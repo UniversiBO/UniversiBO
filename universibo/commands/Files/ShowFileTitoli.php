@@ -110,7 +110,7 @@ class ShowFileTitoli extends PluginCommand {
 				{			
 					$elenco_file_tpl[$i]['titolo']       = $file->getTitolo();
 					//$elenco_file_tpl[$i]['notizia']      = $file->getNotizia();
-					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y - %H:%i', $file->getDataInserimento());
+					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $file->getDataInserimento());
 					//echo $personalizza,"-" ,$ultimo_accesso,"-", $file->getUltimaModifica()," -- ";
 					//$elenco_file_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
 					$elenco_file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
@@ -130,10 +130,11 @@ class ShowFileTitoli extends PluginCommand {
 						$elenco_file_tpl[$i]['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 					}
 					$elenco_file_tpl[$i]['dimensione'] = $file->getDimensione();
-					$elenco_file_tpl[$i]['download_uri'] = '';
-					$permessi_download = $file->getPermessiDownload();
-					if ($user->isGroupAllowed($permessi_download))
-						$elenco_file_tpl[$i]['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+//	tolto controllo: Il link download va mostrato sempre, il controllo è effettuato successivamente 
+//					$elenco_file_tpl[$i]['download_uri'] = '';
+//					$permessi_download = $file->getPermessiDownload();
+//					if ($user->isGroupAllowed($permessi_download))
+					$elenco_file_tpl[$i]['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 					$elenco_file_tpl[$i]['categoria'] = $file->getCategoriaDesc();
 					$elenco_file_tpl[$i]['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 				}

@@ -37,21 +37,18 @@
 {include file=Files/file_titolo.tpl titolo=$temp_file.titolo autore=$temp_file.autore autore_link=$temp_file.autore_link id_autore=$temp_file.id_autore data=$temp_file.data modifica=$temp_file.modifica modifica_link=$temp_file.modifica_link elimina=$temp_file.elimina elimina_link=$temp_file.elimina_link nuova=$temp_file.nuova dimensione=$temp_file.dimensione download_uri=$temp_file.download_uri background='#000016' show_info_uri=$temp_file.show_info_uri}
 	{/if}*}
 	
-<tr valign="center" bgcolor="{cycle values="#000016,#000032"}" class="piccolo" > 
+<tr valign="center" bgcolor="{cycle values="#000016,#000032"}" > 
 <td align="left"><img src="tpl/black/elle_begin.gif" width="10" height="12" alt="modifica" />&nbsp;</td>
-<td class="File" align="left"><a href="{$temp_file.show_info_uri|escape:"htmlall"}">{$temp_file.titolo|escape:"htmlall"|nl2br}</a>&nbsp;{if $temp_file.nuova=="true"}&nbsp;&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}</td>
-<td class="piccolo" align="center" width="30">&nbsp;&nbsp;&nbsp;{$temp_file.data|escape:"htmlall"}
-</td><td align="center">
+<td class="Normal" width="30">{$temp_file.data|escape:"htmlall"}&nbsp;&nbsp;
+</td><td class="Normal" align="left"><a href="{$temp_file.show_info_uri|escape:"htmlall"}">{$temp_file.titolo|escape:"htmlall"|nl2br|truncate}</a>&nbsp;{if $temp_file.nuova=="true"}&nbsp;&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}</td>
+<td class="Normal" >
 &nbsp;&nbsp;&nbsp;<a href="{$temp_file.autore_link|escape:"htmlall"}">{$temp_file.autore|escape:"htmlall"}</a></td>
-<td align="right">&nbsp;&nbsp;&nbsp;{$temp_file.dimensione|escape:"htmlall"}&nbsp;B&nbsp;&nbsp;</td>
-<td valign="center" align="right" width="63">
+<td class="Normal" align="right">&nbsp;&nbsp;&nbsp;{$temp_file.dimensione|escape:"htmlall"}&nbsp;kB&nbsp;&nbsp;</td>
+<td valign="center" align="right" width="80">
 {if $temp_file.download_uri != ""}
-<a href="{$temp_file.download_uri|escape:"htmlall"}"><img src="tpl/black/file_copy.gif" width="15" height="15" alt="scarica il file" /></a>
-{else}&nbsp;
-{/if}
-{if $temp_file.modifica!=""}<a href="{$temp_file.modifica_link|escape:"htmlall"}"><img src="tpl/black/file_edt.gif" width="15" height="15" alt="modifica" /></a>
-{/if}
-{if $temp_file.elimina!=""}<a href="{$temp_file.elimina_link|escape:"htmlall"}"><img src="tpl/black/file_del.gif" width="15" height="15" alt="elimina" /></a>
+&nbsp;<a href="{$temp_file.download_uri|escape:"htmlall"}"><img src="tpl/black/file_copy.gif" border="0" width="15" height="15" alt="scarica il file" /></a>
+{/if}{if $temp_file.modifica!=""}&nbsp;<a href="{$temp_file.modifica_link|escape:"htmlall"}"><img src="tpl/black/file_edt.gif" border="0" width="15" height="15" alt="modifica" /></a>
+{/if}{if $temp_file.elimina!=""}&nbsp;<a href="{$temp_file.elimina_link|escape:"htmlall"}"><img src="tpl/black/file_del.gif" border="0" width="15" height="15" alt="elimina" /></a>
 {/if}
 </td>
 </tr>
