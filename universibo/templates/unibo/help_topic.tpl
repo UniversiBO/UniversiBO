@@ -2,7 +2,7 @@
 
 {include file=avviso_notice.tpl}
 
-<h2><a href="{$common_helpUri|escape:"htmlall"}">Help</a></h2>
+<h2>Help</h2>
 {if $showHelpTopic_index == "true"}
     <a id="index" />
     <div class="elencoTopic">
