@@ -351,7 +351,7 @@ class FileAdd extends UniversiboCommand {
         		$db->autoCommit(false);
 				
 				$nome_file = FileItem::normalizzaNomeFile($_FILES['f12_file']['name']);
-				$dimensione_file = $_FILES['f12_file']['size'] / 1024;
+				$dimensione_file = (int)($_FILES['f12_file']['size'] / 1024);
 				$newFile = new FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUser(), $f12_titolo, $f12_abstract,
 				$f12_data_inserimento, time(), $dimensione_file, 0, $nome_file, $f12_categoria, 
 				FileItem::guessTipo($_FILES['f12_file']['name']), md5_file($_FILES['f12_file']['tmp_name']), ($f12_password == null) ? $f12_password : FileItem::passwordHashFunction($f12_password), 
