@@ -18,7 +18,7 @@ Per per proseguire con il download è necessario inserirla nel seguente form.</p>
 <td align="center">
 <input type="submit" id="" name="f11_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td align="center" class="Normal"><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;alla scheda del file</a></td></tr>
 <tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
