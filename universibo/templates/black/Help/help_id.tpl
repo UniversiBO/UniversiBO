@@ -6,7 +6,7 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 	
 	{foreach from=$showHelpId_langArgomento item=temp_helpid}
-	<tr><td cellpadding="3" class="Normal" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+	<tr><td cellpadding="3" class="Normal" bgcolor="{cycle name=index values="#000032,#000016"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
 	<a href="#{$temp_helpid.id|escape:"htmlall"}"> {$temp_helpid.titolo|escape:"htmlall"}</a></td></tr>
 	{/foreach}
 	 

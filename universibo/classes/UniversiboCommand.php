@@ -303,6 +303,8 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_info', 'Informazioni');
 		$template->assign('common_help', 'Help');
 		$template->assign('common_helpUri', 'index.php?do=ShowHelp');
+		$template->assign('common_helpByTopic', 'Help per argomenti');
+		$template->assign('common_helpByTopicUri', 'index.php?do=ShowHelpTopic');
 		$template->assign('common_rules', 'Regolamento');
 		$template->assign('common_rulesUri', 'index.php?do=ShowRules');
 		$template->assign('common_contacts', 'Contatti - (chi siamo)');

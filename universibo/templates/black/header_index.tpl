@@ -134,6 +134,11 @@
 
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_helpByTopicUri}" >{$common_helpByTopic}</a></td>
+</tr>
+
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
  <td class="Menu"><a href="{$common_rulesUri}" >{$common_rules}</a></td>
 </tr>
 

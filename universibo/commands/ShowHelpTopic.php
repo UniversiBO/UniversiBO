@@ -14,7 +14,7 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowHelpIndex extends UniversiboCommand {
+class ShowHelpTopic extends UniversiboCommand {
 	function execute(){
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();

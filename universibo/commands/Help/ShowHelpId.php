@@ -23,24 +23,34 @@ class ShowHelpId extends PluginCommand {
 	 * Esegue il plugin
 	 *
 	 * @param array $param deve contenere: 
-	 *  - 'id_help' l'id dell'argomento da visualizzare
-	 *	  es: array('id_help'=>5) 
-	 *	se id_help=0 mostra tutti gli argomenti	
+	 *  - 'id_help' l'id dell'argomento o argomenti da visualizzare
+	 *	  es: array("5","6") 
+	 *	se viene passato 0  come parametro mostra tutti gli argomenti	
+	 *  NB 0 non può essere l'id di una notizia
 	 */
 	function execute($param)
 	{
 		
-		$id_help  =  $param['id_help'];
+		
+		$allFlag	= false;
+		$listid		= '';
+		
+		foreach ($param as $key => $id_help){
+			if ($id_help === 0) {$allFlag = true; break;}
+			if ($key === 0)	$listid = $id_help;
+			else 	$listid = $listid.', '.$id_help;
+		}
 
-		$bc        =& $this->getBaseCommand();
+		$bc			     =& $this->getBaseCommand();
 		$frontcontroller =& $bc->getFrontController();
-		$template =& $frontcontroller->getTemplateEngine();
+		$template		 =& $frontcontroller->getTemplateEngine();
 		
 		$db =& FrontController::getDbConnection('main');
-		if ($id_help === 0)
+		
+		if ($allFlag === true)
 			$query = 'SELECT id_help, titolo, contenuto FROM help ORDER BY indice';
 		else 
-			$query = 'SELECT id_help, titolo, contenuto FROM help WHERE id_help=\''.$id_help.'\'';
+			$query = 'SELECT id_help, titolo, contenuto FROM help WHERE id_help IN ('.$listid.') ORDER BY indice';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 

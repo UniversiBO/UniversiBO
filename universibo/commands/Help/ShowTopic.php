@@ -49,13 +49,13 @@ class ShowTopic extends PluginCommand {
 				
 		while($res->fetchInto($row))
 		{		
-			$argomenti[] = array('id' => $row[0]);
-			$this->executePlugin('ShowHelpId', array('id' => $row[0]));
+			$argomenti[] = $row[0]
+			
 		}
 		
-		
+		$this->executePlugin('ShowHelpId', $argomenti);
 		$template->assign('showTopic_langArgomento', $argomenti);
-		
+		$template->assign('showTopic_langReference', $reference);
 	}
 	
 	

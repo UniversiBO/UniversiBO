@@ -36,6 +36,10 @@
 			<response type="template" name="default">help.tpl</response>
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</ShowHelp>
+		<ShowHelpTopic class="ShowHelpTopic">
+			<response type="template" name="default">help_topic.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+		</ShowHelpTopic>
 		<ShowFacolta class="ShowFacolta">
 			<response type="template" name="default">facolta.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
