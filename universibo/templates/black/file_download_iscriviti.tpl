@@ -14,6 +14,13 @@ Per registrarti segui il link &quot;Registrazione Studenti&quot; sulla destra.</
 <tr><td align="center" class="Normal"><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></td></tr>
 </table>
 
+&nbsp;
+<hr>
+<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="">
+<tr><td>
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+</td></tr></table>
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

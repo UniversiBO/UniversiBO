@@ -10,6 +10,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Daniele Tiles
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -41,6 +42,7 @@ class FileDownload extends UniversiboCommand {
 			
 			$nomeFile = $directoryFile.$file->getIdFile().'_'.$file->getNomeFile();
 			//echo $nomeFile;die();
+			
 			if (!file_exists($nomeFile)) 
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare il file richiesto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
 			if ( md5_file($nomeFile) != $file->getHashFile() ) 
@@ -49,7 +51,10 @@ class FileDownload extends UniversiboCommand {
 			if ( $file->getPassword() != null)
 			{
 				if (!array_key_exists('f11_submit', $_POST))
+				{
+					$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
 					return 'file_download_password';
+				}
 
 				if  (!array_key_exists('f11_file_password', $_POST))
 					Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
@@ -57,6 +62,7 @@ class FileDownload extends UniversiboCommand {
 				if  ($file->getPassword() != FileItem::passwordHashFunction($_POST['f11_file_password']))
 				{
 					Error::throw(_ERROR_NOTICE,array('msg'=>'La password inviata è errata','file'=>__FILE__,'line'=>__LINE__,'log' => false, 'template_engine' => & $template  ));
+					$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
 					return 'file_download_password';
 				}
 			}
@@ -91,6 +97,7 @@ class FileDownload extends UniversiboCommand {
 			/**
 			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione a fondo pagina
 			 */
+						
 			exit();
 			
 			return;
@@ -101,6 +108,7 @@ class FileDownload extends UniversiboCommand {
 		if ($user->isOspite() )
 		{
 			Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non è permesso eseguire il download del file', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
 			return 'file_download_iscriviti';
 		}
 

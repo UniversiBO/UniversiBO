@@ -25,6 +25,13 @@ Per per proseguire con il download è necessario inserirla nel seguente form.</p>
 </td></tr>
 </table>
 
+&nbsp;
+<hr>
+<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="">
+<tr><td>
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+</td></tr></table>
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

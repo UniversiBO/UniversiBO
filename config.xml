@@ -79,6 +79,8 @@
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>
 			<response type="template" name="success">reg_studente_success.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</RegStudente>
 		<NewPasswordStudente class="NewPasswordStudente">
 			<response type="template" name="default">new_password_studente.tpl</response>
@@ -119,6 +121,8 @@
 		<FileDownload class="FileDownload">
 			<response type="template" name="file_download_iscriviti">file_download_iscriviti.tpl</response>
 			<response type="template" name="file_download_password">file_download_password.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileDownload>
 		<FileShowInfo class="FileShowInfo">
 			<response type="template" name="default">file_show_info.tpl</response>
