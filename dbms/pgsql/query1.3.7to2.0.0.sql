@@ -263,3 +263,16 @@ riferimento varchar(32) PRIMARY KEY,
 id_help int4 NOT NULL
 );
 
+
+-----04-02-04
+
+DROP TABLE help;
+
+CREATE TABLE help(
+id_help serial PRIMARY KEY,
+titolo varchar(255) NOT NULL,
+contenuto text NOT NULL,
+ultima_modifica int4 NOT NULL,
+indice int4 NOT NULL);
+
+
