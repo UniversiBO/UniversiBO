@@ -88,7 +88,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 				$f4_accept = false;
 			}
 			elseif(User::activeDirectoryUsernameExists($_POST['f4_ad_user'].'@studio.unibo.it')){
-				Error::throw(_ERROR_NOTICE,array('msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente già registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throw(_ERROR_NOTICE,array('msg'=>"La mail di ateneo ".$_POST['f4_ad_user']."@studio.unibo.it appartiene ad un utente già registrato.\nProbabilmente sei già registrato, utilizza la pagina Password Smarrita per recuperare la password",'file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			else
