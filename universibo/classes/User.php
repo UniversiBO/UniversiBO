@@ -781,7 +781,7 @@ class User {
 
 
 	/**
-	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se si vuole creare un utente ospite
+	 * Crea un oggetto utente dato il suo usernamedel database
 	 *
 	 * @static
 	 * @param string $username nome identificativo utente
@@ -805,6 +805,38 @@ class User {
 		$row = $res->fetchRow();
 		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
 		return $user;
+		
+	}
+	
+	
+	
+	/**
+	 * Ritorna un array di oggetti utente che rispettano entrambe le stringhe di ricerca (AND)
+	 * Possono essere usati _ e % come caratteri spaciali
+	 *
+	 * @static
+	 * @param string $username nome identificativo utente
+	 * @param string $username nome identificativo utente
+	 * @return array di User
+	 */
+	function &selectUsersSearch($username = '%', $email = '%')
+	{
+		
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$users = array();
+		
+		while($row = $res->fetchRow())
+		{
+			$users[] =& new User($row[0], $row[5], $row[7], $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
+		}
+		
+		return $users;
 		
 	}
 	

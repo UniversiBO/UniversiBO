@@ -1,10 +1,9 @@
 <?php 
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
-require_once ('Files/FileItem'.PHP_EXTENSION);
 
 /**
- * NewsDelete: elimina una notizia, mostra il form e gestisce la cancellazione 
+ * RuoliAdminSearch: permette la ricerca di ruoli all'interno di un canale 
  * 
  *
  * @package universibo
@@ -21,151 +20,146 @@ class RuoliAdminSearch extends UniversiboCommand {
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 
-		
-		$template->assign('common_canaleURI', $_SERVER['HTTP_REFERER']);
-		$template->assign('common_langCanaleNome', 'indietro');
-		
 		$user =& $this->getSessionUser();
 		
 		$referente = false;
 		
 		$user_ruoli = $user->getRuoli();
 		$ruoli = array();
+		$arrayPublicUsers = array();
 		
 							
-		if (array_key_exists('id_canale', $_GET))
+		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			
+		$canale = & Canale::retrieveCanale($_GET['id_canale']);
+		$id_canale = $canale->getIdCanale();
+		
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+		
+		if (array_key_exists($id_canale, $user_ruoli)) 
 		{
-			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			$ruolo = & $user_ruoli[$id_canale];
+			$referente = $ruolo->isReferente();
+		}
+		
+		
+		if (!$user->isAdmin() && !$referente )
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare i diritti degli utenti su questa pagina.\nLa sessione potrebbe essere scaduta.", 'file' => __FILE__, 'line' => __LINE__));
+		
+		
+		
+		
+		
+
+		$f16_accept = false;
+		//postback
+		if (array_key_exists('f16_submit', $_POST)  )
+		{
 			
-			$canale = & Canale::retrieveCanale($_GET['id_canale']);
-			$id_canale = $canale->getIdCanale();
+			if (!array_key_exists('f16_username', $_POST) || !array_key_exists('f16_email', $_POST) )
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 			
-			$template->assign('common_canaleURI', $canale->showMe());
-			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
-			
-			if (array_key_exists($id_canale, $user_ruoli)) 
+			$f16_accept = true;
+				 
+			if ($_POST['f16_username'] == '' && $_POST['f16_email'] == '')
 			{
-				$ruolo = & $user_ruoli[$id_canale];
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Specificare almeno uno dei due criteri di ricerca', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f16_accept = false;
+			}	
+			
+			if ($_POST['f16_username'] == '')
+				$f16_username = '%';
+			else	
+				$f16_username = $_POST['f16_username'];
 				
-				$referente = $ruolo->isReferente();
+			if ($_POST['f16_email'] == '')
+				$f16_email = '%';
+			else
+				$f16_email = $_POST['f16_email'];
+			
+			if ($f16_accept)
+			{
+				$users_search =& User::selectUsersSearch($f16_username, $f16_email);
+				
+				$users_search_keys = array_keys($users_search);
+				foreach($users_search_keys as $key)
+				{
+					$ruoli_search  =& $users_search[$key]->getRuoli();
+					
+					if(array_key_exists($id_canale, $ruoli_search))
+					{
+						$ruolo_search  =& $ruoli_search[$id_canale];
+						
+						$contactUser = array();
+						$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$users_search[$key]->getIdUser();
+						$contactUser['edit_link']  = 'index.php?do=RuoliAdminEdit&id_canale='.$id_canale.'&id_utente='.$users_search[$key]->getIdUser();
+						$contactUser['nome']  = $users_search[$key]->getUserPublicGroupName();
+						$contactUser['label'] = $users_search[$key]->getUsername();
+						$contactUser['ruolo'] = ($ruolo_search->isReferente()) ? 'R' :  (($ruolo_search->isModeratore()) ? 'M' : 'none');
+						
+						$arrayPublicUsers[$users_search[$key]->getUserPublicGroupName(false)][] = $contactUser;
+					}
+					else
+					{
+						$contactUser = array();
+						$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$users_search[$key]->getIdUser();
+						$contactUser['edit_link']  = 'index.php?do=RuoliAdminEdit&id_canale='.$id_canale.'&id_utente='.$users_search[$key]->getIdUser();
+						$contactUser['nome']  = $users_search[$key]->getUserPublicGroupName();
+						$contactUser['label'] = $users_search[$key]->getUsername();
+						$contactUser['ruolo'] = 'none';
+						
+						$arrayPublicUsers[$users_search[$key]->getUserPublicGroupName(false)][] = $contactUser;
+					
+					}
+					
+				}
+				
 			}
 			
-			$canale_ruoli = $canale->getRuoli();
+		}
+		
+		
+		if (!$f16_accept)
+		{
+			$canale_ruoli =& $canale->getRuoli();
 			$ruoli_keys = array_keys($canale_ruoli);
 			foreach($ruoli_keys as $key)
 			{
 				if ($canale_ruoli[$key]->isReferente() || $canale_ruoli[$key]->isModeratore() )
 				{
 					$ruoli[] =& $canale_ruoli[$key];
-					$user =& User::selectUser($ruolo->getIdUser());
+	
+					$user =& User::selectUser($canale_ruoli[$key]->getIdUser());
 					//var_dump($user);
 					$contactUser = array();
 					$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$user->getIdUser();
+					$contactUser['edit_link']  = 'index.php?do=RuoliAdminEdit&id_canale='.$id_canale.'&id_utente='.$user->getIdUser();
 					$contactUser['nome']  = $user->getUserPublicGroupName();
 					$contactUser['label'] = $user->getUsername();
-					$contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					$contactUser['ruolo'] = ($canale_ruoli[$key]->isReferente()) ? 'R' :  (($canale_ruoli[$key]->isModeratore()) ? 'M' : 'none');
 					//var_dump($ruolo);
 					//$arrayUsers[] = $contactUser;
-					$arrayPublicUsers[$user->getUserPublicGroupName(false)][] = $contactUser;
-					
+					$arrayPublicUsers[$user->getUserPublicGroupName(false)][$contactUser['label']] = $contactUser;
 				}
 			}
-			
 		}
 		
+		uksort($arrayPublicUsers, "strcmp");
+//mettere ogni sotto gruppo in ordine alfabetico (non funziona)
+//		$keys = array_keys($arrayPublicUsers);
+//		foreach($keys as $key)
+//		{
+//			uksort($arrayPublicUsers[$key], "strcmp");
+//		}
 		
-		die();
-		if (!($user->isAdmin() || $referente ) )
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare i diritti degli utenti su questa pagina.\nLa sessione potrebbe essere scaduta.", 'file' => __FILE__, 'line' => __LINE__));
+		$template->assign('ruoliAdminSearch_users', $arrayPublicUsers);
 		
-		//$elenco_canali = array ($id_canale);
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i < $num_ruoli; $i ++)
-		{
-			$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-		}
-		
-		$file_canali =& $file->getIdCanali();
-		
-		$f14_canale = array();
-		$num_canali = count($file_canali);
-		for ($i = 0; $i < $num_canali; $i ++)
-		{
-			$id_current_canale = $file_canali[$i];
-			$current_canale = & Canale :: retrieveCanale($id_current_canale);
-			$nome_current_canale = $current_canale->getTitolo();
-			if (in_array($id_current_canale, $file->getIdCanali())) 
-			{
-				$f14_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
-			}
-		}
-		
-		$f14_accept = false;
-		
-		//postback
-		
-		if (array_key_exists('f14_submit', $_POST)  )
-		{
-			
-			$f14_accept = true;
-			
-			$f14_canale_app = array();
-			//controllo diritti su ogni canale di cui è richiesta la cancellazione
-			if (array_key_exists('f14_canale', $_POST))
-			{
-				foreach ($_POST['f14_canale'] as $key => $value)
-				{
-					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || ($user_ruoli[$key]->isModeratore() && $autore)));
-					if (!$diritti)
-					{
-						//$user_ruoli[$key]->getIdCanale();
-						$canale = & Canale::retrieveCanale($key);
-						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di eliminazione nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-						$f14_accept = false;
-					}
-					else
-						$f14_canale_app[$key] = $value;
-				}
-			}
-			elseif(count($f14_canale) > 0)
-			{
-				$f14_accept = false;
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno una pagina:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-			}
-			
-		}
+		$template->assign('ruoliAdminSearch_langAction', "Modifica i diritti nella pagina\n".$canale->getTitolo());
+		$template->assign('ruoliAdminSearch_langSearch', "Cerca un altro utente");
 		
 		
-		//accettazione della richiesta
-		if ($f14_accept == true)
-		{
-//			var_dump($_POST['f14_canale'] );
-//			die();
-			//cancellazione dai canali richiesti
-			foreach ($f14_canale_app as $key => $value)
-			{
-				$file->removeCanale($key);
-				$canale = Canale::retrieveCanale($key);					
-			}
-			
-			$file->deleteFileItem();
-			/**
-			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
-			 */
-			$template->assign('fileDelete_langSuccess', "Il file è stato cancellato con successo dalle pagine scelte.");
-			
-			return 'success';
-		}
-		
-		//visualizza notizia
-		//$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
-		//$this->executePlugin('ShowNews', $param );
-		
-		$template->assign('f14_langAction', "Elimina il file dalle seguenti pagine:");
-		$template->assign('f14_canale', $f14_canale);
-		$template->assign('fileDelete_flagCanali', (count($f14_canale)) ? 'true' : 'false');
 		
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		

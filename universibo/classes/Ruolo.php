@@ -419,7 +419,7 @@ class Ruolo {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($referente) ? RUOLO_REFERENTE : 0; 
+			$campo_ruolo = (($this->isModeratore()) ? RUOLO_MODERATORE : 0) + (($referente) ? RUOLO_REFERENTE : 0); 
 			$query = 'UPDATE utente_canale SET ruolo = '.$campo_ruolo.' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
@@ -611,18 +611,18 @@ class Ruolo {
 	{
 		$db =& FrontController::getDbConnection('main');
 		
-		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
-		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
+		$campo_ruolo = (($this->isModeratore()) ? RUOLO_MODERATORE : 0) + (($this->isReferente()) ? RUOLO_REFERENTE : 0); 
+		$my_universibo = ($this->isMyUniversibo()) ? 'S' : 'N'; 
 		$nascosto = ($this->isNascosto()) ? 'S' : 'N'; 
 		
-		$query = 'UPDATE utente_canale SET ( id_utente = '.$db->quote($this->id_utente).
-					' id_canale = '.$db->quote($this->id_canale).
-					' ultimo_accesso = '.$db->quote($this->ultimoAccesso).
-					' ruolo = '.$db->quote($campo_ruolo).
-					' my_universibo = '.$db->quote($my_universibo).
-					' notifica = '.$db->quote($this->getTipoNotifica()).
-					' nome = '.$db->quote($this->getNome()).
-					' nascosto = '.$db->quote($nascosto).' )';
+		$query = 'UPDATE utente_canale SET ultimo_accesso = '.$db->quote($this->ultimoAccesso).
+					', ruolo = '.$db->quote($campo_ruolo).
+					', my_universibo = '.$db->quote($my_universibo).
+					', notifica = '.$db->quote($this->getTipoNotifica()).
+					', nome = '.$db->quote($this->getNome()).
+					', nascosto = '.$db->quote($nascosto).' 
+					WHERE id_utente = '.$db->quote($this->id_utente).
+					' AND id_canale = '.$db->quote($this->id_canale);
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
