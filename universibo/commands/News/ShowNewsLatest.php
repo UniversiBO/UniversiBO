@@ -48,17 +48,20 @@ class ShowNewsLatest extends PluginCommand {
 		
 
 		$template->assign('showNewsLatest_addNewsFlag', 'false');
-		if (array_key_exists($id_canale, $user_ruoli))
+		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
 		{
 			$personalizza = true;
 			
-			$ruolo =& $user_ruoli[$id_canale];
+			if (array_key_exists($id_canale, $user_ruoli))
+			{
+				$ruolo =& $user_ruoli[$id_canale];
+				
+				$referente      = $ruolo->isReferente();
+				$moderatore     = $ruolo->isModeratore();
+				$ultimo_accesso = $ruolo->getUltimoAccesso();
+			}
 			
-			$referente      = $ruolo->isReferente();
-			$moderatore     = $ruolo->isModeratore();
-			$ultimo_accesso = $ruolo->getUltimoAccesso();
-			
-			if ( $referente || $moderatore  || $user->isAdmin() )
+			if ( $user->isAdmin() || $referente || $moderatore )
 			{
 				$template->assign('showNewsLatest_addNewsFlag', 'true');
 				$template->assign('showNewsLatest_addNews', 'Scrivi nuova notizia');
@@ -70,7 +73,7 @@ class ShowNewsLatest extends PluginCommand {
 			$personalizza   = false;
 			$referente      = false;
 			$moderatore     = false;
-			$ultimo_accesso = time();
+			$ultimo_accesso = $user->getUltimoLogin();
 		}
 		
 		$canale_news = $this->getNumNewsCanale($id_canale);
