@@ -22,7 +22,7 @@
 			<p>{$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} {$common_userUsername|escape:"htmlall"}<br />
 			{$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} {foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}<br />
 			&nbsp;<br />
-			<input class="submit" name="f2_submit" type="submit" value="LogOut" /><br />
+			<input class="submit" name="f2_submit" type="submit" value="LogOut" /><br /></p>
 			</form>
 		{/if}
 		</div>	
