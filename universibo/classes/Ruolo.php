@@ -1,15 +1,15 @@
 <?php
 
-include_once('User'.PHP_EXTENSION);
-include_once('Canale'.PHP_EXTENSION);
+require_once('User'.PHP_EXTENSION);
+require_once('Canale'.PHP_EXTENSION);
 
 define('RUOLO_NONE'        ,0);
 define('RUOLO_MODERATORE'  ,1);
 define('RUOLO_REFERENTE'   ,2);
 
-define('NOTIFICA_NONE'   ,0);
-define('NOTIFICA_URGENT' ,1);
-define('NOTIFICA_ALL'    ,2);
+define('RUOLO_NOTIFICA_NONE'   ,0);
+define('RUOLO_NOTIFICA_URGENT' ,1);
+define('RUOLO_NOTIFICA_ALL'    ,2);
 
 
 /**
@@ -271,9 +271,9 @@ class Ruolo {
 
 	/**
 	 * restituisce il livello di notifica dell'utente nel canale corrente
-	 * define('NOTIFICA_NONE'   ,0);
-	 * define('NOTIFICA_URGENT' ,1);
-	 * define('NOTIFICA_ALL'    ,2);
+	 * define('RUOLO_NOTIFICA_NONE'   ,0);
+	 * define('RUOLO_NOTIFICA_URGENT' ,1);
+	 * define('RUOLO_NOTIFICA_ALL'    ,2);
 	 *
 	 * @return int livello di notifica
 	 */
@@ -286,9 +286,9 @@ class Ruolo {
 	
 	/**
 	 * Imposta il livello di notifica dell'utente nel canale corrente
-	 * define('NOTIFICA_NONE'   ,0);
-	 * define('NOTIFICA_URGENT' ,1);
-	 * define('NOTIFICA_ALL'    ,2);
+	 * define('RUOLO_NOTIFICA_NONE'   ,0);
+	 * define('RUOLO_NOTIFICA_URGENT' ,1);
+	 * define('RUOLO_NOTIFICA_ALL'    ,2);
 	 *
 	 * @param int $tipo_notifica livello di notifica
 	 * @param boolean $updateDB se true la modifica viene propagata al DB 
@@ -442,7 +442,7 @@ class Ruolo {
 	 */
 	function updateAddMyUniversibo($updateDB = false)
 	{
-		$this->updateSetMyUniversibo(true, $updateDB);   //non l'ho capita, non ricorda che fa! ma funziona!?
+		$this->setMyUniversibo(true, $updateDB);   //non l'ho capita, non ricorda che fa! ma funziona!?
 	}
 
 
@@ -454,7 +454,7 @@ class Ruolo {
 	 * @param	boolean	$updateDB se true la modifica viene propagata al DB 
 	 * @return	boolean	true se avvenuta con successo
 	 */
-	function updateSetMyUniversibo($my_universibo, $updateDB = false)
+	function setMyUniversibo($my_universibo, $updateDB = false)
 	{
 		$this->myUniversibo = $my_universibo;
 		
