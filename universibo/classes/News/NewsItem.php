@@ -7,7 +7,7 @@ define('NEWS_NOT_ELIMINATA','N');
 
 
 define('NEWS_URGENTE','S');
-define('NEWS_NOT_URGENTE','S');
+define('NEWS_NOT_URGENTE','N');
 
 /**
  *
