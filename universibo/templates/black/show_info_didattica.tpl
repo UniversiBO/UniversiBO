@@ -4,8 +4,8 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
-<tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"}</p>
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
 {if $infoDid_obiettiviInfo!=""}
 <p class="NormalC">{$infoDid_langObiettiviInfo|escape:"htmlall"}</p>
 <p class="Normal">{$infoDid_obiettiviInfo|escape:"htmlall"}</p>
