@@ -139,7 +139,7 @@ class ForumApi
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$query = 'UPDATE '.$this->table_prefix.'_users SET user_lastvisit = '.time().' WHERE user_id = '.$user->getIdUser();
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_lastvisit = '.time().' WHERE user_id = '.$user->getIdUser();
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
