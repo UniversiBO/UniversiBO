@@ -29,7 +29,7 @@ class ShowUser extends UniversiboCommand{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
-		if(!$current_user->isAdmin() && !$user->isDocente()  && $current_user->getIdUser() != $user->getIdUser())
+		if(!$current_user->isAdmin() && !$user->isDocente() && !$user->isTutor()  && $current_user->getIdUser() != $user->getIdUser())
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non ti ? permesso visualizzare la scheda dell\'utente','file'=>__FILE__,'line'=>__LINE__));
 		}
