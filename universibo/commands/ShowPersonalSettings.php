@@ -68,9 +68,9 @@ class ShowPersonalSettings extends UniversiboCommand
 				$f20_accept = false;
 			}
 			
-			//telefono
-			if ( (strlen($_POST['f20_cellulare']) > 50)||!ereg('^([0-9]{0,50})$', $_POST['f20_cellulare'])) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il numero di cellulare indicato pu? essere massimo 50 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			//telefono formato +xxyyyzzzzzzz es: +393381407176
+			if ( $_POST['f20_cellulare']!='' && ( (strlen($_POST['f20_cellulare']) != 13)||!ereg('^\+([0-9]{12})$', $_POST['f20_cellulare'])) ) {
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il numero di cellulare deve essere indicato nel formato +xxyyyzzzzzzz'."\n".'es: "+3933901234567"','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f20_accept = false;
 			}
 			else $q20_cellulare = $f20_cellulare = $_POST['f20_cellulare'];
