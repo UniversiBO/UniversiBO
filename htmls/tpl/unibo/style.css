@@ -1,133 +1,451 @@
-.menu_bar_2 {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #386dce
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background: white;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	text-align: left;
 }
-.databar_2 {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.table_bg {
-	background-repeat: no-repeat
-}
-.spallaEventi {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #0099FF
-}
-.bgFilo {
-	BACKGROUND-COLOR: #999999
-}
-A.navbar {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
-}
-.navbar {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
-}
-A.navbar:hover {
-	COLOR: #ffffff
-}
-A.navbar:visited {
-	COLOR: #ffffff
-}
-A.navbar_2 {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
-}
-.navbar_2 {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
-}
-A.navbar:hover_2 {
-	COLOR: #ffffff
-}
-A.navbar:visited_2 {
-	COLOR: #ffffff
-}
-.databar {
-	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
-}
-.menu {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.menu_on {
-	FONT-WEIGHT: bold; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.menu_cal {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
-}
-.menu_blu {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.menu_bar {
-	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #386dce
-}
-.testoFooter {
-	FONT-SIZE: 70%; COLOR: #666666; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.Feriali {
-	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.Festivi {
-	FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.Domeniche {
-	FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.Oggi {
-	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.Piccolo {
-	FONT-SIZE: 7pt; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.titoloHome {
-	FONT-WEIGHT: bolder; FONT-SIZE: 130%; MARGIN: 0px; COLOR: #386dce; FONT-FAMILY: "Times New Roman", Times, serif
-}
-A.menu_piccolo {
-	FONT-WEIGHT: normal; FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.menu_piccolo {
-	FONT-WEIGHT: normal; FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-.BgMenu1livOn {
-	BACKGROUND-COLOR: #cccccc
-}
-.login {
-	FONT-WEIGHT: bold; FONT-SIZE: 100%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
-}
-.testoOcchiello {
-	FONT-SIZE: 85%;
-	COLOR: #333333;
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
 
+/* si gentile con netscape*/
+p, td, ul, ol, ul, li, dl, dt, dd
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
 }
-.sei_in {
-	FONT-SIZE: 85%; COLOR: #333333; FONT-STYLE: italic; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+
+img
+{
+	border: 0;
 }
-.testoNormale {
-	FONT-SIZE: 74%; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+
+form input{
+	font-size: 12px;
+	height: 13px;
+	border: solid 1px #999;
+}
+
+form input.submit{
+	font-size: 12px;
+	height: 17px;
+	border: solid 1px #999;
 }
 
 
 
+/**
+ *	Tips per accessibilità
+ */
 
-.testoDestra {
-	FONT-SIZE: 86%;
-	COLOR: #666666;
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+.hide
+{
+	display: none !important;
 }
-.navbarForm {
-	FONT-SIZE: 86%;
-	COLOR: #000000;
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
-	BACKGROUND-COLOR: #FFFFFF;
+
+/** 
+ *	Testata
+ */
+
+#header
+{
+	background: #0006c2;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	float: left;
+	width: 100%;
 }
-.navbarHead {
-	 COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+td>#header		/* questa regola viene ignorata da exploder*/
+{
+	min-width: 715px;
 }
-.navbarwhite {
-	FONT-SIZE: 70%;	COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+
+#header img
+{
+	background: white;
+	border-style: none;
+	float: left;
 }
-.provaFondino {
-	background-color: #0000CC;
-	background-image: url(TESTATA2.gif);
-	background-repeat: no-repeat;
+
+#header p, #header a, #menubar p, #menubar a
+{
+	color: #fff;
+	clear: none;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	border: 0 none;
+	font-size: 10px ;
 }
-.testoVisite {
-	FONT-SIZE: 70%;
-	COLOR: #666666;
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+
+#Info
+{
+	clear: none;
+	position: absolute;
+	left: 167px;
+	top: 74px;
+	font-weight: bold;
+}
+
+#menubar
+{
+	clear: left;
+	background: #666666;
+	margin: 0;
+	padding: 2px 0 4px;
+	width: 100%;
+	vertical-align: middle;	
+}
+
+#Menu
+{
+	position: relative;
+	left: 167px;
+	font-weight: bold;
+}
+
+#header .TimeInfo
+{
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	top: 2px;
+	padding: 3px 2px 0 0;
+}
+
+
+/** 
+ *	Menu navigazione
+ */
+
+#leftmenu
+{
+	background: white url(pixel.gif) repeat;
+	padding: 1.4em 0 0;
+	border-bottom:dotted 2px #999;
+}
+	
+td.evidenzia{
+	border-right: solid 1px #999;
+}
+
+#leftmenu a
+{
+	color: #333;
+	font-size: 12px;
+}
+
+#leftmenu li
+{
+	margin-left: 20px;
+	margin-bottom: 2px;
+}
+
+#Qui
+{
+	margin-left: 0 !important;
+	overflow: visible;
+	width: 100%;
+	background: #ccc url(navig_freccia.gif) no-repeat left;
+}
+#leftmenu li#Qui a
+{
+	margin-left: 20px;
+}
+
+#leftmenu ul
+{
+	list-style-type: none;
+	padding: 0 0 2px;
+	margin: 0 0 4px;
+	font-weight: bold;
+	border-bottom: dotted 2px #999;
+}
+
+#leftmenu ul li ul li a, #leftmenu ul li ul li, #leftmenu ul li ul
+{
+	font-weight: normal;
+	margin-left: 0;
+	border-bottom: 0; 
+	padding: 0;
+}
+
+.lastElemento
+{
+	border: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+
+#rightmenu
+{
+/*	float: right;	*/
+	padding-right: 10px;
+}
+
+/**
+ * Pagina centrale
+ */
+
+#content
+{
+	padding: 10px 20px 10px 30px;
+}
+
+#seiIn
+{
+	display: block;
+	margin: .4em 0 0 .3em;
+	padding:0;
+	font-size: 12px;
+	color: #333;
+}
+#seiIn a
+{
+	color: #333;
+	font-style: oblique;
+}
+
+
+#content h1
+{
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	clear: left;
+	color: #386dce;
+	margin: 3px;
+}
+
+#content h2
+{
+	margin-top: 30px;
+	border-top: dotted 2px #999;
+	padding-top: 10px;
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	clear: left;
+	color: #386dce;
+}
+
+
+#content #home
+{
+	margin: 20px 0;
+	padding: 2px;
+}
+
+#content #home p img
+{
+	display: block;
+	position: relative;
+	left: 167px;
+}
+
+#content p
+{
+	clear: left;
+	margin: 4px;
+	/*float: left;*/
+	display: block;
+}
+
+
+.evidenzia
+{
+	background-color: #d9e5ff !important;
+}
+
+/**
+ * Box vari
+ *
+ */
+
+.news
+{
+	font-size: 12px;
+	margin: 2em 0;
+	display: block;
+	padding: 0 0 4px;
+	border-top: solid 1px #999;
+	border-bottom: solid 1px #999;
+}
+
+.news p, .news a, .news li, .news h3, .news td
+{
+	font-size: 12px;
+}
+
+.work p, .work a, .work li, .work h3
+{
+	font-size: 12px;
+}
+
+.news h3, .work  h3
+{
+	background-color: #d9e5ff;
+	color: #333;
+	margin: 0 0 2px;
+	padding: 2px;
+/*	quotes: "::" "::" "::" "::"; */
+}
+
+.news p, .work p, .box p
+{
+	float: none !important;
+	margin: 0 2px;
+	padding: 0;
+	line-height: 1.3;
+}
+
+.news table
+{
+	width: 100%;
+}
+
+.news .piePagina
+{
+	float: right;
+	display: inline;
+}
+
+/*.news span
+{
+	margin: 0 2px;
+}
+
+.news span p
+{
+	display: inline !important;
+}
+*/
+
+/*.news ul,.news li,*/.news a, .box a
+{
+	display: inline;
+}
+
+/*.news ul,li
+{
+	list-style-type: none;
+	margin-top: 2px;
+}
+*/
+
+
+.work 
+{
+	border: solid 1px #999;
+	padding: 0;
+	margin: 0.33%;
+	float: left;
+	font-size: 12px;
+	/*voice-family: "\"}\"";
+	voice-family: inherit;*/
+	width: 32%;
+}
+
+#content>.work
+{
+	margin: 0.537%;
+}
+
+.box
+{
+	font-size: 10px;
+	border: solid 1px #999;
+	padding: 0px;
+	background: white url(pixel.gif) repeat;
+	margin: 15px 8px;
+}
+
+.box form *{
+	margin: 2px;
+	text-align: center;
+}
+
+.box form label{
+	font-weight: bold;
+}
+
+.box form{
+	text-align: center;
+	margin: 4px;
+}
+
+.box p, .box a, .box li, .box h3
+{
+	font-size: 10px !important;
+}
+
+.box p, .box a, .box ul, .box span
+{
+	margin: 2px !important;
+}
+
+.box h3
+{
+	margin: 0;
+	padding: 2px;
+	color: white;
+	background-color: #386dce;
+}
+
+.box p, .box a
+{
+	font-weight: bold;
+}
+
+.box a
+{
+	color: #00e !important;
+	padding: 0;
+	margin: 0;
+}
+
+.box span
+{
+	color: #666;
+	margin: 0;
+}
+
+.box .backlink
+{
+	margin-top:3px;
+	/*padding:2px 2px 2px 0;*/
+	width: 100%;
+	text-align: right;
+}
+
+
+
+
+.box .Feriali {
+	font-size: 10px; color: #000;
+}
+.box .Festivi, .Domeniche {
+	font-size: 10px; color: #d00;
+}
+.box .Oggi {
+	font-size: 10px; color: #000; background-color: #9cd;
+}
+.box .Piccolo {
+	font-size: 10px; color: #fff; 
+}
+
+#footer
+{
+	border-top: dotted 2px #999;
+	margin: 40px 10px 0 20px;
+	padding: 15px 180px 0 5px;
+	color: #666;
+}
+
+#footer p
+{
+	font-size: 10px;
+	margin: 0;
+	padding: 0;
 }
