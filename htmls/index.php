@@ -77,7 +77,8 @@ class Receiver{
 			$_SESSION['SID'] = SID;
 		}
 				
-		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
+		$pathDelimiter=( strstr($_SERVER['SERVER_SOFTWARE'], 'Unix') ) ? ':' : ';' ;
+		//$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.'/classes'.$pathDelimiter.ini_get('include_path'));
 		
 		if ( get_magic_quotes_runtime() == 1 )

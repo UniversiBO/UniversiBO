@@ -737,7 +737,7 @@ class FrontController {
 	*
 	* @param string $identifier Connection "name" identifier in config file
 	* @param string $dsn optional sets the $identifier dsn connection
-	* @return mixed true, false, PearError or PearDB
+	* @return mixed true, PearDB
 	* @access public 
 	*/
 	function &getDbConnection( $identifier, $dsn=NULL )
@@ -750,7 +750,7 @@ class FrontController {
 			 $dsnList[$identifier]=$dsn;
 			 return true; //dsn "added" correcly
 			 //if an open connection dsn is modified
-			 //modification doesn't thake effect 
+			 //modification doesn't take effect 
 		}
 		elseif( array_key_exists($identifier, $dsnList) )
 		{	
@@ -765,7 +765,7 @@ class FrontController {
 			return $connectionList[$identifier]; 	
 			
 		}
-    	else return false;  //wrong use of interface... put error here?
+    	else return Error::throw(_ERROR_CRITICAL,array('msg'=>'Uso errato dell\'interfaccia di accesso al Database','file'=>__FILE__,'line'=>__LINE__)); 
 
 	}
 

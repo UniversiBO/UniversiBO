@@ -480,7 +480,16 @@ class NewsItem {
 		
 		$this->elencoIdCanale = $elenco_id_canale;
 		*/
-		$this->elencoCanali =& Canale::selectCanali( $this->getIdCanali() );
+		$elenco_id =& $this->getIdCanali();
+		
+		if ($elenco_id === false)
+		{
+			$this->elencoCanali = array();
+		}
+		else
+		{
+			$this->elencoCanali =& Canale::selectCanali( $elenco_id  );
+		}
 		
  		return $this->elencoCanali;
 		

@@ -64,7 +64,7 @@
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
 	
-	<templateInfo type="Smarty" debugging="off">
+	<templateInfo type="Smarty" debugging="on">
 		<template_dirs>
 			<web_dir>tpl/</web_dir>
 			<smarty_dir>../framework/smarty/</smarty_dir>
