@@ -4,9 +4,9 @@
 <h2>Aggiungi un nuovo file</h2>
 </div>
 <form method="post" enctype="multipart/form-data">
-	<p><label for="f12_file">File:</label>
-		 <input type="file" name="f12_file" id="f12_file" size="30" value="{$f12_file|escape:"htmlall"}">
- 		<input type="hidden" name="MAX_FILE_SIZE" value="20971520"></p>
+	<p><label class="label" for="f12_file">File:</label>
+		<input class="submit" type="file" name="f12_file" id="f12_file" size="65" value="{$f12_file|escape:"htmlall"}" />
+ 		<input type="hidden" name="MAX_FILE_SIZE" value="20971520" /></p>
 	<p><label class="label" for="f12_titolo">Titolo:</label>
 		<input type="text" class="casella" id="f12_titolo" name="f12_titolo" size="65" maxlength="130" value="{$f12_titolo|escape:"htmlall"}" /></p>
 	<p><span><label for="f12_abstract"><p>Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</p></label>
