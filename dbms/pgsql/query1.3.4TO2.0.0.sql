@@ -102,3 +102,8 @@ ALTER TABLE "canale" ADD "links_attivo" char (1) ;
 #-- 16-9-2003
 SELECT setval('canale_id_canale_seq', nextval('argomento_id_argomento_seq'));
 UPDATE canale SET nome_canale = 'Homepage', permessi_groups=127 WHERE id_canale=1;
+
+#-- 17-9-2003
+ALTER TABLE "facolta" RENAME "id_argomento" TO "id_canale"; 
+
+

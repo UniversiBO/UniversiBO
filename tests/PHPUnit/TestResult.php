@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestResult.php,v 1.2 2003-09-10 09:22:58 brain_79 Exp $
+// $Id: TestResult.php,v 1.3 2003-09-17 13:37:57 brain_79 Exp $
 //
 
 require_once 'PHPUnit/TestFailure.php';
@@ -297,7 +297,7 @@ class PHPUnit_TestResult {
 
         foreach ($this->_passedTests as $passedTest) {
             $result .= sprintf(
-              "<tr bgcolor=\"green\"><td>TestCase %s->%s() passed</td></tr>\n",
+              "<tr bgcolor=\"#44ff44\"><td>TestCase %s->%s() passed</td></tr>\n",
 
               get_class($passedTest),
               $passedTest->getName()
@@ -305,7 +305,7 @@ class PHPUnit_TestResult {
         }
 
         foreach ($this->_failures as $failedTest) {
-            $result = $result.'<tr bgcolor="red"><td>'.$failedTest->toString().'</td></tr>';
+            $result = $result.'<tr bgcolor="#ff2222"><td>'.$failedTest->toString().'</td></tr>';
         }
 
 		$result.='</table>';

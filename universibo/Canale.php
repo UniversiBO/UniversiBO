@@ -105,7 +105,7 @@ class Canale {
 	 * @param boolean $links_attivo
 	 * @return Canale
 	 */
-	function &Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
+	function Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
 	{
 		$this->id_canale = $id_canale;
