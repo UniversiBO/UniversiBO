@@ -70,16 +70,16 @@ class ShowFacolta extends CanaleCommand {
 				}
 				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
 															 'name' => $elencoCdl[$i]->getNome(), 
-															 'link' => 'index.php?do=showCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
+															 'link' => 'index.php?do=ShowCDL&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
 			}
 		}
 		//var_dump($fac_listCdlType);
 		
 /*		$fac_listCdl = array(); //cat := lista di cdl
-		$fac_listCdl[] = array('cod' => '0048', 'name' => 'ELETTRONICA', 'link' => 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0049', 'name' => 'GESTIONALE', 'link' => 'index.php?do=showCdl&amp;id_cdl=0049&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0050', 'name' => 'DEI PROCESSI GESTIONALI', 'link' => 'index.php?do=showCdl&amp;id_cdl=0050&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0051', 'name' => 'INFORMATICA', 'link' => 'index.php?do=showCdl&amp;id_cdl=0051&amp;anno_accademico=2003');
+		$fac_listCdl[] = array('cod' => '0048', 'name' => 'ELETTRONICA', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0048&amp;anno_accademico=2003');
+		$fac_listCdl[] = array('cod' => '0049', 'name' => 'GESTIONALE', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0049&amp;anno_accademico=2003');
+		$fac_listCdl[] = array('cod' => '0050', 'name' => 'DEI PROCESSI GESTIONALI', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0050&amp;anno_accademico=2003');
+		$fac_listCdl[] = array('cod' => '0051', 'name' => 'INFORMATICA', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0051&amp;anno_accademico=2003');
 
 		$fac_listCdlType = array(); //fac := lista categorie degli anni di cdl
 		$fac_listCdlType[] = array('cod' => '1', 'name' => 'Lauree Triennali/Primo Livello', 'list' => $fac_listCdl);
