@@ -32,8 +32,8 @@ class ShowMyPage extends UniversiboCommand
 		
 		if(!$utente->isOspite())
 		{
-			$arrayNewsItems[] = array();
-			$arrayFilesItems[] = array();
+			$arrayNewsItems = array();
+			$arrayCanaliFiles = array();
 			$arrayCanali = array();
 			$arrayRuoli =& $utente->getRuoli();
 			$keys = array_keys($arrayRuoli);
@@ -51,6 +51,12 @@ class ShowMyPage extends UniversiboCommand
 			$keys = array_keys($arrayCanali);
 			$num_news = 0;
 			$num_files = 0;
+			
+			//variabili di prova
+			
+			$canali_senza_servizio_news = 0;
+			$canali_senza_servizio_files = 0;
+			
 			foreach ($keys as $key)
 			{
 				$canale =& $arrayCanali[$key];					
@@ -61,36 +67,32 @@ class ShowMyPage extends UniversiboCommand
 					$arrayNewsItems[] = ShowNewsLatest::getNumNewsCanale($canale_news,$id_canale);
 					$num_news = $num_news + $canale_news;
 				}
-				else{echo('stupido!');}
+				else{$canali_senza_servizio_news++;  }
 				
 				if ($canale->getServizioFiles())
 				{
 					$id_canale = $canale->getIdCanale();
 					$canale_files = $this->getNumFilesCanale($id_canale);
-					$arrayFileItems = $this->getLatestFileCanale($canale_files,$id_canale);
-					var_dump($num_files);
+					$arrayCanaliFiles[$key] = $id_canale;
 					$num_files = $num_files + $canale_files;
 				}
-				else{echo('stupidi files');}
+				else{$canali_senza_servizio_files++;}
 			
 			}
 			
-//			var_dump($num_files);
-//			var_dump($canale_files);
-						
-			//Allora...stranamente mi segna tutti i canali di cui dispongo
-			//Senza servizio news...mentre esiste un unico canale
-			//con servizio files,ed é Scrittura Contenuti...
-			//A quanto sembra, $num_files é visto come un intero, mentre
-			//$canale_files come una stringa...anche se non penso sia
-			//questo l'errore...
-			
-			
-			$keys = array_keys($arrayNewsItems);
+			$arrayFilesItems = $this->getLatestFileCanale(2,$arrayCanaliFiles[]);
+			$keys = array_keys($arrayFilesItems);
 			foreach ($keys as $key)
 			{
+				var_dump($key);
+				echo('---');
+				var_dump($arrayFilesItems[$key]);
 				//todo: mettere in ordine le notizie
 			}
+		}
+		else
+		{
+			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
 		
@@ -127,17 +129,16 @@ class ShowMyPage extends UniversiboCommand
 	 * @return array elenco FileItem , false se non ci sono notizie
 	 */
 	
-	function &getLatestFileCanale($num, $id_canale)
+	function &getLatestFileCanale($num, $id_canali = array())
 	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
-		
 		$query = 'SELECT A.id_file FROM file A, file_canale B 
 					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					'AND B.id_canale = '.$db->quote($id_canale).' 
+					'AND B.id_canale IN ('.$db->quote($id_canali[0]).','.$db->quote($id_canali[1]).')
 					ORDER BY A.data_inserimento DESC';
 		$res =& $db->limitQuery($query, 0 , $num);
-		
+		var_dump($res);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
