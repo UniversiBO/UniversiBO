@@ -95,7 +95,7 @@ class ShowNews extends PluginCommand {
 			$elenco_news_tpl[$i]['modifica']     = 'Modifica';
 			$elenco_news_tpl[$i]['modifica_link']= 'EditNews&id_news='.$news->getIdNotizia();
 			$elenco_news_tpl[$i]['elimina']      = 'Elimina';
-			$elenco_news_tpl[$i]['elimina_link'] = 'DeleteNews&id_news='.$news->getIdNotizia().'$id_canale='.$id_canale;
+			$elenco_news_tpl[$i]['elimina_link'] = 'DeleteNews&id_news='.$news->getIdNotizia().'&$id_canale='.$id_canale;
 		}
 		
 		$template->assign('showNews_notizia', $elenco_news_tpl);
