@@ -47,7 +47,7 @@
 				<li>Servizi
 					<ul>	
 					{foreach from=$common_servicesLinks item=temp_link}
-						<li>-&nbsp;<a href="{$temp_link.uri}" >{$temp_link.label|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$temp_link.uri|escape:"htmlall"}" >{$temp_link.label|lower|capitalize|escape:"htmlall"}</a></li>
 					{/foreach}
 					</ul>
 				</li>
