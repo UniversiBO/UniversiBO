@@ -144,3 +144,5 @@ ALTER TABLE "classi_corso" DROP COLUMN "menu_corso";
 ALTER TABLE "facolta" DROP COLUMN "menu_facolta";
 ALTER TABLE "facolta" DROP COLUMN "abbr_facolta";
 DROP TABLE "argomento";
+
+UPDATE "canale" SET "permessi_groups"=127 WHERE tipo_canale=4 OR tipo_canale=5 OR tipo_canale=6;

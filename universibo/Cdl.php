@@ -237,7 +237,7 @@ class Cdl extends Canale{
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale ORDER BY 14 , 15 ';
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 15 ';
 
 		$res = $db->query($query);
 		if (DB::isError($res))

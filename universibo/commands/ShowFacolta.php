@@ -45,26 +45,29 @@ class ShowFacolta extends CanaleCommand {
 		$num_cdl = count($elencoCdl);
 		$cdlType = NULL;
 		$fac_listCdlType = array();
-		$i = 0;
 		$default_anno_accademico = $this->frontController->appSettings['defaultAnnoAccademico'];
-		
-		while ($i < $num_cdl)
+		$session_user =& $this->getSessionUser();
+		$session_user_groups = $session_user->getGroups();
+
+		for ($i=0; $i < $num_cdl; $i++)
 		{
-			if ( $cdlType != $elencoCdl[$i]->getCategoriaCdl() )
+			if ($elencoCdl[$i]->isGroupAllowed( $session_user_groups ))
 			{
-				$cdlType = $elencoCdl[$i]->getCategoriaCdl();
-				switch ($cdlType)
+				if ( $cdlType != $elencoCdl[$i]->getCategoriaCdl() )
 				{
-					case 1: $name = 'CORSI DI LAUREA TRIENNALI'; break;
-					case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
-					case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
+					$cdlType = $elencoCdl[$i]->getCategoriaCdl();
+					switch ($cdlType)
+					{
+						case 1: $name = 'CORSI DI LAUREA TRIENNALI'; break;
+						case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
+						case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
+					}
+					$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
-				$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
+				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
+															 'name' => $elencoCdl[$i]->getNome(), 
+															 'link' => 'index.php?do=showCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
 			}
-			$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
-														 'name' => $elencoCdl[$i]->getNome(), 
-														 'link' => 'index.php?do=showCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
-			$i++;	
 		}
 		var_dump($fac_listCdlType);
 		

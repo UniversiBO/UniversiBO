@@ -199,11 +199,16 @@ class UniversiboCommand extends BaseCommand {
 		
 		$num_facolta = count($elenco_facolta);
 		$i = 0;
+		$session_user =& $this->getSessionUser();
+		$session_user_groups = $session_user->getGroups();
 		for ($i=0; $i<$num_facolta; $i++)
 		{
-			$common_facLinks[$i] = array (); 
-			$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&amp;id_canale='.$elenco_facolta[$i]->getIdCanale();  
-			$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNome(); 			
+			if ( $elenco_facolta[$i]->isGroupAllowed( $session_user_groups ) ) 
+			{
+				$common_facLinks[$i] = array (); 
+				$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&amp;id_canale='.$elenco_facolta[$i]->getIdCanale();  
+				$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNome(); 			
+			}
 		}
 		$template->assign('common_facLinks', $common_facLinks);
 
