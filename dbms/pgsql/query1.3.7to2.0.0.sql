@@ -177,3 +177,8 @@ SELECT "id_news" ,  "id_argomento" FROM news2 ;
 --UPDATE phpbb_config SET config_value='/universibo2/htmls/forum/' WHERE config_name='script_path';
 --UPDATE phpbb_config SET config_value='0' WHERE config_name='cookie_secure';
 
+-----03-11-2003
+ALTER TABLE "utente" ADD "ban" char (1) ;
+ALTER TABLE "utente" ALTER "ban" SET DEFAULT 'N';
+UPDATE "utente" SET ban='N' WHERE 1=1;
+
