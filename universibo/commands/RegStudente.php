@@ -1,4 +1,4 @@
-L<?php
+<?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
