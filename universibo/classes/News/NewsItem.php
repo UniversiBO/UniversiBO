@@ -3,7 +3,11 @@
 
 
 define('NEWS_ELIMINATA','S');
-define('NEWS_VALIDA','N');
+define('NEWS_NOT_ELIMINATA','N');
+
+
+define('NEWS_URGENTE','S');
+define('NEWS_NOT_URGENTE','S');
 
 /**
  *
@@ -203,7 +207,7 @@ class NewsItem {
 	 *
 	 * @return boolean
 	 */
-	function getUrgente()
+	function isUrgente()
 	{
 	 	return $this->urgente;
 	}
@@ -224,7 +228,7 @@ class NewsItem {
 	 *
 	 * @return boolean
 	 */
-	function getEliminata() 
+	function isEliminata() 
 	{
 	 	return $this->eliminata;
 	}
@@ -408,7 +412,7 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],($row[5] == 'S') ? true : false,$row[6],$row[8] );
+			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],($row[4] == NEWS_URGENTE),($row[5] == NEWS_ELIMINATA),$row[6],$row[8] );
 		}
 		
 		$res->free();
@@ -549,7 +553,8 @@ class NewsItem {
         $next_id = $db->nextID('news_id_news');
 		$return = true;
 		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
-				
+		$eliminata = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA;
+		$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
 		$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.
 					'( '.$next_id.' , '.
 					$db->quote($this->getTitolo()).' , '.
@@ -557,8 +562,8 @@ class NewsItem {
 					$scadenza.' , '.
 					$db->quote($this->getNotizia()).' , '.
 					$db->quote($this->getIdUtente()).' , '.
-					$db->quote($this->getEliminata()).' , '.
-					$db->quote($this->getUrgente()).' , '.
+					$db->quote($eliminata).' , '.
+					$db->quote($flag_urgente).' , '.
 					$db->quote($this->getUltimaModifica()).' )'; 
 		$res = $db->query($query);
 		
@@ -587,17 +592,18 @@ class NewsItem {
         $db->autoCommit(false);
         $return = true;
 		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
-		$deleted = ($this->getEliminata() == true) ? NEWS_ELIMINATA : NEWS_VALIDA; 		
+		$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
+		$deleted = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA; 		
 		$query = 'UPDATE news SET titolo = '.$db->quote($this->getTitolo())
 					.' , data_inserimento = '.$db->quote($this->getDataIns())
 					.' , data_scadenza = '.$scadenza
 					.' , notizia = '.$db->quote($this->getNotizia())
 					.' , id_utente = '.$db->quote($this->getIdUtente())
 					.' , eliminata = '.$db->quote($deleted)
-					.' , flag_urgente = '.$db->quote($this->getUrgente())
+					.' , flag_urgente = '.$db->quote($flag_urgente)
 					.' , data_modifica = '.$db->quote($this->getUltimaModifica())
 					.' WHERE id_news = '.$db->quote($this->getIdNotizia());
-										 
+		//echo $query;								 
 		$res = $db->query($query);
 		//var_dump($query);
 		if (DB::isError($res)){

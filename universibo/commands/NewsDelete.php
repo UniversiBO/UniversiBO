@@ -54,7 +54,7 @@ class NewsDelete extends CanaleCommand {
 		}
 
 		$news = & NewsItem :: selectNewsItem($_GET['id_news']);
-		$news-> getIdCanali();
+		//$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
 		*/		

@@ -268,7 +268,7 @@ class NewsAdd extends CanaleCommand {
 			if ($f7_accept == true) {
 
 				//id_news = 0 per inserimento, $id_canali array dei canali in cui inserire
-				$notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, ($f7_urgente) ? 'S' : 'N', 'N', $user->getIdUser(), $user->getUsername());
+				$notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, $f7_urgente, false, $user->getIdUser(), $user->getUsername());
 
 
 				$notizia->insertNewsItem();

@@ -3,10 +3,10 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-{include file=avviso_notice.tpl}
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica la notizia<br />&nbsp;</p></td></tr>
-<tr><td>
+<tr><td align="center">
+{include file=avviso_notice.tpl}
 <form method="post">
 
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">

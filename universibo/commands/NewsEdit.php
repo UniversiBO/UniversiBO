@@ -73,7 +73,7 @@ class NewsEdit extends CanaleCommand
 		$f8_data_scad_ora = '';
 		$f8_data_scad_min = '';
 		$f8_testo = $news->getNotizia();
-		$f8_urgente = $news->getUrgente();
+		$f8_urgente = $news->isUrgente();
 		$f8_scadenza = $news->getDataScadenza() != null;
 
 		if ($f8_scadenza === true)
@@ -156,8 +156,7 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_mm
 			if (!ereg('^([0-9]{1,2})$', $_POST['f8_data_ins_mm']))
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il
-								formato del campo mese di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
@@ -167,16 +166,13 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_aa
 			if (!ereg('^([0-9]{4})$', $_POST['f8_data_ins_aa']))
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il
-								formato del campo anno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
 			elseif ($_POST['f8_data_ins_aa'] < 1970 || $_POST['f8_data_ins_aa'] > 2032)
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il
-								campo anno di inserimento deve essere compreso tra il 1970 e il
-								2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
@@ -186,14 +182,12 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_ora
 			if (!ereg('^([0-9]{1,2})$', $_POST['f8_data_ins_ora']))
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il
-								formato del campo ora di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo ora di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 			}
 			elseif ($_POST['f8_data_ins_ora'] < 0 || $_POST['f8_data_ins_ora'] > 23)
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il
-								campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 			}
 			else
@@ -293,7 +287,7 @@ class NewsEdit extends CanaleCommand
 
 				if ($checkdate_scad == true && !checkdate($_POST['f8_data_scad_mm'], $_POST['f8_data_scad_gg'], $_POST['f8_data_scad_aa']))
 				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di scadenza specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f8_accept = false;
 				}
 
@@ -301,7 +295,10 @@ class NewsEdit extends CanaleCommand
 				$data_scadenza = mktime($_POST['f8_data_scad_ora'], $_POST['f8_data_scad_min'], "0", $_POST['f8_data_scad_mm'], $_POST['f8_data_scad_gg'], $_POST['f8_data_scad_aa']);
 
 				if ($data_scadenza < $data_inserimento)
+				{
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di scadenza è minore della data di inserimento', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f8_accept = false;
+				}
 
 			}
 
