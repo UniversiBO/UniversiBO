@@ -55,6 +55,8 @@ class ShowTopic extends PluginCommand {
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
+		$topic = array();
+		
 		if( $rows > 0)
 		{
 			$argomenti	= array();
@@ -68,10 +70,6 @@ class ShowTopic extends PluginCommand {
 			$lang_argomenti =& $this->executePlugin('ShowHelpId', $argomenti);
 	
 			$topic = array('titolo'=>$topic_title ,'reference'=>$reference, 'argomenti'=>$lang_argomenti);
-		}
-		else
-		{
-			$topic = array();
 		}
 		
 		$template->assign('showTopic_topic', $topic);

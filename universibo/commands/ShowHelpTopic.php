@@ -31,6 +31,8 @@ class ShowHelpTopic extends UniversiboCommand {
 		$ref_pattern='^([:alnum:]{1,32})$'; 
  		
 		$references = array();
+		
+		$topics = array();
 
 		if (!array_key_exists('ref',$_GET) || ereg( $ref_pattern , $_GET['ref'] ) ) 
 		{
