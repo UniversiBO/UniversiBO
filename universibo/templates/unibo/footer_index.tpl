@@ -124,16 +124,16 @@
                     <td align="center"> <table cellspacing="0" cellpadding="1" width="100%" align=center border="0" summary="" background="tpl/unibo/pixel_2.gif">
                         {*quinto blocchetto *}
                           <tr> 
-                            <td class="menu_bar" align="left" colspan="7">Giugno</td>
+                            <td class="CalMese" align="left" colspan="7">Giugno</td>
                           </tr>
                           <tr> 
-                            <td class="Feriali" align="center"><b>L</b></td>
-                            <td class="Feriali" align="center"><b>M</b></td>
-                            <td class="Feriali" align="center"><b>M</b></td>
-                            <td class="Feriali" align="center"><b>G</b></td>
-                            <td class="Feriali" align="center"><b>V</b></td>
-                            <td class="Feriali" align="center"><b>S</b></td>
-                            <td class="Domeniche" align="center"><b>D</b></td>
+                            <td class="FerialiD" align="center">L</td>
+                            <td class="FerialiD" align="center">M</td>
+                            <td class="FerialiD" align="center">M</td>
+                            <td class="FerialiD" align="center">G</td>
+                            <td class="FerialiD" align="center">V</td>
+                            <td class="FerialiD" align="center">S</td>
+                            <td class="DomenicheD" align="center">D</td>
                           </tr>
                           <tr> 
                             <td class="Piccolo" align="center">&nbsp;</td>

@@ -15,8 +15,8 @@
 <td><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
 </tr>
 <tr align="center"> 
-<td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="f1_username" size="9" maxlength="25" style="width: 120px" /><br />
-Password:<br /><input type="password" name="f1_password" size="9" maxlength="25" style="width: 120px" /><br />
+<td class="Piccolo">&nbsp;<br /> <label for="f1_username">Username:</label><br /><input type="text" id ="f1_username" name="f1_username" size="9" maxlength="25" style="width: 120px" /><br />
+<label for="f1_password">Password:</label><br /><input type="password" id="f1_password" name="f1_password" size="9" maxlength="25" style="width: 120px" /><br />
 <input type="hidden" name="f1_resolution" value="" />
 <input name="f1_submit" type="submit" value="Entra" onclick="document.form1_a.f1_resolution.value = screen.width;" /></td>
 </tr>

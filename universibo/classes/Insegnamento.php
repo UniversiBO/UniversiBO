@@ -88,7 +88,7 @@ class Insegnamento extends Canale
 		if ( $num == 1 )
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1).' | '.$att->getNomeDoc();
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n ".$att->getNomeDoc();
 		}
 		else
 		{
@@ -141,7 +141,7 @@ class Insegnamento extends Canale
 			//costruisce la mappa dei nomi
 			for ($i = 0; $i < $num_att; $i++)
 			{
-				$app_nomi[$i] = $app['nomi'][$i].$app['cod_ril'].' aa. '.$app['anni'][$i].' | '.$att->getNomeDoc();
+				$app_nomi[$i] = $app['nomi'][$i].$app['cod_ril'].' aa. '.$app['anni'][$i]." \n ".$att->getNomeDoc();
 			}
 			
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));

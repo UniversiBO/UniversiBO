@@ -18,10 +18,10 @@
     <br /><br />
     {/foreach}
     
-    <div align="center" class="Titolo">
+    <p align="center" class="Titolo">
     {$contribute_langTitle|escape:"htmlall"|bbcode2html}
     <br /><br />
-    </div>
+    </p>
     
     {foreach from=$contribute_langHowToContribute item=temp_HowToContribute}
     {$temp_HowToContribute|escape:"htmlall"|bbcode2html}

@@ -20,20 +20,20 @@
 &nbsp;
 <table width="100%" border="1" cellspacing="0" cellpadding="0" align="center" summary="">
  <tr>
- <td colspan="7" class="MenuC" align="center">
+ <td colspan="7" class="CalMese" align="center">
  <img src="tpl/black/invisible.gif" width="1" height="4" alt="" /><br />
- <a href="#" onclick="window.open('popup.php?pg=666','','scrollbars=yes,resizable=yes,scrolling=no,top=20,left=50')"><b>Agosto</b></a><br />
+ <a href="#" onclick="window.open('popup.php?pg=666','','scrollbars=yes,resizable=yes,scrolling=no,top=20,left=50')">Agosto</a><br />
  <img src="tpl/black/invisible.gif" width="1" height="4" alt="" /></td>
  </tr>
 <tr><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
  <tr bgcolor="#FFFFFF">
- <td class="Feriali" align="center"><b>L</b></td>
- <td class="Feriali" align="center"><b>M</b></td>
- <td class="Feriali" align="center"><b>M</b></td>
- <td class="Feriali" align="center"><b>G</b></td>
- <td class="Feriali" align="center"><b>V</b></td>
- <td class="Feriali" align="center"><b>S</b></td>
- <td class="Domeniche" align="center"><b>D</b></td>
+ <td class="FerialiD" align="center">L</td>
+ <td class="FerialiD" align="center">M</td>
+ <td class="FerialiD" align="center">M</td>
+ <td class="FerialiD" align="center">G</td>
+ <td class="FerialiD" align="center">V</td>
+ <td class="FerialiD" align="center">S</td>
+ <td class="DomenicheD" align="center">D</td>
  </tr>
 <tr><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
 <tr bgcolor="#FFFFFF"><td class="Piccolo"  align="center">&nbsp;</td>

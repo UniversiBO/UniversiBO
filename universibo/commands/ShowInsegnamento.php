@@ -33,14 +33,17 @@ class ShowInsegnamento extends CanaleCommand
 
 
 	function execute() {
+		$session_user =& $this->getSessionUser();
+		$session_user_groups = $session_user->getGroups();
 		$insegnamento =& $this -> getRequestCanale();
+		
 		echo $insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
-/*		$frontcontroller =& $this->getFrontController();
+		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		
-		//@todo fatto sopra
+/*		//@todo fatto sopra
 		
 		require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 		
@@ -58,8 +61,6 @@ class ShowInsegnamento extends CanaleCommand
 		$insAnnoCorso  = NULL;   //ultimo anno dell'insegnamento precedente
 		$insCiclo = NULL;   //ultimo ciclo dell'insegnamento precedente
 		$cdl_listInsYears = array();    //elenco insegnamenti raggruppati per anni
-		$session_user =& $this->getSessionUser();
-		$session_user_groups = $session_user->getGroups();
 		$cdl_listIns = array();
 		
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
@@ -92,10 +93,10 @@ class ShowInsegnamento extends CanaleCommand
 			}
 		}
 		//var_dump($fac_listCdlType);
-		$template -> assign('cdl_list', $cdl_listIns);
+		$template -> assign('cdl_list', $cdl_listIns);*/
 
 		$template -> assign('cdl_langCdl', 'CORSO DI LAUREA');
-		$template -> assign('cdl_cdlTitle', $cdl->getTitolo());
+/*		$template -> assign('cdl_cdlTitle', $cdl->getTitolo());
 		$template -> assign('cdl_langTitleAlt', 'Corsi di Laurea');
 		$template -> assign('cdl_cdlName', $cdl->getNome());
 		$template -> assign('cdl_cdlCodice', $cdl->getCodiceCdl());
@@ -106,9 +107,7 @@ class ShowInsegnamento extends CanaleCommand
 		$template -> assign('cdl_nextYear', ($anno_accademico+1).'/'.($anno_accademico+2) );
 		$template -> assign('cdl_prevYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico-1) );
 		$template -> assign('cdl_nextYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico+1) );
-		
-		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
-		*/
+*/		
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		return 'default';

@@ -199,7 +199,7 @@ class UniversiboCommand extends BaseCommand {
 		// www.universibo.unibo.it
 		$template->assign('common_hostName',	$_SERVER['HTTP_HOST']);
 		// https://www.universibo.unibo.it/path_universibo2/
-		// $template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->frontController->rootUrl);
+		 $template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$fc->getRootPath());
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php
 		$template->assign('common_receiverUrl',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php?do=SomeCommand
@@ -229,6 +229,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_metaKeywords',	'universibo, università, facoltà, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novità, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
 		$template->assign('common_metaDescription',	'Il portale dedicato agli studenti universitari di Bologna');
 		$template->assign('common_title',			'UniversiBO ...il portale dedicato agli studenti universitari di Bologna');
+		$template->assign('common_langNewWindow',	'apre una nuova finestra');
 		
 		//kronos
 		$template->assign('common_veryLongDate', $krono->k_date() );
