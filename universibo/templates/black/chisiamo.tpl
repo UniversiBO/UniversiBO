@@ -15,11 +15,14 @@
 
 	
 {foreach from=$contacts_personal item=temp_curr_people}
-	<!--{$temp_curr_people.nick|escape:"html"}-->
-		<table summary="{$temp_curr_people.nick|escape:"html"}" width="100%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$temp_curr_people.nick|escape:"html"}">
+	{*<!--{$temp_curr_people.nick|escape:"html"}-->*}
+	<!--{$temp_curr_people.username|escape:"html"}-->
+		{*<table summary="{$temp_curr_people.nick|escape:"html"}" width="100%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$temp_curr_people.nick|escape:"html"}">*}
+		<table summary="{$temp_curr_people.username|escape:"html"}" width="100%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$temp_curr_people.username|escape:"html"}">
 			<tr bgcolor="#000099"> 
 				<td colspan="2">
-					<table summary="{$temp_curr_people.nick|escape:"html"} 2" width="100%" border="0" cellspacing="0" cellpadding="0">
+					{*<table summary="{$temp_curr_people.nick|escape:"html"} 2" width="100%" border="0" cellspacing="0" cellpadding="0">*}
+					<table summary="{$temp_curr_people.username|escape:"html"} 2" width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
 							<td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
@@ -28,7 +31,8 @@
 				</td>
 			</tr>
 			<tr bgcolor="#000050"> 
-				<td colspan="2" align="center" class="Titolo">{$temp_curr_people.nick|escape:"html"}</td>
+				{*<td colspan="2" align="center" class="Titolo">{$temp_curr_people.nick|escape:"html"}</td>*}
+				<td colspan="2" align="center" class="Titolo">{$temp_curr_people.username|escape:"html"}</td>
 			</tr>
 			<tr bgcolor="#000099" align="center"> 
 				<td colspan="2"><img src="tpl/black/invisible.gif" width="1" height="2" alt="" /></td>
@@ -60,7 +64,8 @@
 
 			<tr bgcolor="#000099"> 
 				<td colspan="2">
-					<table summary="{$temp_curr_people.nick|escape:"html"} 3" width="100%" border="0" cellspacing="0" cellpadding="0">
+					{*<table summary="{$temp_curr_people.nick|escape:"html"} 3" width="100%" border="0" cellspacing="0" cellpadding="0">*}
+					<table summary="{$temp_curr_people.username|escape:"html"} 3" width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
 							<td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
