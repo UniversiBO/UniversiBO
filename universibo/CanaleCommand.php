@@ -91,7 +91,8 @@ class CanaleCommand extends UniversiboCommand {
 									CANALE_ESAME_ECO => 'EsameEco');
 
 		$class_name = $dispatch_array[$tipo_canale];
-
+		require_once($class_name.PHP_EXTENSION);
+		
 		$this->requestCanale =& call_user_func(array($class_name,'factoryCanale'), $this->getRequestIdCanale());
 		
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
