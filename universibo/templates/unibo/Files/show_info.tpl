@@ -24,5 +24,5 @@
  <p>&nbsp;<a href="{$showFileInfo_addComment|escape:"htmlall"}">Aggiungi il tuo commento!</a></p>
  {/if}
 </div>
-<p class="comandi"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</p>
+<p class="comandi"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></p>
 
