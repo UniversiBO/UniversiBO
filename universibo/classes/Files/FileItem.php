@@ -977,8 +977,9 @@ class FileItem {
 	 */
 	function deleteFileItem() 
 	{
-		$lista_canali = & $this->getIdCanali();
+		$lista_canali = & $this->getIdCanali(true);
 		if (count($lista_canali) == 0) {
+			$db = & FrontController::getDbConnection('main');
 			$query = 'UPDATE file SET eliminato  = '.$db->quote(FILE_ELIMINATO).' WHERE id_file = '.$db->quote($this->getIdFile());
 			//echo $query;								 
 			$res = $db->query($query);

@@ -55,6 +55,8 @@ class NewsDelete extends CanaleCommand {
 		}
 
 		$news = & NewsItem :: selectNewsItem($_GET['id_news']);
+		if ($news === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "La notizia richiesta non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		//$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
@@ -91,7 +93,7 @@ class NewsDelete extends CanaleCommand {
 		$f9_accept = false;
 		
 		//postback
-		
+		$f9_canale_app = array();
 		if (array_key_exists('f9_submit', $_POST)  )
 		{
 			$f9_accept = true;
@@ -109,9 +111,11 @@ class NewsDelete extends CanaleCommand {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di eliminazione nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f9_accept = false;
 					}
+					else
+						$f9_canale_app[$key] = $value;
 				}
 			}
-			else
+			elseif(count($f9_canale) > 0)
 			{
 				$f9_accept = false;
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
@@ -126,11 +130,11 @@ class NewsDelete extends CanaleCommand {
 //			var_dump($_POST['f9_canale'] );
 //			die();
 			//cancellazione dai canali richiesti
-			foreach ($_POST['f9_canale'] as $key => $value)
-				{
-					$news->removeCanale($key);
-					$canale = Canale::retrieveCanale($key);					
-				}
+			foreach ($f9_canale_app as $key => $value)
+			{
+				$news->removeCanale($key);
+				$canale = Canale::retrieveCanale($key);					
+			}
 			
 			$news->deleteNewsItem();
 			/**

@@ -57,6 +57,8 @@ class FileDelete extends UniversiboCommand {
 		}
 
 		$file = & FileItem::selectFileItem($_GET['id_file']);
+		if ($file === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		//$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
@@ -75,7 +77,7 @@ class FileDelete extends UniversiboCommand {
 		
 		$file_canali =& $file->getIdCanali();
 		
-		
+		$f13_canale = array();
 		$num_canali = count($file_canali);
 		for ($i = 0; $i < $num_canali; $i ++)
 		{
@@ -97,6 +99,7 @@ class FileDelete extends UniversiboCommand {
 			
 			$f13_accept = true;
 			
+			$f13_canale_app = array();
 			//controllo diritti su ogni canale di cui è richiesta la cancellazione
 			if (array_key_exists('f13_canale', $_POST))
 			{
@@ -110,9 +113,11 @@ class FileDelete extends UniversiboCommand {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di eliminazione nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f13_accept = false;
 					}
+					else
+						$f13_canale_app[$key] = $value;
 				}
 			}
-			else
+			elseif(count($f13_canale) > 0)
 			{
 				$f13_accept = false;
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
@@ -127,7 +132,7 @@ class FileDelete extends UniversiboCommand {
 //			var_dump($_POST['f13_canale'] );
 //			die();
 			//cancellazione dai canali richiesti
-			foreach ($_POST['f13_canale'] as $key => $value)
+			foreach ($f13_canale_app as $key => $value)
 			{
 				$file->removeCanale($key);
 				$canale = Canale::retrieveCanale($key);					
