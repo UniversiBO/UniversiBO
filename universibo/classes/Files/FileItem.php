@@ -652,7 +652,6 @@ class FileItem {
 						 username, C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
 						 FROM file A, utente B, file_categoria C, file_tipo D 
 						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
-		//var_dump($query);
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
