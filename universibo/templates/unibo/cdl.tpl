@@ -12,7 +12,7 @@
 	{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></div>
 {/if}
 <p>{$cdl_langYear|escape:"htmlall"}</p>
-<a href="{$cdl_prevYearUri|escape:"htmlall"}">{$cdl_prevYear|escape:"htmlall"}</a>&nbsp;&lt;&lt;
+<p><a href="{$cdl_prevYearUri|escape:"htmlall"}">{$cdl_prevYear|escape:"htmlall"}</a>&nbsp;&lt;&lt;
 &nbsp;&nbsp;{$cdl_thisYear|escape:"htmlall"}&nbsp;&nbsp;
 &gt;&gt;&nbsp;<a href="{$cdl_nextYearUri|escape:"htmlall"}">{$cdl_nextYear|escape:"htmlall"}</a> </p>
 <h4>{$cdl_langList|escape:"htmlall"}</h4>
@@ -24,7 +24,7 @@
 		{if $smarty.foreach.t_ciclo.last}<div class="lastElemento">{else}<div>{/if}
 		{foreach name=elenco_ins from=$temp_ciclo.list item=temp_ins}
 			<p class="{if $smarty.foreach.elenco_ins.iteration%2 == 0}odd{else}even{/if}">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}&gt;&nbsp;
-			<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> &nbsp; <a href="{$temp_ins.forumUri|escape:"htmlall"}" alt="{$cdl_langGoToForum|escape:"htmlall"}"><img src="tpl/unibo/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>&nbsp;</p>
+			<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> &nbsp; <a href="{$temp_ins.forumUri|escape:"htmlall"}"><img src="tpl/unibo/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>&nbsp;</p>
 		{/foreach}
 		</div> 
 	{/foreach} 
