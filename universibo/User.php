@@ -1,5 +1,7 @@
 <?php
 
+include_once('Ruolo'.PHP_EXTENSION);
+
 define('USER_OSPITE'     ,1);
 define('USER_STUDENTE'   ,2);
 define('USER_MODERATORE' ,4);
@@ -22,13 +24,37 @@ define('USER_ALL'        ,127);
 
 class User {
 	
+	/**
+	 * @access private
+	 */
 	var $id_utente = 0;
+	/**
+	 * @access private
+	 */
 	var $username = '';
+	/**
+	 * @access private
+	 */
 	var $MD5 = '';
+	/**
+	 * @access private
+	 */
 	var $email = '';
+	/**
+	 * @access private
+	 */
 	var $ultimoLogin = 0;
-	var $bookmark = array();
+	/**
+	 * @access private
+	 */
+	var $bookmark = NULL; //array()
+	/**
+	 * @access private
+	 */
 	var $ADUsername = '';
+	/**
+	 * @access private
+	 */
 	var $groups = 0;
 	
 	
@@ -133,30 +159,6 @@ class User {
 
 
 	/**
-	 * Restituisce true se lo username specificato è già registrato sul DB
-	 *
-	 * @param string $username username da ricercare
-	 * @return boolean
-	 */
-	function usernameExists( $username )
-	{
-		$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		$rows = $res->numRows();
-		
-		if( $rows == 0) return false;
-		elseif( $rows == 1) return true;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-		return false;
-	}
-
-
-
-	/**
 	 * Crea un oggetto User
 	 *
 	 * In pratica non dovrebbe mai essere necessario utilizzarlo a meno che non si voglia 
@@ -165,20 +167,25 @@ class User {
 	 *
 	 * @see selectUser
 	 * @param int $id_utente numero identificativo utente, -1 non registrato du DB, 0 utente ospite
-	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
+	 * @param int $groups nuovo gruppo da impostare
+	 * @param string $username username dell'utente
+	 * @param string $MD5 hash MD5 della password utente
+	 * @param string $email indirizzo e-mail dell'utente
+	 * @param int $ultimo_login timestamp dell'utlimo login all'interno del sito
+	 * @param string $AD_username username dell'active directory di ateneo dell'utente
+	 * @param array() $bookmark array con elenco dei id_canale dell'utente associati ai rispettivi ruoli 
 	 * @return User
 	 */
-	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $ultimoLogin=NULL, $bookmark=NULL, $ADUsername=NULL)
+	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $ultimo_login=NULL, $AD_username=NULL, $bookmark=NULL)
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
 		$this->username    = $username;
 		$this->email       = $email;
-		$this->ADUsername  = $ADUsername;
-		$this->ultimoLogin = $ultimoLogin;
+		$this->ADUsername  = $AD_username;
+		$this->ultimoLogin = $ultimo_login;
 		$this->MD5         = $MD5;
 		$this->bookmark    = $bookmark;
-		return $this;
 	}
 
 
@@ -191,6 +198,18 @@ class User {
 	function getUsername()
 	{
 		return $this->username;
+	}
+
+
+
+	/**
+	 * Ritorna l'ID dello User nel database
+	 *
+	 * @return int
+	 */
+	function getIdUser()
+	{
+		return $this->id_utente;
 	}
 
 
@@ -221,7 +240,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET email = '.$db->quote($email).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$query = 'UPDATE utente SET email = '.$db->quote($email).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -264,7 +283,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET groups = '.$db->quote($groups).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$query = 'UPDATE utente SET groups = '.$db->quote($groups).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -306,7 +325,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET ultimo_login = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$query = 'UPDATE utente SET ultimo_login = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -324,12 +343,15 @@ class User {
 
 	/**
 	 * Ritorna l'oggetto bookmark associato all'utente corrente  
-	 * ??? da decidere come fare
 	 *
 	 * @return Bookmark
 	 */
-	function getBookmark()
+	function getRuoli()
 	{
+		if ($this->bookmark == NULL)
+		{
+			$this->bookmark =& Ruolo::selectUserRuoli($id_utente);
+		}
 		return $this->bookmark;
 	}
 
@@ -361,7 +383,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET ad_username = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$query = 'UPDATE utente SET ad_username = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -403,7 +425,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET password = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$query = 'UPDATE utente SET password = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -428,7 +450,7 @@ class User {
 	 */
 	function isAdmin( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_ADMIN ) return true;
 		return false;
@@ -445,7 +467,7 @@ class User {
 	 */
 	function isPersonale( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_PERSONALE ) return true;
 		return false;
@@ -462,7 +484,7 @@ class User {
 	 */
 	function isDocente( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_DOCENTE ) return true;
 		return false;
@@ -479,7 +501,7 @@ class User {
 	 */
 	function isTutor( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_TUTOR ) return true;
 		return false;
@@ -496,7 +518,7 @@ class User {
 	 */
 	function isModeratore( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_MODERATORE ) return true;
 		return false;
@@ -513,7 +535,7 @@ class User {
 	 */
 	function isStudente( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_STUDENTE ) return true;
 		return false;
@@ -530,9 +552,34 @@ class User {
 	 */
 	function isOspite( $groups = NULL )
 	{
-		if ( $groups == NULL ) $groups = $this->groups;
+		if ( $groups == NULL ) $groups = $this->getGroups();
 
 		if ( $groups | USER_OSPITE ) return true;
+		return false;
+	}
+
+
+
+	/**
+	 * Restituisce true se lo username specificato è già registrato sul DB
+	 *
+	 * @static
+	 * @param string $username username da ricercare
+	 * @return boolean
+	 */
+	function usernameExists( $username )
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		
+		if( $rows == 0) return false;
+		elseif( $rows == 1) return true;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		return false;
 	}
 
@@ -568,7 +615,7 @@ class User {
 			if( $rows = 0) return false;
 
 			$row = $res->fetchRow();
-			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], NULL , $row[5]);
+			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], $row[4], NULL);
 			return $user;
 			
 		}
@@ -587,18 +634,23 @@ class User {
 		
 			$this->id_utente = $db->nextID('utente_id_utente');
 
-			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups) '.
-						'( '.$db->quote($this->id_utente).' , '.
-						$db->quote($this->username).' , '.
-						$db->quote($this->MD5).' , '.
-						$db->quote($this->email).' , '.
-						$db->quote($this->ultimoLogin).' , '.
-						$db->quote($this->ADUsername).' , '.
-						$db->quote($this->groups).' )'; 
+			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups) VALUES '.
+						'( '.$db->quote($this->getIdUser()).' , '.
+						$db->quote($this->getUsername()).' , '.
+						$db->quote($this->getMD5()).' , '.
+						$db->quote($this->getEmail()).' , '.
+						$db->quote($this->getUltimoLogin()).' , '.
+						$db->quote($this->getADUsername()).' , '.
+						$db->quote($this->getGroups).' )'; 
 			$res = $db->query($query);
-			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-
+			
+			if (DB::isError($res))
+			{ 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				return false;
+			}
+				 
+			return true;
 	}
 
 	
@@ -612,13 +664,13 @@ class User {
 	{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET username = '.$db->quote($this->username).
-						', password = '.$db->quote($this->MD5).
-						', email = '.$db->quote($this->email).
-						', ultimo_login = '.$db->quote($this->ultimoLogin).
-						', ad_username = '.$db->quote($this->ADUsername).
-						', groups = '.$db->quote($this->groups).
-						' WHERE id_utente = '.$db->quote($this->id_utente); 
+			$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
+						', password = '.$db->quote($this->getPasswordHash()).
+						', email = '.$db->quote($this->getEmail()).
+						', ultimo_login = '.$db->quote($this->getUltimoLogin()).
+						', ad_username = '.$db->quote($this->getADUsername()).
+						', groups = '.$db->quote($this->getGroups()).
+						' WHERE id_utente = '.$db->quote($this->getIdUser()); 
 			
 			$res = $db->query($query);
 			if (DB::isError($res)) 
