@@ -1,5 +1,9 @@
 <?php
 
+list($usec, $sec) = explode(" ", microtime());
+$page_time_start = ((float)$usec + (float)$sec);
+
+
 /**
  * The receiver. Code to activate the framework system
  * 
@@ -21,6 +25,13 @@ class Receiver{
 	function _setPhpEnvirorment()
 	{
 		
+		// attivo la visualizzazione di tutti i warning
+		error_reporting(E_ALL); 
+
+		// buffering dell'output.
+		//ob_start('ob_gzhandler');
+
+		//inizializzazione della sessione
 		session_start();
 		if (!array_key_exists('SID',$_SESSION) )
 		{
@@ -71,6 +82,11 @@ class Receiver{
 $receiver = new Receiver;
 $receiver->main();
 
+
+list($usec, $sec) = explode(" ", microtime());
+$page_time_end = ((float)$usec + (float)$sec);
+
+printf("%01.5f", $page_time_end - $page_time_start);
 
 ?>
 

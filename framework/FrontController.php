@@ -180,8 +180,7 @@ class FrontController {
 		$this->_setMailerInfo();
 
 		//set $this->languageInfo
-		//$this->_setLanguageInfo();
-
+		$this->_setLanguageInfo();
 
 		//set $this->appSettings
 		$this->_appSettings();
@@ -313,12 +312,26 @@ class FrontController {
 		$this->templateEngine=array();
 		
 		$templateInfoNode = &$this->config->root->getChild('templateInfo');
-		if($templateInfoNode == NULL)
-			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		if ( $templateInfoNode == NULL )
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
+		if ( $templateInfoNode->attributes['type'] != 'Smarty' ) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
+
+		if ( $templateInfoNode->attributes['debugging'] == 'on' )
+		{ 
+			$this->templateEngine['debugging'] = true;
+		}
+		else
+		{ 
+			$this->templateEngine['debugging'] = false;
+		}
+		
+		
+
 		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');
-		if($templateDirsNode == NULL)
-			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		if ( $templateDirsNode == NULL )
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
 				
 		$n = $templateDirsNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -327,9 +340,10 @@ class FrontController {
 			$this->templateEngine[$templateSetting->name] = $templateSetting->charData;
 		}
 
+
 		$templateStylesNode = &$templateInfoNode->getChild('template_styles');		
 		if($templateStylesNode == NULL)
-			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
 
 		$n = $templateStylesNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -369,7 +383,7 @@ class FrontController {
 	*/
 	function _setMailerInfo()
 	{
-		$mailerInfoNode = &$this->config->root->getChild("mailerInfo");
+		$mailerInfoNode =& $this->config->root->getChild('mailerInfo');
 		if ($mailerInfoNode == NULL)
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
@@ -389,15 +403,20 @@ class FrontController {
 	*/
 	function _setLanguageInfo()
 	{
-		$languageInfoNode = &$this->config->root->getChild("languageInfo");
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento languageInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		$languageInfoNode =& $this->config->root->getChild('langInfo');
+		if ($languageInfoNode == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento langInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$n = $languageInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
 			$aSetting=&$languageInfoNode->children[$i];
-			$this->mailerInfo[$aSetting->name] = $aSetting->charData;
+			$this->languageInfo[$aSetting->name] = $aSetting->charData;
 		}
+		
+		//linguaggio corrente inpostato uguale a quello di default
+		//inserire la possibilità di cambiarlo a run time. 
+		$this->languageInfo['lang'] = $this->languageInfo['lang_default'];  
 	}	
 
 
@@ -541,10 +560,9 @@ class FrontController {
 			$templateEngine->compile_dir  = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 			$templateEngine->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 			$templateEngine->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-
-			//$templateEngine  =& $smarty; 
+			$templateEngine->debugging    = $this->templateEngine['debugging'];
 			
-			//var_dump($smarty);
+			//var_dump($templateEngine->debugging);
 			
 			return $templateEngine; 	
 			
@@ -556,14 +574,13 @@ class FrontController {
 	
 	/**
 	* Factory method that creates a PhpMailer Mail object
-	* If called with optional $dsn parameter sets the connection information
 	*
-	* @return phpmailer object
+	* @return PHPMailer object
 	* @access public 
 	*/
-	function getMail()
+	function &getMail()
 	{
-		require_once("PHPMailer.php");
+		require_once('PHPMailer.php');
 
     	$mail = new PHPMailer();
     	$mail -> IsSMTP(); 							// send via SMTP
@@ -573,6 +590,24 @@ class FrontController {
 		$mail -> FromName = $this->mailerInfo['fromName'];
     	
     	return $mail;
+	}
+
+
+	/**
+	* Factory method that creates a Kronos object based on the config language info
+	*
+	* @return Krono object
+	* @access public 
+	*/
+	function &getKrono()
+	{
+
+		require_once('Krono.php');
+
+		$krono = new Krono($this->languageInfo['lang'],$this->languageInfo['lang'],$this->languageInfo['date_separator']);
+    	
+    	return $krono;
+    	
 	}
 
 

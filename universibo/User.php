@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User class
  *
@@ -24,6 +25,9 @@ class User {
 		
 				
 	}
+	
+	
 
 }
+
 ?>

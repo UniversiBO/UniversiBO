@@ -35,6 +35,8 @@ class TestTemplate extends UniversiboCommand {
 		$template->assign('config_docType', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">');
 		$template->assign('config_styleSheet', '<link rel="stylesheet" href="tpl/black/style.css" type="text/css">');
 
+
+/*
 		//solo nella pagine index
 		$template->assign('common_logo', 'Logo UniversiBO');
 		$template->assign('common_logoType', 'default'); //estate/natale/8marzo/pasqua/carnevale/svalentino/halloween/ecc...
@@ -84,7 +86,7 @@ class TestTemplate extends UniversiboCommand {
 
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
 												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
-
+*/
 		
 //-------------------- HOME
 

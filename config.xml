@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
 <config>
-    <!--****According to the manual, rootFolder and rootURL should be changed to reflect your machine's 
-                installation. However, you do not need to change it becuase we are using relative path 
-                and virtual URL
-	****-->
 
 	<!--Root Folder can be absolute or relative to receiver path -->
 	<rootFolder>../framework/</rootFolder>
@@ -12,14 +8,17 @@
 	<rootURL>/universibo_2/htmls/</rootURL>
 
 	<defaultCommand>TestTemplate</defaultCommand>
+	
 	<paths>
 		<application>../universibo/</application>
 		<logs>../universibo/log-universibo/</logs>
 		<commands>../universibo/commands/</commands>
 	</paths>
+	
 	<receivers>
 		<main>index.php</main>
 	</receivers>
+	
 	<commands>
 		<StartExample1 class="Example1">
 			 <template type="default">example1.htm</template>
@@ -58,7 +57,7 @@
 	    <fromAddress>universibo@joker.ing.unibo.it</fromAddress>
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
-	<templateInfo type="Smarty">
+	<templateInfo type="Smarty" debugging="off">
 		<template_dirs>
 			<web_dir>tpl/</web_dir>
 			<smarty_dir>../framework/smarty/</smarty_dir>
@@ -67,7 +66,6 @@
 			<smarty_config>../universibo/templates_config/</smarty_config>
 			<smarty_cache>../universibo/templates_cache/</smarty_cache>
 		</template_dirs>
-		
 		<template_styles default="black">
 			<style name="black" dir="black/" />
 			<style name="unibo" dir="unibo/" />
@@ -75,23 +73,21 @@
 		</template_styles>
 	</templateInfo>	
 	
-	<languageInfo>
+	<langInfo>
 	 	<lang_dir>../universibo/lang/</lang_dir> 
 	 	<lang_default>it</lang_default> 
-	</languageInfo>	
+	 	<date_separator>/</date_separator> 
+	</langInfo>	
 		
 	<!--****appSettings is an optional node. You can place any thing here 
                 and access it from $fc->appSettings
 	****-->
 	<appSettings>
-		<!--***If you are using a language file, you have to define a node 
-                       <langFile>Location of language file here</langFile>
-                       Location of language file should be wrt rootFolder
-		       To use a language file, change the langFile1 node below to langFile
-                ****-->
-		<langFile1>/location/of/userLanguageFile.txt</langFile1>
+		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<files>../html/file-universibo</files>
 		<questionariReceiver>eagleone@libero.it</questionariReceiver>
-
+        <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione. Ci scusiamo per il disagio.</alertMessage>
+        <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
+        <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 	</appSettings>
 </config>
