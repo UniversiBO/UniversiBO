@@ -3,7 +3,7 @@
 {if $titleSize|default:"small" == "big"}
 <img src="tpl/black/files_30.gif" width="100" height="39" alt="News" /><br />
 {else}
-<img src="tpl/black/files_18.gif" width="64" height="22" alt="News" /><br />
+<img src="tpl/black/files_18.gif" width="57" height="22" alt="News" /><br />
 {/if}
 </td></tr>
 <tr><td class="piccolo">
