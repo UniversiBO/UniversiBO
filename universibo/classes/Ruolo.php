@@ -281,8 +281,8 @@ class Ruolo {
 	{
 		return $this->tipoNotifica;
 	}
-
-
+	
+	
 	
 	/**
 	 * Imposta il livello di notifica dell'utente nel canale corrente
@@ -442,7 +442,7 @@ class Ruolo {
 	 */
 	function updateAddMyUniversibo($updateDB = false)
 	{
-		$this->_updateMyUniversibo(true, $updateDB);   //non l'ho capita, non ricorda che fa! ma funziona!?
+		$this->updateSetMyUniversibo(true, $updateDB);   //non l'ho capita, non ricorda che fa! ma funziona!?
 	}
 
 
