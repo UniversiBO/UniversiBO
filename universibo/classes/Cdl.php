@@ -161,6 +161,16 @@ class Cdl extends Canale{
 		return $this->cdlCodice;
 	}
 
+	/**
+	 * Impsta il codice di ateneo a 4 cifre del cdl
+	 * es: ingegneria informatica -> '0048'
+	 *
+	 * @return string
+	 */
+	function setCodiceCdl($cod_new)
+	{
+		$this->cdlCodice = $cod_new;
+	}
 
 	/**
 	 * Crea un oggetto Cdl dato il suo numero identificativo id_canale
