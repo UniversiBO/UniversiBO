@@ -15,9 +15,10 @@
 <td align="center">{include file=avviso_notice.tpl}</td>
 </tr>
 <tr align="center"> 
-<td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="f1_username" size="9" maxlength="25" style="width: 120px" value="{$f1_username_value}" /><br />
-Password:<br /><input type="password" name="f1_password" size="9" maxlength="25" style="width: 120px" value="{$f1_password_value}" /><br />
+<td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="f1_username" size="9" maxlength="25" style="width: 120px" value="{$f1_username_value|escape:"htmlall"}" /><br />
+Password:<br /><input type="password" name="f1_password" size="9" maxlength="25" style="width: 120px" value="{$f1_password_value|escape:"htmlall"}" /><br />
 <input type="hidden" name="f1_resolution" value="" />
+<input type="hidden" name="f1_referer" value="{$f1_referer_value|escape:"htmlall"}" />
 <input name="f1_submit" type="submit" value="Entra" onclick="document.form1.f1_resolution.value = screen.width;" /></td>
 </tr>
 </table></form>

@@ -22,9 +22,11 @@ class Login extends UniversiboCommand {
 		$fc =& $this->getFrontController();
 		$template =& $this->frontController->getTemplateEngine();
 		
+		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : $_SERVER['HTTP_REFERER'];
+		
 		if ( array_key_exists('f1_submit',$_POST) )
 		{
-		
+			
 			if (!$this->sessionUser->isOspite())
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
@@ -54,7 +56,12 @@ class Login extends UniversiboCommand {
 				$forum = new ForumApi;
 				$forum->login($user);
 				
-				FrontController::redirectCommand('ShowHome');
+				if ( !strstr('do',$referer) || strstr('do=ShowHome', $referer) )
+					FrontController::redirectCommand('ShowMyUniversiBO');
+				else
+					FrontController::goTo($referer);
+				
+				
 			}
 			$_POST['f1_password'] = '';  //resettata per sicurezza
 		
@@ -64,6 +71,7 @@ class Login extends UniversiboCommand {
 		$f1_password = '';
 		
 		$template->assign('login_langLogin','Login');
+		$template->assign('f1_referer_value',$referer);
 		$template->assign('f1_username_value',$_POST['f1_username']);
 		$template->assign('f1_password_value','');
 

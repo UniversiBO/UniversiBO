@@ -218,7 +218,7 @@ class FrontController {
 	function redirectCommand($command='', $receiver=NULL)
 	{
 		$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on') ? 'https' : 'http';
-
+		
 		if ( $command != '' )
 		{
 			$command = 'do='.$command;
@@ -226,34 +226,22 @@ class FrontController {
 		
 		$url = $request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$command;
 		
-		header('Location: '.$url);
-		exit();
-
-		/*
-		questa era una implementazione con interfaccia diversa...
-		
-		@param array $params associative array of uri GET string parameters es: array('pippo'=>'pluto') -> index.php?do=CommandName&pippo=pluto
-		$append = ''
-		if ( $command != NULL )
-		{
-			$append = '?do='.$command
-		}
-		
-		$first = ($append != '') ? '&' : '?';
-		
-		if ($params != NULL)
-		{
-			foreach($params as $key=>$value)
-			{
-				$pippo =
-			}
-		}
-		...
-		header('Location: '.$url);
-		
-		*/
-
+		FrontController::goTo($url);
 	}
+	
+	
+	/**
+	 * Permette di redirigere la richiesa su un'altra pagina
+	 *
+	 * @param string $destination
+	 */ 
+	function goTo($destination)
+	{
+		header('Location: '.$destination);
+		exit();
+	}
+
+
 
 
 
