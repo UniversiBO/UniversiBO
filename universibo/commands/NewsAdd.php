@@ -53,8 +53,8 @@ class NewsAdd extends CanaleCommand {
 		$f7_data_scad_gg = '';
 		$f7_data_scad_mm = '';
 		$f7_data_scad_aa = '';
-		$f7_data_scad_ora = '';
-		$f7_data_scad_min = '';
+		$f7_data_scad_ora = '6';
+		$f7_data_scad_min = '00';
 		$f7_testo = '';
 		$f7_urgente = false;
 		$f7_scadenza = false;
