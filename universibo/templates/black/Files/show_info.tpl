@@ -24,8 +24,9 @@
  <tr> 
  <td width="190" class="Normal">
   &nbsp;<br />
-  <font class="NormalC">&nbsp;Inserito il:</font>&nbsp;&nbsp;{$fileShowInfo_dataInserimento|escape:"htmlall"}<br /><br />
   <font class="NormalC">&nbsp;Inserito da:</font>&nbsp;&nbsp;<a href="{$fileShowInfo_userLink|escape:"htmlall"}">{$fileShowInfo_username|escape:"htmlall"}</a><br /><br />
+  <font class="NormalC">&nbsp;Inserito il:</font>&nbsp;&nbsp;{$fileShowInfo_dataInserimento|escape:"htmlall"}<br /><br />
+  <font class="NormalC">&nbsp;Titolo:</font>&nbsp;&nbsp;{$fileShowInfo_descrizione|escape:"htmlall"}<br /><br />
   <font class="NormalC">&nbsp;Descrizione/abstract:</font>&nbsp;&nbsp;{$fileShowInfo_descrizione|escape:"htmlall"}<br /><br />
   <font class="NormalC">&nbsp;Parole chiave:</font>&nbsp;&nbsp;{foreach from=$fileShowInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}<br /><br />
   <font class="NormalC">&nbsp;Categoria:</font>&nbsp;&nbsp;{$fileShowInfo_categoria|escape:"htmlall"}<br /><br />
