@@ -259,3 +259,4 @@ class Facolta extends Canale{
 	}
 	
 }
+?>

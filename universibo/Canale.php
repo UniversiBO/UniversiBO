@@ -129,7 +129,7 @@ class Canale {
 	/**
 	 * Ritorna l'id_canale che identifica il canale
 	 *
-	 * @return string
+	 * @return int
 	 */
 	function getIdCanale()
 	{
