@@ -177,7 +177,7 @@ class ShowContribute extends UniversiboCommand
 			//stesura contenuti check
 			if ( array_key_exists('f3_contenuti', $_POST) ) {
 				$q3_contenuti = 'S';
-				$f3_contenutie = true;
+				$f3_contenuti = true;
 			}
 			else $q3_contenuti = 'N' ;
 			
@@ -224,11 +224,11 @@ class ShowContribute extends UniversiboCommand
 		//esecuzione operazioni accettazione del form
 		if ($f3_accept == true)
 		{
-			$db =& FrontController::getDbConnection('main');
+			//salvataggio form
+			$db =& $frontcontroller->getDbConnection('main');
 			
 			$q3_idQuestionario = $db->nextID('questionario_id_questionari');
 			$q3_idUtente = $this->getSessionIdUtente();
-			
 			$query = 'INSERT INTO questionario (id_questionario, id_utente, data, nome, cognome, mail, telefono, tempo_disp, tempo_internet, attiv_offline, attiv_moderatore, attiv_contenuti, attiv_test, attiv_grafica, attiv_prog, altro) VALUES ( '.$db->quote($q3_idQuestionario).', '.$db->quote($q3_idUtente).', '.$db->quote(time()).', '.$db->quote($q3_nome).', '.$db->quote($q3_cognome).', '.$db->quote($q3_mail).', '.$db->quote($q3_tel).', '.$db->quote($q3_tempo).', '.$db->quote($q3_internet).', '.$db->quote($q3_offline).', '.$db->quote($q3_moderatore).', '.$db->quote($q3_contenuti).', '.$db->quote($q3_test).', '.$db->quote($q3_grafica).', '.$db->quote($q3_prog).', '.$db->quote($q3_altro).');';
 			$res = $db->query($query);
 			if (DB::isError($res))
@@ -237,9 +237,40 @@ class ShowContribute extends UniversiboCommand
 				return false;
 			}
 			
+
+			//invio mail notifica
+			$session_user = $this->getSessionUser();
+			$mail =& $frontcontroller->getMail();
+
+			$riceventi = $frontcontroller->getAppSetting('questionariReceiver');
+			$array_riceventi = explode(';', $riceventi);
+			foreach($array_riceventi as $key => $value)
+			{
+				$mail->AddAddress($value);
+			}
+
+			$mail->Subject = '[UniversiBO] Nuovo questionario';
+			$mail->Body = 'nome: '.$f3_nome."\n".
+			    'cognome: '.$f3_cognome."\n".
+				'mail: '.$f3_mail."\n".
+				'telefono: '.$f3_tel."\n".
+				'username: '.$session_user->getUsername()."\n".
+				'id_utente: '.$q3_idUtente."\n\n".
+				'tempo_disponibile: '.$f3_tempo."\n".
+				'tempo_internet: '.$f3_internet."\n".
+				'attivita_offline: '.$q3_offline."\n".
+				'attivita_moderatore: '.$q3_moderatore."\n".
+				'attivita_contenuti: '.$q3_contenuti."\n".
+				'attivita_test: '.$q3_test."\n".
+				'attivita_grafica: '.$q3_grafica."\n".
+				'attivita_prog: '.$q3_prog."\n".
+				'altre_informazioni: '.$f3_altro."\n\n";
+			
+			//var_dump($mail);
+			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
+			
 			//return '';
 		}
-		
 		
 		return 'default';
 	}

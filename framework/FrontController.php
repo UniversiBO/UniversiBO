@@ -841,7 +841,10 @@ class FrontController {
     	$mail -> SMTPAuth = false; 					// off SMTP authentication
     	$mail -> From = $this->mailerInfo['fromAddress']; 
 		$mail -> FromName = $this->mailerInfo['fromName'];
-    	
+		$mail -> WordWrap = 80;
+		$mail -> IsHTML(false);
+		$mail -> AddReplyTo($this->mailerInfo['replyToAddress'], $this->mailerInfo['fromName']);
+		
     	return $mail;
 	}
 
