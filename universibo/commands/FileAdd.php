@@ -368,13 +368,13 @@ class FileAdd extends UniversiboCommand {
 				
 				//$num_canali = count($f12_canale);
 				//var_dump($f12_canale);
-				//var_dump($_POST['f12_canale']);
-				foreach ($_POST['f12_canale'] as $key => $value)
-				{
-					$newFile->addCanale($key);
-					$canale =& $elenco_canali_retrieve[$key];
-					$canale->setUltimaModifica(time(), true);
-				}
+				if (array_key_exists('f12_canale', $_POST))
+					foreach ($_POST['f12_canale'] as $key => $value)
+					{
+						$newFile->addCanale($key);
+						$canale =& $elenco_canali_retrieve[$key];
+						$canale->setUltimaModifica(time(), true);
+					}
 				
         		$db->autoCommit(true);
 				ignore_user_abort(0);
