@@ -156,7 +156,7 @@ class PrgAttivitaDidattica extends Canale
 	 */
 	function PrgAttivitaDidattica($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine,
 				 $nome, $visite, $news_attivo, $files_attivo, $forum_attivo,
-				 $forum_forum_id, $forum_group_id, $links_attivo, $annoAccademico, $codiceCdl,
+				 $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo, $annoAccademico, $codiceCdl,
 				 $codInd, $codOri, $codMateria, $nomeMateria, $annoCorso,
 				 $codMateriaIns, $nomeMateriaIns, $annoCorsoIns, $codRil, $codModulo,
 				 $codDoc, $nomeDoc, $flagTitolareModulo, $tipoCiclo, $codAte,
@@ -164,7 +164,7 @@ class PrgAttivitaDidattica extends Canale
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo);
 				 
 	 	$this->annoAccademico	   = $annoAccademico;
 	 	$this->codiceCdl		   = $codiceCdl;
@@ -491,7 +491,7 @@ class PrgAttivitaDidattica extends Canale
 					FROM (
 						SELECT DISTINCT ON (id_canale, anno_accademico, cod_corso, cod_materia, anno_corso, cod_materia_ins, anno_corso_ins, cod_ril, cod_doc, tipo_ciclo, cod_ate, anno_corso_universibo, sdoppiato ) *
 						FROM (
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo,c.files_studenti_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.cod_materia=m1.cod_materia
@@ -508,7 +508,7 @@ class PrgAttivitaDidattica extends Canale
 							AND i.cod_ril='.$cod_ril.'
 							AND i.cod_ate='.$cod_ate.'
 						UNION
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.files_studenti_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, prg_sdoppiamento s, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.anno_accademico=s.anno_accademico_fis
@@ -535,7 +535,7 @@ class PrgAttivitaDidattica extends Canale
 							AND i.cod_ate='.$cod_ate.'
 						) AS cdl
 					) AS cdl1
-					ORDER BY 32, 31, 29, 22';
+					ORDER BY 33, 32, 30, 23';
 		
 
 		$res = $db->query($query);
@@ -548,11 +548,11 @@ class PrgAttivitaDidattica extends Canale
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$prgAtt =& new PrgAttivitaDidattica( $row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
-				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20],
-				$row[21], $row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28],
-				$row[29], $row[30], $row[31]=='S' );
+			$prgAtt =& new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
+				$row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20], $row[21],
+				$row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28], $row[29],
+				$row[30], $row[31], $row[32]=='S' );
 			
 			$elenco[] =& $prgAtt;
 		}
@@ -582,7 +582,7 @@ class PrgAttivitaDidattica extends Canale
 					FROM (
 						SELECT DISTINCT ON (id_canale, anno_accademico, cod_corso, cod_materia, anno_corso, cod_materia_ins, anno_corso_ins, cod_ril, cod_doc, tipo_ciclo, cod_ate, anno_corso_universibo, sdoppiato ) *
 						FROM (
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo,c.files_studenti_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.cod_materia=m1.cod_materia
@@ -590,7 +590,7 @@ class PrgAttivitaDidattica extends Canale
 							AND i.cod_doc=d.cod_doc
 							AND c.id_canale='.$id_canale.'
 						UNION
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo,c.files_studenti_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, prg_sdoppiamento s, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.anno_accademico=s.anno_accademico_fis
@@ -608,7 +608,7 @@ class PrgAttivitaDidattica extends Canale
 							AND c.id_canale='.$id_canale.'
 						) AS cdl
 					) AS cdl1
-					ORDER BY 31, 29, 22';
+					ORDER BY 32, 30, 23';
 		/**
 		 * @todo ATTENZIONE! ...questa query non ? portabile.
 		 * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
@@ -624,11 +624,11 @@ class PrgAttivitaDidattica extends Canale
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$prgAtt =& new PrgAttivitaDidattica( $row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
-				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20],
-				$row[21], $row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28],
-				$row[29], $row[30], $row[31]=='S' );
+			$prgAtt =& new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
+				$row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20], $row[21],
+				$row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28], $row[29],
+				$row[30], $row[31], $row[32]=='S' );
 			
 			$elenco[] =& $prgAtt;
 		}
@@ -694,7 +694,7 @@ class PrgAttivitaDidattica extends Canale
 					FROM (
 						SELECT DISTINCT ON (id_canale, anno_accademico, cod_corso, cod_materia, anno_corso, cod_materia_ins, anno_corso_ins, cod_ril, cod_doc, tipo_ciclo, cod_ate, anno_corso_universibo ) *
 						FROM (
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo,c.files_studenti_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.cod_materia=m1.cod_materia
@@ -703,7 +703,7 @@ class PrgAttivitaDidattica extends Canale
 							AND i.anno_accademico='.$anno_accademico.'
 							AND cod_corso='.$cod_cdl.'
 						UNION
-							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
+							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo,c.files_studenti_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, prg_sdoppiamento s, classi_materie m1, classi_materie m2, docente d
 							WHERE c.id_canale = i.id_canale
 							AND i.anno_accademico=s.anno_accademico_fis
@@ -722,7 +722,7 @@ class PrgAttivitaDidattica extends Canale
 							AND s.anno_accademico='.$anno_accademico.'
 						) AS cdl
 					) AS cdl1
-					ORDER BY 31, 29, 22';
+					ORDER BY 32, 30, 23';
 		/**
 		 * @todo ATTENZIONE! ...questa query non ? portabile.
 		 * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
@@ -741,11 +741,11 @@ class PrgAttivitaDidattica extends Canale
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$prgAtt =& new PrgAttivitaDidattica( $row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
-				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20],
-				$row[21], $row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28],
-				$row[29], $row[30], $row[31]=='S' );
+			$prgAtt =& new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
+				$row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20], $row[21],
+				$row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28], $row[29],
+				$row[30], $row[31], $row[32]=='S' );
 			
 			$elenco[] =& $prgAtt;
 		}

@@ -79,6 +79,10 @@ class Canale {
 	 * @private
 	 */
 	var $ruoli = NULL;
+	/**
+	 * @private
+	 */
+	var $servizioFilesStudenti = false;
 	
 	
 	
@@ -110,7 +114,7 @@ class Canale {
 	 * @return Canale
 	 */
 	function Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo)
 	{
 		$this->id_canale = $id_canale;
 		$this->permessi = $permessi;
@@ -125,6 +129,7 @@ class Canale {
 		$this->forum['forum_id'] = $forum_forum_id;
 		$this->forum['group_id'] = $forum_group_id;
 		$this->servizioLinks = $links_attivo;
+		$this->servizioFilesStudenti = $files_studenti_attivo;
 		$this->bookmark = NULL;
 	}
 
@@ -429,6 +434,32 @@ class Canale {
 	{
 		$this->servizioLinks = $attiva_links;
 	}
+	
+	/**
+	 * Ritorna true , false se il servizio non ? attivo
+	 *
+	 * @todo implementare Files
+	 * @return boolean
+	 */
+	function getServizioFilesStudenti()
+	{
+		return $this->servizioFilesStudenti;
+	}
+
+
+
+	/**
+	 * Imposta il servizio Files Studenti, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_files 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioFilesStudenti($attiva_files_studenti, $updateDB = false)
+	{
+		$this->servizioFilesStudenti = $attiva_files_studenti;
+	}
 
 
 
@@ -505,7 +536,7 @@ class Canale {
 
 
 	/**
-	 * Dato Inizializza le informazioni del canale di CanaleCommand 
+	 * Inizializza le informazioni del canale di CanaleCommand 
 	 * Esegue il dispatch inizializzndo il corretto sottotipo di 'canale' 
 	 *
 	 * @private
@@ -644,7 +675,7 @@ class Canale {
 		array_walk($elenco_id_canali, array($db, 'quote'));
 		$canali_comma = implode (' , ',$elenco_id_canali);
 		
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale IN ('.$canali_comma.');';
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, files_studenti_attivo FROM canale WHERE id_canale IN ('.$canali_comma.');';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -658,7 +689,7 @@ class Canale {
 		{
 			//var_dump($row);
 			$elenco_canali[] =& new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[13]=='S' );
 		}
 		$res->free();
 		
@@ -681,6 +712,7 @@ class Canale {
 		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
 		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
 		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
+		$files_studenti_attivo = ( $this->getFilesStudentiAttivo() ) ? 'S' : 'N';
 		if ( $this->getForumAttivo() )
 		{
 			$forum_attivo = 'S';
@@ -698,7 +730,7 @@ class Canale {
 		}	
 			
 		
-		$query = 'INSERT INTO canale (id_canale, tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo) VALUES ('.
+		$query = 'INSERT INTO canale (id_canale, tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, files_studenti_attivo) VALUES ('.
 					$db->quote($this->getIdCanale()).' , '.
 					$db->quote($this->getTipoCanale()).' , '.
 					$db->quote($this->getNomeCanale()).' , '.
@@ -711,7 +743,8 @@ class Canale {
 					$db->quote($forum_attivo).' , '.
 					$db->quote($forum_forum_id).' , '.
 					$db->quote($forum_group_id).' , '.
-					$db->quote($links_attivo).' )';
+					$db->quote($links_attivo).' ,'.
+					$db->quote($files_studenti_attivo).' )';
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
@@ -736,6 +769,7 @@ class Canale {
 		$files_attivo = ( $this->getServizioFiles() ) ? 'S' : 'N';
 		$news_attivo  = ( $this->getServizioNews()  ) ? 'S' : 'N';
 		$links_attivo = ( $this->getServizioLinks() ) ? 'S' : 'N';
+		$files_studenti_attivo = ( $this->getServizioFilesStudenti() ) ? 'S' : 'N';
 		if ( $this->getServizioForum() )
 		{
 			$forum_attivo = 'S';
@@ -761,7 +795,8 @@ class Canale {
 					' , forum_attivo = '.$db->quote($forum_attivo).
 					' , id_forum = '.$db->quote($forum_forum_id).
 					' , group_id = '.$db->quote($forum_group_id).
-					' , links_attivo = '.$db->quote($links_attivo).' WHERE id_canale ='.$db->quote($this->getIdCanale());
+					' , links_attivo = '.$db->quote($links_attivo).
+					' , files_studenti_attivo = '.$db->quote($files_studenti_attivo).' WHERE id_canale ='.$db->quote($this->getIdCanale());
 			
 		$res = $db->query($query);
 		if (DB::isError($res)) 

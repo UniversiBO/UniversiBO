@@ -75,12 +75,12 @@ class Cdl extends Canale{
 	 * @return Facolta
 	 */
 	function Cdl($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo,
 				 $cod_cdl, $nome_cdl, $categoria_cdl, $cod_facolta_padre, $cod_doc, $forum_cat_id)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo);
 		
 		$this->cdlCodice	= $cod_cdl;
 		$this->cdlNome		= $nome_cdl;
@@ -281,7 +281,7 @@ class Cdl extends Canale{
 
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,files_studenti_attivo,
 					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
 
 		$res = $db->query($query);
@@ -293,8 +293,8 @@ class Cdl extends Canale{
 		if( $rows == 0) return false;
 
 		$res->fetchInto($row);
-		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
+		$cdl =& new Cdl($row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S', $row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
 		
 		return $cdl;
 
@@ -318,10 +318,10 @@ class Cdl extends Canale{
 		
 		// LA PRIMA QUERY E' QUELLA CHE VA BENE, MA BISOGNA ALTRIMENTI SISTEMARE IL DB 
 			//E VERIFICARE CHE METTENDO DIRITTI = 0 IL CANALE NON VENGA VISUALIZZATO
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
+		//$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+		//			 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
 					 
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,files_studenti_attivo,
                                          a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM  classi_corso b LEFT OUTER JOIN canale a ON a.id_canale = b.id_canale WHERE b.cod_corso = '.$db->quote($cod_cdl);			 
 		$res = $db->query($query);
 		if (DB::isError($res))
@@ -332,9 +332,8 @@ class Cdl extends Canale{
 		if( $rows == 0) return false;
 
 		$res->fetchInto($row);
-		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
-		
+		$cdl =& new Cdl($row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S', $row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
 		return $cdl;
 
 	}
@@ -354,9 +353,9 @@ class Cdl extends Canale{
 
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,files_studenti_attivo,
 					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale
-					 AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 16 , 14 ';
+					 AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 17 , 15 ';
 
 		$res = $db->query($query);
 		if (DB::isError($res))
@@ -368,9 +367,9 @@ class Cdl extends Canale{
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
-				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
+			$cdl =& new Cdl($row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
+				$row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
 
 			$elenco[] =& $cdl;
 		}

@@ -65,11 +65,11 @@ class Insegnamento extends Canale
 	 * @return Insegnamento
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $elenco_attivita)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $files_studenti_attivo, $elenco_attivita)
 	{
 	
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $files_studenti_attivo);
 		
 		//inizializza l'elenco delle attivit? padre/non sdoppiate
 		//var_dump($elenco_attivita);
@@ -256,7 +256,7 @@ class Insegnamento extends Canale
 	
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, files_studenti_attivo FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -271,7 +271,7 @@ class Insegnamento extends Canale
 		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
 		//var_dump($row);
 		$insegnamento =& new Insegnamento($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $elenco_attivita);
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[13]=='S',$elenco_attivita);
 		
 		return $insegnamento;
 
