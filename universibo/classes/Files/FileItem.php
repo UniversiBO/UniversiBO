@@ -893,9 +893,9 @@ class FileItem {
 		$next_id = $db->nextID('file_id_file');
 		$return = true;
 		$eliminata = FILE_NOT_ELIMINATO;
-		$query = 'INSERT INTO file (id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+		$query = 'INSERT INTO file (id_file, permessi_download, permessi_visualizza, id_utente, titolo,
 						 descrizione, data_inserimento, data_modifica, dimensione, download,
-						 nome_file, A.id_categoria, A.id_tipo_file, hash_file, password) VALUES '.
+						 nome_file, id_categoria, id_tipo_file, hash_file, password, eliminato) VALUES '.
 						 '( '.$next_id.' , '.
 						 $db->quote($this->getPermessiDownload()).' , '.
 						 $db->quote($this->getPermessiVisualizza()).' , '.
@@ -910,13 +910,15 @@ class FileItem {
 						 $db->quote($this->getIdCategoria()).' , '.
 						 $db->quote($this->getIdTipoFile()).' , '.
 						 $db->quote($this->getHashFile()).' , '.
-						 $db->quote($this->getPassword()).' )';
+						 $db->quote($this->getPassword()).' , '.
+						 $db->quote(FILE_NOT_ELIMINATO).' )';
 						 
 		$res = $db->query($query);
+		//echo $query;
 
 		if (DB :: isError($res)) {
 			$db->rollback();
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB::errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
 		$this->setIdFile($next_id);

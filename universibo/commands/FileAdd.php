@@ -17,7 +17,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
 class FileAdd extends CanaleCommand {
 
 	function execute() {
-
+		
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 		
@@ -52,11 +52,11 @@ class FileAdd extends CanaleCommand {
 		$f12_abstract = '';
 		$f12_parole_chiave = array();
 		$f12_categorie = FileItem::getCategorie();
-		$f12_categoria = 0;
+		$f12_categoria = 5;
 		$f12_data_inserimento = time();
 		$f12_permessi_download = '';
 		$f12_permessi_visualizza = '';
-		$f12_password = false;
+		$f12_password = null;
 		$f12_canale = array ();
 
 		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
@@ -102,6 +102,7 @@ class FileAdd extends CanaleCommand {
 			 !array_key_exists('f12_password', $_POST) || 
 			 !array_key_exists('f12_canale', $_POST) ) 
 			{
+				var_dump($_POST);die();
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f12_accept = false;
 			}
@@ -194,24 +195,31 @@ class FileAdd extends CanaleCommand {
 			} else
 				$f12_testo = $_POST['f12_abstract'];
 
-			//parole chiave	
-			$parole_chiave = explode("\n", $_POST['f12_parole_chiave']);
-			if (count($parole_chiave) > 4) 
-			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
-			}
-			else 
-			{
-				foreach($parole_chiave as $parola)
+			//parole chiave
+			if ($_POST['f12_parole_chiave'] != '')
+			{	
+				$parole_chiave = explode("\n", $_POST['f12_parole_chiave']);
+				if (count($parole_chiave) > 4) 
 				{
-					if (strlen($parola > 40))
-					{
-						Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-						$f12_accept = false;
-					} 
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					$f12_accept = false;
 				}
-			}			
+				else 
+				{
+					foreach($parole_chiave as $parola)
+					{
+						if (strlen($parola > 40))
+						{
+							Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							$f12_accept = false;
+						}
+						else
+						{
+							$f12_parole_chiave[] = $parola;
+						}
+					}
+				}			
+			}
 			
 			//permessi_download	
 			if (!ereg('^([0-9]{1,9})$', $_POST['f12_categoria'])) 
@@ -274,47 +282,48 @@ class FileAdd extends CanaleCommand {
 				$f12_canali_inserimento = $_POST['f12_canale'];
 			}
 			
+			//echo substr($_FILES['userfile']['name'],-4);
+			$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
+			if ( $estensione == '.php') 
+			{
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
+				$f12_accept = false;
+			}	
+			elseif (!is_uploaded_file($_FILES['f12_file']['tmp_name'])) 
+			{
+				Error :: throw(_ERROR_NOTICE, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f12_accept = false;
+			}
+			
+			
 			
 			//esecuzione operazioni accettazione del form
 			if ($f12_accept == true) 
 			{
 				
-				//echo substr($_FILES['userfile']['name'],-4);
-				$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
-				if ( $estensione == '.php') 
-				{
-					Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
-				}	
-				if (is_uploaded_file($_FILES['f12_file']['tmp_name'])) 
-				{
-					
-					$db = FrontController::getDbConnection('main');
-					ignore_user_abort(1);
-	        		$db->autoCommit(false);
+				$db = FrontController::getDbConnection('main');
+				ignore_user_abort(1);
+        		$db->autoCommit(false);
+			
+				$newFile = new FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUser(), $f12_titolo, $f12_abstract,
+				$f12_data_inserimento, time(), $_FILES['f12_file']['size'], 0, $_FILES['f12_file']['name'], $f12_categoria, 
+				FileItem::guessTipo($_FILES['f12_file']['tmp_name']), md5_file($_FILES['f12_file']['tmp_name']), ($f12_password == null) ? $f12_password : FileItem::passwordHashFunction($f12_password), 
+				'', '', '', '', '');
+				/* gli ultimi parametri dipendono da altre tabelle e
+				 il loro valore viene insegnato internamente a FileItem 
+				 bisognerebbe non usare il costruttore per dover fare l'insert
+				 ma...*/
 				
-					$newFile = new FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUtente(), $f12_titolo, $f12_abstract,
-					$f12_data_inserimento, time(), $_FILES['f12_file']['size'], 0, $_FILES['f12_file']['name'], $f12_categoria, 
-					FileItem::guessTipo($_FILES['f12_file']['tmp_name']), md5_file($_FILES['f12_file']['tmp_name']), FileItem::passwordHashFunction($password), 
-					'', '', '', '', '');
-					/* gli ultimi parametri dipendono da altre tabelle e
-					 il loro valore viene insegnato internamente a FileItem 
-					 bisognerebbe non usare il costruttore per dover fare l'insert
-					 ma...*/
-					
-					
-					$newFile->insertFileItem();
+				$newFile->insertFileItem();
+				
+				$newFile->setParoleChiave($f12_parole_chiave);
 
-					$nomeFile = $newFile->getNomeFile();
-					
-					if ( move_uploaded_file($_FILES['f12_file']['tmp_name'],$fc->getAppSetting('filesPath').$nomeFile ) === false )
-					{
-						$db->rollback();
-						Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
-					}
-				}
-				else
+				$nomeFile = $newFile->getNomeFile();
+				
+				if ( move_uploaded_file($_FILES['f12_file']['tmp_name'],$frontcontroller->getAppSetting('filesPath').$nomeFile ) === false )
 				{
-					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__));
+					$db->rollback();
+					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
 				}
 				
 				
@@ -338,14 +347,25 @@ class FileAdd extends CanaleCommand {
 		
 		$template->assign('f12_file', $f12_file);
 		$template->assign('f12_titolo', $f12_titolo);
-		$template->assign('f12_data_ins_mm', $krono->k_date('%j',$f12_data_inserimento));
-		$template->assign('f12_data_ins_gg', $krono->k_date('%m',$f12_data_inserimento));
+		$template->assign('f12_abstract', $f12_abstract);
+		$template->assign('f12_parole_chiave', $f12_parole_chiave);
+		$template->assign('f12_categoria', $f12_categoria);
+		$template->assign('f12_categorie', $f12_categorie);
+		$template->assign('f12_abstract', $f12_abstract);
+		$template->assign('f12_canale', $f12_canale);
+		
+		$template->assign('f12_password', $f12_password);
+		$template->assign('f12_permessi_download', $f12_permessi_download);
+		$template->assign('f12_permessi_visualizza', $f12_permessi_visualizza);
+		$template->assign('f12_data_ins_gg', $krono->k_date('%j',$f12_data_inserimento));
+		$template->assign('f12_data_ins_mm', $krono->k_date('%m',$f12_data_inserimento));
 		$template->assign('f12_data_ins_aa', $krono->k_date('%Y',$f12_data_inserimento));
 		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_inserimento));
 		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_inserimento));
 
-/*			if ( !array_key_exists('f12_file', $_FILES) ||
-			 !array_key_exists('f12_abstract', $_POST) || 
+
+
+/* 			if ( !array_key_exists('f12_file', $_FILES) ||
 			 !array_key_exists('f12_parole_chiave', $_POST) || 
 			 !array_key_exists('f12_categoria', $_POST) || 
 			 !array_key_exists('f12_permessi_download', $_POST) || 

@@ -143,12 +143,12 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileAdd>
-		<FileAdd class="FileEdit">
-			<response type="template" name="default">file_add.tpl</response>
-		</FileAdd>
-		<FileAdd class="FileDelete">
-			<response type="template" name="default">file_add.tpl</response>
-		</FileAdd>
+		<FileEdit class="FileEdit">
+			<response type="template" name="default">file_edit.tpl</response>
+		</FileEdit>
+		<FileDelete class="FileDelete">
+			<response type="template" name="default">file_delete.tpl</response>
+		</FileDelete>
 
 
 		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />

@@ -3,27 +3,40 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-{include file=avviso_notice.tpl}
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi un nuovo file<br />&nbsp;</p></td></tr>
 <tr><td align="center">
-<form method="post">
+{include file=avviso_notice.tpl}
+<form method="post" enctype="multipart/form-data">
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
 <tr>
 <td class="News" align="right" valign="top"><label for="f12_file">File:</label></td>
-<td><input type="text" id="f12_file" name="f12_file" size="65" maxlength="130" value="{$f12_file|escape:"htmlall"}" /></td>
+<td>
+ <input type="file" name="f12_file" id="f12_file" size="30" value="{$f12_file|escape:"htmlall"}">
+ <input type="hidden" name="MAX_FILE_SIZE" value="20971520">
 </tr>
 <tr>
 <td class="News" align="right" valign="top"><label for="f12_titolo">Titolo:</label></td>
 <td><input type="text" id="f12_titolo" name="f12_titolo" size="65" maxlength="130" value="{$f12_titolo|escape:"htmlall"}" /></td>
 </tr>
 <tr>
-<td class="News" align="right" valign="top"><label for="f12_abstract"> Abstract del file:<br />(max 3000 <br />caratteri)</label></td>
+<td class="News" align="right" valign="top"><label for="f12_abstract">Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</label></td>
 <td colspan="2"><textarea cols="50" rows="10" id="f12_abstract" name="f12_abstract">{$f12_abstract|escape:"htmlall"}</textarea></td>
 </tr>
 <tr>
+<td class="News" align="right" valign="top"><label for="f12_parole_chiave">Parole chiave<br />(una per riga, max 4 parole)</label></td>
+<td colspan="2"><textarea cols="50" rows="4" id="f12_parole_chiave" name="f12_parole_chiave">{foreach from=$f12_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
+{/foreach}</textarea></td>
+</tr>
+<tr>
 <td class="News" align="right" valign="top"><label for="f12_categoria">Categoria:</label></td>
-<td><input type="text" id="f12_categoria" name="f12_categoria" size="65" maxlength="130" value="{$f12_categoria|escape:"htmlall"}" /></td>
+<td>
+<select id="f12_categoria" name="f12_categoria">
+{foreach from=$f12_categorie item=temp_categoria key=temp_key}
+<option value="{$temp_key}" {if $temp_key==$f12_categoria} selected="selected"{/if}>{$temp_categoria|escape:"htmlall"}</option>
+{/foreach}
+</select>
+</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
@@ -55,6 +68,23 @@
 </table>
 </td>
 </tr>
+<tr>
+<td class="News" align="right" valign="top"><label for="f12_permessi_download">Permessi download:</label></td>
+<td>
+<select id="f12_permessi_download" name="f12_permessi_download">
+<option value="127" selected="selected">Tutti</option>
+<option value="126" selected="selected">Solo iscritti</option>
+</select>
+<input type="hidden" id="f12_permessi_visualizza" name="f12_permessi_visualizza" value="127" />
+</td>
+</tr>
+<tr><td colspan="2">
+<tr>
+<td class="News" align="right" valign="top"><label for="f12_password">Password:</label></td>
+<td>
+<input type="password" id="f12_password" name="f12_password" size="30" maxlength="130" value="{$f12_password|escape:"htmlall"}" />
+</td>
+</tr>
 <tr><td colspan="2">
 <fieldset>
 <legend><span class="Normal">La notizia verr&agrave; inserita negli argomenti:</span></legend>
@@ -66,13 +96,7 @@
 	{/foreach}
 	</table>
 </fieldset>
-</tr></td>
-
-<tr>
-<td>&nbsp;</td>
-<td class="News" align="left" valign="top"><label for="f12_password"><input type="checkbox" id="f7_scadenza" name="f12_password" {if $f12_password=='true'}checked="checked"{/if} />&nbsp;Attiva Password</label></td>
-</tr>
-
+</td></tr>
 <tr>
 <td colspan="2" align="center">
 <input type="submit" id="" name="f12_submit" size="20" value="Invia" /></td>
