@@ -585,8 +585,8 @@ td.evidenzia{
 	margin: 2em 10%;
 	display: block;
 	width: 80%;
-	border-top: solid 2px #999;
-	border-bottom: solid 2px #999;
+	border-top: solid 1px #999;
+	border-bottom: solid 1px #999;
 }
 
 .tbl2col table
@@ -596,7 +596,11 @@ td.evidenzia{
 	border-width: 0 !important;
 	border-collapse: collapse;
 }
-.tbl2col p { text-align: center !important;}
+.tbl2col p, .tbl2col a { 
+	text-align: center !important;
+	font-size: 12px;
+	font-weight: bold;
+}
 
 .titolo /* da chi è usato?*/
 {
@@ -677,4 +681,4 @@ td.evidenzia{
 	display: inline !important;
 }
 .comandi { font-size: 11px; text-align: center;}
-p.comandi {margin-left: 5% !important;}
+p.comandi {margin-left: 5% !important; }

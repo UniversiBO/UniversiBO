@@ -9,7 +9,7 @@
 {/if}
 </div>
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
-{if $ins_infoDidEdit != ""}<p class="comandi"><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a></p>{/if}
+{if $ins_infoDidEdit != ""}<div class="comandi"><p><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a></p></div>{/if}
 <hr />
 {include file=News/latest_news.tpl}
 <hr/>
