@@ -15,68 +15,7 @@
 
 	
 {foreach from=$contacts_personal item=temp_curr_people}
-	{*<!--{$temp_curr_people.nick|escape:"html"}-->*}
-	<!--{$temp_curr_people.username|escape:"html"}-->
-		{*<table summary="{$temp_curr_people.nick|escape:"html"}" width="100%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$temp_curr_people.nick|escape:"html"}">*}
-		<table summary="{$temp_curr_people.username|escape:"html"}" width="100%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$temp_curr_people.username|escape:"html"}">
-			<tr bgcolor="#000099"> 
-				<td colspan="2">
-					{*<table summary="{$temp_curr_people.nick|escape:"html"} 2" width="100%" border="0" cellspacing="0" cellpadding="0">*}
-					<table summary="{$temp_curr_people.username|escape:"html"} 2" width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
-							<td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr bgcolor="#000050"> 
-				{*<td colspan="2" align="center" class="Titolo">{$temp_curr_people.nick|escape:"html"}</td>*}
-				<td colspan="2" align="center" class="Titolo">{$temp_curr_people.username|escape:"html"}</td>
-			</tr>
-			<tr bgcolor="#000099" align="center"> 
-				<td colspan="2"><img src="tpl/black/invisible.gif" width="1" height="2" alt="" /></td>
-			</tr>
-			<tr bgcolor="#000032">
-          		<td colspan="2" class="Normal">&nbsp;<br />{$temp_curr_people.intro|escape:"html"}<br />&nbsp;</td>
-			</tr>
-			<tr bgcolor="#000099" align="center"> 
-				<td colspan="2"><img src="tpl/black/invisible.gif" width="1" height="2" alt="" /></td>
-			</tr>
-
-			<tr bgcolor="#000032">
-				<td width="30%" class="NormalC" valign="top" align="left">&nbsp;<br />ruolo principale:</td>
-				<td class="Normal">&nbsp;<br />{$temp_curr_people.ruolo|escape:"html"}<br />&nbsp;</td>
-			</tr>
-			<tr bgcolor="#000032">
-				<td width="30%" class="NormalC" valign="top" align="left">e-mail:</td>
-				<td class="Normal"><a href="mailto:{$temp_curr_people.email|escape:"html"}">{$temp_curr_people.email|escape:"html"}</a><br />&nbsp;</td>
-			</tr>
-			<tr bgcolor="#000032">
-				<td width="30%" class="NormalC" valign="top" align="left">recapito telefonico:</td>
-				<td class="Normal">{$temp_curr_people.recapito|escape:"html"}<br />&nbsp;</td>
-			</tr>
-			<tr bgcolor="#000032">
-				<td width="30%" class="NormalC" valign="top" align="left">obiettivi:</td>			
-                <td class="Normal">&quot;{$temp_curr_people.obiettivi|escape:"html"}&quot;</td>
-          	</tr>
-			<tr bgcolor="#000032"><td colspan=2>&nbsp;</td></tr>
-
-			<tr bgcolor="#000099"> 
-				<td colspan="2">
-					{*<table summary="{$temp_curr_people.nick|escape:"html"} 3" width="100%" border="0" cellspacing="0" cellpadding="0">*}
-					<table summary="{$temp_curr_people.username|escape:"html"} 3" width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
-							<td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-
-
-		</table>
-		
+	{include file=tabellina_contatto.tpl username=$temp_curr_people.username intro=$temp_curr_people.intro ruolo=$temp_curr_people.ruolo email=$temp_curr_people.email recapito=$temp_curr_people.recapito obiettivi=$temp_curr_people.obiettivi foto=$temp_curr_people.foto id_utente=$temp_curr_people.id_utente}
 		<p>&nbsp;</p>	
 
 	
