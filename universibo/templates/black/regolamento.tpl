@@ -12,14 +12,14 @@
 <p>
 &nbsp;<br />
 <p align="center">
-<img src="tpl/black/regolamento_30.gif" width="234" height="39" alt="{$rules_langTitleAlt}" /><br />
+<img src="tpl/black/regolamento_30.gif" width="234" height="39" alt="{$rules_langTitleAlt|escape:"htmlall"|bbcode2html}" /><br />
 </p>
 <p>{$rules_langIntro} <br /></p>
-<font class="NormalC">{$rules_langTitle}</font> <br />
-{$rules_langFacSubtitle} <br />
-{$rules_langPrivacy} <br />
-{$rules_langServicesRules|nl2br} <br />
-{$rules_langForumRules} <br />
+<font class="NormalC">{$rules_langTitle|escape:"htmlall"|bbcode2html}</font> <br />
+{$rules_langFacSubtitle|escape:"htmlall"|bbcode2html} <br />
+{$rules_langPrivacy|escape:"htmlall"|bbcode2html} <br />
+{$rules_langServicesRules|escape:"htmlall"|bbcode2html|nl2br} <br />
+{$rules_langForumRules|escape:"htmlall"|bbcode2html} <br />
 
 </td></tr></table>
 {if $common_pageType == "index"}
