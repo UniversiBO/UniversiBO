@@ -15,6 +15,7 @@
 </p>
 <p>
 {$manifesto_langWhatIsIt|escape:"html"|nl2br}
+</p>
 <p align="right" class="NormalC">{$manifesto_Author|capitalize}</p>
 &nbsp;<br /></td></tr></table>
 
