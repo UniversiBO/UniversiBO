@@ -36,7 +36,7 @@ class ShowTopic extends PluginCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$db =& FrontController::getDbConnection('main');
-		$query = 'SELECT id_help FROM help_riferimento he, help h WHERE he.riferimento=\''.$reference.'\' ORDER BY indice';  //un join solo per ordinare secondo l'indice..
+		$query = 'SELECT he.id_help FROM help_riferimento he, help h WHERE he.riferimento=\''.$reference.'\' ORDER BY h.indice';  //un join solo per ordinare secondo l'indice..
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
