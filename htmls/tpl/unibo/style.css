@@ -340,7 +340,7 @@ td.evidenzia{
  *
  */
 
-.news, .elenco, .chi_siamo, .file_info, .elencoFile
+.news, .elenco, .chi_siamo, .file_info, .elencoFile, .boxCommento
 {
 	font-size: 11px !important;
 	margin: 2em 0 0;
@@ -357,6 +357,19 @@ td.evidenzia{
 .elenco div, .elencoFile div
 {
 	border-bottom: dotted 2px #999;
+}
+
+.boxCommento
+{
+	background-color: #efffff;
+	padding: 2px 4px !important;
+}
+
+.commento
+{
+	text-align: left;
+	margin: -2.2em 8em 0;
+	font-size: 11px !important;
 }
 /*
 .elenco		TODO non riesco a centrare sto cacchio di div
