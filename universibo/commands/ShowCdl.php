@@ -41,7 +41,7 @@ class ShowCdl extends CanaleCommand {
 		if ( !array_key_exists('anno_accademico', $_GET) )
 			$anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		elseif( !ereg( '^([0-9]{4})$', $_GET['anno_accademico'] ) )
-			Error::throw(_ERROR_DEFAULT, array('msg' => 'L\'anno accademico richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throw(_ERROR_DEFAULT, array('msg' => 'L\'anno accademico richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		else 
 			$anno_accademico = $_GET['anno_accademico'];
 		
@@ -56,6 +56,7 @@ class ShowCdl extends CanaleCommand {
 		$session_user_groups = $session_user->getGroups();
 		$cdl_listIns = array();
 		
+		$forum = new ForumApi;
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
 		for ($i=0; $i < $num_ins; $i++)
 		{
@@ -77,7 +78,6 @@ class ShowCdl extends CanaleCommand {
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
 				
-				$forum = new ForumApi;
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
 					array( 'name' => $tempPrgAttDid->getNome(),
 						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 

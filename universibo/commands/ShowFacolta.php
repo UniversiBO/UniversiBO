@@ -3,8 +3,8 @@
 require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * ShowFacolta: mostra una facoltà
- * Mostra i collegamenti a tutti i corsi di laurea attivi nella facoltà
+ * ShowFacolta: mostra una facolt?
+ * Mostra i collegamenti a tutti i corsi di laurea attivi nella facolt?
  *
  * @package universibo
  * @subpackage commands
@@ -40,7 +40,6 @@ class ShowFacolta extends CanaleCommand {
 		require_once('Cdl'.PHP_EXTENSION);
 
 		$elencoCdl =& Cdl :: selectCdlElencoFacolta($facolta -> getCodiceFacolta());
-
 		$num_cdl = count($elencoCdl);
 		$cdlType = NULL;
 		$fac_listCdlType = array();
@@ -62,6 +61,7 @@ class ShowFacolta extends CanaleCommand {
 						case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
 						case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
 					}
+					if (!array_key_exists($cdlType,$fac_listCdlType) )
 					$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
 				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
