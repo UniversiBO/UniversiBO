@@ -140,7 +140,9 @@ class FileItemStudenti extends FileItem {
 			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		// rimuove l'id del canale dall'elenco completo
-		$this->elencoIdCanali = array_diff($this->elencoIdCanali, array ($id_canale));
+//		var_dump($this->elencoIdCanali);
+//		die();
+//		$this->elencoIdCanali = array_diff($this->elencoIdCanali, array ($id_canale));
 
 		/**
 		 * @TODO settare eliminata = 'S' quando il file viene tolto dall'ultimo canale
@@ -239,6 +241,26 @@ class FileItemStudenti extends FileItem {
 			ignore_user_abort(0);
 		return $return;
 	  }
+	  
+	/**
+	 * Elimina il file studente 
+	 *
+	 * @return	 boolean true se avvenua con successo, altrimenti false
+	 */
+	function deleteFileItem() 
+	{
+		
+		$db = & FrontController::getDbConnection('main');
+		$query = 'UPDATE file SET eliminato  = '.$db->quote(FILE_ELIMINATO).' WHERE id_file = '.$db->quote($this->getIdFile());
+		//echo $query;								 
+		$res = $db->query($query);
+		//var_dump($query);
+		if (DB :: isError($res)) {
+			$db->rollback();
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		}
+		return false;
+	}
 	
 }
 
