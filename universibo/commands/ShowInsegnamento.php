@@ -158,7 +158,7 @@ testi consigliati[/uri]';
 		$tpl_tabella[] = $orario;
 		$tpl_tabella[] = $forum;
 		
-		$template->assign('ins_title', $insegnamento->getTitolo() );
+		$template->assign('ins_tabella', $tpl_tabella );
 		
 		$template->assign('ins_title', $insegnamento->getTitolo() );
 		

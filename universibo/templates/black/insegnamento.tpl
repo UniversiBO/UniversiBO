@@ -10,6 +10,8 @@
 
 <p align="center"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
 
+{include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
+
 {include file=News/latest_news.tpl}
 </td></tr>
 <tr><td class="Normal">&nbsp;<br />&nbsp;<br />
