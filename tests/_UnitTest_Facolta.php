@@ -61,7 +61,8 @@ class FacoltaTest extends PHPUnit_TestCase
 		$this->facolta->setUri($new_value);
 		$this->assertEquals($new_value, $this->facolta->getUri());
 	}
-
+	
+	
 	function testRetrieveAndUpdate()
 	{
 		$db =& FrontController::getDbConnection('main');
@@ -87,83 +88,24 @@ class FacoltaTest extends PHPUnit_TestCase
 		$db->rollback();
 		$db->autoCommit(true);
 	}
+	
+	
+	function testFacoltaElenco()
+	{
+		$elenco =& FAcolta::selectFacoltaElenco();
+		
+		foreach ( $elenco as $facolta)
+		{
+			$value = $facolta->getNome();
+			if (isset($value_old))
+				$this->assertTrue( strcmp($value_old, $value) < 0 );
+			$value_old = $value;
+		}
+		
+	}
 
 }
 
 ?>
-
-	/**
-	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine alfabetico di tutte le facolt? 
-	 * 
-	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
-	 * @return array(Facolta)
-	 */
-	function &selectFacoltaElenco()
-	{
-		global $__facoltaElencoAlfabetico;
-		
-		if ( $__facoltaElencoAlfabetico == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		return $__facoltaElencoAlfabetico;
-	}
 	
 	
-	/**
-	 * Siccome nella maggiorparte delle chiamate viene eseguito l'accesso a tutte le
-	 * facolt? questa procedura si occupa di eseguire il caching degli oggetti facolt?
-	 * in variabili static (globali per comodit? implementativa) e permette di 
-	 * alleggerire i futuri accessi a DB implementando di fatto insieme ai metodi
-	 * select*() i meccanismi di un metodo singleton factory
-	 * 
-	 * @static
-	 * @private
-	 * @return none 
-	 */
-	function _selectFacolta()
-	{
-		
-		global $__facoltaElencoCodice;
-		global $__facoltaElencoAlfabetico;
-		global $__facoltaElencoCanale;
-
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, a.id_canale, cod_fac, desc_fac, url_facolta FROM canale a , facolta b WHERE a.id_canale = b.id_canale ORDER BY 15';
-		$res = $db->query($query);
-		if (DB::isError($res))
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		$__facoltaElencoAlfabetico = array();
-		$__facoltaElencoCanale     = array();
-		$__facoltaElencoCodice     = array();
-
-		if( $rows = 0) return array();
-		while (	$res->fetchInto($row) )
-		{
-			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15]);
-
-			$__facoltaElencoAlfabetico[] =& $facolta;
-			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
-			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
-		}
-		$res->free();
-		
-	}
-	
-	/** 
-	 * Restituisce l'uri del command che visulizza il canale
-	 *	
-	 * @return string URI del command 
-	 */
-	 function getShowUri()
-	 {
-	 	return 'index.php?do=ShowFacolta&id_canale='.$this->getIdCanale();
-	 }
