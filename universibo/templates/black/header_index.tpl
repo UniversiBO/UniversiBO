@@ -30,7 +30,7 @@
 <tr><td bgcolor="#000050">
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr>
- <td valign="middle" align="left" class="Navbar" width="350">&nbsp;&nbsp;<a href="{$common_homepageUri}">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;{$common_homepage}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_forumUri}" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;{$common_forum}&nbsp;</a>&nbsp;&nbsp;&nbsp;{if $common_userLoggedIn == 'true'}<a href="{$common_settingsUri}">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;{$common_settings}&nbsp;</a>{/if}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ <td valign="middle" align="left" class="Navbar" width="380">&nbsp;&nbsp;<a href="{$common_homepageUri}">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;{$common_homepage}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_forumUri}" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;{$common_forum}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_chatUri|escape:"htmlall"}" target="_blank" title="Apre la finestra di Azzurra.net">&nbsp;{$common_chat|lower|capitalize|escape:"htmlall"|ereg_replace:" ":"&nbsp;"}&nbsp;</a>&nbsp;&nbsp;&nbsp;{if $common_userLoggedIn == 'true'}<a href="{$common_settingsUri}">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;{$common_settings}&nbsp;</a>{/if}&nbsp;&nbsp;&nbsp;&nbsp;</td>
  <td>
   <table border="0" width="100%" cellspacing="0" cellpadding="0" summary="">
   <tr><td class="Titolo" align="right">{$common_longDate} - {$common_time}&nbsp;&nbsp;</td></tr>

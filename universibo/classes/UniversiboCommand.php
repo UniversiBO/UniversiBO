@@ -457,6 +457,8 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');
 		$template->assign('common_credits', 'Credits');
 		$template->assign('common_creditsUri', 'index.php?do=ShowCredits');
+		$template->assign('common_chat', 'La chat di UniversiBO');
+		$template->assign('common_chatUri', 'http://webchat.azzurra.org/irc.cgi?chan=%23universibo');
 		
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
