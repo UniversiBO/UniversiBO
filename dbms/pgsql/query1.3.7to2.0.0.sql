@@ -185,9 +185,11 @@ UPDATE "utente" SET ban='N' WHERE 1=1;
 -----06-11-2003
 CREATE TABLE "collaboratore" (
  "id_utente" int4 PRIMARY KEY,
- "intro" text NOT NULL,
- "ruolo" varchar(50) NOT NULL,
- "recapito" varchar(255)NOT NULL,
- "obiettivi" text NOT NULL
+ "intro" text ,
+ "ruolo" varchar(50) ,
+ "recapito" varchar(255),
+ "obiettivi" text 
  );
+ 
+ 
 
