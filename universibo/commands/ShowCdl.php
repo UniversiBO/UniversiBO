@@ -3,7 +3,7 @@
 require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * ShowFacolta: mostra un corso di laurea
+ * ShowCdl: mostra un corso di laurea
  * Mostra i collegamenti a tutti gli insegnamenti attivi nel corso di laurea
  *
  * @package universibo
@@ -15,19 +15,19 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
 
 class ShowCdl extends CanaleCommand {
 
-	/** 
+	/**
 	 * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
 	 */
 	function initCommand(& $frontController) {
-
+		
 		parent :: initCommand($frontController);
-
+		
 		$canale = & $this -> getRequestCanale();
 		//var_dump($canale);
-
+		
 		if ($canale -> getTipoCanale() != CANALE_CDL)
 			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
-
+		
 	}
 
 	function execute() {
@@ -36,11 +36,11 @@ class ShowCdl extends CanaleCommand {
 		
 		//@todo fatto sopra
 		$cdl = & $this -> getRequestCanale();
-
+		
 		require_once('Insegnamento'.PHP_EXTENSION);
-
+		
 		$elencoIns =& Cdl :: selectInsegnamentoElencoCdl($cdl -> getCodiceCdl());
-
+		
 		$num_ins = count($elencoIns);
 		$insAnnoCorso  = NULL;   //ultimo anno dell'insegnamento precedente
 		$insCiclo = NULL;   //ultimo ciclo dell'insegnamento precedente
@@ -48,8 +48,8 @@ class ShowCdl extends CanaleCommand {
 		$default_anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
-
-
+		
+		
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
 		for ($i=0; $i < $num_ins; $i++)
 		{
@@ -62,11 +62,11 @@ class ShowCdl extends CanaleCommand {
 					
 					//$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
-
+				
 				if ( $insCiclo != $elencoIns[$i]->getCiclo() )
 				{
 					$insCiclo = $elencoIns[$i]->getCiclo();
-
+					
 					//$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
 				
@@ -91,12 +91,12 @@ class ShowCdl extends CanaleCommand {
 */
 		$template -> assign('fac_list', $fac_listCdlType);
 
-		$template -> assign('fac_langFac', 'FACOLTA\'');
-		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
-		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
-		$template -> assign('fac_facName', $facolta->getNome());
-		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
-		$template -> assign('cdl_facLink', $facolta->getUri());
+		$template -> assign('cdl_langCdl', 'CORSO DI LAUREA');
+		$template -> assign('cdl_cdlTitle', $cdl->getTitoloFacolta());
+		$template -> assign('cdl_langTitleAlt', 'Corsi di Laurea');
+		$template -> assign('cdl_cdlName', $cdl->getNome());
+		$template -> assign('cdl_cdlCodice', $cdl->getCodiceCdl());
+		$template -> assign('cdl_facLink', $cdl->getUri());
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));

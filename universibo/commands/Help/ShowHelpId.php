@@ -8,6 +8,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
  * Mostra la spiegazione dell'argomento n° $id_help
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
  * Nel parametro di ingresso del plugin deve essere specificato l'id_help da visualizzare.
+ * E' associato al template help_id.tpl
  *
  * @package universibo
  * @subpackage Help
@@ -72,8 +73,6 @@ class ShowHelpId extends PluginCommand {
 		
 	}
 	
-	
-
 	
 }
 
