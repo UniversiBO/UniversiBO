@@ -367,7 +367,7 @@ class NewsEdit extends CanaleCommand
 				$news->setUrgente($f8_urgente);
 				$news->setNotizia($f8_testo);
 				$news->setUltimaModifica(time());
-				$news->setIdUtente($user->getIdUser());
+				//$news->setIdUtente($user->getIdUser());
 
 				$news->updateNewsItem();
 
