@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
  * ShowContacts is an extension of UniversiboCommand class.
@@ -42,8 +42,10 @@ class ShowContacts extends UniversiboCommand {
 		
 		$arrayContatti=array();     //l'array di array da passare al template
 		
-		while($res->fetchInto($row)){
-			$arrayContatti[]=array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$row[6], 'id_utente'=>$row[7]);
+		while($res->fetchInto($row))
+		{
+			$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');
+			$arrayContatti[] = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
 		}
 		$template->assign('contacts_personal', $arrayContatti);
 		

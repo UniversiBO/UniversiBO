@@ -17,7 +17,7 @@
 				<td colspan="2"><img src="tpl/black/invisible.gif" width="1" height="2" alt="" /></td>
 			</tr>
 			<tr bgcolor="#000032">
-				<td class="Normal" align="center">&nbsp;<br /><img src="{$contacts_path}{$id_utente}_{$foto|escape:"html"}" alt="foto di {$username|escape:"html"}" width="60" height="80"><br />&nbsp;</td>
+				<td class="Normal" align="center">&nbsp;<br /><img src="{$contacts_path}{$foto|escape:"html"}" alt="foto di {$username|escape:"html"}" width="60" height="80"><br />&nbsp;</td>
           		<td class="Normal">&nbsp;<br />{$intro|escape:"html"}<br />&nbsp;</td>
 			</tr>
 			<tr bgcolor="#000099" align="center"> 
@@ -26,7 +26,7 @@
 
 			<tr bgcolor="#000032">
 				<td width="30%" class="NormalC" valign="top" align="left">&nbsp;<br />ruolo principale:</td>
-				<td class="Normal">&nbsp;<br />{$ruolo|escape:"html"}<br />&nbsp;</td>
+				<td class="Normal">&nbsp;<br />{$ruolo|escape:"htmlall"}<br />&nbsp;</td>
 			</tr>
 			<tr bgcolor="#000032">
 				<td width="30%" class="NormalC" valign="top" align="left">e-mail:</td>

@@ -94,6 +94,7 @@
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<forumLocation>forum/</forumLocation>
 		<files>../html/file-universibo</files>
+		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;</questionariReceiver>
         <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione - Ci scusiamo per il disagio</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
