@@ -8,7 +8,9 @@
 	&nbsp;<a href="{$showSettings}">Vai alle impostazioni personali</a>
 {/if}
 </span></p>
-<p>Livello: {$showUserLivelli|escape:"htmlall"}</p>
+<p>Livello: {$showUserLivelli|escape:"htmlall"}
+{if $showUser_UserHomepage != ''}<br />Vai alla <a href="{$showUser_UserHomepage|escape:"htmlall"}">homepage del docente</a> sul portale di Ateneo{/if}</p>
+
 <div class="elenco">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr><td colspan="2"><h3>Ruoli</h3></td></tr>

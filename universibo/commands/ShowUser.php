@@ -1,6 +1,7 @@
 <?php
 
 require_once('User'.PHP_EXTENSION);
+require_once('Docente'.PHP_EXTENSION);
 require_once('UniversiboCommand'.PHP_EXTENSION);
 
 /**
@@ -75,6 +76,13 @@ class ShowUser extends UniversiboCommand{
 			$stessi = true;
 		}
 		$template->assign('showDiritti',$stessi);
+		
+		$template->assign('showUser_UserHomepage','');
+		if ($user->isDocente())
+		{
+			$doc =& Docente::selectDocente($user->getIdUser());
+			$template->assign('showUser_UserHomepage',$doc->getHomepageDocente());
+		}
 		$template->assign('showSettings','index.php?do=ShowSettings');
 		return 'default';
 	}
