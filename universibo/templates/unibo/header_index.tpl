@@ -71,7 +71,7 @@
 		{* MyUniversiBO *}
 		{if $common_myLinksAvailable=="true"}
 		<div class="box">
-			<h3>MyUniversiBO</h3>
+			<h3><a href="{$common_myUniversiBOUri|escape:"htmlall"}">MyUniversiBO</a></h3>
 			<div class="contenuto">
 				{foreach from=$common_myLinks item=temp_currLink}
 				<p><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>

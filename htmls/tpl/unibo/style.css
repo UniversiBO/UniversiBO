@@ -2,7 +2,7 @@ body
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background: white;
-	font-size: 14px;
+	font-size: 13px;
 	margin: 0;
 	padding: 0;
 }
@@ -11,7 +11,7 @@ body
 p, td, ul, ol, ul, li, dl, dt, dd
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 hr
@@ -30,17 +30,17 @@ img
 
 h4
 {	
-	font-size: 14px;
+	font-size: 13px;
 }
 
 form input{
-	font-size: 12px;
+	font-size: 11px;
 	height: 13px;
 	border: solid 1px #999;
 }
 
 form input.submit{
-	font-size: 12px;
+	font-size: 11px;
 	height: 17px;
 	border: solid 1px #999;
 }
@@ -119,7 +119,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	padding: 0;
 	margin: 0;
 	border: 0 none;
-	font-size: 10px ;
+	font-size: 9px ;
 }
 
 #Info
@@ -150,7 +150,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 
 #header .TimeInfo
 {
-	font-size: 12px;
+	font-size: 11px;
 	position: absolute;
 	right: 10px;
 	top: 2px;
@@ -176,7 +176,7 @@ td.evidenzia{
 #leftmenu a
 {
 	color: #333;
-	font-size: 12px;
+	font-size: 11px;
 	text-decoration: none;
 }
 
@@ -184,7 +184,7 @@ td.evidenzia{
 {
 	margin-left: 20px;
 	margin-bottom: 2px;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 #Qui
@@ -240,7 +240,7 @@ td.evidenzia{
 	display: block;
 	margin: .4em 0 0 .3em;
 	padding:0;
-	font-size: 12px;
+	font-size: 11px;
 	color: #333;
 }
 #seiIn a
@@ -259,7 +259,7 @@ td.evidenzia{
 #content h1
 {
 	display: block;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: bold;
 	clear: left;
 	color: #386dce;
@@ -272,7 +272,7 @@ td.evidenzia{
 	border-top: dotted 2px #999;
 	padding-top: 10px;*/
 	display: block;
-	font-size: 16px;
+	font-size: 15px;
 	clear: left;
 	color: #386dce;
 	text-align: left;
@@ -306,7 +306,7 @@ td.evidenzia{
 
 .news, .elenco, .chi_siamo
 {
-	font-size: 12px;
+	font-size: 11px;
 	margin: 2em 0;
 	display: block;
 	border-top: solid 1px #999;
@@ -340,12 +340,12 @@ td.evidenzia{
 
 .news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td, .chi_siamo p, .chi_siamo a, .chi_siamo li, .chi_siamo h3, .chi_siamo td
 {
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .work p, .work a, .work li, .work h3
 {
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .news h3, .work  h3
@@ -412,7 +412,7 @@ td.evidenzia{
 	padding: 0;
 	margin: 0.33%;
 	float: left;
-	font-size: 12px;
+	font-size: 11px;
 	/*voice-family: "\"}\"";
 	voice-family: inherit;*/
 	width: 32%;
@@ -426,7 +426,7 @@ td.evidenzia{
 
 .box
 {
-	font-size: 10px;
+	font-size: 9px;
 	border: solid 1px #999;
 	padding: 0;
 	background: white url(pixel.gif) repeat;
@@ -441,7 +441,7 @@ td.evidenzia{
 .box form input, .box form label{
 	margin: 2px;
 	text-align: center;
-	font-size: 10px;
+	font-size: 9px;
 	vertical-align: text-top;
 }
 
@@ -456,7 +456,7 @@ td.evidenzia{
 
 .box p, .box a, .box li, .box h3
 {
-	font-size: 10px !important;
+	font-size: 9px !important;
 }
 
 .box p, .box a, .box ul, .box span
@@ -502,16 +502,16 @@ td.evidenzia{
 }
 
 .box .Feriali {
-	font-size: 10px; color: #000;
+	font-size: 9px; color: #000;
 }
 .box .Festivi, .Domeniche {
-	font-size: 10px; color: #d00;
+	font-size: 9px; color: #d00;
 }
 .box .Oggi {
-	font-size: 10px; color: #000; background-color: #9cd;
+	font-size: 9px; color: #000; background-color: #9cd;
 }
 .box .Piccolo {
-	font-size: 10px; color: #fff; 
+	font-size: 9px; color: #fff; 
 }
 
 #footer
@@ -524,7 +524,7 @@ td.evidenzia{
 
 #footer p
 {
-	font-size: 10px;
+	font-size: 9px;
 	margin: 0;
 	padding: 0;
 }
@@ -546,7 +546,7 @@ td.evidenzia{
 
 .tbl2col
 {
-	font-size: 12px;
+	font-size: 11px;
 	margin: 2em 0;
 	display: block;
 	border-top: solid 1px #999;
@@ -555,7 +555,7 @@ td.evidenzia{
 
 .tbl2col table
 {
-	font-size: 12px;
+	font-size: 11px;
 	border-color: #999 !important;
 	border-width: 0 !important;
 	border-collapse: collapse;
@@ -588,7 +588,7 @@ td.evidenzia{
 
 .elencoTopic
 {
-	font-size: 12px;
+	font-size: 11px;
 	margin: 2em 12%;
 	display: block;
 	border-top: dotted 2px #999;
@@ -598,7 +598,7 @@ td.evidenzia{
 }
 .elencoTopic p
 {
-	font-size: 12px;
+	font-size: 11px;
 }	
 .elencoTopic .even
 {
@@ -612,11 +612,11 @@ td.evidenzia{
 {
 	color: #386dce;
 	text-align: left !important;
-	font-size: 12px;
+	font-size: 11px;
 }
 .help_generale p, .help_generale a, .help_generale li
 {
-	font-size: 12px;
+	font-size: 11px;
 }
 .help_generale div
 {
