@@ -694,7 +694,30 @@ class FileItem {
 	 *
 	 * @param string $file percorso in cui si trova il file
 	 */
-	function guessTipo($file) {
+	function guessTipo($file) 
+	{
+		static $tipi_regex = NULL;
+		
+		if ($tipi != NULL)
+			return $categorie;
+		
+		$db = & FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_file_tipo, descrizione FROM file_tipo';
+		$res = & $db->query($query);
+		
+		if (DB :: isError($res))
+			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		
+		$tipi = array ();
+		
+		while ($res->fetchInto($row)) {
+			$tipi[$row[0]] = $row[1];
+		}
+
+		$res->free();
+
+		return $tipi;
 		/**
 		 * @todo da implementare
 		 */
@@ -713,7 +736,7 @@ class FileItem {
 		static $tipi = NULL;
 		
 		if ($tipi != NULL)
-			return $categorie;
+			return $tipi;
 		
 		$db = & FrontController::getDbConnection('main');
 		
