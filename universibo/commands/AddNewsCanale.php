@@ -20,22 +20,26 @@ class AddNewsCanale extends CanaleCommand {
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		
-
+		$krono =& $frontcontroller->getKrono();
+		
 		// valori default form
 		$f7_titolo =	'';
-		$f7_data_ins_gg =	'';
-		$f7_data_ins_mm =	'';
-		$f7_data_ins_aa =	'';
-		$f7_data_ins_ora =	'';
-		$f7_data_ins_min =	'';
+		$f7_data_ins_gg =	$krono->k_date('%j');
+		$f7_data_ins_mm =	$krono->k_date('%m');
+		$f7_data_ins_aa =	$krono->k_date('%Y')'';
+		$f7_data_ins_ora =	$krono->k_date('%H');
+		$f7_data_ins_min =	$krono->k_date('%i');
 		$f7_data_scad_gg =	'';
 		$f7_data_scad_mm =	'';
 		$f7_data_scad_aa =	'';	
 		$f7_data_scad_ora =	'';
 		$f7_data_scad_min =	'';
-		$f7_testo		= false;
+		$f7_testo		= '';
 		$f7_urgente		= false;
 		$f7_scadenza	= false;
+		/*
+		 * @todo da gestire
+		 */
 		$f7_canale[]	= array();
 		
 		$f7_accept = false;
@@ -45,130 +49,186 @@ class AddNewsCanale extends CanaleCommand {
 			//var_dump($_POST);
 			$f7_accept = true;
 
-			if ( !array_key_exists('f7_nome', $_POST) ||
-				 !array_key_exists('f7_cognome', $_POST) ||
-				 !array_key_exists('f7_mail', $_POST) ||
-				 !array_key_exists('f7_tel', $_POST) ||
-				 !array_key_exists('f7_altro', $_POST) ) 
+			if ( !array_key_exists('f7_titolo', $_POST) ||
+				 !array_key_exists('f7_data_ins_gg', $_POST) ||
+				 !array_key_exists('f7_data_ins_mm', $_POST) ||
+				 !array_key_exists('f7_data_ins_aa', $_POST) ||
+				 !array_key_exists('f7_data_ins_ora', $_POST) ||
+				 !array_key_exists('f7_data_ins_min', $_POST) ||
+				 !array_key_exists('f7_data_scad_gg', $_POST) ||
+				 !array_key_exists('f7_data_scad_mm', $_POST) ||
+				 !array_key_exists('f7_data_scad_aa', $_POST) ||
+				 !array_key_exists('f7_data_scad_ora', $_POST) ||
+				 !array_key_exists('f7_data_scad_min', $_POST) ||
+				 !array_key_exists('f7_testo', $_POST) ) 
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f7_accept = false;
 			}	
 
-			//nome	
-			if ( strlen($_POST['f7_nome']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il nome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			//titolo	
+			if ( strlen($_POST['f7_titolo']) > 150 ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il titolo deve essere inferiore ai 150 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
-			}	
-			else $q3_nome = $f7_nome = $_POST['f7_nome'];
+			}
+			elseif ( $_POST['f7_titolo'] == '' ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il titolo deve essere inserito obbligatoriamente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f7_accept = false;
+			}
+			else $f7_titolo = $_POST['f7_titolo'];
 
-			//cognome
-			if ( strlen($_POST['f7_cognome']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il cognome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			//data_ins_gg
+			if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_gg'] ) ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo giorno di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			else $q3_cognome = $f7_cognome = $_POST['f7_cognome'];
-			
-			//telefono
-			if ( strlen($_POST['f7_tel']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il numero di cellulare indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			else $f7_data_ins_gg = $_POST['f7_data_ins_gg'];
+
+			//f7_data_ins_mm
+			if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_mm'] ) ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo mese di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			else $q3_tel = $f7_tel = $_POST['f7_tel'];
-			
-			//mail
-			if ( strlen($_POST['f7_mail']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'L\' indirizzo e-mail indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			else $f7_data_ins_mm = $_POST['f7_data_ins_mm'];
+
+			//f7_data_ins_aa
+			if ( !ereg('^([0-9]{4})$', $_POST['f7_data_ins_aa'] ) ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo anno di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			elseif ( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f7_mail']) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			elseif($_POST['f7_data_ins_aa'] < 1970 || $_POST['f7_data_ins_aa'] > 2032)
+			{
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			else $q3_mail = $f7_mail = $_POST['f7_mail'];
-			
-			//altro
-			$q3_altro = $f7_altro = $_POST['f7_altro'];
-			
-			//tempo
-			if ( !array_key_exists('f7_tempo', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Indica quanto tempo utilizzi una connessione internet','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			else $f7_data_ins_aa = $_POST['f7_data_ins_aa'];
+
+			//f7_data_ins_ora
+			if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_ora'] ) ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo ora di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			else $q3_tempo = $f7_tempo = $_POST['f7_tempo'];
-			
-			//internet
-			if ( !array_key_exists('f7_internet', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Indica quanto tempo libero potresti dedicare al progetto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			elseif($_POST['f7_data_ins_ora'] < 0 || $_POST['f7_data_ins_ora'] > 23)
+			{
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo ora di inserimento deve essere compreso tra 0 e 23','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			else $q3_internet = $f7_internet = $_POST['f7_internet'];
-			
-			//privacy
-			if ( !array_key_exists('f7_privacy', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'E\' necessario acconsentire al trattamento dei dati personali','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			else $f7_data_ins_ora = $_POST['f7_data_ins_ora'];
+
+			//f7_data_ins_min
+			if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_min'] ) ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo minuto di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f7_accept = false;
 			}
-			
-			//attività offline check
-			if ( array_key_exists('f7_offline', $_POST) ) {
-				$q3_offline = 'S';
-				$f7_offline = true;
+			elseif($_POST['f7_data_ins_min'] < 0 || $_POST['f7_data_ins_min'] > 59)
+			{
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo ora di inserimento deve essere compreso tra 0 e 59','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f7_accept = false;
 			}
-			else $q3_offline = 'N';
+			else $f7_data_ins_min = $_POST['f7_data_ins_min'];
 			
-			//moderatore check
-			if ( array_key_exists('f7_moderatore', $_POST) ) {
-				$q3_moderatore = 'S';
-				$f7_moderatore = true;
-			}
-			else $q3_moderatore = 'N';
+			////////////
+			      if ( !checkdate($_POST['news_scad_mese'],$_POST['news_scad_giorno'],$_POST['news_scad_anno']) ) errore('La data specificata non esiste',__FILE__,__LINE__);
+      if ( $_POST['news_scad_ora'] < 0  ||  $_POST['news_scad_ora'] > 23 ) errore('Valore ora deve essere compreso tra 0 e 23',__FILE__,__LINE__);
+      if ( $_POST['news_scad_minuto'] < 0  ||  $_POST['news_scad_minuto'] > 59 ) errore('Valore minuto deve essere compreso tra il 0 e 59',__FILE__,__LINE__);
+      
+			$data_scadenza=mktime($_POST['news_scad_ora'], $_POST['news_scad_minuto'],
+      "0", $_POST['news_scad_mese'], $_POST['news_scad_giorno'], $_POST['news_scad_anno']);
+		}
 			
-			//stesura contenuti check
-			if ( array_key_exists('f7_contenuti', $_POST) ) {
-				$q3_contenuti = 'S';
-				$f7_contenuti = true;
-			}
-			else $q3_contenuti = 'N';
 			
-			//test check
-			if ( array_key_exists('f7_test', $_POST) ) {
-				$q3_test = 'S';
-				$f7_test = true;
-			}
-			else $q3_test = 'N';
 			
-			//grafica check
-			if ( array_key_exists('f7_grafica', $_POST) ) {
-				$q3_grafica = 'S';
-				$f7_grafica = true;
-			}
-			else $q3_grafica = 'N';
+			if (array_key_exists('f7_scadenza', $_POST)){
 			
-			//progettazione check
-			if ( array_key_exists('f7_prog', $_POST) ) {
-				$q3_prog = 'S';
-				$f7_prog = true;
+				$f7_scadenza = true;
+				
+				//data_scad_gg
+				if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_gg'] ) ) {
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo giorno di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				else $f7_data_scad_gg = $_POST['f7_data_scad_gg'];
+	
+				//f7_data_scad_mm
+				if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_mm'] ) ) {
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo mese di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				else $f7_data_scad_mm = $_POST['f7_data_scad_mm'];
+	
+				//f7_data_scad_aa
+				if ( !ereg('^([0-9]{4})$', $_POST['f7_data_scad_aa'] ) ) {
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo anno di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				elseif($_POST['f7_data_scad_aa'] < 1970 || $_POST['f7_data_scad_aa'] > 2032)
+				{
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				else $f7_data_scad_aa = $_POST['f7_data_scad_aa'];
+	
+				//f7_data_scad_ora
+				if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_ora'] ) ) {
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo ora di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				elseif($_POST['f7_data_scad_ora'] < 0 || $_POST['f7_data_scad_ora'] > 23)
+				{
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo ora di inserimento deve essere compreso tra 0 e 23','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				else $f7_data_scad_ora = $_POST['f7_data_scad_ora'];
+	
+				//f7_data_scad_min
+				if ( !ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_min'] ) ) {
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il formato del campo minuto di inserimento non è valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				elseif($_POST['f7_data_scad_min'] < 0 || $_POST['f7_data_scad_min'] > 59)
+				{
+					Error::throw(_ERROR_NOTICE,array('msg'=>'Il campo ora di inserimento deve essere compreso tra 0 e 59','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+					$f7_accept = false;
+				}
+				else $f7_data_scad_min = $_POST['f7_data_scad_min'];
+			
 			}
-			else $q3_prog = 'N';
+			
+			//testo	
+			if ( strlen($_POST['f7_testo']) > 3000 ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il testo della notizia deve essere inferiore ai 3000 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f7_accept = false;
+			}
+			elseif ( $_POST['f7_testo'] == '' ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il testo della notizia deve essere inserito obbligatoriamente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f7_accept = false;
+			}
+			else $f7_testo = $_POST['f7_testo'];
+
+
+			//flag urgente
+			if ( array_key_exists('f7_urgente', $_POST) ) {
+				$f7_urgente = true;
+			}
 			
 		}
-		
-		
-		// riassegna valori form
-		$template->assign('f7_nome',	$f7_nome);
-		$template->assign('f7_cognome',	$f7_cognome);
-		$template->assign('f7_mail',	$f7_mail);
-		$template->assign('f7_tel',		$f7_tel);
-		$template->assign('f7_altro',	$f7_altro); 
-		$template->assign('f7_offline',	$f7_offline);
-		$template->assign('f7_moderatore',	$f7_moderatore);
-		$template->assign('f7_contenuti',	$f7_contenuti);
-		$template->assign('f7_test',	$f7_test);
-		$template->assign('f7_grafica',	$f7_grafica);
-		$template->assign('f7_prog',	$f7_prog);
-		$template->assign('f7_tempo',	$f7_tempo);
-		$template->assign('f7_internet',	$f7_internet);
+
+
+		$template->assign('f7_titolo',			$f7_titolo);
+		$template->assign('f7_data_ins_mm',		$f7_data_ins_mm);
+		$template->assign('f7_data_ins_gg',		$f7_data_ins_gg);
+		$template->assign('f7_data_ins_aa',		$f7_data_ins_aa);
+		$template->assign('f7_data_ins_ora',	$f7_data_ins_ora); 
+		$template->assign('f7_data_ins_min',	$f7_data_ins_min);
+		$template->assign('f7_data_scad_gg',	$f7_data_scad_gg);
+		$template->assign('f7_data_scad_mm',	$f7_data_scad_mm);
+		$template->assign('f7_data_scad_aa',	$f7_data_scad_aa);
+		$template->assign('f7_data_scad_ora',	$f7_data_scad_ora);
+		$template->assign('f7_data_scad_min',	$f7_data_scad_min);
+		$template->assign('f7_testo',			$f7_testo);
+		$template->assign('f7_urgente',			$f7_urgente);
+		$template->assign('f7_scadenza',		$f7_scadenza);
+		$template->assign('f7_canale',			$f7_canale);
 		
 		
 		//esecuzione operazioni accettazione del form
