@@ -128,7 +128,7 @@ class ShowNews extends PluginCommand {
 				$elenco_news_tpl[$i]['scadenza']     = '';
 				if ( ($news->getDataScadenza()!=NULL) && ( $user->isAdmin() || $referente || $this_moderatore ) && $flag_chkDiritti)
 				{
-					$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y', $news->getDataScadenza() );
+					$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
 				}
 				
 				$elenco_news_tpl[$i]['modifica']     = '';

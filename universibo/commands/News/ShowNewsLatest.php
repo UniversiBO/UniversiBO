@@ -119,7 +119,7 @@ class ShowNewsLatest extends PluginCommand {
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();
 				$elenco_news_tpl[$i]['notizia']      = $news->getNotizia();
-				$elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $news->getDataIns());
+				$elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y - %H:%i', $news->getDataIns());
 				//echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
 				$elenco_news_tpl[$i]['nuova']        = ($personalizza_not_admin==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
 				$elenco_news_tpl[$i]['autore']       = $news->getUsername();
