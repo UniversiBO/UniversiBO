@@ -48,7 +48,7 @@
 	</div>
 	<div class="box"> {*quarto blocchetto *}
 		<h3>Giugno</h3>
-		<table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
+		<table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="Calendario">
 			<tr align="center">
 				<th class="Feriali"><b>L</b></th>
 				<th class="Feriali"><b>M</b></th>
