@@ -15,7 +15,7 @@ require_once 'PHPUnit'.PHP_EXTENSION;
 /*
 * classe da testare 
 */
-require_once '../universibo/User'.PHP_EXTENSION;
+require_once 'User'.PHP_EXTENSION;
 
 
 /**

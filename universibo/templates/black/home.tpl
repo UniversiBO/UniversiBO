@@ -9,9 +9,9 @@
 
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal"><br />
-<p class="Titolo">{$home_langWelcome}</p>
-<p>{$home_langWhatIs}</p>
-<p>{$home_langMission}</p>
+<p class="Titolo">{$home_langWelcome|escape:"htmlall"}</p>
+<p>{$home_langWhatIs|escape:"htmlall"}</p>
+<p>{$home_langMission|escape:"htmlall"}</p>
 
 &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">

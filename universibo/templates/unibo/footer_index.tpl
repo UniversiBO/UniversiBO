@@ -8,7 +8,7 @@
                     <td bgcolor="#999999" colspan="3"></td>
                   </tr>
                   <tr> 
-                    <td width="1" bgcolor="#999999"><img border="0" src="tpl/unibo/spacer.gif"></td>
+                    <td width="1" bgcolor="#999999"><img border="0" width="1" height="1" src="tpl/unibo/spacer.gif" /></td>
                     <td align="center"> <table cellspacing="0" cellpadding="1" width="160" align="center" border="0"summary="" background="tpl/unibo/pixel_2.gif">
                         {* primo blocchetto *}
                           <tr> 
