@@ -84,7 +84,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 				$f4_accept = false;
 			}
 			elseif(!eregi('^([[:alnum:]])+\.[[[:alnum:]]+$',$_POST['f4_ad_user'])){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'La mail di ateneo inserita '.$_POST['f4_ad_user'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>"La mail di ateneo ".$_POST['f4_ad_user']."@studio.unibo.it appartiene ad un utente gi? registrato.\nProbabilmente sei gi? registrato, utilizza la pagina Password Smarrita per recuperare la password",'file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif(User::activeDirectoryUsernameExists($_POST['f4_ad_user'].'@studio.unibo.it')){
@@ -177,7 +177,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			
 			if(!$mail->Send()) Error::throwError(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione è stata registrata con successo.\n\nLe informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono state inviate al tuo indirizzo e-mail di ateneo\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$new_user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
+			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione ? stata registrata con successo.\n\nLe informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono state inviate al tuo indirizzo e-mail di ateneo\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$new_user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
 			'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
