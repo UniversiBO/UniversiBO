@@ -13,7 +13,7 @@ require_once ('News/NewsItem'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class NewsAdd extends CanaleCommand {
+class NewsEdit extends CanaleCommand {
 
 	function execute() {
 
@@ -22,8 +22,15 @@ class NewsAdd extends CanaleCommand {
 		$user_ruoli = & $user->getRuoli();
 		$id_canale = $canale->getIdCanale();
 
+		
+		//diritti
 		$referente = false;
 		$moderatore = false;
+
+		if (!array_key_exists('id_news', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_news'] )  )
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id della notizia richiesta non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
 
 		if (array_key_exists($id_canale, $user_ruoli)) {
 			$ruolo = & $user_ruoli[$id_canale];
@@ -32,31 +39,37 @@ class NewsAdd extends CanaleCommand {
 			$moderatore = $ruolo->isModeratore();
 		}
 		
-		if (!($user->isAdmin() || $referente || $moderatore)) 
+		$news =& NewsItem::selectNewsItem($_GET['id_news']);
+		$autore = ($user->getIdUser() == $news->getIdUtente());
+		
+		if (!($user->isAdmin() || $referente || ($moderatore && $utore))) 
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+		
+		$param = array('id_notizie'=>array($_GET['id_news']) );
+		$this->executePlugin('ShowNews', $param);
+
 		
 		$frontcontroller = & $this->getFrontController();
 		$template = & $frontcontroller->getTemplateEngine();
-
+		
 		$krono = & $frontcontroller->getKrono();
-
+		$data_inserimento = $news->getDataIns();
 		// valori default form
-		$f7_titolo = '';
-		$f7_data_ins_gg = $krono->k_date('%j');
-		$f7_data_ins_mm = $krono->k_date('%m');
-		$f7_data_ins_aa = $krono->k_date('%Y');
-		$f7_data_ins_ora = $krono->k_date('%H');
-		$f7_data_ins_min = $krono->k_date('%i');
+		$f7_titolo = $news->getTitolo();
+		$f7_data_ins_gg = $krono->k_date('%j', $data_inserimento);
+		$f7_data_ins_mm = $krono->k_date('%m', $data_inserimento);
+		$f7_data_ins_aa = $krono->k_date('%Y', $data_inserimento);
+		$f7_data_ins_ora = $krono->k_date('%H', $data_inserimento);
+		$f7_data_ins_min = $krono->k_date('%i', $data_inserimento);
 		$f7_data_scad_gg = '';
 		$f7_data_scad_mm = '';
 		$f7_data_scad_aa = '';
 		$f7_data_scad_ora = '';
 		$f7_data_scad_min = '';
-		$f7_testo = '';
-		$f7_urgente = false;
-		$f7_scadenza = false;
-		$f7_canale = array ();
-
+		$f7_testo = $news->getNotizia();
+		$f7_urgente = $news->getUrgente();
+		$f7_scadenza = $news->getDataScadenza() != null;
+		
 		$elenco_canali = array($id_canale);
 		$ruoli_keys = array_keys($user_ruoli);
 		$num_ruoli = count($ruoli_keys);
@@ -66,8 +79,8 @@ class NewsAdd extends CanaleCommand {
 				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 		}
 		
-	
-	
+		
+		
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
 		{
@@ -80,14 +93,15 @@ class NewsAdd extends CanaleCommand {
 		
 		$f7_accept = false;
 		
-		if (array_key_exists('f7_submit', $_POST)) {
+		if (array_key_exists('f7_submit', $_POST))
+		{
 			$f7_accept = true;
-
+			
 			if (!array_key_exists('f7_titolo', $_POST) || !array_key_exists('f7_data_ins_gg', $_POST) || !array_key_exists('f7_data_ins_mm', $_POST) || !array_key_exists('f7_data_ins_aa', $_POST) || !array_key_exists('f7_data_ins_ora', $_POST) || !array_key_exists('f7_data_ins_min', $_POST) || !array_key_exists('f7_data_scad_gg', $_POST) || !array_key_exists('f7_data_scad_mm', $_POST) || !array_key_exists('f7_data_scad_aa', $_POST) || !array_key_exists('f7_data_scad_ora', $_POST) || !array_key_exists('f7_data_scad_min', $_POST) || !array_key_exists('f7_testo', $_POST)) {
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f7_accept = false;
 			}
-
+			
 			//titolo	
 			if (strlen($_POST['f7_titolo']) > 150) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));

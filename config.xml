@@ -87,6 +87,7 @@
 			<response type="template" name="default">change_password.tpl</response>
 			<response type="template" name="success">change_password_success.tpl</response>
 		</ChangePassword>
+		
 		<NewsAdd class="NewsAdd">
 			<response type="template" name="default">news_add.tpl</response>
 			<response type="template" name="success">news_add_success.tpl</response>
@@ -96,6 +97,13 @@
 			<response type="template" name="success">news_delete_success.tpl</response>
 			<pluginCommand name="ShowNews" class="News.ShowNews" />
 		</NewsDelete>
+		<NewsEdit class="NewsEdit">
+			<response type="template" name="default">news_edit.tpl</response>
+			<response type="template" name="success">news_edit_success.tpl</response>
+			<pluginCommand name="ShowNews" class="News.ShowNews" />
+		</NewsEdit>
+
+
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>
