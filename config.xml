@@ -83,6 +83,10 @@
 		<ShowSettings class="ShowSettings">
 			<response type="template" name="default">impostazioni.tpl</response>
 		</ShowSettings>
+		<ShowPersonalSettings class="ShowPersonalSettings">
+			<response type="template" name="default">show_personal_settings.tpl</response>
+			<response type="template" name="success">show_personal_settings_success.tpl</response>
+		</ShowPersonalSettings>
 		<ShowUser class="ShowUser">
 			<response type="template" name="default">show_user.tpl</response>
 		</ShowUser>

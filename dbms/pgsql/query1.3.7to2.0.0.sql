@@ -778,6 +778,7 @@ INSERT INTO "file_tipo" ("id_file_tipo", "descrizione", "pattern_riconoscimento"
 INSERT INTO "file_tipo" ("id_file_tipo", "descrizione", "pattern_riconoscimento", "icona", "info_aggiuntive") VALUES ('10', 'sxi', '\.sxi$', 'formato_sxi.gif', 'Open Office Impress\r\nPer visualizzare correttamente questo tipo di file avrete bisogno del software libero [url=http://www.openoffice.org/]OpenOffice[/url]');
 INSERT INTO "file_tipo" ("id_file_tipo", "descrizione", "pattern_riconoscimento", "icona", "info_aggiuntive") VALUES ('9', 'sxc', '\.sxc$', 'formato_sxc.gif', 'Open Office Calc\r\nPer visualizzare correttamente questo tipo di file avrete bisogno del software libero [url=http://www.openoffice.org/]OpenOffice[/url]');
 
+--LastHope 28-9-2004
 
-
+UPDATE "utente" SET "default_style" = 'unibo' WHERE 1=1;
  

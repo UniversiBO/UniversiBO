@@ -243,6 +243,15 @@ class User {
 		return $this->notifica;
 	}
 
+	/**
+	 * Imposta il livello di notifica dei messaggi
+	 *
+	 * @param string $notifica il livello da impostare
+	 */
+	function setLivelloNotifica($notifica)
+	{
+		$this->notifica = $notifica;
+	}
 
 
 	/**
@@ -969,13 +978,13 @@ class User {
 	function updateUser()
 	{
 		$db =& FrontController::getDbConnection('main');
-		$utente_ban = ( $this->getBan() ) ? 'S' : 'N';
+		$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
 		
 		
 		$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
 					', password = '.$db->quote($this->getPasswordHash()).
 					', email = '.$db->quote($this->getEmail()).
-					', notifica = '.$db->quote($this->getNotifica()).
+					', notifica = '.$db->quote($this->getLivelloNotifica()).
 					', ultimo_login = '.$db->quote($this->getUltimoLogin()).
 					', ad_username = '.$db->quote($this->getADUsername()).
 					', groups = '.$db->quote($this->getGroups()).
