@@ -55,7 +55,7 @@ class RuoliAdminSearch extends UniversiboCommand {
 			$ruoli_keys = array_keys($canale_ruoli);
 			foreach($ruoli_keys as $key)
 			{
-				if ($canale_ruoli[$key]->isResferente() || $canale_ruoli[$key]->isModeratore() )
+				if ($canale_ruoli[$key]->isReferente() || $canale_ruoli[$key]->isModeratore() )
 				{
 					$ruoli[] =& $canale_ruoli[$key];
 					$user =& User::selectUser($ruolo->getIdUser());

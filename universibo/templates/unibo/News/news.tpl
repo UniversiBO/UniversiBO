@@ -2,16 +2,15 @@
 {* modifica, elimina sono da considerare come boolean, scadenza deve contenere o la stringa "Scade il data" o "scaduta il data"
    tutti e tre i parametri servono per il controllo dei diritti che avviene a livello applicativo *}
 
-<div class="News">
+<div class="news">
 	<h3>::&nbsp;{$titolo|escape:"htmlall"|nl2br}&nbsp;::{if $nuova=="true"}&nbsp;&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}{if $scadenza!=""}{$scadenza|escape:"htmlall"|bbcode2html|nl2br}{/if}</h3>
 	<p>{$notizia|escape:"htmlall"|bbcode2html|ereg_replace:"[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</p>
 	{* TODO capire come togliere tabella *}
 	<table><tr><td>
 	<span class="actions">
-		{if $modifica!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_edt.gif" width="15" height="15" alt="modifica" />
+		{if $modifica!="" && $elimina!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_edt.gif" width="15" height="15" alt="modifica" />
 		<a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a>
-		{/if}&nbsp|&nbsp;
-		{if $elimina!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_del.gif" width="15" height="15" alt="elimina" />
+		&nbsp|&nbsp;&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_del.gif" width="15" height="15" alt="elimina" />
 		<a href="index.php?do={$elimina_link|escape:"htmlall"}">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a>
 		{/if}
 	</span></td><td>

@@ -5,7 +5,6 @@ body
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
-	text-align: left;
 }
 
 /* si gentile con netscape*/
@@ -24,7 +23,9 @@ hr
 
 img
 {
-	border: 0;
+	margin: 0;
+	border: 0 none;
+	padding: 0;
 }
 
 h4
@@ -44,6 +45,10 @@ form input.submit{
 	border: solid 1px #999;
 }
 
+form fieldset 
+{
+	margin: 12px 0;
+}
 
 
 /**
@@ -195,18 +200,15 @@ td.evidenzia{
 #rightmenu
 {
 /*	float: right;	*/
-	padding-right: 10px;
+	/*padding-right: 10px;*/
+	margin-right: 10px;
+	padding: 0;
+	width: 168px;
 }
 
 /**
  * Pagina centrale
  */
-
-#content
-{
-	padding: 10px 20px 10px 30px;
-}
-
 #seiIn
 {
 	display: block;
@@ -221,6 +223,12 @@ td.evidenzia{
 	font-style: oblique;
 }
 
+#content
+{
+	margin: 10px 20px 10px 30px;
+	text-align: center;
+	padding: 0;
+}
 
 #content h1
 {
@@ -241,6 +249,7 @@ td.evidenzia{
 	font-size: 16px;
 	clear: left;
 	color: #386dce;
+	text-align: left;
 }
 
 
@@ -248,23 +257,16 @@ td.evidenzia{
 {
 	margin: 20px 0;
 	padding: 2px;
+	text-align: left;
 }
 
-#content #home p img
-{
-	display: block;
-	position: relative;
-	left: 167px;
-}
-
-#content p
+#content p, #content li
 {
 	clear: left;
-	margin: 4px;
-	/*float: left;*/
+	margin: 10px 4px;
 	display: block;
+	text-align: left;
 }
-
 
 .evidenzia
 {
@@ -284,6 +286,7 @@ td.evidenzia{
 	padding: 0 0 4px;
 	border-top: solid 1px #999;
 	border-bottom: solid 1px #999;
+	text-align: left;
 }
 
 .news p, .news a, .news li, .news h3, .news td
@@ -302,7 +305,6 @@ td.evidenzia{
 	color: #333;
 	margin: 0 0 2px;
 	padding: 2px;
-/*	quotes: "::" "::" "::" "::"; */
 }
 
 .news p, .work p, .box p
@@ -315,7 +317,7 @@ td.evidenzia{
 
 .news table
 {
-	width: 100%;
+ 	width: 100%;
 }
 
 .news .piePagina
@@ -363,13 +365,14 @@ td.evidenzia{
 #content>.work
 {
 	margin: 0.537%;
+	width: 32%;
 }
 
 .box
 {
 	font-size: 10px;
 	border: solid 1px #999;
-	padding: 0px;
+	padding: 0;
 	background: white url(pixel.gif) repeat;
 	margin: 15px 8px;
 }
@@ -423,23 +426,24 @@ td.evidenzia{
 	padding: 0;
 	margin: 0;
 }
-
+.box h3 a, .work h3 a,.news h3 a
+{
+	color: white !important;
+}
 .box span
 {
 	color: #666;
 	margin: 0;
 }
 
-.box .backlink
+.backlink
 {
 	margin-top:3px;
 	/*padding:2px 2px 2px 0;*/
 	width: 100%;
 	text-align: right;
+	text-decoration: underline;
 }
-
-
-
 
 .box .Feriali {
 	font-size: 10px; color: #000;
@@ -467,4 +471,19 @@ td.evidenzia{
 	font-size: 10px;
 	margin: 0;
 	padding: 0;
+}
+
+#alert
+{
+	color: red;
+}
+
+.actions
+{
+	margin-top: 5px;
+}
+
+#content .longText
+{
+	text-align: justify;
 }

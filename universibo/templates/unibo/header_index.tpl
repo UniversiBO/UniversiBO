@@ -3,24 +3,21 @@
 <html>
 <head>
 <title>{$common_title|escape:"html"}</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}">
-<meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
+<meta http-equiv="Content-Type" content="text/html" charset="ISO-8859-1" />
+<meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}" />
+<meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
 {#styleSheet#}
 {#favIcon#}
-</head>
- 
+</head> 
 <body>
 {* inizio tabella di impaginazione GENERALE  *}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-	<colgroup>
-		<col width="200px" />
-		<col />
-		<col width="168px" />
-	</colgroup>
-{* barra in alto, gif di sinistra LOGO a sfondo BIANCO di dimensioni 150x92,gif per il TITOLO a sfondo del colore della tabella con data e menu di navigazione di dimensioni 600x100 *}
-<tr>
- 	<td colspan="3">
+<colgroup>
+	<col width="200px" />
+	<col />
+	<col width="170px" />
+</colgroup>
+<tr><td colspan="3"> {* barra in alto, gif di sinistra LOGO a sfondo BIANCO di dimensioni 150x92,gif per il TITOLO a sfondo del colore della tabella con data e menu di navigazione di dimensioni 600x100 *}
 		<div id="header">
 			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="200" height="92"/></a>
 			<img src="tpl/unibo/logo_{$common_logoType}" alt="Logo UniversiBO" />
@@ -30,11 +27,8 @@
 		</div> {* /header *}
 		<div id="menubar">
 			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a></p>
-			{* spazio per il login *}
-
 		</div> {* /menubar *}
-	</td>
-</tr>
+</td></tr>
 {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
 <tr valign="top">
 	<td class="evidenzia" rowspan="2">
@@ -49,7 +43,7 @@
 					</ul>
 				</li>
 			</ul>
-			<ul class="lastElemento">
+			<ul>
 				<li>Servizi
 					<ul>	
 					{foreach from=$common_servicesLinks item=temp_link}
@@ -59,6 +53,8 @@
 					<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits|lower|capitalize|escape:"htmlall"}</a></li>
 					</ul>
 				</li>
+			</ul>
+			<ul class="lastElemento">
 				<li>Informazioni
 					<ul>
 						<li>-&nbsp;<a href="{$common_helpUri}" >{$common_help}</a></li>
@@ -95,12 +91,3 @@
 	{if $common_alert != ""}
 	<div id="alert">{$common_alert|escape:"htmlall"}</div>
 	{/if}
-	
-
-
-
-
-
- 
-
-

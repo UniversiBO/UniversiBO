@@ -22,7 +22,7 @@
 			<p>{$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} <strong>{$common_userUsername|escape:"htmlall"}</strong><br />
 			{$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <strong class="NormalC">{foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}</strong><br />
 			&nbsp;<br />
-			<input name="f2_submit" type="submit" value="LogOut" /><br />&nbsp;
+			<input class="submit" name="f2_submit" type="submit" value="LogOut" /><br />&nbsp;
 			</form>
 		{/if}
 		</div>	
@@ -31,97 +31,52 @@
 	<div class="box"> {* secondo blocchetto *}
 	<h3>Contatti</h3>
 		<div class="contenuto">
-			{foreach from=$common_contactsCanale item=temp_currLink}
-			<a href="{$temp_currLink.utente_link}">{$temp_currLink.label|escape:"htmlall"}</a>
-			{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/black/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
-			{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/black/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}<br />
+			{foreach from=$common_contactsCanale key=temp_key item=temp_currGroup}
+				<p>{$temp_key|escape:"htmlall"}</p>
+				{foreach from=$temp_currGroup item=temp_currLink}
+					<img src="tpl/black/pallino1.gif" width="12" height="11" alt="" />&nbsp;
+					<a href="{$temp_currLink.utente_link|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a>
+					{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/black/icona_3_r.gif" width="9" height="9" alt="Referente" title="Referente" />{/if}
+					{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/black/icona_3_m.gif" width="9" height="9" alt="Moderatore" title="Moderatore" />{/if}
+				{/foreach}
 			{/foreach}
+			{if $common_contactsEditAvailable == "true"}
+				<div class="actions"><a href="{$common_contactsEdit.uri|escape:"htmlall"}">{$common_contactsEdit.label|escape:"htmlall"}</a></div>
+			{/if}
 		</div>
 	</div>
 	{/if}
 	<div class="box"> {* terzo blocchetto *}
 		<h3>Links</h3>
 		<div class="contenuto">
-			<p><a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Universit&agrave; di BO</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Facolt&agrave; di Ingegneria</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Uniwex</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Guida dello Studente</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Elenco Dipartimenti</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Assoc. Studentesche</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Ordine Ingegneri</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;ATC Bologna</a></p>
-			<p><a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;&nbsp;Trenitalia</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Universit&agrave; di BO</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Facolt&agrave; di Ingegneria</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Uniwex</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Guida dello Studente</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Elenco Dipartimenti</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Assoc. Studentesche</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Ordine Ingegneri</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;ATC Bologna</a></p>
+			<p><a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />&nbsp;Trenitalia</a></p>
 		</div>
 	</div>
 	<div class="box"> {*quarto blocchetto *}
-		<h3>Giugno</h3>
-		<div class="contenuto">
-			<table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="Calendario">
+		<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>
+		<table width="100%" cellspacing="0" cellpadding="1" border="0" summary="Calendario">
+			<tr align="center">
+			{foreach name=weekday from=$common_calendarWeekDays item=temp_weekday}
+			 <th class="{if %weekday.last%}Domeniche{else}Feriali{/if}">{$temp_weekday.numero|escape:"htmlall"|capitalize}</th>
+			{/foreach}
+			</tr>
+			{foreach from=$common_calendar item=temp_week}
 				<tr align="center">
-					<th class="Feriali"><b>L</b></th>
-					<th class="Feriali"><b>M</b></th>
-					<th class="Feriali"><b>M</b></th>
-					<th class="Feriali"><b>G</b></th>
-					<th class="Feriali"><b>V</b></th>
-					<th class="Feriali"><b>S</b></th>
-					<th class="Domeniche"><b>D</b></th>
+				{foreach from=$temp_week item=temp_day}
+					{if $temp_day.today=='true'}<td class="Oggi">{$temp_day.numero|escape:"htmlall"}</td>
+					{else}<td class="{if $temp_day.tipo=='none'}Piccolo{elseif $temp_day.tipo=='feriale'}Feriali{elseif $temp_day.tipo=='festivo'}Festivi{elseif $temp_day.tipo=='domenica'}Domeniche{/if}">{$temp_day.numero|escape:"htmlall"}</td>{/if}
+				{/foreach}
 				</tr>
-				<tr align="center">
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Domeniche">1</td>
-				</tr>
-				<tr align="center">
-					<td class="Feriali">2</td>
-					<td class="Feriali">3</td>
-					<td class="Feriali">4</td>
-					<td class="Feriali">5</td>
-					<td class="Feriali">6</td>
-					<td class="Feriali">7</td>
-					<td class="Domeniche">8</td>
-				</tr>
-				<tr align="center">
-					<td class="Feriali">9</td>
-					<td class="Feriali">10</td>
-					<td class="Feriali">11</td>
-					<td class="Feriali">12</td>
-					<td class="Oggi">13</td>
-					<td class="Feriali">14</td>
-					<td class="Domeniche">15</td>
-				</tr>
-				<tr align="center">
-					<td class="Feriali">16</td>
-					<td class="Feriali">17</td>
-					<td class="Feriali">18</td>
-					<td class="Feriali">19</td>
-					<td class="Feriali">20</td>
-					<td class="Feriali">21</td>
-					<td class="Domeniche">22</td>
-				</tr>
-				<tr align="center">
-					<td class="Feriali">23</td>
-					<td class="Feriali">24</td>
-					<td class="Feriali">25</td>
-					<td class="Feriali">26</td>
-					<td class="Feriali">27</td>
-					<td class="Feriali">28</td>
-					<td class="Domeniche">29</td>
-				</tr>
-				<tr align="center">
-					<td class="Feriali">30</td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-					<td class="Piccolo"></td>
-				</tr>
-			</table>
-		</div>
+			{/foreach}
+		</table>
 	</div>
 	
 	{if $common_isSetVisite == 'true'}

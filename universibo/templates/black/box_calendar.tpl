@@ -13,16 +13,16 @@
  <a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a><br />
  <img src="tpl/black/invisible.gif" width="1" height="4" alt="" /></td>
  </tr>
-<th><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
+<tr><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
  <tr bgcolor="#FFFFFF">
- <td class="FerialiD" align="center">L</td>
- <td class="FerialiD" align="center">M</td>
- <td class="FerialiD" align="center">M</td>
- <td class="FerialiD" align="center">G</td>
- <td class="FerialiD" align="center">V</td>
- <td class="FerialiD" align="center">S</td>
- <td class="DomenicheD" align="center">D</td>
- </th>
+ <th class="FerialiD" align="center">L</th>
+ <th class="FerialiD" align="center">M</th>
+ <th class="FerialiD" align="center">M</th>
+ <th class="FerialiD" align="center">G</th>
+ <th class="FerialiD" align="center">V</th>
+ <th class="FerialiD" align="center">S</th>
+ <th class="DomenicheD" align="center">D</th>
+ </tr>
 <tr><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
 
 {foreach from=$common_calendar item=temp_week}
