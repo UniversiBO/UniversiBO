@@ -89,7 +89,7 @@ class CanaleCommand extends UniversiboCommand
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 		
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale =& $this->getRequestCanale();
 		$user =& $this->getSessionUser();

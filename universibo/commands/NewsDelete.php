@@ -21,14 +21,27 @@ class NewsDelete extends CanaleCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$user =& $this->getSessionUser();
-		$canale =& $this->getCanale();
+		$canale =& $this->getRequestCanale();
+		
+		if (!array_key_exists('id_news', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_news'] )  )
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id della notizia richiesta non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
+		
+		//diritti
+		
 		
 		if (array_key_exists('f8_submit', $_POST)  )
 		{
-			
+			//cancellazione
+			return 'success';
 		}
-
-
+		
+		//visualizza notizia
+		$param = array('id_notizie'=>array($_GET['id_news']) );
+		$this->executePlugin('ShowNews', $param );
+		
+		
 		return 'default';
 	}
 

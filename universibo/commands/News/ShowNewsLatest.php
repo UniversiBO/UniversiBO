@@ -5,7 +5,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
- * ShowNewsLatest ? un'implementazione di PluginCommand.
+ * ShowNewsLatest è un'implementazione di PluginCommand.
  *
  * Mostra le ultime $num notizie del canale.
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.

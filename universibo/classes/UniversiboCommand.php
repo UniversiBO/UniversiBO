@@ -335,7 +335,7 @@ class UniversiboCommand extends BaseCommand {
 			if ( $elenco_facolta[$i]->isGroupAllowed( $session_user_groups ) ) 
 			{
 				$common_facLinks[$i] = array (); 
-				$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&amp;id_canale='.$elenco_facolta[$i]->getIdCanale();  
+				$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&id_canale='.$elenco_facolta[$i]->getIdCanale();  
 				$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNome(); 			
 			}
 		}

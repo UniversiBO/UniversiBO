@@ -94,6 +94,7 @@
 		<NewsDelete class="NewsDelete">
 			<response type="template" name="default">news_delete.tpl</response>
 			<response type="template" name="success">news_delete_success.tpl</response>
+			<pluginCommand name="ShowNews" class="News.ShowNews" />
 		</NewsDelete>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
