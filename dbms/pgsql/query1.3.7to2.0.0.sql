@@ -666,3 +666,8 @@ INSERT INTO "phpbb_themes" ("themes_id", "style_name", "template_name", "head_st
 
 --23-9-04
 update canale set permessi_groups = 127 where id_canale = 73;
+
+UPDATE canale SET files_attivo = 'S' WHERE tipo_canale IN (1,5);
+UPDATE canale SET files_attivo = 'N' WHERE tipo_canale IN (2,3,4);
+UPDATE canale SET news_attivo = 'S' WHERE 1 = 1;
+

@@ -30,74 +30,45 @@ class ShowMyUniversiBO extends UniversiboCommand
 		
 		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
 		
-		if(!$utente->isOspite())
+		if($utente->isOspite())
+			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
+		
+		$arrayIdCanaliNews = array();
+		$arrayIdCanaliFiles = array();
+		$arrayCanali = array();
+		$arrayRuoli =& $utente->getRuoli();
+		$keys = array_keys($arrayRuoli);
+		foreach ($keys as $key)
 		{
-			$arrayNewsItems = array();
-			$arrayFilesItems = array();
-			$arrayCanali = array();
-			$arrayRuoli =& $utente->getRuoli();
-			$keys = array_keys($arrayRuoli);
-			$canali_senza_servizio_news = 0;
-			$canali_senza_servizio_files = 0;
-			$num_files = 0;
-			foreach ($keys as $key)
+			$ruolo =& $arrayRuoli[$key];
+			if ($ruolo->isMyUniversibo())
 			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
+							
+				$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+				$arrayCanali[] = $key;
+				if ($canale->getServizioNews())
 				{
-								
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$arrayCanali[] = $key;
-					if ($canale->getServizioNews())
-					{
-						$id_canale = $canale->getIdCanale();
-						$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
-						$arrayNewsItems[$key] = $id_canale;
-//						$num_news = $num_news + $canale_news;
-					}
-					else{$canali_senza_servizio_news++;  }
-					
-					if ($canale->getServizioFiles())
-					{
-						$id_canale = $canale->getIdCanale();
-						$canale_files = $this->getNumFilesCanale($id_canale);
-						$arrayFilesItems[$key] = $id_canale;
-						$num_files = $num_files + $canale_files;
-					}
-					else{$canali_senza_servizio_files++;}
+					$id_canale = $canale->getIdCanale();
+					$arrayIdCanaliNews[] = $id_canale;
+				}
+				if ($canale->getServizioFiles())
+				{
+					$id_canale = $canale->getIdCanale();
+					$arrayIdCanaliFiles[] = $id_canale;
 				}
 			}
-			if($canali_senza_servizio_news==count($arrayRuoli))
-			{
-			
-			}
-			else
-			{
-				$arrayNewsItems = $this->getLatestNewsCanale(5,$arrayCanali);
-				$this->executePlugin('ShowMyNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
-			}
-			
-			if($canali_senza_servizio_files==count($arrayRuoli))
-			{
-			
-			}
-			else
-			{
-				$arrayFilesItems = $this->getLatestFileCanale(5,$arrayCanali);
-			}
-			
-			$template->assign('showMyScheda','index.php?do=ShowUser&id_utente='.$utente->getIdUser());
-//			var_dump($arrayFilesItems);
-//			die();
-			
-			
-		}
-		else
-		{
-			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
+		$arrayNewsItems = $this->getLatestNewsCanale(5,$arrayIdCanaliNews);
+
+		$this->executePlugin('ShowMyNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
+
+		$arrayFilesItems = $this->getLatestFileCanale(5,$arrayIdCanaliFiles);
 		
+		$template->assign('showMyScheda','index.php?do=ShowUser&id_utente='.$utente->getIdUser());
+//		var_dump($arrayFilesItems);
+//		die();
+			
 	}
 	
 	/**
