@@ -81,7 +81,7 @@ class CanaleCommand extends UniversiboCommand {
 		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale = $this->getRequestCanale();
 		$canale->addVisite();
@@ -101,6 +101,10 @@ class CanaleCommand extends UniversiboCommand {
         //var_dump($template);
 		
 		$canale =& $this->getRequestCanale();
+		$user =& $this->getSessionUser();
+		
+		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
+			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
 		$template->assign( 'common_isSetVisite', 'S' );
 		$template->assign( 'common_visite', $canale->getVisite() );

@@ -15,6 +15,23 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
 class ShowHome extends CanaleCommand 
 {
 	
+	/** 
+	 * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
+	 */
+	function initCommand( &$frontController )
+	{
+		
+		parent::initCommand( $frontController );
+		
+		$canale =& $this->getRequestCanale();
+		//var_dump($canale);
+		
+		if ( $canale->getTipoCanale() != CANALE_HOME )
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo canale richiesto non corrisponde al comando selezionato','file'=>__FILE__,'line'=>__LINE__));
+				
+	}
+
+
 	function execute()
 	{
 		$template =& $this->frontController->getTemplateEngine();

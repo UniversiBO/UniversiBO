@@ -151,6 +151,20 @@ class Canale {
 
 
 	/**
+	 * Restituisce true se il gruppo o uno dei gruppi appartenenti a $groups 
+	 * ha il permesso di acecsso al canale, altrimenti false
+	 *
+	 * @param int $groups gruppi di cui si vuole verificare l'accesso
+	 * @return boolean
+	 */
+	function isGroupAllowed($groups)
+	{
+		return (boolean) ($this->permessi & $groups);
+	}
+
+
+
+	/**
 	 * Ritorna il tipo di canale
 	 *
 	 * es: $tipo_canale:
