@@ -65,7 +65,7 @@
 </td>
 <td>
 	{*<p id="seiIn">sei in: <a href="">Home</a></p>*}
-	<div id="content" width="100%"> {* COLONNA MENU CENtrALE *}
+	<div id="content"> {* COLONNA MENU CENtrALE *}
 	{if $common_alert != ""}
 	<div id="alert">{$common_alert|escape:"htmlall"}</div>
 	{/if}
