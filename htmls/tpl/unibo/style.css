@@ -618,6 +618,8 @@ td.evidenzia{
 	font-size: 11px !important;
 	display: inline;
 }
+.titoloPagina h2, .titoloPagina h4 { margin-left: 0 !important;}
+
 .titoloPagina
 {
 	margin-bottom: 30px;
