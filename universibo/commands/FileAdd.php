@@ -336,6 +336,10 @@ class FileAdd extends CanaleCommand {
 					$canale =& $elenco_canali_retrieve[$key];
 					$canale->setUltimaModifica(time(), true);
 				}
+				
+        		$db->autoCommit(true);
+				ignore_user_abort(0);
+				
 				return 'success';
 			}
 
