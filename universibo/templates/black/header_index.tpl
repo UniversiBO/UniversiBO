@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}">
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
+<script type="text/javascript" src="tpl/black/js_common.js"></script>
 {#styleSheet#}
 </head>
  

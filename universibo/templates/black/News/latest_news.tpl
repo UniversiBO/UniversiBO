@@ -3,9 +3,13 @@
 <img src="tpl/black/news_30.gif" width="100" height="39" alt="News" /><br />
 </td>
 </tr>
-<tr><td class="piccolo" align="right">
-&nbsp;{if $showNewsLatest_addNewsFlag == "true"}<a href="{$showNewsLatest_addNewsUri}">{$showNewsLatest_addNews}</a>{/if}<br />
-&nbsp;{if $showNewsLatest_langNewsShowOthers != ""}<a href="{$showNewsLatest_langNewsShowOthersUri}">{$showNewsLatest_langNewsShowOthers}</a>{/if}</td>
+<tr><td class="piccolo">
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
+<tr><td class="piccolo">
+&nbsp;{if $showNewsLatest_langNewsShowOthers != ""}<img src="tpl/black/news_all.gif" width="15" height="15" alt="" /><a href="{$showNewsLatest_langNewsShowOthersUri}">{$showNewsLatest_langNewsShowOthers}</a>&nbsp;&nbsp;&nbsp;{/if}
+</td><td class="piccolo" align="right">
+&nbsp;{if $showNewsLatest_addNewsFlag == "true"}<img src="tpl/black/news_new.gif" width="15" height="15" alt="" /><a href="{$showNewsLatest_addNewsUri}">{$showNewsLatest_addNews}</a>{/if}</td>
+</td></tr></table>
 <tr>
 <td class="Normal" align="center">
 {if $showNewsLatest_langNewsAvailableFlag=="true"}

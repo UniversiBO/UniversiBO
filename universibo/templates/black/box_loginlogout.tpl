@@ -9,7 +9,7 @@
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="middle" align="center">
 {if $common_userLoggedIn=='false'}
-<form action="{$common_receiverUrl}?do=Login" name="form1_a" method="post">
+<form action="index.php?do=Login" name="form1_a" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
 <td><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
@@ -22,16 +22,7 @@ Password:<br /><input type="password" name="f1_password" size="9" maxlength="25"
 </tr>
 <tr>
 <td class="Menu">&nbsp;<br />
-{* le funzioni javascript sarebbe meglio metterle in un altro file per scaricarle una volta sola *}
-{* inoltre è palloso scrivere le graffe con Smarty che interpreta il template!! *}
-<script type="text/javascript" language="JavaScript">
-<!--
-function universiboPopup(dest)
-{ldelim}
-	window.open(dest,'','scrollbars=yes,resizable=yes,scrolling=yes,top=20,left=50')
-{rdelim}
--->
-</script>
+
 <script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\"><font color=\"#FF0000\">Registrazione Studenti<\/font><\/a><br />");
@@ -48,7 +39,7 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;
 </table></form>
 {else}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<form action="{$common_receiverUrl}?do=Logout" name="form2" method="post">
+<form action="index.php?do=Logout" name="form2" method="post">
 <tr><td class="Normal" valign="center" align="center">&nbsp;<br />
 {$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{$common_userUsername|escape:"htmlall"}</font><br />
 {$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}</font><br />

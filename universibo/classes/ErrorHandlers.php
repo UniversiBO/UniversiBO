@@ -55,7 +55,8 @@ class ErrorHandlers{
 	{
 		$_SESSION['error_param'] = $param;
 
-		FrontController::redirectCommand('ShowError');
+		( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' ) ? $page_type = '&pageType=popup' : $page_type = '';
+		FrontController::redirectCommand('ShowError'.$page_type);
 		exit(1);
 	}
 

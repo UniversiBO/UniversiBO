@@ -88,12 +88,11 @@ class CanaleCommand extends UniversiboCommand
 		if ($tipo_canale === false )
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
-		$dispatch_array = array (	CANALE_DEFAULT   => 'Canale',
-									CANALE_HOME      => 'Canale',
-									CANALE_FACOLTA   => 'Facolta',
-									CANALE_CDL       => 'Cdl',
-									CANALE_ESAME_ING => 'EsameIng',
-									CANALE_ESAME_ECO => 'EsameEco');
+		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
+									CANALE_HOME         => 'Canale',
+									CANALE_FACOLTA      => 'Facolta',
+									CANALE_CDL          => 'Cdl',
+									CANALE_INSEGNAMENTO => 'Insegnamento');
 
 		$class_name = $dispatch_array[$tipo_canale];
 		require_once($class_name.PHP_EXTENSION);

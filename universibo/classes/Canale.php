@@ -2,12 +2,12 @@
 
 require_once('Ruolo'.PHP_EXTENSION);
 
-define('CANALE_DEFAULT'   ,1);
-define('CANALE_HOME'      ,2);
-define('CANALE_FACOLTA'   ,3);
-define('CANALE_CDL'       ,4);
-define('CANALE_ESAME_ING' ,5);
-define('CANALE_ESAME_ECO' ,6);
+define('CANALE_DEFAULT'      ,1);
+define('CANALE_HOME'         ,2);
+define('CANALE_FACOLTA'      ,3);
+define('CANALE_CDL'          ,4);
+define('CANALE_INSEGNAMENTO' ,5);
+//define('CANALE_ESAME_ECO'    ,6);
 
 
 /**
@@ -82,12 +82,11 @@ class Canale {
 	 * Crea un oggetto canale 
 	 *
 	 * $tipo_canale:
-	 *  define('CANALE_DEFAULT'   ,1);
-	 *  define('CANALE_HOME'      ,2);
-	 *  define('CANALE_FACOLTA'   ,3);
-	 *  define('CANALE_CDL'       ,4);
-	 *  define('CANALE_ESAME_ING' ,5);
-	 *  define('CANALE_ESAME_ECO' ,6);
+	 *  define('CANALE_DEFAULT'      ,1);
+	 *  define('CANALE_HOME'         ,2);
+	 *  define('CANALE_FACOLTA'      ,3);
+	 *  define('CANALE_CDL'          ,4);
+	 *  define('CANALE_INSEGNAMENTO' ,5);
 	 *
 	 * @see selectCanale
 	 * @param int $id_canale 		identificativo del canae su database
@@ -172,8 +171,7 @@ class Canale {
 	 *  define('CANALE_HOME'      ,2);
 	 *  define('CANALE_FACOLTA'   ,3);
 	 *  define('CANALE_CDL'       ,4);
-	 *  define('CANALE_ESAME_ING' ,5);
-	 *  define('CANALE_ESAME_ECO' ,6);
+	 *  define('CANALE_INSEGNAMENTO' ,5);
 	 * 
 	 * @static
 	 * @param int $id_canale numero identificativo del canale
