@@ -1,6 +1,7 @@
 <?php
 
 
+
 define('NEWS_ELIMINATA','S');
 
 
@@ -22,7 +23,7 @@ define('NEWS_ELIMINATA','S');
 class NewsItem {
 	
 	/**
-	 * é costante per il valore del flag per le notizie eliminate
+	 * ? costante per il valore del flag per le notizie eliminate
 	 *
 	 * @private
 	 */
@@ -361,23 +362,10 @@ class NewsItem {
 	 */
 	 function &selectNewsItem ($id_notizia)
 	 {
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, username, data_modifica FROM news A, utente B WHERE A.id_autore = B.id_utente AND id_news='.$db->quote($id_notizia).'AND eliminata!='.$db->quote($this->ELIMINATA);
-		$res =& $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows = 0) return false;
-	
-		$res->fetchInto($row);	
-		$res->free();
-		
-		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8], $row[9]);
-		return $news;
+	 	$id_notizie = array($id_notizia);
+		$news =& NewsItem::selectNewsItems($id_notizie);
+		if ($news === false) return false;
+		return $news[0];
 	 }
 	
 	
@@ -424,7 +412,7 @@ class NewsItem {
 	
 
 	/**
-	 * Verifica se la notizia è scaduta
+	 * Verifica se la notizia ? scaduta
 	 *
 	 * @return boolean
 	 */
@@ -435,7 +423,7 @@ class NewsItem {
 	 
 	 
 	/**
-	 * Seleziona gli id_canale per i quali la notizia è inerente 
+	 * Seleziona gli id_canale per i quali la notizia ? inerente 
 	 *
 	 * @static
 	 * @return array	elenco degli id_canale
@@ -482,7 +470,7 @@ class NewsItem {
 	 	$db =& FrontController::getDbConnection('main');
 		
 		$query = 'DELETE FROM news_canale WHERE id_canale='.$db->quote($id_canale).' AND id_news='.$db->quote($this->id_notizia);
-		 //è da testare il funzionamento di =&
+		 //? da testare il funzionamento di =&
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -514,7 +502,7 @@ class NewsItem {
 		if ($res->numRows());
 		
 		$query = 'INSERT INTO news_canale (id_notizia, id_canale) VALUES ('.$db->quote($this->id_notizia).','.$db->quote($id_canale).')';
-		 //è da testare il funzionamento di =&
+		 //? da testare il funzionamento di =&
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 

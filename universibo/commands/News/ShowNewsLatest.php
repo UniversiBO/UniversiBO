@@ -1,10 +1,11 @@
 <?php
 
+
 require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
- * ShowNewsLatest è un'implementazione di PluginCommand.
+ * ShowNewsLatest ? un'implementazione di PluginCommand.
  *
  * Mostra le ultime $num notizie del canale.
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -112,7 +113,7 @@ class ShowNewsLatest extends PluginCommand {
 			
 			for ($i = 0; $i < $ret_news; $i++)
 			{
-				$news = $elenco_news[$i];
+				$news =& $elenco_news[$i];
 				$this_moderatore = ($moderatore && $news->getIdUtente()==$user->getIdUser());
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();

@@ -9,6 +9,7 @@ define('CANALE_INSEGNAMENTO' ,5);
 //define('CANALE_ESAME_ECO'    ,6);
 
 
+
 /**
  * Canale class.
  *
@@ -91,6 +92,7 @@ class Canale {
 	 *  define('CANALE_CDL'          ,4);
 	 *  define('CANALE_INSEGNAMENTO' ,5);
 	 *
+	 * @see factoryCanale
 	 * @see selectCanale
 	 * @param int $id_canale 		identificativo del canae su database
 	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
@@ -682,8 +684,7 @@ class Canale {
 		}	
 		
 		
-		$query = 'UPDATE canale SET ( id_canale = '.$db->quote($this->getIdCanale()).
-					' , tipo_canale = '.$db->quote($this->getTipoCanale()).
+		$query = 'UPDATE canale SET ( tipo_canale = '.$db->quote($this->getTipoCanale()).
 					' , nome_canale = '.$db->quote($this->getNomeCanale()).
 					' , immagine = '.$db->quote($this->getImmagine()).
 					' , ultima_modifica = '.$db->quote($this->getUltimaModifica()).
@@ -693,7 +694,7 @@ class Canale {
 					' , forum_attivo = '.$db->quote($forum_attivo).
 					' , id_forum = '.$db->quote($forum_forum_id).
 					' , group_id = '.$db->quote($forum_group_id).
-					' , links_attivo = '.$db->quote($links_attivo).' )';
+					' , links_attivo = '.$db->quote($links_attivo).' ) WHERE id_canale ='.$db->quote($this->getIdCanale());
 			
 		$res = $db->query($query);
 		if (DB::isError($res)) 
