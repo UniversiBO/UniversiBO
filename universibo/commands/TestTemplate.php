@@ -1,11 +1,15 @@
 <?php
 
-class TestTemplate extends BaseCommand {
+include ('UniversiboCommand.php');
+
+class TestTemplate extends UniversiboCommand {
 	function execute(){
 
 		$template =& $this->frontController->getTemplateEngine();
-
 		
+		//var_dump($template);
+		
+/*		
 		//$template->assign('common_pageType', 'popup');
 		$template->assign('common_pageType', 'index');
 
@@ -23,6 +27,8 @@ class TestTemplate extends BaseCommand {
 		$template->assign('common_metaDescription', 'Il portale dedicato agli studenti universitari di Bologna');
 		$template->assign('common_alert', 'Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione');
 		$template->assign('common_title', 'Titolo della pagina');
+*/
+		//...nell'UniversiBO command
 
 
 		//mettetere nel config del template 

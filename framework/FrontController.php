@@ -64,8 +64,6 @@ class FrontController {
 //		var_dump($language);
 		//temp
 
-
-		return;
 		
 
 		//Initialize Request and Response objects and set $this->request, $this->response
@@ -182,7 +180,7 @@ class FrontController {
 		$this->_setMailerInfo();
 
 		//set $this->languageInfo
-		$this->_setLanguageInfo();
+		//$this->_setLanguageInfo();
 
 
 		//set $this->appSettings
@@ -316,9 +314,11 @@ class FrontController {
 		
 		$templateInfoNode = &$this->config->root->getChild('templateInfo');
 		if($templateInfoNode == NULL)
-			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');
+		if($templateDirsNode == NULL)
+			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
 				
 		$n = $templateDirsNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -328,6 +328,9 @@ class FrontController {
 		}
 
 		$templateStylesNode = &$templateInfoNode->getChild('template_styles');		
+		if($templateStylesNode == NULL)
+			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
+
 		$n = $templateStylesNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
@@ -367,7 +370,9 @@ class FrontController {
 	function _setMailerInfo()
 	{
 		$mailerInfoNode = &$this->config->root->getChild("mailerInfo");
-		if ($mailerInfoNode == NULL) return;
+		if ($mailerInfoNode == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
 		$n = $mailerInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
@@ -385,7 +390,8 @@ class FrontController {
 	function _setLanguageInfo()
 	{
 		$languageInfoNode = &$this->config->root->getChild("languageInfo");
-		if ($languageInfoNode == NULL) return;
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento languageInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
 		$n = $languageInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
@@ -518,9 +524,10 @@ class FrontController {
 	*/
 	function &getTemplateEngine()
 	{
-		static $templateEngine = NULL;
+		static $templateEngine;
+		//var_dump($templateEngine);
 		 
-		if ( $templateEngine  !== NULL ){
+		if ( defined('SMARTY_DIR') ){
 			 return $templateEngine ; 
 		}
 		else
@@ -528,16 +535,18 @@ class FrontController {
 			define('SMARTY_DIR',$this->templateEngine['smarty_dir']);
 			require_once(SMARTY_DIR.'Smarty.class.php');
 			
-			$smarty = new Smarty();
+			$templateEngine = new Smarty();
 			
-			$smarty->template_dir = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$smarty->compile_dir  = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$smarty->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$smarty->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->template_dir = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->compile_dir  = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 
-			$templateEngine  =& $smarty; 
+			//$templateEngine  =& $smarty; 
 			
-			return $smarty; 	
+			//var_dump($smarty);
+			
+			return $templateEngine; 	
 			
 		}
 
