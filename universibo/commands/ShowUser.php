@@ -20,7 +20,7 @@ class ShowUser extends UniversiboCommand{
 		$user				=& User::selectUser($id_user);
 		if($current_user->isOspite())
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Le schede degli utenti sono visualizzabili solo se si é loggati','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Le schede degli utenti sono visualizzabili solo se si é registrati','file'=>__FILE__,'line'=>__LINE__));
 		}
 		if(!$user)
 		{

@@ -23,5 +23,6 @@
 	<p><input class="submit" name="f16_submit" id="f16_submit" type="submit" value="Cerca" /></p>
 </form>
 <p><a href=" Torna {$common_langCanaleUri|escape:"htmlall"|nl2br}">Torna {$common_langCanaleNome|escape:"htmlall"|nl2br}</a></p>
-
+<hr />
+<p>{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}</p>
 {include file=footer_index.tpl}

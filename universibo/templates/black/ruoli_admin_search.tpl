@@ -45,6 +45,9 @@
 </td></tr>
 </table>
 
+<hr />
+<p>{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}</p>
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

@@ -161,7 +161,7 @@ class RuoliAdminSearch extends UniversiboCommand {
 		
 		
 		
-		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+		$this->executePlugin('ShowTopic', array('reference' => 'ruoliadmin'));
 		
 		return 'default';
 	}
