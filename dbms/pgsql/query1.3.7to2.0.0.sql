@@ -589,3 +589,11 @@ UPDATE "utente" SET notifica = 2 WHERE inoltro_email = 'T';
 ALTER TABLE "questionario" ADD "cdl" character varying(50);
 UPDATE "questionario" SET cdl = 0;
 ALTER TABLE "questionario" ALTER COLUMN "cdl" SET NOT NULL;
+
+--- 17/9/2004
+
+update help_riferimento set riferimento='myuniversibo' where 
+riferimento='Preferiti';
+
+update help_topic set riferimento='myuniversibo' where 
+riferimento='Preferiti';
