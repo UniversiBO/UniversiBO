@@ -5,11 +5,10 @@
 {include file=avviso_notice.tpl}
 Sei sicuro di voler cancellare questo file?
 <form method="post">
-	{if $fileDelete_flagCanali == 'true'}
 	<p><fieldset>
 	<legend>{$f25_langAction|escape:"htmlall"}</legend>
+	{$f25_canale|escape:"htmlall"}
 	</fieldset></p>	  
-	{/if}
 	<p><input class="submit" type="submit" id="" name="f25_submit" size="20" value="Elimina" /></p>
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></p>

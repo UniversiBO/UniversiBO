@@ -218,6 +218,27 @@ class FileItemStudenti extends FileItem {
 			
 		return $ris[0];
 	 }
+	 
+	 /**
+	  * Questa funzione cancella tutti i commenti associati al file studente
+	  */
+	  
+	  function deleteAllCommenti()
+	  {
+	  	$db = FrontController::getDbConnection('main');
+		ignore_user_abort(1);
+		$return = true;
+        $query = 'UPDATE file_studente_commenti SET eliminato = '.$db->quote(COMMENTO_ELIMINATO).'WHERE id_file='.$db->quote($this->id_file);
+		$res = $db->query($query);
+		if (DB :: isError($res))
+			{				
+				$db->rollback();
+				Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				$return = false;
+			}
+			ignore_user_abort(0);
+		return $return;
+	  }
 	
 }
 

@@ -24,8 +24,8 @@ class FileStudentiDelete extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 
 		
-		$template->assign('common_canaleURI', 'index.php?do=ShowMyUniversiBO');
-		$template->assign('common_langCanaleNome', 'indietro');
+//		$template->assign('common_canaleURI', 'index.php?do=ShowMyUniversiBO');
+//		$template->assign('common_langCanaleNome', 'indietro');
 		
 		$user =& $this->getSessionUser();
 		
@@ -39,7 +39,12 @@ class FileStudentiDelete extends UniversiboCommand {
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 			
-		$file = & FileItem::selectFileItem($_GET['id_file']);
+		$file = & FileItemStudenti::selectFileItem($_GET['id_file']);
+		$file_canali = $file->getIdCanali();
+		
+		$canale = & Canale::retrieveCanale($file_canali[0]);
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
 		if ($file === false)
 			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il file richiesto non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
 			
@@ -90,19 +95,19 @@ class FileStudentiDelete extends UniversiboCommand {
 		}
 		
 		$file_canali =& $file->getIdCanali();
-		
-		$f25_canale = array();
-		$num_canali = count($file_canali);
-		for ($i = 0; $i < $num_canali; $i ++)
-		{
-			$id_current_canale = $file_canali[$i];
-			$current_canale = & Canale :: retrieveCanale($id_current_canale);
-			$nome_current_canale = $current_canale->getTitolo();
-			if (in_array($id_current_canale, $file->getIdCanali())) 
-			{
-				$f25_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
-			}
-		}
+		$canale =& Canale::retrieveCanale($file_canali[0]); 
+		$f25_canale = $canale->getTitolo();
+//		$num_canali = count($file_canali);
+//		for ($i = 0; $i < $num_canali; $i ++)
+//		{
+//			$id_current_canale = $file_canali[$i];
+//			$current_canale = & Canale :: retrieveCanale($id_current_canale);
+//			$nome_current_canale = $current_canale->getTitolo();
+//			if (in_array($id_current_canale, $file->getIdCanali())) 
+//			{
+//				$f25_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
+//			}
+//		}
 		
 		$f25_accept = false;
 		
@@ -131,11 +136,11 @@ class FileStudentiDelete extends UniversiboCommand {
 						$f25_canale_app[$key] = $value;
 				}
 			}
-			elseif(count($f25_canale) > 0)
-			{
-				$f25_accept = false;
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Devi selezionare almeno una pagina:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-			}
+//			elseif(count($f25_canale) > 0)
+//			{
+//				$f25_accept = false;
+//				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Devi selezionare almeno una pagina:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//			}
 			
 		}
 		
@@ -146,16 +151,17 @@ class FileStudentiDelete extends UniversiboCommand {
 //			var_dump($_POST['f25_canale'] );
 //			die();
 			//cancellazione dai canali richiesti
-			foreach ($f25_canale_app as $key => $value)
-			{
-				$file->removeCanale($key);
-				$canale = Canale::retrieveCanale($key);					
-			}
+//			foreach ($f25_canale_app as $key => $value)
+//			{
+//				$file->removeCanale($key);
+//				$canale = Canale::retrieveCanale($key);					
+//			}
 			
+			$file->removeCanale($file_canali[0]);
+			$canale = Canale::retrieveCanale($file_canali[0]);
 			$file->deleteFileItem();
-			/**
-			 * @TODO elenco dei canali dai quali ? stata effetivamente cancellata la notizia
-			 */
+			$file->deleteAllCommenti();
+			
 			$template->assign('fileDelete_langSuccess', "Il file ? stato cancellato con successo dalle pagine scelte.");
 			
 			return 'success';
@@ -165,7 +171,7 @@ class FileStudentiDelete extends UniversiboCommand {
 		//$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
 		//$this->executePlugin('ShowNews', $param );
 		
-//		$template->assign('f25_langAction', "Elimina il file dalle seguenti pagine:");
+		$template->assign('f25_langAction', "Elimina il file dal canale");
 		$template->assign('f25_canale', $f25_canale);
 		$template->assign('fileDelete_flagCanali', (count($f25_canale)) ? 'true' : 'false');
 		

@@ -31,11 +31,16 @@ class FileStudentiEdit extends UniversiboCommand {
 		{
 			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del file richiesto non é valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
-		$file = & FileItem::selectFileItem($_GET['id_file']);
+		$file = & FileItemStudenti::selectFileItem($_GET['id_file']);
 		if ($file === false)
 			Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il file richiesto non é presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		$template->assign('fileEdit_fileUri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
+		$file_canali = $file->getIdCanali();
+		
+		$canale = & Canale::retrieveCanale($file_canali[0]);
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
 		
 		
 //		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
