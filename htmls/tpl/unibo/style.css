@@ -318,7 +318,7 @@ td.evidenzia{
 
 .news, .elenco, .chi_siamo
 {
-	font-size: 11px;
+	font-size: 11px !important;
 	margin: 2em 0 0;
 	display: block;
 	border-top: solid 1px #999;
