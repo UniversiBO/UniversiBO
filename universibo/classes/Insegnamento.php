@@ -88,7 +88,7 @@ class Insegnamento extends Canale
 		if ( $num == 1 )
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' - '.$att->getNomeDoc();
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1).' | '.$att->getNomeDoc();
 		}
 		else
 		{
