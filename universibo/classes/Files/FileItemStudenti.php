@@ -182,7 +182,7 @@ class FileItemStudenti extends FileItem {
 	 * @return $flag	true o false
 	 */
 	
-	function & isFileStudenti($id_file)
+	function  isFileStudenti($id_file)
 	{
 		$flag = true;
 		
@@ -204,7 +204,7 @@ class FileItemStudenti extends FileItem {
 	 *
 	 * @param $id_file id del file
 	 */
-	 function & getVoto($id_file)
+	 function  getVoto($id_file)
 	 {
 	 	
 		$db = & FrontController :: getDbConnection('main');

@@ -207,7 +207,7 @@ class CommentoItem
 	 * @param int $id_file identificativo su database del file studente
 	 * @return numero dei commenti
 	 */
-	function & quantiCommenti($id_file)
+	function  quantiCommenti($id_file)
 	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
@@ -252,7 +252,7 @@ class CommentoItem
 	 * Aggiunge un Commento sul DB
 	 */
 	 
-	 function & insertCommentoItem($id_file_studente,$id_utente,$commento,$voto)
+	 function  insertCommentoItem($id_file_studente,$id_utente,$commento,$voto)
 	 {
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
@@ -275,7 +275,7 @@ class CommentoItem
 	 * Modifica un Commento sul DB
 	 */
 	 
-	 function & updateCommentoItem($id_commento,$commento,$voto)
+	 function  updateCommentoItem($id_commento,$commento,$voto)
 	 {
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
@@ -296,7 +296,7 @@ class CommentoItem
 	  * Cancella un commento sul DB
 	  */
 	  
-	  function & deleteCommentoItem($id_commento)
+	  function  deleteCommentoItem($id_commento)
 	  {
 	  		$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
@@ -319,7 +319,7 @@ class CommentoItem
 	 * @return un valore booleano
 	 */
 	
-	function & esisteCommento($id_file,$id_utente)
+	function  esisteCommento($id_file,$id_utente)
 	{
 		$flag = false;
 		

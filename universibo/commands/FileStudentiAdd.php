@@ -366,6 +366,34 @@ class FileStudentiAdd extends UniversiboCommand {
 						$newFile->addCanale($canale->getIdCanale());
 						$canale->setUltimaModifica(time(), true);
 						
+						//Ricerco solo i referenti/moderatori per il canale
+						
+						$arrayRuoli =& $canale->getRuoli();
+						$keys = array_keys($arrayRuoli);
+						$arrayEmailRef = array();
+						$i=0;
+						foreach ($keys as $key)
+						{
+							$ruolo =& $arrayRuoli[$key];
+							if ($ruolo->isReferente() || $ruolo->isModeratore())
+							{
+								$user_temp =& User::selectUser($ruolo->getIdUser());
+								//Notifichiamo i professori di un nuovo file studente? Noh...
+							    if($user_temp->isCollaboratore()||$user_temp->isAdmin())
+							    {
+									$arrayEmailRef[$i] = $user_temp->getEmail();
+									$i++;
+								}
+							}
+						}
+//						var_dump($arrayEmailRef);
+//						die();
+						
+						//Ok: prende i referenti, e solo gli studenti...;)...
+						//Bisogna solo creare la notifica...
+						//E serve uno script per le pagine SENZA referenti --> admin preposti al lavoro...
+											
+						
 						//todo: notifiche solo per referenti e admin che devono controllare la 
 						//correttezza legale del file
 						
@@ -424,7 +452,7 @@ class FileStudentiAdd extends UniversiboCommand {
 				
 				
 				
-				
+			
 				
 				return 'success';
 			}
