@@ -12,8 +12,6 @@ define('USER_ALL'        ,127);
 
 /**
  * User class
- * 
- * 
  *
  * @package universibo
  * @version 2.0.0
@@ -24,10 +22,11 @@ define('USER_ALL'        ,127);
 class User {
 	
 	var $id_utente = 0;
-	var $group = 0;
+	var $groups = 0;
 	var $MD5 = '';
 	var $ultimoLogin = 0;
 	var $username = '';
+	var $email = '';
 	var $bookmark;
 	var $ADUsername = '';
 	
@@ -36,6 +35,7 @@ class User {
 	 *  Verifica se la sintassi dello username è valido.
 	 *  Sono permessi fino a 25 caratteri: alfanumerici, lettere accentate, spazi, punti, underscore
 	 *
+	 * @static
 	 * @param string $username stringa dello username da verificare
 	 * @return boolean
 	 */
@@ -72,10 +72,25 @@ class User {
 	 * @param string $password stringa della password da verificare
 	 * @return boolean
 	 */
-	function generateRandomPassword(){
-		$begin  = rand(0,24);
-		$length = rand(6,8);
-		return substr(md5(uniqid('')), $begin , $length);
+	function generateRandomPassword()
+	{
+		$chars = array( 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J',  'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T',  'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+		$max_chars = count($chars) - 1;
+		
+        $hash = md5(microtime());
+        $loWord = substr($hash, -8);
+        $seed = hexdec($loWord);
+        $seed &= 0x7fffffff;
+		
+		mt_srand( $seed );
+	
+		$rand_str = '';
+		for($i = 0; $i < 8; $i++)
+		{
+			$rand_str = $rand_str . $chars[mt_rand(0, $max_chars)];
+		}
+
+		return $rand_str;
 	}
 	
 
@@ -88,7 +103,7 @@ class User {
 	 * @param boolean $singolare 
 	 * @return array
 	 */
-	function groupNames( $singolare = true )
+	function groupsNames( $singolare = true )
 	{
 		if ( $singolare == true )
 		{
@@ -146,11 +161,12 @@ class User {
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
 	 * @return boolean
 	 */
-	function User($id_utente, $group, $username=NULL, $ADUsername=NULL, $MD5=NULL, $ultimoLogin=NULL, $bookmark=NULL)
+	function User($id_utente, $groups, $username=NULL, $email=NULL, $ADUsername=NULL, $MD5=NULL, $ultimoLogin=NULL, $bookmark=NULL)
 	{
 		$this->id_utente   = $id_utente;
-		$this->group       = $group;
+		$this->groups       = $groups;
 		$this->username    = $username;
+		$this->email       = $email;
 		$this->ADUsername  = $ADUsername;
 		$this->ultimoLogin = $ultimoLogin;
 		$this->MD5         = $MD5;
@@ -172,14 +188,45 @@ class User {
 
 
 	/**
+	 * Ritorna la email dello User
+	 *
+	 * @return int
+	 */
+	function getEmail()
+	{
+		return $this->email;
+	}
+
+
+
+	/**
+	 * Imposta la email dello User
+	 * 
+	 * @param string $email nuova email da impostare
+	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
+	 * @return int
+	 */
+	function updateEmail($email, $updateDB = false)
+	{
+		return $this->email;
+		if ( $updateDB == true )
+		{
+			
+		}
+		return true;
+	}
+
+
+
+	/**
 	 * Ritorna lo OR bit a bit dei gruppi di appartenenza dello User
 	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
 	 *
 	 * @return int
 	 */
-	function getGroup()
+	function getGroups()
 	{
-		return $this->group;
+		return $this->groups;
 	}
 
 
@@ -187,13 +234,13 @@ class User {
 	/**
 	 * Imposta il gruppo di appartenenza dello User
 	 * 
-	 * @param int $group nuovo gruppo da impostare
+	 * @param int $groups nuovo gruppo da impostare
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
 	 * @return int
 	 */
-	function updateGroup($group, $updateDB = false)
+	function updateGroups($groups, $updateDB = false)
 	{
-		return $this->group;
+		return $this->groups;
 		if ( $updateDB == true )
 		{
 			
@@ -315,11 +362,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isAdmin( $group = NULL )
+	function isAdmin( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_ADMIN ) return true;
+		if ( $groups | USER_ADMIN ) return true;
 		return false;
 	}
 
@@ -332,11 +379,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isPersonale( $group = NULL )
+	function isPersonale( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_PERSONALE ) return true;
+		if ( $groups | USER_PERSONALE ) return true;
 		return false;
 	}
 
@@ -349,11 +396,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isDocente( $group = NULL )
+	function isDocente( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_DOCENTE ) return true;
+		if ( $groups | USER_DOCENTE ) return true;
 		return false;
 	}
 
@@ -366,11 +413,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isTutor( $group = NULL )
+	function isTutor( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_TUTOR ) return true;
+		if ( $groups | USER_TUTOR ) return true;
 		return false;
 	}
 
@@ -383,11 +430,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isModeratore( $group = NULL )
+	function isModeratore( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_MODERATORE ) return true;
+		if ( $groups | USER_MODERATORE ) return true;
 		return false;
 	}
 
@@ -400,11 +447,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isStudente( $group = NULL )
+	function isStudente( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_STUDENTE ) return true;
+		if ( $groups | USER_STUDENTE ) return true;
 		return false;
 	}
 
@@ -417,11 +464,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isOspite( $group = NULL )
+	function isOspite( $groups = NULL )
 	{
-		if ( $group == NULL ) $group = $this->group;
+		if ( $groups == NULL ) $groups = $this->groups;
 
-		if ( $group | USER_OSPITE ) return true;
+		if ( $groups | USER_OSPITE ) return true;
 		return false;
 	}
 
