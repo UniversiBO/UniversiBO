@@ -16,36 +16,36 @@
 	<defaultCommand>ShowHome</defaultCommand>
 	<commands>
 		<ShowError class="ShowError">
-			 <response type="template" name="default">error.tpl</response>
+			<response type="template" name="default">error.tpl</response>
 		</ShowError>
 		<RegistraStudente class="RegistraStudente">
-			 <response type="template" name="default">registra_studente.tpl</response>
+			<response type="template" name="default">registra_studente.tpl</response>
 		</RegistraStudente>
 		<Login class="Login">
-			 <response type="template" name="default">login.tpl</response>
+			<response type="template" name="default">login.tpl</response>
 		</Login>
 		<Logout class="Logout" />
 		<ShowManifesto class="ShowManifesto">
-			 <response type="template" name="default">manifesto.tpl</response>
+			<response type="template" name="default">manifesto.tpl</response>
 		</ShowManifesto>
 		<ShowHome class="ShowHome">
-			 <response type="template" name="default">home.tpl</response>
-			 <pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+			<response type="template" name="default">home.tpl</response>
+			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowHome>
 		<ShowFacolta class="ShowFacolta">
-			 <response type="template" name="default">facolta.tpl</response>
+			<response type="template" name="default">facolta.tpl</response>
 		</ShowFacolta>
 		<ShowContribute class="ShowContribute">
-			 <response type="template" name="default">contribute.tpl</response>
+			<response type="template" name="default">contribute.tpl</response>
 		</ShowContribute>
 		<ShowContacts class="ShowContacts">
-			 <response type="template" name="default">chisiamo.tpl</response>
+			<response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>
 		<ShowQuestions class="ShowQuestions">
-			 <response type="template" name="default">questionario.tpl</response>
+			<response type="template" name="default">questionario.tpl</response>
 		</ShowQuestions>
 		<ShowRules class="ShowRules">
-			 <response type="template" name="default">regolamento.tpl</response>
+			<response type="template" name="default">regolamento.tpl</response>
 		</ShowRules>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />

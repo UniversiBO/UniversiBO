@@ -514,6 +514,7 @@ class Canale {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
+		array_walk($elenco_id_canali, array($db, 'quote'));
 		$canali_comma = implode (' , ',$elenco_id_canali);
 		
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale IN ('.$canali_comma.');';
@@ -531,6 +532,7 @@ class Canale {
 			$elenco_canali[] =& new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
 		}
+		$res->free();
 		
 		return $elenco_canali;
 		

@@ -255,6 +255,7 @@ class Facolta extends Canale{
 			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
 			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
 		}
+		$res->free();
 		
 	}
 	

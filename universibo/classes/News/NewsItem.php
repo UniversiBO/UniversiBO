@@ -1,5 +1,9 @@
 <?php
 
+
+define('NEWS_ELIMINATA','S');
+
+
 /**
  *
  * NewsItem class
@@ -309,12 +313,51 @@ class NewsItem {
 		if( $rows = 0) return false;
 	
 		$res->fetchInto($row);	
+		$res->free();
 		
 		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
 		return $news;
 	 }
 	
 	
+
+	/**
+	 * Recupera un elenco di notizie dal database
+	 *
+	 * @static
+	 * @param array $id_notizie array elenco di id della news
+	 * @return NewsItems 
+	 */
+	 function &selectNewsItems ($id_notizie){
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		
+		//esegue $db->quote() su ogni elemento dell'array
+		array_walk($id_notizie, array($db, 'quote'));
+		$values = implode(',',$id_notizie);
+		
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, id_news FROM news WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote($this->ELIMINATA);
+		$res =& $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		$news_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
+		}
+		
+		$res->free();
+		
+		return $news_list;
+	 }
+	
+	
+
 	/**
 	 * Verifica se la notizia è scaduta
 	 *
@@ -357,6 +400,8 @@ class NewsItem {
 		{
 			$elenco_id_canale[] = $row[0];
 		}
+		
+		$res->free();		
 		
 		$this->elencoIdCanali =& $elenco_id_canale;
 		
