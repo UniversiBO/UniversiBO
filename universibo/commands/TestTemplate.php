@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand.php');
+include ('UniversiboCommand'.PHP_EXTENSION);
 
 class TestTemplate extends UniversiboCommand {
 	function execute(){

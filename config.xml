@@ -32,6 +32,9 @@
 		<ShowRules class="ShowRules">
 			 <template type="default">example1_a.htm</template>
 		</ShowRules>
+		<TestUnit class="TestUnit">
+			 <template type="default">example1_a.htm</template>
+		</TestUnit>
 	</commands>
 	<dbInfo type="DB">
 	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo</connection>

@@ -22,13 +22,13 @@ define('USER_ALL'        ,127);
 class User {
 	
 	var $id_utente = 0;
-	var $groups = 0;
-	var $MD5 = '';
-	var $ultimoLogin = 0;
 	var $username = '';
+	var $MD5 = '';
 	var $email = '';
+	var $ultimoLogin = 0;
 	var $bookmark;
 	var $ADUsername = '';
+	var $groups = 0;
 	
 	
 	/**
@@ -161,7 +161,7 @@ class User {
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
 	 * @return boolean
 	 */
-	function User($id_utente, $groups, $username=NULL, $email=NULL, $ADUsername=NULL, $MD5=NULL, $ultimoLogin=NULL, $bookmark=NULL)
+	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $ultimoLogin=NULL, $bookmark=NULL, $ADUsername=NULL)
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
@@ -495,22 +495,29 @@ class User {
 	 */
 	function &selectUser($id_utente)
 	{
-
-		$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT id_utente, username, groups, password, ultimo_login, email, AD_username FROM utente WHERE id_utente = '.$db->quote($id_utente);
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		//$rows = $res->affectedRows();
-	
-		if( $rows == 1) return true;
-		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-
-		$user = new User(0,USER_OSPITE);
-		return $user;
+		if ($id_utente == 0)
+		{
+			$user = new User(0,USER_OSPITE);
+			return $user;
+		}
+		elseif ($id_utente > 0)
+		{
+			$db =& FrontController::getDbConnection('main');
 		
+			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups  FROM utente WHERE id_utente = '.$db->quote($id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+			$rows = $res->numRows();
+			if( $rows != 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+
+			$row = $res->fetchRow();
+			$user = new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], NULL , $row[5]);
+			return $user;
+			
+		}
 	}
 
 

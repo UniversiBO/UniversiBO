@@ -11,7 +11,7 @@
  */
 
 
-include ('UniversiboCommand.php');
+include ('UniversiboCommand'.PHP_EXTENSION);
 
 class ShowManifesto extends UniversiboCommand {
 	function execute(){

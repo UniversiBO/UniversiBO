@@ -104,7 +104,7 @@ class UniversiboCommand extends BaseCommand {
 		}
 		elseif ( $this->getSessionIdUtente() >= 0 )
 		{
-			$this->sessionUser &= User::selectUser( $this->getSessionIdUtente() );
+			$this->sessionUser &= User::selectUser( 79 );
 		}
 		else 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));

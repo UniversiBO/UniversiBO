@@ -11,7 +11,7 @@
  */
  
  
- include ('UniversiboCommand.php');
+include ('UniversiboCommand'.PHP_EXTENSION);
 
 class ShowRules extends UniversiboCommand {
 	function execute(){
