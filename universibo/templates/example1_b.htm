@@ -1,0 +1,18 @@
+<html><body>
+Example 1. RightFrame This text is outside block<br>
+<block start="onBlock"/>
+This line is inside the block<br>
+<form name="form1" action="{t_receiver.main}?do=DisplayRightFrame" method="post">
+<input type="hidden" name="f_onBlock">
+<input type="submit" value="Remove Block">
+</form>
+<block end="onBlock"/>
+<br>
+<block start="offBlock"/>
+<form name="form2" action="{t_receiver.main}?do=DisplayRightFrame" method="post">
+<input type="hidden" name="f_offBlock">
+<input type="submit" value="Show Block">
+</form>
+<block end="offBlock"/>
+<include filename="theFooter.htm"/>
+</body></html>

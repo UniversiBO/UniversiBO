@@ -1,0 +1,17 @@
+<html>
+<style>
+.odd{color: #FF0000;background-color:#000000;}
+.even{color: #0000FF;background-color:#FFCCCC;}
+</style>
+<body>
+<table>
+<loop start="books"/>
+<tr class="odd"><td>{books.name_odd}</td></tr>
+<tr class="even"><td>{books.name_even}</td></tr>
+<loop end="books"/>
+<block start="if-odd"/>
+<tr class="odd"><td>{name_odd}</td></tr>
+<block end="if-odd"/>
+</table>
+</body>
+</html>

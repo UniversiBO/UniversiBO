@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Smarty plugin
+ * -------------------------------------------------------------
+ * Type:     function
+ * Name:     debug
+ * Version:  1.0
+ * Date:     July 1, 2002
+ * Author:	 Monte Ohrt <monte@ispi.net>
+ * Purpose:  popup debug window
+ * -------------------------------------------------------------
+ *
+ * @package Smarty
+ */
+function smarty_function_debug($params, &$smarty)
+{
+	if($params['output']) {
+		$smarty->assign('_smarty_debug_output',$params['output']);
+	}
+	return $smarty->_generate_debug_output();
+}
+
+/* vim: set expandtab: */
+
+?>

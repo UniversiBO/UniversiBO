@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<config>
+    <!--****According to the manual, rootFolder and rootURL should be changed to reflect your machine's 
+                installation. However, you do not need to change it becuase we are using relative path 
+                and virtual URL
+	****-->
+
+	<!--Root Folder can be absolute or relative to receiver path -->
+	<rootFolder>../framework/</rootFolder>
+
+	<!--Here root URL is virtual to the Web root****-->
+	<rootURL>/universibo_2/htmls/</rootURL>
+
+	<defaultCommand>StartExample1</defaultCommand>
+	<paths>
+		<logs>../universibo/log-universibo/</logs>
+		<commands>../universibo/commands</commands>
+		<templates>../universibo/templates</templates>
+		<application>../universibo</application>
+		<files>../html/file-universibo</files>
+	</paths>
+	<receivers>
+		<main>index.php</main>
+	</receivers>
+	<commands>
+		<StartExample1 class="Example1">
+			 <template type="default">example1.htm</template>
+		</StartExample1>
+		<DisplayLeftFrame class="Example1">
+			 <template type="default">example1_a.htm</template>
+		</DisplayLeftFrame>
+		<DisplayRightFrame class="Example1">
+			 <template type="default">example1_b.htm</template>
+		</DisplayRightFrame>
+		<StartExample2 class="Example2">
+			 <template type="default">example2.htm</template>
+		</StartExample2>
+		<Register class="Example2_Register">
+			 <template type="default">example2_a.htm</template>
+			 <template type="failure">example2.htm</template>
+		</Register>
+		<StartExample3 class="Example3">
+			 <template type="default">example3.htm</template>
+		</StartExample3>
+		<StartExample4 class="Example4">
+			 <template type="default">example4.htm</template>
+		</StartExample4>
+		<StartExample5 class="Example5">
+			 <template type="default">example5.htm</template>
+		</StartExample5>
+		<RunSessionExample class="SessionExample" />
+	</commands>
+	<dbInfo type="DB">
+	    <connection identifier="main">pgsql://my_username:my_password@host/my_dbname</connection>
+	    <connection identifier="mysql">mysql://my_username:my_password@host/my_dbname</connection>
+	</dbInfo>
+	<mailerInfo>
+	<!-- leave smtp empty if don't want to use a smtp server -->
+	    <smtp>joker.ing.unibo.it</smtp>
+	    <fromAddress>universibo@joker.ing.unibo.it</fromAddress>
+	    <fromName>UniversiBO</fromName>
+	</mailerInfo>
+	<templateInfo type="Smarty">
+		<smarty_dir>../framework/smarty</smarty_dir>
+		<smarty_template>../framework/smarty/templates</smarty_template>
+		<smarty_compile>../framework/smarty/templates_c</smarty_compile>
+		<smarty_config>../framework/smarty/config</smarty_config>
+		<smarty_cache>../framework/smarty/cache</smarty_cache>
+	</templateInfo>	
+		
+	<!--****appSettings is an optional node. You can place any thing here 
+                and access it from $fc->appSettings
+	****-->
+	<appSettings>
+		<!--***If you are using a language file, you have to define a node 
+                       <langFile>Location of language file here</langFile>
+                       Location of language file should be wrt rootFolder
+		       To use a language file, change the langFile1 node below to langFile
+                ****-->
+		<langFile1>/location/of/userLanguageFile.txt</langFile1>
+		<questionariReceiver>eagleone@libero.it</questionariReceiver>
+
+	</appSettings>
+</config>
