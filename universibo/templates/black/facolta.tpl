@@ -12,7 +12,7 @@
 &nbsp;<br /> <img src="tpl/black/facolta_30.gif" width="132" height="39" alt="corsi_di_laurea" />
 <p align="center" class="Titolo">{$fac_facTitle|escape:"html"}</p>
 
-<p>{$fac_langList|escape:"html"}</p>
+<p>{$fac_langList|escape:"htmlall"}</p>
 
 {foreach from=$fac_list item=temp_fac}
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""> 
@@ -33,7 +33,7 @@
 
   {foreach from=$temp_fac.list item=temp_cdl}
 <tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
-<a href="{$temp_cdl.link}">{$temp_cdl.cod|escape:"html"} - {$temp_cdl.name|escape:"html"}</a> </td></tr>
+<a href="{$temp_cdl.link}">{$temp_cdl.cod|escape:"htmlall"} - {$temp_cdl.name|escape:"htmlall"}</a> </td></tr>
 
   {/foreach} 
 

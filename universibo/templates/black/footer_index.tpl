@@ -41,14 +41,14 @@ function universiboPopup(dest)
 document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\"><font color=\"#FF0000\">Registrazione Studenti</font></a><br />");
 -->
 </script>
-<NOSCRIPT><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></NOSCRIPT>
+<noscript><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></noscript>
 
 <script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\">Password smarrita...</a><br />");
 //-->
 </script>
-<NOSCRIPT><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></NOSCRIPT>
+<noscript><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></noscript>
 </tr>
 </table></form>
 {else}
