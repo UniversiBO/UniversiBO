@@ -84,6 +84,7 @@ class XmlDoc{
 	function _characterData($parser, $data){
 		$lastNode=&$this->_stack[count($this->_stack)-1];
 		$data=trim($data);
+		//var_dump($lastNode);
 		$charData=$lastNode->charData." ".$data;
 		$charData=trim($charData);
 		$lastNode->charData=$charData;
@@ -119,7 +120,7 @@ class XmlNode{
 	var $children;
 	var $name;
 	var $attributes;
-	var $charData;
+	var $charData='';
 	/*************************************************************************************
 	PUBLIC METHODS
 	**************************************************************************************/
