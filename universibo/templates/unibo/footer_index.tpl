@@ -85,10 +85,11 @@
 		<h3>Statistiche</h3>
 		<div class="contenuto">
 			<p>{$common_visite}&nbsp;</p>
-			<span class="">visite in questa pagina</span>
+			<span>visite in questa pagina</span>
 		</div> 
 	</div>
 	{/if}
+	<p id="versione">Versione {$common_version|escape:"htmlall"}</p>
 </td></tr> {* FINE MENU DI DESTRA*}
 <tr>
 	<td colspan="2">

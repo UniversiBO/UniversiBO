@@ -17,7 +17,6 @@
 &gt;&gt;&nbsp;<a href="{$cdl_nextYearUri|escape:"htmlall"}">{$cdl_nextYear|escape:"htmlall"}</a> </p>
 <h4>{$cdl_langList|escape:"htmlall"}</h4>
 </div>
-<hr />
 {foreach from=$cdl_list item=temp_anno}
 <div class="elenco">
 	<h3>{$temp_anno.name|escape:"html"|upper}</h3>

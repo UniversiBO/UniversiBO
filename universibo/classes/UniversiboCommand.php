@@ -455,6 +455,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_langCalendar', 'Calendario');
 		$common_calendarLink = array ('label'=>$krono->k_date('%F'), 'uri'=>'index.php?do=ShowCalendar&month='.$krono->k_date('%n')); 
 		$template->assign('common_calendarLink', $common_calendarLink);
+		$template->assign('common_version', $this->frontController->getAppSetting('version'));
 		
 	}
 	

@@ -10,7 +10,7 @@
 
 {include file=box_visite.tpl}
 
-<p align="center" class="MenuC">Versione 2.0.0</p>
+<p align="center" class="MenuC">Versione {$common_version|escape:"htmlall"}</p>
 <!-- Fine MENU Right -->
 </td></tr>
 </table>
