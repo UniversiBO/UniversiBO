@@ -11,7 +11,7 @@
 	<!--Here root URL is virtual to the Web root****-->
 	<rootURL>/universibo_2/htmls/</rootURL>
 
-	<defaultCommand>StartExample1</defaultCommand>
+	<defaultCommand>TestTemplate</defaultCommand>
 	<paths>
 		<application>../universibo/</application>
 		<logs>../universibo/log-universibo/</logs>
@@ -21,7 +21,7 @@
 		<main>index.php</main>
 	</receivers>
 	<commands>
-		<StartExample1 class="TestTemplate">
+		<StartExample1 class="Example1">
 			 <template type="default">example1.htm</template>
 		</StartExample1>
 		<TestTemplate class="TestTemplate">
@@ -60,7 +60,7 @@
 	</mailerInfo>
 	<templateInfo type="Smarty">
 		<template_dirs>
-			<smarty_dir>../framework/smarty</smarty_dir>
+			<smarty_dir>../framework/smarty/</smarty_dir>
 			<smarty_template>../universibo/templates/</smarty_template>
 			<smarty_compile>../universibo/templates_compile/</smarty_compile>
 			<smarty_config>../universibo/templates_config/</smarty_config>

@@ -1,6 +1,6 @@
 <?php
 
-class Error_Handlers{
+class ErrorHandlers{
 
 	function critical_handler($param)
 	{

@@ -97,7 +97,10 @@ class FrontController {
 		//Now load the user language file
 		//$this->language->loadUserMsg();
 		
-		$command = new $command_class($this);
+		$command = new $command_class;
+		
+		$command->initCommand($this);
+		
 		$command->execute();
 		
 	}
@@ -217,11 +220,9 @@ class FrontController {
 		define('_ERROR_CRITICAL',1);
 		define('_ERROR_NOTICE',2);
 		
-		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','critical_handler'));
+		Error::setHandler(_ERROR_CRITICAL,array('ErrorHandlers','critical_handler'));
 		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','default_handler'));
-		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','notice_handler'));
-		
-		
+		Error::setHandler(_ERROR_NOTICE,array('ErrorHandlers','notice_handler'));
 		
 	}
 
@@ -234,9 +235,12 @@ class FrontController {
 	function _setRootFolder()
 	{
 		$elementFolder = &$this->config->root->getChild('rootFolder');
+		if ($elementFolder == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento rootFolder nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		$this->rootFolder = $elementFolder->charData;
 		if(is_dir($this->rootFolder)) return;
-		die ('Config error: rootFolder mismatch');
+		else
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'rootFolder errata nel file di config','file'=>__FILE__,'line'=>__LINE__));
 	}
 
 	
@@ -310,8 +314,12 @@ class FrontController {
 	{
 		$this->templateEngine=array();
 		
-		$templateInfoNode = &$this->config->root->getChild('templateInfo');		
-		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');		
+		$templateInfoNode = &$this->config->root->getChild('templateInfo');
+		if($templateInfoNode == NULL)
+			Error::throw(_ERROR_NOTICE,array('msg'=>'Non è specificato l\'elemento template nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
+		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');
+				
 		$n = $templateDirsNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
@@ -330,9 +338,7 @@ class FrontController {
 		$this->templateEngine['default_template'] = $templateStylesNode->attributes['default'];  
 		
 		if (!array_key_exists($this->templateEngine['default_template'],$this->templateEngine['styles']))
-		{
-			die('non esiste il template di default');			
-		}	
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste il template di default nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		//assegno il template in uso	
 		if (array_key_exists('setTemplate', $_GET) && $_GET['setTemplate']!=''
@@ -417,7 +423,9 @@ class FrontController {
 	{
 		$this->paths=array();
 		$node=&$this->config->root->getChild('paths');
-		if($node == NULL) $this->writeError('Paths non trovati');
+		if($node == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento path nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			
 		$n=$node->numChildren();
 		for($i=0; $i<$n; $i++)
 		{
@@ -436,13 +444,15 @@ class FrontController {
 		$commandString=$this->getCommandRequest();
 		
 		$cinfonode=&$this->config->root->getChild('commands');
-//err		if($cinfonode==NULL) $this->writeError(115);
+		if($cinfonode == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$commandNode=&$cinfonode->getChild($commandString);
-//err		if($commandNode == NULL) $this->writeError(116,$commandString);
-
-		$this->commandClass=$commandNode->attributes['class'];		
-
+		if($commandNode == NULL)
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
+		$this->commandClass=$commandNode->attributes['class'];
+		
 		$this->commandTemplate=array();
 		//$templatePath=$this->paths['templates'];		
 		$n=$commandNode->numChildren();
@@ -451,11 +461,11 @@ class FrontController {
 			$child=&$commandNode->children[$i];
 			$this->templates[$child->attributes['type']]=$child->charData;			
 		}
-//		if(!isset($this->commandClass))
-//err			$this->writeError(117,$commandString);
+		if(!isset($this->commandClass))
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definita l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
-//		if(empty($this->commandClass))
-//err			$this->writeError(118,$commandString );			
+		if(empty($this->commandClass))
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 	}	
 
 
@@ -508,15 +518,15 @@ class FrontController {
 	*/
 	function &getTemplateEngine()
 	{
-		static $myTemplateObject = NULL;
+		static $templateEngine = NULL;
 		 
-		if ( $myTemplateObject !== NULL ){
-			 return $myTemplateObject; 
+		if ( $templateEngine  !== NULL ){
+			 return $templateEngine ; 
 		}
 		else
 		{	
 			define('SMARTY_DIR',$this->templateEngine['smarty_dir']);
-			require_once(SMARTY_DIR.'/Smarty.class.php');
+			require_once(SMARTY_DIR.'Smarty.class.php');
 			
 			$smarty = new Smarty();
 			
@@ -525,7 +535,7 @@ class FrontController {
 			$smarty->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 			$smarty->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 
-			$myTemplateObject =& $smarty; 
+			$templateEngine  =& $smarty; 
 			
 			return $smarty; 	
 			
