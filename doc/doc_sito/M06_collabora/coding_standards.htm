@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Coding Standards</TITLE>
+<META http-equiv="Content-type content=text/html; charset=ISO-8859-1"></HEAD>
+<BODY text="#000000" vLink="#840084" aLink="#0000ff" link="#0000ff" bgColor="#ffffff">
+<H1><A name="standards">Coding Standards</A></H1>
+<DIV class="sect1">
+<H1 class="sect1"><A name="standards.comments" />Comments</H1>
+  <P>Inline documentation for classes should follow the PHPDocumentor convention, 
+    similar to Javadoc. More information about PHPDoc can be found here: <A 
+href="http://phpdocu.sourceforge.net/" target="_top">http://phpdocu.sourceforge.net/</A> 
+  </P>
+<P>Non-documentation comments are strongly encouraged. A general rule of thumb 
+is that if you look at a section of code and think "Wow, I don't want to try and 
+describe that", you need to comment it before you forget how it works. </P>
+<P>C style comments (/* */) and standard C++ comments (//) are both fine. Use of 
+Perl/shell style comments (#) is discouraged. </P></DIV>
+
+<DIV class="sect1">
+<H1 class="sect1"><A name="standards.including" />Including Code</H1>
+<P>Anywhere you are unconditionally including a class file, use <B 
+class="function">require_once()</B>. Anywhere you are conditionally including a 
+class file (for example, factory methods), use <B 
+class="function">include_once()</B>. Either of these will ensure that class files 
+are included only once. They share the same file list, so you don't need to 
+worry about mixing them - a file included with <B 
+class="function">require_once()</B> will not be included again by <B 
+class="function">include_once()</B>. 
+
+<P></P></DIV>
+
+
+<DIV class="sect1">
+<H1 class="sect1"><A name="standards.tags" />PHP Code Tags</H1>
+<P><SPAN class="emphasis"><I class="emphasis">Always</I></SPAN> use <TT 
+class="literal">&lt;?php ?&gt;</TT> to delimit PHP code, not the <TT 
+class="literal">&lt;? ?&gt;</TT> shorthand. This is required for PEAR compliance 
+and is also the most portable way to include PHP code on differing operating 
+systems and setups. </P></DIV>
+
+
+
+<DIV class="sect1">
+<H1 class="sect1"><A name="standards.header" />Header Comment Blocks</H1>
+  <P>All source code files &quot;must&quot; contain the following comment block 
+    as the header: 
+  <TABLE cellSpacing="0" cellPadding="0" width="100%" bgColor="#eeeeee" border="0">
+  <TBODY>
+  <TR>
+    <TD><PRE class="php">/**<br>*
+* nome_file.php - Descrizione breve<br>* <br>* Descrizione piu' dettagliata del contenuto del file, 
+* delle funzionalita' che svolge o integra.<br>*  <br>* @package Framework<br>* @author Original Author &amp;lt;author@example.com&amp;gt;, Your Name &amp;lt;you@example.com&amp;gt;<br>* @copyright Copyright (c) 2002-2003 UniversiBO<br>* @license http://opensource.org/licenses/gpl-license.php GNU Public License<br>* <br>*/</PRE></TD></TR></TBODY></TABLE></P>
+<P>There's no hard rule to determine when a new code contributor should be added 
+to the list of authors for a given source file. In general, their changes should 
+fall into the "substantial" category (meaning somewhere around 10% to 20% of 
+code changes). Exceptions could be made for rewriting functions or contributing 
+new logic. </P>
+<P>Simple code reorganization or bug fixes would not justify the addition of a 
+new individual to the list of authors. </P>
+  <P>Files not in the core repository should have a similar block stating the copyright, 
+    the license, and the authors. All files should include the modeline comments 
+    to encourage consistency. </P>
+</DIV>
+
+
+<DIV class="sect1">
+  <H1 class="sect1"><A name="standards.exampleurls" />Example URLs</H1>
+</DIV>
+<DIV class="sect1">
+  <P>Use "example.com", "example.org" and "example.net" for all example URLs and 
+    email addresses, per RFC 2606. </P>
+  <P>&nbsp;</P>
+</DIV>
+<p>Si&nbsp;consiglia di utilizzare la notazione &quot;::&quot; solo per metodi 
+      statici.</p>
+    <TABLE class="CALSTABLE" border="1">
+      <TBODY>
+        <tr> 
+          <TD vAlign="center" align="left"> <P>Class_Name::StaticMethod()</P></TD>
+        </TR>
+        <tr> 
+          <TD vAlign="center" align="left"> <P>Class_Name-&gt;_PrivateMethod()</P></TD>
+        </TR>
+        <tr> 
+          <TD vAlign="center" align="left"> <P>$class_istance-&gt;Method()</P></TD>
+        </TR>
+      </TBODY>
+    </TABLE>
+    <DIV class="sect2">
+<H2 class="sect2"><A name="AEN460" />Constants</H2>
+<P>Constants should always be all-uppercase, with underscores to separate words. 
+Prefix constant names with the uppercased name of the class/package they are 
+used in. For example, the constants used by the <TT class="literal">DB::</TT> 
+package all begin with "<TT class="literal">DB_</TT>". </P></DIV>
+<DIV class="sect2">
+<H2 class="sect2"><A name="AEN465" />Global Variables</H2>
+    <P>If your package needs to define global variables, their name should start with 
+      a single underscore followed by the package name and another underscore.<br>
+      For example, the PEAR package uses a global variable called $_PEAR_destructor_object_list. 
+    </P>
+  </DIV></DIV>
+
+</BODY></HTML>

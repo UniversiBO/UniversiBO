@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+	<LINK REL=StyleSheet HREF="../nat.css" TYPE="text/css">
+</head>
+
+<body>
+
+<h2>Analisi del problema</h2>
+<h4>Partire dai casi d'uso?</h4>
+<p>Si &egrave; tentato di procedere con un approccio a partire dai casi d'uso 
+  per escrivere l'intera applicazione Web, ma vista la complessit&agrave; del 
+  problema non &egrave; possibile esporre con ordine a questo livello tutti i 
+  casi d'uso quindi si rende necessaria una suddivisione del problema in sottoparti.</p>
+<h4>Dividere la complessit&agrave; del problema</h4>
+<p>Dalle esperienze acquisite dalla prima versione di UniversiBO si &egrave; riscontrata 
+  la necessaria suddivisione del problema in sottoparti. Questa suddivisione pu&ograve; 
+  essere concettualmente vista in due &quot;direzioni&quot; diverse:</p>
+<p><strong>Verticale:</strong><br>
+  - presentazione<br>
+  - logica dell'applicazione<br>
+  - persistenza dei dati<br>
+  Permette la suddivisione dei compiti del team di sviluppo e il lavoro in parallelo 
+  sui tre livelli.<br>
+  Permette una specializzazione delle conoscenze dei componenti del team sulle 
+  tecnologie proprie di ognuno dei livelli</p>
+<p><img src="vertical_layers.png" width="363" height="300"></p>
+<p><strong>Orizzontale:</strong><br>
+  - framework per i servizi<br>
+  - servizi<br>
+  Permette lo sviluppo incrementale dell'applicazione, dopo aver creato il framework 
+  si possono aggiungere incrementalmente nuovi servizi e seguente il rilascio 
+  dell'applicazione alla fine di ogni ciclo.</p>
+<p><img src="IncrementalDevelopment.png" width="500" height="267"></p>
+</body>
+</html>
