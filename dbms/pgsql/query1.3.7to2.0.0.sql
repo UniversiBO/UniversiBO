@@ -275,4 +275,12 @@ contenuto text NOT NULL,
 ultima_modifica int4 NOT NULL,
 indice int4 NOT NULL);
 
+------14-02-04
+DROP TABLE help_riferimento;
+
+CREATE TABLE help_riferimento(
+riferimento varchar(32) ,
+id_help int4,
+PRIMARY KEY(riferimento, id_help)
+);
 
