@@ -15,9 +15,8 @@ define('NOTIFICA_NOT_URGENTE', 'N');
  * Rappresenta una singola Notifica.
  *
  * @package Notifica
- * @version 0.0.1
+ * @version 0.0.9
  * @author GNU/Mel <gnu.mel@gmail.com>
- * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
