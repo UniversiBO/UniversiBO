@@ -328,7 +328,7 @@ td.evidenzia{
  *
  */
 
-.news, .elenco, .chi_siamo, .file_info
+.news, .elenco, .chi_siamo, .file_info, .elencoFile
 {
 	font-size: 11px !important;
 	margin: 2em 0 0;
@@ -339,9 +339,9 @@ td.evidenzia{
 }
 .news, .file_info { width: 90%; margin: 2em 5% 0; background-color: #eff3fc;}
 .news, .chi_siamo, .file_info { padding: 0 0 4px; }
-.elenco { padding: 0; }
-.elenco p { padding: 2px 4px !important; }
-.elenco div
+.elenco, .elencoFile { padding: 0; }
+.elenco p, .elencoFile p { padding: 2px 4px !important; }
+.elenco div, .elencoFile div
 {
 	border-bottom: dotted 2px #999
 }
@@ -350,6 +350,7 @@ td.evidenzia{
 {
 	width: 90%;
 }*/
+.elencoFile span { text-align: right;}
 
 .odd
 {
@@ -363,7 +364,7 @@ td.evidenzia{
 	padding: 2px 0 !important;
 }
 
-.news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td, .chi_siamo p, .chi_siamo a, .chi_siamo li, .chi_siamo h3, .chi_siamo td, .file_info p, .file_info a, .file_info li, .file_info h3, .file_info td
+.news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td, .chi_siamo p, .chi_siamo a, .chi_siamo li, .chi_siamo h3, .chi_siamo td, .file_info p, .file_info a, .file_info li, .file_info h3, .file_info td, .elencoFile p, .elencoFile a, .elencoFile li, .elencoFile h3, .elencoFile td
 {
 	font-size: 11px;
 }
@@ -373,9 +374,9 @@ td.evidenzia{
 	font-size: 11px;
 }
 
-.news h3, .work  h3, .file_info  h3
+.news h3, .work  h3, .file_info h3, div.elencoFile th
 {
-	background-color: #d9e5ff;
+	background-color: #d9e5ff !important;
 	color: #333;
 	margin: 0 0 2px;
 	padding: 2px;
