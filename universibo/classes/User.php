@@ -71,7 +71,7 @@ class User {
 	
 	
 	/**
-	 *  Verifica se la sintassi dello username è valido.
+	 *  Verifica se la sintassi dello username ? valido.
 	 *  Sono permessi fino a 25 caratteri: alfanumerici, lettere accentate, spazi, punti, underscore
 	 *
 	 * @static
@@ -80,14 +80,14 @@ class User {
 	 */
 	function isUsernameValid( $username )
 	{
-		$username_pattern='^([[:alnum:]àèòéìù ._]{1,25})$';
+		$username_pattern='^([[:alnum:]?????? ._]{1,25})$';
 		return ereg($username_pattern , $username );
 	}
 	
 	
 	
 	/**
-	 *  Verifica se la sintassi della password è valida.
+	 *  Verifica se la sintassi della password ? valida.
 	 *  Lunghezza min 5, max 30 caratteri
 	 *
 	 * @static
@@ -485,8 +485,8 @@ class User {
 
 
 	/**
-	 * Ritorna true se ad un utente è impedito l'accesso ai servizi di interazione, 
-	 * la fase di autorizzazione deve tenere conto di questà proprietà 
+	 * Ritorna true se ad un utente ? impedito l'accesso ai servizi di interazione, 
+	 * la fase di autorizzazione deve tenere conto di quest? propriet? 
 	 *
 	 * @return boolean
 	 */
@@ -595,7 +595,7 @@ class User {
 	/**
 	 * Se chiamata senza parametri ritorna true se l'utente corrente appartiene al gruppo Ospite.
 	 * Se chiamata in modo statico con il parametro opzionale ritorna true se il gruppo specificato appartiene al gruppo Ospite.
-	 * Un utente non è ospite se appartiene anche ad altri gruppi. 
+	 * Un utente non ? ospite se appartiene anche ad altri gruppi. 
 	 *
 	 * @static
 	 * @return boolean
@@ -638,7 +638,7 @@ class User {
 
 
 	/**
-	 * Restituisce true se lo username specificato è già registrato sul DB
+	 * Restituisce true se lo username specificato ? gi? registrato sul DB
 	 *
 	 * @static
 	 * @param string $username username da ricercare
@@ -767,8 +767,10 @@ class User {
 			$res = $db->query($query);
 			
 			if (DB::isError($res))
+			{
+				$db->rollback();
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
-			
+			}
 			$db->commit();
 			
 			$return = true;
@@ -814,7 +816,7 @@ class User {
 	
 	
 	/**
-	 * Restituisce true se l'utente dell'active directory è già registrato sul DB
+	 * Restituisce true se l'utente dell'active directory ? gi? registrato sul DB
 	 *
 	 * @static
 	 * @param string $ad_username username da ricercare
@@ -857,7 +859,7 @@ class User {
 		
 		if ( $javaADLoginSock == false )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare più tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare pi? tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
 		}
 		else
 		{
