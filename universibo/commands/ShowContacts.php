@@ -22,7 +22,8 @@ class ShowContacts extends UniversiboCommand {
 		
 		$template->assign('contacts_altTitle', 'Chi Siamo');
 		$template->assign('contacts_intro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
-		//inizio array di array contenenti i vari chi siamo 
+		
+		/*//inizio array di array contenenti i vari chi siamo 
 
 		$template->assign('contacts_personal', array(
 			'contacts_brain'=>array('nick'=>'brain', 'intro'=>'Brain è un caparbio studente di Ingegneria Informatica. Nel progetto si occupa del lavoro più importante: la progettazione del software e di buona parte della grafica.', 'ruolo'=>'amministratore - progettista software', 'email'=>'brain79@virgilio.it', 'recapito'=>'3381407176', 'obiettivi'=>'Obiettivo iniziale del mio progetto era semplicemente mettere in pratica le prime conoscenze acquisite riguardo HTML, PHP e la realizzazione di applicazioni Web.
@@ -62,11 +63,11 @@ Non ho ancora ben capito che animale sia un Ingegnere dei Processi Gestionali, m
 			
 			));  
 		//fine array
+		*/
 		
-		/*
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT * FROM collaboratore';
+		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -74,10 +75,14 @@ Non ho ancora ben capito che animale sia un Ingegnere dei Processi Gestionali, m
 		$rows = $res->numRows();
 
 		if( $rows = 0) return false;
-		//ancora non so come funzia fetchInto
-		$res->fetchInto($row);
-		//qui va creato l'array di array da passare a smarty
-		*/
+		
+		$arrayContatti=array();     //l'array di array da passare al template
+		
+		while($res->fetchInto($row)){
+			$arrayContatti[]=array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5]);
+		}
+		$template->assign('contacts_personal', $arrayContatti);
+		
 		
 		return 'default';						
 	}
