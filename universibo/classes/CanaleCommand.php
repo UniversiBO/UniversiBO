@@ -134,7 +134,7 @@ class CanaleCommand extends UniversiboCommand
 			}
 		}
 		else
-			$template->assign( 'common_langCanaleMyUniversiBO', '');
+		$template->assign( 'common_langCanaleMyUniversiBO', '');
 		
 		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );
@@ -173,11 +173,14 @@ class CanaleCommand extends UniversiboCommand
 		{		
 			$template =& $this->frontController->getTemplateEngine();
 			$canale =& $this->getRequestCanale();
+			$user =& $this->getSessionUser();
 			
 			//informazioni del menu contatti
-			$attivaContatti = false;
+			$attivaContatti = $user->isAdmin();
 			
-			$arrayUsers = array();
+			$attivaModificaDiritti = $user->isAdmin();
+			
+			$arrayPublicUsers = array();
 			$arrayRuoli =& $canale->getRuoli();
 			//var_dump($arrayRuoli);
 			$keys = array_keys($arrayRuoli);
@@ -189,30 +192,40 @@ class CanaleCommand extends UniversiboCommand
 				{
 					$attivaContatti = true;
 					
+					if ($ruolo->isReferente() && $ruolo->getIdUser() == $user->getIdUser())
+						$attivaModificaDiritti = true;
+					
 					$user =& User::selectUser($ruolo->getIdUser());
 					//var_dump($user);
 					$contactUser = array();
 					$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$user->getIdUser();
-					$contactUser['tipo']  = $user->getUserGroupsNames();
+					$contactUser['nome']  = $user->getUserPublicGroupName();
 					$contactUser['label'] = $user->getUsername();
 					$contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
 					//var_dump($ruolo);
-					$arrayUsers[] = $contactUser;
+					//$arrayUsers[] = $contactUser;
+					$arrayPublicUsers[$user->getUserPublicGroupName(false)][] = $contactUser;
 				}
 			}
 			//ordina $arrayCanali
 			//usort($arrayUsers, array('CanaleCommand','_compareMyUniversiBO'));
 			
-					
 			//assegna al template
 			if ($attivaContatti)
 			{
+				
+				uksort($arrayPublicUsers, "strcmp");
+				
 				$template->assign('common_contactsCanaleAvailable', 'true');
 				$template->assign('common_langContactsCanale', 'Contatti');
-				$template->assign('common_contactsCanale', $arrayUsers);
+				//$template->assign('common_contactsCanale', $arrayUsers);
+				$template->assign('common_contactsCanale', $arrayPublicUsers);
+				$template->assign('common_contactsEdit', array('label' => 'Modifica diritti', 'uri' => 'index.php?do=RuoliAdminSearch&id_canale='.$canale->getIdCanale() ) ) ;
+				$template->assign('common_contactsEditAvailable', ($attivaModificaDiritti) ? 'true' : 'false');
 			}
-				//$template->assign('common_contactsCanaleAvailable', 'false');
-
+			
+			
+			//$template->assign('common_contactsCanaleAvailable', 'false');
 			
 			
 		}

@@ -97,6 +97,11 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</MyUniversiBORemove>
+		<RuoliAdminSearch class="RuoliAdminSearch">
+			<response type="template" name="default">ruoli_admin_search.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
+		</RuoliAdminSearch>
 		
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>

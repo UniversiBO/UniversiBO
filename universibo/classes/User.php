@@ -296,9 +296,9 @@ class User {
 	{
 		return $this->groups;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Imposta il gruppo di appartenenza dello User
 	 * 
@@ -431,6 +431,43 @@ class User {
 			return false;
 		}
 		return true;
+	}
+
+
+
+	/**
+	 * Restituisce il nome del gruppo da usare nel blocchetto contatti
+	 * (admin e collaboratori compaiono come studenti)
+	 *
+	 * @static
+	 * @param boolean $singolare 
+	 * @return array
+	 */
+	function publicGroupsName( $singolare = true )
+	{
+		if ( $singolare == true )
+		{
+			
+			return array(
+			 USER_OSPITE		=> "Ospite",
+			 USER_STUDENTE		=> "Studente",
+			 USER_COLLABORATORE	=> "Studente",
+  			 USER_TUTOR			=> "Tutor",
+			 USER_DOCENTE		=> "Docente",
+			 USER_PERSONALE		=> "Personale non docente",
+			 USER_ADMIN			=> "Studente");
+		} 
+		else
+		{
+			return array(
+			 USER_OSPITE        => "Ospiti",
+			 USER_STUDENTE      => "Studenti",
+			 USER_COLLABORATORE => "Studenti",
+			 USER_TUTOR         => "Tutor",
+			 USER_DOCENTE       => "Docenti",
+			 USER_PERSONALE     => "Personale non docente",
+			 USER_ADMIN         => "Studenti");
+		}
 	}
 
 
@@ -650,6 +687,31 @@ class User {
 		if ($this->isAdmin())			$return[]=$nomi_gruppi[USER_ADMIN];
 
 		return $return;
+		
+	}
+
+
+
+	/**
+	 * Restituisce l'array dell'elenco dei nomi dei gruppi
+	 * a cui appartiene una persona
+	 *
+	 * @static
+	 * @param boolean $singolare 
+	 * @return array
+	 */
+	function getUserPublicGroupName( $singolare = true )
+	{
+		$nomi_gruppi = User::publicGroupsName($singolare);
+		
+		
+		if ($this->isOspite())			return $nomi_gruppi[USER_OSPITE];
+		if ($this->isStudente())		return $nomi_gruppi[USER_STUDENTE];
+		if ($this->isCollaboratore())	return $nomi_gruppi[USER_COLLABORATORE];
+		if ($this->isTutor())			return $nomi_gruppi[USER_TUTOR];
+		if ($this->isDocente())			return $nomi_gruppi[USER_DOCENTE];
+		if ($this->isPersonale())		return $nomi_gruppi[USER_PERSONALE];
+		if ($this->isAdmin())			return $nomi_gruppi[USER_ADMIN];
 		
 	}
 
