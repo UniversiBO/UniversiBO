@@ -151,6 +151,7 @@
 		</FileEdit>
 		<FileDelete class="FileDelete">
 			<response type="template" name="default">file_delete.tpl</response>
+			<response type="template" name="success">file_delete_success.tpl</response>
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileDelete>

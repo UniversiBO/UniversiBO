@@ -27,6 +27,8 @@ class FileDelete extends UniversiboCommand {
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$canale = & Canale::retrieveCanale($_GET['id_canale']);
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', $canale->getTitolo());
 		
 		$user =& $this->getSessionUser();
 		
@@ -142,7 +144,7 @@ class FileDelete extends UniversiboCommand {
 			/**
 			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */
-			$template->assign('FileDelete_langSuccess', "La notizia è stata cancellata dai canali scelti.");
+			$template->assign('fileDelete_langSuccess', "Il file è stata cancellata dai canali scelti.");
 			
 			return 'success';
 		}
@@ -153,8 +155,6 @@ class FileDelete extends UniversiboCommand {
 		
 		$template->assign('f13_langAction', "Elimina il file dai seguenti canali:");
 		$template->assign('f13_canale', $f13_canale);
-		$template->assign('common_canaleURI', $canale->showMe());
-		$template->assign('common_langCanaleNome', $canale->getTitolo());
 		
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		

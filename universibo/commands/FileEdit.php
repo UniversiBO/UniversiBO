@@ -10,7 +10,6 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
- * @author Daniele Tiles
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -18,10 +17,6 @@ class FileAdd extends UniversiboCommand {
 
 	function execute() {
 		
-		$frontcontroller = & $this->getFrontController();
-		$template = & $frontcontroller->getTemplateEngine();
-
-		$krono = & $frontcontroller->getKrono();
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 		
@@ -31,8 +26,6 @@ class FileAdd extends UniversiboCommand {
 		}
 		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 		$id_canale = $canale->getIdCanale();
-		$template->assign('common_canaleURI', $canale->showMe());
-		$template->assign('common_langCanaleNome', $canale->getTitolo());
 
 		$referente = false;
 		$moderatore = false;
@@ -47,19 +40,23 @@ class FileAdd extends UniversiboCommand {
 		if (!($user->isAdmin() || $referente || $moderatore)) 
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		
+		$frontcontroller = & $this->getFrontController();
+		$template = & $frontcontroller->getTemplateEngine();
+
+		$krono = & $frontcontroller->getKrono();
 
 		// valori default form
-		$f12_file = '';
-		$f12_titolo = '';
-		$f12_abstract = '';
-		$f12_parole_chiave = array();
-		$f12_categorie = FileItem::getCategorie();
-		$f12_categoria = 5;
-		$f12_data_inserimento = time();
-		$f12_permessi_download = '';
-		$f12_permessi_visualizza = '';
-		$f12_password = null;
-		$f12_canale = array ();
+		$f13_file = '';
+		$f13_titolo = '';
+		$f13_abstract = '';
+		$f13_parole_chiave = array();
+		$f13_categorie = FileItem::getCategorie();
+		$f13_categoria = 5;
+		$f13_data_inserimento = time();
+		$f13_permessi_download = '';
+		$f13_permessi_visualizza = '';
+		$f13_password = null;
+		$f13_canale = array ();
 
 		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
 		$elenco_canali = array($id_canale);
@@ -80,132 +77,132 @@ class FileAdd extends UniversiboCommand {
 			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
 			$nome_current_canale = $current_canale->getTitolo();
 			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-			$f12_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
+			$f13_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
 		}
 		
-		$f12_accept = false;
+		$f13_accept = false;
 		
-		if (array_key_exists('f12_submit', $_POST)) 
+		if (array_key_exists('f13_submit', $_POST)) 
 		{
-			$f12_accept = true;
+			$f13_accept = true;
 
-			if ( !array_key_exists('f12_file', $_FILES) ||
-			 !array_key_exists('f12_titolo', $_POST) ||
-			 !array_key_exists('f12_data_ins_gg', $_POST) || 
-			 !array_key_exists('f12_data_ins_mm', $_POST) || 
-			 !array_key_exists('f12_data_ins_aa', $_POST) || 
-			 !array_key_exists('f12_data_ins_ora', $_POST) || 
-			 !array_key_exists('f12_data_ins_min', $_POST) || 
-			 !array_key_exists('f12_abstract', $_POST) || 
-			 !array_key_exists('f12_parole_chiave', $_POST) || 
-			 !array_key_exists('f12_categoria', $_POST) || 
-			 !array_key_exists('f12_permessi_download', $_POST) || 
-			 !array_key_exists('f12_permessi_visualizza', $_POST) || 
-			 !array_key_exists('f12_password', $_POST) || 
-			 !array_key_exists('f12_password_confirm', $_POST) || 
-			 !array_key_exists('f12_canale', $_POST) ) 
+			if ( !array_key_exists('f13_file', $_FILES) ||
+			 !array_key_exists('f13_titolo', $_POST) ||
+			 !array_key_exists('f13_data_ins_gg', $_POST) || 
+			 !array_key_exists('f13_data_ins_mm', $_POST) || 
+			 !array_key_exists('f13_data_ins_aa', $_POST) || 
+			 !array_key_exists('f13_data_ins_ora', $_POST) || 
+			 !array_key_exists('f13_data_ins_min', $_POST) || 
+			 !array_key_exists('f13_abstract', $_POST) || 
+			 !array_key_exists('f13_parole_chiave', $_POST) || 
+			 !array_key_exists('f13_categoria', $_POST) || 
+			 !array_key_exists('f13_permessi_download', $_POST) || 
+			 !array_key_exists('f13_permessi_visualizza', $_POST) || 
+			 !array_key_exists('f13_password', $_POST) || 
+			 !array_key_exists('f13_password_confirm', $_POST) || 
+			 !array_key_exists('f13_canale', $_POST) ) 
 			{
 				var_dump($_POST);die();
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
 			
 			
 			//titolo	
-			if (strlen($_POST['f12_titolo']) > 150) {
+			if (strlen($_POST['f13_titolo']) > 150) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			elseif ($_POST['f12_titolo'] == '') {
+			elseif ($_POST['f13_titolo'] == '') {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			} else
-				$f12_titolo = $_POST['f12_titolo'];
+				$f13_titolo = $_POST['f13_titolo'];
 			
 			
 			//abstract
-			$f12_abstract = $_POST['f12_abstract'];
+			$f13_abstract = $_POST['f13_abstract'];
 			
 			
 			$checkdate_ins = true;
 			//data_ins_gg
-			if (!ereg('^([0-9]{1,2})$', $_POST['f12_data_ins_gg'])) {
+			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_gg'])) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
-				$f12_data_ins_gg = $_POST['f12_data_ins_gg'];
+				$f13_data_ins_gg = $_POST['f13_data_ins_gg'];
 
-			//f12_data_ins_mm
-			if (!ereg('^([0-9]{1,2})$', $_POST['f12_data_ins_mm'])) {
+			//f13_data_ins_mm
+			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_mm'])) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
-				$f12_data_ins_mm = $_POST['f12_data_ins_mm'];
+				$f13_data_ins_mm = $_POST['f13_data_ins_mm'];
 
-			//f12_data_ins_aa
-			if (!ereg('^([0-9]{4})$', $_POST['f12_data_ins_aa'])) {
+			//f13_data_ins_aa
+			if (!ereg('^([0-9]{4})$', $_POST['f13_data_ins_aa'])) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 				$checkdate_ins = false;
 			}
-			elseif ($_POST['f12_data_ins_aa'] < 1970 || $_POST['f12_data_ins_aa'] > 2032) {
+			elseif ($_POST['f13_data_ins_aa'] < 1970 || $_POST['f13_data_ins_aa'] > 2032) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
-				$f12_data_ins_aa = $_POST['f12_data_ins_aa'];
+				$f13_data_ins_aa = $_POST['f13_data_ins_aa'];
 
-			//f12_data_ins_ora
-			if (!ereg('^([0-9]{1,2})$', $_POST['f12_data_ins_ora'])) {
+			//f13_data_ins_ora
+			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_ora'])) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo ora di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			elseif ($_POST['f12_data_ins_ora'] < 0 || $_POST['f12_data_ins_ora'] > 23) {
+			elseif ($_POST['f13_data_ins_ora'] < 0 || $_POST['f13_data_ins_ora'] > 23) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			} else
-				$f12_data_ins_ora = $_POST['f12_data_ins_ora'];
+				$f13_data_ins_ora = $_POST['f13_data_ins_ora'];
 
-			//f12_data_ins_min
-			if (!ereg('^([0-9]{1,2})$', $_POST['f12_data_ins_min'])) {
+			//f13_data_ins_min
+			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_min'])) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			elseif ($_POST['f12_data_ins_min'] < 0 || $_POST['f12_data_ins_min'] > 59) {
+			elseif ($_POST['f13_data_ins_min'] < 0 || $_POST['f13_data_ins_min'] > 59) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			} else
-				$f12_data_ins_min = $_POST['f12_data_ins_min'];
+				$f13_data_ins_min = $_POST['f13_data_ins_min'];
 
-			if ( $checkdate_ins == true && !checkdate($_POST['f12_data_ins_mm'], $_POST['f12_data_ins_gg'], $_POST['f12_data_ins_aa']))
+			if ( $checkdate_ins == true && !checkdate($_POST['f13_data_ins_mm'], $_POST['f13_data_ins_gg'], $_POST['f13_data_ins_aa']))
 			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
 			
-			$f12_data_inserimento = mktime($_POST['f12_data_ins_ora'], $_POST['f12_data_ins_min'], "0", $_POST['f12_data_ins_mm'], $_POST['f12_data_ins_gg'], $_POST['f12_data_ins_aa']);
+			$f13_data_inserimento = mktime($_POST['f13_data_ins_ora'], $_POST['f13_data_ins_min'], "0", $_POST['f13_data_ins_mm'], $_POST['f13_data_ins_gg'], $_POST['f13_data_ins_aa']);
 			
 			//abstract	
-			if (strlen($_POST['f12_abstract']) > 3000) {
+			if (strlen($_POST['f13_abstract']) > 3000) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			elseif ($_POST['f12_abstract'] == '') {
+			elseif ($_POST['f13_abstract'] == '') {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			} else
-				$f12_testo = $_POST['f12_abstract'];
+				$f13_testo = $_POST['f13_abstract'];
 
 			//parole chiave
-			if ($_POST['f12_parole_chiave'] != '')
+			if ($_POST['f13_parole_chiave'] != '')
 			{	
-				$parole_chiave = explode("\n", $_POST['f12_parole_chiave']);
+				$parole_chiave = explode("\n", $_POST['f13_parole_chiave']);
 				if (count($parole_chiave) > 4) 
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f12_accept = false;
+					$f13_accept = false;
 				}
 				else 
 				{
@@ -214,72 +211,73 @@ class FileAdd extends UniversiboCommand {
 						if (strlen($parola > 40))
 						{
 							Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-							$f12_accept = false;
+							$f13_accept = false;
 						}
 						else
 						{
-							$f12_parole_chiave[] = $parola;
+							$f13_parole_chiave[] = $parola;
 						}
 					}
 				}			
 			}
 			
-			//permessi_download	
-			if (!ereg('^([0-9]{1,9})$', $_POST['f12_categoria'])) 
+			//categoria	
+			if (!ereg('^([0-9]{1,9})$', $_POST['f13_categoria'])) 
 			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo categoria non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			elseif ( !array_key_exists($_POST['f12_categoria'], $f12_categorie) )
+			elseif ( !array_key_exists($_POST['f13_categoria'], $f13_categorie) )
 			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La categoria inviata contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
-			else $f12_categoria = $_POST['f12_categoria'];
+			else $f13_categoria = $_POST['f13_categoria'];
 			
 			//permessi_download	
-			if (!ereg('^([0-9]{1,3})$', $_POST['f12_permessi_download'])) 
+			if (!ereg('^([0-9]{1,3})$', $_POST['f13_permessi_download'])) 
 			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
 			elseif ( $user->isAdmin() ) 
 			{
-				if ($_POST['f12_permessi_download'] < 0 || $_POST['f12_permessi_download'] > USER_ALL )
+				if ($_POST['f13_permessi_download'] < 0 || $_POST['f13_permessi_download'] > USER_ALL )
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
-					$f12_accept = false;
+					$f13_accept = false;
 				}
-				$f12_permessi_download = $_POST['f12_permessi_download'];
+				$f13_permessi_download = $_POST['f13_permessi_download'];
 			}
 			else 
 			{
-				if ($_POST['f12_permessi_download'] != USER_ALL || $_POST['f12_permessi_download'] != (USER_STUDENTE & USER_DOCENTE & USER_TUTOR & USER_PERSONALE & USER_COLLABORATORE & USER_ADMIN ) )
+				if ($_POST['f13_permessi_download'] != USER_ALL || $_POST['f13_permessi_download'] != (USER_STUDENTE & USER_DOCENTE & USER_TUTOR & USER_PERSONALE & USER_COLLABORATORE & USER_ADMIN ) )
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
-					$f12_accept = false;
+					$f13_accept = false;
 				}
 			}			
 			
 			//password non necessita controlli
-			if ($_POST['f12_password'] != $_POST['f12_password_confirm'])
+			if ($_POST['f13_password'] != $_POST['f13_password_confirm'])
 			{ 
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 				$f12_accept = false;
 			}
-			elseif($_POST['f12_password'] != '')
+			elseif($_POST['f13_password'] != '')
 			{ 
-				$f12_password = $_POST['f12_password'];
+				$f13_password = $_POST['f13_password'];
 			}
+			
 			//e i permessi di visualizzazione??
 			// li prendo uguali a quelli del canale,
-			$f12_permessi_visualizza = $canale->getPermessi();
+			$f13_permessi_visualizza = $canale->getPermessi();
 			// eventualmente dare la possibilità all'admin di metterli diversamente
 			
 			
-			$f12_canali_inserimento = array();
+			$f13_canali_inserimento = array();
 			//controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
-			foreach ($_POST['f12_canale'] as $key => $value)
+			foreach ($_POST['f13_canale'] as $key => $value)
 			{
 				$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
 				if (!$diritti)
@@ -287,38 +285,38 @@ class FileAdd extends UniversiboCommand {
 					//$user_ruoli[$key]->getIdCanale();
 					$canale =& $elenco_canali_retrieve[$key];
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f12_accept = false;
+					$f13_accept = false;
 				}
 				
-				$f12_canali_inserimento = $_POST['f12_canale'];
+				$f13_canali_inserimento = $_POST['f13_canale'];
 			}
 			
 			//echo substr($_FILES['userfile']['name'],-4);
-			$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
+			$estensione = strtolower ( substr($_FILES['f13_file']['name'],-4) );
 			if ( $estensione == '.php') 
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
-				$f12_accept = false;
+				$f13_accept = false;
 			}	
-			elseif (!is_uploaded_file($_FILES['f12_file']['tmp_name'])) 
+			elseif (!is_uploaded_file($_FILES['f13_file']['tmp_name'])) 
 			{
 				Error :: throw(_ERROR_NOTICE, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f12_accept = false;
+				$f13_accept = false;
 			}
 			
 			
 			
 			//esecuzione operazioni accettazione del form
-			if ($f12_accept == true) 
+			if ($f13_accept == true) 
 			{
 				
 				$db = FrontController::getDbConnection('main');
 				ignore_user_abort(1);
         		$db->autoCommit(false);
 			
-				$newFile = new FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUser(), $f12_titolo, $f12_abstract,
-				$f12_data_inserimento, time(), $_FILES['f12_file']['size'] / 1024, 0, $_FILES['f12_file']['name'], $f12_categoria, 
-				FileItem::guessTipo($_FILES['f12_file']['tmp_name']), md5_file($_FILES['f12_file']['tmp_name']), ($f12_password == null) ? $f12_password : FileItem::passwordHashFunction($f12_password), 
+				$newFile = new FileItem(0, $f13_permessi_download, $f13_permessi_visualizza, $user->getIdUser(), $f13_titolo, $f13_abstract,
+				$f13_data_inserimento, time(), $_FILES['f13_file']['size'] / 1024, 0, $_FILES['f13_file']['name'], $f13_categoria, 
+				FileItem::guessTipo($_FILES['f13_file']['tmp_name']), md5_file($_FILES['f13_file']['tmp_name']), ($f13_password == null) ? $f13_password : FileItem::passwordHashFunction($f13_password), 
 				'', '', '', '', '');
 				/* gli ultimi parametri dipendono da altre tabelle e
 				 il loro valore viene insegnato internamente a FileItem 
@@ -327,21 +325,21 @@ class FileAdd extends UniversiboCommand {
 				
 				$newFile->insertFileItem();
 				
-				$newFile->setParoleChiave($f12_parole_chiave);
+				$newFile->setParoleChiave($f13_parole_chiave);
 
 				$nomeFile = $newFile->getNomeFile();
 				
-				if ( move_uploaded_file($_FILES['f12_file']['tmp_name'],$frontcontroller->getAppSetting('filesPath').$nomeFile ) === false )
+				if ( move_uploaded_file($_FILES['f13_file']['tmp_name'],$frontcontroller->getAppSetting('filesPath').$nomeFile ) === false )
 				{
 					$db->rollback();
 					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
 				}
 				
 				
-				//$num_canali = count($f12_canale);
-				//var_dump($f12_canale);
-				//var_dump($_POST['f12_canale']);
-				foreach ($_POST['f12_canale'] as $key => $value)
+				//$num_canali = count($f13_canale);
+				//var_dump($f13_canale);
+				//var_dump($_POST['f13_canale']);
+				foreach ($_POST['f13_canale'] as $key => $value)
 				{
 					$newFile->addCanale($key);
 					$canale =& $elenco_canali_retrieve[$key];
@@ -355,28 +353,30 @@ class FileAdd extends UniversiboCommand {
 			}
 
 		} 
-		//end if (array_key_exists('f12_submit', $_POST))
+		//end if (array_key_exists('f13_submit', $_POST))
 
 		
 		// resta da sistemare qui sotto, fare il form e fare debugging
 		
-		$template->assign('f12_file', $f12_file);
-		$template->assign('f12_titolo', $f12_titolo);
-		$template->assign('f12_abstract', $f12_abstract);
-		$template->assign('f12_parole_chiave', $f12_parole_chiave);
-		$template->assign('f12_categoria', $f12_categoria);
-		$template->assign('f12_categorie', $f12_categorie);
-		$template->assign('f12_abstract', $f12_abstract);
-		$template->assign('f12_canale', $f12_canale);
+		$template->assign('f13_file', $f13_file);
+		$template->assign('f13_titolo', $f13_titolo);
+		$template->assign('f13_abstract', $f13_abstract);
+		$template->assign('f13_parole_chiave', $f13_parole_chiave);
+		$template->assign('f13_categoria', $f13_categoria);
+		$template->assign('f13_categorie', $f13_categorie);
+		$template->assign('f13_abstract', $f13_abstract);
+		$template->assign('f13_canale', $f13_canale);
 		
-		$template->assign('f12_password', $f12_password);
-		$template->assign('f12_permessi_download', $f12_permessi_download);
-		$template->assign('f12_permessi_visualizza', $f12_permessi_visualizza);
-		$template->assign('f12_data_ins_gg', $krono->k_date('%j',$f12_data_inserimento));
-		$template->assign('f12_data_ins_mm', $krono->k_date('%m',$f12_data_inserimento));
-		$template->assign('f12_data_ins_aa', $krono->k_date('%Y',$f12_data_inserimento));
-		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_inserimento));
-		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_inserimento));
+		$template->assign('f13_password', $f13_password);
+		$template->assign('f13_permessi_download', $f13_permessi_download);
+		$template->assign('f13_permessi_visualizza', $f13_permessi_visualizza);
+		$template->assign('f13_data_ins_gg', $krono->k_date('%j',$f13_data_inserimento));
+		$template->assign('f13_data_ins_mm', $krono->k_date('%m',$f13_data_inserimento));
+		$template->assign('f13_data_ins_aa', $krono->k_date('%Y',$f13_data_inserimento));
+		$template->assign('f13_data_ins_ora', $krono->k_date('%H',$f13_data_inserimento));
+		$template->assign('f13_data_ins_min', $krono->k_date('%i',$f13_data_inserimento));
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', $canale->getTitolo());
 
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		return 'default';

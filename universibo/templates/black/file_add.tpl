@@ -85,9 +85,15 @@
 <input type="password" id="f12_password" name="f12_password" size="30" maxlength="130" value="{$f12_password|escape:"htmlall"}" />
 </td>
 </tr>
+<tr>
+<td class="News" align="right" valign="top"><label for="f12_password_confirm">Conferma password:</label></td>
+<td>
+<input type="password" id="f12_password_confirm" name="f12_password_confirm" size="30" maxlength="130" value="{$f12_password|escape:"htmlall"}" />
+</td>
+</tr>
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">La notizia verr&agrave; inserita negli argomenti:</span></legend>
+<legend><span class="Normal">Il file verr&agrave; inserito negli argomenti:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f12_canale}
 	<tr class="Normal" valign="center" align="center">
