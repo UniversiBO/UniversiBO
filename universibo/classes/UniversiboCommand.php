@@ -362,7 +362,7 @@ class UniversiboCommand extends BaseCommand {
 		
 				
 		//preparo le informazioni sui preferiti
-		$attivaMyUniverbo = false;
+		$attivaMyUniversibo = false;
 		
 		if(!$session_user->isOspite())
 		{
@@ -374,19 +374,25 @@ class UniversiboCommand extends BaseCommand {
 				$ruolo =& $arrayRuoli[$key];
 				if ($ruolo->isMyUniversibo())
 				{
-					$attivaMyUniverbo = true;
+					$attivaMyUniversibo = true;
 					
 					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$link = array();
-					$link['uri']   = $canale->showMe();
-					$link['label'] = $canale->getNome();
-					$link['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
-					$arrayCanali[] = $link;
+					$myCanali = array();
+					$myCanali['uri']   = $canale->showMe();
+					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
+					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					//var_dump($ruolo);
+					$arrayCanali[] = $myCanali;
 				}
 			}
 		}
 		
-		if ($attivaMyUniverbo)
+		//ordina $arrayCanali
+		
+		
+		//assegna al template
+		if ($attivaMyUniversibo)
 		{
 			$template->assign('common_myLinksAvailable', 'true');
 			$template->assign('common_langMyUniversibo', 'My UniversiBO');
@@ -403,7 +409,7 @@ class UniversiboCommand extends BaseCommand {
 
 	/**
 	 * Inizializza le variabili del template per le pagine popup
-	 *
+	 * 
 	 * @private
 	 * @todo implementare  
 	 */

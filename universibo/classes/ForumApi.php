@@ -46,7 +46,7 @@ class ForumApi
 	 * Ranks e livelli da assegnare agli utenti inizialmente
 	 * @access private
 	 */
-	var $defaultRanks = array(USER_STUDENTE => 0, USER_MODERATORE => 9, USER_TUTOR => 10, USER_DOCENTE => 11, USER_PERSONALE => 12, USER_ADMIN =>  1);
+	var $defaultRanks = array(USER_STUDENTE => 0, USER_COLLABORATORE => 9, USER_TUTOR => 10, USER_DOCENTE => 11, USER_PERSONALE => 12, USER_ADMIN =>  1);
 
 
 	/**
@@ -191,12 +191,12 @@ class ForumApi
 		if ($user->isOspite()) return;
 
 		$groups = $user->getGroups();
-		if ( $groups != USER_OSPITE && $groups != USER_STUDENTE && $groups != USER_MODERATORE && $groups != USER_TUTOR && $groups != USER_DOCENTE && $groups != USER_PERSONALE && $groups != USER_ADMIN ) return;
+		if ( $groups != USER_OSPITE && $groups != USER_STUDENTE && $groups != USER_COLLABORATORE && $groups != USER_TUTOR && $groups != USER_DOCENTE && $groups != USER_PERSONALE && $groups != USER_ADMIN ) return;
 		// @todo renderla funzionante anche per utenti che appartengono a più gruppi
 		
 		$user_style = $this->defaultUserStyle;
 		$user_rank  = $this->defaultRanks[$groups];
-		$user_level = ( $user->isAdmin() == true ) ? 1 : ( $user->isModeratore() == true ) ? 2 : 0 ;
+		$user_level = ( $user->isAdmin() == true ) ? 1 : ( $user->isCollaboratore() == true ) ? 2 : 0 ;
 		
 		require_once('Krono'.PHP_EXTENSION);
 		$user_timezone =  (Krono::_is_daylight(time()) == true) ? 2 : 1;

@@ -188,7 +188,7 @@ class Ruolo {
 	 */
 	function getNome()
 	{
-		return $this->tipoNotifica;
+		return $this->nome;
 	}
 
 

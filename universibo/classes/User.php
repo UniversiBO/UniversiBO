@@ -2,14 +2,14 @@
 
 require_once('Ruolo'.PHP_EXTENSION);
 
-define('USER_OSPITE'     ,1);
-define('USER_STUDENTE'   ,2);
-define('USER_MODERATORE' ,4);
-define('USER_TUTOR'      ,8);
-define('USER_DOCENTE'    ,16);
-define('USER_PERSONALE'  ,32);
-define('USER_ADMIN'      ,64);
-define('USER_ALL'        ,127);
+define('USER_OSPITE'     	,1);
+define('USER_STUDENTE'   	,2);
+define('USER_COLLABORATORE' ,4);
+define('USER_TUTOR'      	,8);
+define('USER_DOCENTE'    	,16);
+define('USER_PERSONALE'  	,32);
+define('USER_ADMIN'      	,64);
+define('USER_ALL'        	,127);
 
 
 /**
@@ -84,8 +84,8 @@ class User {
 		return ereg($username_pattern , $username );
 	}
 	
-
-
+	
+	
 	/**
 	 *  Verifica se la sintassi della password è valida.
 	 *  Lunghezza min 5, max 30 caratteri
@@ -115,10 +115,10 @@ class User {
 		$chars = array( 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J',  'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T',  'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
 		$max_chars = count($chars) - 1;
 		
-        $hash = md5(microtime());
-        $loWord = substr($hash, -8);
-        $seed = hexdec($loWord);
-        $seed &= 0x7fffffff;
+		$hash = md5(microtime());
+		$loWord = substr($hash, -8);
+		$seed = hexdec($loWord);
+		$seed &= 0x7fffffff;
 		
 		mt_srand( $seed );
 	
@@ -146,29 +146,29 @@ class User {
 		if ( $singolare == true )
 		{
 			return array(
-			 USER_OSPITE     => "Ospite",
-			 USER_STUDENTE   => "Studente",
-			 USER_MODERATORE => "Moderatore",
-			 USER_TUTOR      => "Tutor",
-			 USER_DOCENTE    => "Docente",
-			 USER_PERSONALE  => "Personale non docente",
-			 USER_ADMIN      => "Admin");
+			 USER_OSPITE		=> "Ospite",
+			 USER_STUDENTE		=> "Studente",
+			 USER_COLLABORATORE	=> "Collaboratore",
+  			 USER_TUTOR			=> "Tutor",
+			 USER_DOCENTE		=> "Docente",
+			 USER_PERSONALE		=> "Personale non docente",
+			 USER_ADMIN			=> "Admin");
 		} 
 		else
 		{
 			return array(
 			 USER_OSPITE     => "Ospiti",
 			 USER_STUDENTE   => "Studenti",
-			 USER_MODERATORE => "Moderatori",
+			 USER_COLLABORATORE => "Collaboratori",
 			 USER_TUTOR      => "Tutor",
 			 USER_DOCENTE    => "Docenti",
 			 USER_PERSONALE  => "Personale non docente",
 			 USER_ADMIN      => "Admin");
-		}	
+		}
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Crea un oggetto User
 	 *
@@ -198,9 +198,9 @@ class User {
 		$this->MD5         = $MD5;
 		$this->bookmark    = $bookmark;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Ritorna lo username dello User
 	 *
@@ -507,7 +507,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		return (boolean) ( $groups & USER_ADMIN );
+		return (boolean) ( (int)$groups & (int)USER_ADMIN );
 	}
 
 
@@ -523,7 +523,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		return (boolean) ( $groups & USER_PERSONALE );
+		return (boolean) ( (int)$groups & (int)USER_PERSONALE );
 	}
 
 
@@ -539,7 +539,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		return (boolean) ( $groups & USER_DOCENTE );
+		return (boolean) ( (int)$groups & (int)USER_DOCENTE );
 	}
 
 
@@ -567,11 +567,11 @@ class User {
 	 * @static
 	 * @return boolean
 	 */
-	function isModeratore( $groups = NULL )
+	function isCollaboratore( $groups = NULL )
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		return (boolean) ( $groups & USER_MODERATORE );
+		return (boolean) ( (int)$groups & (int)USER_COLLABORATORE );
 	}
 
 
@@ -623,13 +623,13 @@ class User {
 		$nomi_gruppi = User::groupsNames($singolare);
 		$return = array();
 		
-		if ($this->isOspite())		$return[]=$nomi_gruppi[USER_OSPITE];
-		if ($this->isStudente())	$return[]=$nomi_gruppi[USER_STUDENTE];
-		if ($this->isModeratore())	$return[]=$nomi_gruppi[USER_MODERATORE];
-		if ($this->isTutor())		$return[]=$nomi_gruppi[USER_TUTOR];
-		if ($this->isDocente())		$return[]=$nomi_gruppi[USER_DOCENTE];
-		if ($this->isPersonale())	$return[]=$nomi_gruppi[USER_PERSONALE];
-		if ($this->isAdmin())		$return[]=$nomi_gruppi[USER_ADMIN];
+		if ($this->isOspite())			$return[]=$nomi_gruppi[USER_OSPITE];
+		if ($this->isStudente())		$return[]=$nomi_gruppi[USER_STUDENTE];
+		if ($this->isCollaboratore())	$return[]=$nomi_gruppi[USER_COLLABORATORE];
+		if ($this->isTutor())			$return[]=$nomi_gruppi[USER_TUTOR];
+		if ($this->isDocente())			$return[]=$nomi_gruppi[USER_DOCENTE];
+		if ($this->isPersonale())		$return[]=$nomi_gruppi[USER_PERSONALE];
+		if ($this->isAdmin())			$return[]=$nomi_gruppi[USER_ADMIN];
 
 		return $return;
 		
@@ -659,9 +659,9 @@ class User {
 		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		return false;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se si vuole creare un utente ospite
 	 *
@@ -725,11 +725,11 @@ class User {
 		$row = $res->fetchRow();
 		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[3], $row[4], NULL);
 		return $user;
-			
+		
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Inserisce su DB le informazioni riguardanti un nuovo utente
 	 *
@@ -779,9 +779,9 @@ class User {
 		
 		return $return;
 	}
-
 	
-
+	
+	
 	/**
 	 * Aggiorna il contenuto su DB riguardante le informazioni utente
 	 *
@@ -789,29 +789,30 @@ class User {
 	 */
 	function updateUser()
 	{
-			$db =& FrontController::getDbConnection('main');
-			$utente_ban = ( $this->getBan() ) ? 'S' : 'N';
+		$db =& FrontController::getDbConnection('main');
+		$utente_ban = ( $this->getBan() ) ? 'S' : 'N';
 		
-
-			$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
-						', password = '.$db->quote($this->getPasswordHash()).
-						', email = '.$db->quote($this->getEmail()).
-						', ultimo_login = '.$db->quote($this->getUltimoLogin()).
-						', ad_username = '.$db->quote($this->getADUsername()).
-						', groups = '.$db->quote($this->getGroups()).
-						', ban = '.$db->quote($utente_ban).
-						' WHERE id_utente = '.$db->quote($this->getIdUser()); 
-			
-			$res = $db->query($query);
-			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $db->affectedRows();
 		
-			if( $rows == 1) return true;
-			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
+					', password = '.$db->quote($this->getPasswordHash()).
+					', email = '.$db->quote($this->getEmail()).
+					', ultimo_login = '.$db->quote($this->getUltimoLogin()).
+					', ad_username = '.$db->quote($this->getADUsername()).
+					', groups = '.$db->quote($this->getGroups()).
+					', ban = '.$db->quote($utente_ban).
+					' WHERE id_utente = '.$db->quote($this->getIdUser()); 
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $db->affectedRows();
+		
+		if( $rows == 1) return true;
+		elseif( $rows == 0) return false;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
-
+	
+	
 	/**
 	 * Restituisce true se l'utente dell'active directory è già registrato sul DB
 	 *
@@ -834,8 +835,8 @@ class User {
 		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		return false;
 	}
-
-
+	
+	
 	/**
 	 * Restituisce true se l'utente viene autenticato con successo sull'active directory di ateneo
 	 *
@@ -853,7 +854,7 @@ class User {
 		                             $errno,   # error number if any
 		                             $errstr,  # error message if any
 		                             3);   # give up after 5 secs
-	
+		
 		if ( $javaADLoginSock == false )
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare più tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
@@ -873,7 +874,7 @@ class User {
 			else  Error::throw(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida','file'=>__FILE__,'line'=>__LINE__)); 
 		
 		}				 
-
+	
 	}
 	
 }

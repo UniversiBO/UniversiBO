@@ -1,5 +1,4 @@
 <?php
-
 require_once('Ruolo'.PHP_EXTENSION);
 
 define('CANALE_DEFAULT'      ,1);
@@ -151,14 +150,14 @@ class Canale {
 
 	/**
 	 * Restituisce true se il gruppo o uno dei gruppi appartenenti a $groups 
-	 * ha il permesso di acecsso al canale, altrimenti false
+	 * ha il permesso di accesso al canale, altrimenti false
 	 *
 	 * @param int $groups gruppi di cui si vuole verificare l'accesso
 	 * @return boolean
 	 */
 	function isGroupAllowed($groups)
 	{
-		return (boolean) ($this->permessi & $groups);
+		return (boolean) ((int)$this->permessi & (int)$groups);
 	}
 
 
