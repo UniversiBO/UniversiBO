@@ -3,12 +3,7 @@
 
 	<!--Root Folder can be absolute or relative to receiver path -->
 	<rootFolder>../framework/</rootFolder>
-
-	<!--Here root URL is virtual to the Web root****-->
 	<rootURL>universibo2/htmls/</rootURL>
-
-	<defaultCommand>TestTemplate</defaultCommand>
-	
 	<paths>
 		<application>../universibo/</application>
 		<logs>../universibo/log-universibo/</logs>
@@ -18,7 +13,8 @@
 	<receivers>
 		<main>index.php</main>
 	</receivers>
-	
+
+	<defaultCommand>TestTemplate</defaultCommand>
 	<commands>
 		<TestTemplate class="TestTemplate">
 		</TestTemplate>
@@ -45,16 +41,19 @@
 		</ShowRules>
 		<TestUnit class="TestUnit" />
 	</commands>
+
 	<dbInfo type="DB">
 	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo</connection>
 	    <connection identifier="mysql">mysql://my_username:my_password@host/my_dbname</connection>
 	</dbInfo>
+
 	<mailerInfo>
-	<!-- leave smtp empty if don't want to use a smtp server -->
+		<!-- leave smtp empty if don't want to use a smtp server -->
 	    <smtp>joker.ing.unibo.it</smtp>
 	    <fromAddress>universibo@joker.ing.unibo.it</fromAddress>
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
+	
 	<templateInfo type="Smarty" debugging="off">
 		<template_dirs>
 			<web_dir>tpl/</web_dir>
@@ -84,9 +83,10 @@
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<files>../html/file-universibo</files>
 		<questionariReceiver>eagleone@libero.it</questionariReceiver>
-        <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione. Ci scusiamo per il disagio.</alertMessage>
+        <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione - Ci scusiamo per il disagio</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
         <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
         <defaultAnnoAccademico>2003</defaultAnnoAccademico>
 	</appSettings>
+
 </config>
