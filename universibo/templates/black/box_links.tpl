@@ -12,11 +12,10 @@
 </td>
 </tr>
 {/foreach}
-{*
-{if $common_contactsEditAvailable == "true"}<tr><td colspan="3" align="center">&nbsp;<br />
-<a href="{$common_contactsEdit.uri|escape:"htmlall"}">{$common_contactsEdit.label|escape:"htmlall"}</a></td></tr>
+{if $showLinks_linksPersonalizza == 'true'}
+	<tr><td colspan="3" align="center">&nbsp;<br />
+<a href="{$showLinks_linksAdminUri}">{$showLinks_linksAdminLabel|escape:"htmlall"}</a></td></tr>
 {/if}
-*}
 </table>
 {include file=box_end.tpl}
 {/if}
