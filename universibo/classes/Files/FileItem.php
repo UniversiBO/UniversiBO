@@ -675,11 +675,57 @@ class FileItem {
 	 *
 	 * @param string $titolo
 	 */
-
 	function setTitolo($titolo) {
 		$this->titolo = $titolo;
 	}	
 
+	
+	/**
+	 * Restituisce il tipo di un file su hd tra i tipi ammissibili riconosciuti
+	 *
+	 * @param string $file percorso in cui si trova il file
+	 */
+	function guessTipo($file) {
+		/**
+		 * da implementare
+		 */
+		return 1;
+	}	
+
+	
+	/**
+	 * Recupera le categorie possibili di un file
+	 *
+	 * @static
+	 * @return array [id_categoria] => 'descrizione' 
+	 */
+	function getCategorie() 
+	{
+		static $categorie = NULL;
+		
+		if ($categorie != NULL)
+			return $categorie;
+		
+		$db = & FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_file_categoria, descrizione FROM file_categoria';
+		$res = & $db->query($query);
+		
+		if (DB :: isError($res))
+			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		
+		$categorie = array ();
+		
+		while ($res->fetchInto($row)) {
+			$categorie[$row[0]] = $row[1];
+		}
+
+		$res->free();
+
+		return $categorie;
+	}
+	
+	
 	
 	/**
 	 * Recupera un file dal database

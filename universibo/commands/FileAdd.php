@@ -19,8 +19,7 @@ class FileAdd extends CanaleCommand {
 
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
-
-
+		
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id della notizia richiesta non è	valido', 'file' => __FILE__, 'line' => __LINE__));
@@ -51,7 +50,8 @@ class FileAdd extends CanaleCommand {
 		$f12_titolo = '';
 		$f12_abstract = '';
 		$f12_parole_chiave = array();
-		$f12_categoria = '';
+		$f12_categorie = FileItem::getCategorie();
+		$f12_categoria = 0;
 		$f12_data_inserimento = time();
 		$f12_permessi_download = '';
 		$f12_permessi_visualizza = '';
@@ -82,10 +82,12 @@ class FileAdd extends CanaleCommand {
 		
 		$f12_accept = false;
 		
-		if (array_key_exists('f12_submit', $_POST)) {
+		if (array_key_exists('f12_submit', $_POST)) 
+		{
 			$f12_accept = true;
 
-			if (!array_key_exists('f12_titolo', $_POST) ||
+			if ( !array_key_exists('f12_file', $_FILES) ||
+			 !array_key_exists('f12_titolo', $_POST) ||
 			 !array_key_exists('f12_data_ins_gg', $_POST) || 
 			 !array_key_exists('f12_data_ins_mm', $_POST) || 
 			 !array_key_exists('f12_data_ins_aa', $_POST) || 
@@ -98,7 +100,7 @@ class FileAdd extends CanaleCommand {
 			 !array_key_exists('f12_permessi_visualizza', $_POST) || 
 			 !array_key_exists('f12_password', $_POST) || 
 			 !array_key_exists('f12_canale', $_POST) ) 
-			 {
+			{
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f12_accept = false;
 			}
@@ -211,13 +213,21 @@ class FileAdd extends CanaleCommand {
 			}			
 			
 			//permessi_download	
-			if (!ereg('^([0-9]{1,9})$', $_POST['f12_categoria'])) {
+			if (!ereg('^([0-9]{1,9})$', $_POST['f12_categoria'])) 
+			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo categoria non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f12_accept = false;
 			}
-
+			elseif ( !array_key_exists($_POST['f12_categoria'], $f12_categorie) )
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La categoria inviata contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f12_accept = false;
+			}
+			else $f12_categoria = $_POST['f12_categoria'];
+			
 			//permessi_download	
-			if (!ereg('^([0-9]{1,3})$', $_POST['f12_permessi_download'])) {
+			if (!ereg('^([0-9]{1,3})$', $_POST['f12_permessi_download'])) 
+			{
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f12_accept = false;
 			}
@@ -241,7 +251,6 @@ class FileAdd extends CanaleCommand {
 			
 			//password non necessita controlli
 			
-			
 			//e i permessi di visualizzazione??
 			// li prendo uguali a quelli del canale,
 			$f12_permessi_visualizza = $canale->getPermessi();
@@ -261,7 +270,7 @@ class FileAdd extends CanaleCommand {
 					$f12_accept = false;
 				}
 				
-				$f12_canali_inserimento = 
+				$f12_canali_inserimento = $_POST['f12_canale'];
 			}
 			
 			
@@ -269,66 +278,79 @@ class FileAdd extends CanaleCommand {
 			if ($f12_accept == true) 
 			{
 				
-				$db = FrontController::getDbConnection('main');
-				ignore_user_abort(1);
-        		$db->autoCommit(false);
-				
-				$newFile = new FileItem(FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUtente(), $f12_titolo, $f12_abstract,
-					 $f12_data_inserimento, $data_modifica, $dimensione, $download, $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password, $username, $categoria_desc, $tipo_desc, $tipo_icona, $tipo_info /*, $eliminato*/));
-				
-				
-				$newFile->insertFileItem();
-
-				$table = (array_key_exists('approfondimento', $_GET) && $_GET['approfondimento']=='true') ? 'canale_approfondimenti' : 'canale_canale';
-				$newCanale->setPadre($canale->getIdCanale(), $table);
-				
-				$nomeFile = $newCanale->getIdCanale()."_".$_FILES['f10_file']['name'];
-
 				//echo substr($_FILES['userfile']['name'],-4);
-				$estensione = strtolower ( substr($_FILES['f10_file']['name'],-4) );
-				if ( $estensione == '.php') {
-					$db->rollback();
-					Error::throw(_ERROR_DEFAULT,array('msg'=>'Non e\' permesso inserire file con estensione .php'.': impossibile impostare la dipendenza tra il canale e il file','file'=>__FILE__,'line'=>__LINE__));
+				$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
+				if ( $estensione == '.php') 
+				{
+					Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
 				}	
-				if (is_uploaded_file($_FILES['f10_file']['tmp_name'])) {
-					if ( move_uploaded_file($_FILES['f10_file']['tmp_name'],$fc->getAppSetting('directoryFile').$nomeFile ) === false )
+				if (is_uploaded_file($_FILES['f12_file']['tmp_name'])) 
+				{
+					
+					$db = FrontController::getDbConnection('main');
+					ignore_user_abort(1);
+	        		$db->autoCommit(false);
+				
+					$newFile = new FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUtente(), $f12_titolo, $f12_abstract,
+					$f12_data_inserimento, time(), $_FILES['f12_file']['size'], 0, $_FILES['f12_file']['name'], $f12_categoria, 
+					FileItem::guessTipo($_FILES['f12_file']['tmp_name']), md5_file($_FILES['f12_file']['tmp_name']), FileItem::passwordHashFunction($password), 
+					'', '', '', '', '');
+					/* gli ultimi parametri dipendono da altre tabelle e
+					 il loro valore viene insegnato internamente a FileItem 
+					 bisognerebbe non usare il costruttore per dover fare l'insert
+					 ma...*/
+					
+					
+					$newFile->insertFileItem();
+
+					$nomeFile = $newFile->getNomeFile();
+					
+					if ( move_uploaded_file($_FILES['f12_file']['tmp_name'],$fc->getAppSetting('filesPath').$nomeFile ) === false )
 					{
 						$db->rollback();
 						Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
 					}
 				}
-				else{
-					$db->rollback();
+				else
+				{
 					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__));
 				}
 				
-				$db->commit();
 				
-				$db->autoCommit(true);
-				ignore_user_abort(0);
-				
-					
 				//$num_canali = count($f12_canale);
 				//var_dump($f12_canale);
 				//var_dump($_POST['f12_canale']);
 				foreach ($_POST['f12_canale'] as $key => $value)
 				{
-					$notizia->addCanale($key);
+					$newFile->addCanale($key);
 					$canale =& $elenco_canali_retrieve[$key];
 					$canale->setUltimaModifica(time(), true);
 				}
 				return 'success';
 			}
 
-		} //end if (array_key_exists('f12_submit', $_POST))
+		} 
+		//end if (array_key_exists('f12_submit', $_POST))
 
+		
+		// resta da sistemare qui sotto, fare il form e fare debugging
+		
+		$template->assign('f12_file', $f12_file);
 		$template->assign('f12_titolo', $f12_titolo);
+		$template->assign('f12_data_ins_mm', $krono->k_date('%j',$f12_data_inserimento));
+		$template->assign('f12_data_ins_gg', $krono->k_date('%m',$f12_data_inserimento));
+		$template->assign('f12_data_ins_aa', $krono->k_date('%Y',$f12_data_inserimento));
+		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_inserimento));
+		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_inserimento));
 
-		$template->assign('f12_data_ins_mm', $krono->k_date('%j',$f12_data_ins_mm));
-		$template->assign('f12_data_ins_gg', $krono->k_date('%m',$f12_data_ins_gg));
-		$template->assign('f12_data_ins_aa', $krono->k_date('%Y',$f12_data_ins_aa));
-		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_ins_ora));
-		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_ins_min));
+/*			if ( !array_key_exists('f12_file', $_FILES) ||
+			 !array_key_exists('f12_abstract', $_POST) || 
+			 !array_key_exists('f12_parole_chiave', $_POST) || 
+			 !array_key_exists('f12_categoria', $_POST) || 
+			 !array_key_exists('f12_permessi_download', $_POST) || 
+			 !array_key_exists('f12_permessi_visualizza', $_POST) || 
+			 !array_key_exists('f12_password', $_POST) || 
+			 !array_key_exists('f12_canale', $_POST) ) */
 
 
 		return 'default';
