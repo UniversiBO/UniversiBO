@@ -22,7 +22,7 @@ class ShowHelpTopic extends UniversiboCommand {
 		$template -> assign('showHelpTopic_langAltTitle', 'Help');
 
 		$db =& FrontController::getDbConnection('main');
-		$query = 'SELECT riferimento FROM help_riferimento WHERE ';
+		$query = 'SELECT riferimento FROM help_riferimento';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -36,7 +36,7 @@ class ShowHelpTopic extends UniversiboCommand {
 		while($res->fetchInto($row))
 		{		
 			$reference[] = array('reference' => $row[0]);
-			$this->executePlugin('Showtopic', array('id' => $row[0]));
+			$this->executePlugin('ShowTopic', array('reference' => $row[0]));
 		}
 		
 		$template->assign('showHelpTopic_langReferences', $reference);

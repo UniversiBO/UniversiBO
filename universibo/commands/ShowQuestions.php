@@ -31,7 +31,7 @@ class ShowQuestions extends UniversiboCommand {
 		$template->assign('question_q3AnswersMulti', array('attività off-line(contatti con i docenti o studenti, reperimento materiale...);','moderatore 
 		(controllare che la gente non scriva cose non permesse...);','scrittura contenuti riguardanti i corsi che frequento;','testare le nuove versioni dei sevizi 
 		provandoli on-line;','elaborazione grafica di immagini (icone, scritte, ecc...);','aiutare nella progettazione e programmazione del sito;'));
-		$template->assign('question_InformaticKnowledge', 'Le seguenti sono domande per avere informazioni sulle vostre conscenze informatiche, non spaventatevi se non siete interessati all\'aspetto tecnico del progetto!!');
+		/*$template->assign('question_InformaticKnowledge', 'Le seguenti sono domande per avere informazioni sulle vostre conscenze informatiche, non spaventatevi se non siete interessati all\'aspetto tecnico del progetto!!');
 		$template->assign('question_q4', 'Sai utilizzare i seguenti Sistemi Operativi?');
 		$template->assign('question_q4Sub1', '- Windows');
 		$template->assign('question_q4AnswersSub1', array('benissimo;','bene;','lo uso poco;'));
@@ -54,7 +54,7 @@ class ShowQuestions extends UniversiboCommand {
 		$template->assign('question_q6Sub1', '- Photoshop');
 		$template->assign('question_q6AnswersSub1', array('benissimo;','sufficientemente;','non lo conosco;'));
 		$template->assign('question_q6Sub2', '- Gimp');
-		$template->assign('question_q6AnswersSub2', array('benissimo;','sufficientemente;','non lo conosco;'));
+		$template->assign('question_q6AnswersSub2', array('benissimo;','sufficientemente;','non lo conosco;'));*/
 		$template->assign('question_PersonalNotes', 'Altre informazioni personali:');
 		$template->assign('question_Privacy', 'Acconsento al trattamento dei miei dati personali ai sensi della legge sulla privacy 1996 N. 675/96;');
 		$template->assign('question_Send', 'Invia');

@@ -49,7 +49,7 @@ class ShowTopic extends PluginCommand {
 				
 		while($res->fetchInto($row))
 		{		
-			$argomenti[] = $row[0]
+			$argomenti[] = $row[0];
 			
 		}
 		
