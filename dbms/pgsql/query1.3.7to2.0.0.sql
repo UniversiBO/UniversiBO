@@ -794,3 +794,7 @@ ALTER TABLE "utente_canale" ADD "nome" varchar(60) ;
 UPDATE "utente_canale" SET nome = nome_errato;
 ALTER TABLE "utente_canale" DROP COLUMN "nome_errato";
 
+-- 26-12-2004 brain
+-- sposto la chiave primaria su cod_doc invece che id_utente
+ALTER TABLE ONLY docente DROP CONSTRAINT docente_pkey;
+ALTER TABLE "docente" ADD PRIMARY KEY ("cod_doc");

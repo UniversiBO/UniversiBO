@@ -29,3 +29,7 @@ CREATE TABLE link (
     PRIMARY KEY ("id_link"), UNIQUE ("id_link")
 );
 
+-- 26-12-2004 brain
+-- sposto la chiave primaria su cod_doc invece che id_utente
+ALTER TABLE ONLY docente DROP CONSTRAINT docente_pkey;
+ALTER TABLE "docente" ADD PRIMARY KEY ("cod_doc");

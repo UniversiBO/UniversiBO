@@ -691,7 +691,7 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 
 		$query = '
 		SELECT *
-		FROM orientamento
+		FROM orientamenti
 		WHERE cod_corso NOT IN (SELECT cod_corso FROM classi_corso);
 		';
 
@@ -854,25 +854,6 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 			$this->assertEquals(0, $result->numRows());
 	}
 
-	/**
-	--PHPBB_AUTH_ACCESS
-	--Controllo che il gruppo esista
-	*/
-	function testCanalePuntaPhpbbGroup() {
-		$db = & FrontController :: getDbConnection('main');
-
-		$query = '
-		SELECT *
-		FROM phpbb_auth_access
-		WHERE group_id NOT IN (SELECT group_id FROM phpbb_groups);
-		';
-
-		$result = & $db->query($query);
-		if (DB :: isError($result))
-			$this->fail();
-		else
-			$this->assertEquals(0, $result->numRows());
-	}
 
 	/**
 	--Controllo che il forum esista
@@ -924,7 +905,7 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 		$query = '
 		SELECT *
 		FROM phpbb_banlist
-		WHERE user_id NOT IN (SELECT user_id FROM phpbb_users);
+		WHERE ban_userid NOT IN (SELECT user_id FROM phpbb_users);
 		';
 
 		$result = & $db->query($query);
@@ -1036,7 +1017,7 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 	--PHPBB_POSTS_TEXT
 	--Controllo che il post esista
 	*/
-	function testPhpbbPostTestPuntaPhpbbPost() {
+	function testPhpbbPostTextPuntaPhpbbPost() {
 		$db = & FrontController :: getDbConnection('main');
 
 		$query = '
@@ -1153,7 +1134,7 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 	/**
 	--Controllo che il post iniziale sia esistente
 	*/
-	function testPhpbbTopicPuntaPhpbbPrimaMsg() {
+	function testPhpbbTopicPuntaPhpbbPrimoMsg() {
 		$db = & FrontController :: getDbConnection('main');
 
 		$query = '
