@@ -67,6 +67,10 @@
 		<smarty_config>../framework/smarty/config</smarty_config>
 		<smarty_cache>../framework/smarty/cache</smarty_cache>
 	</templateInfo>	
+	<languageInfo>
+	 	<lang_dir>../framework/smarty</lang_dir> 
+	 	<lang_default>it</lang_defualt> 
+	</languageInfo>	
 		
 	<!--****appSettings is an optional node. You can place any thing here 
                 and access it from $fc->appSettings

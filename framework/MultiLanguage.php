@@ -1,63 +1,72 @@
 <?php
 /**
- * Class MultiLanguage
- * Version 1.1.0
- * Author: pswitek, http://www.eocene.net
- * Unrestricted license, subject to no modifcations to the line above.
- * Please include any modifcation history.
- * This class adds multilanguage capability to Eocene
- * PUBLIC METHODS
- *  getLanguage()		//returns a language code
- *  getMessage($msgId)	//It accepts variable length arguments besides $msgId and returns a message string 
+ * Multilanguage class, handles dictionary for multilanguage
+ * messages support.
+ * Has a kronos class for date-time format definition
  *
  * @package framework
- * @version 1.1.0
- * @author  Deepak Dutta, Ilias Bartolini
+ * @version 2.0.0
+ * @author  pswitek, Ilias Bartolini
  * @license http://www.opensource.org/licenses/gpl-license.php
  */
 
-class MultiLanguage { 
-	var $language = 'en' ; 
-	var $messages;
-	var $eoceneLanguageFile='eoceneStrings.txt';
+class MultiLanguage 
+{ 
+
+	var $lang_path = ''; 
+
+	var $language = ''; 
+
+	var $messages = array();
 	
-	function MultiLanguage($eoceneLanguage){
-		if(isset($eoceneLanguage)) $this->setLanguage($eoceneLanguage);
-		$this->loadEoceneMsg();
+	var $loaded_packs = array();
+	
+	/**
+	 * 
+	 *
+	 *
+	 */
+	function MultiLanguage( $lang_path, $lang_code )
+	{
+		$this->lang_path = $lang_path;
+		$this->setLanguage( $lang_code );
 	}
 
-	function setLanguage( $language) { 
-		$this->language = $language ; 
-	} 
-
-	function getLanguage() { 
+	function getLanguage()
+	{ 
 		return $this->language ; 
 	} 
 
-	function getMessage( $msgId ) { 
-		$args = func_get_args() ; 
-		unset( $args[0]); 
-		return vsprintf( $this->messages[$this->language][$msgId], $args) ; 
+	function setLanguage( $lang_code )
+	{ 
+		$this->language = $lang_code ; 
+		foreach ($this->loaded_packs as $pack_name => $value)
+		{
+			$this->loadLangPack($pack_name);
+		}
 	} 
 
-	function loadUserMsg() { 
-		global $fc ;
-		if(isset($fc->appSettings['langFile'])){
-			$fullPath=realpath($fc->rootFolder . $fc->appSettings['langFile']);
-			if (!$fp=fopen( $fullPath, 'r' )) $fc->writeError( 120,$fullPath ); 
-			while ($line = fgetcsv($fp, 1000, ','))
-				$this->messages[$line[0]][$line[1]] = $line[2];
-		}
+	function getMessage( $message_id )
+	{ 
+		return $this->messages[$message_id]; 
+	} 
+
+	function loadLangPack( $pack_name )
+	{ 
+		$full_file_name = $this->lang_path . 'lang_'.$this->language . PHP_EXTENSION ;
+		if (!$fp=fopen( $full_file_name, 'r' ))
+		{
+			return false;
+		} 
+
+		$lang =& $this->messages;
+		
+		include($full_file_name);
+		
+		$this->loaded_packs[$pack_name] = true;
+
 	}
-	
-	function loadEoceneMsg(){
-		global $fc ;
-		global $eocene;
-		$theFile = $this->eoceneLanguageFile;
-		if (!$fp=fopen( $theFile, 'r' ))
-			$fc->writeError("Error: Cannot open Eocene language file: $theFile"); 
-		while ($line = fgetcsv($fp, 1000, ',')) 
-			$this->messages[$line[0]][$line[1]] = $line[2]; 
-	}
+
 }
+
 ?>

@@ -78,6 +78,7 @@ class LogHandler{
 			}
 			
 			$curr_value = str_replace($this->csv_text_delimiter, $this->csv_text_delimiter.$this->csv_text_delimiter, $curr_value);
+			$curr_value = str_replace("\n",'|', $curr_value);
 			$string .= $this->csv_text_delimiter.$curr_value.$this->csv_text_delimiter;
 			if ($i < $this->count_values -1) 
 			{
@@ -108,6 +109,7 @@ class LogHandler{
 			$curr_value = $this->definition[$i];
 			
 			$curr_value = str_replace($this->csv_text_delimiter, $this->csv_text_delimiter.$this->csv_text_delimiter, $curr_value);
+			$curr_value = str_replace("\n",'|', $curr_value);
 			$string .= $this->csv_text_delimiter.$curr_value.$this->csv_text_delimiter;
 			if ($i < $this->count_values -1) 
 			{
@@ -141,6 +143,9 @@ class LogHandler{
 		}
 		
 		$fp = fopen ($full_file_name, "a");
+		
+		if ($fp === false) return false; 
+		
 		flock ($fp,2);
 		if ( $addHeader == true )
 		{

@@ -20,13 +20,12 @@ class FrontController {
 	var $rootURL;
 	var $defaultCommand;
 	var $commandClass;
-	var $defaultLanguage;
 	var $paths;	
 	var $receivers;
 	var $commandTemplate;
-	var $dbLinks;
 	var $appSettings;
-	var $mailerInfo;
+	var $mailerInfo = array();
+	var $languageInfo = array();
 	var $plugs;
 	var $templateEngine;
 
@@ -43,7 +42,7 @@ class FrontController {
 		//include bootstrap classes from core library
 		$this->setConfig( $configFile );
 		
-		$log_error_definition = array(	0 => 'timestamp',
+/*		$log_error_definition = array(	0 => 'timestamp',
 										1 => 'date',
 										2 => 'remote_ip',
 										3 => 'request',
@@ -53,9 +52,13 @@ class FrontController {
 										7 => 'description' );
 		
 		$errorLog = new LogHandler('error',$this->paths['logs'],$log_error_definition); 
+*/
 
+		include_once("MultiLanguage.php");
+
+		$language = new MultiLanguage('it',$this->defaultLanguage);
 		
-		//var_dump($this);
+		var_dump($language);
 		//temp
 
 
@@ -64,9 +67,6 @@ class FrontController {
 
 		
 		include_once("Error.php");
-		include_once("MultiLanguage.php");
-
-		$this->language=new MultiLanguage('it');
 	
 
 		//Initialize Request and Response objects and set $this->request, $this->response
@@ -200,6 +200,10 @@ class FrontController {
 		//set $this->dbinfo
 		$this->_setMailerInfo();
 
+		//set $this->languageInfo
+		$this->_setLanguageInfo();
+
+
 		//set $this->appSettings
 		$this->_appSettings();
 		
@@ -288,7 +292,7 @@ class FrontController {
 	*/
 	function _setDbInfo()
 	{
-		$this->receivers=array();
+		//cancellare?   $this->receivers=array();
 		$dbinfoNode=&$this->config->root->getChild('dbInfo');		
 		$n = $dbinfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -324,8 +328,25 @@ class FrontController {
 	*/
 	function _setMailerInfo()
 	{
-		$this->mailerInfo = array();
 		$mailerInfoNode = &$this->config->root->getChild("mailerInfo");
+		if ($mailerInfoNode == NULL) return;
+		$n = $mailerInfoNode->numChildren();
+		for( $i=0; $i<$n; $i++ )
+		{
+			$aSetting=&$mailerInfoNode->children[$i];
+			$this->mailerInfo[$aSetting->name] = $aSetting->charData;
+		}
+	}	
+
+
+	/**
+	* Sets the framework and application multilanguage info
+	*
+	* @access private
+	*/
+	function _setLanguageInfo()
+	{
+		$languageInfoNode = &$this->config->root->getChild("languageInfo");
 		if ($mailerInfoNode == NULL) return;
 		$n = $mailerInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -366,7 +387,7 @@ class FrontController {
 		$node=&$this->config->root->getChild('paths');
 		if($node == NULL) $this->writeError('Paths non trovati');
 		$n=$node->numChildren();
-		for($i=0;$i<$n;$i++)
+		for($i=0; $i<$n; $i++)
 		{
 			$child=&$node->children[$i];
 //			$this->paths[$child->name]=realpath($this->rootFolder.$child->charData);
