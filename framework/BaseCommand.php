@@ -15,7 +15,7 @@ class BaseCommand {
 	var $frontController;
 
 	/**
-	 * Initializes the base command link to fornt controller
+	 * Initializes the base command link to front controller
 	 * 
 	 * This method must be called from son classes
 	 * parent::initCommand();

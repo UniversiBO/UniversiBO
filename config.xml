@@ -19,6 +19,9 @@
 		<ShowError class="ShowError">
 			 <response type="template" name="default">error.tpl</response>
 		</ShowError>
+		<RegistraStudente class="RegistraStudente">
+			 <response type="template" name="default">registra_studente.tpl</response>
+		</RegistraStudente>
 		<Login class="Login">
 			 <response type="template" name="default">login.tpl</response>
 		</Login>
@@ -89,9 +92,10 @@
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<forumLocation>forum/</forumLocation>
 		<files>../html/file-universibo</files>
-		<questionariReceiver>eagleone@libero.it</questionariReceiver>
+		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;</questionariReceiver>
         <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione - Ci scusiamo per il disagio</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
+        <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
         <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
         <defaultAnnoAccademico>2003</defaultAnnoAccademico>
 	</appSettings>

@@ -247,6 +247,8 @@ class FrontController {
 	*
 	* @param string $receiverId receiver identifier
 	* @param boolean $relative if true path is relative to rootUrl
+	* @return string ...mi ero scordato il commento non ricordo cosa ritorna!!!! argh!!!
+	* @todo ...mi ero scordato il commento non ricordo cosa ritorna!!!! argh!!!
 	* @access public
 	*/
 	function getReceiverUrl($receiverId, $relative=true)
@@ -355,18 +357,10 @@ class FrontController {
 	/**
  	* Defines error categories, sets the error handlers
 	*/
-	function _setErrorHandler(){
-		
+	function _setErrorHandler()
+	{
+		//Error Handlers class must/can be defined from the application
 		require_once('ErrorHandlers'.PHP_EXTENSION);
-		
-		define('_ERROR_DEFAULT',0);
-		define('_ERROR_CRITICAL',1);
-		define('_ERROR_NOTICE',2);
-		
-		Error::setHandler(_ERROR_CRITICAL,array('ErrorHandlers','critical_handler'));
-		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','default_handler'));
-		Error::setHandler(_ERROR_NOTICE,array('ErrorHandlers','notice_handler'));
-		
 	}
 
 

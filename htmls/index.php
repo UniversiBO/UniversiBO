@@ -25,6 +25,25 @@ class Receiver{
 	
 	
 	/**
+	 * Costruttore del Receiver
+	 *
+	 * @param string $identifier stringa indentificativa del receiver
+	 * @param string $config_file file di configurazione dell'applicazione/receiver
+	 * @param string $framework_path percorso in cui si trovano i file del framework
+	 * @param string $application_path percorso in cui si trovano i file dell'applicazione
+	 */
+	function Receiver($identifier, $config_file, $framework_path, $application_path)
+	{
+		$this->frameworkPath = $framework_path;
+		$this->applicationPath = $application_path;
+
+		$this->configFile = $config_file;
+		$this->receiverIdentifier = $identifier;
+	}
+	
+	
+	
+	/**
  	* Return the receiver name identifier
  	*
  	* @return string
@@ -98,7 +117,8 @@ class Receiver{
 
 }
 
-$receiver = new Receiver;
+
+$receiver = new Receiver('main', '../config.xml', '../framework', '../universibo');
 $receiver->main();
 
 
