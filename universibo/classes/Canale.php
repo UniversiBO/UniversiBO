@@ -287,6 +287,11 @@ class Canale {
 		return $this->nome;
 	}
 
+	function getNomeCanale()
+	{
+		return $this->nome;
+	}
+
 	/**
 	 * Ritorna la stringa descrittiva del titolo/nome breve del canale per il MyUniversiBO
 	 *
@@ -714,11 +719,11 @@ class Canale {
 		$db =& FrontController::getDbConnection('main');
 	
 		$this->id_canale = $db->nextID('canale_id_canale');
-		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
-		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
-		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
-		$files_studenti_attivo = ( $this->getFilesStudentiAttivo() ) ? 'S' : 'N';
-		if ( $this->getForumAttivo() )
+		$files_attivo = ( $this->getServizioFiles() ) ? 'S' : 'N';
+		$news_attivo  = ( $this->getServizioNews()  ) ? 'S' : 'N';
+		$links_attivo = ( $this->getServizioLinks() ) ? 'S' : 'N';
+		$files_studenti_attivo = ( $this->getServizioFilesStudenti() ) ? 'S' : 'N';
+		if ( $this->getServizioForum() )
 		{
 			$forum_attivo = 'S';
 			$forum_forum_id = $this->getForumForumId();
