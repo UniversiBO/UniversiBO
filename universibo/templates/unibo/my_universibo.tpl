@@ -4,6 +4,7 @@
 <div class="titoloPagina">
 <h2>My UniversiBO</h2>
 </div>
+<h4>Vai alla tua <a href="{$showMyScheda}">scheda</a></h4>
 <h4>My News</h4>
 {include file=News/show_my_news.tpl}
 <h4>My Files</h4>

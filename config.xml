@@ -83,6 +83,9 @@
 		<ShowSettings class="ShowSettings">
 			<response type="template" name="default">impostazioni.tpl</response>
 		</ShowSettings>
+		<ShowUser class="ShowUser">
+			<response type="template" name="default">show_user.tpl</response>
+		</ShowUser>
 		
 		<ShowMyUniversiBO class="ShowMyUniversiBO">
 			<response type="template" name="default">my_universibo.tpl</response>

@@ -1,0 +1,22 @@
+{include file=header_index.tpl}
+
+<div class="titoloPagina">
+<h2>Scheda dell'utente: {$showUserNickname}</h2>
+</div>
+<p><span>Email: <a href="mailto:{$showUserEmail}">{$showEmailFirstPart}<img src="tpl/unibo/chiocciola.gif" width="9" height="9" alt="(at)" />{$showEmailSecondPart}</a>
+{if $showDiritti == 'true'}
+	&nbsp;<a href="{$showSettings}">Modifica</a>
+{/if}
+</span></p>
+<p>Ruoli: 
+	{foreach from=$showCanali item=temp_currLink}
+				<p><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
+				{$temp_currLink.categoria}
+				{if $temp_currLink.ruolo=="R"},<img src="tpl/unibo/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
+				{if $temp_currLink.ruolo=="M"},<img src="tpl/unibo/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
+				{if $showDiritti == 'true'}
+					&nbsp;<a href="{$temp_currLink.rimuovi}">Rimuovi dal tuo MyUniversiBO</a>
+				{/if}
+	{/foreach}
+</p>
+{include file=footer_index.tpl}
