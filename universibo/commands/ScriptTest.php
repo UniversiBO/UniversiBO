@@ -18,6 +18,12 @@ class ScriptTest extends UniversiboCommand
 	function execute()
 	{
 
+		echo php_uname();
+		
+		if (substr(php_uname(), 0, 7) == "Windows") {
+			die ("Sorry, this script doesn't run on Windows.\n");
+		}
+		
 		$string = 'we£$%\'rwe2432_we.rw35
 		234_34++.ZIP';
 		

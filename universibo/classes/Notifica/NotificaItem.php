@@ -73,7 +73,8 @@ class NotificaItem {
 	 * @return NewsItem
 	 */
 
-	function NotificaItem($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) {
+	function NotificaItem($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
+	{
 		$this->id_notifica = $id_notifica;
 		$this->titolo = $titolo;
 		$this->messaggio = $messaggio;
@@ -81,17 +82,26 @@ class NotificaItem {
 		$this->urgente = $urgente;
 		$this->eliminata = $eliminata;
 		$this->destinatario = $destinatario;
-
 	}
 
 	/**
-	 * 
 	 * Recupera il titolo della notifica
 	 *
 	 * @return String 
 	 */
-	function getTitolo() {
+	function getTitolo() 
+	{
 		return $this->titolo;
+	}
+
+	/**
+	 * Recupera il titolo della notifica
+	 *
+	 * @return String 
+	 */
+	function getTimestamp() 
+	{
+		return $this->timestamp;
 	}
 
 	/**
@@ -103,8 +113,7 @@ class NotificaItem {
 		return $this->messaggio;
 	}
 
-	function getProtollo 
-
+	
 	/**
 	 * Recupera la data di inserimento della notifica
 	 *
@@ -127,11 +136,12 @@ class NotificaItem {
      /**
 	 * Overwrite the Send function of the base class
 	 * @abstract
-	 * @return string template identifier if command uses template engine
+	 * @param $fc FrontController
+	 * @return boolean true if sent succesfull else false
 	 */ 
-	function Send()
+	function send($fc)
 	{
-		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo execute del command deve essere ridefinito','file'=>__FILE__,'line'=>__LINE__) );
+		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo send della notifica deve essere implementato','file'=>__FILE__,'line'=>__LINE__) );
 	}
 
 
@@ -141,7 +151,8 @@ class NotificaItem {
 	 *
 	 * @return int
 	 */
-	function getIdNotifica() {
+	function getIdNotifica() 
+	{
 		return $this->id_notifica;
 	}
 
@@ -150,7 +161,8 @@ class NotificaItem {
 	 *
 	 * @return string
 	 */
-	function getDestinatario() {
+	function getDestinatario() 
+	{
 		return $this->destinatario;
 	}
 
@@ -159,16 +171,29 @@ class NotificaItem {
 	 *
 	 * @return string
 	 */
-	function getProtocollo() {
-		return $this->destinatario;
+	function getIndirizzo() 
+	{
+		$strarr = explode('://',$this->getDestinatario());
+		return strtolower($strarr[1]);
 	}
 
 	/**
-	 * Imposta il destinatario
+	 * Recupera il protocollo
+	 *
+	 * @return string
+	 */
+	function getProtocollo() 
+	{
+		$strarr = explode('://',$this->getDestinatario());
+		return strtolower($strarr[0]);
+	}
+
+	/**
+	 * Imposta il destinatario "protocollo://indirizzo"
 	 *
 	 * @param  string $destinatario destinatario della news max 150 caratteri
 	 */
-	function setDestinatario() {
+	function setDestinatario($destinatario) {
 		$this->destinatario = $destinatario;
 	}
 
@@ -228,7 +253,6 @@ class NotificaItem {
 	}
 
 	/**
-	 * 
 	 * Imposta lo stato della notifica
 	 *
 	 * @param  boolean $eliminata flag stato della news
@@ -237,6 +261,8 @@ class NotificaItem {
 		$this->eliminata = $eliminata;
 	}
 
+
+	
 	/**
 	 * Recupera una notifica dal database
 	 *
@@ -246,7 +272,7 @@ class NotificaItem {
 	 */
 	function & selectNotifica($id_notifica) {
 		$id_notizie = array ($id_notifica);
-		$notifica = & NotificaItem :: selectNotifiche($id_notizie);
+		$notifica = & NotificaItem::selectNotifiche($id_notizie);
 		if ($notifica === false)
 			return false;
 		return $notifica[0];
@@ -292,9 +318,42 @@ class NotificaItem {
 		}
 
 		$res->free();
-
+		//var_dump($notifiche_list);
 		return $notifiche_list;
 	}
+
+
+	/**
+	 * Recupera un l'elenco di notizie da spedire dal database
+	 *
+	 * @static
+	 * @return array di oggetti che implemetano l'interfaccia NotificaItem 
+	 */
+	function &selectNotificheSend($fc) {
+		//var_dump($id_notifiche);
+		$db = & FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_notifica FROM notifica WHERE timestamp < '.$db->quote(time()).' AND eliminata!='.$db->quote(NOTIFICA_ELIMINATA);
+		//var_dump($query);
+		$res = & $db->query($query);
+		
+		//echo $query;
+		
+		if (DB :: isError($res))
+			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		
+		$notifiche_list = array ();
+		
+		while ($res->fetchInto($row)) 
+		{
+			$notifiche_list[] =& NotificaItem::retrieveNotifica($row[0], $fc);
+		}
+		
+		$res->free();
+		
+		return $notifiche_list;
+	}
+
 
 	/**
 	* Inserisce una notifica sul DB
@@ -334,7 +393,8 @@ class NotificaItem {
 	 *
 	 * @return boolean true se avviene con successo, altrimenti Error object
 	 */
-	function updateNotifica() {
+	function updateNotificaItem() 
+	{
 		$db = & FrontController :: getDbConnection('main');
 
 		ignore_user_abort(1);
@@ -343,11 +403,12 @@ class NotificaItem {
 
 		$urgente = ($this->isUrgente()) ? NOTIFICA_URGENTE : NOTIFICA_NOT_URGENTE;
 		$eliminata = ($this->isEliminata()) ? NOTIFICA_ELIMINATA : NOTIFICA_NOT_ELIMINATA;
-		$query = 'UPDATE notifica SET titolo = '.$db->quote($this->getTitolo()).' , timestamp = '.$db->quote($this->getDataIns()).' , messaggio = '.$db->quote($this->getMessaggio()).' , eliminata = '.$db->quote($eliminata).' , urgente = '.$db->quote($urgente).' , messaggio = '.$db->quote($this->getMessaggio()).' WHERE id_notifica = '.$db->quote($this->getIdNotizia());
+		$query = 'UPDATE notifica SET titolo = '.$db->quote($this->getTitolo()).' , timestamp = '.$db->quote($this->getDataIns()).' , eliminata = '.$db->quote($eliminata).' , urgente = '.$db->quote($urgente).' , messaggio = '.$db->quote($this->getMessaggio()).' WHERE id_notifica = '.$db->quote($this->getIdNotifica());
 		//echo $query;								 
 		$res = $db->query($query);
 		//var_dump($query);
-		if (DB :: isError($res)) {
+		if (DB :: isError($res)) 
+		{
 			$db->rollback();
 			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
@@ -360,7 +421,7 @@ class NotificaItem {
 	/**
 	 * La funzione deleteNotificaItem controlla se la notifica é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
 	 */
-	function deleteNotifica() {
+	function deleteNotificaItem() {
 		$this->eliminata = true;
 		$this->updateNotificaItem();
 	}
@@ -379,17 +440,24 @@ class NotificaItem {
 	 *
 	 * @return NotificaItem Oggetto sottoclasse di NotificaItem.
 	 */
-	function &retrieveNotifica($id,$fc) { 
-		$not=selectNotifica($id);
-		$strarr=explode('://',this->getDestinatario());
+	function &retrieveNotifica($id) { 
+		$not = NotificaItem::selectNotifica($id);
 		
-		$p = ucfirst(strtolower($strarr[0]));
-		$not->setDestinatario($strarr[1]); //ocio che non sia un destinatario di piu' parole. Ha senso?
+		//es: sms://3351359443
+		//es: mail://ilias.bartolini@studio.unibo.it
 		
-		$className = 'Notifica'.$p;
+		//ocio che non sia un destinatario di piu' parole. il destinatario non può contenere "://"		
+		$p = strtolower($not->getProtocollo() );
+		
+		$arrayClassi = array('mail' => 'NotificaMail');
+		
+		$className = $arrayClassi[$p];
+		//es: NotificaMail
+		//es: NotificaSms
 		
 		require_once($className.PHP_EXTENSION);
-		return call_user_func(array($class_name,'factoryNotifica'), $id, $fc);
+		echo $className;
+		return call_user_func(array($className,'factoryNotifica'), $id);
 		
 	
 	}

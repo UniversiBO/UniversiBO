@@ -20,7 +20,7 @@
 		
 		<ScriptTest class="ScriptTest" />
 		
-		<ScriptSendNotifiche class="ScriptSendNotifiche" />
+		<ScriptNotificheSend class="ScriptNotificheSend" />
 
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
@@ -68,6 +68,7 @@
 		<adLoginHost>127.0.0.1</adLoginHost>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
+		<notificheLock>../universibo/notifiche.lock</notificheLock>
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<filesPath>../universibo/file-universibo/</filesPath>

@@ -20,25 +20,20 @@ class NotificaMail extends NotificaItem {
 	
 	
 	
-	function NotificaMail ($notifica,$fc=null) {
+	function NotificaMail ($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
+	{
 		//$id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario
-		$this->notifica = $notifica->notifica ;
-		$this->titolo = $notifica->titolo ;
-		$this->messaggio = $notifica->messaggio ;
-		$this->timestamp = $notifica->timestamp ;
-		$this->urgente = $notifica->urgente ;
-		$this->eliminata = $notifica->eliminata ;
-		$this->destinatario = $notifica->destinatario ;
-		$this->fc =& $fc ;
+		parent::NotificaItem($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario);
 	}
 	
+	
+	
 	/**
-	* Overwrite the Send (abstract) function of the base class
+	* Overwrite the send (abstract) function of the base class
 	* 
-	* @return string "success" or "failed"
+	* @return boolean true "success" or false "failed"
 	*/
-	function Send() {
-		$fc =& $this->getFrontController();
+	function send($fc) {
 		$mail =& $fc->getMail();
 		
 		$mail->AddAddress($this->getDestinatario());
@@ -47,20 +42,15 @@ class NotificaMail extends NotificaItem {
 		$mail->Body = $this->getMessaggio();
 
 		//$msg = "messaggio in caso di fallimento";
-		if (!$mail->Send())
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => $msg, 'file' => __FILE__, 'line' => __LINE__));
-
-		//$template->assign('regStudente_thanks', "Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione è stata registrata con successo.\nLe informazioni per permetterti l'accesso ai servizi offerti dal portale sono state inviate al tuo indirizzo e-mail di ateneo\n".'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
-
-		//elimino la password
-		//$randomPassword = '';
-		$mail->Body = '';
-		//$msg = '';
-
+		if (!$mail->send())
+			return false;
 	}
-
-	function &factoryNotifica($id_notifica,$fc)	{
-		return new NotificaMail($id_notifica,$fc);
+	
+	
+	function &factoryNotifica($id_notifica)
+	{
+		$not = NotificaItem::selectNotifica($id_notifica);
+		return new NotificaMail($not->getIdNotifica(), $not->getTitolo(), $not->getMessaggio(), $not->getTimestamp(), $not->isUrgente(), $not->isEliminata(), $not->getDestinatario());
 		//$notif=NotificaMail::selectNotifica($id_notifica);
 		//$notifMail=new NotificaMail($notif,$fc);
 		//return $notifMail;
