@@ -77,7 +77,7 @@ class FileEdit extends UniversiboCommand {
 
 		
 		if (!($user->isAdmin() || $referente || $moderatore)) 
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire un file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		
 		
 		// valori default form
