@@ -142,7 +142,7 @@ ALTER TABLE "esami_attivi" DROP COLUMN "cod_attivita";
 ALTER TABLE "news" RENAME TO "news2";
 
 ALTER TABLE news2
- DROP CONSTRAINT news_pkey
+ DROP CONSTRAINT news_pkey;
 
 CREATE TABLE "news" (
    "id_news" int4 DEFAULT nextval('"news_id_news_seq"'::text) NOT NULL,
@@ -170,4 +170,10 @@ CREATE INDEX "news_canale_id_canale_key" ON "news_canale"("id_canale");
 
 INSERT INTO news_canale ( "id_news" , "id_canale") 
 SELECT "id_news" ,  "id_argomento" FROM news2 ;
+
+---query per configurarvi il path del forum
+--UPDATE phpbb_config SET config_value='localhost' WHERE config_name='server_name';
+--UPDATE phpbb_config SET config_value='localhost' WHERE config_name='cookie_domain';
+--UPDATE phpbb_config SET config_value='/universibo2/htmls/forum/' WHERE config_name='script_path';
+--UPDATE phpbb_config SET config_value='0' WHERE config_name='cookie_secure';
 
