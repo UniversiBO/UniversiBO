@@ -99,11 +99,15 @@
 			<response type="template" name="default">news_delete.tpl</response>
 			<response type="template" name="success">news_delete_success.tpl</response>
 			<pluginCommand name="ShowNews" class="News.ShowNews" />
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsDelete>
 		<NewsEdit class="NewsEdit">
 			<response type="template" name="default">news_edit.tpl</response>
 			<response type="template" name="success">news_edit_success.tpl</response>
 			<pluginCommand name="ShowNews" class="News.ShowNews" />
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsEdit>
 		<NewsShowCanale class="NewsShowCanale">
 			<response type="template" name="default">news_show_canale.tpl</response>

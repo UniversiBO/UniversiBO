@@ -416,7 +416,7 @@ class NewsEdit extends CanaleCommand
 		$template->assign('f8_scadenza', $f8_scadenza);
 		$template->assign('f8_canale', $f8_canale);
 		
-		
+		$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
 
 		return 'default';
 

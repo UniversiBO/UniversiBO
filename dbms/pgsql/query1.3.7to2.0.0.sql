@@ -486,3 +486,23 @@ UPDATE file SET id_tipo_file = 16 WHERE id_file IN ( SELECT id_file FROM file2 w
 ALTER TABLE "help_topic" ADD "indice" integer;
 UPDATE "help_topic" SET indice = 0;
 ALTER TABLE "help_topic" ALTER COLUMN "indice" SET NOT NULL;
+
+--Modifiche LastHope 10-9-2004
+
+UPDATE help_riferimento SET riferimento = 'newsutenti' WHERE id_help = 24;
+UPDATE help_riferimento SET riferimento = 'newscollabs' WHERE riferimento = 'Gestione notizie';
+UPDATE help_riferimento SET riferimento = 'newsutenti' WHERE riferimento = 'News';
+UPDATE help_riferimento SET riferimento = 'filesutenti' WHERE id_help = '26';
+UPDATE help_riferimento SET riferimento = 'filesutenti' WHERE riferimento = 'Scaricare files';
+UPDATE help_riferimento SET riferimento = 'filescollabs' WHERE riferimento = 'Processo uploading files';
+UPDATE help_riferimento SET riferimento = 'iscrizione' WHERE riferimento = 'Iscrizione a UniversiBO';
+UPDATE help_riferimento SET riferimento = 'iscrizione' WHERE riferimento = 'Mail Ateneo';
+UPDATE help_riferimento SET riferimento = 'suggerimentinav' WHERE riferimento = 'Suggerimenti navigazione';
+
+UPDATE help_topic SET riferimento = riferimento = 'newscollabs' WHERE indice = 80;
+UPDATE help_topic SET riferimento = riferimento = 'filescollabs' WHERE indice = 70;
+UPDATE help_topic SET riferimento = riferimento = 'filesutenti' WHERE indice = 60;
+UPDATE help_topic SET riferimento = riferimento = 'newsutenti' WHERE indice = 50;
+UPDATE help_topic SET riferimento = riferimento = 'iscrizione' WHERE indice = 10;
+UPDATE help_topic SET riferimento = riferimento = 'suggerimentinav' WHERE indice = 30;
+DELETE FROM help_topic WHERE riferimento = 'Mail'

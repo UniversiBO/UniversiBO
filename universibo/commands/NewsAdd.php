@@ -305,7 +305,7 @@ class NewsAdd extends CanaleCommand {
 		$template->assign('f7_canale', $f7_canale);
 
 		//$topics[] = 
-		$this->executePlugin('ShowTopic', array('reference' => 'News'));
+		$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
 		
 		
 		
