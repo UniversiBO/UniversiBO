@@ -216,6 +216,7 @@ class FrontController {
 	/**
 	* Returns the command class name only (without .) 
 	*
+	* @return string
 	* @access public
 	*/
 	function getCommandClass()
@@ -232,6 +233,7 @@ class FrontController {
 	/**
 	* Returns the current receiver identifier 
 	*
+	* @return string
 	* @access public
 	*/
 	function getReceiverId()
@@ -273,6 +275,7 @@ class FrontController {
 	* Returns default command string if not set
 	* and  sets $_GET['do'] with default value
 	*
+	* @return string
 	* @access public
 	*/
 	function getCommandRequest()
@@ -355,7 +358,17 @@ class FrontController {
 	
 	
 	/**
+ 	* Imposta lo style del template da visualizzare... 
+ 	* @todo implementare
+	*/
+	function setStyle()
+	{
+	}
+
+
+	/**
  	* Defines error categories, sets the error handlers
+	* @access private
 	*/
 	function _setErrorHandler()
 	{
@@ -497,10 +510,10 @@ class FrontController {
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste il template di default nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		//assegno il template in uso	
-		if (array_key_exists('setTemplate', $_GET) && $_GET['setTemplate']!=''
-			&& array_key_exists($_GET['setTemplate'],$this->templateEngine['styles'])) 
+		if (array_key_exists('setStyle', $_GET) && $_GET['setStyle']!=''
+			&& array_key_exists($_GET['setStyle'],$this->templateEngine['styles'])) 
 		{
-			$_SESSION['template_name'] = $_GET['setTemplate'];
+			$_SESSION['template_name'] = $_GET['setStyle'];
 		}
 		
 		if (array_key_exists('template_name', $_SESSION) && $_SESSION['template_name']!='') 

@@ -5,13 +5,15 @@ $page_time_start = ((float)$usec + (float)$sec);
 
 
 /**
- * The receiver. Code to activate the framework system
+ * The receiver. 
+ * Code to activate the framework system.
+ * One application can be built by multiple receivers.
  * 
  * @package framework
  * @version 1.0.0
  * @author Deepak Dutta, http://www.eocene.net, 
  * @author Ilias Bartolini <brain79@virgilio.it>
- * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
+ * @license GPL, http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
@@ -27,8 +29,8 @@ class Receiver{
 	/**
 	 * Costruttore del Receiver
 	 *
-	 * @param string $identifier stringa indentificativa del receiver
-	 * @param string $config_file file di configurazione dell'applicazione/receiver
+	 * @param string $identifier indentifier of receiver
+	 * @param string $config_file configuration file for this receiver (applicatio)
 	 * @param string $framework_path percorso in cui si trovano i file del framework
 	 * @param string $application_path percorso in cui si trovano i file dell'applicazione
 	 */
@@ -62,13 +64,13 @@ class Receiver{
 	function _setPhpEnvirorment()
 	{
 		
-		// attivo la visualizzazione di tutti i warning
+		//error reporting activation (enabled on testing system)
 		error_reporting(E_ALL); 
 
-		// buffering dell'output.
+		//output buffering
 		//ob_start('ob_gzhandler');
 
-		//inizializzazione della sessione
+		//session initialization
 		session_start();
 		if (!array_key_exists('SID',$_SESSION) )
 		{
@@ -83,6 +85,7 @@ class Receiver{
 			 set_magic_quotes_runtime(0);
 		} 
 		
+		//php files extension, can ben modified to externally hide php files
 		define ('PHP_EXTENSION', '.php');
 		
 		
@@ -102,16 +105,7 @@ class Receiver{
 		
 		$fc->setConfig( $this->configFile );
 		
-		
-		//$smarty =& $fc->getTemplateEngine();
-		
-		//var_dump($smarty);
-		
-		//$response = $fc->executeCommand( $request );
 		$fc->executeCommand();
-		
-		//modifica brain
-		//echo $fc->response->content;
 		
 	}
 
