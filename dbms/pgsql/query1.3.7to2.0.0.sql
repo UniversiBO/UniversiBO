@@ -159,4 +159,10 @@ CREATE TABLE "news" (
 INSERT INTO news ( "id_news" , "titolo" , "data_inserimento", "data_scadenza", "notizia" , "id_utente", "eliminata") 
 SELECT "id_news" , "titolo" , "data_inserimento", "data_scadenza", "notizia" , "id_utente", "eliminata" FROM news2 ;
 
+CREATE TABLE "news_canale" (
+"id_news" int4 NOT NULL, 
+"id_canale" int4 NOT NULL ,
+PRIMARY KEY ("id_news", "id_canale"));
+CREATE INDEX "news_canale_id_news_key" ON "news_canale"("id_news"); 
+CREATE INDEX "news_canale_id_canale_key" ON "news_canale"("id_canale");
 
