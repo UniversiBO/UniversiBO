@@ -28,6 +28,7 @@ class ShowUser extends UniversiboCommand{
 		}
 		$arrayRuoli				=& $user->getRuoli();
 		$canali = array();
+		$arrayCanali = array();
 		$keys = array_keys($arrayRuoli);
 		foreach ($keys as $key)
 			{

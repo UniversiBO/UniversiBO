@@ -478,6 +478,7 @@ class UniversiboCommand extends BaseCommand {
 		
 		if(!$session_user->isOspite())
 		{
+			$attivaMyUniversibo = true;
 			$arrayCanali = array();
 			$arrayRuoli =& $session_user->getRuoli();
 			$keys = array_keys($arrayRuoli);
@@ -486,7 +487,7 @@ class UniversiboCommand extends BaseCommand {
 				$ruolo =& $arrayRuoli[$key];
 				if ($ruolo->isMyUniversibo())
 				{
-					$attivaMyUniversibo = true;
+					//$attivaMyUniversibo = true;
 					
 					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
 					$myCanali = array();

@@ -11,7 +11,7 @@
 <div class="elenco">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr><td colspan="2"><h3>Ruoli</h3></td></tr>
-	{foreach from=$showCanali item=temp_currLink name=showCanali}
+	{foreach name=ruoli from=$showCanali item=temp_currLink}
 	<tr align="left"><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}">
 				<p class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
 		</td><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><span>{$temp_currLink.categoria}
@@ -22,6 +22,7 @@
 				{/if}</span></p>
 	</td></tr>
 	{/foreach}
+	{if $smarty.foreach.ruoli.total == 0}<tr><td>Nessun ruolo</td></tr>{/if}
 </table>
 	</div>
 </p>
