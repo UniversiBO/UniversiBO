@@ -47,43 +47,12 @@
 <tr><td>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td width="175" valign="top" align="center" class="Normal">&nbsp;<br />
-<!-- Inizio MENU Left --><table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr valign="bottom"> 
-<td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
-<td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="12" alt="" /></td>
-</tr>
-<tr> 
-<td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
-<td valign="top">
+<!-- Inizio MENU Left -->
+{include file=box_facolta.tpl}
 
+{include file=box_my_universibo.tpl}
 
-
-<table width="95%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
-<tr> 
-    <td colspan="2"> <img src="tpl/black/facolta_18.gif" width="89" height="22" alt="{$common_fac}" /></td>
-</tr>
-
-{foreach from=$common_facLinks item=temp_currLink}
-<tr>
- <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu" width="100%">&nbsp;<a href="{$temp_currLink.uri}" >{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></td>
-</tr>
-{/foreach}
-
-</table>
-
-
-</td>
-<td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
-</tr>
-<tr valign="top"> 
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td>
-<td height="12" align="right"><img src="tpl/black/menuB.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
-</tr>
-</table>
-&nbsp;<br /><table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr valign="bottom"> 
 <td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
 <td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>

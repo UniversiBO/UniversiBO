@@ -1,13 +1,4 @@
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr valign="bottom"> 
-<td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
-<td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="12" alt="" /></td>
-</tr>
-<tr> 
-<td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
-<td valign="middle" align="center">
+{include file=box_begin.tpl}
 {if $common_userLoggedIn=='false'}
 <form action="index.php?do=Login" name="form1_a" id="f1" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
@@ -51,12 +42,4 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordSt
 </form>
 </table>
 {/if}
-</td>
-<td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
-</tr>
-<tr valign="top"> 
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="12" height="12" alt="" /></td>
-<td height="12" align="right"><img src="tpl/black/menuB.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
-</tr>
-</table>
+{include file=box_end.tpl}

@@ -1,7 +1,7 @@
 </td><td width="170" valign="top" align="center" class="Normal">&nbsp;<br />
 <!-- Inizio MENU Right -->
 {include file=box_loginlogout.tpl}
-&nbsp;<br />
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr valign="bottom"> 
 <td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
@@ -85,45 +85,11 @@
 </table>
 &nbsp;<br />
 
-{if $common_isSetVisite == "S"}
-<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr valign="bottom"> 
-<td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
-<td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="12" alt="" /></td>
-</tr>
-<tr> 
-<td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
-<td valign="top">
- 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
-<tr> 
-<td><img src="tpl/black/statistiche_18.gif" width="116" height="22" alt="Statistiche" /></td>
-</tr>
-<tr> 
-<td align="center" class="Piccolo">
-&nbsp;<br />
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
-<tr>
-	 <td class="Normal" align="right">&nbsp;{$common_visite}&nbsp;</td>
-	 <td class="MenuC">visite in questa pagina</td>
-	 </tr></table>
-&nbsp;<br />
-</td>
-</tr>
-</table></td>
-<td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
-</tr>
-<tr valign="top"> 
-<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td>
-<td height="12" align="right"><img src="tpl/black/menuB.gif" width="67" height="12" alt="" /></td>
-<td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
-</tr>
-</table>
-&nbsp;<br />
-{/if}
+{include file=box_visite.tpl}
 
-<p align="center" class="MenuC">Versione 2.0.0</p><!-- Fine MENU Right --></td></tr>
+<p align="center" class="MenuC">Versione 2.0.0</p>
+<!-- Fine MENU Right -->
+</td></tr>
 </table>
 </td></tr>
 <tr><td align="center">
