@@ -358,9 +358,10 @@ class User {
 		if ($this->bookmark == NULL)
 		{
 			$ruoli =& Ruolo::selectUserRuoli($this->getIdUser());
-			foreach ($ruoli as $ruolo)
+			$num_elementi = count($ruoli);
+			for ($i=0; $i<$num_elementi; $i++)
 			{
-				$this->bookmark[$ruolo->getIdCanale()] = $ruolo;
+				$this->bookmark[$ruoli[$i]->getIdCanale()] =& $ruoli[$i];
 			}
 		}
 		return $this->bookmark;
