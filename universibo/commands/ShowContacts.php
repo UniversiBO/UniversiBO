@@ -63,6 +63,22 @@ Non ho ancora ben capito che animale sia un Ingegnere dei Processi Gestionali, m
 			));  
 		//fine array
 		
+		/*
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT * FROM collaboratore';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		//ancora non so come funzia fetchInto
+		$res->fetchInto($row);
+		//qui va creato l'array di array da passare a smarty
+		*/
+		
 		return 'default';						
 	}
 }
