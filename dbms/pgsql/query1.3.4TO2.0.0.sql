@@ -140,3 +140,7 @@ UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0025';
 UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='5407';
 
 ALTER TABLE "classi_corso" DROP COLUMN "menu_corso";
+-- 19-9-2003
+ALTER TABLE "facolta" DROP COLUMN "menu_facolta";
+ALTER TABLE "facolta" DROP COLUMN "abbr_facolta";
+DROP TABLE "argomento";

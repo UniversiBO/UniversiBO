@@ -46,7 +46,7 @@
 			</tr>
 			<tr bgcolor="#000032">
 				<td width="30%" class="NormalC" valign="top" align="left">e-mail:</td>
-				<td class="Normal"><a href="mailto:{$contacts_personal[data].e-mail|escape}">{$contacts_personal[data].e-mail|escape}</a><br />&nbsp;</td>
+				<td class="Normal"><a href="mailto:{$contacts_personal[data].email|escape}">{$contacts_personal[data].email|escape}</a><br />&nbsp;</td>
 			</tr>
 			<tr bgcolor="#000032">
 				<td width="30%" class="NormalC" valign="top" align="left">recapito telefonico:</td>
