@@ -16,6 +16,7 @@
 	<a href="#{$temp_ref.reference|escape:"htmlall"|bbcode2html|nl2br}"> {$temp_ref.reference|escape:"htmlall"|bbcode2html|nl2br}</a></td></tr>
 	{/foreach}
 </td></tr>
+<tr><td>&nbsp</td></tr>
 <tr><td>
 	{foreach from=$showHelpTopic_langReferences item=temp_ref}
 	{include file=Help/topic.tpl}

@@ -22,7 +22,7 @@ class ShowHelpTopic extends UniversiboCommand {
 		$template -> assign('showHelpTopic_langAltTitle', 'Help');
 
 		$db =& FrontController::getDbConnection('main');
-		$query = 'SELECT riferimento FROM help_riferimento';
+		$query = 'SELECT DISTINCT riferimento FROM help_riferimento';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 

@@ -39,6 +39,7 @@
 		<ShowHelpTopic class="ShowHelpTopic">
 			<response type="template" name="default">help_topic.tpl</response>
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</ShowHelpTopic>
 		<ShowFacolta class="ShowFacolta">
 			<response type="template" name="default">facolta.tpl</response>
