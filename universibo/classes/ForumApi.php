@@ -86,7 +86,7 @@ class ForumApi
 
 
 	/**
-	 * Esegue il login sul forum, si suppone che la password sia già stata controllata.
+	 * Esegue il login sul forum, si suppone che la password sia gi? stata controllata.
 	 * Inserisce le informazioni di sessione e cookie per mantenere traccia dell'utente
 	 * Se l'opreazione avviene con successo viene impostata nella sessione la variabile 'phpbb_sid'
 	 * 
@@ -197,7 +197,7 @@ class ForumApi
 	/**
 	 * Crea un nuovo utente sul database del forum dato uno User
 	 * 
-	 * @todo renderla funzionante anche per utenti che appartengono a più gruppi
+	 * @todo renderla funzionante anche per utenti che appartengono a pi? gruppi
 	 * @static 
 	 */
 	function insertUser($user)
@@ -208,7 +208,7 @@ class ForumApi
 
 		$groups = $user->getGroups();
 		if ( $groups != USER_OSPITE && $groups != USER_STUDENTE && $groups != USER_COLLABORATORE && $groups != USER_TUTOR && $groups != USER_DOCENTE && $groups != USER_PERSONALE && $groups != USER_ADMIN ) return;
-		// @todo renderla funzionante anche per utenti che appartengono a più gruppi
+		// @todo renderla funzionante anche per utenti che appartengono a pi? gruppi
 		
 		$user_style = $this->defaultUserStyle[$user->getDefaultStyle()];
 		$user_rank  = $this->defaultRanks[$groups];
