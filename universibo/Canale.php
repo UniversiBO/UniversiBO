@@ -149,7 +149,7 @@ class Canale {
 	 * 
 	 * @return int
 	 */
-	function getPermessi()
+	function getessi()
 	{
 		return $this->permessi;
 	}
