@@ -8,7 +8,7 @@
 
 <table summary="help" width="90%" border="0" cellspacing="0" cellpadding="0">
 <tr><td class="Normal" align="left">
-		<div align="center">&nbsp;<br /><img src="tpl/black/help_30.gif" width="179" height="39" alt="{$showHelpIndex_langAltTitle|escape:"htmlall"|BBcode2html}" /></div>
+		<div align="center">&nbsp;<br /><img src="tpl/black/help_30.gif" width="84" height="39" alt="{$showHelpIndex_langAltTitle|escape:"htmlall"|BBcode2html}" /></div>
 
 {include file=Help/help_id.tpl}
 
