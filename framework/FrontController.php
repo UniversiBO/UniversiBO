@@ -415,7 +415,6 @@ class FrontController {
 		//set $this->languageInfo
 		$this->_setLanguageInfo();
 		
-// @bug: dopo la chiamata ad appSettings l'albero del config cambia
 		//set $this->appSettings
 		$this->_appSettings();
 		
@@ -607,16 +606,16 @@ class FrontController {
 		
 		$templateInfoNodes = &$this->config->getElementsByTagName('templateInfo');
 		if ( $templateInfoNodes == NULL )
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		$templateInfoNode = &$templateInfoNodes->item(0);
 //		var_dump($templateInfoNode->attributes);
 		if ( $templateInfoNode == NULL )
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non è specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 	
 		if ( $templateInfoNode->getAttribute('type') != 'Smarty' ) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
 
-		$this->templateEngine['debugging'] = ( $templateInfoNode->getAttribute('debugging') != 'on' );
+		$this->templateEngine['debugging'] = ( $templateInfoNode->getAttribute('debugging') == 'on' );
 
 
 		$templateDirsNodes 	= &$templateInfoNode->getElementsByTagName('template_dirs');
