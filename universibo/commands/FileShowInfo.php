@@ -48,7 +48,6 @@ class FileShowInfo extends UniversiboCommand {
 			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
 		}
 		
-		$canali_tpl = array();
 		$id_canali = $file->getIdCanali();
 		foreach($id_canali as $id_canale)
 		{ 
@@ -75,8 +74,7 @@ class FileShowInfo extends UniversiboCommand {
 		$template->assign('fileShowInfo_icona', $frontcontroller->getAppSetting('filesTipoIconePath').$file->getTipoIcona());
 		$template->assign('fileShowInfo_info', $file->getTipoInfo());
 		$template->assign('fileShowInfo_canali', $canali_tpl);
-		$template->assign('fileShowInfo_paroleChiave', array());
-
+		$template->assign('fileShowInfo_paroleChiave', $file->getParoleChiave());
 		
 		return;
 		
