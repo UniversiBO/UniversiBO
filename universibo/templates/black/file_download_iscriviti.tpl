@@ -8,7 +8,8 @@
 <tr><td align="center" class="Normal">
 {include file=avviso_notice.tpl}
 <p>Il download del file è permesso solo agli utenti registrati facenti parte dell'università di bologna.<br />
-Per registrarti segui il link &quot;Registrazione Studenti&quot; sulla destra.</p>
+Esegui il login utilizzando il form sulla destra.<br />
+Se non possiedi username e password per registrarti segui il link &quot;Registrazione Studenti&quot;.</p>
 <p>La sessione potrebbe essere scaduta.</p>
 </td></tr>
 <tr><td align="center" class="Normal"><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></td></tr>

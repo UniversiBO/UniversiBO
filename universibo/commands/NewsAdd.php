@@ -62,7 +62,7 @@ class NewsAdd extends CanaleCommand {
 		$num_ruoli = count($ruoli_keys);
 		for ($i = 0; $i<$num_ruoli; $i++)
 		{
-			if ($id_canale != $ruoli_keys[$i])
+			if ($id_canale != $ruoli_keys[$i] && ($user->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isModeratore() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) )
 				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 		}
 		
@@ -230,7 +230,10 @@ class NewsAdd extends CanaleCommand {
 				$data_scadenza = mktime($_POST['f7_data_scad_ora'], $_POST['f7_data_scad_min'], "0", $_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']);
 
 				if ($data_scadenza < $data_inserimento)
+				{
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di scadenza non può essere inferiore alla data di inserimento', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
+				}
 
 			}
 
