@@ -13,8 +13,8 @@
 <tr><td>	
 	<table width="100%" border="0" cellspacing="0" cellpadding="1" summary="">
 	{foreach from=$showHelpId_langArgomento item=temp_helpid}
-	<tr><td class="Title" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
-	<a name="{$temp_helpid.id|escape:"htmlall"}" id="{$temp_helpid.id|escape:"htmlall"}"> {$temp_helpid.titolo|escape:"htmlall"}</a></td></tr>
+	<tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+	<a name="{$temp_helpid.id|escape:"htmlall"}" id="{$temp_helpid.id|escape:"htmlall"}"> <strong>{$temp_helpid.titolo|escape:"htmlall"}</strong></a></td></tr>
 	<tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">{$temp_helpid.contenuto|escape:"htmlall"}</td></tr>
 	{/foreach} 
 	</table>

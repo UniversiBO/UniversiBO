@@ -32,6 +32,10 @@
 			<response type="template" name="default">home.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowHome>
+		<ShowHelp class="ShowHelpIndex">
+			<response type="template" name="default">help.tpl</response>
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
+		</ShowHelp>
 		<ShowFacolta class="ShowFacolta">
 			<response type="template" name="default">facolta.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
