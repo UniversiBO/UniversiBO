@@ -69,7 +69,7 @@ class ShowFacolta extends CanaleCommand {
 															 'link' => 'index.php?do=showCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
 			}
 		}
-		var_dump($fac_listCdlType);
+		//var_dump($fac_listCdlType);
 		
 /*		$fac_listCdl = array(); //cat := lista di cdl
 		$fac_listCdl[] = array('cod' => '0048', 'name' => 'ELETTRONICA', 'link' => 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
