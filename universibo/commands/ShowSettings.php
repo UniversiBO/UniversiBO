@@ -24,7 +24,7 @@ class ShowSettings extends UniversiboCommand
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		$utente =& $this->getSessionUser();
-		
+				
         if ($utente->isOspite() )
 		{
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per accedere alla pagina\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
@@ -41,11 +41,11 @@ class ShowSettings extends UniversiboCommand
 		
 		if ($utente->isCollaboratore())
 		{
-			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni personali[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica preferiti[/url]','[url=https://posta.studio.unibo.it/horde/?username]Posta di ateneo[/url]','[url=]Docenti da contattare[/url]'));
+			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni personali[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica preferiti[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]','[url=]Docenti da contattare[/url]'));
 		}
 		else
 		{
-			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni personali[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica preferiti[/url]','[url=https://posta.studio.unibo.it/horde/?username]Posta di ateneo[/url]'));
+			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni personali[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica preferiti[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]'));
 		}
 
 		$template->assign('showSettings_langTitleAlt','MyPage');
