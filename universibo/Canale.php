@@ -165,7 +165,7 @@ class Canale {
 	 */
 	function getTipoCanale()
 	{
-		return $this->permessi;
+		return $this->tipoCanale;
 	}
 
 
@@ -402,7 +402,7 @@ class Canale {
 
 		$res->fetchInto($row);
 		$canale =& new Canale($id_canale, $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7], $row[6], $row[8], $row[9], $row[10], $row[11] );
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
 
 		return $canale;
 		
