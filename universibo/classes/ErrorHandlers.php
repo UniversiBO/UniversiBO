@@ -1,8 +1,10 @@
 <?php
 
+require_once('LogHandler'.PHP_EXTENSION);
+
 /**
  * Definisce gli handler da utilizzare per la classe Error, 
- * si è deciso di raggrupparli in questa classe solo per dagli un ordine migliore.
+ * si ? deciso di raggrupparli in questa classe solo per dagli un ordine migliore.
  *
  * @package universibo
  * @version 2.0.0
@@ -20,16 +22,32 @@ class ErrorHandlers{
 	 * Mostra sul browser un messaggio di errore e interrompe l'esecuzione 
 	 *
 	 * @param $param mixed,array() Tipo restituito da chi cattura l'errore, 
-	 * questo handler è in grado di gestire un parametro array avente la seguente struttura
+	 * questo handler ? in grado di gestire un parametro array avente la seguente struttura
 	 * $param = array(  "msg"=>"messaggio di errore da mostrare", 
-	 * 					"file"=>"file in cui è avvenuto l'errore", 
-	 * 					"line"=>"linea di codice in cui è avvenuto l'errore", 
+	 * 					"file"=>"file in cui ? avvenuto l'errore", 
+	 * 					"line"=>"linea di codice in cui ? avvenuto l'errore", 
 	 * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul LogHandler" 
 	 * 					)
 	 */
 	function critical_handler($param)
 	{
 		$param['log']= true;
+		
+		$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'error_level', 4 => 'file', 5 => 'line', 6 => 'messaggio' );
+		
+		$log = new LogHandler('error','../universibo/log-universibo/',$log_definition); 
+		
+		$log_array = array( 'timestamp'  => time(),
+							'date'  => date("Y-m-d",time()),
+							'time'  => date("H:i",time()),
+							'error_level'  => 'CRITICAL',
+							'file'  => $param['file'],
+							'line'  => $param['line'],
+							'messaggio'  => $param['msg']);
+		$log->addLogEntry($log_array);
+				
+				//$notifiche[$i]->setFallita(true);
+
 		die( 'Errore Critico: '.$param['msg']. '<br />
 		file: '.$param['file']. '<br />
 		line: '.$param['line']. '<br />
@@ -44,17 +62,35 @@ class ErrorHandlers{
 	 * Redirige il browser ad una pagina dell'applicazione in cui viene mostrato il messaggio di errore 
 	 *
 	 * @param $param mixed,array() Tipo restituito da chi cattura l'errore, 
-	 * questo handler è in grado di gestire un parametro array avente la seguente struttura
+	 * questo handler ? in grado di gestire un parametro array avente la seguente struttura
 	 * $param = array(  "msg"=>"messaggio di errore da mostrare", 
-	 * 					"file"=>"file in cui è avvenuto l'errore", 
-	 * 					"line"=>"linea di codice in cui è avvenuto l'errore", 
+	 * 					"file"=>"file in cui ? avvenuto l'errore", 
+	 * 					"line"=>"linea di codice in cui ? avvenuto l'errore", 
 	 * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul LogHandler" 
 	 * 					)
 	 */
 	function default_handler($param)
 	{
+//		die( 'Errore Critico: '.$param['msg']. '<br />
+//		file: '.$param['file']. '<br />
+//		line: '.$param['line']. '<br />
+//		log: '.$param['log']. '<br />');
 		$_SESSION['error_param'] = $param;
 		//var_dump($param);
+		
+		$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'error_level', 4 => 'file', 5 => 'line', 6 => 'messaggio' );
+		
+		$log = new LogHandler('error','../universibo/log-universibo/',$log_definition); 
+		
+		$log_array = array( 'timestamp'  => time(),
+							'date'  => date("Y-m-d",time()),
+							'time'  => date("H:i",time()),
+							'error_level'  => 'DEFAULT',
+							'file'  => $param['file'],
+							'line'  => $param['line'],
+							'messaggio'  => $param['msg']);
+		$log->addLogEntry($log_array);
+		
 		$page_type = ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' ) ? '&pageType=popup' : '';
 		FrontController::redirectCommand('ShowError'.$page_type);
 		exit(1);
@@ -66,10 +102,10 @@ class ErrorHandlers{
 	 * NON interrompe l'esecuzione.
 	 *
 	 * @param $param mixed,array() Tipo restituito da chi cattura l'errore, 
-	 * questo handler è in grado di gestire un parametro array avente la seguente struttura
+	 * questo handler ? in grado di gestire un parametro array avente la seguente struttura
 	 * $param = array(  "msg"=>"messaggio di errore da mostrare", 
-	 * 					"file"=>"file in cui è avvenuto l'errore", 
-	 * 					"line"=>"linea di codice in cui è avvenuto l'errore", 
+	 * 					"file"=>"file in cui ? avvenuto l'errore", 
+	 * 					"line"=>"linea di codice in cui ? avvenuto l'errore", 
 	 * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul LogHandler",
 	 *					"template_engine"=>"Riferimento all'oggetto template engine" 
 	 * 					)
@@ -81,6 +117,21 @@ class ErrorHandlers{
 		$template =& $param['template_engine'];
 		$template->assign('error_notice_present', 'true');
 		
+		if(array_key_exists('log', $param) && $param['log'] == true )
+		{
+			$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'error_level', 4 => 'file', 5 => 'line', 6 => 'messaggio' );
+		
+			$log = new LogHandler('error','../universibo/log-universibo/',$log_definition); 
+			
+			$log_array = array( 'timestamp'  => time(),
+								'date'  => date("Y-m-d",time()),
+								'time'  => date("H:i",time()),
+								'error_level'  => 'DEFAULT',
+								'file'  => $param['file'],
+								'line'  => $param['line'],
+								'messaggio'  => $param['msg']);
+			$log->addLogEntry($log_array);
+		}
 		/** ALTERNATIVA ALL'USO DI append()
 		$current_error = $template->get_template_vars('error_notice');
 		if ($current_error == NULL)
