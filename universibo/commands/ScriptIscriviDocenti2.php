@@ -4,9 +4,9 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 
 /**
- * ChangePassword is an extension of UniversiboCommand class.
+ * ScriptIscriviDocenti2 is an extension of UniversiboCommand class.
  *
- * Si occupa della modifica della password di un utente
+ * Si occupa dell'iscrizione di nuovi docenti
  *
  * @package universibo
  * @subpackage commands
@@ -25,7 +25,7 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 		
 		$notifica = NOTIFICA_NONE;
 		
-		$res =& $db->query('SELECT cod_doc, nome_doc, email FROM docente2 WHERE 1=1');
+		$res =& $db->query('SELECT cod_doc, nome_doc, email FROM docente2 WHERE cod_doc NOT IN (SELECT cod_doc FROM docente WHERE 1=1)');
 		if (DB::isError($res)) die('select docente2'); 
 		
 		while ( $res->fetchInto($row) )
