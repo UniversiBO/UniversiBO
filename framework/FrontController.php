@@ -160,7 +160,7 @@ class FrontController {
 			if (!$templateEngine->template_exists($template))
 			{
 				echo $template;
-				Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__));
+				Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			$templateEngine->display($template);
@@ -689,7 +689,7 @@ class FrontController {
 		if($cinfonode == NULL)
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
-		$commandNode=&$cinfonode->getChild($commandString);
+		$commandNode = &$cinfonode->getChild($commandString);
 		if($commandNode == NULL)
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		

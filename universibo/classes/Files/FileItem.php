@@ -372,11 +372,22 @@ class FileItem {
 	 *
 	 * @return string 
 	 */
-
 	function getNomeFile() {
 		return $this->getIdFile().'_'.$this->nome_file;
 	}
-
+	
+	
+	/**
+	 * Ritorna il nome del file ripulito
+	 *
+	 * @param string
+	 * @return string 
+	 */
+	function normalizzaNomeFile($string) {
+		return ereg_replace('([^a-zA-Z0-9_\.])','_',$string);
+	}
+	
+	
 	/**
 	 * Recupera il nome originale del file come è registrato su database
 	 *

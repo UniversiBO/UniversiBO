@@ -169,9 +169,6 @@
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileDelete>
 
-
-		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />
-		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

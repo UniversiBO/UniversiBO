@@ -25,8 +25,8 @@ class ScriptUpdateFileHash extends UniversiboCommand
 		$user =& $this->getSessionUser();
 		$filePath = $fc->getAppSetting('filesPath');
 		
-		if(!$user->isAdmin())
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'La modifica della password non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
+		//if(!$user->isAdmin())
+		//	Error::throw(_ERROR_DEFAULT,array('msg'=>'La modifica della password non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 		
 		$res =& $db->query('SELECT id_file, nome_file FROM file ORDER BY 1');
 		
