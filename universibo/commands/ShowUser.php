@@ -39,24 +39,24 @@ class ShowUser extends UniversiboCommand{
 		$arrayCanali = array();
 		$keys = array_keys($arrayRuoli);
 		foreach ($keys as $key)
+		{
+			$ruolo =& $arrayRuoli[$key];
+			if ($ruolo->isMyUniversibo())
 			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
+				$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+				if ($canale->isGroupAllowed($current_user->getGroups()))
 				{
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					if ($canale->isGroupAllowed($current_user->getGroups()))
-					{
-						$canali = array();
-						$canali['uri']   = $canale->showMe();
-						$canali['tipo']  = $canale->getTipoCanale();
-						$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
-						$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-						$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
-						$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
-						$arrayCanali[] = $canali;
-					}
+					$canali = array();
+					$canali['uri']   = $canale->showMe();
+					$canali['tipo']  = $canale->getTipoCanale();
+					$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+					$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
+					$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
+					$arrayCanali[] = $canali;
 				}
 			}
+		}
 		usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
 		$email = $user->getEmail();
 		$template->assign('showUserLivelli', implode(', ',$user->getUserGroupsNames()));
