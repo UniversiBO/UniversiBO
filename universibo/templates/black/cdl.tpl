@@ -20,7 +20,7 @@
 
 {foreach from=$cdl_list item=temp_anno}
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""> 
-<tr><td colspan="3" bgcolor="#000099">
+<tr><td bgcolor="#000099">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr>
 	 <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
@@ -28,18 +28,21 @@
 	 </tr>
 	</table>
 </td></tr>
-<tr><td colspan="3" class="Titolo" align="center" bgcolor="#000050">{$temp_anno.name|escape:"html"|upper}</td></tr>
+<tr><td class="Titolo" align="center" bgcolor="#000050">{$temp_anno.name|escape:"html"|upper}</td></tr>
 
 
 {foreach from=$temp_anno.list item=temp_ciclo}
-<tr bgcolor="#000099"><td colspan="3"><img src="tpl/black/invisible.gif" width="200" height="2" alt="" /></td></tr>
+<tr bgcolor="#000099"><td><img src="tpl/black/invisible.gif" width="200" height="2" alt="" /></td></tr>
+<tr><td>
+<table width="100%" border="0" cellspacing="0" cellpadding="1" summary=""> 
 {foreach from=$temp_ciclo.list item=temp_ins}
 <tr bgcolor="{cycle values="#000016,#000032"}"><td class="Menu" width="26">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />&nbsp;</td><td class="Menu">
 <a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> </td><td class="Menu" align="right">Vai&nbsp;al&nbsp;forum&nbsp;</td></tr>
 {/foreach} 
+</td></tr></table></td></tr>
 {/foreach} 
 
-<tr><td colspan="3" bgcolor="#000099">
+<tr><td bgcolor="#000099">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr>
 	 <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>

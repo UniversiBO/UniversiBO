@@ -299,3 +299,5 @@ ALTER TABLE "prg_insegnamento" RENAME "id_argomento" TO "id_canale";
 
 ALTER TABLE "prg_insegnamento"   DROP COLUMN "prog_cronologico";
 
+------23-03-04
+UPDATE "canale" SET "tipo_canale"=5 WHERE tipo_canale=6;

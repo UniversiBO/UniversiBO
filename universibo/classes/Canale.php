@@ -521,7 +521,7 @@ class Canale {
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > count($elenco_id_canali)) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$elenco_canali = array();

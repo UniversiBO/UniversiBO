@@ -13,10 +13,10 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class ShowCdl extends CanaleCommand {
+class ShowInsegnamento extends CanaleCommand {
 
 	/**
-	 * Inizializza il comando ShowCdl ridefinisce l'initCommand() di CanaleCommand
+	 * Inizializza il comando ShowInsegnamento ridefinisce l'initCommand() di CanaleCommand
 	 */
 	function initCommand(& $frontController) 
 	{
@@ -25,16 +25,18 @@ class ShowCdl extends CanaleCommand {
 		$canale = & $this->getRequestCanale();
 		//var_dump($canale);
 		
-		if ($canale->getTipoCanale() != CANALE_CDL)
+		if ($canale->getTipoCanale() != CANALE_INSEGNAMENTO)
 			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	function execute() {
-		$frontcontroller =& $this->getFrontController();
+		$insegnamento = & $this -> getRequestCanale();
+		var_dump($insegnamento);
+		
+/*		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		//@todo fatto sopra
-		$cdl = & $this -> getRequestCanale();
 		
 		require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 		
@@ -102,9 +104,9 @@ class ShowCdl extends CanaleCommand {
 		$template -> assign('cdl_nextYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico+1) );
 		
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
+		*/
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
-		
 		return 'default';
 	}
 

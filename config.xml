@@ -49,6 +49,10 @@
 			<response type="template" name="default">cdl.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowCdl>
+		<ShowInsegnamento class="ShowInsegnamento">
+			<response type="template" name="default">insegnamento.tpl</response>
+			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+		</ShowInsegnamento>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
 		</ShowContribute>

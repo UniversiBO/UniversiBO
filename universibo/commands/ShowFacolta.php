@@ -16,7 +16,7 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
 class ShowFacolta extends CanaleCommand {
 
 	/** 
-	 * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
+	 * Inizializza il comando ShowFacolta ridefinisce l'initCommand() di CanaleCommand
 	 */
 	function initCommand(& $frontController) {
 

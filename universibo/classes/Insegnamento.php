@@ -1,6 +1,7 @@
 <?php
 
 require_once('Canale'.PHP_EXTENSION);
+require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 
 /**
  * Insegnamento class.
@@ -21,13 +22,19 @@ class Insegnamento extends Canale{
 	 * @private
 	 * per il caching del nome dell'insegnamento
 	 */
-	var $insegnamentoNome = '';
+	var $insegnamentoNome = NULL;
 	
 	/**
 	 * @private
+	 * per il caching del nome dell'insegnamento
 	 */
-	var $insegnamentoUri = '';
+	var $insegnamentoTitle = NULL;
 	
+	/**
+	 * @private
+	 * per il caching di tutte le attività collegate a questo insegnamento
+	 */
+	var $elencoAttivita = NULL;
 	
 	
 	/**
@@ -52,25 +59,39 @@ class Insegnamento extends Canale{
 	 * @return Insegnamento
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo
-				 /* ... */)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $elenco_attivita)
 	{
-
+	
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
-		/**
+		$this->elencoAttivita = $elenco_attivita;
 		
-		//id_canale
+		$nomi    = array();
+		$anni    = array();
+		$docenti = array();
 		
-		$this->facoltaCodice = $cod_facolta;
-		$this->facoltaNome   = $nome_facolta;
-		$this->facoltaUri    = $uri_facolta;
-		*/
+		
+		$this->insegnamentoNome  = '';
 		
 	}
 
 
+
+	/**
+	 * Crea un oggetto Insegnamento dato il suo numero identificativo id_canale
+	 * Ridefinisce il factory method della classe padre per restituire un oggetto
+	 * del tipo Insegnamento
+	 *
+	 * @static
+	 * @param int $id_canale numero identificativo del canale
+	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
+	 */
+	function &factoryCanale($id_canale)
+	{
+		return Insegnamento::selectInsegnamentoCanale($id_canale);
+	}
+	
 
 	/**
 	 * Restituisce il nome della facoltà
@@ -81,9 +102,9 @@ class Insegnamento extends Canale{
 	{
 		return $this->insegnamentoNome;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Restituisce il titolo/nome completo dell'insegnamento
 	 *
@@ -91,10 +112,10 @@ class Insegnamento extends Canale{
 	 */
 	function getTitolo()
 	{
-		return $this->getNome();
+		return 'INSEGNAMENTO DI '.$this->getNome();
 	}
-
-
+	
+	
 	/**
 	 * Restituisce il codice di ateneo a 4 cifre della facoltà
 	 * es: ingegneria -> '0021'
@@ -108,21 +129,6 @@ class Insegnamento extends Canale{
 
 
 	/**
-	 * Crea un oggetto Cdl dato il suo numero identificativo id_canale
-	 * Ridefinisce il factory method della classe padre per restituire un oggetto
-	 * del tipo Cdl
-	 *
-	 * @static
-	 * @param int $id_canale numero identificativo del canale
-	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
-	 */
-	function &factoryCanale($id_canale)
-	{
-		return Insegnamento::selectInsegnamentoCanale($id_canale);
-	}
-	
-
-	/**
 	 * Seleziona da database e restituisce l'oggetto Insegnamento
 	 * corrispondente al codice id_canale 
 	 * 
@@ -132,37 +138,42 @@ class Insegnamento extends Canale{
 	 */
 	function &selectInsegnamentoCanale($id_canale)
 	{
-
+	
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT .... WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
-
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
-		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-
-		if( $rows == 0) return false;
-
 		$res->fetchInto($row);
-		$insegnamento =& new Insegnamento( /* ... $row[12], $row[5], */ );
+		$res->free();
+		
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows = 0) return false;
+		
+		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
+		
+		$insegnamento =& new Insegnamento($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $elenco_attivita);
 		
 		return $insegnamento;
 
 	}
 	
 	
-
-	/**
+	
+	/*
 	 * Seleziona da database e restituisce l'oggetto Cdl 
 	 * corrispondente al codice $cod_cdl 
 	 * 
+	 * @todo implementare se serve
 	 * @static
 	 * @param string $cod_cdl stringa a 4 cifre del codice d'ateneo del corso di laurea
 	 * @return Facolta
-	 */
-	function &selectInsegnamentoCodice(/* ...tutta la chiave... */)
+	 *
+	function &selectInsegnamentoCodice( ...tutta la chiave... )
 	{
 
 		$db =& FrontController::getDbConnection('main');
@@ -178,47 +189,12 @@ class Insegnamento extends Canale{
 		if( $rows == 0) return false;
 
 		$res->fetchInto($row);
-		$insegnamento =& new Insegnamento( /* ... $row[16] ... */ );
+		$insegnamento =& new Insegnamento(  ... $row[16] ...  );
 		
 		return $insegnamento;
 
 	}
-
-	
-	/**
-	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine anno/ciclo/alfabetico di tutti gli insegnamenti appartenenti 
-	 * al corso di laurea in un dato anno accademico
-	 * 
-	 * @static
-	 * @param string $cod_cdl stringa a 4 cifre del codice del corso di laurea
-	 * @param int $anno_accademico anno accademico
-	 * @return array(Insegnamento)
-	 */
-	function &selectInsegnamentoElencoCdl($cod_cdl, $anno_accademico)
-	{
-
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT ... AND b.cod_corso = '.$db->quote($cod_cdl).' ORDER BY ... ';
-
-		$res = $db->query($query);
-		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows == 0) return array();
-		$elenco = array();
-		while (	$res->fetchInto($row) )
-		{
-			$insegnamento =& new Insegnamento( /* ... $row[15], $row[16] ... */ );
-
-			$elenco[] =& $insegnamento;
-		}
-		
-		return $elenco;
-	}
+	*/
 	
 }
 ?>

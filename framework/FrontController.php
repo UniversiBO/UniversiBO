@@ -139,7 +139,10 @@ class FrontController {
 
 		//$command_request=$this->getCommandRequest();
 		$command_class=$this->getCommandClass();
-		include_once($this->paths['commands'].'/'.$command_class.PHP_EXTENSION);
+		require_once($this->paths['commands'].'/'.$command_class.PHP_EXTENSION);
+		/**
+		 * @todo mettere controllo sull'avvenuta inclusione, altrimenti errore critico
+		 */
 		
 		$command = new $command_class;
 		
