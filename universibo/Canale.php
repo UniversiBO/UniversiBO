@@ -131,6 +131,32 @@ class Canale {
 
 
 	/**
+	 * Ritorna l' OR bit a bit dei gruppi che hanno accesso al canale
+	 *
+	 * @return int
+	 */
+	function getPermessi()
+	{
+		return $this->permessi;
+	}
+
+
+
+	/**
+	 * Ritorna lo XOR bit a bit dei gruppi che hanno accesso al canale
+	 *
+	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
+	 * 
+	 * @return int
+	 */
+	function getPermessi()
+	{
+		return $this->permessi;
+	}
+
+
+
+	/**
 	 * Ritorna lo OR bit a bit dei gruppi di appartenenza dello User
 	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
 	 *

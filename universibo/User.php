@@ -265,6 +265,7 @@ class User {
 
 	/**
 	 * Ritorna lo OR bit a bit dei gruppi di appartenenza dello User
+	 *
 	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
 	 *
 	 * @return int
