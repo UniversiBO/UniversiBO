@@ -5,7 +5,7 @@
  *
  * @package universibo_tests
  * @author Ilias Bartolini <brain79@inwind.it>
- * @license GPL, http://www.opensource.org/licenses/gpl-license.php
+ * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 

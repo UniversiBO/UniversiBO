@@ -7,7 +7,7 @@
  * @package framework
  * @version 2.0.0
  * @author  pswitek, Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
 class MultiLanguage 

@@ -21,7 +21,7 @@
  * @package framework
  * @version 1.0.0
  * @author  Deepak Dutta, Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
 class Response{

@@ -5,7 +5,7 @@
  * @package framework
  * @version 1.1.0
  * @author  Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 class BaseCommand {
 	
