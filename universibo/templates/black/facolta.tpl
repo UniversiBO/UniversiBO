@@ -6,13 +6,11 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal" align="center">
-	&nbsp;<br />
-	Titolo<br />&nbsp;
+&nbsp;<br />
+<p align="center" class="Titolo">{$fac_facTitle}</p>
+
+
 </td></tr>
-<tr>
-    <td class="Normal" align="left">
-    </td>
-</tr>
 </table>
 
 

@@ -74,9 +74,21 @@ class Facolta extends Canale{
 	 *
 	 * @return string
 	 */
-	function getTitolo()
+	function getTitoloFacolta()
 	{
-		return 'FACOLTA\' DI '.$this->getNomeFacolta();
+		return 'FACOLTA\' DI '.$this->getNome();
+	}
+
+
+
+	/**
+	 * Restituisce il link alla homepage ufficiale della facoltà
+	 *
+	 * @return string
+	 */
+	function getUri()
+	{
+		return $this->facoltaUri;
 	}
 
 
@@ -92,6 +104,21 @@ class Facolta extends Canale{
 		return $this->facoltaCodice;
 	}
 
+
+	/**
+	 * Crea un oggetto facolta dato il suo numero identificativo id_canale
+	 * Ridefinisce il factory method della classe padre per restituire un oggetto
+	 * del tipo Facolta
+	 *
+	 * @static
+	 * @param int $id_canale numero identificativo del canale
+	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
+	 */
+	function &factoryCanale($id_canale)
+	{
+		return Facolta::selectFacoltaCanale($id_canale);
+	}
+	
 
 	/**
 	 * Seleziona da database e restituisce l'oggetto facoltà 

@@ -25,7 +25,7 @@ class CanaleCommand extends UniversiboCommand {
 
 	
 	/**
-	 * Restituisce l'id_canale corrente, se non è specificato nella richiesta si considera 
+	 * Restituisce l'id_canale corrente, se non è specificato nella richiesta HTTP-GET si considera 
 	 * default l'homepage id_canale = 1
 	 *
 	 * @static
@@ -47,7 +47,7 @@ class CanaleCommand extends UniversiboCommand {
 
 	
 	/**
-	 * Restituisce l'oggetto canale della richiesta corrente
+	 * Restituisce l'oggetto canale della richiesta web corrente
 	 *
 	 * @return Canale
 	 */
@@ -81,9 +81,20 @@ class CanaleCommand extends UniversiboCommand {
 	function _setUpCanaleCanale()
 	{
 
-		//$tipo_canale =  Canale::getTipoCanaleFromId ( $this->getRequestIdCanale() );
+		$tipo_canale =  Canale::getTipoCanaleFromId ( $this->getRequestIdCanale() );
 
-		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
+		$dispatch_array = array (	CANALE_DEFAULT   => 'Canale',
+									CANALE_HOME      => 'Canale',
+									CANALE_FACOLTA   => 'Facolta',
+									CANALE_CDL       => 'Cdl',
+									CANALE_ESAME_ING => 'EsameIng',
+									CANALE_ESAME_ECO => 'EsameEco');
+
+		$class_name = $dispatch_array[$tipo_canale];
+
+		$this->requestCanale =& call_user_func(array($class_name,'factoryCanale'), $this->getRequestIdCanale());
+		
+		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
@@ -116,6 +127,7 @@ class CanaleCommand extends UniversiboCommand {
 		$template->assign( 'common_visite', $canale->getVisite() );
 			
 	}
+
 
 }
 

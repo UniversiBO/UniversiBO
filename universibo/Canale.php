@@ -175,6 +175,32 @@ class Canale {
 	 *  define('CANALE_ESAME_ING' ,5);
 	 *  define('CANALE_ESAME_ECO' ,6);
 	 * 
+	 * @static
+	 * @param int $id_canale numero identificativo del canale
+	 * @return int se eseguita con successo, false se il canale non esiste
+	 */
+	function getTipoCanaleFromId($id_canale)
+	{
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT tipo_canale FROM canale WHERE id_canale= '.$db->quote($id_canale);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows = 0) return false;
+
+		$res->fetchInto($row);
+		return $row[0];
+	}
+
+
+
+	/**
+	 * Ritorna il tipo di canale dato l'id_canale del database
+	 *
 	 * @return int
 	 */
 	function getTipoCanale()
@@ -432,10 +458,25 @@ class Canale {
 
 
 	/**
+	 * Crea un oggetto canale dato il suo numero identificativo id_canale
+	 * Questo metodo viene ridefinito nelle sottoclassi per restituire un oggetto
+	 * del tipo corrispondente
+	 *
+	 * @static
+	 * @param int $id_canale numero identificativo del canale
+	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
+	 */
+	function &factoryCanale($id_canale)
+	{
+		return Canale::selectCanale($id_canale);
+	}
+	
+
+	/**
 	 * Crea un oggetto canale dato il suo numero identificativo id_canale del database
 	 *
 	 * @static
-	 * @param int $id_canale numero identificativo utente
+	 * @param int $id_canale numero identificativo del canale
 	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
 	 */
 	function &selectCanale($id_canale)

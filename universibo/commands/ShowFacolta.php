@@ -37,23 +37,26 @@ class ShowFacolta extends CanaleCommand
 	{
 		$template =& $this->frontController->getTemplateEngine();
 		
-		$template->assign('fac_langFac', 'Facoltà');
-		$template->assign('fac_facName', 'Ingegneria');
-		$template->assign('fac_facLink', 'http://www.ing.unibo.it');
-		$template->assign('fac_langList', 'Elenco corsi di laurea attivi su UniversiBO');
+		$facolta =& $this->getRequestCanale();
+		
+		$template->assign('fac_langFac', 'FACOLTA\'');
+		$template->assign('fac_facTitle', $facolta->getTitoloFacolta());
+		$template->assign('fac_facName', $facolta->getNome());
+		$template->assign('fac_facLink', $facolta->getUri());
+		$template->assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
 
-		$fac_cat = array(); 	//cat := lista di cdl
-		$fac_cat[] =  array('cod'=>'0048' , 'name'='ELETTRONICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>'0049' , 'name'='GESTIONALE', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0049&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>'0050' , 'name'='DEI PROCESSI GESTIONALI', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0050&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>'0051' , 'name'='INFORMATICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0051&amp;anno_accademico=2003');
+		$fac_listCdl = array(); 	//cat := lista di cdl
+		$fac_listCdl[] =  array('cod'=>'0048' , 'name'=>'ELETTRONICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0049' , 'name'=>'GESTIONALE', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0049&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0050' , 'name'=>'DEI PROCESSI GESTIONALI', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0050&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0051' , 'name'=>'INFORMATICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0051&amp;anno_accademico=2003');
 	
-		$fac_list   =  array();   //fac := lista categorie degli anni di cdl
-		$fac_list[] =  array('cod'=>'L' , 'name'='Lauree Triennali/Primo Livello', 'list'=> $fac_cat);
-		$fac_list[] =  array('cod'=>'S' , 'name'='Lauree Specialistiche', 'list'=> $fac_cat); 
-		$fac_list[] =  array('cod'=>'V' , 'name'='Lauree Vecchio Ordinamento', 'list'=> $fac_cat);
+		$fac_listCdlType   =  array();   //fac := lista categorie degli anni di cdl
+		$fac_listCdlType[] =  array('cod'=>'L' , 'name'=>'Lauree Triennali/Primo Livello', 'list'=> $fac_listCdl);
+		$fac_listCdlType[] =  array('cod'=>'S' , 'name'=>'Lauree Specialistiche', 'list'=> $fac_listCdl); 
+		$fac_listCdlType[] =  array('cod'=>'V' , 'name'=>'Lauree Vecchio Ordinamento', 'list'=> $fac_listCdl);
 
-		$template->assign('fac_list', $cdl_list );
+		$template->assign('fac_list', $fac_listCdl );
 
 
 	}

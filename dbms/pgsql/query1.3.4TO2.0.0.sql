@@ -113,4 +113,7 @@ INSERT INTO canale (tipo_canale,visite, ultima_modifica, permessi_groups, files_
 UPDATE facolta SET url_facolta='http://www.economia.unibo.it' WHERE cod_fac='0054';
 #-- @todo IMPORTANTE!!!! manualmente aggiornare id_canale nella tabella facolta riguardo la tupla di economia ...lo si legge dopo la insert due query più su
 
+#-- 18-9-2003
+ALTER TABLE "classi_corso" RENAME "id_argomento" TO "id_canale"; 
+
 
