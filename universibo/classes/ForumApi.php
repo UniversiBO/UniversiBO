@@ -351,15 +351,49 @@ class ForumApi
 	}
 	
 	/**
-	 * @param	int   id del forum di cui controllare i messaggi nuovi. se non passato vengono
+	 *
+	 * @param	user	$user 
+	 * @param	int   id del forum di cui controllare i messaggi nuovi. se passato 0 vengono
 	 * cercati gli ultimi post su tutto il forum a cui l'utente ha diritto di accesso 
-	 * @return 	array string: gli ultimi messaggi del forum
+	 * @return 	mixed array di array( id degli ultimi messaggi del forum, nome topic) , false se nessun messaggio nuovo
 	 */
-	function getLastPost($id_forum = 0)
+	function &getLastPostsForum($user, $id_forum)
 	{
-		//
+		// teoricamente se uno ha accesso al canale ha anche accesso al forum
+		
+		// controllo post più recenti dell'ultimo accesso
+		
+		$db =& FrontController::getDbConnection($this->database);
+
+		$query = 	'SELECT p.post_id, t.topic_title FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
+					WHERE t.topic_id = p.topic_id 
+					AND p.forum_id = '.$db->quote($id_forum).'
+					AND p.post_id IN (SELECT pp.post_id FROM '.$this->table_prefix.'posts pp WHERE t.topic_id = pp.topic_id AND pp.post_time > '.$user->getUltimoLogin().' ORDER BY pp.post_time ASC LIMIT 1)
+					ORDER BY p.post_edit_time DESC';
+		//var_dump($query);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				
+		$rows = $res->numRows();
+
+		if( $rows == 0) return false;
+		
+		$id_post_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$id_post_list[] =  array('id' => $row[0], 'name' => $row[1]);
+		}
+		
+		$res->free();
+		
+		return $id_post_list;		
 	}
 
+	//getLastNPostsForum ?
+	//getLastPosts ?
+	//getLastNPosts ?
 }
 
 

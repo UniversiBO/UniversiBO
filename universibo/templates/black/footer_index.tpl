@@ -6,6 +6,8 @@
 
 {include file=box_contacts.tpl}
 
+{include file=box_forum.tpl}
+
 {include file=box_calendar.tpl}
 
 {include file=box_visite.tpl}

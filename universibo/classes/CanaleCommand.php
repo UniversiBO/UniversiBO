@@ -100,7 +100,7 @@ class CanaleCommand extends UniversiboCommand
 			Error::throwError(_ERROR_DEFAULT, array('msg'=>'Non ti ? permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
 		$canale->addVisite();
-			
+		
 	}
 	
 	
@@ -230,7 +230,23 @@ class CanaleCommand extends UniversiboCommand
 			
 			
 			//$template->assign('common_contactsCanaleAvailable', 'false');
+		
+			// elenco post nuovi contestuale al canale
+			$newposts = 'false';
+			$fa = new ForumApi();
+			$id_posts_list 	=&  $fa->getLastPostsForum($user, $canale->getForumForumId());
+			$list_post		=	array();
 			
+			if ($id_posts_list != false)
+			{
+				$newposts = 'true';
+				foreach ($id_posts_list as $curr_post)
+				{
+					$list_post[]= array('URI' => $fa->getPostUri($curr_post['id']), 'desc' => $curr_post['name']);
+				} 
+			}
+			$template->assign( 'common_newPostsAvailable', $newposts);		
+			$template->assign( 'common_newPostsList', $list_post);
 			
 		}
 		
