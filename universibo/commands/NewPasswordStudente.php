@@ -142,7 +142,7 @@ class NewPasswordStudente extends UniversiboCommand {
 			//	Error::throw(_ERROR_DEFAULT,'msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q5_username.' mail '.$q5_ad_user,'file'=>__FILE__,'line'=>__LINE__));
 			
 			
-			$mail =& $frontcontroller->getMail();
+			$mail =& $fc->getMail();
 
 			$mail->AddAddress($user->getADUsername());
 
@@ -158,10 +158,10 @@ class NewPasswordStudente extends UniversiboCommand {
 			
 			$msg = "La nuova password è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
 				"Le informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono:\n".
-				"Username: ".$new_user->getUsername()."\n".
+				"Username: ".$user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n";
 			
-			//if(!$mail->Send()){ Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+			if(!$mail->Send()){ Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('newPasswordStudente_thanks',"Una nuova password è stata generata, la tua richiesta è stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');

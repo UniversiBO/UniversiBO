@@ -1,4 +1,4 @@
-<?php
+L<?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
@@ -154,7 +154,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 			$forum->insert($new_user);
 			//	Error::throw(_ERROR_DEFAULT,'msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q4_username.' mail '.$q4_ad_user,'file'=>__FILE__,'line'=>__LINE__));
 			
-			$mail =& $frontcontroller->getMail();
+			$mail =& $fc->getMail();
 
 			$mail->AddAddress($new_user->getEmail());
 
