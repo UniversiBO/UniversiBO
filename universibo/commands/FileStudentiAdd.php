@@ -313,7 +313,16 @@ class FileStudentiAdd extends UniversiboCommand {
 			
 			//controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
 						
-			//echo substr($_FILES['userfile']['name'],-4);
+			
+			//modifica aggiunta per compatibilità bug explorer con PHP4.3.11 e successivi
+			$_FILES['f12_file']['name'] = str_replace('\\', '/', $_FILES['f12_file']['name']);
+			if (get_magic_quotes_gpc()) {
+		        $_FILES['f12_file']['name'] = basename(stripslashes($_FILES['f12_file']['name']));
+		    } else {
+		        $_FILES['f12_file']['name'] = basename($_FILES['f12_file']['name']);
+		    }
+			
+			
 			$estensione = strtolower ( substr($_FILES['f23_file']['name'],-4) );
 			if ( $estensione == PHP_EXTENSION) 
 			{
