@@ -23,7 +23,6 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 		$template =& $fc->getTemplateEngine();
 		$db =& $fc->getDbConnection('main');
 		
-		$randomPassword = User::generateRandomPassword();
 		$notifica = NOTIFICA_NONE;
 		
 		$res =& $db->query('SELECT cod_doc, nome_doc, email FROM docente2 WHERE 1=1');
@@ -36,6 +35,7 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 			
 			if (User::selectUserUsername($username) == false)
 			{
+				$randomPassword = User::generateRandomPassword();
 				//$pippo = $fc->getAppSetting('defaultStyle');
 				//var_dump($pippo);
 				$new_user = new User(-1, USER_DOCENTE, $username ,User::passwordHashFunction($randomPassword), $row[2], $notifica, 0, '', '', $fc->getAppSetting('defaultStyle') );
