@@ -38,7 +38,7 @@
   {/foreach} 
 
 </table>
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left"><img src="img/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="img/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
 <p>&nbsp;</p>
 {/foreach}
 

@@ -25,7 +25,7 @@ class ShowContacts extends UniversiboCommand {
 		$template->assign('contacts_langAltTitle', 'Chi Siamo');
 		$template->assign('contacts_langIntro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
 
-		$contacts_path = $this->frontController->appSettings['contactsPath'];
+		$contacts_path = $this->frontController->getAppSetting('contactsPath');
 		$template->assign('contacts_path', $contacts_path);
 		
 	
