@@ -37,6 +37,10 @@ class ShowFileInfo extends PluginCommand {
 		
 		$file =& FileItem::selectFileItem($param['id_file']);
 		
+		if ($file === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+		
+		//var_dump($file);
         $directoryFile = $fc->getAppSetting('filesPath');
 		$nomeFile = $file->getIdFile().'_'.$file->getNomeFile();
 		
@@ -63,24 +67,24 @@ class ShowFileInfo extends PluginCommand {
 			$canali_tpl[$id_canale]['uri'] = $canale->showMe();
 		}
 		
-		$template->assign('fileShowInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
-		$template->assign('fileShowInfo_uri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
-		$template->assign('fileShowInfo_titolo', $file->getTitolo());
-		$template->assign('fileShowInfo_descrizione', $file->getDescrizione());
-		$template->assign('fileShowInfo_userLink', 'ShowUser&id_utente='.$file->getIdUtente());
-		$template->assign('fileShowInfo_username', $file->getUsername());
-		$template->assign('fileShowInfo_dataInserimento', $krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
-		$template->assign('fileShowInfo_new', ($file->getDataModifica() < $user->getUltimoLogin() ) ? 'true' : 'false' );
-		$template->assign('fileShowInfo_nomeFile', $nomeFile);
-		$template->assign('fileShowInfo_dimensione',  $file->getDimensione());
-		$template->assign('fileShowInfo_download',  $file->getDownload());
-		$template->assign('fileShowInfo_hash',  $file->getHashFile());
-		$template->assign('fileShowInfo_categoria', $file->getCategoriaDesc());
-		$template->assign('fileShowInfo_tipo', $file->getTipoDesc());
-		$template->assign('fileShowInfo_icona', $fc->getAppSetting('filesTipoIconePath').$file->getTipoIcona());
-		$template->assign('fileShowInfo_info', $file->getTipoInfo());
-		$template->assign('fileShowInfo_canali', $canali_tpl);
-		$template->assign('fileShowInfo_paroleChiave', $file->getParoleChiave());
+		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_titolo', $file->getTitolo());
+		$template->assign('showFileInfo_descrizione', $file->getDescrizione());
+		$template->assign('showFileInfo_userLink', 'ShowUser&id_utente='.$file->getIdUtente());
+		$template->assign('showFileInfo_username', $file->getUsername());
+		$template->assign('showFileInfo_dataInserimento', $krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
+		$template->assign('showFileInfo_new', ($file->getDataModifica() < $user->getUltimoLogin() ) ? 'true' : 'false' );
+		$template->assign('showFileInfo_nomeFile', $nomeFile);
+		$template->assign('showFileInfo_dimensione',  $file->getDimensione());
+		$template->assign('showFileInfo_download',  $file->getDownload());
+		$template->assign('showFileInfo_hash',  $file->getHashFile());
+		$template->assign('showFileInfo_categoria', $file->getCategoriaDesc());
+		$template->assign('showFileInfo_tipo', $file->getTipoDesc());
+		$template->assign('showFileInfo_icona', $fc->getAppSetting('filesTipoIconePath').$file->getTipoIcona());
+		$template->assign('showFileInfo_info', $file->getTipoInfo());
+		$template->assign('showFileInfo_canali', $canali_tpl);
+		$template->assign('showFileInfo_paroleChiave', $file->getParoleChiave());
 		
 		return ;
 		

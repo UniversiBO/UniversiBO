@@ -38,8 +38,9 @@ class FileDownload extends UniversiboCommand {
 		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
 		$template->assign('common_langCanaleNome', 'indietro');
 				
-		$file =& FileItem::selectFileItem($_GET['id_file']);
-
+		if ($file === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			
 		if ($file === false) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto è stato eliminato o non è disponibile','file'=>__FILE__,'line'=>__LINE__ ));
 		
