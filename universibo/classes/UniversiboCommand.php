@@ -28,8 +28,7 @@ class UniversiboCommand extends BaseCommand {
 	 * Restituisce l'id_utente del dello user nella sessione corrente
 	 *
 	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
+	 * @return int
 	 */
 	function getSessionIdUtente()
 	{

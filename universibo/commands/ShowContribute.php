@@ -131,7 +131,7 @@ class ShowContribute extends UniversiboCommand
 				Error::throw(_ERROR_NOTICE,array('msg'=>'L\' indirizzo e-mail indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
-			elseif ( $_POST['f3_mail']!='' && !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f3_mail']) ) {
+			elseif ( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f3_mail']) ) {
 				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
@@ -186,7 +186,7 @@ class ShowContribute extends UniversiboCommand
 				$q3_test = 'S';
 				$f3_test = true;
 			}
-			else $q3_offline = 'N' ;
+			else $q3_test = 'N' ;
 			
 			//grafica check
 			if ( array_key_exists('f3_grafica', $_POST) ) {
@@ -224,10 +224,18 @@ class ShowContribute extends UniversiboCommand
 		//esecuzione operazioni accettazione del form
 		if ($f3_accept == true)
 		{
-			echo 'ACCETTATO';
+			$db =& FrontController::getDbConnection('main');
 			
-			$query = '';
+			$q3_idQuestionario = $db->nextID('questionario_id_questionari');
+			$q3_idUtente = $this->getSessionIdUtente();
 			
+			$query = 'INSERT INTO questionario (id_questionario, id_utente, data, nome, cognome, mail, telefono, tempo_disp, tempo_internet, attiv_offline, attiv_moderatore, attiv_contenuti, attiv_test, attiv_grafica, attiv_prog, altro) VALUES ( '.$db->quote($q3_idQuestionario).', '.$db->quote($q3_idUtente).', '.$db->quote(time()).', '.$db->quote($q3_nome).', '.$db->quote($q3_cognome).', '.$db->quote($q3_mail).', '.$db->quote($q3_tel).', '.$db->quote($q3_tempo).', '.$db->quote($q3_internet).', '.$db->quote($q3_offline).', '.$db->quote($q3_moderatore).', '.$db->quote($q3_contenuti).', '.$db->quote($q3_test).', '.$db->quote($q3_grafica).', '.$db->quote($q3_prog).', '.$db->quote($q3_altro).');';
+			$res = $db->query($query);
+			if (DB::isError($res))
+			{ 
+				Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				return false;
+			}
 			
 			//return '';
 		}

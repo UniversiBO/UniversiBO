@@ -231,6 +231,7 @@ ALTER TABLE "questionario" DROP COLUMN "xml";
 ALTER TABLE "questionario" DROP COLUMN "java";
 ALTER TABLE "questionario" DROP COLUMN "photoshop";
 ALTER TABLE "questionario" DROP COLUMN "gimp";
+ALTER TABLE "questionario" DROP COLUMN "sql";
 
 
 ----09-12-2003
