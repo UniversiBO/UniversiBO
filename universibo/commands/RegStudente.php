@@ -33,10 +33,10 @@ class RegStudente extends UniversiboCommand
 		$template->assign('f4_submit',		'Registra');
 		$template->assign('regStudente_langRegAlt','Registrazione');
 		$template->assign('regStudente_langMail','e-mail di ateneo:');
-		$template->assign('regStudente_langPassword','Password:');
-		$template->assign('regStudente_langUsername','Username:');
+		$template->assign('regStudente_langPassword','Password della email d\'ateneo:');
+		$template->assign('regStudente_langUsername','Username scelto per UniversiBO:');
 		$template->assign('regStudente_domain','@studio.unibo.it');
-		$template->assign('regStudente_langInfoUsername','E\' necessario scegliere uno Username che sarà utilizzato per i futuri accessi e che sarà anche il vostro nome identificativo all\'interno di UniversiBO.
+		$template->assign('regStudente_langInfoUsername','E\' necessario scegliere uno Username che sarà utilizzato per i futuri accessi e che sarà anche il vostro nome identificativo all\'interno di UniversiBO. [b]Non sará possibile cambiare username in seguito[/b].
 Il sistema genererà una password casuale che sarà inviata alla vostra casella e-mail d\'ateneo.');
 		$template->assign('regStudente_langInfoReg','Per garantire la massima sicurezza, l\'identificazione degli studenti al loro primo accesso avviene tramite la casella e-mail d\'ateneo e la relativa password.
 Se non possedete ancora la e-mail di ateneo andate sul sito [url]http://www.unibo.it[/url] cliccate sul "Login" in alto a destra e seguite le istruzioni.
