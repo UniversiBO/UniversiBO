@@ -39,7 +39,7 @@ function universiboPopup(dest)
 <script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\"><font color=\"#FF0000\">Registrazione Studenti</font></a><br />");
-//-->
+-->
 </script>
 <NOSCRIPT><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></NOSCRIPT>
 
