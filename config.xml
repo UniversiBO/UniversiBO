@@ -104,6 +104,8 @@
 		</NewsEdit>
 
 
+		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />
+		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

@@ -314,7 +314,7 @@ CREATE TABLE "file" (
 "permessi_visualizza" int4 NOT NULL,
 "id_utente" int4 NOT NULL,
 "titolo" varchar (150) NOT NULL,
-"descrizione" text NOT NULL,
+"descrizione" text NULL,
 "data_inserimento" int4 NOT NULL,
 "data_modifica" int4 NOT NULL,
 "dimensione" int4 NOT NULL,
@@ -355,4 +355,17 @@ INSERT INTO file ( "id_file", "permessi_download", "permessi_visualizza", "id_ut
 "nome_file", "id_categoria", "id_tipo_file", "hash_file", "password", "eliminato" ) 
 SELECT "f2.id_file" , '127' , '127', "f2.id_autore",
 '' , "f2.descrizione", f2.data, f2.data, f2.dimensione, f2.contatore,
-f2.nome_file,  FROM news2 ;
+f2.nome_file, 0 , 0 , '', NULL, 'N' FROM file2;
+
+--se in v1 un file era stato eliminato da tutti gli argomenti allora viene 
+--impostato come eliminato
+UPDATE file SET eliminato = 'S' WHERE id_file IN (
+  SELECT id_file from file_riguarda_argomento WHERE eliminato = 'S' AND id_file NOT IN 
+  (
+    SELECT id_file from file_riguarda_argomento WHERE eliminato = 'N'
+  )
+  GROUP BY id_file 
+);
+
+UPDATE file SET titolo = substring(descrizione from 1 for 100);
+
