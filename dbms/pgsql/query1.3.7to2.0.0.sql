@@ -784,7 +784,7 @@ UPDATE "utente" SET "default_style" = 'unibo' WHERE 1=1;
  
 -- brain 1-10-2004
  
-UPDATE phpbb_users SET config_value='0' WHERE config_name='override_user_style';
+UPDATE phpbb_config SET config_value='0' WHERE config_name='override_user_style';
 
 -- brain 2-10-2004
  
