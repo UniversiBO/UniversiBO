@@ -92,7 +92,7 @@ class FacoltaTest extends PHPUnit_TestCase
 	
 	function testFacoltaElenco()
 	{
-		$elenco =& FAcolta::selectFacoltaElenco();
+		$elenco =& Facolta::selectFacoltaElenco();
 		
 		foreach ( $elenco as $facolta)
 		{
