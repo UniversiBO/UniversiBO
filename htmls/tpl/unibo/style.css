@@ -49,7 +49,7 @@ form fieldset
 {
 	margin: 12px 0;
 }
-form fieldset p
+form p
 {
 	clear: both;
 }
@@ -164,6 +164,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 
 #leftmenu
 {
+	width: 200px;
 	background: white url(pixel.gif) repeat;
 	padding: 1.4em 0 0;
 	border-bottom:dotted 2px #999;

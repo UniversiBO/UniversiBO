@@ -5,15 +5,15 @@
 	<fieldset>
 	<legend>{$question_PersonalInfo|escape:"htmlall"}</legend>
 	<p><label class="label" for="f3_nome">{$question_PersonalInfoData[0]|escape:"htmlall"}</label>
-		<input id="f3_nome" maxlength="50" size="50" name="f3_nome" value="{$f3_nome|escape:"htmlall"}" /></p>
+		<input id="f3_nome" maxlength="50" size="40" name="f3_nome" value="{$f3_nome|escape:"htmlall"}" /></p>
 	<p><label class="label" for="f3_cognome">{$question_PersonalInfoData[1]|escape:"htmlall"}</label>
-		<input id="f3_cognome" maxlength="50" size="50" name="f3_cognome" value="{$f3_cognome|escape:"htmlall"}" /></p>
+		<input id="f3_cognome" maxlength="50" size="40" name="f3_cognome" value="{$f3_cognome|escape:"htmlall"}" /></p>
 	<p><label class="label" for="f3_mail">{$question_PersonalInfoData[2]|escape:"htmlall"}</label>
-		<input id="f3_mail" maxlength="50" size="50" name="f3_mail" value="{$f3_mail|escape:"htmlall"}" /></p>
+		<input id="f3_mail" maxlength="50" size="40" name="f3_mail" value="{$f3_mail|escape:"htmlall"}" /></p>
 	<p><label class="label" for="f3_tel">{$question_PersonalInfoData[3]|escape:"htmlall"}</label>
-		<input id="f3_tel" maxlength="50" size="50" name="f3_tel" value="{$f3_tel|escape:"htmlall"}" /></p>
+		<input id="f3_tel" maxlength="50" size="40" name="f3_tel" value="{$f3_tel|escape:"htmlall"}" /></p>
 	<p><label class="label" for="f3_cdl">{$question_PersonalInfoData[4]|escape:"htmlall"}</label>
-		<input id="f3_cdl" maxlength="50" size="50" name="f3_cdl" value="{$f3_cdl|escape:"htmlall"}" /></p> 
+		<input id="f3_cdl" maxlength="50" size="40" name="f3_cdl" value="{$f3_cdl|escape:"htmlall"}" /></p> 
 	</fieldset>
 	<fieldset>
 	<legend>{$question_q1|escape:"htmlall"}</legend>

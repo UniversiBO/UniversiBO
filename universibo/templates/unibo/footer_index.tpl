@@ -7,11 +7,11 @@
 		<div class="contenuto">
 			<form action="index.php?do=Login" name="form1_a" id="f1" method="post">
 				<label for="f1_username">username: </label><br />
-				<input id ="f1_username" name="f1_username" maxlength="25" type="text" class="navbarForm" size="15" /><br />
+				<input id ="f1_username" name="f1_username" maxlength="25" type="text" class="navbarForm" size="15" tabindex="1" /><br />
 				<label for="f1_password">password: </label><br />
-				<input id="f1_password" name="f1_password" maxlength="25" type="password" class="navbarForm" size="15" /><br />
+				<input id="f1_password" name="f1_password" maxlength="25" type="password" class="navbarForm" size="15" tabindex="2" /><br />
 				<input type="hidden" name="f1_resolution" value="" />
-				<input class="submit" name="f1_submit" type="submit" value="Login" onclick="document.form1_a.f1_resolution.value = screen.width;" /><br />
+				<input class="submit" name="f1_submit" type="submit" value="Login" tabindex="3" onclick="document.form1_a.f1_resolution.value = screen.width;" /><br />
 			</form>
 			<a href="index.php?do=RegStudente"><font color="#FF0000">Registrazione studenti</font></a><br />
 			<a href="index.php?do=NewPasswordStudente">Password smarrita</a><br />
