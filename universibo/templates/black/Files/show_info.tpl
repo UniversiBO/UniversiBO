@@ -23,7 +23,7 @@
  <table width="100%" border="0" cellspacing="0" cellpadding="5" summary="">
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito da:</span> <a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito il:</span> {$showFileInfo_dataInserimento|escape:"htmlall"}</td></tr>
- <tr><td class="Normal" colspan="2"><span class="NormalC">Titolo:</span> {$showFileInfo_descrizione|escape:"htmlall"}</td></tr>
+ <tr><td class="Normal" colspan="2"><span class="NormalC">Titolo:</span> {$showFileInfo_titolo|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Descrizione/abstract:</span> {$showFileInfo_descrizione|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Parole chiave:</span> {foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Categoria:</span> {$showFileInfo_categoria|escape:"htmlall"}</td></tr>
