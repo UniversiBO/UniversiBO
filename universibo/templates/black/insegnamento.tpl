@@ -22,6 +22,7 @@
 {/if}
 
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
+{if $ins_infoDidEdit != ""}<p class="Normal" align="center"><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a> </p>{/if}
 &nbsp;<br />
 {include file=News/latest_news.tpl}
 </td></tr>

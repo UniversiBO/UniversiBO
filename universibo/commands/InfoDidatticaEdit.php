@@ -30,7 +30,7 @@ class InfoDidatticaEdit extends UniversiboCommand
 			Error::throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$id_canale = $_GET['id_canale'];
-		if (!$user->isAdmin() && !$user_ruoli[$id_canale]->isReferente())
+		if (!$user->isAdmin() && (!array_key_exists($id_canale, $user_ruoli) || !$user_ruoli[$id_canale]->isReferente()))
 			Error::throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eseguire l\'perazione richiesta.\nLa sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		
 		

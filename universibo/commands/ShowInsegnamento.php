@@ -41,12 +41,19 @@ class ShowInsegnamento extends CanaleCommand
 		$id_canale = $this->getRequestIdCanale();
 		$insegnamento =& $this->getRequestCanale();
 		
+		$user_ruoli =& $session_user->getRuoli();
+			
+
+		
 		$insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		
+		$template->assign('ins_infoDidEdit', '' );
+		if ( $session_user->isAdmin() || (array_key_exists($id_canale, $user_ruoli) && $user_ruoli[$id_canale]->isReferente()) )
+			$template->assign('ins_infoDidEdit', 'index.php?do=InfoDidatticaEdit&id_canale='.$id_canale );
 		
 		
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
