@@ -26,7 +26,7 @@
   <tr> 
   <td class="News" align="right">{$data|escape:"htmlall"|bbcode2html|nl2br}<br />
   {* come interpreto la riga sotto???? ovvero come si chiamano i popup?*}
-	<a href="#news" onclick="window.open('popup.php?pg=666&amp;id_utente={$id_autore|escape:"htmlall"|bbcode2html|nl2br}','','width=500,height=500,scrollbars=yes,resizable=yes,scrolling=yes,top=50,left=100')">{$autore|escape:"htmlall"|bbcode2html|nl2b}</a></td>
+	<a href="#news" onclick="window.open('popup.php?pg=666&amp;id_utente={$id_autore|escape:"htmlall"|bbcode2html|nl2br}','','width=500,height=500,scrollbars=yes,resizable=yes,scrolling=yes,top=50,left=100')">{$autore|escape:"htmlall"|bbcode2html|nl2br}</a></td>
   </tr>
   </table>
 </td>
