@@ -45,6 +45,10 @@
 			<response type="template" name="default">facolta.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowFacolta>
+		<ShowCld class="ShowCdl">
+			<response type="template" name="default">cdl.tpl</response>
+			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+		</ShowCdl>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
 		</ShowContribute>
@@ -54,6 +58,9 @@
 		<ShowContacts class="ShowContacts">
 			<response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>
+		<ShowCollaboratore class="ShowCollaboratore">
+			<response type="template" name="default">collaboratore.tpl</response>
+		</ShowCollaboratore>
 		<ShowQuestions class="ShowQuestions">
 			<response type="template" name="default">questionario.tpl</response>
 		</ShowQuestions>
