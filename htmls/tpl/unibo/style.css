@@ -53,17 +53,17 @@ form fieldset p
 {
 	clear: both;
 }
-
+/*
 form fieldset .casella
 {
 	float: right;
 	text-align: left;
 	display: inline;	
-}
+}*/
 form fieldset .label
 {
 	float: left;
-	width: 120px;
+	width: 90px;
 	padding-right: 15px !important;
 	text-align: right;
 	display: inline;
