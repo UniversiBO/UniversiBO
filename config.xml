@@ -29,6 +29,9 @@
 		<ShowHome class="ShowHome">
 			 <template type="default">home.tpl</template>
 		</ShowHome>
+		<ShowFacolta class="ShowFacolta">
+			 <template type="default">facolta.tpl</template>
+		</ShowFacolta>
 		<ShowContribute class="ShowContribute">
 			 <template type="default">contribute.tpl</template>
 		</ShowContribute>
