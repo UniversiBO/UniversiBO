@@ -92,7 +92,7 @@ class Insegnamento extends Canale
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
 			//var_dump($cod_ril);
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n prof. ".ucwords(strtolower($att->getNomeDoc()));
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' - aa.'.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." - prof. ".ucwords(strtolower($att->getNomeDoc()));
 		}
 		elseif($nome != '' )
 		{
@@ -156,7 +156,7 @@ class Insegnamento extends Canale
 				//se A-Z non lo metto nel nome
 				if ($cod_ril[$i] == "A-Z") $codice_ril = " ";
 				else $codice_ril = " (".$cod_ril[$i].")";
-				$app_nomi[$i] = $nomi[$i].$codice_ril.' aa. '.$anni[$i]." \nprof. ". ucwords(strtolower($att->getNomeDoc()));
+				$app_nomi[$i] = $nomi[$i].$codice_ril.' - aa.'.$anni[$i]." - prof. ". ucwords(strtolower($att->getNomeDoc()));
 			}
 			//var_dump($cod_ril);
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));

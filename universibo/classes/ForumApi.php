@@ -375,9 +375,9 @@ class ForumApi
 	{
 		$db =& FrontController::getDbConnection($this->database);
 		
-		$next_id = $db->nextId('phpbb_categories_id');
+		$next_id = $db->nextId($this->table_prefix.'categories_id');
 		
-		$query = 'INSERT INTO phpbb_categories ( cat_id, cat_title, cat_order) 
+		$query = 'INSERT INTO '.$this->table_prefix.'categories ( cat_id, cat_title, cat_order) 
 				VALUES ('.$next_id.', '.$db->quote($cat_title).', '.$cat_order.' )';
 		
 		$res = $db->query($query);
@@ -398,7 +398,7 @@ class ForumApi
 		
 		$next_id = $this->getMaxForumId() + 1;
 		
-		$query = 'INSERT INTO "phpbb_forums" ("forum_id", "cat_id", "forum_name", "forum_desc", "forum_status", "forum_order", 
+		$query = 'INSERT INTO "'.$this->table_prefix.'forums" ("forum_id", "cat_id", "forum_name", "forum_desc", "forum_status", "forum_order", 
 				"forum_posts", "forum_topics", "forum_last_post_id", "prune_enable", "prune_next", "auth_view", "auth_read",
 				"auth_post", "auth_reply", "auth_edit", "auth_delete", "auth_announce", "auth_sticky", "auth_pollcreate",
 				"auth_vote", "auth_attachments")
@@ -421,9 +421,9 @@ class ForumApi
 	{
 		$db =& FrontController::getDbConnection($this->database);
 		
-		$next_id = $db->nextId('phpbb_groups_id');
+		$next_id = $db->nextId($this->table_prefix.'groups_id');
 		
-		$query = 'INSERT INTO "phpbb_groups" ("group_name", "group_type", "group_description", "group_moderator", "group_single_user")
+		$query = 'INSERT INTO "'.$this->table_prefix.'groups" ("group_name", "group_type", "group_description", "group_moderator", "group_single_user")
 					VALUES ('.$db->quote($title).',2 ,'.$db->quote($desc).' ,'.$id_owner.' , 0)';
 
 		$res = $db->query($query);
@@ -441,9 +441,9 @@ class ForumApi
 	{
 		$db =& FrontController::getDbConnection($this->database);
 		
-		$next_id = $db->nextId('phpbb_groups_id');
+		$next_id = $db->nextId($this->table_prefix.'groups_id');
 		
-		$query = 'INSERT INTO "phpbb_auth_access" ("group_id", "forum_id", "auth_view", "auth_read", "auth_post", "auth_reply", 
+		$query = 'INSERT INTO "'.$this->table_prefix.'auth_access" ("group_id", "forum_id", "auth_view", "auth_read", "auth_post", "auth_reply", 
 				"auth_edit", "auth_delete", "auth_announce", "auth_sticky", "auth_pollcreate", "auth_attachments", "auth_vote", "auth_mod")
 				VALUES ('.$group_id.', '.$forum_id.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)';
 		
@@ -454,7 +454,35 @@ class ForumApi
 	}
 	
 	
+	/**
+	 * @return string nuovo nome
+	 */
+	function addForumInsegnamentoNewYear($forum_id, $anno_accademico)
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$query = 'SELECT forum_name FROM "'.$this->table_prefix.'forums" WHERE forum_id = '.$forum_id;
+
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$res->fetchInto($row);
+		
+		$vecchio_nome = $row[0];
+		$search = ($anno_accademico-1).'/'.$anno_accademico.' ';
+		$replace = ($anno_accademico-1).'/'.$anno_accademico.'/'.($anno_accademico+1).' ';
+		$nuovo_nome = str_replace($search, $replace, $vecchio_nome);
+			
+		$query = 'UPDATE '.$this->table_prefix.'forums SET forum_name = '.$db->quote($nuovo_nome).'  WHERE forum_id = '.$forum_id;
+
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		return $nuovo_nome;
 	
+	}
 	
 }
 

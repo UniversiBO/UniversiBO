@@ -22,17 +22,6 @@ class ScriptTest extends UniversiboCommand
 	{
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		die();
-/*		
 		$canale = Canale::retrieveCanale(1573);
 		echo $titolo = $canale->getNome(),"\n";
 		$tutti = array();
@@ -53,7 +42,7 @@ class ScriptTest extends UniversiboCommand
 			}
 		}
 
-		usort($tutti, array('ScriptTest','_order'));
+		//usort($tutti, array('ScriptTest','_order'));
 		
 		$i = 0;
 		foreach ($tutti as $value) {
@@ -73,7 +62,7 @@ class ScriptTest extends UniversiboCommand
 //		234_34++.ZIP';
 //		
 //		echo ereg_replace('([^a-zA-Z0-9_\.])','_',$string), "\n";
-*/
+
 		
 	}
 	

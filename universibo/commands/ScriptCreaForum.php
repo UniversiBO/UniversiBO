@@ -2,6 +2,8 @@
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('Cdl'.PHP_EXTENSION);
+require_once ('Insegnamento'.PHP_EXTENSION);
+require_once ('PrgAttivitaDidattica'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
 
 
@@ -20,8 +22,14 @@ require_once ('ForumApi'.PHP_EXTENSION);
  
 class ScriptCreaForum extends UniversiboCommand 
 {
+	var $anno_accademico = 2004;
+	
 	function execute()
 	{
+		
+		$anno_accademico = $this->anno_accademico;
+		
+		
 		$fc =& $this->getFrontController();
 		$template =& $fc->getTemplateEngine();
 		$db =& $fc->getDbConnection('main');
@@ -45,7 +53,7 @@ class ScriptCreaForum extends UniversiboCommand
 			// creo categoria
 			if ($cdl->getForumCatId()=='')
 			{
-				$cat_id = $forum->addForumCategory($cdl->getCodiceCdl().' - '.ucwords($cdl->getTitolo()), $cdl->getCodiceCdl());
+				$cat_id = $forum->addForumCategory($cdl->getCodiceCdl().' - '.ucwords( strtolower( $cdl->getNome())), $cdl->getCodiceCdl());
 				echo ' > ','creata categoria: ',$cat_id,"\n";
 				
 				$cdl->setForumCatId($cat_id);
@@ -60,20 +68,20 @@ class ScriptCreaForum extends UniversiboCommand
 			
 			if ($cdl->isGroupAllowed(USER_OSPITE) && $cdl->getServizioForum()==false)
 			{
-				$forum_id = $forum->addForum($cdl->getCodiceCdl().' - '.ucwords($cdl->getTitolo()), 
-							'Forum riservato sulla discussione generale sul CdL '.$cdl->getCodiceCdl() , $cdl->getCodiceCdl(), $cat_id);
+				$forum_id = $forum->addForum($cdl->getCodiceCdl().' - '.ucwords(strtolower($cdl->getNome())), 
+							'Forum riservato alla discussione generale sul CdL '.$cdl->getCodiceCdl(), $cat_id);
 				$cdl->setForumForumId($forum_id);
 				$cdl->setServizioForum(true);
 				
-				echo ' > ','creato forum : ',$forum_id,"\n";
+				echo ' > ','creato forum cdl : ',$forum_id,'-'.$cat_id,"\n";
 				
 				if ($id_utente != null)
 				{
-					$group_id = $forum->addGroup('Moderatori '.$cdl->getCodiceCdl(), 'Moderatori del cdl'.$cdl->getCodiceCdl().' - '.ucwords($cdl->getTitolo()), $id_utente );
-					echo ' > ','creato gruppo forum : ',$group_id,"\n";
+					$group_id = $forum->addGroup('Moderatori '.$cdl->getCodiceCdl(), 'Moderatori del cdl'.$cdl->getCodiceCdl().' - '.ucwords(strtolower($cdl->getNome())), $id_utente );
+					echo ' > ','creato gruppo forum cdl : ',$group_id,"\n";
 					
 					$forum->addGroupForumPrivilegies($forum_id, $group_id);
-					echo ' > ','aggiunti privilegi : ',$group_id,' - '.$forum_id,"\n";
+					echo ' > ','aggiunti privilegi cdl : ',$group_id,' - '.$forum_id,"\n";
 					
 					$cdl->setForumGroupId($forum_id);
 				}
@@ -84,16 +92,78 @@ class ScriptCreaForum extends UniversiboCommand
 				echo ' > ','aggiornato il canale con il nuovo forum e categoria: ',$forum_id,"\n";
 				
 			}
-//			elseif ($cdl->isGroupAllowed(USER_OSPITE))
-//				echo ' > ','forum gia\' presente: ',$cdl->getForumForumId(),' - '.$cdl->getForumGroupId()."\n";
-				 
+			elseif ($cdl->isGroupAllowed(USER_OSPITE))
+				echo ' > ','forum cdl gia\' presente: ',$cdl->getForumForumId(),' - '.$cdl->getForumGroupId()."\n";
+			
+			
+			$elenco_prgAttivitaDidattica = PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($cdl->getCodiceCdl(), $anno_accademico);
+			
+			foreach($elenco_prgAttivitaDidattica as $prg_att)
+			{
+				//AAHHH qui la cache di Canale potrebbe restituire dei casini, non la posso usare,
+				// PrgAttivit? ed Insegnamento hanno gli stessi id_canali
+				if (!$prg_att->isSdoppiato() && $prg_att->isGroupAllowed(USER_OSPITE))
+				{
+					$insegnamento = Insegnamento::selectInsegnamentoCanale($prg_att->getIdCanale());
+					echo '   - ',$insegnamento->getIdCanale(),' - '.str_replace("\n",' ',$insegnamento->getNome()),"\n";
+					$simile = $this->selectInsegnamentoConForumSimile($insegnamento);
+					
+					if ($simile == null)
+					{
+						//creo nuovo forum
+						$id_docente = $this->selectIdUtenteFromCodDoc($prg_att->getCodDoc()); 
+						
+						if ($insegnamento->isGroupAllowed(USER_OSPITE) && $insegnamento->getServizioForum()==false)
+						{
+							$ins_forum_id = $forum->addForum($insegnamento->getNome(),'', $cat_id);
+							$insegnamento->setForumForumId($ins_forum_id);
+							$insegnamento->setServizioForum(true);
+							
+							echo '   - ','creato forum insegnamento : ',$ins_forum_id,'-'.$cat_id,"\n";
+							
+							if ($id_docente != null)
+							{
+								$ins_group_id = $forum->addGroup('Moderatori '.$insegnamento->getIdCanale(), 'Moderatori dell\'insegnamento con id_canale'.$insegnamento->getIdCanale().' - '.$insegnamento->getNome(), $id_docente );
+								echo '   - ','creato gruppo forum insegnamento : ',$ins_group_id,"\n";
+								
+								$forum->addGroupForumPrivilegies($ins_forum_id, $ins_group_id);
+								echo '   - ','aggiunti privilegi insegnamento : ',$ins_group_id,' - '.$ins_forum_id,"\n";
+								
+								$insegnamento->setForumGroupId($ins_forum_id);
+							}
+							else
+								echo '   ### docente insegnamento non trovato: ',$ins_forum_id,"\n";
+								
+							$insegnamento->updateCanale();
+							echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_forum_id,"\n";
+							
+						}
+						
+					}
+					else
+					{
+						$ins_simile = Insegnamento::selectInsegnamentoCanale($simile);
+						echo '   - forum simile a: '.$ins_simile->getIdCanale(),' - '.str_replace("\n",' ',$ins_simile->getNome()),"\n";
+						
+						$forum->addForumInsegnamentoNewYear($ins_simile->getForumForumId(), $anno_accademico);
+						echo '   - aggiornato il nome del forum con il nuovo anno accademico ',$ins_simile->getForumForumId(),"\n";
+						
+						$insegnamento->setForumGroupId($ins_simile->getForumGroupId());
+						$insegnamento->setForumForumId($ins_simile->getForumForumId());
+						$insegnamento->setServizioForum(true);
+						
+						$insegnamento->updateCanale();
+						echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_forum_id,"\n";
+						
+					}
+					
+					
+				}
+				
+			}
+			
 				
 		}
-		
-		
-//		$query = 'rollback';
-//		$res =& $db->query($query);
-//		die();
 		
 		$query = 'commit';
 		$res =& $db->query($query);
@@ -126,6 +196,51 @@ class ScriptCreaForum extends UniversiboCommand
 		
 	}
 	
+	
+	
+	/**
+	 * @todo questa funzione qui fa schifo,
+	 *
+	 * @return Insegnamento
+	 */
+	function selectInsegnamentoConForumSimile($ins)
+	{
+		$elencoAtt = $ins->getElencoAttivitaPadre();
+		
+		//se sono pi? attivit? unite... non ci impazzisco.
+		if (count($elencoAtt) > 1) return null;
+		
+		$att = $elencoAtt[0];
+		
+		$db =& FrontController::getDbConnection('main');
+		$query = 'SELECT c.id_canale FROM canale c, prg_insegnamento pi WHERE
+				c.id_canale=pi.id_canale
+				AND c.forum_attivo IS NOT NULL
+				AND c.id_forum IS NOT NULL
+				AND c.group_id IS NOT NULL
+				AND pi.cod_materia_ins='.$db->quote($att->getCodMateriaIns()).'
+				AND pi.cod_ril='.$db->quote($att->getCodRil()).'
+				AND pi.cod_materia = '.$db->quote($att->getCodMateria()).'
+				AND pi.cod_doc = '.$db->quote($att->getCodDoc()).'
+				AND anno_accademico = '.$db->quote($this->anno_accademico - 1).'		
+				AND pi.cod_corso = '.$db->quote($att->getCodiceCdl());
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		if ($res->numRows() == 0 ) 
+			return null;
+		
+		//se ce ne sono di pi? prendo il primo
+		if ($res->numRows() > 1 ) 
+			echo '   #### c\'erano '.$res->numRows().' forum simili, ho preso solo il primo',"\n";
+		
+		$res->fetchInto($row);
+			
+		return $row[0];
+	
+	}	
 }
 
 ?>
