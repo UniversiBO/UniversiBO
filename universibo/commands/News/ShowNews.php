@@ -36,6 +36,7 @@ class ShowNews extends PluginCommand {
 //		die();
 		
 		$bc        =& $this->getBaseCommand();
+		$canale    =& $bc->getRequestCanale();
 		$user      =& $bc->getSessionUser();
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
