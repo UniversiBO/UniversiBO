@@ -544,7 +544,7 @@ class User {
 	 * @static
 	 * @param int $id_utente numero identificativo utente
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
-	 * @return boolean
+	 * @return mixed User se eseguita con successo, false se l'utente non esiste
 	 */
 	function &selectUser($id_utente)
 	{
@@ -564,10 +564,11 @@ class User {
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 			$rows = $res->numRows();
-			if( $rows != 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			if( $rows = 0) return false;
 
 			$row = $res->fetchRow();
-			$user = new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], NULL , $row[5]);
+			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], NULL , $row[5]);
 			return $user;
 			
 		}

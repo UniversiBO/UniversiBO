@@ -30,7 +30,7 @@ ALTER TABLE ONLY phpbb_confirm
 INSERT INTO "phpbb_config" ("config_name", "config_value") VALUES ('enable_confirm', '0');
 INSERT INTO "phpbb_config" ("config_name", "config_value") VALUES ('sendmail_fix', '0');
 UPDATE "phpbb_config" SET config_value = '.0.6' WHERE config_name='version';
-#-- modifiche livello -> groups
+#-- modifiche tabella utente livello -> groups
 ALTER TABLE "utente" ADD "groups" int4 ;
 
 UPDATE "utente" SET "groups" = 2 WHERE "livello" = 100;
@@ -46,7 +46,7 @@ ALTER TABLE "classi_corso" ADD "cod_fac" varchar (4) ;
 
 UPDATE classi_corso SET cod_fac = '0054' WHERE cod_corso IN ('0025', '0023', '0221', '0218', '0025', '5402', '0022', '5407');
 UPDATE classi_corso SET cod_fac = '0021' WHERE cod_corso NOT IN ('0025', '0023', '0221', '0218', '0025', '5402', '0022');
-#-- creazione tabella canale
+#-- creazione tabella canale   (si poteva fare in modo molto più semplice... vedi utente_canale)
 CREATE TABLE "canale" (
 "id_canale" SERIAL, 
 "tipo_canale" int4 NOT NULL, 
@@ -80,4 +80,17 @@ UPDATE canale SET tipo_canale = 3 WHERE canale.id_canale IN ( SELECT id_argoment
 UPDATE canale SET tipo_canale = 4 WHERE canale.id_canale IN ( SELECT id_argomento FROM argomento WHERE tipo_argomento='C' );
 UPDATE canale SET tipo_canale = 5 WHERE canale.id_canale IN ( SELECT id_argomento FROM argomento WHERE tipo_argomento='E' );
 UPDATE canale SET tipo_canale = 6 WHERE canale.id_canale IN ( SELECT a.id_argomento FROM argomento a, esami_attivi b, classi_corso c WHERE a.id_argomento=b.id_argomento AND b.cod_corso=c.cod_corso AND c.cod_fac='0054' );
+#-- modifica utente_argomento
+ALTER TABLE "utente_argomento" RENAME "id_argomento" TO "id_canale"; ALTER TABLE "utente_argomento" ALTER "id_canale" DROP DEFAULT ;
+ALTER TABLE "utente_argomento" ADD "ruolo" int4 ;
+ALTER TABLE "utente_argomento" ADD "my_universibo" char (1) ;
+ALTER TABLE "utente_argomento" RENAME TO "utente_canale";
 
+UPDATE utente_canale SET my_universibo='S' WHERE 1=1;
+UPDATE utente_canale SET ruolo=1 WHERE diritti='M';
+UPDATE utente_canale SET ruolo=2 WHERE diritti='R';
+
+ALTER TABLE "utente_canale" DROP COLUMN "diritti";
+#-- nuovi campi in utente_argomento
+ALTER TABLE "utente_canale" ADD "notifica" int4 ;
+ALTER TABLE "utente_canale" ADD "nome" char (60) ;
