@@ -40,7 +40,7 @@ class ForumApi
 	 * Stile del forum di default - implica la modifica anche nella tabella di config di phpbb
 	 * @access private
 	 */
-	var $defaultUserStyle = 7;
+	var $defaultUserStyle = array('unibo' => 1, 'black' => 7);
 
 	/**
 	 * Ranks e livelli da assegnare agli utenti inizialmente
@@ -194,7 +194,7 @@ class ForumApi
 		if ( $groups != USER_OSPITE && $groups != USER_STUDENTE && $groups != USER_COLLABORATORE && $groups != USER_TUTOR && $groups != USER_DOCENTE && $groups != USER_PERSONALE && $groups != USER_ADMIN ) return;
 		// @todo renderla funzionante anche per utenti che appartengono a più gruppi
 		
-		$user_style = $this->defaultUserStyle;
+		$user_style = $this->defaultUserStyle[$user->getDefaultStyle()];
 		$user_rank  = $this->defaultRanks[$groups];
 		$user_level = ( $user->isAdmin() == true ) ? 1 : ( $user->isCollaboratore() == true ) ? 2 : 0 ;
 		

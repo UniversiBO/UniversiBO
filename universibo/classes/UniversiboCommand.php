@@ -375,11 +375,10 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
 		
-		$template->assign('common_docUri', 'http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/');
-		$template->assign('common_doc', 'Documentazione');
-		$template->assign('common_docUri', 'http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/');
-		$template->assign('common_project', 'UniversiBO Open Source Project');
-		$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
+		$template->assign('common_docSf', 'Documentazione');
+		$template->assign('common_docSfUri', 'http://universibo.sourceforge.net/');
+		//$template->assign('common_project', 'UniversiBO Open Source Project');
+		//$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
 		
 		
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.

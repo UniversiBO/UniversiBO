@@ -52,6 +52,7 @@ class Login extends UniversiboCommand {
 			{
 				$_POST['f1_password'] = '';  //resettata per sicurezza
 				$this->setSessionIdUtente($user->getIdUser());
+				$fc->setStyle($user->getDefaultStyle());
 				
 				$forum = new ForumApi;
 				$forum->login($user);

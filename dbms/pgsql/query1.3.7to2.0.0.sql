@@ -671,3 +671,16 @@ UPDATE canale SET files_attivo = 'S' WHERE tipo_canale IN (1,5);
 UPDATE canale SET files_attivo = 'N' WHERE tipo_canale IN (2,3,4);
 UPDATE canale SET news_attivo = 'S' WHERE 1 = 1;
 
+--24-9-04
+ALTER TABLE "utente" ADD "phone" varchar(15);
+ALTER TABLE "utente" ALTER COLUMN "phone" SET DEFAULT '';
+UPDATE "utente" SET  "phone" = '' WHERE 1=1;
+ALTER TABLE "utente" ADD "default_style" varchar(10);
+ALTER TABLE "utente" ALTER COLUMN "default_style" SET DEFAULT '';
+UPDATE "utente" SET  "default_style" = '' WHERE 1=1;
+
+
+UPDATE phpbb_config set config_value='1' WHERE config_name='default_style';
+
+UPDATE phpbb_users set user_style='1' WHERE 1=1;
+

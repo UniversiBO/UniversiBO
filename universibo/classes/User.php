@@ -74,6 +74,18 @@ class User {
 	 */
 	var $ban = false;
 	
+	/**
+	 * @access private
+	 */
+	var $phone = '';
+	
+	/**
+	 * @access private
+	 */
+	var $defaultStyle = '';
+	
+	
+	
 	
 	/**
 	 *  Verifica se la sintassi dello username ? valido.
@@ -192,7 +204,7 @@ class User {
 	 * @param array() $bookmark array con elenco dei id_canale dell'utente associati ai rispettivi ruoli 
 	 * @return User
 	 */
-	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $notifica=NULL, $ultimo_login=NULL, $AD_username=NULL, $bookmark=NULL)
+	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $notifica=NULL, $ultimo_login=NULL, $AD_username=NULL, $phone='', $defaultStyle='', $bookmark=NULL)
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
@@ -202,6 +214,8 @@ class User {
 		$this->ultimoLogin = $ultimo_login;
 		$this->MD5         = $MD5;
 		$this->notifica    = $notifica;
+		$this->phone	   = $phone;
+		$this->defaultStyle	= $defaultStyle;
 		$this->bookmark    = $bookmark;
 	}
 	
@@ -436,6 +450,30 @@ class User {
 
 
 	/**
+	 * Ritorna la stringa con il numero di telefono
+	 *
+	 * @return string
+	 */
+	function getPhone()
+	{
+		return $this->phone;
+	}
+
+
+
+	/**
+	 * Ritorna lo stile grafico predefinito
+	 *
+	 * @return string
+	 */
+	function getDefaultStyle()
+	{
+		return $this->defaultStyle;
+	}
+
+
+
+	/**
 	 * Restituisce il nome del gruppo da usare nel blocchetto contatti
 	 * (admin e collaboratori compaiono come studenti)
 	 *
@@ -525,6 +563,30 @@ class User {
 		return true;
 	}
 
+
+
+	/**
+	 * Imposta il numero di telefono 
+	 *
+	 * @param boolean $phome il numero di telefono
+	 * @return boolean
+	 */
+	function setPhone($phome)
+	{
+		$this->phone = $phome;
+	}
+
+
+	/**
+	 * Imposta il nome del template di default 
+	 *
+	 * @param boolean $defaultStyle nome del template di default
+	 * @return boolean
+	 */
+	function setDefaultStyle($defaultStyle)
+	{
+		$this->defaultStyle = $defaultStyle;
+	}
 
 
 	/**
@@ -762,7 +824,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica  FROM utente WHERE id_utente = '.$db->quote($id_utente);
+			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE id_utente = '.$db->quote($id_utente);
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -772,7 +834,7 @@ class User {
 			if( $rows == 0) return false;
 
 			$row = $res->fetchRow();
-			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
+			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
 			return $user;
 			
 		}
@@ -793,7 +855,7 @@ class User {
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica  FROM utente WHERE username = '.$db->quote($username);
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE username = '.$db->quote($username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -803,7 +865,7 @@ class User {
 		if( $rows == 0) return false;
 
 		$row = $res->fetchRow();
-		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
+		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
 		return $user;
 		
 	}
@@ -824,7 +886,7 @@ class User {
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username, phone, default_style  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -833,7 +895,7 @@ class User {
 		
 		while($row = $res->fetchRow())
 		{
-			$users[] =& new User($row[0], $row[5], $row[7], $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
+			$users[] =& new User($row[0], $row[5], $row[7], $row[1], $row[2], $row[6], $row[3], $row[4], $row[8], $row[9], NULL);
 		}
 		
 		return $users;
@@ -867,7 +929,7 @@ class User {
 			$this->id_utente = $db->nextID('utente_id_utente');
 			$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
 			
-			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban) VALUES '.
+			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban, phone, defaultStyle) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
 						$db->quote($this->getPasswordHash()).' , '.
@@ -876,7 +938,9 @@ class User {
 						$db->quote($this->getUltimoLogin()).' , '.
 						$db->quote($this->getADUsername()).' , '.
 						$db->quote($this->getGroups()).' , '.
-						$db->quote($utente_ban).' )'; 
+						$db->quote($utente_ban).' , '.
+						$db->quote($this->getPhone()).' , '.
+						$db->quote($this->getDefaultStyle()).' )'; 
 			$res = $db->query($query);
 			
 			if (DB::isError($res))
@@ -915,6 +979,8 @@ class User {
 					', ultimo_login = '.$db->quote($this->getUltimoLogin()).
 					', ad_username = '.$db->quote($this->getADUsername()).
 					', groups = '.$db->quote($this->getGroups()).
+					', phone = '.$db->quote($this->getPhone()).
+					', default_style = '.$db->quote($this->getDefaultStyle()).
 					', ban = '.$db->quote($utente_ban).
 					' WHERE id_utente = '.$db->quote($this->getIdUser()); 
 		

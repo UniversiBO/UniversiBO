@@ -428,10 +428,22 @@ class FrontController {
 	
 	/**
  	* Imposta lo style del template da visualizzare... 
- 	* @todo implementare
 	*/
-	function setStyle()
+	function setStyle($style)
 	{
+		$_SESSION['template_name'] = $style;
+	}
+
+
+	/**
+ 	* Restituisce lo style del template da visualizzare... 
+	*/
+	function getStyle()
+	{
+		if (!array_key_exists('template_name', $_SESSION) )
+			return $fc->getAppSetting('defaultStyle'); 
+		
+		return $_SESSION['template_name'];
 	}
 
 
@@ -582,12 +594,12 @@ class FrontController {
 		if (array_key_exists('setStyle', $_GET) && $_GET['setStyle']!=''
 			&& array_key_exists($_GET['setStyle'],$this->templateEngine['styles'])) 
 		{
-			$_SESSION['template_name'] = $_GET['setStyle'];
+			$this->setStyle($_GET['setStyle']);
 		}
 		
-		if (array_key_exists('template_name', $_SESSION) && $_SESSION['template_name']!='') 
+		if ( $this->getStyle()!='' ) 
 		{
-			$this->templateEngine['template_name'] = $_SESSION['template_name'];
+			$this->templateEngine['template_name'] = $this->getStyle();
 		}
 		else
 		{

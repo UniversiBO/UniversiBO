@@ -22,7 +22,7 @@ class ShowCredits extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$template->assign('showCredits_langTitleAlt','Credits');
-		$template->assign('showCredits_langIntro','Questo sito è stato realizzato e funziona utilizzando internamente solo software freeware e open source e appoggiandosi alle altre strutture rese disponibili dall\'ateneo');
+		$template->assign('showCredits_langIntro','Questo sito è stato realizzato e funziona utilizzando internamente solo software libero e open source e appoggiandosi alle strutture rese disponibili dall\'Ateneo');
 		$template->assign('showCredits_langSO','Il sistema operativo su cui si appoggia il nostro server è GNU/Linux di cui abbiamo scelto la distribuzione Debian relase Woody
 [url=http://www.debian.org]www.debian.org[/url]');
 		$template->assign('showCredits_langApache','Il programma di web server utilizzato è il diffusissimo Apache Web Server e per mantenere la massima sicurezza dei dati inviati viene utilizzato il protocollo HTTPS/SSL 

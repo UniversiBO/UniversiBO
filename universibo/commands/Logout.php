@@ -21,6 +21,8 @@ class Logout extends UniversiboCommand {
 		{
 			$this->setSessionIdUtente(0);
 			
+			$fc->setStyle($fc->getAppSetting('defaultStyle'));
+			
 			require_once('ForumApi'.PHP_EXTENSION);
 			$forum = new ForumApi();
 			$forum->logout();

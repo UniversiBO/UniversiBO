@@ -246,6 +246,7 @@
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
         <alertMessage></alertMessage>
+        <defaultStyle>black</defaultStyle>
         <rootEmail>universibo@mail.ing.unibo.it</rootEmail>
         <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
         <regolamento>../universibo/files/regolamento.txt</regolamento>

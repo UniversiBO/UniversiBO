@@ -102,14 +102,14 @@
 <td colspan="2"><img src="tpl/black/informazioni_18.gif" width="136" height="22" alt="{$common_info}" /></td>
 </tr>
 
-<tr>
+{*<tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
  <td class="Menu"><a href="{$common_helpUri}" >{$common_help}</a></td>
 </tr>
-
+*}
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu"><a href="{$common_helpByTopicUri}" >{$common_helpByTopic}</a></td>
+ <td class="Menu"><a href="{$common_helpByTopicUri}" >{$common_help}</a></td>
 </tr>
 
 <tr>
@@ -137,6 +137,11 @@
  <td class="Menu"><a href="{$common_creditsUri}" >{$common_credits}</a></td>
 </tr>
 
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/freccia_4.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_docSfUri|escape:"htmlall"}" target="_blank"  title="Apre in un altra finestra" >{$common_docSf}</a></td>
+</tr>
+
 </table>
 
 </td>
@@ -162,31 +167,31 @@
 <td><img src="tpl/black/links_18.gif" width="62" height="22" alt="Links" /></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.unibo.it" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Universit&agrave; di BO</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.unibo.it" target="_blank" title="Apre in un altra finestra" >Universit&agrave; di BO</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.ing.unibo.it" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Facolt&agrave; di Ingegneria</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.ing.unibo.it" target="_blank" title="Apre in un altra finestra" >Facolt&agrave; di Ingegneria</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="https://uniwex.unibo.it" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Uniwex</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="https://uniwex.unibo.it" target="_blank" title="Apre in un altra finestra" >Uniwex</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://guida.ing.unibo.it" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Guida dello Studente</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://guida.ing.unibo.it" target="_blank" title="Apre in un altra finestra" >Guida dello Studente</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Elenco Dipartimenti</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank" title="Apre in un altra finestra" >Elenco Dipartimenti</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Assoc. Studentesche</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank" title="Apre in un altra finestra" >Assoc. Studentesche</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Ordine Ingegneri</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank" title="Apre in un altra finestra" >Ordine Ingegneri</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.atc.bo.it/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />ATC Bologna</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.atc.bo.it/" target="_blank" title="Apre in un altra finestra" >ATC Bologna</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://www.trenitalia.com/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Trenitalia</a></td>
+<td class="Menu"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" /><a href="http://www.trenitalia.com/" target="_blank" title="Apre in un altra finestra" >Trenitalia</a></td>
 </tr>
 </table></td>
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
