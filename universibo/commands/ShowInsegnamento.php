@@ -107,16 +107,16 @@ testi consigliati');
 		if ($info_didattica->getObiettiviEsameLink() == '' && $info_didattica->getObiettiviEsame() == '' )
 			$obiettivi = 'Obiettivi del corso';
 		elseif ($info_didattica->getObiettiviEsameLink() != '' && $info_didattica->getObiettiviEsame() == '' )
-			$obiettivi = '[uri="'.$info_didattica->getObiettiviEsameLink().'"]Obiettivi del corso[/uri]';
+			$obiettivi = '[url="'.$info_didattica->getObiettiviEsameLink().'"]Obiettivi del corso[/url]';
 		else
-			$obiettivi = '[uri="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#obiettivi"]Obiettivi del corso[/uri]';
+			$obiettivi = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#obiettivi"]Obiettivi del corso[/url]';
 		
 		if ($info_didattica->getProgrammaLink() == '' && $info_didattica->getProgramma() == '' )
 			$programma = 'Programma d\'esame';
 		elseif ($info_didattica->getProgrammaLink() != '' && $info_didattica->getProgramma() == '' )
-			$programma = '[uri="'.$info_didattica->getProgrammaLink().'"]Programma d\'esame[/uri]';
+			$programma = '[url="'.$info_didattica->getProgrammaLink().'"]Programma d\'esame[/url]';
 		else
-			$programma = '[uri="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#programma"]Programma d\'esame[/uri]';
+			$programma = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#programma"]Programma d\'esame[/url]';
 		
 		if ($info_didattica->getTestiConsigliatiLink() == '' && $info_didattica->getTestiConsigliati() == '' )
 		{
@@ -124,31 +124,31 @@ testi consigliati');
 testi consigliati';
 		}
 		elseif ($info_didattica->getTestiConsigliatiLink() != '' && $info_didattica->getTestiConsigliati() == '' )
-			$materiale = '[uri="'.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
-testi consigliati[/uri]';
+			$materiale = '[url="'.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
+testi consigliati[/url]';
 		else
-			$materiale = '[uri="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Materiale didattico e 
-testi consigliati[/uri]';
+			$materiale = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Materiale didattico e 
+testi consigliati[/url]';
 			'';
 
 		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
 			$modalita = 'Modalità d\'esame';
 		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
-			$modalita = '[uri="'.$info_didattica->getModalitaLink().'"]Modalità d\'esame[/uri]';
+			$modalita = '[url="'.$info_didattica->getModalitaLink().'"]Modalità d\'esame[/url]';
 		else
-			$modalita = '[uri="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Modalità d\'esame[/uri]';
+			$modalita = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Modalità d\'esame[/url]';
 		
 		
 		if ($info_didattica->getAppelliLink() == '' && $info_didattica->getAppelli() == '' )
 			$appelli = 'Appelli d\'esame';
 		elseif ($info_didattica->getAppelliLink() != '' && $info_didattica->getAppelli() == '' )
-			$appelli = '[uri="'.$info_didattica->getAppelliLink().'"]Appelli d\'esame[/uri]';
+			$appelli = '[url="'.$info_didattica->getAppelliLink().'"]Appelli d\'esame[/url]';
 		else
-			$appelli = '[uri="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#appelli"]Appelli d\'esame[/uri]';
+			$appelli = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#appelli"]Appelli d\'esame[/url]';
 		
-		$orario = '[uri=""]Orario delle lezioni[/uri]';
+		$orario = '[url=""]Orario delle lezioni[/url]';
 		
-		$forum = '[uri=""]Forum[/uri]';
+		$forum = '[url=""]Forum[/url]';
 		
 		$tpl_tabella[] = $obiettivi;
 		$tpl_tabella[] = $programma;
