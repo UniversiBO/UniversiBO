@@ -447,7 +447,7 @@ class FrontController {
 		
 		if ( $templateInfoNode->attributes['type'] != 'Smarty' ) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
-
+		
 		if ( $templateInfoNode->attributes['debugging'] == 'on' )
 		{ 
 			$this->templateEngine['debugging'] = true;
@@ -681,23 +681,22 @@ class FrontController {
 		static $templateEngine;
 		//var_dump($templateEngine);
 		 
-		if ( defined('SMARTY_DIR') ){
+		if ( defined('TEMPLATE_SINGLETON') ){
 			 return $templateEngine ; 
 		}
 		else
 		{	
-			define('SMARTY_DIR',$this->templateEngine['smarty_dir']);
-			require_once(SMARTY_DIR.'Smarty.class.php');
+			define('TEMPLATE_SINGLETON','on');
+			require_once($this->templateEngine['smarty_dir'].'Smarty.class.php');
 			
 			$templateEngine = new Smarty();
 			
-			$templateEngine->template_dir = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$templateEngine->compile_dir  = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$templateEngine->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$templateEngine->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
-			$templateEngine->debugging    = $this->templateEngine['debugging'];
-			
-			//var_dump($templateEngine->debugging);
+			$templateEngine->template_dir  = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->compile_dir   = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->config_dir    = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->cache_dir     = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$templateEngine->compile_check = true;
+			$templateEngine->debugging     = $this->templateEngine['debugging'];
 			
 			return $templateEngine; 	
 			
