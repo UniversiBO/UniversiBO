@@ -4,7 +4,7 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
- * NewsAdd: si occupa dell'inserimento di una news in un canale
+ * NewsEdit: si occupa della modifica di una news in un canale
  *
  * @package universibo
  * @subpackage commands
@@ -43,7 +43,7 @@ class NewsEdit extends CanaleCommand {
 		$autore = ($user->getIdUser() == $news->getIdUtente());
 		
 		if (!($user->isAdmin() || $referente || ($moderatore && $utore))) 
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare la notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		
 		$param = array('id_notizie'=>array($_GET['id_news']) );
 		$this->executePlugin('ShowNews', $param);
