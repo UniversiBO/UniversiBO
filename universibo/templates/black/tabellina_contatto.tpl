@@ -1,6 +1,6 @@
 {* collaboratore.username collaboratore.intro collaboratore.ruolo collaboratore.email collaboratore.recapito collaboratore.obiettivi collaboratore.foto collaboratore.id_utente *}
 
-<table summary="{$collaboratore.username|escape:"html"}" align="center" width="90%" border="0" cellspacing="0" cellpadding="0" alt="tabella con le informazioni su {$collaboratore.username|escape:"htmlall"}">
+<table summary="{$collaboratore.username|escape:"html"}" align="center" width="90%" border="0" cellspacing="0" cellpadding="0" title="tabella con le informazioni su {$collaboratore.username|escape:"htmlall"}">
 	<tr bgcolor="#000099"> 
 	<td colspan="2">
 		<table summary="" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -18,7 +18,7 @@
 		<td colspan="2"><img src="tpl/black/invisible.gif" width="1" height="2" alt="" /></td>
 	</tr>
 	<tr bgcolor="#000032">
-		<td class="Normal" align="center">&nbsp;<br /><img src="{$contacts_path}{$collaboratore.foto|escape:"htmlall"}" alt="foto di {$collaboratore.username|escape:"htmlall"}" width="60" height="80"><br />&nbsp;</td>
+		<td class="Normal" align="center">&nbsp;<br /><img src="{$contacts_path}{$collaboratore.foto|escape:"htmlall"}" alt="foto di {$collaboratore.username|escape:"htmlall"}" width="60" height="80" /><br />&nbsp;</td>
   		<td class="Normal">&nbsp;<br />{$collaboratore.intro|escape:"html"}<br />&nbsp;</td>
 	</tr>
 	<tr bgcolor="#000099" align="center"> 

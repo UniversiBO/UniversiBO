@@ -10,7 +10,7 @@
 
 <form action="index.php?do=ShowContribute#gotof3" id="f3" method="post">
 <fieldset>
-<legend><p class="NormalC">{$question_PersonalInfo|escape:"htmlall"}</p></legend>
+<legend class="NormalC">{$question_PersonalInfo|escape:"htmlall"}</legend>
 <table width="90%" align="center" class="Normal" summary="">
 <tr>
 <td><label for="f3_nome">{$question_PersonalInfoData[0]|escape:"htmlall"}</label></td>
@@ -37,7 +37,7 @@
  <p>&nbsp;</p>
 
 	<fieldset>
-	<legend><p class="NormalC">{$question_q1|escape:"htmlall"}</p></legend>
+	<legend class="NormalC">{$question_q1|escape:"htmlall"}</legend>
 	 <table width="90%" align="center" class="Normal" summary="">
 	<tr>
 	 <td><input id="f3_tempo_0" type="radio" value="120" name="f3_tempo" {if $f3_tempo==120}checked="checked"{/if} /> <label for="f3_tempo_0">{$question_q1Answers[0]|escape:"htmlall"}</label></td></tr>
@@ -49,7 +49,7 @@
  <p>&nbsp;</p>
 
 	<fieldset>
-	<legend><p class="NormalC">{$question_q2|escape:"htmlall"}</p></legend>
+	<legend class="NormalC">{$question_q2|escape:"htmlall"}</legend>
 		<table width="90%" align="center" class="Normal" summary="">
 		<tr><td><input type="radio" id="f3_internet_0" name="f3_internet" value="1" {if $f3_internet==1}checked="checked"{/if} /> <label for="f3_internet_0">{$question_q2Answers[0]|escape:"htmlall"}</label></td>
 		</tr>
@@ -64,7 +64,7 @@
  <p>&nbsp;</p>
 
 	<fieldset>
-	<legend><p class="NormalC">{$question_q3|escape:"htmlall"}</p></legend>
+	<legend class="NormalC">{$question_q3|escape:"htmlall"}</legend>
 	<table width="90%" align="center" class="Normal" summary="">
 	<tr>
 	 <td><input id="f3_offline" type="checkbox" name="f3_offline" {if $f3_offline==true}checked="checked"{/if} /> <label for="f3_offline">{$question_q3AnswersMulti[0]|escape:"htmlall"}</label></td></tr>
@@ -77,12 +77,12 @@
 	<tr>
 	 <td><input id="f3_grafica" type="checkbox" name="f3_grafica" {if $f3_grafica==true}checked="checked"{/if} /> <label for="f3_grafica">{$question_q3AnswersMulti[4]|escape:"htmlall"}</label></td></tr>
 	<tr>
-	 <td><input id="f3_prog" type="checkbox" name="f3_prog" {if $f3_prog==true}checked="checked"{/if} /> <label for="f3_prog">{$question_q3AnswersMulti[5]|escape:"htmlall"}</td></tr>
+	 <td><input id="f3_prog" type="checkbox" name="f3_prog" {if $f3_prog==true}checked="checked"{/if} /> <label for="f3_prog">{$question_q3AnswersMulti[5]|escape:"htmlall"}</label></td></tr>
 	</table>
 	</fieldset>
  <p>&nbsp;</p>
 
- <label for="f3_altro"><p class="NormalC">{$question_PersonalNotes|escape:"htmlall"} </p></label>
+ <label for="f3_altro" class="NormalC">{$question_PersonalNotes|escape:"htmlall"}</label>
  <table width="90%" align="center" class="Normal" summary="">
 	<tr><td><textarea id="f3_altro" cols="50" rows="5" name="f3_altro">{$f3_altro|escape:"htmlall"}</textarea></td></tr></table>
 
