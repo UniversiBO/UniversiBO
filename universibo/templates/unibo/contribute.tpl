@@ -1,7 +1,6 @@
 {include file=header_index.tpl}
 
 <h2>Collabora</h2>
-<hr />
 {foreach from=$contribute_langIntro item=temp_intro}
    <p>{$temp_intro|escape:"htmlall"|bbcode2html}
     <br /><br /></p>
@@ -15,5 +14,4 @@
 {/foreach}
 <hr />
 {include file=questionario.tpl}
-<hr />
 {include file=footer_index.tpl}

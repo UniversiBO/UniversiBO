@@ -3,7 +3,6 @@
 {include file=avviso_notice.tpl}
 
 <h2><a href="{$common_helpUri|escape:"htmlall"}">Help</a></h2>
-<hr />
 {if $showHelpTopic_index == "true"}
     <a id="index" />
     <div class="elenco">
@@ -18,5 +17,4 @@
 {foreach from=$showHelpTopic_topics item=temp_topic}
 	{include file=Help/topic.tpl showTopic_topic=$temp_topic idsu=$temp_topic.reference}
 {/foreach}
-<hr />
 {include file=footer_index.tpl}

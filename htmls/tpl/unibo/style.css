@@ -49,8 +49,23 @@ form fieldset
 {
 	margin: 12px 0;
 }
+form fieldset p
+{
+	clear: both;
+}
 
-
+form fieldset .casella
+{
+	float: right;
+	text-align: left;
+}
+form fieldset label
+{
+	float: left;
+	width: 20%;
+	text-align: right;
+	display: inline;
+}
 /**
  *	Tips per accessibilità
  */
@@ -518,3 +533,38 @@ td.evidenzia{
 	text-align: justify;
 }
 
+.tbl2col
+{
+	font-size: 12px;
+	margin: 2em 0;
+	display: block;
+	border-top: solid 1px #999;
+	border-bottom: solid 1px #999;
+	text-align: left;
+}
+
+.tbl2col p
+{
+	border-right: solid 1px #999;
+	border-bottom: solid 1px #999;	
+	width: 50%;
+}
+.tbl2col p.lastCol, .tbl2col p.lastColRow
+{
+	border-right: 0 none;
+	display: block;
+}
+.tbl2col p.lastRow, .tbl2col p.lastColRow
+{
+	border-bottom: 0 none;
+}
+
+.titolo
+{
+	padding: 0;
+	margin: 40px 0 !important;
+}
+.titoloPagina p, .titoloPagina a, .titoloPagina h1, .titoloPagina h2, .titoloPagina h4
+{ 
+	text-align: center !important;
+}

@@ -2,12 +2,12 @@
 
 {include file=avviso_notice.tpl}
 
-
-<h2>{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}<h2>
-<p><a href="{$fac_facLink|escape:"htmlall"}" target="_blank">Apri il sito ufficiale della facoltá</a></p>
-<p><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
-<p>{$fac_langList|escape:"htmlall"}</p>
-<hr />
+<div class="titoloPagina">
+	<h2>{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}<h2>
+	<p><a href="{$fac_facLink|escape:"htmlall"}" target="_blank">Apri il sito ufficiale della facoltá</a></p>
+	<p><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+</div>
+<h2>{$fac_langList|escape:"htmlall"}</h2>
 {foreach from=$fac_list item=temp_fac}
 <div class="elenco">
 	

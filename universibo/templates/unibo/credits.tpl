@@ -18,5 +18,4 @@
 	<img src="img/credits/phpbb.png" width="88" height="31" alt="PHPBB Logo" vspace="2" /></span></p>
 <p><span><img src="img/credits/valid-html401" width="88" height="31" alt="Valid HTML 4.01 Logo" vspace="2" />{$showCredits_langW3c|escape:"htmlall"|bbcode2html|nl2br}</span></p>
 <br />
-<hr />
 {include file=footer_index.tpl}

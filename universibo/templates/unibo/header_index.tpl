@@ -57,13 +57,12 @@
 			<ul class="lastElemento">
 				<li>Informazioni
 					<ul>
-						<li>-&nbsp;<a href="{$common_helpUri}" >{$common_help}</a></li>
-						<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_helpByTopic}</a></li>
-						<li>-&nbsp;<a href="{$common_rulesUri}" >{$common_rules}</a></li>
-						<li>-&nbsp;<a href="{$common_contactsUri}" >{$common_contacts}</a></li>
-						<li>-&nbsp;<a href="{$common_contributeUri}" >{$common_contribute}</a></li>
-						<li>-&nbsp;<a href="{$common_manifestoUri}" >{$common_manifesto}</a></li>
-						<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits}</a></li>
+						<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_help|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$common_rulesUri}" >{$common_rules|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$common_contactsUri}" >{$common_contacts|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$common_contributeUri}" >{$common_contribute|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$common_manifestoUri}" >{$common_manifesto|lower|capitalize|escape:"htmlall"}</a></li>
+						<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits|lower|capitalize|escape:"htmlall"}</a></li>
 					</ul>
 				</li>
 			</ul>
