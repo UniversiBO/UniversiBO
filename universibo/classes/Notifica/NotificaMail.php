@@ -40,7 +40,7 @@ class NotificaMail extends NotificaItem
 		$mail->AddAddress($this->getClearAddresses());
 		$mail->AddAddress($this->getIndirizzo());
 
-		$mail->Subject =$this->getTitolo();
+        $mail->Subject = str_replace( "\n"," - ",  '[UniversiBO] '.$this->getTitolo());
 		$mail->Body = $this->getMessaggio();
 		
 		/**
