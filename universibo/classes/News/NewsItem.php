@@ -566,7 +566,7 @@ class NewsItem {
 					$db->quote($flag_urgente).' , '.
 					$db->quote($this->getUltimaModifica()).' )'; 
 		$res = $db->query($query);
-		
+		//var_dump($query);
 		if (DB::isError($res)){
 			$db->rollback();
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));

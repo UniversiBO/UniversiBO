@@ -46,7 +46,7 @@ class ShowNewsLatest extends PluginCommand {
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
 		$user_ruoli =& $user->getRuoli();
 
-		
+		$personalizza_not_admin = false;
 
 		$template->assign('showNewsLatest_addNewsFlag', 'false');
 		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
@@ -57,6 +57,7 @@ class ShowNewsLatest extends PluginCommand {
 			{
 				$ruolo =& $user_ruoli[$id_canale];
 				
+				$personalizza_not_admin = true;
 				$referente      = $ruolo->isReferente();
 				$moderatore     = $ruolo->isModeratore();
 				$ultimo_accesso = $ruolo->getUltimoAccesso();
@@ -76,7 +77,7 @@ class ShowNewsLatest extends PluginCommand {
 			$moderatore     = false;
 			$ultimo_accesso = $user->getUltimoLogin();
 		}
-		
+		//var_dump($moderatore);
 		$canale_news = $this->getNumNewsCanale($id_canale);
 
 		$template->assign('showNewsLatest_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
@@ -114,13 +115,13 @@ class ShowNewsLatest extends PluginCommand {
 			for ($i = 0; $i < $ret_news; $i++)
 			{
 				$news =& $elenco_news[$i];
-				$this_moderatore = ($moderatore && $news->getIdUtente()==$user->getIdUser());
+				$this_moderatore = ($user->isAdmin() || ($moderatore && $news->getIdUtente()==$user->getIdUser()));
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();
 				$elenco_news_tpl[$i]['notizia']      = $news->getNotizia();
 				$elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $news->getDataIns());
 				//echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
-				$elenco_news_tpl[$i]['nuova']        = ($personalizza==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
+				$elenco_news_tpl[$i]['nuova']        = ($personalizza_not_admin==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
 				$elenco_news_tpl[$i]['autore']       = $news->getUsername();
 				$elenco_news_tpl[$i]['autore_link']  = 'ShowUser&id_utente='.$news->getIdUtente();
 				$elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();

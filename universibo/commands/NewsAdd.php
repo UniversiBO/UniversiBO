@@ -38,6 +38,8 @@ class NewsAdd extends CanaleCommand {
 		$frontcontroller = & $this->getFrontController();
 		$template = & $frontcontroller->getTemplateEngine();
 
+		$template->assign('NewsAdd_back', $canale->showMe());
+		
 		$krono = & $frontcontroller->getKrono();
 
 		// valori default form
@@ -302,7 +304,7 @@ class NewsAdd extends CanaleCommand {
 		$template->assign('f7_urgente', $f7_urgente);
 		$template->assign('f7_scadenza', $f7_scadenza);
 		$template->assign('f7_canale', $f7_canale);
-		$template->assign('NewsAdd_back', $canale->showMe());
+
 
 		return 'default';
 

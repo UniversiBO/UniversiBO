@@ -6,7 +6,7 @@
 {include file=avviso_notice.tpl}
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi una nuova notizia<br />&nbsp;</p></td></tr>
-<tr><td>
+<tr><td align="center">
 <form method="post">
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
 <tr>
@@ -90,13 +90,11 @@
 <fieldset>
 <legend><span class="Normal">La notizia verr&agrave; inserita negli argomenti:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
-	<tr class="News"><td>
 	{foreach name=canali item=item from=$f7_canale}
-	<tr class="Normal" valign="top">
-	<td>&nbsp;&nbsp;<input type="checkbox" id="f7_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f7_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f7_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<tr class="Normal" valign="center" align="center">
+	<td align="center">&nbsp;&nbsp;<input type="checkbox" id="f7_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f7_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f7_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
-	</td></tr>
 	</table>
 </fieldset>
 </tr></td>

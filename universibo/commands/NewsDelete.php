@@ -22,13 +22,16 @@ class NewsDelete extends CanaleCommand {
 	function execute() {
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
+
 		
+				
 		$user =& $this->getSessionUser();
 		$canale =& $this->getRequestCanale();
 		
 		$referente = false;
 		$moderatore = false;
 		
+		$template->assign('NewsDelete_back', $canale->showMe());
 				
 		$user_ruoli = $user->getRuoli();
 		$id_canale = $canale->getIdCanale();
@@ -128,8 +131,7 @@ class NewsDelete extends CanaleCommand {
 			foreach ($_POST['f9_canale'] as $key => $value)
 				{
 					$news->removeCanale($key);
-					$canale = Canale::retrieveCanale($key);
-					$canale->setUltimaModifica(time(), true);
+					$canale = Canale::retrieveCanale($key);					
 				}
 			
 			$news->deleteNewsItem();
@@ -147,7 +149,7 @@ class NewsDelete extends CanaleCommand {
 		
 		$template->assign('f9_langAction', "Elimina la notizia dai seguenti canali:");
 		$template->assign('f9_canale', $f9_canale);
-		$template->assign('NewsDelete_back', $canale->showMe());
+
 		
 		return 'default';
 	}

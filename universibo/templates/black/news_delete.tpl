@@ -10,7 +10,7 @@
 {include file=avviso_notice.tpl}
 </td></tr><tr><td> 
 {include file=News/show_news.tpl}
-</td></tr><tr><td> 
+</td></tr><tr><td align="center"> 
 <form method="post">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
@@ -19,8 +19,8 @@
 <legend><span class="Normal">{$f9_langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f9_canale}
-	<tr class="Normal" valign="top">
-	<td>&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<tr class="Normal" valign="center">
+	<td>&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
 	</table>
