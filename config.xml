@@ -5,7 +5,7 @@
 	<rootFolder>../framework/</rootFolder>
 
 	<!--Here root URL is virtual to the Web root****-->
-	<rootURL>/EclipseProject/progettazione/universibo2/htmls/</rootURL>
+	<rootURL>universibo2/htmls/</rootURL>
 
 	<defaultCommand>TestTemplate</defaultCommand>
 	
@@ -32,26 +32,6 @@
 		<ShowRules class="ShowRules">
 			 <template type="default">example1_a.htm</template>
 		</ShowRules>
-		<DisplayRightFrame class="Example1">
-			 <template type="default">example1_b.htm</template>
-		</DisplayRightFrame>
-		<StartExample2 class="Example2">
-			 <template type="default">example2.htm</template>
-		</StartExample2>
-		<Register class="Example2_Register">
-			 <template type="default">example2_a.htm</template>
-			 <template type="failure">example2.htm</template>
-		</Register>
-		<StartExample3 class="Example3">
-			 <template type="default">example3.htm</template>
-		</StartExample3>
-		<StartExample4 class="Example4">
-			 <template type="default">example4.htm</template>
-		</StartExample4>
-		<StartExample5 class="Example5">
-			 <template type="default">example5.htm</template>
-		</StartExample5>
-		<RunSessionExample class="SessionExample" />  -->
 	</commands>
 	<dbInfo type="DB">
 	    <connection identifier="main">pgsql://my_username:my_password@host/my_dbname</connection>
