@@ -620,7 +620,7 @@ class User {
 		
 			$rows = $res->numRows();
 			if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-			if( $rows = 0) return false;
+			if( $rows == 0) return false;
 
 			$row = $res->fetchRow();
 			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], $row[4], NULL);
@@ -651,7 +651,7 @@ class User {
 	
 		$rows = $res->numRows();
 		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 
 		$row = $res->fetchRow();
 		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[3], $row[4], NULL);
