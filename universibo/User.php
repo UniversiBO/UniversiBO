@@ -139,17 +139,17 @@ class User {
 	 */
 	function usernameExists( $username )
 	{
-/*		global $pg_conn;
+		$db =& FrontController::getDbConnection('main');
 		
-		$query='SELECT * FROM utente WHERE username = \''.$username.'\'';
-
-		$dati = pg_exec($pg_conn,$query) or errore(pg_errormessage($pg_conn),__FILE__,__LINE__);
-
-		$rows =  pg_numrows($dati);
+		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		
 		if( $rows == 0) return false;
 		elseif( $rows == 1) return true;
-		else errore('Errore generale database utenti: username non unico',__FILE__,__LINE__);
-*/
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 
 
@@ -164,7 +164,7 @@ class User {
 	function User($id_utente, $groups, $username=NULL, $email=NULL, $ADUsername=NULL, $MD5=NULL, $ultimoLogin=NULL, $bookmark=NULL)
 	{
 		$this->id_utente   = $id_utente;
-		$this->groups       = $groups;
+		$this->groups      = $groups;
 		$this->username    = $username;
 		$this->email       = $email;
 		$this->ADUsername  = $ADUsername;
@@ -211,6 +211,17 @@ class User {
 		return $this->email;
 		if ( $updateDB == true )
 		{
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET email = '.$db->quote($email).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			
 		}
 		return true;

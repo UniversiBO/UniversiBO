@@ -524,11 +524,14 @@ class FrontController {
 			if( !array_key_exists($identifier, $connectionList) )
 			{
 				$connectionList[$identifier] = &DB::connect( $dsnList[$identifier] );
+				if (DB::isError($connectionList[$identifier]))
+ 					Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($connectionList[$identifier]),'file'=>__FILE__,'line'=>__LINE__)); 
+ 
 			}
 			return $connectionList[$identifier]; 	
 			
 		}
-    	else return false;  //what are you tring do do... put error here?
+    	else return false;  //wrong use of interface... put error here?
 
 	}
 
