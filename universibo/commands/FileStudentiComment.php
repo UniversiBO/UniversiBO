@@ -42,12 +42,14 @@ class FileStudentiComment extends UniversiboCommand {
 		//Controllo che non esista giá un commento da parte di questo utente
 		
 		$id_file = $_GET['id_file'];
-		$esiste_commento = CommentoItem::esisteCommento($id_file,$user->getIdUser());
-		if($esiste_commento!==false)
+		$id_commento = CommentoItem::esisteCommento($id_file,$user->getIdUser());
+		if($id_commento!=NULL)
 		{   $canali = $file->getIdCanali();
 			
-			$template->assign('FileStudentiComment_ris','Esiste giá un tuo commento');
+			$template->assign('FileStudentiComment_ris','Esiste giá un tuo commento a questo file.');
 			$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali[0]);
+			$template->assign('FilesStudentiComment_modifica','index.php?do=FileStudentiCommentEdit&id_commento='.$id_commento.'&id_canale='.$canali[0]);
+			$template->assign('esiste_CommentoItem','true');
 			return 'success';
 		}
 		
