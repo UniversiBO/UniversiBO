@@ -533,7 +533,7 @@ class Canale {
 		
 		if (!array_key_exists($tipo_canale, $dispatch_array))
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff - '.var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_CRITICO,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$class_name = $dispatch_array[$tipo_canale];
