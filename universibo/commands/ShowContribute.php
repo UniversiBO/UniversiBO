@@ -44,7 +44,7 @@ class ShowContribute extends UniversiboCommand
         [*]potreste aiutarci con l\'attività di [b]moderazione[/b] e 
           proporre la vostra candidatura al titolo di moderatore;
         [*]segnalateci ogni errore o problema che riscontrate scrivendo a 
-		[url=mailto:staff_universibo@calvin.ing.unibo.it]staff_universibo@calvin.ing.unibo.it[/url]
+        [url=mailto:'.$frontcontroller->getAppSetting('infoEmail').']'.$frontcontroller->getAppSetting('infoEmail').'[/url]
 		oppure preferibilmente scrivendo sul forum dedicato.
         [*]oppure potreste aiutaci nella [b]progettazione[/b]: scrivendo 
           contenuti, scrivendo il codice che genera le pagine, aiutandoci nell\'amministrazione 
