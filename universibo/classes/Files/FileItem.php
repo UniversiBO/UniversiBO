@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 
 define('FILE_ELIMINATO', 'S');
@@ -123,18 +123,23 @@ class FileItem {
 	 * @private
 	 */
 	var $tipo_desc = '';
+
+	
 	
 	
 	/**
 	 * @private
 	 */
 	var $tipo_icona = '';
+
 	
 		
 	/**
 	 * @private
 	 */
 	var $tipo_info = '';
+
+	///////////////////////////////////////////
 	
 	
 	/**
@@ -146,8 +151,6 @@ class FileItem {
 	 * @private
 	 */
 	var $elencoCanali = NULL;
-
-
 
 	/**
 	 * Crea un oggetto FileItem con i parametri passati
@@ -162,10 +165,8 @@ class FileItem {
 	 * @return FileItem
 	 */
 
-	function FileItem($id_file, $permessi_download, $permessi_visualizza, $id_utente, $titolo,
-					 $descrizione, $data_inserimento, $data_modifica, $dimensione, $download, 
-					 $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password, $username, 
-					 $categoria_desc, $tipo_desc, $tipo_icona, $tipo_info  /*, $eliminato*/ ) {
+	function FileItem($id_file, $permessi_download, $permessi_visualizza, $id_utente, $titolo, $descrizione, $data_inserimento, $data_modifica, $dimensione, $download, $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password, $username, $categoria_desc, $tipo_desc, $tipo_icona, $tipo_info /*, $eliminato*/
+	) {
 
 		$this->id_file = $id_file;
 		$this->permessi_download = $permessi_download;
@@ -358,7 +359,6 @@ class FileItem {
 	 *
 	 * @return string 
 	 */
-
 	function getIdCategoria() {
 		return $this->id_categoria;
 	}
@@ -383,6 +383,7 @@ class FileItem {
 		return $this->download;
 	}	
 	
+
 	/**
 	 * Imposta la descrizione completa del file
 	 *
@@ -428,7 +429,6 @@ class FileItem {
 	 *
 	 * @param int $data_inserimento timestamp del giorno di caricamento del file
 	 */
-
 	function setDataInserimento($data_inserimento) {
 		$this->data_inserimento = $data_inserimento;
 	}
@@ -612,7 +612,12 @@ class FileItem {
 		else
 			$values = implode(',', $id_notizie);
 
-		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo, descrizione, data_inserimento, data_modifica, dimensione, download, nome_file, id_categoria, id_tipo_file, hash_file, password, eliminato, username FROM file A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+						 descrizione, data_inserimento, data_modifica, dimensione, download,
+						 nome_file, A.id_categoria, A.id_tipo_file, hash_file, password,
+						 username, categoria_desc, tipo_desc, tipo_icona, tipo_info
+						 FROM file A, utente B, file_categoria C, file_tipo D 
+						 WHERE A.id_utente = B.id_utente AND A.id_file_categoria = C.id_file_categoria AND A.id_file_tipo = D.id_file_tipo AND A.id_file IN ('.$values.') AND eliminata!='.$db->quote(FILE_ELIMINATO);
 		//var_dump($query);
 		$res = & $db->query($query);
 
@@ -626,7 +631,7 @@ class FileItem {
 		$files_list = array ();
 
 		while ($res->fetchInto($row)) {
-			$files_list[] = & new FileItem($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $row[15], $row[16], $row[17]);
+			$files_list[] = & new FileItem($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
 		}
 
 		$res->free();
@@ -734,12 +739,28 @@ class FileItem {
 
 		ignore_user_abort(1);
 		$db->autoCommit(false);
-		$next_id = $db->nextID('news_id_news');
+		$next_id = $db->nextID('file_id_file');
 		$return = true;
-		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
-		$eliminata = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA;
-		$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
-		$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.'( '.$next_id.' , '.$db->quote($this->getTitolo()).' , '.$db->quote($this->getDataIns()).' , '.$scadenza.' , '.$db->quote($this->getNotizia()).' , '.$db->quote($this->getIdUtente()).' , '.$db->quote($eliminata).' , '.$db->quote($flag_urgente).' , '.$db->quote($this->getUltimaModifica()).' )';
+		$eliminata = FILE_NOT_ELIMINATO;
+		$query = 'INSERT INTO file (id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+						 descrizione, data_inserimento, data_modifica, dimensione, download,
+						 nome_file, A.id_categoria, A.id_tipo_file, hash_file, password) VALUES '.
+						 '( '.$next_id.' , '.
+						 $db->quote($this->getPermessiDownload()).' , '.
+						 $db->quote($this->getPermessiVisualizza()).' , '.
+						 $db->quote($this->getIdUtente()).' , '.
+						 $db->quote($this->getTitolo()).' , '.
+						 $db->quote($this->getDescrizione()).' , '.
+						 $db->quote($this->getDataInserimento()).' , '.
+						 $db->quote($this->getDataModifica()).' , '.
+						 $db->quote($this->getDimensione()).' , '.
+						 $db->quote($this->getDownload()).' , '.
+						 $db->quote($this->getNomeFile()).' , '.
+						 $db->quote($this->getIdCategoria()).' , '.
+						 $db->quote($this->getIdTipoFile()).' , '.
+						 $db->quote($this->getHashFile()).' , '.
+						 $db->quote($this->getPassword()).' )';
+						 
 		$res = $db->query($query);
 
 		if (DB :: isError($res)) {
@@ -747,7 +768,7 @@ class FileItem {
 			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
-		$this->setIdNotizia($next_id);
+		$this->setIdFile($next_id);
 
 		$db->commit();
 		$db->autoCommit(true);
@@ -755,43 +776,57 @@ class FileItem {
 	}
 
 	/**
-	 * Aggiorna le modifiche alla notizia nel DB
+	 * Aggiorna le modifiche al file nel DB
 	 *
-	 * @return	 boolean true se avvenua con successo, altrimenti Error object
+	 * @return	boolean true se avvenua con successo, altrimenti lancia Error Critical
 	 */
-	function updateNewsItem() {
-		$db = & FrontController :: getDbConnection('main');
-
+	function updateFileItem() 
+	{
+		$db = & FrontController::getDbConnection('main');
+		
 		ignore_user_abort(1);
 		$db->autoCommit(false);
 		$return = true;
-		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
-		$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
-		$deleted = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA;
-		$query = 'UPDATE news SET titolo = '.$db->quote($this->getTitolo()).' , data_inserimento = '.$db->quote($this->getDataIns()).' , data_scadenza = '.$scadenza.' , notizia = '.$db->quote($this->getNotizia()).' , id_utente = '.$db->quote($this->getIdUtente()).' , eliminata = '.$db->quote($deleted).' , flag_urgente = '.$db->quote($flag_urgente).' , data_modifica = '.$db->quote($this->getUltimaModifica()).' WHERE id_news = '.$db->quote($this->getIdNotizia());
+		//$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
+		//$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
+		//$deleted = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA;
+		$query = 'UPDATE file SET id_file = '.$db->quote($this->getIdFile()).' , permessi_download = '.$db->quote($this->getPermessiDownload()).' , permessi_visualizza = '.$db->quote($this->getPermessiVisualizza()).' , id_utente = '.$db->quote($this->getIdUtente()).' , titolo = '.$db->quote($this->getTitolo()).' , descrizione = '.$db->quote($this->getDescrizione()).' , data_inserimento = '.$db->quote($this->getDataInserimento()).' , data_modifica = '.$db->quote($this->getDataModifica()).' , dimensione = '.$db->quote($this->getDimensione()).' , download = '.$db->quote($this->getDownload()).' , nome_file = '.$db->quote($this->getNomeFile()).' , id_categoria = '.$db->quote($this->getIdCategoria()).' , id_tipo_file = '.$db->quote($this->getIdTipoFile()).' , hash_file = '.$db->quote($this->getHashFile()).' , password = '.$db->quote($this->getPassword()).' WHERE id_file = '.$db->quote($this->getIdFile());
 		//echo $query;								 
 		$res = $db->query($query);
 		//var_dump($query);
 		if (DB :: isError($res)) {
 			$db->rollback();
 			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			$return = false;
 		}
-
+		
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		return $return;
 	}
 
+	
 	/**
-	 * La funzione deleteNewsItem controlla se la notizia é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 * controlla se il file é stato eliminato da tutti i canali in cui era presente, e aggiorna il db
+	 *
+	 * @return	 boolean true se avvenua con successo, altrimenti false
 	 */
-
-	function deleteNewsItem() {
+	function deleteFileItem() 
+	{
 		$lista_canali = & $this->getIdCanali();
 		if (count($lista_canali) == 0) {
-			$this->eliminata = true;
-			$this->updateNewsItem();
+			$query = 'UPDATE file SET eliminato  = '.$db->quote(FILE_ELIMINATO).' WHERE id_file = '.$db->quote($this->getIdFile());
+			//echo $query;								 
+			$res = $db->query($query);
+			//var_dump($query);
+			if (DB :: isError($res)) {
+				$db->rollback();
+				Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			}
+			return true;
 		}
+		return false;
 	}
 
 }
