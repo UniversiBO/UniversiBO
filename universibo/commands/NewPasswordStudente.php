@@ -5,9 +5,9 @@ require_once ('ForumApi'.PHP_EXTENSION);
 
 
 /**
- * Login is an extension of UniversiboCommand class.
+ * NewPasswordStudente is an extension of UniversiboCommand class.
  *
- * Manages Users Login/Logout actions
+ * Si occupa della generazione di una nuova password per gli utenti che l'hanno smarrita
  *
  * @package universibo
  * @subpackage commands
@@ -27,16 +27,13 @@ class NewPasswordStudente extends UniversiboCommand {
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione può essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
-		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
-		$f1_password = '';
-		
 		$template->assign('newPasswordStudente_langNewPasswordAlt','Recupera Password');
 		$template->assign('newPasswordStudente_langMail','e-mail di ateneo:');
 		$template->assign('newPasswordStudente_langPassword','Password:');
 		$template->assign('newPasswordStudente_langUsername','Username:');
 		$template->assign('newPasswordStudente_domain','@studio.unibo.it');
 		$template->assign('newPasswordStudente_langInfoNewPassword','Gli studenti che hanno smarrito la password di accesso ad UniversiBO possono ottenerne una nuova, ricevendola all\'e-mail di ateneo utilizzata al momento dell\'iscrizione.'."\n".
-							'Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore successive[/b] all\'iscrizione al portale [url]http://www.unibo.it[/url] e potete accedervi tramite il sito [url]https://posta.studio.unibo.it[/url], vi preghiamo di apettare che la mail di ateneo sia attiva prima di iscrivervi.');
+							'Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore successive[/b] all\'iscrizione al portale [url]http://www.unibo.it[/url] e potete accedervi tramite il sito [url]https://posta.studio.unibo.it[/url], vi preghiamo di apettare che la mail di ateneo sia attiva prima di richiedere una nuova password.');
 		$template->assign('newPasswordStudente_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
 							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
 
@@ -114,12 +111,6 @@ class NewPasswordStudente extends UniversiboCommand {
 			
 		}
 
-		// riassegna valori form
-		$template->assign('f5_username',	$f5_username);
-		$template->assign('f5_password',	'');
-		$template->assign('f5_ad_user',		$f5_ad_user);
-		$template->assign('f5_submit',		'Registra');
-
 		if ( $f5_accept == true )
 		{
 		
@@ -157,7 +148,7 @@ class NewPasswordStudente extends UniversiboCommand {
 
 			$mail->Subject = "Registrazione UniversiBO";
 			$mail->Body = "Ciao \"".$user->getUsername()."\"\nE' stata richiesta la generazione di una nuova password per permetterti l'accesso ad UniversiBO\n\n".
-				"Per accedere al sito utilizza l'indirizzo https://www.universibo.unibo.it\n\n".
+				"Per accedere al sito utilizza l'indirizzo '. $fc->getAppSetting('rootUrl') .'\n\n".
 				"Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
 				"Username: ".$user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n".
@@ -165,24 +156,31 @@ class NewPasswordStudente extends UniversiboCommand {
 				"Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
 			
 			
-			$msg = "L'iscrizione è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
+			$msg = "La nuova password è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
 				"Le informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono:\n".
 				"Username: ".$new_user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n";
 			
-			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+			//if(!$mail->Send()){ Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
+			$template->assign('newPasswordStudente_thanks',"Una nuova password è stata generata, la tua richiesta è stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo\n".
+								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
 			$randomPassword = '';
 			$mail->Body = '';
 			$msg = '';
 			
-			return 'new_password_success';
+			return 'success';
 			
 		}
 		
+		// riassegna valori form
+		$template->assign('f5_username',	$f5_username);
+		$template->assign('f5_password',	'');
+		$template->assign('f5_ad_user',		$f5_ad_user);
+		$template->assign('f5_submit',		'Invia');
+
 		return 'default';
 		
 	}

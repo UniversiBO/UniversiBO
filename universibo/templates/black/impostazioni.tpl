@@ -9,10 +9,10 @@
 
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td align="center" class="Normal">
-&nbsp;<br /><img src="tpl/black/mypage_30.gif" width="138" height="39" alt="{$mypage_langTitleAlt|escape:"htmlall"}" />
+&nbsp;<br /><img src="tpl/black/mypage_30.gif" width="138" height="39" alt="{$showSettings_langTitleAlt|escape:"htmlall"}" />
 </td></tr>
 <tr><td class="Normal">
-{$mypage_langIntro|escape:"htmlall"|bbcode2html}&nbsp;<br />&nbsp;<br />
+{$showSettings_langIntro|escape:"htmlall"|bbcode2html}&nbsp;<br />&nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr bgcolor="#000099"> 
  <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
@@ -25,7 +25,7 @@
  <tr><td>
   <img src="tpl/black/preferences_18.gif" width="131" height="22" alt="Preferences" /><br />
 	&nbsp;<br />
-  {include file=tabellina_due_colonne.tpl arrayToShow=$mypage_langPreferences} 
+  {include file=tabellina_due_colonne.tpl arrayToShow=$showSettings_langPreferences} 
  </td></tr>
  </table> 
  &nbsp;<br />
@@ -38,12 +38,12 @@
  </table>
  &nbsp;<br />
  &nbsp;<br />
-{if $mypage_showAdminPanel == "true"} 
+{if $showSettings_showAdminPanel == "true"} 
  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
  <tr><td>
   <img src="img/admin_18.gif" width="76" height="22" alt="Admin" /><br />
 	&nbsp;<br />
-  {include file=tabellina_due_colonne.tpl arrayToShow=$mypage_langAdmin}
+  {include file=tabellina_due_colonne.tpl arrayToShow=$showSettings_langAdmin}
   
  </td></tr>
  </table> 

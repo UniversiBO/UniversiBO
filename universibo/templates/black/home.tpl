@@ -5,7 +5,7 @@
 {/if}
 
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal"><br /> 
+<tr><td class="Normal">
 <p class="Titolo">{$home_langWelcome|escape:"htmlall"}</p>
 <p>{$home_langWhatIs|escape:"htmlall"}</p>
 <p>{$home_langMission|escape:"htmlall"}</p>
@@ -22,7 +22,7 @@
 &nbsp;<br />
 
 
-{include file=News/latest_news.tpl}
+{include file=News/latest_news.tpl titleSize="big"}
 
 
 </td></tr></table>

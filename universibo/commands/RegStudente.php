@@ -5,9 +5,9 @@ require_once ('ForumApi'.PHP_EXTENSION);
 
 
 /**
- * Login is an extension of UniversiboCommand class.
+ * RegStudente is an extension of UniversiboCommand class.
  *
- * Manages Users Login/Logout actions
+ * Si occupa della registrazione degli studenti
  *
  * @package universibo
  * @subpackage commands
@@ -16,7 +16,8 @@ require_once ('ForumApi'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class RegStudente extends UniversiboCommand {
+class RegStudente extends UniversiboCommand 
+{
 	function execute()
 	{
 		$fc =& $this->getFrontController();
@@ -27,9 +28,6 @@ class RegStudente extends UniversiboCommand {
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione può essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
-		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
-		$f1_password = '';
-		
 		$template->assign('regStudente_langRegAlt','Registrazione');
 		$template->assign('regStudente_langMail','e-mail di ateneo:');
 		$template->assign('regStudente_langPassword','Password:');
@@ -57,6 +55,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 		
 		if ( array_key_exists('f4_submit', $_POST)  )
 		{
+			$f4_accept = true;
 			//var_dump($_POST);
 			if ( !array_key_exists('f4_privacy', $_POST) ||
 				 !array_key_exists('f4_regolamento', $_POST) ||
@@ -129,17 +128,8 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 			
 		}
 
-		// riassegna valori form
-		$template->assign('f4_regolamento',	file_get_contents($fc->getAppSetting('regolamento')));
-		$template->assign('f4_privacy',		file_get_contents($fc->getAppSetting('informativaPrivacy')));
-		$template->assign('f4_username',	$f4_username);
-		$template->assign('f4_password',	'');
-		$template->assign('f4_ad_user',		$f4_ad_user);
-		$template->assign('f4_submit',		'Registra');
-
 		if ( $f4_accept == true )
 		{
-			require_once('ForumApi');
 			
 			//controllo active directory
 			$adl_host = $fc->getAppSetting('adLoginHost');
@@ -167,13 +157,13 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 
 			$mail->Subject = "Registrazione UniversiBO";
 			$mail->Body = "Benvenuto \"".$new_user->getUsername()."\"!!\nFai ora parte di UniversiBO, la community degli studenti dell'universita' di Bologna!\n\n".
-			     "Per accedere al sito utilizza l'indirizzo https://www.universibo.unibo.it\n\n".
+			     "Per accedere al sito utilizza l'indirizzo '.$fc->getAppSetting('rootUrl').'\n\n".
 				 "Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
 				 "Username: ".$new_user->getUsername()."\n".
 				 "Password: ".$randomPassword."\n\n".
 				 "Questa password e' stata generata in modo casuale: sul sito  e' disponibile nella pagina delle tue impostazioni personali la funzionalita' per poterla cambiare a tuo piacimento\n\n".
 		 		 "Dopo aver fatto il login puoi, modificare il tuo profilo personale per l'inoltro delle News dei tuoi esami preferiti in e-mail\n".
-		 		 "Se desideri collaborare al progetto UniversiBO compila il questionario all'indirizzo https://www.universibo.unibo.it/index.php?do=ShowContribute \n\n".
+		 		 "Se desideri collaborare al progetto UniversiBO compila il questionario all'indirizzo '.$fc->getAppSetting('rootUrl').'/index.php?do=ShowContribute \n\n".
 				 "Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
 			
 			$msg = "L'iscrizione è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
@@ -181,22 +171,32 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 				 "Username: ".$new_user->getUsername()."\n".
 				 "Password: ".$randomPassword."\n\n";
 			
-			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+			if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
+			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione è stata registrata con successo.\nLe informazioni per permetterti l'accesso ai servizi offerti dal portale sono state inviate al tuo indirizzo e-mail di ateneo\n".
+									'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
 			$randomPassword = '';
 			$mail->Body = '';
 			$msg = '';
 			
-			return 'reg_success';
+			return 'success';
 			
 		}
 		
+		// riassegna valori form
+		$template->assign('f4_regolamento',	file_get_contents($fc->getAppSetting('regolamento')));
+		$template->assign('f4_privacy',		file_get_contents($fc->getAppSetting('informativaPrivacy')));
+		$template->assign('f4_username',	$f4_username);
+		$template->assign('f4_password',	'');
+		$template->assign('f4_ad_user',		$f4_ad_user);
+		$template->assign('f4_submit',		'Registra');
+
 		return 'default';
 		
 	}
+	
 }
 
 ?>

@@ -77,10 +77,16 @@
 		</ShowSettings>
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>
+			<response type="template" name="success">reg_studente_success.tpl</response>
 		</RegStudente>
 		<NewPasswordStudente class="NewPasswordStudente">
 			<response type="template" name="default">new_password_studente.tpl</response>
+			<response type="template" name="success">new_password_studente_success.tpl</response>
 		</NewPasswordStudente>
+		<ChangePassword class="ChangePassword">
+			<response type="template" name="default">change_password.tpl</response>
+			<response type="template" name="success">change_password_success.tpl</response>
+		</ChangePassword>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>
@@ -129,6 +135,7 @@
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<files>../html/file-universibo</files>
+		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
         <alertMessage>Messaggio di avviso importante ed urgente</alertMessage>

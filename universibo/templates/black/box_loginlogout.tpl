@@ -22,19 +22,21 @@
 </tr>
 <tr>
 <td class="Menu">&nbsp;<br />
-
-<script type="text/javascript" language="JavaScript">
 <!--
+<script type="text/javascript" language="JavaScript">
 document.write("<a href=\"javascript:universiboPopup('index.php?do=RegStudente&amp;pageType=popup');\" ><font color=\"#FF0000\">Registrazione Studenti<\/font><\/a><br />");
--->
 </script>
-<noscript><a href="index.php?do=RegStudente&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></noscript>
-<script type="text/javascript" language="JavaScript">
+<noscript>
+-->
+<a href="index.php?do=RegStudente"><font color="#FF0000">Registrazione studenti</font></a><br />
 <!--
+</noscript>
+<script type="text/javascript" language="JavaScript">
 document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordStudente&amp;pageType=popup');\">Password smarrita...<\/a><br \/>");
--->
 </script>
-<noscript><a href="index.php?do=NewPasswordStudente&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></noscript>
+<noscript>-->
+<a href="index.php?do=NewPasswordStudente">Password smarrita</a><br />
+<!--</noscript>-->
 </td></tr>
 </table></form>
 {else}

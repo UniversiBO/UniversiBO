@@ -1,8 +1,11 @@
 <table width="90%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr align="center" ><td><a name="news"></a>
+{if $titleSize|default:"small" == "big"}
 <img src="tpl/black/news_30.gif" width="100" height="39" alt="News" /><br />
-</td>
-</tr>
+{else}
+<img src="tpl/black/news_18.gif" width="64" height="22" alt="News" /><br />
+{/if}
+</td></tr>
 <tr><td class="piccolo">
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="piccolo">

@@ -4,15 +4,15 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal" align="center">
-
-{include file=avviso_notice.tpl}
-
-<form action="{$common_receiverUrl}?do=Login" name="form1" method="post">
-<table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr> 
-<td><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
+<td class="Normal"><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
+</tr>
+<tr><td class="Normal" align="center">
+<form action="{$common_receiverUrl}?do=Login" name="form1" method="post">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
+<tr> 
+<td align="center">{include file=avviso_notice.tpl}</td>
 </tr>
 <tr align="center"> 
 <td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="f1_username" size="9" maxlength="25" style="width: 120px" value="{$f1_username_value}" /><br />
