@@ -108,7 +108,7 @@
 {if $fileEdit_flagCanali == 'true'}
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">Il file verr&agrave; modificato nei seguenti argomenti:</span></legend>
+<legend><span class="Normal">Il file verr&agrave; modificato nelle seguenti pagine:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f13_canale}
 	{*<tr class="Normal" valign="top">

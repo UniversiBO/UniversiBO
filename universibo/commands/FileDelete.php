@@ -135,7 +135,7 @@ class FileDelete extends UniversiboCommand {
 			elseif(count($f14_canale) > 0)
 			{
 				$f14_accept = false;
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno una pagina:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 			}
 			
 		}
@@ -157,7 +157,7 @@ class FileDelete extends UniversiboCommand {
 			/**
 			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */
-			$template->assign('fileDelete_langSuccess', "Il file è stata cancellata dai canali scelti.");
+			$template->assign('fileDelete_langSuccess', "Il file è stata cancellata dalle pagine scelte.");
 			
 			return 'success';
 		}
@@ -166,7 +166,7 @@ class FileDelete extends UniversiboCommand {
 		//$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
 		//$this->executePlugin('ShowNews', $param );
 		
-		$template->assign('f14_langAction', "Elimina il file dai seguenti canali:");
+		$template->assign('f14_langAction', "Elimina il file dalle seguenti pagine:");
 		$template->assign('f14_canale', $f14_canale);
 		$template->assign('fileDelete_flagCanali', (count($f14_canale)) ? 'true' : 'false');
 		

@@ -94,7 +94,7 @@
 {if $fileAdd_flagCanali == 'true'}
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">Il file verr&agrave; inserito negli argomenti:</span></legend>
+<legend><span class="Normal">Il file verr&agrave; inserito nelle pagine:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f12_canale}
 	<tr class="Normal" valign="center" align="center">
