@@ -5,9 +5,9 @@ require_once('Canale'.PHP_EXTENSION);
 
 
 /**
- * CanaleCommand è la superclasse astratta di tutti i command che utilizzando un oggetto Canale
+ * CanaleCommand ? la superclasse astratta di tutti i command che utilizzando un oggetto Canale
  *
- * Un Canale è una pagina dinamica con a disposizione il collegamento 
+ * Un Canale ? una pagina dinamica con a disposizione il collegamento 
  * verso i vari servizi tramite un indentificativo, gestisce i diritti di
  * accesso per i diversi gruppi e diritti particolari 'ruoli' per alcuni utenti,
  * fornisce sistemi di notifica e per assegnare un nome ad un canale
@@ -28,7 +28,7 @@ class CanaleCommand extends UniversiboCommand
 
 	
 	/**
-	 * Restituisce l'id_canale corrente, se non è specificato nella richiesta HTTP-GET si considera 
+	 * Restituisce l'id_canale corrente, se non ? specificato nella richiesta HTTP-GET si considera 
 	 * default l'homepage id_canale = 1
 	 *
 	 * @static
@@ -39,11 +39,11 @@ class CanaleCommand extends UniversiboCommand
 		if (!array_key_exists('id_canale', $_GET ) )
 		{
 			if ($this->frontController->getCommandRequest() == 'ShowHome') return 1;
-			else Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale non è specificato nella richiesta','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale non ? specificato nella richiesta','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		if (!ereg('^([0-9]+)$', $_GET['id_canale'] ) )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale è sintatticamente non valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale ? sintatticamente non valido','file'=>__FILE__,'line'=>__LINE__));
 
 		return intval($_GET['id_canale']);
 	}
@@ -89,9 +89,14 @@ class CanaleCommand extends UniversiboCommand
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 		
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
-		$canale = $this->getRequestCanale();
+		$canale =& $this->getRequestCanale();
+		$user =& $this->getSessionUser();
+		
+		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
+			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
+		
 		$canale->addVisite();
 			
 	}
@@ -110,10 +115,6 @@ class CanaleCommand extends UniversiboCommand
         //var_dump($template);
 		
 		$canale =& $this->getRequestCanale();
-		$user =& $this->getSessionUser();
-		
-		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
-			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
 		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );

@@ -12,7 +12,7 @@ define('CANALE_INSEGNAMENTO' ,5);
 /**
  * Canale class.
  *
- * Un "canale" è una pagina dinamica con a disposizione il collegamento 
+ * Un "canale" ? una pagina dinamica con a disposizione il collegamento 
  * verso i vari servizi tramite un indentificativo, gestisce i diritti di
  * accesso per i diversi gruppi e diritti particolari 'ruoli' per alcuni utenti,
  * fornisce sistemi di notifica e per assegnare un nome ad un canale
@@ -99,12 +99,12 @@ class Canale {
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
 	 * @param string $nome			nome del canale
 	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
+	 * @param boolean $news_attivo	se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo	se true il servizio false ? attivo
+	 * @param boolean $forum_attivo	se true il servizio forum ? attivo
+	 * @param int $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links ? attivo
 	 * @return Canale
 	 */
 	function Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
@@ -248,7 +248,7 @@ class Canale {
 
 
 	/**
-	 * Restituisce se la stringa descrittiva nome è impostata
+	 * Restituisce se la stringa descrittiva nome ? impostata
 	 *
 	 * @return string
 	 */
@@ -309,7 +309,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna l'oggetto News, false se il servizio non è attivo
+	 * Ritorna l'oggetto News, false se il servizio non ? attivo
 	 *
 	 * @todo implementare News
 	 * @return mixed
@@ -337,7 +337,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna l'oggetto Files, false se il servizio non è attivo
+	 * Ritorna l'oggetto Files, false se il servizio non ? attivo
 	 *
 	 * @todo implementare Files
 	 * @return mixed
@@ -365,7 +365,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna l'oggetto Links, false se il servizio non è attivo
+	 * Ritorna l'oggetto Links, false se il servizio non ? attivo
 	 *
 	 * @todo implementare Links
 	 * @return mixed
@@ -393,7 +393,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna l'oggetto Forum, false se il servizio non è attivo
+	 * Ritorna l'oggetto Forum, false se il servizio non ? attivo
 	 *
 	 * @todo implementare Forum
 	 * @return mixed
@@ -421,7 +421,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna il forum_id delle tabelle di phpbb, , NULL se il forum non è attivo
+	 * Ritorna il forum_id delle tabelle di phpbb, , NULL se il forum non ? attivo
 	 *
 	 * @return mixed
 	 */
@@ -433,7 +433,7 @@ class Canale {
 
 
 	/**
-	 * Ritorna il group_id delle tabelle di phpbb, NULL se il forum non è attivo
+	 * Ritorna il group_id delle tabelle di phpbb, NULL se il forum non ? attivo
 	 *
 	 * @return mixed
 	 */
@@ -461,7 +461,7 @@ class Canale {
 		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale = $this->getRequestCanale();
 		$canale->addVisite();
@@ -483,7 +483,7 @@ class Canale {
 	{
 		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
 		if ($tipo_canale === false )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
 									CANALE_HOME         => 'Canale',
@@ -492,7 +492,7 @@ class Canale {
 									CANALE_INSEGNAMENTO => 'Insegnamento');
 		
 		if (!array_key_exists($tipo_canale, $dispatch_array))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo di canale richiesto su database non ? valido, contattare lo staff','file'=>__FILE__,'line'=>__LINE__));
 		
 		$class_name = $dispatch_array[$tipo_canale];
 		
@@ -711,7 +711,7 @@ class Canale {
 	 *
 	 * @return array
 	 */
-	function getRuoli()
+	function &getRuoli()
 	{
 		if ($this->ruoli == NULL)
 		{

@@ -27,7 +27,7 @@ class Login extends UniversiboCommand {
 		
 			if (!$this->sessionUser->isOspite())
 			{
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il login può essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
@@ -42,7 +42,7 @@ class Login extends UniversiboCommand {
 			{
 				Error::throw(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
-			elseif( $user->getPasswordHash() != md5($_POST['f1_password']) )
+			elseif( $user->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
 			{
 				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
