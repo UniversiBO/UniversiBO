@@ -189,7 +189,7 @@ CREATE TABLE "collaboratore" (
  "ruolo" varchar(50) ,
  "recapito" varchar(255),
  "obiettivi" text 
- );
+);
  
  
  ----13-11-2003
@@ -303,4 +303,56 @@ ALTER TABLE "prg_insegnamento"   DROP COLUMN "prog_cronologico";
 ------23-03-04
 UPDATE "canale" SET "tipo_canale"=5 WHERE tipo_canale=6;
 
+------07-09-04
+ALTER TABLE "files" RENAME TO "files2";
 
+--ATTENZIONE qui bisogna fare a mano il drop della costrain sull'indice della tabella files2!!
+
+CREATE TABLE "file" (
+"id_file" int4 DEFAULT nextval('"file_id_file_seq"'::text) NOT NULL,
+"permessi_download" int4 NOT NULL,
+"permessi_visualizza" int4 NOT NULL,
+"id_utente" int4 NOT NULL,
+"titolo" varchar (150) NOT NULL,
+"descrizione" text NOT NULL,
+"data_inserimento" int4 NOT NULL,
+"data_modifica" int4 NOT NULL,
+"dimensione" int4 NOT NULL,
+"download" int4 NOT NULL,
+"nome_file" varchar (256) NOT NULL,
+"id_categoria" int4 NOT NULL,
+"id_tipo_file" int4 NOT NULL,
+"hash_file" varchar (40) NOT NULL,
+"password" varchar (40) ,
+"eliminato" char (1) NOT NULL ,
+PRIMARY KEY ("id_file"));
+
+
+CREATE TABLE "file_canale" (
+"id_file" int4 NOT NULL, 
+"id_canale" int4 NOT NULL ,
+PRIMARY KEY ("id_file", "id_canale"));
+CREATE INDEX "file_canale_id_file_key" ON "file_canale"("id_file"); 
+CREATE INDEX "file_canale_id_canale_key" ON "file_canale"("id_canale");
+
+
+CREATE TABLE "file_tipo" (
+"id_file_tipo" SERIAL NOT NULL,
+"descrizione" varchar (128) NOT NULL,
+"pattern_riconoscimento" varchar (128) NOT NULL,
+"icona" varchar (256) NOT NULL,
+"info_aggiuntive" text,
+PRIMARY KEY ("id_file_tipo"));
+
+
+CREATE TABLE "file_categoria" (
+"id_file_categoria" SERIAL NOT NULL,
+"descrizione" varchar (128) NOT NULL,
+PRIMARY KEY ("id_file_categoria"));
+
+INSERT INTO file ( "id_file", "permessi_download", "permessi_visualizza", "id_utente",
+"titolo", "descrizione", "data_inserimento", "data_modifica", "dimensione", "download",
+"nome_file", "id_categoria", "id_tipo_file", "hash_file", "password", "eliminato" ) 
+SELECT "f2.id_file" , '127' , '127', "f2.id_autore",
+'' , "f2.descrizione", f2.data, f2.data, f2.dimensione, f2.contatore,
+f2.nome_file,  FROM news2 ;
