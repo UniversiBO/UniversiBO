@@ -67,6 +67,11 @@
 {if $showLinks_linksListAvailable|default:"false" =="true"}
 	{include file=Links/show_links.tpl}
 {/if}	
+{if $showFileStudentiTitoli_langFileAvailableFlag|default:"false" =="true"}
+	{include file=Files/box_show_files_studenti.tpl}
+{/if}	
+
+
 	<div class="box"> {*quarto blocchetto *}
 		{*<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>*}
 		<h3>{$common_calendarLink.label|escape:"htmlall"}</h3>

@@ -96,6 +96,7 @@ class ShowFacolta extends CanaleCommand {
 
 		$param = array( 'num' => 4 );
 		$this->executePlugin('ShowNewsLatest', $param );
+		$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
 		
 		return 'default';
 	}

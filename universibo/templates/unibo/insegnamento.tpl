@@ -20,7 +20,5 @@
 <hr/>
 {include file=Files/show_file_titoli.tpl}
 
-<hr/>
-{include file=Files/show_file_studenti_titoli.tpl}
 
 {include file=footer_index.tpl}

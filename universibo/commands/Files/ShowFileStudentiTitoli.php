@@ -62,10 +62,10 @@ class ShowFileStudentiTitoli extends PluginCommand {
 				$ultimo_accesso = $ruolo->getUltimoAccesso();
 			}
 			
-			if ( $user->isAdmin() || $referente || $moderatore )
+			if ( !$user->isOspite() )
 			{
 				$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
-				$template->assign('showFileStudentiTitoli_addFile', 'Invia un nuovo file');
+				$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
 				$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
 			}
 		}
@@ -154,6 +154,8 @@ class ShowFileStudentiTitoli extends PluginCommand {
 				}
 			}
 		}
+		
+						
 		
 		$num_file = count($elenco_file_tpl);
 		if ( $num_file == 0 )

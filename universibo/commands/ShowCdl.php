@@ -105,6 +105,7 @@ class ShowCdl extends CanaleCommand {
 		$template -> assign('cdl_langGoToForum', 'Link al forum');
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
+		$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
 		
 		return 'default';
 	}

@@ -340,7 +340,7 @@ class FileStudentiAdd extends UniversiboCommand {
 				$dimensione_file = (int)($_FILES['f23_file']['size'] / 1024);
 				$newFile = new FileItemStudenti(0, $f23_permessi_download, $f23_permessi_visualizza, $user->getIdUser(), $f23_titolo, $f23_abstract,
 				$f23_data_inserimento, time(), $dimensione_file, 0, $nome_file, $f23_categoria, 
-				FileItem::guessTipo($_FILES['f23_file']['name']), md5_file($_FILES['f23_file']['tmp_name']), FileItem::passwordHashFunction(''), 
+				FileItem::guessTipo($_FILES['f23_file']['name']), md5_file($_FILES['f23_file']['tmp_name']), null, 
 				'', '', '', '', '');
 				/* gli ultimi parametri dipendono da altre tabelle e
 				 il loro valore viene insegnato internamente a FileItem 

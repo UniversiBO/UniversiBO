@@ -52,16 +52,19 @@
 		<ShowFacolta class="ShowFacolta">
 			<response type="template" name="default">facolta.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+			<pluginCommand name="ShowLinks" class="Links.ShowLinks" />
 		</ShowFacolta>
 		<ShowCdl class="ShowCdl">
 			<response type="template" name="default">cdl.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+			<pluginCommand name="ShowLinks" class="Links.ShowLinks" />
 		</ShowCdl>
 		<ShowInsegnamento class="ShowInsegnamento">
 			<response type="template" name="default">insegnamento.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 			<pluginCommand name="ShowFileTitoli" class="Files.ShowFileTitoli" />
 			<pluginCommand name="ShowFileStudentiTitoli" class="Files.ShowFileStudentiTitoli" />
+			<pluginCommand name="ShowLinks" class="Links.ShowLinks" />
 		</ShowInsegnamento>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
