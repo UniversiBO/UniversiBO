@@ -4,7 +4,7 @@
 <h2>{$ruoliAdminEdit_langAction|escape:"htmlall"|nl2br}</h2>
 </div>
 <p>{$ruoliAdminEdit_langSuccess|escape:"htmlall"|nl2br}</p>
-<p><a href="{$ruoliAdminEdit_userUri|escape:"htmlall"}">{$ruoliAdminEdit_username|escape:"htmlall"}</p>
+<p><a href="{$ruoliAdminEdit_userUri|escape:"htmlall"}">{$ruoliAdminEdit_username|escape:"htmlall"}</a></p>
 <form method="post">
 	<p><fieldset>
 		<legend>Livello diritti nella pagina</legend>
