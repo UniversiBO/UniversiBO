@@ -622,7 +622,6 @@ class FileItem {
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
 			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database file non unico','file'=>__FILE__,'line'=>__LINE__));
-			
 		}
 		
 	}	
