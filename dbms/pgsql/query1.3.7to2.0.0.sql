@@ -656,4 +656,4 @@ INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:7]','face_whistle.
 UPDATE phpbb_config set config_value='la community degli studenti dell\'Università di Bologna'
 WHERE  config_name='site_desc';
 
-
+DELETE FROM utente_canale WHERE id_canale NOT IN (SELECT id_canale FROM canale WHERE 1=1);
