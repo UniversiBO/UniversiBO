@@ -72,6 +72,7 @@ class Insegnamento extends Canale
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
 		//inizializza l'elenco delle attività padre/non sdoppiate
+		//var_dump($elenco_attivita);
 		$this->elencoAttivita =& $elenco_attivita;
 		$num = count($elenco_attivita);
 		for ($i = 0; $i < $num; $i++)
@@ -96,44 +97,47 @@ class Insegnamento extends Canale
 			$nome     = NULL;
 			$max_anno = 0;
 			$nomi    = array();
+			$e_nomi    = array();
+			$b_nomi    = array();
 			$t_nomi  = array();
 			$anni    = array();
 			$docenti = array();
 			$cod_ril = array();
+			//$app	 = array('nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL);
 			
 			$app_elenco_attivita = array();
 			$num_att = count($this->elencoAttivitaPadre);
 			for ($i = 0; $i < $num_att; $i++)
 			{
 				$app_elenco_attivita =& $this->elencoAttivitaPadre;
-				var_dump($app_elenco_attivita);
-				$app['nomi'][$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
-				$app['b_nomi'][$i]  = substr($app['nomi'][$i], 0, -3);    //nome materia meno le ultime 3 lettere
-				$app['e_nomi'][$i]  = substr($app['nomi'][$i], -3, 0);    //ultime 3 lettere del nome materia
-				$app['anni'][$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
-				if ($max_anno < $app['anni'][$i]) $max_anno = $app['anni'][$i];
-				$app['docenti'][$i] = $app_elenco_attivita[$i]->getNomeDoc();
-				$app['cod_ril'][$i] = $app_elenco_attivita[$i]->getCodRil();
+				//var_dump($app_elenco_attivita);
+				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
+				$b_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
+				$e_nomi[$i]  = substr($nomi[$i], -3, 0);    //ultime 3 lettere del nome materia
+				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
+				if ($max_anno < $anni[$i]) $max_anno = $anni[$i];
+				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
+				$cod_ril[$i] = $app_elenco_attivita[$i]->getCodRil();
 			}
 			
 			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
-			$fin = array_values($app['e_nomi']);
-			if ( (count(array_values($app['b_nomi'])) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			$fin = array_values($e_nomi);
+			if ( (count(array_values($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
-				$nome = $b_nomi.$fin[0].' + '.$fin[1];
+				$nome = $b_nomi[0].$fin[0].' + '.$fin[1];
 				for ($i = 0; $i < $num_att; $i++)
 				{
-					$app['nomi'][$i] = $nome;
+					$nomi[$i] = $nome;
 				}
 			}
 			
 			// "NOME ESAME 2002" && "NOME ESAME 2003" -->  "NOME ESAME 2003/2003"
-			if ( (count(array_values(array_values($app['anni']))) == 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			if ( (count(array_values(array_values($anni))) == 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
-				$anni = implode('/',array_unique($app['anni'])).'/'.($max_anno+1);
+				$anniStr = implode('/',array_unique($anni)).'/'.($max_anno+1);
 				for ($i = 0; $i < $num_att; $i++)
 				{
-					$app['anni'][$i] = $anni;
+					$anni[$i] = $anniStr;
 				}
 				
 			}
@@ -141,14 +145,12 @@ class Insegnamento extends Canale
 			//costruisce la mappa dei nomi
 			for ($i = 0; $i < $num_att; $i++)
 			{
-				$app_nomi[$i] = $app['nomi'][$i].$app['cod_ril'].' aa. '.$app['anni'][$i]." \n ".$att->getNomeDoc();
+				$app_nomi[$i] = $nomi[$i].$cod_ril.' aa. '.$anni[$i]." \n ".$att->getNomeDoc();
 			}
 			
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
 			
 		}
-		
-		
 		
 	}
 	

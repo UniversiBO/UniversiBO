@@ -9,8 +9,8 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal" align="center">
-&nbsp;<br /> <img src="tpl/black/corsi_di_laurea_30.gif" width="132" height="39" alt="{$cdl_langTitleAlt|escape:"htmlall"}" />
-<p align="center" class="Titolo">{$cdl_cdlTitle|escape:"htmlall"}</p>
+<!--&nbsp;<br /> <img src="tpl/black/corsi_di_laurea_30.gif" width="132" height="39" alt="{$cdl_langTitleAlt|escape:"htmlall"}" />-->
+<p align="center" class="Titolo">{$cdl_cdlTitle|escape:"htmlall"} - {$cdl_cdlCodice|escape:"htmlall"}</p>
 <p>{$cdl_langYear|escape:"htmlall"}<br />
 <a href="{$cdl_prevYearUri|escape:"htmlall"}">{$cdl_prevYear|escape:"htmlall"}</a>&nbsp;&lt;&lt;
 &nbsp;&nbsp;<font color="FF0000">{$cdl_thisYear|escape:"htmlall"}</font>&nbsp;&nbsp;

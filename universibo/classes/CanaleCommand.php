@@ -144,10 +144,62 @@ class CanaleCommand extends UniversiboCommand
 	 */
 	function shutdownCommand()
 	{
+		
+		
+		if (!$this->isPopup())
+		{		
+			$template =& $this->frontController->getTemplateEngine();
+			$canale =& $this->getRequestCanale();
+			
+			//informazioni del menu contatti
+			$attivaContatti = false;
+			
+			$arrayUsers = array();
+			$arrayRuoli =& $canale->getRuoli();
+			//var_dump($arrayRuoli);
+			$keys = array_keys($arrayRuoli);
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				//var_dump($ruolo);
+				if ($ruolo->isReferente() || $ruolo->isModeratore())
+				{
+					$attivaContatti = true;
+					
+					$user =& User::selectUser($ruolo->getIdUser());
+					//var_dump($user);
+					$contactUser = array();
+					$contactUser['mail']  = $user->getEmail();
+					$contactUser['tipo']  = $user->getUserGroupsNames();
+					$contactUser['label'] = $user->getUsername();
+					$contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					//var_dump($ruolo);
+					$arrayUsers[] = $contactUser;
+				}
+			}
+			//ordina $arrayCanali
+			//usort($arrayUsers, array('CanaleCommand','_compareMyUniversiBO'));
+			
+					
+			//assegna al template
+			if ($attivaContatti)
+			{
+				$template->assign('common_contactsCanaleAvailable', 'true');
+				$template->assign('common_langContactsCanale', 'Contatti');
+				$template->assign('common_contactsCanale', $arrayUsers);
+			}
+			else
+			{
+				$template->assign('common_contactsCanaleAvailable', 'false');
+			}
+			
+			
+		}
+		
 		$this->updateUltimoAccesso();
+		
 		parent::shutdownCommand();
 	}
-	
 	
 }
 

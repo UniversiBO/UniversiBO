@@ -550,11 +550,41 @@ class Ruolo {
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows = 0) return false;
-
+		if( $rows = 0) return array();
+		
+		$ruoli = array();
 		while (	$res->fetchInto($row) )
 		{
 			$ruoli[] =& new Ruolo($id_utente, $row[0], $row[5], $row[1], $row[2]==RUOLO_MODERATORE, $row[2]==RUOLO_REFERENTE, $row[3]=='S', $row[4], $row[6]=='S');
+		}
+		return $ruoli;
+		
+	}
+
+
+	/**
+	 * Preleva tutti i ruoli di un canale da database
+	 *
+	 * @static
+	 * @param int		$id_canale		numero identificativo del canale
+	 * @return mixed    array di oggetti Ruolo
+	 */
+	function &selectCanaleRuoli($id_canale)
+	{
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT id_utente, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_canale = '.$db->quote($id_canale);
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$rows = $res->numRows();
+		if( $rows = 0) return array();
+		
+		$ruoli = array();
+		while (	$res->fetchInto($row) )
+		{
+			$ruoli[] =& new Ruolo($row[0], $id_canale, $row[5], $row[1], $row[2]==RUOLO_MODERATORE, $row[2]==RUOLO_REFERENTE, $row[3]=='S', $row[4], $row[6]=='S');
 		}
 		return $ruoli;
 		

@@ -74,6 +74,10 @@ class Canale {
 	 * @private
 	 */
 	var $servizioLinks = false;
+	/**
+	 * @private
+	 */
+	var $ruoli = NULL;
 	
 	
 	
@@ -677,7 +681,7 @@ class Canale {
 			$forum_group_id = NULL ;
 		}	
 		
-	
+		
 		$query = 'UPDATE canale SET ( id_canale = '.$db->quote($this->getIdCanale()).
 					' , tipo_canale = '.$db->quote($this->getTipoCanale()).
 					' , nome_canale = '.$db->quote($this->getNomeCanale()).
@@ -695,11 +699,34 @@ class Canale {
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
-	
+		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
 		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
+	
+	
+	/**
+	 * Ritorna un array contenente gli oggetti Ruolo associati al canale
+	 *
+	 * @return array
+	 */
+	function getRuoli()
+	{
+		if ($this->ruoli == NULL)
+		{
+			$this->ruoli = array();
+			$ruoli =& Ruolo::selectCanaleRuoli($this->getIdCanale());
+			$num_elementi = count($ruoli);
+			for ($i=0; $i<$num_elementi; $i++)
+			{
+				$this->ruoli[$ruoli[$i]->getIdUser()] =& $ruoli[$i];
+			}
+		}
+		//var_dump($this->ruoli);
+		return $this->ruoli;
+	}
+	
 }
 
 

@@ -4,7 +4,7 @@
 {foreach from=$common_facLinks item=temp_currLink}
 <tr>
 <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-<td><img src="tpl/black/invisible.gif" width="4" height="1" alt="" /></td>
+<td><img src="tpl/black/invisible.gif" width="4" height="2" alt="" /></td>
 <td class="Menu" width="100%"><a href="{$temp_currLink.uri}" >{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></td>
 </tr>
 {/foreach}

@@ -93,7 +93,7 @@ class UniversiboCommand extends BaseCommand {
 		
 		$this->_setUpUserUniversibo();
 		
-		$this->_setUpTemplateUniversibo();
+		$this->_initTemplateUniversibo();
 	}
 	
 	
@@ -106,6 +106,17 @@ class UniversiboCommand extends BaseCommand {
 	{
 		parent::shutdownCommand();
 		
+		
+		if ( $this->isPopup() )
+		{
+			$this->_shutdownTemplatePopupUniversibo();
+		}
+		else
+		{
+			$this->_shutdownTemplateIndexUniversibo();
+		}
+		
+		//raccolgo tutti gli errori
 		while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
 		{
 			echo $current_error->throw();
@@ -121,6 +132,18 @@ class UniversiboCommand extends BaseCommand {
 			echo $current_error->throw();
 		}
 		
+	}
+	
+	
+	
+	/**
+	 * Restituisce se la pagina chiamata è di tipo indice (con menu) o popup (senza menu)
+	 * 
+	 * @return boolean  
+	 */
+	function isPopup()
+	{
+		return (boolean) (array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup');
 	}
 	
 	
@@ -157,24 +180,24 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private
 	 */
-	function _setUpTemplateUniversibo()
+	function _initTemplateUniversibo()
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
 		$krono =& $this->frontController->getKrono();
         //var_dump($template);
 		
-		if ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' )
+		if ( $this->isPopup() )
 		{
 			$template->assign('common_pageType', 'popup');
 			$template->assign('common_pageTypeExt', 'pageType=popup&');
-			$this->_setUpTemplatePopupUniversibo();
+			$this->_initTemplatePopupUniversibo();
 		}
 		else
 		{
 			$template->assign('common_pageType', 'index');
 			$template->assign('common_pageTypeExt', '');
-			$this->_setUpTemplateIndexUniversibo();
+			$this->_initTemplateIndexUniversibo();
 		}
 		
 		//riferimenti per ottimizzare gli accessi
@@ -247,7 +270,7 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private
 	 */
-	function _setUpTemplateIndexUniversibo()
+	function _initTemplateIndexUniversibo()
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
@@ -360,8 +383,35 @@ class UniversiboCommand extends BaseCommand {
 		
 		$template->assign( 'common_isSetVisite', 'N' );
 		
-				
-		//preparo le informazioni sui preferiti
+	}
+	
+
+
+	/**
+	 * Inizializza le variabili del template per le pagine popup
+	 * 
+	 * @private
+	 * @todo implementare  
+	 */
+	function _initTemplatePopupUniversibo()
+	{
+		
+	}
+		
+	
+	/**
+	 * Inizializza le variabili del template per le pagine con indice completo
+	 *
+	 * @private
+	 */
+	function _shutdownTemplateIndexUniversibo()
+	{
+		
+		$template =& $this->frontController->getTemplateEngine();
+		
+		$session_user = $this->getSessionUser();
+		
+		//informazioni del MyUniversiBO
 		$attivaMyUniversibo = false;
 		
 		if(!$session_user->isOspite())
@@ -379,6 +429,7 @@ class UniversiboCommand extends BaseCommand {
 					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
 					$myCanali = array();
 					$myCanali['uri']   = $canale->showMe();
+					$myCanali['tipo']  = $canale->getTipoCanale();
 					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
 					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
 					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
@@ -386,9 +437,9 @@ class UniversiboCommand extends BaseCommand {
 					$arrayCanali[] = $myCanali;
 				}
 			}
+			//ordina $arrayCanali
+			usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
 		}
-		
-		//ordina $arrayCanali
 		
 		
 		//assegna al template
@@ -413,10 +464,34 @@ class UniversiboCommand extends BaseCommand {
 	 * @private
 	 * @todo implementare  
 	 */
-	function _setUpTemplatePopupUniversibo()
+	function _shutdownTemplatePopupUniversibo()
 	{
 		
 	}
-		
+	
+	
+	
+	/**
+	 * Ordina la struttura del MyUniversiBO
+	 *	$myCanali['uri']   = $canale->showMe();
+	 *	$myCanali['tipo']  = $canale->getTipoCanale();
+	 *	$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+	 *	$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
+	 *	$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+	 * 
+	 * @static
+	 * @private
+	 * @todo implementare  
+	 */
+	function _compareMyUniversiBO($a, $b)
+	{
+		if ($a['tipo']<$b['tipo']) return +1;
+		if ($a['tipo']>$b['tipo']) return -1;
+		if ($a['label']<$b['label']) return -1;
+		if ($a['label']>$b['label']) return +1;
+		if ($a['ruolo']<$b['ruolo']) return -1;
+		if ($a['ruolo']>$b['ruolo']) return +1;
+	}
+	
 }
 ?>

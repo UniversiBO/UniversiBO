@@ -2,6 +2,8 @@
 <!-- Inizio MENU Right -->
 {include file=box_loginlogout.tpl}
 
+{include file=box_contacts.tpl}
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr valign="bottom"> 
 <td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
