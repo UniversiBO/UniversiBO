@@ -28,7 +28,7 @@
 		{foreach name=elenco_ins from=$temp_ciclo.list item=temp_ins}
 			{counter name=total_loop}
 			<p class="{cycle name=t_class}">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}&gt;&nbsp;
-			<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> &nbsp; <a href="{$temp_ins.forumUri|escape:"htmlall"}"><img src="tpl/unibo/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>&nbsp;</p>
+			<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> &nbsp;{if $temp_ins.forumUri != ''} <a href="{$temp_ins.forumUri|escape:"htmlall"}"><img src="tpl/unibo/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>{/if}&nbsp;</p>
 		{/foreach}
 		</div>		
 	{/foreach} 

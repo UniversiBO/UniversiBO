@@ -43,7 +43,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="1" summary=""> 
 {foreach from=$temp_ciclo.list item=temp_ins}
 <tr bgcolor="{cycle values="#000016,#000032"}"><td class="Menu" width="26">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />&nbsp;</td><td class="Menu">
-<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> </td><td class="Menu" align="right"><a href="{$temp_ins.forumUri|escape:"htmlall"}" title="{$cdl_langGoToForum|escape:"htmlall"}"><img src="tpl/black/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>&nbsp;</td></tr>
+<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> </td><td class="Menu" align="right">{if $temp_ins.forumUri != ''}<a href="{$temp_ins.forumUri|escape:"htmlall"}" title="{$cdl_langGoToForum|escape:"htmlall"}"><img src="tpl/black/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>{/if}&nbsp;</td></tr>
 {/foreach} 
 </table>
 </td></tr>
