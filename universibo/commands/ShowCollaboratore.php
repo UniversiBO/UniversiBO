@@ -1,6 +1,7 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('Collaboratore'.PHP_EXTENSION);
 
 /**
  * ShowContacts is an extension of UniversiboCommand class.
@@ -26,22 +27,19 @@ class ShowCollaboratore extends UniversiboCommand {
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__)); 
 					
 
-		$contacts_path = $this->frontController->getAppSetting('contactsPath');
+		$contacts_path = $frontcontroller->getAppSetting('contactsPath');
 
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi, c.foto, u.id_utente FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente AND u.id_utente='.$db->quote($_GET['id_utente']);
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if($rows = 0) Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'utente cercato non esiste','file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$res->fetchInto($row);
-		$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');
-		$arrayContatti = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
+		$collaboratore =& Collaboratore::selectCollaboratore(81);
+		$curr_user =& $collaboratore->getUser();
+		$arrayContatti = array('username'=>$curr_user->getUsername(),
+								 'intro'=>$collaboratore->getIntro(),
+								 'ruolo'=>$collaboratore->getRuolo(),
+								 'email'=>$curr_user->getEmail(),
+								 'recapito'=>$collaboratore->getRecapito(),
+								 'obiettivi'=>$collaboratore->getObiettivi(),
+								 'foto'=>$collaboratore->getFotoFilename(),
+								 'id_utente'=>$collaboratore->getIdUtente()
+								);
 
 		$template->assign('collaboratore_collaboratore', $arrayContatti);
 		

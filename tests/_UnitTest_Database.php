@@ -462,6 +462,53 @@ WHERE id_categoria NOT IN (SELECT id_categoria FROM file_categoria);
 	}
 	
 
+
+	
+	
+		/**
+		*/
+	function test()
+	{
+		$db =& FrontController::getDbConnection('main');
+
+		$query = '
+';
+
+		$result =& $db->query($query);
+		if (DB::isError($result)) $this->fail();
+		else 
+		$this->assertEquals(0, $result->numRows());
+	}
+	
+	
+
+
+
+
+
+
+
+		/**
+-- Controlla che le password di sito e forum siano uguali (restituisce tuple solo se trova pwd diverse)
+		*/
+	function testPasswordUtentiForumUguali()
+	{
+		$db =& FrontController::getDbConnection('main');
+
+		$query = '
+SELECT user_id, u.username, p.user_password, u.password
+FROM phpbb_users p, utente u
+WHERE user_id=id_utente
+AND p.user_password NOT LIKE u.password
+';
+
+		$result =& $db->query($query);
+		if (DB::isError($result)) $this->fail();
+		else 
+		$this->assertEquals(0, $result->numRows());
+	}
+	
+	
 	
 	
 
