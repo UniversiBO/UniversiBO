@@ -48,6 +48,8 @@ class Login extends UniversiboCommand {
 			}
 			else
 			{
+				session_destroy();
+				session_start();
 				$user->updateUltimoLogin(time());
 				$_POST['f1_password'] = '';  //resettata per sicurezza
 				$this->setSessionIdUtente($user->getIdUser());
