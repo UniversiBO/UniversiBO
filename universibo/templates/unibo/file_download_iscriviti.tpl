@@ -1,6 +1,7 @@
 {include file=header_index.tpl}
-<h2>&nbsp;<br />Download file</h2>
-
+<div class="titoloPagina">
+<h2>Download file</h2>
+</div>
 {include file=avviso_notice.tpl}
 
 <p>Il download del file è permesso solo agli utenti registrati facenti parte dell'università di bologna.<br />

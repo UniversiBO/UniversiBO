@@ -1,7 +1,7 @@
 {include file=header_index.tpl}
-
-<h2>&nbsp;<br />Password file<br />&nbsp;</h2>
-
+<div class="titoloPagina">
+<h2>Password file</h2>
+</div>
 <p class="Normal">Il file richiesto è stato protetto dall'autore con una password,<br />
 Per per proseguire con il download è necessario inserirla nel seguente form.</p>
 {include file=avviso_notice.tpl}

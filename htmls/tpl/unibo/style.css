@@ -549,11 +549,20 @@ td.evidenzia{
 	padding: 0;
 }
 
-#alert, #error
+#alert {color: red;}
+
+#error
 {
 	color: red;
+	background:red;
+	margin-bottom: 25px;
+	padding: 2px;
 }
-
+#error p {
+	padding: 1px;
+	margin: 1px;
+	background: white;
+}
 .actions
 {
 	margin-top: 5px;
@@ -659,3 +668,4 @@ td.evidenzia{
 	font-size: 11px;	
 	display: inline !important;
 }
+.comandi { font-size: 11px; text-align: center;}

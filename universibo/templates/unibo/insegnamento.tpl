@@ -3,13 +3,13 @@
 <h2>{$ins_title|escape:"htmlall"}</h2>
 {if $common_langCanaleMyUniversiBO != '' }
 	<div class="comandi">{if $common_canaleMyUniversiBO == "remove"}
-		<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;
-	{else}<img src="tpl/black/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
+		<img src="tpl/unibo/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;
+	{else}<img src="tpl/unibo/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
 	{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></div>
 {/if}
 </div>
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
-{if $ins_infoDidEdit != ""}<h4><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a></h4>{/if}
+{if $ins_infoDidEdit != ""}<p class="comandi"><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a></p>{/if}
 <hr />
 {include file=News/latest_news.tpl}
 <hr/>
