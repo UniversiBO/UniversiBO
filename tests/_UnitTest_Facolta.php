@@ -67,7 +67,7 @@ class FacoltaTest extends PHPUnit_TestCase
 		$db =& FrontController::getDbConnection('main');
 		$db->autoCommit(false);
 		
-		$facolta = Facolta::selectFacoltaCanale($this->facolta->getIdCanale());
+		$facolta =& Facolta::selectFacoltaCanale($this->facolta->getIdCanale());
 		
 		$new_link = 'http://www.ing.example.com';
 		$facolta->setUri($new_link);
@@ -78,7 +78,7 @@ class FacoltaTest extends PHPUnit_TestCase
 		
 		$facolta->updateFacolta();
 		
-		$facolta2 = Facolta::selectFacoltaCanale($this->facolta->getIdCanale());
+		$facolta2 =& Facolta::selectFacoltaCanale($this->facolta->getIdCanale());
 		
 		$this->assertEquals($new_link, $facolta2->getUri());
 		$this->assertEquals($nome_facolta, $facolta2->getNome());
