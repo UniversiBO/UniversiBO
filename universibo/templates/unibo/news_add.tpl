@@ -38,6 +38,9 @@
 			<input type="text" id="f7_data_scad_min" name="f7_data_scad_min" size="2" maxlength="2" value="{$f7_data_scad_min|escape:"htmlall"}" />
 		</span>
 	</fieldset></p>
+	
+	<p><input type="checkbox" id="f7_urgente"  name="f7_urgente" {if $f7_urgente=='true'}checked="checked"{/if}/>&nbsp;<label for="f7_uregente">Invia il messaggio come urgente</label></p>
+	
 	<p><fieldset>
 		<legend><span>La notizia verr&agrave; inserita nelle pagine:</span></legend>
 			{foreach name=canali item=item from=$f7_canale}
