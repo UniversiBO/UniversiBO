@@ -324,7 +324,7 @@ class User {
 	 * 
 	 * @param int $ultimoLogin timestamp dell'ultimo login da impostare
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * @return boolean
 	 */
 	function updateUltimoLogin($ultimoLogin, $updateDB = false)
 	{

@@ -149,9 +149,9 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_templateBaseDir',$templateInfo['web_dir'].$templateInfo['styles'][$templateInfo['template_name']]);
 
 		//da config.xml
-		$template->assign('common_rootUrl',   'https://universibo.ing.unibo.it/');
+		$template->assign('common_rootUrl',   'https://www.universibo.unibo.it/');
 		$template->assign('common_protocol',   'https'); 
-		$template->assign('common_hostName',   'universibo.unibo.it');
+		$template->assign('common_hostName',   'www.universibo.unibo.it');
 		$template->assign('common_forumDir',   'forum');
 		
 		$template->assign('common_rootEmail',  $appSettings['rootEmail'] );

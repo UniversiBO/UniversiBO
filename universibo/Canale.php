@@ -52,7 +52,7 @@ class Canale {
 	/**
 	 * @private
 	 */
-	var $servizioNotizie = false;
+	var $servizioNews = false;
 	/**
 	 * @private
 	 */
@@ -163,130 +163,178 @@ class Canale {
 
 
 	/**
-	 * Ritorna lo OR bit a bit dei gruppi di appartenenza dello User
-	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
+	 * Ritorna il timestamp dell'ultima modifica eseguita nel canale
 	 *
 	 * @return int
 	 */
-	function getGroup()
+	function getUltimaModifica()
 	{
-		return $this->group;
+		return $this->ultimaModifica;
 	}
 
 
 
 	/**
-	 * Imposta il gruppo di appartenenza dello User
-	 * 
-	 * @param int $group nuovo gruppo da impostare
-	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
-	 */
-	function updateGroup($group, $updateDB = false)
-	{
-		return $this->group;
-		if ( $updateDB == true )
-		{
-			
-		}
-		return true;
-	}
-
-
-
-	/**
-	 * Ritorna il timestamp dell'ultimo login dello User
+	 * Ritorna l'URL relativo alla cartella del template dell'immagine di intestazione del canale
 	 *
-	 * @return int
+	 * @return string
 	 */
-	function getUltimoLogin()
+	function getImmagine()
 	{
-		return $this->ultimoLogin;
+		return $this->immagine;
 	}
 
 
 
 	/**
-	 * Imposta il timestamp dell'ultimo login dello User
-	 * 
-	 * @param int $ultimoLogin timestamp dell'ultimo login da impostare
-	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * Ritorna la stringa descrittiva del titolo/nome del canale
+	 *
+	 * @return string
 	 */
-	function updateUltimoLogin($ultimoLogin, $updateDB = false)
+	function getNome()
 	{
-		$this->ultimoLogin = $ultimoLogin;
-		if ( $updateDB == true )
-		{
-			
-		}
-		return true;
+		return $this->nome;
 	}
 
 
 
 	/**
-	 * Se chiamata senza parametri ritorna true se l'utente corrente appartiene al gruppo Ospite.
-	 * Se chiamata in modo statico con il parametro opzionale ritorna true se il gruppo specificato appartiene al gruppo Ospite. 
+	 * Ritorna l'oggetto News, false se il servizio non è attivo
+	 *
+	 * @todo implementare News
+	 * @return mixed
+	 */
+	function getServizioNews()
+	{
+		return $this->servizioNews;
+	}
+
+
+
+	/**
+	 * Imposta il servizio news, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_files 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioNews($attiva_news, $updateDB = false)
+	{
+		$this->servizioNews = $attiva_news;
+	}
+
+
+
+	/**
+	 * Ritorna l'oggetto Files, false se il servizio non è attivo
+	 *
+	 * @todo implementare Files
+	 * @return mixed
+	 */
+	function getServizioFiles()
+	{
+		return $this->servizioFiles;
+	}
+
+
+
+	/**
+	 * Imposta il servizio files, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_files 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioFiles($attiva_files, $updateDB = false)
+	{
+		$this->servizioFiles = $attiva_files;
+	}
+
+
+
+	/**
+	 * Ritorna l'oggetto Links, false se il servizio non è attivo
+	 *
+	 * @todo implementare Links
+	 * @return mixed
+	 */
+	function getServizioLinks()
+	{
+		return $this->servizioLinks;
+	}
+
+
+
+	/**
+	 * Imposta il servizio links, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_links 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioLinks($attiva_links, $updateDB = false)
+	{
+		$this->servizioLinks = $attiva_links;
+	}
+
+
+
+	/**
+	 * Ritorna l'oggetto Forum, false se il servizio non è attivo
+	 *
+	 * @todo implementare Forum
+	 * @return mixed
+	 */
+	function getServizioForum()
+	{
+		return $this->servizioLinks;
+	}
+
+
+
+	/**
+	 * Imposta il servizio forum, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_links 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioForum($attiva_forum, $updateDB = false)
+	{
+		$this->servizioForum = $attiva_forum;
+	}
+
+
+
+	/**
+	 * Crea un oggetto canale dato il suo numero identificativo id_canale del database
 	 *
 	 * @static
-	 * @return boolean
+	 * @param int $id_canale numero identificativo utente
+	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
 	 */
-	function isOspite( $group = NULL )
+	function &selectCanale($id_canale)
 	{
-		if ( $group == NULL ) $group = $this->group;
-
-		if ( $group | USER_OSPITE ) return true;
-		return false;
-	}
-
-
-
-	/**
-	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se utente ospite
-	 *
-	 * @param int $id_utente numero identificativo utente
-	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
-	 * @return boolean
-	 */
-	function selectUser($id_utente)
-	{
-/*
-		SELECT 
-		return new User();
-*/		
-	}
-
-
-
-	/**
-	 * Inserisce su DB le informazioni riguardanti un nuovo utente
-	 *
-	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
-	 */
-	function insertUser()
-	{
-/*
-		INSERT INTO  
-		return true;
-*/		
-	}
-
+		$db =& FrontController::getDbConnection('main');
 	
+		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows = 0) return false;
 
-	/**
-	 * Aggiorna il contenuto su DB riguardante le informazioni utente
-	 *
-	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
-	 */
-	function updateUser()
-	{
-/*
-		UPDATE SET 
-		return true;
-*/		
+		$res->fetchInto($row);
+		$ruolo =& new Ruolo($id_utente, $id_canale, $row[4], $row[0], $row[1]==RUOLO_MODERATORE, $row[1]==RUOLO_REFERENTE, $row[2]=='S', $row[3]);
+		return $ruolo;
+		
 	}
-
 	
 }
 
