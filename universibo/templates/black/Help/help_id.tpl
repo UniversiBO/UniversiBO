@@ -1,4 +1,4 @@
-{* parametro: showHelpId_langArgomento     array di argomenti (id, titolo, contenuto)*}
+{* showHelpId_langArgomento     array di argomenti (id, titolo, contenuto)*}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left">
     <a name="index" id="index" /><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table></td></tr>
