@@ -19,7 +19,7 @@ require_once 'XmlDOMFactory'.PHP_EXTENSION;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class _UnitTest_Cdl extends PHPUnit_TestCase
+class _UnitTest_ConfigDOM extends PHPUnit_TestCase
 {
 
 	var $config;	
@@ -32,9 +32,9 @@ class _UnitTest_Cdl extends PHPUnit_TestCase
 	// called before the test functions will be executed
 	function setUp()
 	{
-		$config = XmlDOMFactory::getXmlDOM();
-		$config->load('config.xml');
-		$this->config =& $config;
+//		$config = XmlDOMFactory::getXmlDOM();
+//		$config->load('config.xml');
+//		$this->config =& $config;
 		
 	}
 	
@@ -45,9 +45,10 @@ class _UnitTest_Cdl extends PHPUnit_TestCase
 	
 	function testRootFolder()
 	{
-		$nodeList =& $this->config->getElementsByTag('rootFolder');
-		$primoFiglio =& $nodeList->item(0)->firstChild;
-		$this->assertEquals($primoFiglio->nodeValue, '../framework/');
+//		$nodeList =& $this->config->getElementsByTag('rootFolder');
+//		$nodeZero =& $nodeList->item(0);
+//		$primoFiglio =& $nodeZero->firstChild;
+//		$this->assertEquals($primoFiglio->nodeValue, '../framework/');
 	}
 	
 }
