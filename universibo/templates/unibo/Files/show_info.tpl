@@ -20,7 +20,7 @@
  <p>&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/unibo/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></p>
  {/if}
  {if $isFileStudente == 'true'}
- <p>&nbsp;Voto:&nbsp;{$showFileInfo_voto|escape:"htmlall"}</p>
+ <p>&nbsp;Voto medio:&nbsp;{$showFileInfo_voto|escape:"htmlall"}</p>
  <p>&nbsp;<a href="{$showFileInfo_addComment|escape:"htmlall"}">Aggiungi il tuo commento!</a></p>
  {/if}
 </div>

@@ -362,13 +362,19 @@ td.evidenzia{
 .boxCommento
 {
 	background-color: #efffff;
-	padding: 2px 4px !important;
+	padding: 0px 4px !important;
+	margin: 2em 5% 0;
+}
+
+.boxCommento p,a
+{
+	font-size: 11px !important;
 }
 
 .commento
 {
 	text-align: left;
-	margin: -2.2em 8em 0;
+	margin: -2.1em 7em 0;
 	font-size: 11px !important;
 }
 /*
