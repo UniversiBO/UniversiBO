@@ -255,6 +255,10 @@
 			<response type="template" name="default">programmazione_didattica_cdl.tpl</response>
 		</ProgrammazioneDidatticaCdl>
 		
+		<LinkAdd class="LinkAdd">
+			<response type="template" name="default">link_add.tpl</response>
+			<response type="template" name="success">link_add_success.tpl</response>
+		</LinkAdd>
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />

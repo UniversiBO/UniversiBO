@@ -79,16 +79,53 @@ class LinkAdd extends UniversiboCommand {
 		if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f29_URI']))
 			{
 				$f29_accept = false;
+				$f29_URI = 'http://';
 				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 			}
 		else $f29_accept = true;
 		
-		if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f29_URI']))
+		if ($f29_Label === '')
 			{
 				$f29_accept = false;
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai assegnato un etichetta al link', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 			}
 		else $f29_accept = true;
+	
+		if ($f29_Description === '')
+			{
+				$f29_accept = false;
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai dato una descrizione del link', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			}
+		else $f29_accept = true;
+			
+		if (strlen($_POST['$f29_Description']) > 1000) {
+			Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione del link deve essere inferiore ai 1000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			$f7_accept = false;
+		}
+		else $f29_accept = true;
+		
+		if (strlen($_POST['$f29_Label']) > 127) {
+			Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'etichetta del link deve essere inferiore ai 127 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			$f7_accept = false;
+		}
+		else $f29_accept = true;
+		
+		if($f29_accept === true)
+			{
+				$linkItem = new Link(0, $id_canale, $user->getIdUser(), $f29_URI, $f29_Label, $f29_Description );
+				$linkItem->insertLink();
+				$canale->setUltimaModifica(time(), true);
+				return 'success';		
+			}
+			
+		$template->assign('f29_URI', f29_URI);
+		$template->assign('f29_Label', f29_Label);
+		$template->assign('f29_Description', f29_Description);
+		
+		$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+		
+		return 'default';
+	
 	}
 	
 	
