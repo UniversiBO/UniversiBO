@@ -16,7 +16,7 @@
 <form method="post">
 <tr><td colspan="2" class="Normal">
 {include file=avviso_notice.tpl}
-<filedset>
+<fieldset>
 <legend>Livello diritti nella pagina</legend>
 </td></tr>
 <tr><td><input name="f17_livello" id="f17_livello_0" type="radio" {if $ruoliAdminEdit_userLivello == 'none'}checked="checked"{/if} value="none" />
