@@ -145,9 +145,13 @@
 		</FileAdd>
 		<FileEdit class="FileEdit">
 			<response type="template" name="default">file_edit.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileEdit>
 		<FileDelete class="FileDelete">
 			<response type="template" name="default">file_delete.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileDelete>
 
 
