@@ -22,75 +22,97 @@ class Insegnamento extends Canale{
 	 * per il caching del nome dell'insegnamento
 	 */
 	var $insegnamentoNome = '';
+	
 	/**
 	 * @private
 	 */
 	var $insegnamentoUri = '';
+	
 	/**
 	 * @private
 	 */
-	var $ = '';
-	/**
-	 * @private
-	 */
-	var $Uri = '';
+	var $uri = '';
+
 	/**
 	 * @private
 	 */
 	var $obiettivi = '';
+
 	/**
 	 * @private
 	 */
 	var $obiettiviUri = '';
+
 	/**
 	 * @private
 	 */
 	var $programma = '';
+
 	/**
 	 * @private
 	 */
 	var $programmaUri = '';
+
 	/**
 	 * @private
 	 */
 	var $materiale = '';
+
 	/**
 	 * @private
 	 */
 	var $materialeUri = '';
+
 	/**
 	 * @private
 	 */
 	var $modalita = '';
+
 	/**
 	 * @private
 	 */
 	var $modalitaUri = '';
+
 	/**
 	 * @private
 	 */
 	var $orario = '';
+
 	/**
 	 * @private
 	 */
 	var $orarioUri = '';
+
 	/**
 	 * @private
 	 */
 	var $appelli = '';
+
 	/**
 	 * @private
 	 */
 	var $appelliUri = '';
 	
 	
-	
 	/**
 	 * Crea un oggetto Insegnamento 
 	 *
-	 * @see selectFacoltaCanale
-	 * @see selectFacoltaCodice
-	 * @see selectFacoltaElenco
+	var $insegnamentoNome = '';
+	var $insegnamentoUri = '';
+	var $ = '';
+	var $uri = '';
+	var $obiettivi = '';
+	var $obiettiviUri = '';
+	var $programma = '';
+	var $programmaUri = '';
+	var $materiale = '';
+	var $materialeUri = '';
+	var $modalita = '';
+	var $modalitaUri = '';
+	var $orario = '';
+	var $orarioUri = '';
+	var $appelli = '';
+	var $appelliUri = '';
 	 * @param int $id_canale 		identificativo del canae su database
 	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
 	 * @param int $ultima_modifica 	timestamp 
@@ -107,7 +129,7 @@ class Insegnamento extends Canale{
 	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
 	 * @param string $nome_facolta	descrizione del nome della facoltà
 	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
-	 * @return Facolta
+	 * @return Insegnamento
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
@@ -243,7 +265,7 @@ class Insegnamento extends Canale{
 	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
 	 * @return array(Facolta)
 	 */
-	function &selectFacoltaElenco()
+	function &selectElencoInsegnamentiCdl()
 	{
 		global $__facoltaElencoAlfabetico;
 		
@@ -257,17 +279,13 @@ class Insegnamento extends Canale{
 	
 	
 	/**
-	 * Siccome nella maggiorparte delle chiamate viene eseguito l'accesso a tutte le
-	 * facoltà questa procedura si occupa di eseguire il caching degli oggetti facoltà
-	 * in variabili static (globali per comodità implementativa) e permette di 
-	 * alleggerire i futuri accessi a DB implementando di fatto insieme ai metodi
-	 * select*() i meccanismi di un metodo singleton factory
+	 *
 	 * 
 	 * @static
 	 * @private
 	 * @return none 
 	 */
-	function _selectFacolta()
+	function _selectInsegnamento()
 	{
 		
 		global $__facoltaElencoCodice;
