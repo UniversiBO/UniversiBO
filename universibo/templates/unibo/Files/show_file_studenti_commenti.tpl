@@ -1,5 +1,6 @@
 {if $showFileStudentiCommenti_langCommentiAvailableFlag == "true"}
-	<br />
+	<div class="boxCommenti">
+	<h2>Commenti:</h2>
 	{foreach from=$showFileStudentiCommenti_commentiList item=temp_commenti}
 	<div class="boxCommento">
 	    <p>Voto proposto: {$temp_commenti.voto}</p>
@@ -12,8 +13,8 @@
 		</span></p>
 		{/if}
 	</div>
-	<br />
 	{/foreach}
+	</div>
 {else}
 <p> Non esistono commenti per questo file.</p>
 {/if}

@@ -359,22 +359,30 @@ td.evidenzia{
 	border-bottom: dotted 2px #999;
 }
 
+.boxCommenti
+{
+	border: solid 1px #999;
+	margin: 30px 5%;
+}
+
 .boxCommento
 {
-	background-color: #efffff;
+	border: dotted 1px #999;
+	background-color: #f3f7fd;
 	padding: 0px 4px !important;
-	margin: 2em 5% 0;
+	margin: 5px;
 }
 
 .boxCommento p,a
 {
 	font-size: 11px !important;
+	margin: 0.4em !important;
 }
 
 .commento
 {
 	text-align: left;
-	margin: -2.1em 7em 0;
+	margin: -1.8em 7em 0;
 	font-size: 11px !important;
 }
 /*
