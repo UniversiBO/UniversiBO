@@ -1,0 +1,213 @@
+<?php
+
+require_once ('PluginCommand'.PHP_EXTENSION);
+require_once ('News/ShowNewsLatest'.PHP_EXTENSION);
+require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once  ('UniversiboCommand'.PHP_EXTENSION);
+
+/**
+ * ShowMyPage is an extension of UniversiboCommand class.
+ *
+ * Mostra la MyPage dell'utente loggato, con le ultime 5 notizie e 
+ * gli ultimi 5 files presenti nei canali da lui aggiunti...
+ *
+ * @package universibo
+ * @subpackage commands
+ * @version 2.0.0
+ * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Daniele Tiles 
+ * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
+ */
+ 
+class ShowMyUniversiBO extends UniversiboCommand 
+{
+	function execute()
+	{
+		
+		$frontcontroller =& $this->getFrontController();
+		$template =& $frontcontroller->getTemplateEngine();
+		$utente =& $this->getSessionUser();
+		
+		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
+		
+		if(!$utente->isOspite())
+		{
+			$arrayNewsItems = array();
+			$arrayFilesItems = array();
+			$arrayCanali = array();
+			$arrayRuoli =& $utente->getRuoli();
+			$keys = array_keys($arrayRuoli);
+			$canali_senza_servizio_news = 0;
+			$canali_senza_servizio_files = 0;
+			$num_files = 0;
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
+								
+					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+					$arrayCanali[] = $key;
+					if ($canale->getServizioNews())
+					{
+						$id_canale = $canale->getIdCanale();
+						$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
+						$arrayNewsItems[$key] = $id_canale;
+//						$num_news = $num_news + $canale_news;
+					}
+					else{$canali_senza_servizio_news++;  }
+					
+					if ($canale->getServizioFiles())
+					{
+						$id_canale = $canale->getIdCanale();
+						$canale_files = $this->getNumFilesCanale($id_canale);
+						$arrayFilesItems[$key] = $id_canale;
+						$num_files = $num_files + $canale_files;
+					}
+					else{$canali_senza_servizio_files++;}
+				}
+			}
+			if($canali_senza_servizio_news==count($arrayRuoli))
+			{
+			
+			}
+			else
+			{
+				$arrayNewsItems = $this->getLatestNewsCanale(5,$arrayCanali);
+				$this->executePlugin('ShowMyNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
+			}
+			if($canali_senza_servizio_files==count($arrayRuoli))
+			{
+			
+			}
+			else
+			{
+				$arrayFilesItems = $this->getLatestFileCanale(5,$arrayCanali);
+			}
+			
+//			var_dump($arrayFilesItems);
+//			die();
+			
+			
+		}
+		else
+		{
+			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		
+		
+	}
+	
+	/**
+	 * Preleva da database il numero di files del canale $id_canale
+	 *
+	 * @static
+	 * @param int $id_canale identificativo su database del canale
+	 * @return int $res numero files
+	 */
+	 
+	function getNumFilesCanale($id_canale)
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT count(A.id_file) FROM file A, file_canale B 
+					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote(FILE_ELIMINATO).
+					'AND B.id_canale = '.$db->quote($id_canale).'';
+		$res = $db->getOne($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		return $res;
+	}
+	
+	/**
+	 * Preleva da database gli ultimi $num files del canale $id_canale
+	 *
+	 * @static
+	 * @param int $num numero files da prelevare 
+	 * @param int $id_canale identificativo su database del canale
+	 * @return array elenco FileItem , false se non ci sono notizie
+	 */
+	
+	function &getLatestFileCanale($num, $id_canali)
+	{ 
+		if ( count($id_canali) == 1 ) 
+			$values = $id_canali[0];
+		else 
+			$values = implode(',',$id_canali);
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		$query = 'SELECT A.id_file FROM file A, file_canale B 
+					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
+					'AND B.id_canale IN ('.$values.')
+					ORDER BY A.data_inserimento DESC';
+		$res =& $db->limitQuery($query, 0 , $num);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		
+		$id_news_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$id_news_list[]= $row[0];
+		}
+		
+		$res->free();
+		
+		return FileItem::selectFileItems($id_news_list);
+		
+	}
+	
+	/**
+	 * Preleva da database le ultime $num notizie non scadute dai canali $id_canali
+	 *
+	 * @static
+	 * @param int $num numero notize da prelevare 
+	 * @param array $id_canali contenente gli id_canali, identificativi su database del canale
+	 * @return array elenco NewsItem , false se non ci sono notizie
+	 */
+	
+	function &getLatestNewsCanale($num, $id_canali)
+	{
+		if ( count($id_canali) == 1 ) 
+			$values = $id_canali[0];
+		else 
+			$values = implode(',',$id_canali);
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT A.id_news FROM news A, news_canale B 
+					WHERE A.id_news = B.id_news AND eliminata!='.$db->quote( NEWS_ELIMINATA ).
+					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale IN ('.$values.') 
+					ORDER BY A.data_inserimento DESC';
+		$res =& $db->limitQuery($query, 0 , $num);
+//		var_dump($res);
+//		die();
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		
+		$id_news_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$id_news_list[]= $row[0];
+		}
+		
+		$res->free();
+		
+		return $id_news_list;
+		
+	}
+	
+	
+}
+
+?>

@@ -1,7 +1,7 @@
 {if $common_myLinksAvailable=="true"}
 {include file=box_begin.tpl}
 <table width="98%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
-<tr><td colspan="3"><img src="tpl/black/my_universibo_18s.gif" width="140" height="22" alt="{$common_langMyUniversibo|escape:"htmlall"}" /></td></tr>
+<tr><td colspan="3"><a href="{$common_myUniversiBOUri|escape:"htmlall"}" ><img border="0" src="tpl/black/my_universibo_18s.gif" width="140" height="22" alt="{$common_langMyUniversibo|escape:"htmlall"}" /></a></td></tr>
 {foreach from=$common_myLinks item=temp_currLink}
 <tr>
 <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
