@@ -29,11 +29,11 @@ class MyUniversiBORemove extends UniversiboCommand
 		
 		
 		if($utente->isOspite())
-			Error::throwError(_ERROR_DEFAULT, array('msg' => "Non ? permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $utente->getIdUtente(), 'msg' => "Non ? permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
-			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $utente->getIdUtente(), 'msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$id_canale = $_GET['id_canale'];
 		$canale = & Canale::retrieveCanale($id_canale);
@@ -55,7 +55,7 @@ class MyUniversiBORemove extends UniversiboCommand
 		}
 		else
 		{
-			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'E\' impossibile trovare la pagina nel tuo elenco di MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $utente->getIdUtente(), 'msg' => 'E\' impossibile trovare la pagina nel tuo elenco di MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
 	}

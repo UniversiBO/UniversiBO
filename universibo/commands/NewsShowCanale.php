@@ -27,7 +27,7 @@ class NewsShowCanale extends CanaleCommand {
 
 		if (!array_key_exists('inizio', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['inizio'] ) || !array_key_exists('qta', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['qta'] ))
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Parametri non validi','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Parametri non validi','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
 		$template->assign('NewsShowCanale_addNewsFlag', 'false');
@@ -98,7 +98,7 @@ class NewsShowCanale extends CanaleCommand {
 		$res =& $db->limitQuery($query, $startNum , $qta);
 		
 		if (DB::isError($res)) 
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -135,7 +135,7 @@ class NewsShowCanale extends CanaleCommand {
 					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale = '.$db->quote($id_canale).'';
 		$res = $db->getOne($query);
 		if (DB::isError($res)) 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $res;
 		

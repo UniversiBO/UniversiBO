@@ -21,7 +21,8 @@ class ShowContacts extends UniversiboCommand {
 
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
-		
+		$user =& $this->getSessionUser();
+				
 		$template->assign('contacts_langAltTitle', 'Chi Siamo');
 
 		$contacts_path = $this->frontController->getAppSetting('contactsPath');
@@ -34,7 +35,7 @@ class ShowContacts extends UniversiboCommand {
 		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi, c.foto, u.id_utente FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

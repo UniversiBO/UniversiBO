@@ -27,7 +27,7 @@ class RegStudente extends UniversiboCommand
 		$session_user =& $this->getSessionUser();
 		if (!$session_user->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione pu? essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'L\'iscrizione pu? essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		$template->assign('f4_submit',		'Registra');
@@ -66,29 +66,29 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 				 !array_key_exists('f4_password', $_POST) ||
 				 !array_key_exists('f4_ad_user', $_POST) ) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f4_accept = false;
 			}
 			
 			//ad_user
 			if ( $_POST['f4_ad_user'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Inserire la e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Inserire la e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif ( strlen($_POST['f4_ad_user']) > 30 ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Lo username di ateneo indicato pu? essere massimo 30 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Lo username di ateneo indicato pu? essere massimo 30 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif(ereg('@studio\.unibo\.it$',$_POST['f4_ad_user'])){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Non inserire il suffisso "@studio.unibo.it" nella email di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Non inserire il suffisso "@studio.unibo.it" nella email di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif(!eregi('^([[:alnum:]])+\.[[[:alnum:]]+$',$_POST['f4_ad_user'])){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La mail di ateneo inserita '.$_POST['f4_ad_user'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'La mail di ateneo inserita '.$_POST['f4_ad_user'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif(User::activeDirectoryUsernameExists($_POST['f4_ad_user'].'@studio.unibo.it')){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente gi? registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente gi? registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			else
@@ -99,33 +99,33 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			
 			//password
 			if ( $_POST['f4_password'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Inserire la password della e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Inserire la password della e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif ( strlen($_POST['f4_password']) > 50 ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			else $q4_password = $f4_password = $_POST['f4_password'];
 			
 			//username
 			if ( $_POST['f4_username'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Scegliere uno username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Scegliere uno username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif ( !User::isUsernameValid( $_POST['f4_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			elseif ( User::usernameExists( $_POST['f4_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Lo username richiesto ? gi? stato registrato da un altro utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Lo username richiesto ? gi? stato registrato da un altro utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			else $q4_username = $f4_username = $_POST['f4_username'];
 			
 			//confirm
 			if ( !array_key_exists('f4_confirm', $_POST)) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'E\' neccessario confermare il regolamento per potersi iscrivere','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'E\' neccessario confermare il regolamento per potersi iscrivere','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			
@@ -139,7 +139,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			$adl_port = $fc->getAppSetting('adLoginPort'); 
 			if (! User::activeDirectoryLogin($f4_ad_user, 'studio.unibo.it', $q4_password, $adl_host, $adl_port ) )
 			{
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				return 'default';
 			}
 			
@@ -149,7 +149,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			$new_user = new User(-1, USER_STUDENTE, $q4_username ,User::passwordHashFunction($randomPassword), $q4_ad_user, $notifica, 0, $q4_ad_user, '', $fc->getAppSetting('defaultStyle') );
 			
 			if ($new_user->insertUser() == false)
-				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Si ? verificato un errore durente la registrazione dell\'account username '.$q4_username.' mail '.$q4_ad_user,'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUtente(), 'msg'=>'Si ? verificato un errore durente la registrazione dell\'account username '.$q4_username.' mail '.$q4_ad_user,'file'=>__FILE__,'line'=>__LINE__));
 
 			$forum = new ForumApi();
 			$forum->insert($new_user);

@@ -21,9 +21,9 @@ class ShowCollaboratore extends UniversiboCommand {
 
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
-		
+		$user =& $this->getSessionUser();
 		if (!array_key_exists('id_utente',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['id_utente'] ) ) 
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__)); 
 					
 
 		$contacts_path = $this->frontController->getAppSetting('contactsPath');
@@ -33,11 +33,11 @@ class ShowCollaboratore extends UniversiboCommand {
 		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi, c.foto, u.id_utente FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente AND u.id_utente='.$db->quote($_GET['id_utente']);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
-		if($rows = 0) Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non esiste','file'=>__FILE__,'line'=>__LINE__)); 
+		if($rows = 0) Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'utente cercato non esiste','file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$res->fetchInto($row);
 		$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');

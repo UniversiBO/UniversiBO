@@ -17,17 +17,16 @@ class FileShowInfo extends UniversiboCommand {
 
 	function execute() 
 	{
-		
-		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
-		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
-		}
-		
 		$frontcontroller = & $this->getFrontController();
 		
 		$template = & $frontcontroller->getTemplateEngine();
 		$krono = & $frontcontroller->getKrono();
 		$user =& $this->getSessionUser();		
+		
+		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
+		{
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
 		
 //		
 //		$file =& FileItem::selectFileItem($_GET['id_file']);

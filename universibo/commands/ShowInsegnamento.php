@@ -29,7 +29,7 @@ class ShowInsegnamento extends CanaleCommand
 		//var_dump($canale);
 		
 		if ($canale->getTipoCanale() != CANALE_INSEGNAMENTO)
-			Error::throwError(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUtente(), 'msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 	
 	

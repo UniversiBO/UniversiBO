@@ -23,10 +23,10 @@ class NewPasswordStudente extends UniversiboCommand
 	{
 		$fc =& $this->getFrontController();
 		$template =& $this->frontController->getTemplateEngine();
-		
-		if (!$this->sessionUser->isOspite())
+		$user =& $this->getSessionUser();
+		if (!$user->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione pu? essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'iscrizione pu? essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		$template->assign('newPasswordStudente_langNewPasswordAlt','Recupera Password');
@@ -57,29 +57,29 @@ class NewPasswordStudente extends UniversiboCommand
 				 !array_key_exists('f5_password', $_POST) ||
 				 !array_key_exists('f5_ad_user', $_POST) ) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f5_accept = false;
 			}
 			
 			//ad_user
 			if ( $_POST['f5_ad_user'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Inserire la e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Inserire la e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif ( strlen($_POST['f5_ad_user']) > 30 ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Lo username di ateneo indicato pu? essere massimo 30 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Lo username di ateneo indicato pu? essere massimo 30 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif(ereg('@studio\.unibo\.it$',$_POST['f5_ad_user'])){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Non inserire il suffisso "@studio.unibo.it" nella email di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Non inserire il suffisso "@studio.unibo.it" nella email di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif(!eregi('^([[:alnum:]])+\.[[[:alnum:]]+$',$_POST['f5_ad_user'])){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La mail di ateneo inserita '.$_POST['f5_ad_user'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'La mail di ateneo inserita '.$_POST['f5_ad_user'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif(!User::activeDirectoryUsernameExists($_POST['f5_ad_user'].'@studio.unibo.it')){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La mail di ateneo '.$_POST['f5_ad_user'].'@studio.unibo.it'.' non appartiene ad alcun un utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'La mail di ateneo '.$_POST['f5_ad_user'].'@studio.unibo.it'.' non appartiene ad alcun un utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			else{
@@ -89,26 +89,26 @@ class NewPasswordStudente extends UniversiboCommand
 			
 			//password
 			if ( $_POST['f5_password'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Inserire la password della e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Inserire la password della e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif ( strlen($_POST['f5_password']) > 50 ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			else $q5_password = $f5_password = $_POST['f5_password'];
 			
 			//username
 			if ( $_POST['f5_username'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Inserire il proprio username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Inserire il proprio username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif ( !User::isUsernameValid( $_POST['f5_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			elseif ( !User::usernameExists( $_POST['f5_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Lo username richiesto non ? registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Lo username richiesto non ? registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			else $q5_username = $f5_username = $_POST['f5_username'];
@@ -123,7 +123,7 @@ class NewPasswordStudente extends UniversiboCommand
 			$adl_port = $fc->getAppSetting('adLoginPort'); 
 			if (! User::activeDirectoryLogin($f5_ad_user, 'studio.unibo.it', $q5_password, $adl_host, $adl_port ) )
 			{
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				return 'default';
 			}
 			
@@ -131,7 +131,7 @@ class NewPasswordStudente extends UniversiboCommand
 			$user = User::selectUserUsername($q5_username);
 			if ( $user->getADUsername() != $q5_ad_user )
 			{
-				Error::throwError(_ERROR_NOTICE,array('msg'=>'Lo username inserito non corrisponde con la mail di ateneo precedentemente registrata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Lo username inserito non corrisponde con la mail di ateneo precedentemente registrata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				return 'default';
 			}
 			
@@ -139,7 +139,7 @@ class NewPasswordStudente extends UniversiboCommand
 			$randomPassword = User::generateRandomPassword();
 			
 			if ($user->updatePasswordHash(User::passwordHashFunction($randomPassword),true) == false)
-				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Si ? verificato un errore durante l\'aggiornamento della password relativa allo username '.$q5_username.' mail '.$q5_ad_user,'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Si ? verificato un errore durante l\'aggiornamento della password relativa allo username '.$q5_username.' mail '.$q5_ad_user,'file'=>__FILE__,'line'=>__LINE__));
 
 			$forum = new ForumApi();
 			$forum->updatePasswordHash($user);
@@ -166,7 +166,7 @@ class NewPasswordStudente extends UniversiboCommand
 				"Password: ".$randomPassword."\n\n";
 			
 			if(!$mail->Send())
-				Error::throwError(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('newPasswordStudente_thanks',"Una nuova password ? stata generata, la tua richiesta ? stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');

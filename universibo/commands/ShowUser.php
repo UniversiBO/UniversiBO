@@ -21,17 +21,17 @@ class ShowUser extends UniversiboCommand{
 		
 		if($current_user->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Le schede degli utenti sono visualizzabili solo se si ? registrati','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Le schede degli utenti sono visualizzabili solo se si ? registrati','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		if(!$user)
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		if(!$current_user->isAdmin() && !$user->isDocente()  && $current_user->getIdUser() != $user->getIdUser())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non ti ? permesso visualizzare la scheda dell\'utente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Non ti ? permesso visualizzare la scheda dell\'utente','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$arrayRuoli				=& $user->getRuoli();

@@ -171,7 +171,7 @@ class UniversiboCommand extends BaseCommand {
 //			echo $this->sessionUser->getUsername();
 		}
 		else 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUtente(), 'msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
 			
 	}
 
