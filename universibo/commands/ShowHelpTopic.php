@@ -25,12 +25,18 @@ class ShowHelpTopic extends UniversiboCommand {
 		
 		$template -> assign('showHelpTopic_langAltTitle', 'Help');
 
-		$ref_pattern='^([:alnum:]{1,32})$'; //queste info andrebbero in una classe statica help
+		/**
+		 * @todo queste info andrebbero in una classetta statica per l'help
+		 */
+		$ref_pattern='^([:alnum:]{1,32})$'; 
  		
 		$references = array();
 
 		if (!array_key_exists('ref',$_GET) || ereg( $ref_pattern , $_GET['ref'] ) ) 
 		{
+			/**
+			 * @todo l'acesso al DB a questo livello non mi piace... ci sarebbe da inserire un po' di roba in una classetta statica
+			 */
 			$db =& FrontController::getDbConnection('main');
 			$query = 'SELECT riferimento FROM help_topic';
 			$res = $db->query($query);
