@@ -25,7 +25,6 @@ class CanaleCommand extends UniversiboCommand
 	 * @private 
 	 */
 	var $requestCanale;
-
 	
 	/**
 	 * Restituisce l'id_canale corrente, se non ? specificato nella richiesta HTTP-GET si considera 
@@ -43,9 +42,12 @@ class CanaleCommand extends UniversiboCommand
 		}
 
 		if (!ereg('^([0-9]+)$', $_GET['id_canale'] ) )
+		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale ? sintatticamente non valido','file'=>__FILE__,'line'=>__LINE__));
+		}
 
 		return intval($_GET['id_canale']);
+		
 	}
 
 	
@@ -89,13 +91,13 @@ class CanaleCommand extends UniversiboCommand
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 		
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale =& $this->getRequestCanale();
 		$user =& $this->getSessionUser();
 		
 		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
-			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
+			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti ? permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
 		$canale->addVisite();
 			
@@ -196,16 +198,16 @@ class CanaleCommand extends UniversiboCommand
 					if ($ruolo->isReferente() && $ruolo->getIdUser() == $user->getIdUser())
 						$attivaModificaDiritti = true;
 					
-					$user =& User::selectUser($ruolo->getIdUser());
+					$user_temp =& User::selectUser($ruolo->getIdUser());
 					//var_dump($user);
 					$contactUser = array();
-					$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$user->getIdUser();
-					$contactUser['nome']  = $user->getUserPublicGroupName();
-					$contactUser['label'] = $user->getUsername();
+					$contactUser['utente_link']  = 'index.php?do=ShowUser&id_utente='.$user_temp->getIdUser();
+					$contactUser['nome']  = $user_temp->getUserPublicGroupName();
+					$contactUser['label'] = $user_temp->getUsername();
 					$contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
 					//var_dump($ruolo);
 					//$arrayUsers[] = $contactUser;
-					$arrayPublicUsers[$user->getUserPublicGroupName(false)][] = $contactUser;
+					$arrayPublicUsers[$user_temp->getUserPublicGroupName(false)][] = $contactUser;
 				}
 			}
 			//ordina $arrayCanali
@@ -214,8 +216,9 @@ class CanaleCommand extends UniversiboCommand
 			//assegna al template
 			if ($attivaContatti)
 			{
-				
-				uksort($arrayPublicUsers, "strcmp");
+				//var_dump($arrayPublicUsers);
+				uksort($arrayPublicUsers, array('CanaleCommand','_compareContattiKeys'));
+				//var_dump($arrayPublicUsers);
 				
 				$template->assign('common_contactsCanaleAvailable', 'true');
 				$template->assign('common_langContactsCanale', 'Contatti');
@@ -231,11 +234,39 @@ class CanaleCommand extends UniversiboCommand
 			
 		}
 		
+		
 		$this->updateUltimoAccesso();
 		
 		parent::shutdownCommand();
 	}
+
+
+
 	
+	function _compareContattiKeys($b, $a)
+	{
+		$theArrayOrder = array ('Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>'');
+				  
+		$posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
+		$posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
+		if ($posA==$posB) return 0;
+		return ($posA > $posB) ? 1 : -1;
+	}
+		
+		
+	//where is my key in my array
+	function _keyPosInArray($key,$array)
+	{
+		$i=0;
+		reset($array);
+		while(current($array)){ 
+			if(key($array) == $key){
+				return $i;
+			}
+			next($array);
+		}
+		return $i + 1;
+	}
 }
 
 ?>
