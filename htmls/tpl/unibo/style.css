@@ -279,6 +279,11 @@ td.evidenzia{
 	color: #386dce;
 	text-align: left;
 }
+#content th
+{
+	background-color: #ccc;
+	padding: 2px 4px;
+}
 
 #content span p
 {

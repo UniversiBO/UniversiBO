@@ -1,7 +1,7 @@
 {include file=header_index.tpl}
 
 <div class="titoloPagina">
-<h2>{$showCanale_titolo|escape:"htmlall"}"</h2>
+<h2>{$showCanale_titolo|escape:"htmlall"}</h2>
 <p><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
 </div>
 
