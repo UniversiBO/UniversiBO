@@ -24,7 +24,8 @@ class RegStudente extends UniversiboCommand
 		$fc =& $this->getFrontController();
 		$template =& $this->frontController->getTemplateEngine();
 		
-		if (!$this->sessionUser->isOspite())
+		$session_user =& $this->getSessionUser();
+		if (!$session_user->isOspite())
 		{
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione pu? essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
