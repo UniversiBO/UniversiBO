@@ -10,7 +10,4 @@
 <hr />					
 {include file=News/latest_news.tpl}
 
-<hr />
-{include file=Files/show_info.tpl}
-
 {include file=footer_index.tpl}
