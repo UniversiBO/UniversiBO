@@ -1,5 +1,4 @@
-{if $showFileStudentiCommenti_langCommentiAvailableFlag == "true"}
-	<br />
+<br />
 	{if $isFileStudente == 'true'}
 	<table width="90%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 	 <tr><td class="Normal"><span class="NormalC">Voto&nbsp;medio:</span></td><td class="Normal" valign="middle" width="100%">&nbsp;{$showFileInfo_voto|escape:"htmlall"}</td></tr>
@@ -8,6 +7,7 @@
  	</table>
  	<br />
  	{/if}
+{if $showFileStudentiCommenti_langCommentiAvailableFlag == "true"}
 	{foreach from=$showFileStudentiCommenti_commentiList item=temp_commenti}
 	<table width="90%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr bgcolor="#000099">
