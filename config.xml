@@ -240,6 +240,7 @@
 		<FileStudentiCommentEdit class="FileStudentiCommentEdit">
 			<response type="template" name="success">file_studenti_comment_edit_success.tpl</response>
 			<response type="template" name="default">file_studenti_comment_edit.tpl</response>
+			<pluginCommand name="ShowFileStudentiCommento" class="Files.ShowFileStudentiCommento" />
 		</FileStudentiCommentEdit>
 		<FileStudentiCommentDelete class="FileStudentiCommentDelete">
 			<response type="template" name="success">file_studenti_comment_delete_success.tpl</response>

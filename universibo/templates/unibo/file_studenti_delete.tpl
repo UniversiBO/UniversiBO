@@ -3,7 +3,7 @@
 <h2>Cancella il file</h2>
 </div>
 {include file=avviso_notice.tpl}
-
+Sei sicuro di voler cancellare questo file?
 <form method="post">
 	{if $fileDelete_flagCanali == 'true'}
 	<p><fieldset>

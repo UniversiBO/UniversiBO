@@ -93,6 +93,7 @@ class FileStudentiCommentEdit extends UniversiboCommand {
 		$f27_commento = $commentoItem->getCommento();
 		$f27_voto = $commentoItem->getVoto();		
 
+		$this->executePlugin('ShowFileStudentiCommento', array( 'id_file_studente' => $_GET['id_file_studente'],'id_utente' => $_GET['id_utente'] ));
 
 		$f27_accept = false;
 		
