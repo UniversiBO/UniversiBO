@@ -253,7 +253,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_universibo',		'UniversiBO');
 		$template->assign('common_metaKeywords',	'universibo, università, facoltà, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novità, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
 		$template->assign('common_metaDescription',	'Il portale dedicato agli studenti universitari di Bologna');
-		$template->assign('common_title',			'UniversiBO ...il portale dedicato agli studenti universitari di Bologna');
+		$template->assign('common_title',			'UniversiBO: la community degli studenti dell\'Università di Bologna');
 		$template->assign('common_langNewWindow',	'apre una nuova finestra');
 		
 		//kronos

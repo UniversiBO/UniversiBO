@@ -1,11 +1,11 @@
 {config_load file="main.conf"}
 {#docType#}
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>{$common_title|escape:"html"}</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}">
-<meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}" />
+<meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
 <script type="text/javascript" src="tpl/black/js_common.js"></script>
 {#styleSheet#}
 {#favIcon#}
@@ -27,7 +27,7 @@
 <tr><td bgcolor="#000050">
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr>
- <td valign="middle" align="left" class="Navbar" width="350">&nbsp;&nbsp;<a href="{$common_homepageUri}">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;{$common_homepage}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_forumUri}" target="_blank" alt="">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;{$common_forum}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_settingsUri}">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;{$common_settings}&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ <td valign="middle" align="left" class="Navbar" width="350">&nbsp;&nbsp;<a href="{$common_homepageUri}">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;{$common_homepage}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_forumUri}" target="_blank" alt="" >&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;{$common_forum}&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="{$common_settingsUri}">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;{$common_settings}&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
  <td>
   <table border="0" width="100%" cellspacing="0" cellpadding="0" summary="">
   <tr><td class="Titolo" align="right">{$common_longDate} - {$common_time}&nbsp;&nbsp;</td></tr>
