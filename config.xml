@@ -187,7 +187,7 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsShowCanale>
-
+		
 		<FileDownload class="FileDownload">
 			<response type="template" name="file_download_iscriviti">file_download_iscriviti.tpl</response>
 			<response type="template" name="file_download_password">file_download_password.tpl</response>
@@ -224,8 +224,11 @@
 		<ProgrammazioneDidatticaFacolta class="ProgrammazioneDidatticaFacolta">
 			<response type="template" name="default">programmazione_didattica_facolta.tpl</response>
 		</ProgrammazioneDidatticaFacolta>
+		<ProgrammazioneDidatticaCdl class="ProgrammazioneDidatticaCdl">
+			<response type="template" name="default">programmazione_didattica_cdl.tpl</response>
+		</ProgrammazioneDidatticaCdl>
 		
-
+		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

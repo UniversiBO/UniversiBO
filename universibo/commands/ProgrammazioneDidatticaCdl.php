@@ -3,6 +3,7 @@
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaDataRetrieverFactory'.PHP_EXTENSION);
 require_once ('Facolta'.PHP_EXTENSION);
+require_once ('Cdl'.PHP_EXTENSION);
 
 
 /**
@@ -17,7 +18,7 @@ require_once ('Facolta'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ProgrammazioneDidatticaFacolta extends UniversiboCommand 
+class ProgrammazioneDidatticaCdl extends UniversiboCommand 
 {
 	function execute()
 	{
@@ -26,6 +27,10 @@ class ProgrammazioneDidatticaFacolta extends UniversiboCommand
 		
 		$session_user =& $this->getSessionUser();
 		
+		if (!arraY_key_exists('cod_fac',$_GET) || !ereg('^([0-9A-Z]{4})$', $_GET['cod_fac']))
+				Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id della facolta\' richiesta non e\' valido', 'file' => __FILE__, 'line' => __LINE__));
+		$codFac = $_GET['cod_fac'];
+		
 		if (!$session_user->isAdmin())
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La gestione della didattica e\' accessibile solo ad utenti amministratori.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 				
@@ -33,7 +38,7 @@ class ProgrammazioneDidatticaFacolta extends UniversiboCommand
 		if (!in_array($session_user->getUsername(), $username_allowed ))
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La gestione della didattica e\' accessibile solo a '.implode(', ',$username_allowed),'file'=>__FILE__,'line'=>__LINE__));
 		
-		if ( array_key_exists('f24_submit_publish', $_POST) || array_key_exists('f24_submit_hide', $_POST))
+/*		if ( array_key_exists('f24_submit_publish', $_POST) || array_key_exists('f24_submit_hide', $_POST))
 		{
 			if (array_key_exists('f24_submit_publish', $_POST))
 			{
@@ -58,16 +63,16 @@ class ProgrammazioneDidatticaFacolta extends UniversiboCommand
 			$facolta->setPermessi($permessi);
 			$facolta->updateFacolta();
 		}
-		
+*/		
 		
 		
 		$data_retriever =& ProgrammazioneDidatticaDataRetrieverFactory::getProgrammazioneDidatticaDataRetriever("web_service");
-		$elenco_facolta =& $data_retriever->getFacoltaList();
-		$num_facolta = count($elenco_facolta);
+		$elenco_cdl =& $data_retriever->getCorsoListFacolta($codFac);
+		$num_cdl = count($elenco_cdl);
 		
 		
-		$keys_nuovi_cod_fac = array();
-		if ( array_key_exists('f24_submit', $_POST) )
+		$keys_nuovi_cod_cdl = array();
+/*		if ( array_key_exists('f24_submit', $_POST) )
 		{
 			$keys_nuovi_cod_fac = array_keys($_POST['f24_cod_fac']);
 			for($i=0; $i<count($keys_nuovi_cod_fac);  $i++)
@@ -76,47 +81,47 @@ class ProgrammazioneDidatticaFacolta extends UniversiboCommand
 					Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id della facolta\' da aggiungere non e\' valido', 'file' => __FILE__, 'line' => __LINE__));
 				}
 		}
+	*/	
 		
+		$tpl_elenco_cdl = array();
 		
-		$tpl_elenco_facolta = array();
-		
-		for($i=0; $i<$num_facolta;  $i++)
+		for($i=0; $i<$num_cdl;  $i++)
 		{
-			$facolta_db =& Facolta::selectFacoltaCodice($elenco_facolta[$i]->codFac);
+			$cdl_db =& Cdl::selectCdlCodice($elenco_cdl[$i]->codCorso);
 			
-			if ($facolta_db === false)
+			if ($cdl_db === false)
 			{ 
-				$facolta_attiva = 'false';
+				$cdl_attiva = 'false';
 				$public = 'false';
 				
-				if (in_array($elenco_facolta[$i]->codFac,$keys_nuovi_cod_fac))
+				if (in_array($elenco_cdl[$i]->codCorso,$keys_nuovi_cod_cdl))
 				{
-					$new_facolta = new Facolta(0, USER_NONE, time(), CANALE_FACOLTA, '', '', 0,
-												true, false, false, null, null, true, false,
-												$elenco_facolta[$i]->codFac, $elenco_facolta[$i]->descFac, '');
-					
-					if ($new_facolta->insertFacolta())
-					{
-						$facolta_attiva = 'true';
-						$public = 'false';
-					}
+//					$new_cdl = new Facolta(0, USER_NONE, time(), CANALE_FACOLTA, '', '', 0,
+//												true, false, false, null, null, true, false,
+//												$elenco_cdl[$i]->codFac, $elenco_cdl[$i]->descFac, '');
+//					
+//					if ($new_facolta->insertFacolta())
+//					{
+//						$facolta_attiva = 'true';
+//						$public = 'false';
+//					}
 					
 				}
 
 			}	
 			else
 			{
-				$facolta_attiva = 'true';
-				if ($facolta_db->getPermessi() == USER_NONE)
+				$cdl_attiva = 'true';
+				if ($cdl_db->getPermessi() == USER_NONE)
 					$public = 'false';
 				else
 					$public = 'true';
 			}
 			
-			$tpl_elenco_facolta[] = array("desc_fac" => $elenco_facolta[$i]->descFac, "cod_fac" => $elenco_facolta[$i]->codFac, "cod_doc_preside" => $elenco_facolta[$i]->codDocPreside, "attiva" => $facolta_attiva, "public" => $public );
+			$tpl_elenco_cdl[] = array("desc_corso" => $elenco_cdl[$i]->descCorso, "cod_corso" => $elenco_cdl[$i]->codCorso, "cod_doc_presidente" => $elenco_cdl[$i]->codDocPresidente, "attiva" => $cdl_attiva, "public" => $public );
 		}
 		
-		$template->assign('programmazioneDidatticaFacolta_elencoFacolta',$tpl_elenco_facolta);
+		$template->assign('programmazioneDidatticaCdl_elencoCdl',$tpl_elenco_cdl);
 		
 		return 'default';
 		
