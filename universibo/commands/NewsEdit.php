@@ -52,7 +52,7 @@ class NewsEdit extends CanaleCommand
 		if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare la notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 
-		$param = array ('id_notizie' => array ($_GET['id_news']));
+		$param = array ('id_notizie' => array ($_GET['id_news']), 'chk_diritti' => false);
 		$this->executePlugin('ShowNews', $param);
 
 		$frontcontroller = & $this->getFrontController();

@@ -5,6 +5,7 @@
 {/if}
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica la notizia<br />&nbsp;</p></td></tr>
+<tr><td align="center">{include file=News/show_news.tpl}</td></tr>
 <tr><td align="center">
 {include file=avviso_notice.tpl}
 <form method="post">

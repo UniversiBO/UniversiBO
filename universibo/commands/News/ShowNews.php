@@ -31,23 +31,24 @@ class ShowNews extends PluginCommand {
 	{
 		
 		$elenco_id_news		=  $param['id_notizie'];
+		$flag_chkDiritti	=  $param['chk_diritti'];
 //		var_dump($param['id_notizie']);
 //		die();
 		
 		$bc        =& $this->getBaseCommand();
-//		$user      =& $bc->getSessionUser();
-//		$canale    =& $bc->getRequestCanale();
+		$user      =& $bc->getSessionUser();
+		$canale    =& $bc->getRequestCanale();
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
 
 
-/*		$id_canale = $canale->getIdCanale();
+		$id_canale = $canale->getIdCanale();
 		$titolo_canale =  $canale->getTitolo();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
 		$user_ruoli =& $user->getRuoli();
 
-		
+		$personalizza_not_admin = false;
 
 		$template->assign('showNews_addNewsFlag', 'false');
 		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
@@ -58,6 +59,7 @@ class ShowNews extends PluginCommand {
 			{
 				$ruolo =& $user_ruoli[$id_canale];
 				
+				$personalizza_not_admin = true;
 				$referente      = $ruolo->isReferente();
 				$moderatore     = $ruolo->isModeratore();
 				$ultimo_accesso = $ruolo->getUltimoAccesso();
@@ -77,7 +79,7 @@ class ShowNews extends PluginCommand {
 			$moderatore     = false;
 			$ultimo_accesso = $user->getUltimoLogin();
 		}
-		
+/*		
 		$canale_news = $this->getNumNewsCanale($id_canale);
 
 		$template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
@@ -112,35 +114,35 @@ class ShowNews extends PluginCommand {
 			{
 				$news =& $elenco_news[$i];
 				//var_dump($news);
-				//$this_moderatore = ($moderatore && $news->getIdUtente()==$user->getIdUser());
+				//$this_moderatore = ($user->isAdmin() || $moderatore && $news->getIdUtente()==$user->getIdUser());
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();
 				$elenco_news_tpl[$i]['notizia']      = $news->getNotizia();
 				$elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $news->getDataIns());
 				//echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
-				//$elenco_news_tpl[$i]['nuova']        = ($personalizza==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
+				$elenco_news_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
 				$elenco_news_tpl[$i]['autore']       = $news->getUsername();
 				$elenco_news_tpl[$i]['autore_link']  = 'ShowUser&id_utente='.$news->getIdUtente();
 				$elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();
 				
 				$elenco_news_tpl[$i]['scadenza']     = '';
-/*				if ( ($news->getDataScadenza()!=NULL) && ( $user->isAdmin() || $referente || $this_moderatore ) )
+				if ( ($news->getDataScadenza()!=NULL) && ( $user->isAdmin() || $referente || $this_moderatore ) && $flag_chkDiritti)
 				{
 					$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y', $news->getDataScadenza() );
 				}
-*/				
+				
 				$elenco_news_tpl[$i]['modifica']     = '';
 				$elenco_news_tpl[$i]['modifica_link']= '';
 				$elenco_news_tpl[$i]['elimina']      = '';
 				$elenco_news_tpl[$i]['elimina_link'] = '';
-/*				if ( $user->isAdmin() || $referente || $this_moderatore )
+				if ( ($user->isAdmin() || $referente || $this_moderatore)  && $flag_chkDiritti)
 				{
 					$elenco_news_tpl[$i]['modifica']     = 'Modifica';
 					$elenco_news_tpl[$i]['modifica_link']= 'NewsEdit&id_news='.$news->getIdNotizia();
 					$elenco_news_tpl[$i]['elimina']      = 'Elimina';
 					$elenco_news_tpl[$i]['elimina_link'] = 'NewsDelete&id_news='.$news->getIdNotizia().'&id_canale='.$id_canale;
 				}
-*/
+
 			}
 		
 		}

@@ -144,7 +144,7 @@ class NewsDelete extends CanaleCommand {
 		}
 		
 		//visualizza notizia
-		$param = array('id_notizie'=>array($_GET['id_news']) );
+		$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
 		$this->executePlugin('ShowNews', $param );
 		
 		$template->assign('f9_langAction', "Elimina la notizia dai seguenti canali:");
