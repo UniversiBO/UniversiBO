@@ -202,7 +202,7 @@ class Cdl extends Canale{
 		
 		while($res->fetchInto($row))
 		{
-			echo $row[0];
+			//echo $row[0];
 			if ( ($elencoCdl[] =& Cdl::selectCdlCodice($row[0]) ) === false )
 				return false;
 		}
@@ -299,14 +299,14 @@ class Cdl extends Canale{
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 15 ';
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 16 ';
 
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
+		
 		$rows = $res->numRows();
-
+		
 		if( $rows == 0) return array();
 		$elenco = array();
 		while (	$res->fetchInto($row) )
