@@ -673,7 +673,7 @@ class FrontController {
 	*/
 	function getAppSetting( $identifier )
 	{
-		return $this->appSettings['identifier'];
+		return $this->appSettings[$identifier];
 	}
 
 
