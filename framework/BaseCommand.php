@@ -4,7 +4,7 @@
  *
  * @package framework
  * @version 1.1.0
- * @author  Ilias Bartolini
+ * @author  Ilias Bartolini <brain79@virgilio.it>
  * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 class BaseCommand {

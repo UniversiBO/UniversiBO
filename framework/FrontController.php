@@ -632,15 +632,30 @@ class FrontController {
 		
 		$this->commandTemplate=array();
 		//$templatePath=$this->paths['templates'];		
-		$n=$commandNode->numChildren();
+		$responses =& $commandNode->getChildren('response');
+		$n=count($responses);
 		for($i=0;$i<$n;$i++)
 		{
-			$response=&$commandNode->children[$i];
+			$response =& $responses[$i];
 			if ($response->attributes['type'] == 'template')
 			{
 				$this->commandTemplate[$response->attributes['name']] = $response->charData;	
 			}		
 		}
+
+/*
+		$responses =& $commandNode->getChildren('pluginCommand');
+		$n=count($responses);
+		for($i=0;$i<$n;$i++)
+		{
+			$response =& $responses[$i];
+			//if ($response->attributes['type'] == 'template')
+			//{
+			//	$this->commandTemplate[$response->attributes['name']] = $response->charData;	
+			//}		
+		}
+*/
+
 		if(!isset($this->commandClass))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definita l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
@@ -699,15 +714,16 @@ class FrontController {
 	*/
 	function &getTemplateEngine()
 	{
-		static $templateEngine;
+		static $templateEngine = NULL;
 		//var_dump($templateEngine);
 		 
-		if ( defined('TEMPLATE_SINGLETON') ){
+		//if ( defined('TEMPLATE_SINGLETON') ){
+		if ( $templateEngine != NULL ){
 			 return $templateEngine ; 
 		}
 		else
 		{	
-			define('TEMPLATE_SINGLETON','on');
+			//define('TEMPLATE_SINGLETON','on');
 			require_once($this->templateEngine['smarty_dir'].'Smarty.class.php');
 			
 			$templateEngine = new Smarty();
