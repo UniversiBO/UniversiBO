@@ -80,6 +80,11 @@ class Ruolo {
 	 */
 	var $referente = false; 
 
+	/**
+	 * @access private
+	 */
+	var $nascosto = false; 
+
 	
 	
 	/**
@@ -93,12 +98,13 @@ class Ruolo {
 	 * @param boolean	$moderatore		true se l'utente possiede diritti di moderatore sul canale
 	 * @param boolean	$referente		true se l'utente possiede diritti di referente sul canale
 	 * @param boolean	$my_universibo	true se l'utente ha inserito il canale tra i suoi preferiti
+	 * @param boolean	$nascosto		se il ruolo è nascosto o visibile da tutti
 	 * @param User 		$user			riferimento all'oggetto User
 	 * @param Canale 	$canale			riferimento all'oggetto Canale
 	 * @return Ruolo
 	 */
 	
-	function Ruolo($id_utente, $id_canale, $nome, $ultimo_accesso, $moderatore, $referente, $my_universibo, $notifica, $user=NULL, $canale=NULL)
+	function Ruolo($id_utente, $id_canale, $nome, $ultimo_accesso, $moderatore, $referente, $my_universibo, $notifica, $nascosto, $user=NULL, $canale=NULL)
 	{
 		$this->id_utente = $id_utente; 
 		$this->id_canale = $id_canale;
@@ -112,6 +118,8 @@ class Ruolo {
 		$this->myUniversibo = $my_universibo; 
 		$this->moderatore = $moderatore; 
 		$this->referente = $referente; 
+		
+		$this->nascosto = $nascosto;
 		
 	}
 	
@@ -369,6 +377,18 @@ class Ruolo {
 
 	
 	/**
+	 * Verifica se nel ruolo corrente l'utente è referente del canale
+	 *
+	 * @return boolean	true se è referente, viceversa false
+	 */
+	function isNascosto()
+	{
+		return $this->nascosto;
+	}
+
+
+	
+	/**
 	 * Imposta i diritti di referente nel ruolo
 	 *
 	 * @param	boolean	$referente livello di notifica
@@ -422,7 +442,7 @@ class Ruolo {
 	 */
 	function updateAddMyUniversibo($updateDB = false)
 	{
-		$this->_updateMyUniversibo(true, $updateDB);
+		$this->_updateMyUniversibo(true, $updateDB);   //non l'ho capita, non ricorda che fa! ma funziona!?
 	}
 
 
@@ -497,7 +517,7 @@ class Ruolo {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
+		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -507,7 +527,7 @@ class Ruolo {
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
-		$ruolo =& new Ruolo($id_utente, $id_canale, $row[4], $row[0], $row[1]==RUOLO_MODERATORE, $row[1]==RUOLO_REFERENTE, $row[2]=='S', $row[3]);
+		$ruolo =& new Ruolo($id_utente, $id_canale, $row[4], $row[0], $row[1]==RUOLO_MODERATORE, $row[1]==RUOLO_REFERENTE, $row[2]=='S', $row[3], $row[5]=='S');
 		return $ruolo;
 		
 	}
@@ -524,7 +544,7 @@ class Ruolo {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente);
+		$query = 'SELECT id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_utente = '.$db->quote($id_utente);
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -534,7 +554,7 @@ class Ruolo {
 
 		while (	$res->fetchInto($row) )
 		{
-			$ruoli[] =& new Ruolo($id_utente, $row[0], $row[5], $row[1], $row[2]==RUOLO_MODERATORE, $row[2]==RUOLO_REFERENTE, $row[3]=='S', $row[4]);
+			$ruoli[] =& new Ruolo($id_utente, $row[0], $row[5], $row[1], $row[2]==RUOLO_MODERATORE, $row[2]==RUOLO_REFERENTE, $row[3]=='S', $row[4], $row[6]=='S');
 		}
 		return $ruoli;
 		
@@ -547,6 +567,7 @@ class Ruolo {
 		
 		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
 		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
+		$nascosto = ($this->isNascosto()) ? 'S' : 'N'; 
 		
 		$query = 'UPDATE utente_canale SET ( id_utente = '.$db->quote($this->id_utente).
 					' id_canale = '.$db->quote($this->id_canale).
@@ -554,7 +575,8 @@ class Ruolo {
 					' ruolo = '.$db->quote($campo_ruolo).
 					' my_universibo = '.$db->quote($my_universibo).
 					' notifica = '.$db->quote($this->getTipoNotifica()).
-					' nome = '.$db->quote($this->getNome()).' )';
+					' nome = '.$db->quote($this->getNome()).
+					' nascosto = '.$db->quote($nascosto).' )';
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
@@ -577,15 +599,17 @@ class Ruolo {
 		
 		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
 		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
+		$nascosto = ($this->isNascosto()) ? 'S' : 'N'; 
 		
-		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome) VALUES ( '.
+		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto) VALUES ( '.
 					$db->quote($this->id_utente).' , '.
 					$db->quote($this->id_canale).' , '.
 					$db->quote($this->ultimoAccesso).' , '.
 					$db->quote($campo_ruolo).' , '.
 					$db->quote($my_universibo).' , '.
 					$db->quote($this->getTipoNotifica()).' , '.
-					$db->quote($this->getNome()).' )';
+					$db->quote($this->getNome()).' , '.
+					$db->quote($nascosto).' )';
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
