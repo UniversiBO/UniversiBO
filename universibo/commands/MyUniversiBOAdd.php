@@ -39,6 +39,7 @@ class MyUniversiBOAdd extends UniversiboCommand
 		$template->assign('common_langCanaleNome', $canale->getNome());
 		
 		$ruoli =& $utente->getRuoli();
+		$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
 		
 		if(array_key_exists($id_canale, $ruoli))
 		{
@@ -99,7 +100,7 @@ class MyUniversiBOAdd extends UniversiboCommand
 			$template->assign('f15_nome', $f15_nome);
 			$template->assign('f15_livelli_notifica', $f15_livelli_notifica);
 			$template->assign('f15_livello_notifica', $f15_livello_notifica);
-			$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
+			
 			return 'default';
 		}
 		

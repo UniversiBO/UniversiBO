@@ -12,6 +12,13 @@
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<tr><td>
+<br />
+<hr width="90%" />
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+</td></tr></table>
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

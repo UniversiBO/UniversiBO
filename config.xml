@@ -94,6 +94,8 @@
 		</MyUniversiBOAdd>
 		<MyUniversiBORemove class="MyUniversiBORemove">
 			<response type="template" name="success">my_universibo_remove_success.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</MyUniversiBORemove>
 		
 		<RegStudente class="RegStudente">
