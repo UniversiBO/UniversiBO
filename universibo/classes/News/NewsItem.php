@@ -117,9 +117,6 @@ class NewsItem {
 	 
 	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $ultimaModifica, $urgente, $eliminata, $id_utente, $username)
 	 {
-	 	/**
-	 	 * @TODO verifica parametri ingresso	
-	 	 */
 	 	$this->id_notizia     = $id_notizia;
 	 	$this->titolo         = $titolo;
 	 	$this->notizia        = $notizia;
@@ -130,7 +127,6 @@ class NewsItem {
 	 	$this->eliminata      = $eliminata;
 	 	$this->id_utente      = $id_utente;
 	 	$this->username       = $username;
-	 
 	 }
 
 	 
