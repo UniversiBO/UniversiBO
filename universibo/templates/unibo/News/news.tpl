@@ -3,7 +3,7 @@
 <tr><td bgcolor="#999999" height="1"><img src="tpl/unibo/spacer.gif" width="1" height="1" alt=""></td></tr>
 </table>
 <table width="100%" cellspacing="0" cellpadding="3" border="0" summary="">
-  <tr><td class="testoNormale" bgcolor="#cccccc" colspan="2"><b>:: {$titolo|escape:"htmlall"} ::</b> {if $nuova=="true"}&nbsp;&nbsp;novit&agrave;{/if}</td></tr>
+  <tr><td class="testoNormale" bgcolor="#cccccc" colspan="2"><strong>:: {$titolo|escape:"htmlall"} ::</strong> {if $nuova=="true"}&nbsp;&nbsp;novit&agrave;{/if}</td></tr>
   <tr><td class="testoNormale" colspan="2">{$notizia|escape:"htmlall"|ereg_replace:"[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</td></tr>
   <tr><td class="testoNormale" >
 {if $modifica!=""}&nbsp;&nbsp;&nbsp;&nbsp;
