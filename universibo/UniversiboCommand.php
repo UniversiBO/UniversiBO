@@ -200,8 +200,19 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_setHomepage', 'Imposta Homepage');
 		$template->assign('common_addBookmarks', 'Aggiungi ai preferiti');
 
-		$template->assign('common_fac', 'Facoltà');
+
+		$session_user = $this->getSessionUser();
+		if ($session_user->isOspite())
+		{
+			$template->assign('common_userLoggedIn', 'true');
+		}
+		else
+		{
+			$template->assign('common_userLoggedIn', 'false');
+		}
 		
+		
+		$template->assign('common_fac', 'Facoltà');
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
 		//var_dump($elenco_facolta);
