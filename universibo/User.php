@@ -465,8 +465,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_ADMIN ) return true;
-		return false;
+		return (boolean) ( $groups & USER_ADMIN );
 	}
 
 
@@ -482,8 +481,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_PERSONALE ) return true;
-		return false;
+		return (boolean) ( $groups & USER_PERSONALE );
 	}
 
 
@@ -499,8 +497,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_DOCENTE ) return true;
-		return false;
+		return (boolean) ( $groups & USER_DOCENTE );
 	}
 
 
@@ -516,8 +513,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_TUTOR ) return true;
-		return false;
+		return (boolean) ( $groups & USER_TUTOR );
 	}
 
 
@@ -533,8 +529,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_MODERATORE ) return true;
-		return false;
+		return (boolean) ( $groups & USER_MODERATORE );
 	}
 
 
@@ -550,8 +545,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups & USER_STUDENTE ) return true;
-		return false;
+		return (boolean) ( $groups & USER_STUDENTE );
 	}
 
 
