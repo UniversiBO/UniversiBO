@@ -86,6 +86,13 @@
 			<response type="template" name="default">my_page.tpl</response>
 			<pluginCommand name="ShowMyNews" class="News.ShowMyNews" />
 		</ShowMyUniversiBO>
+		<MyUniversiBOAdd class="MyUniversiBOAdd">
+			<response type="template" name="default">my_universibo_add.tpl</response>
+			<response type="template" name="default">my_universibo_add_success.tpl</response>
+		</MyUniversiBOAdd>
+		<MyUniversiBORemove class="MyUniversiBORemove">
+			<response type="template" name="success">my_universibo_remove_success.tpl</response>
+		</MyUniversiBORemove>
 		
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>

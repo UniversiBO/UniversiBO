@@ -67,6 +67,11 @@ class User {
 	/**
 	 * @access private
 	 */
+	var $notifica = 0;
+	
+	/**
+	 * @access private
+	 */
 	var $ban = false;
 	
 	
@@ -187,7 +192,7 @@ class User {
 	 * @param array() $bookmark array con elenco dei id_canale dell'utente associati ai rispettivi ruoli 
 	 * @return User
 	 */
-	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $ultimo_login=NULL, $AD_username=NULL, $bookmark=NULL)
+	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $notifica=NULL, $ultimo_login=NULL, $AD_username=NULL, $bookmark=NULL)
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
@@ -196,6 +201,7 @@ class User {
 		$this->ADUsername  = $AD_username;
 		$this->ultimoLogin = $ultimo_login;
 		$this->MD5         = $MD5;
+		$this->notifica    = $notifica;
 		$this->bookmark    = $bookmark;
 	}
 	
@@ -209,6 +215,18 @@ class User {
 	function getUsername()
 	{
 		return $this->username;
+	}
+
+
+
+	/**
+	 * Ritorna il livello di notifica dei messaggi
+	 *
+	 * @return string
+	 */
+	function getLivelloNotifica()
+	{
+		return $this->notifica;
 	}
 
 
@@ -682,7 +700,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups  FROM utente WHERE id_utente = '.$db->quote($id_utente);
+			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica  FROM utente WHERE id_utente = '.$db->quote($id_utente);
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -692,7 +710,7 @@ class User {
 			if( $rows == 0) return false;
 
 			$row = $res->fetchRow();
-			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[3], $row[4], NULL);
+			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
 			return $user;
 			
 		}
@@ -713,7 +731,7 @@ class User {
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups  FROM utente WHERE username = '.$db->quote($username);
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica  FROM utente WHERE username = '.$db->quote($username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -723,7 +741,7 @@ class User {
 		if( $rows == 0) return false;
 
 		$row = $res->fetchRow();
-		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[3], $row[4], NULL);
+		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], NULL);
 		return $user;
 		
 	}
@@ -755,11 +773,12 @@ class User {
 			$this->id_utente = $db->nextID('utente_id_utente');
 			$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
 			
-			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups, ban) VALUES '.
+			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
 						$db->quote($this->getPasswordHash()).' , '.
 						$db->quote($this->getEmail()).' , '.
+						$db->quote($this->getNotifica()).' , '.
 						$db->quote($this->getUltimoLogin()).' , '.
 						$db->quote($this->getADUsername()).' , '.
 						$db->quote($this->getGroups()).' , '.
@@ -798,6 +817,7 @@ class User {
 		$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
 					', password = '.$db->quote($this->getPasswordHash()).
 					', email = '.$db->quote($this->getEmail()).
+					', notifica = '.$db->quote($this->getNotifica()).
 					', ultimo_login = '.$db->quote($this->getUltimoLogin()).
 					', ad_username = '.$db->quote($this->getADUsername()).
 					', groups = '.$db->quote($this->getGroups()).

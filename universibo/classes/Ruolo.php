@@ -7,9 +7,9 @@ define('RUOLO_NONE'        ,0);
 define('RUOLO_MODERATORE'  ,1);
 define('RUOLO_REFERENTE'   ,2);
 
-define('RUOLO_NOTIFICA_NONE'   ,0);
-define('RUOLO_NOTIFICA_URGENT' ,1);
-define('RUOLO_NOTIFICA_ALL'    ,2);
+define('NOTIFICA_NONE'   ,0);
+define('NOTIFICA_URGENT' ,1);
+define('NOTIFICA_ALL'    ,2);
 
 
 /**
@@ -283,6 +283,22 @@ class Ruolo {
 	}
 	
 	
+	/**
+	 * restituisce il livello di notifica dell'utente nel canale corrente
+	 * define('RUOLO_NOTIFICA_NONE'   ,0);
+	 * define('RUOLO_NOTIFICA_URGENT' ,1);
+	 * define('RUOLO_NOTIFICA_ALL'    ,2);
+	 *
+	 * @return int livello di notifica
+	 */
+	function getLivelliNotifica()
+	{
+		return array(	NOTIFICA_NONE => 'Nessuna', 
+						NOTIFICA_URGENT => 'Solo Urgenti', 
+						NOTIFICA_ALL => 'Tutti');
+	}
+	
+	
 	
 	/**
 	 * Imposta il livello di notifica dell'utente nel canale corrente
@@ -464,7 +480,7 @@ class Ruolo {
 		
 			$my_universibo = ($my_universibo) ? 'S' : 'N';
 			
-			$query = 'UPDATE utente_canale SET my_universibo = '.$campo_ruolo.' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
+			$query = 'UPDATE utente_canale SET my_universibo = '.$db->quote($my_universibo).' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 

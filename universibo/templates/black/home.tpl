@@ -12,6 +12,7 @@
 
 {include file=avviso_notice.tpl}
 
+<p align="right"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
 &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr bgcolor="#000099"> 

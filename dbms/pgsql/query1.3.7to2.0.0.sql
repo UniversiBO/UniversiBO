@@ -574,3 +574,14 @@ CREATE TABLE "notifica" (
     "eliminata" char(1) NOT NULL,
     CONSTRAINT "notifica_pkey" PRIMARY KEY (id_notifica)
 ) WITH OIDS;
+
+-- 16/9/2004
+
+ALTER TABLE "utente" ADD "notifica" integer;
+UPDATE "utente" SET notifica = 0;
+ALTER TABLE "utente" ALTER COLUMN "notifica" SET NOT NULL;
+
+UPDATE "utente" SET notifica = 1 WHERE inoltro_email = 'U';
+UPDATE "utente" SET notifica = 2 WHERE inoltro_email = 'T';
+
+

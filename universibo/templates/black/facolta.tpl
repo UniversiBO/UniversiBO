@@ -12,6 +12,8 @@
 <!--&nbsp;<br /> <img src="tpl/black/facolta_30.gif" width="132" height="39" alt="{$fac_langTitleAlt|escape:"htmlall"}" />-->
 <p align="center" class="Titolo">{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}</p>
 
+<p align="center"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+
 <p>{$fac_langList|escape:"htmlall"}</p>
 
 {foreach from=$fac_list item=temp_fac}

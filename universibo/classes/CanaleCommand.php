@@ -113,14 +113,32 @@ class CanaleCommand extends UniversiboCommand
 		
 		$template =& $this->frontController->getTemplateEngine();
         //var_dump($template);
-		
 		$canale =& $this->getRequestCanale();
+		$id_canale = $this->getRequestIdCanale();
+		$user =& $this->getSessionUser();
+		
+		if(!$user->isOspite())
+		{
+			$user_ruoli =& $user->getRuoli();
+			if (array_key_exists($id_canale, $user_ruoli) && $user_ruoli[$id_canale]->isMyUniversiBO())
+			{
+				$template->assign( 'common_canaleMyUniversiBO', 'remove');
+				$template->assign( 'common_langCanaleMyUniversiBO', 'Rimuovi questa pagina da MyUniversiBO');
+				$template->assign( 'common_canaleMyUniversiBO', 'index.php?do=MyUniversiBORemove&id_canale='.$canale->getIdCanale());
+			}
+			else
+			{
+				$template->assign( 'common_canaleMyUniversiBO', 'add');
+				$template->assign( 'common_langCanaleMyUniversiBO', 'Aggiungi questa pagina a MyUniversiBO');
+				$template->assign( 'common_canaleMyUniversiBO', 'index.php?do=MyUniversiBOAdd&id_canale='.$canale->getIdCanale());
+			}
+		}
 		
 		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );
 		$template->assign( 'common_langCanaleNome', $canale->getNome());
 		$template->assign( 'common_canaleURI', $canale->showMe());
-			
+		
 	}
 
 

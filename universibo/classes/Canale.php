@@ -298,7 +298,7 @@ class Canale {
 	 */
 	function getTitolo()
 	{
-		return $this->nome;
+		return $this->getNome();
 	}
 
 

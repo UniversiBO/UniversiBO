@@ -8,6 +8,8 @@
 <tr><td class="Normal">&nbsp;<br /> 
 <p align="center"><img src="tpl/black/{$showCanale_img|escape:"htmlall"}.gif" alt="{$showCanale_titolo|escape:"htmlall"}"></p>
 
+<p align="center"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+
 {if $showCanale_newsFlag == 'true'}
 {include file=News/latest_news.tpl}
 {/if}
