@@ -102,6 +102,10 @@
 			<response type="template" name="success">news_edit_success.tpl</response>
 			<pluginCommand name="ShowNews" class="News.ShowNews" />
 		</NewsEdit>
+		<NewsShowCanale class="NewsShowCanale">
+			<response type="template" name="default">news_show_canale.tpl</response>
+			<pluginCommand name="ShowNews" class="News.ShowNews" />
+		</NewsShowCanale>
 
 
 		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />

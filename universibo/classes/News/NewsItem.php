@@ -385,7 +385,7 @@ class NewsItem {
 	 */
 	 function &selectNewsItems ($id_notizie)
 	 {
-	 	
+	 	//var_dump($id_notizie);
 	 	$db =& FrontController::getDbConnection('main');
 		
 		if ( count($id_notizie) == 0 )
@@ -393,6 +393,7 @@ class NewsItem {
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
+		
 		if ( count($id_notizie) == 1 ) 
 			$values = $id_notizie[0];
 		else 
@@ -480,7 +481,7 @@ class NewsItem {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'DELETE FROM news_canale WHERE id_canale='.$db->quote($id_canale).' AND id_news='.$db->quote($this->id_notizia);
+		$query = 'DELETE FROM news_canale WHERE id_canale='.$db->quote($id_canale).' AND id_news='.$db->quote($this->getIdNotizia());
 		 //? da testare il funzionamento di =&
 		$res =& $db->query($query);
 		

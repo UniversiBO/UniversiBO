@@ -29,11 +29,13 @@ class NewsShowCanale extends CanaleCommand {
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Parametri non validi','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
-		$qta = $_GET['qta'];
-		$num_news_canale = getNumNewsCanale($id_canale);
-		$num_pagine = ceil($num_news_canale / $qta);
 		
-		$lista_notizie = & getLatestNewsCanale($_GET['inizio'],$_qta);
+		$num_news_canale = $this->getNumNewsCanale($id_canale);
+		$quantita = $_GET['qta'];
+		$num_pagine = ceil($num_news_canale / $quantita);
+		$n_pag_list =  array();
+		for ($i = 1; $i <= $num_pagine+1; $i++)  $n_pag_list[] = $i;  
+		$lista_notizie = & $this->getLatestNewsCanale($_GET['inizio'],$quantita,$id_canale);
 		$param = array('id_notizie'=> $lista_notizie, 'chk_diritti' => true);
 		$this->executePlugin('ShowNews', $param );
 		
@@ -77,8 +79,8 @@ class NewsShowCanale extends CanaleCommand {
 		}
 		
 		$res->free();
-		
-		return NewsItem::selectNewsItems($id_news_list);
+		//var_dump($id_news_list);
+		return $id_news_list;
 		
 	}
 	

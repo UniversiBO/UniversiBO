@@ -114,7 +114,7 @@ class ShowNews extends PluginCommand {
 			{
 				$news =& $elenco_news[$i];
 				//var_dump($news);
-				//$this_moderatore = ($user->isAdmin() || $moderatore && $news->getIdUtente()==$user->getIdUser());
+				$this_moderatore = ($user->isAdmin() || ($moderatore && $news->getIdUtente()==$user->getIdUser()));
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();
 				$elenco_news_tpl[$i]['notizia']      = $news->getNotizia();
