@@ -929,12 +929,12 @@ class User {
 			$this->id_utente = $db->nextID('utente_id_utente');
 			$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
 			
-			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban, phone, defaultStyle) VALUES '.
+			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban, phone, default_style) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
 						$db->quote($this->getPasswordHash()).' , '.
 						$db->quote($this->getEmail()).' , '.
-						$db->quote($this->getNotifica()).' , '.
+						$db->quote($this->getLivelloNotifica()).' , '.
 						$db->quote($this->getUltimoLogin()).' , '.
 						$db->quote($this->getADUsername()).' , '.
 						$db->quote($this->getGroups()).' , '.

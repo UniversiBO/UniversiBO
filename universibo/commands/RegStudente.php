@@ -145,7 +145,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 			$randomPassword = User::generateRandomPassword();
 			$notifica = USER_ALL;
 			
-			$new_user = new User(-1, USER_STUDENTE, $q4_username ,User::passwordHashFunction($randomPassword), $q4_ad_user, $notifica, 0, $q4_ad_user, '', $frontcontroller->getAppSetting('defaultStyle') );
+			$new_user = new User(-1, USER_STUDENTE, $q4_username ,User::passwordHashFunction($randomPassword), $q4_ad_user, $notifica, 0, $q4_ad_user, '', $fc->getAppSetting('defaultStyle') );
 			
 			if ($new_user->insertUser() == false)
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q4_username.' mail '.$q4_ad_user,'file'=>__FILE__,'line'=>__LINE__));
@@ -160,13 +160,13 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 
 			$mail->Subject = "Registrazione UniversiBO";
 			$mail->Body = "Benvenuto \"".$new_user->getUsername()."\"!!\nFai ora parte di UniversiBO, la community degli studenti dell'universita' di Bologna!\n\n".
-			     "Per accedere al sito utilizza l'indirizzo '.$fc->getAppSetting('rootUrl').'\n\n".
+			     "Per accedere al sito utilizza l'indirizzo ".$fc->getAppSetting('rootUrl')."\n\n".
 				 "Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
 				 "Username: ".$new_user->getUsername()."\n".
 				 "Password: ".$randomPassword."\n\n".
 				 "Questa password e' stata generata in modo casuale: sul sito  e' disponibile nella pagina delle tue impostazioni personali la funzionalita' per poterla cambiare a tuo piacimento\n\n".
 		 		 "Dopo aver fatto il login puoi, modificare il tuo profilo personale per l'inoltro delle News dei tuoi esami preferiti in e-mail\n".
-		 		 "Se desideri collaborare al progetto UniversiBO compila il questionario all'indirizzo '.$fc->getAppSetting('rootUrl').'/index.php?do=ShowContribute \n\n".
+		 		 "Se desideri collaborare al progetto UniversiBO compila il questionario all'indirizzo ".$fc->getAppSetting('rootUrl')."/index.php?do=ShowContribute \n\n".
 				 "Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
 			
 			$msg = "L'iscrizione è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
