@@ -23,7 +23,7 @@ define('NOTIFICA_NOT_URGENTE', 'N');
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class NewsItem {
+class NotificaItem {
 
 	/**
 	 * @private
@@ -104,6 +104,8 @@ class NewsItem {
 		return $this->messaggio;
 	}
 
+	function getProtollo 
+
 	/**
 	 * Recupera la data di inserimento della notifica
 	 *
@@ -122,8 +124,21 @@ class NewsItem {
 		return $this->urgente;
 	}
 
+
+     /**
+	 * Overwrite the Send function of the base class
+	 * @abstract
+	 * @return string template identifier if command uses template engine
+	 */ 
+	function Send()
+	{
+		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo execute del command deve essere ridefinito','file'=>__FILE__,'line'=>__LINE__) );
+	}
+
+
+
 	/**
-	 * Recupera l'id della notifica
+		 * Recupera l'id della notifica
 	 *
 	 * @return int
 	 */
@@ -137,6 +152,15 @@ class NewsItem {
 	 * @return string
 	 */
 	function getDestinatario() {
+		return $this->destinatario;
+	}
+
+	/**
+	 * Recupera il protocollo
+	 *
+	 * @return string
+	 */
+	function getProtocollo() {
 		return $this->destinatario;
 	}
 
@@ -311,7 +335,7 @@ class NewsItem {
 	 *
 	 * @return boolean true se avviene con successo, altrimenti Error object
 	 */
-	function updateNewsItem() {
+	function updateNotifica() {
 		$db = & FrontController :: getDbConnection('main');
 
 		ignore_user_abort(1);
@@ -337,12 +361,42 @@ class NewsItem {
 	/**
 	 * La funzione deleteNotificaItem controlla se la notifica é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
 	 */
-
-	function deleteNotificaItem() {
+	function deleteNotifica() {
 		$this->eliminata = true;
 		$this->updateNotificaItem();
 	}
 
+	/**
+	 * La funzione deleteNotificaItem controlla se la notifica é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 *
+	 * @return NotificaItem costruttore stile factory.
+	 */
+	function &factoryNotifica($id_notifica)	{
+		return NotificaItem::selectNotifica($id_notifica);
+	}
+	
+	/**
+	 * La funzione retrieveNotifica recupera una notifica, e restituisce il giusto oggetto notifica creandolo dinamicamente.
+	 *
+	 * @return NotificaItem Oggetto sottoclasse di NotificaItem.
+	 */
+	function &retrieveNotifica($id,$fc) { 
+		$not=selectNotifica($id);
+		$strarr=explode('://',this->getDestinatario());
+		
+		$p = ucfirst(strtolower($strarr[0]));
+		$not->setDestinatario($strarr[1]); //ocio che non sia un destinatario di piu' parole. Ha senso?
+		
+		$className = 'Notifica'.$p;
+		
+		require_once($className.PHP_EXTENSION);
+		return call_user_func(array($class_name,'factoryNotifica'), $id, $fc);
+		
+	
+	}
+
+		
+	
 }
 
 ?>
