@@ -44,10 +44,11 @@ class ShowFacolta extends CanaleCommand {
 		$num_cdl = count($elencoCdl);
 		$cdlType = NULL;
 		$fac_listCdlType = array();
-		$default_anno_accademico = $this->frontController->appSettings['defaultAnnoAccademico'];
+		$default_anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
 
+		//2 livelli di innesstamento facolta/tipocdl/cdl
 		for ($i=0; $i < $num_cdl; $i++)
 		{
 			if ($elencoCdl[$i]->isGroupAllowed( $session_user_groups ))
