@@ -39,7 +39,7 @@ class ShowSettings extends UniversiboCommand
 			$template->assign('showSettings_showAdminPanel','false');
 		}
 		
-		if ($utente->isCollaboratore())
+		if ($utente->isCollaboratore()||$utente->isAdmin())
 		{
 			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni forum[/url]','[url=]Impostazioni personali[/url]','[url=index.php?do=ShowUser&id_utente='.$utente->getIdUser().']Modifica MyUniversiBO[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]','[url=]Docenti da contattare[/url]'));
 		}
