@@ -1,5 +1,7 @@
 <?php
 
+require_once('User'.PHP_EXTENSION);
+
 /**
  * UniversiboCommand is the abstract super class of all command classes
  * used in the universibo application.
@@ -82,9 +84,9 @@ class UniversiboCommand extends BaseCommand {
 	{
 		parent::initCommand( $frontController );
 		
-		$this->_setUpUser();
+		$this->_setUpUserUniversibo();
 		
-		$this->_setUpTemplate();
+		$this->_setUpTemplateUniversibo();
 		
 	}
 	
@@ -95,9 +97,8 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private  
 	 */
-	function _setUpUser()
+	function _setUpUserUniversibo()
 	{
-		require_once('User.php');
 		
 		if (! $this->sessionUserExists() )
 		{
@@ -125,7 +126,7 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private  
 	 */
-	function _setUpTemplate()
+	function _setUpTemplateUniversibo()
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
@@ -134,12 +135,12 @@ class UniversiboCommand extends BaseCommand {
 		if ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' )
 		{ 
 			$template->assign('common_pageType', 'popup');
-			$this->_setUpTemplatePopup();
+			$this->_setUpTemplatePopupUniversibo();
 		}
 		else
 		{
 			$template->assign('common_pageType', 'index');
-			$this->_setUpTemplateIndex();
+			$this->_setUpTemplateIndexUniversibo();
 		}
 		
 		//riferimenti per ottimizzare gli accessi
@@ -180,7 +181,7 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private  
 	 */
-	function _setUpTemplateIndex()
+	function _setUpTemplateIndexUniversibo()
 	{
 			
 		$template =& $this->frontController->getTemplateEngine();
@@ -244,7 +245,7 @@ class UniversiboCommand extends BaseCommand {
 	 *
 	 * @private  
 	 */
-	function _setUpTemplatePopup()
+	function _setUpTemplatePopupUniversibo()
 	{
 
 	}
