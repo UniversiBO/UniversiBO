@@ -29,6 +29,7 @@ class RegStudente extends UniversiboCommand
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione può essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
+		$template->assign('f4_submit',		'Registra');
 		$template->assign('regStudente_langRegAlt','Registrazione');
 		$template->assign('regStudente_langMail','e-mail di ateneo:');
 		$template->assign('regStudente_langPassword','Password:');
