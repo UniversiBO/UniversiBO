@@ -99,6 +99,11 @@ class FileItem {
 	/**
 	 * @private
 	 */
+	var $username=''; 
+
+	/**
+	 * @private
+	 */
 //	var $eliminato = false
 
 
@@ -122,7 +127,8 @@ class FileItem {
 	 
 	function FileItem($id_file, $permessi_download, $permessi_visualizza, $id_utente, 
 				$titolo, $descrizione, $data_inserimento, $data_modifica, $dimensione, 
-				$download, $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password/*, $eliminato*/ ){
+				$download, $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password, 
+				$username /*, $eliminato*/ ){
 	 	
 		$this->id_file = $id_file;
 		$this->permessi_download = $permessi_download;
@@ -139,6 +145,7 @@ class FileItem {
 		$this->id_tipo_file = $id_tipo_file;
 		$this->hash_file = $hash_file;
 		$this->password = $password;
+		$this->username = $username;
 //		$this->eliminato = $eliminato;
 	 	
 	 }
@@ -646,47 +653,59 @@ class NewsItem {
 	 	$this->eliminata=$eliminata;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//ilias: da qui in giù sto sistemando dal copia e incolla da NewsItem
+	
 	 
 	/**
-	 * Recupera una notizia dal database
+	 * Recupera un file dal database
 	 *
 	 * @static
-	 * @param int $id_notizia  id della news
-	 * @return NewsItem 
+	 * @param int $id_file  id del file
+	 * @return FileItem 
 	 */
-	 function &selectNewsItem ($id_notizia)
+	 function &selectFileItem ($id_file)
 	 {
-	 	$id_notizie = array($id_notizia);
-		$news =& NewsItem::selectNewsItems($id_notizie);
-		if ($news === false) return false;
-		return $news[0];
+	 	$id_files = array($id_file);
+		$files =& FileItem::selectFileItems($id_files);
+		if ($files === false) return false;
+		return $files[0];
 	 }
 	
 	
 
 	/**
-	 * Recupera un elenco di notizie dal database
+	 * Recupera un elenco di file dal database
+	 * non ristorna i files eliminati
 	 *
 	 * @static
-	 * @param array $id_notizie array elenco di id della news
-	 * @return array NewsItems 
+	 * @param array $id_file array elenco di id dei file
+	 * @return array FileItem 
 	 */
-	 function &selectNewsItems ($id_notizie)
+	 function &selectNewsItems ($id_files)
 	 {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
-		if ( count($id_notizie) == 0 )
+		if ( count($id_files) == 0 )
 			return array();
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
-		if ( count($id_notizie) == 1 ) 
-			$values = $id_notizie[0];
+		if ( count($id_files) == 1 ) 
+			$values = $id_files[0];
 		else 
 			$values = implode(',',$id_notizie);
 		
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo, descrizione, data_inserimento, data_modifica, dimensione, download, nome_file, id_categoria, id_tipo_file, hash_file, password, eliminato, username FROM file A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
 		//var_dump($query);
 		$res =& $db->query($query);
 		
@@ -709,17 +728,6 @@ class NewsItem {
 	 }
 	
 	
-
-	/**
-	 * Verifica se la notizia ? scaduta
-	 *
-	 * @return boolean
-	 */
-	function isScaduta() 
-	{
-	 	return $this->getDataScadenza() < time();
-	}
-	 
 	 
 	/**
 	 * Seleziona gli id_canale per i quali la notizia ? inerente 
