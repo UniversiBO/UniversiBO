@@ -601,16 +601,16 @@ td.evidenzia{
 	margin: 2em 10%;
 	display: block;
 	width: 80%;
-	border-top: solid 1px #999;
-	border-bottom: solid 1px #999;
+	border-right: solid 3px #777;
+	border-bottom: solid 3px #777;
 }
 
 .tbl2col table
 {
 	font-size: 11px;
 	border-color: #999 !important;
-	border-width: 0 !important;
 	border-collapse: collapse;
+	
 }
 .tbl2col p, .tbl2col a { 
 	text-align: center !important;
