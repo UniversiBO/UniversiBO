@@ -151,9 +151,9 @@ class Canale {
 	{
 		return $this->permessi;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Restituisce true se il gruppo o uno dei gruppi appartenenti a $groups 
 	 * ha il permesso di accesso al canale, altrimenti false
@@ -165,9 +165,9 @@ class Canale {
 	{
 		return (boolean) ((int)$this->permessi & (int)$groups);
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Ritorna il tipo di canale
 	 *
@@ -198,9 +198,9 @@ class Canale {
 		$res->fetchInto($row);
 		return $row[0];
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Ritorna il tipo di canale dato l'id_canale del database
 	 *
@@ -210,9 +210,9 @@ class Canale {
 	{
 		return $this->tipoCanale;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Ritorna il timestamp dell'ultima modifica eseguita nel canale
 	 *
@@ -222,8 +222,8 @@ class Canale {
 	{
 		return $this->ultimaModifica;
 	}
-
-
+	
+	
 	/**
 	 * Imposta il timestamp dell'ultima modifica
 	 *
