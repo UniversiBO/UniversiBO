@@ -94,7 +94,7 @@ class CanaleCommand extends UniversiboCommand {
 		require_once($class_name.PHP_EXTENSION);
 		
 		$this->requestCanale =& call_user_func(array($class_name,'factoryCanale'), $this->getRequestIdCanale());
-		
+
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 

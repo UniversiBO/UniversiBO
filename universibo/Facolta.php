@@ -151,7 +151,7 @@ class Facolta extends Canale{
 	 * 
 	 * @static
 	 * @param int $id_canale id_del canale corrispondente alla facoltà
-	 * @return Facolta
+	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
 	 */
 	function &selectFacoltaCanale($id_canale)
 	{
@@ -161,6 +161,8 @@ class Facolta extends Canale{
 		{
 			Facolta::_selectFacolta();
 		}
+		
+		if ( !array_key_exists($id_canale,$__facoltaElencoCanale) ) return false;
 		
 		return $__facoltaElencoCanale[$id_canale];
 	}
@@ -183,6 +185,8 @@ class Facolta extends Canale{
 		{
 			Facolta::_selectFacolta();
 		}
+
+		if ( !array_key_exists($cod_facolta,$__facoltaElencoCodice) ) return false;
 		
 		return $__facoltaElencoCodice[$cod_facolta];
 	}
@@ -241,7 +245,7 @@ class Facolta extends Canale{
 		$__facoltaElencoCanale     = array();
 		$__facoltaElencoCodice     = array();
 
-		if( $rows = 0) return;
+		if( $rows = 0) return array();
 		while (	$res->fetchInto($row) )
 		{
 			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],

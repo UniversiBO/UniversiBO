@@ -2,6 +2,11 @@
 
 require_once('Canale'.PHP_EXTENSION);
 
+define('CDL_NUOVO_ORDINAMENTO'   ,1);
+define('CDL_SPECIALISTICA'       ,2);
+define('CDL_VECCHIO_ORDINAMENTO' ,3);
+
+
 /**
  * Cdl class.
  *
@@ -29,6 +34,10 @@ class Cdl extends Canale{
 	/**
 	 * @private
 	 */
+	var $cdlCategoria = 0;
+	/**
+	 * @private
+	 */
 	var $cdlCodiceFacoltaPadre = '';
 
 	
@@ -51,12 +60,13 @@ class Cdl extends Canale{
 	 * @param boolean $links_attivo se true il servizio links è attivo
 	 * @param string $cod_cdl		codice identificativo d'ateneo del corso di laurea a 4 cifre 
 	 * @param string $nome_cdl		descrizione del nome del cdl
+	 * @param int $categoria_cdl	categoria del tipo do cdl
 	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a cui appartiene il corso di laurea
 	 * @return Facolta
 	 */
 	function Cdl($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
-				 $cod_cdl, $nome_cdl, $cod_facolta_padre)
+				 $cod_cdl, $nome_cdl, $categoria_cdl, $cod_facolta_padre)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
@@ -64,6 +74,7 @@ class Cdl extends Canale{
 		
 		$this->cdlCodice = $cod_cdl;
 		$this->cdlNome   = $nome_cdl;
+		$this->cdlCategoria  = $categoria_cdl;
 		$this->cdlCodiceFacoltaPadre   = $cod_facolta_padre;
 	}
 
@@ -89,6 +100,20 @@ class Cdl extends Canale{
 	function getTitoloCdl()
 	{
 		return 'CORSO DI LAUREA DI '.$this->getNome();
+	}
+
+	/**
+	 * Restituisce la categoria del cdl
+	 * 
+	 * define('CDL_NUOVO_ORDINAMENTO'   ,1);
+	 * define('CDL_SPECIALISTICA'       ,2);
+	 * define('CDL_VECCHIO_ORDINAMENTO' ,3);
+	 *
+	 * @return int
+	 */
+	function getCategoriaCdl()
+	{
+		return $this->cdlCategoria;
 	}
 
 
@@ -118,9 +143,9 @@ class Cdl extends Canale{
 
 
 	/**
-	 * Crea un oggetto facolta dato il suo numero identificativo id_canale
+	 * Crea un oggetto Cdl dato il suo numero identificativo id_canale
 	 * Ridefinisce il factory method della classe padre per restituire un oggetto
-	 * del tipo Facolta
+	 * del tipo Cdl
 	 *
 	 * @static
 	 * @param int $id_canale numero identificativo del canale
@@ -128,117 +153,109 @@ class Cdl extends Canale{
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Facolta::selectFacoltaCanale($id_canale);
+		return Cdl::selectCdlCanale($id_canale);
 	}
 	
 
 	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * Seleziona da database e restituisce l'oggetto corso di laurea 
 	 * corrispondente al codice id_canale 
 	 * 
 	 * @static
-	 * @param int $id_canale id_del canale corrispondente alla facoltà
-	 * @return Facolta
+	 * @param int $id_canale identificativo su DB del canale corrispondente al corso di laurea
+	 * @return mixed Cdl se eseguita con successo, false se il canale non esiste
 	 */
-	function &selectFacoltaCanale($id_canale)
+	function &selectCdlCanale($id_canale)
 	{
-		global $__facoltaElencoCanale;
-		
-		if ( $__facoltaElencoCanale == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		return $__facoltaElencoCanale[$id_canale];
-	}
-	
-	
-
-	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
-	 * corrispondente al codice $cod_facolta 
-	 * 
-	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
-	 * @return Facolta
-	 */
-	function &selectFacoltaCodice($cod_facolta)
-	{
-		global $__facoltaElencoCodice;
-		
-		if ( $__facoltaElencoCodice == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		return $__facoltaElencoCodice[$cod_facolta];
-	}
-	
-
-	
-	/**
-	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine alfabetico di tutte le facoltà 
-	 * 
-	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
-	 * @return array(Facolta)
-	 */
-	function &selectFacoltaElenco()
-	{
-		global $__facoltaElencoAlfabetico;
-		
-		if ( $__facoltaElencoAlfabetico == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		return $__facoltaElencoAlfabetico;
-	}
-	
-	
-	/**
-	 * Siccome nella maggiorparte delle chiamate viene eseguito l'accesso a tutte le
-	 * facoltà questa procedura si occupa di eseguire il caching degli oggetti facoltà
-	 * in variabili static (globali per comodità implementativa) e permette di 
-	 * alleggerire i futuri accessi a DB implementando di fatto insieme ai metodi
-	 * select*() i meccanismi di un metodo singleton factory
-	 * 
-	 * @static
-	 * @private
-	 * @return none 
-	 */
-	function _selectFacolta()
-	{
-		
-		global $__facoltaElencoCodice;
-		global $__facoltaElencoAlfabetico;
-		global $__facoltaElencoCanale;
 
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, a.id_canale, cod_fac, desc_fac, url_facolta FROM canale a , facolta b WHERE a.id_canale = b.id_canale ORDER BY 15';
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
+
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
-		$__facoltaElencoAlfabetico = array();
-		$__facoltaElencoCanale     = array();
-		$__facoltaElencoCodice     = array();
+		if( $rows = 0) return false;
 
-		if( $rows = 0) return;
+		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
+		
+		return $cdl;
+
+	}
+	
+	
+
+	/**
+	 * Seleziona da database e restituisce l'oggetto Cdl 
+	 * corrispondente al codice $cod_cdl 
+	 * 
+	 * @static
+	 * @param string $cod_cdl stringa a 4 cifre del codice d'ateneo del corso di laurea
+	 * @return Facolta
+	 */
+	function &selectCdlCodice($cod_cdl)
+	{
+
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
+
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+
+		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
+		
+		return $cdl;
+
+	}
+	
+
+	
+	/**
+	 * Seleziona da database e restituisce un'array contenente l'elenco 
+	 * in ordine alfabetico di tutti i cdl appartenenti alla facoltà data 
+	 * 
+	 * @static
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @return array(Facolta)
+	 */
+	function &selectCdlElencoFacolta($cod_facolta)
+	{
+
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale ORDER BY 14 , 15 ';
+
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return array();
+		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15]);
+			$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
 
-			$__facoltaElencoAlfabetico[] =& $facolta;
-			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
-			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
+			$elenco[] =& $cdl;
 		}
 		
+		return $elenco;
 	}
 	
 }

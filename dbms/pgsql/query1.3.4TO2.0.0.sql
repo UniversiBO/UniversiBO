@@ -115,5 +115,28 @@ UPDATE facolta SET url_facolta='http://www.economia.unibo.it' WHERE cod_fac='005
 
 #-- 18-9-2003
 ALTER TABLE "classi_corso" RENAME "id_argomento" TO "id_canale"; 
+ALTER TABLE "classi_corso" ADD "categoria" int4;
 
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2147';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2141';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2142';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2143';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2148';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2149';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='2150';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0050';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0051';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0049';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0055';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0046';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0048';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0047';
+UPDATE "classi_corso" SET categoria=2 WHERE cod_corso='0233';
+UPDATE "classi_corso" SET categoria=2 WHERE cod_corso='0231';
+UPDATE "classi_corso" SET categoria=2 WHERE cod_corso='0234';
+UPDATE "classi_corso" SET categoria=2 WHERE cod_corso='0232';
+UPDATE "classi_corso" SET categoria=2 WHERE cod_corso='0067';
+UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0025';
+UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='5407';
 
+ALTER TABLE "classi_corso" DROP COLUMN "menu_corso";

@@ -84,5 +84,6 @@
         <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione. Ci scusiamo per il disagio.</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
         <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
+        <defaultAnnoAccademico>2003</defaultAnnoAccademico>
 	</appSettings>
 </config>
