@@ -493,7 +493,7 @@ class UniversiboCommand extends BaseCommand {
 					$myCanali = array();
 					$myCanali['uri']   = $canale->showMe();
 					$myCanali['tipo']  = $canale->getTipoCanale();
-					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
 					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
 					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
 					//var_dump($ruolo);

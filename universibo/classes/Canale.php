@@ -277,7 +277,15 @@ class Canale {
 		return $this->nome;
 	}
 
-
+	/**
+	 * Ritorna la stringa descrittiva del titolo/nome breve del canale per il MyUniversiBO
+	 *
+	 * @return string
+	 */
+	function getNomeMyUniversiBO()
+	{
+		return $this->getNome();
+	}
 
 	/**
 	 * Restituisce se la stringa descrittiva nome ? impostata

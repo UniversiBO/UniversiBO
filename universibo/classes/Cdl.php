@@ -116,7 +116,15 @@ class Cdl extends Canale{
 		return $this->cdlCategoria;
 	}
 
-
+	/**
+	 * Ritorna la stringa descrittiva del titolo/nome breve del canale per il MyUniversiBO
+	 *
+	 * @return string
+	 */
+	function getNomeMyUniversiBO()
+	{
+		return $this->getNome().' - '.$this->getCodiceCdl();
+	}
 
 	/**
 	 * Restituisce il link alla homepage ufficiale della facoltà
