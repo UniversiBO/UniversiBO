@@ -99,7 +99,7 @@ class Cdl extends Canale{
 	 */
 	function getTitolo()
 	{
-		return 'CORSO DI LAUREA DI '.$this->getNome();
+		return "CORSO DI LAUREA DI \n".$this->getNome();
 	}
 
 	/**

@@ -245,6 +245,18 @@ class Canale {
 
 
 	/**
+	 * Restituisce se la stringa descrittiva nome è impostata
+	 *
+	 * @return string
+	 */
+	function isNomeSet()
+	{
+		return $this->nome!='' && $this->nome!=NULL;
+	}
+
+
+
+	/**
 	 * Ritorna la stringa descrittiva del titolo/nome completo del canale
 	 *
 	 * @return string

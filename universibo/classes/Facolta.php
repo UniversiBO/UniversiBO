@@ -101,7 +101,7 @@ class Facolta extends Canale{
 	 */
 	function getTitolo()
 	{
-		return 'FACOLTA\' DI '.$this->getNome();
+		return "FACOLTA' DI \n".$this->getNome();
 	}
 
 

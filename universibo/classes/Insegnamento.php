@@ -16,7 +16,8 @@ require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class Insegnamento extends Canale{
+class Insegnamento extends Canale
+{
 	
 	/**
 	 * @private
@@ -36,6 +37,11 @@ class Insegnamento extends Canale{
 	 */
 	var $elencoAttivita = NULL;
 	
+	/**
+	 * @private
+	 * per il caching di tutte le attività collegate a questo insegnamento
+	 */
+	var $elencoAttivitaPadre = NULL;
 	
 	/**
 	 * Crea un oggetto Insegnamento 
@@ -65,19 +71,57 @@ class Insegnamento extends Canale{
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
-		$this->elencoAttivita = $elenco_attivita;
+		//inizializza l'elenco delle attività padre/non sdoppiate
+		$this->elencoAttivita =& $elenco_attivita;
+		$num = count($elenco_attivita);
+		for ($i = 0; $i < $num; $i++)
+		{
+			if ($elenco_attivita[$i]->isSdoppiato() == false)
+			{
+				$this->elencoAttivitaPadre[] =& $elenco_attivita[$i];
+			}
+		}
 		
-		$nomi    = array();
-		$anni    = array();
-		$docenti = array();
+		$num = count($this->elencoAttivitaPadre);
+		//inizializza il nome dell'esame
+		if ( $num == 1 )
+		{
+			$att = $this->elencoAttivitaPadre[0];
+			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' - '.$att->getNomeDoc();
+		}
+		else
+		{
+			// CHE CASINOOOOO!!!!!
+			
+			$nomi    = array();
+			$t_nomi  = array();
+			$anni    = array();
+			$docenti = array();
+			$cod_ril = array();
+			
+			$app_elenco_attivita = array();
+			$num_att = count($this->elencoAttivitaPadre);
+			for ($i = 0; $i < $num_att; $i++)
+			{
+				$app_elenco_attivita[$i] =& $this->elencoAttivitaPadre;
+				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
+				$t_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
+				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
+				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
+				$cod_ril[$i] = $app_elenco_attivita[$i]->getCodRil();
+			}
+			
+			
+			
+		}
 		
 		
-		$this->insegnamentoNome  = '';
 		
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Crea un oggetto Insegnamento dato il suo numero identificativo id_canale
 	 * Ridefinisce il factory method della classe padre per restituire un oggetto
@@ -92,14 +136,21 @@ class Insegnamento extends Canale{
 		return Insegnamento::selectInsegnamentoCanale($id_canale);
 	}
 	
-
+	
 	/**
-	 * Restituisce il nome della facoltà
+	 * Restituisce il nome dell'insegnamento:
+	 * Se è impostato un nome del canale nella tabella canale lo restituisce
+	 * Altrimenti se l'Insegnamento è composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
+	 * Altrimenti se è composto da più PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
+	 *   restituisce NOME_MATERIA PRI+SEC RIL AA
+	 * Se è composto da più entità di cui al punto precedente di anni accademici differenti
+	 *   restituisce {NOME} AA1/AA2
 	 *
 	 * @return string
 	 */
 	function getNome()
 	{
+		if ($this->isNomeSet()) return parent::getNome();
 		return $this->insegnamentoNome;
 	}
 	
@@ -112,19 +163,32 @@ class Insegnamento extends Canale{
 	 */
 	function getTitolo()
 	{
-		return 'INSEGNAMENTO DI '.$this->getNome();
+		return "INSEGNAMENTO DI \n".$this->getNome();
 	}
 	
 	
 	/**
-	 * Restituisce il codice di ateneo a 4 cifre della facoltà
-	 * es: ingegneria -> '0021'
+	 * Restituisce un array con chiavi numeriche 
+	 * di oggetti PrgAttivitaDidattica corrispondenti a questo Insegnamento
 	 *
 	 * @return string
 	 */
-	function getCodiceFacolta()
+	function getElencoAttivita()
 	{
-		return $this->facoltaCodice;
+		return $this->elencoAttivita;
+	}
+
+
+	/**
+	 * Restituisce un array con chiavi numeriche 
+	 * di oggetti PrgAttivitaDidattica NON SDOPPIATE / PADRE 
+	 * corrispondenti a questo Insegnamento
+	 *
+	 * @return string
+	 */
+	function getElencoAttivitaPadre()
+	{
+		return $this->elencoAttivitaPadre;
 	}
 
 
