@@ -44,7 +44,7 @@ class ShowSettings extends UniversiboCommand
 
 		$template->assign('showSettings_langTitleAlt','MyPage');
 		$template->assign('showSettings_langIntro','Ora ti trovi nella tua pagina personale.
-Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni personali ed avere un accesso veloce e personalizzato alle informazioni scegliendo i contenuti e il loro formato tramite le tue <font class="NormalC">Preferences</font>.');
+Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni personali ed avere un accesso veloce e personalizzato alle informazioni scegliendo i contenuti e il loro formato tramite le tue [b]Preferences[/b].');
 		
 		$template->assign('showSettings_langAdmin',array('[url=https://www.universibo.unibo.it/phppgadmin242/]DB Postgresql locale[/url]', '[url=https://www.universibo.unibo.it/phporacleadmin/]DB Oracle ateneo[/url]', '[url=https://universibo.ing.unibo.it/phpMyAdmin]DB MySql facoltà[/url]', '[url=index.php?do=RegistraStudente]Iscrivi nuovo utente[/url]'));
 		return 'default';						
