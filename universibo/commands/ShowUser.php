@@ -51,16 +51,16 @@ class ShowUser extends UniversiboCommand{
 						$Canali['tipo']  = $canale->getTipoCanale();
 						$Canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
 						$Canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-						$Canali['categoria'] = ($user->getUserGroupsNames());
 						$Canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
 						$Canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
-						$Canali['categoria'] = implode($Canali['categoria']);
 						$arrayCanali[] = $Canali;
 					}
 				}
 			}
 		usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
 		$email = $user->getEmail();
+		$template->assign('showUserLivelli', implode(', ',$user->getUserGroupsNames()));
+						
 		$template->assign('showUserNickname',$user->getUsername());
 		$template->assign('showUserEmail',$email);
 		$pos = strpos($email,'@');

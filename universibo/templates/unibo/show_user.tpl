@@ -1,22 +1,23 @@
 {include file=header_index.tpl}
 
 <div class="titoloPagina">
-<h2>Scheda dell'utente: {$showUserNickname}</h2>
+<h2>Utente: {$showUserNickname}</h2>
 </div>
 <p><span>Email: <a href="mailto:{$showEmailFirstPart}(at){$showEmailSecondPart}">{$showEmailFirstPart}<img src="tpl/unibo/chiocciola.gif" width="16" height="16" alt="(at)" />{$showEmailSecondPart}</a>
 {if $showDiritti == 'true'}
-	&nbsp;<a href="{$showSettings}">Modifica</a>
+	&nbsp;<a href="{$showSettings}">Vai alle impostazioni personali</a>
 {/if}
 </span></p>
+<p>Livello: {$showUserLivelli|escape:"htmlall"}</p>
 <div class="elenco">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr><td colspan="2"><h3>Ruoli</h3></td></tr>
 	{foreach name=ruoli from=$showCanali item=temp_currLink}
 	<tr align="left"><td class="{if ($smarty.foreach.ruoli.iteration % 2) == 0}odd{else}even{/if}">
 				<p class="{if $smarty.foreach.ruoli.iteration%2 == 0}odd{else}even{/if}"><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
-		</td><td class="{if $smarty.foreach.ruoli.iteration%2 == 0}odd{else}even{/if}"><span>{$temp_currLink.categoria}
-				{if $temp_currLink.ruolo=="R"},<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Referente" />{/if}
-				{if $temp_currLink.ruolo=="M"},<img src="tpl/unibo/icona_m.gif" width="9" height="9" alt="Moderatore" />{/if}
+		</td><td class="{if $smarty.foreach.ruoli.iteration%2 == 0}odd{else}even{/if}"><span>
+				{if $temp_currLink.ruolo=="R"}<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Referente" />{/if}
+				{if $temp_currLink.ruolo=="M"}<img src="tpl/unibo/icona_m.gif" width="9" height="9" alt="Moderatore" />{/if}
 				{if $showDiritti == 'true'}
 					&nbsp;<img src="tpl/unibo/esame_myuniversibo_edit.gif" width="15" height="15" alt="" />&nbsp;<a href="{$temp_currLink.modifica}">Modifica</a>
 					&nbsp;<img src="tpl/unibo/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;<a href="{$temp_currLink.rimuovi}">Rimuovi dal tuo MyUniversiBO</a>
