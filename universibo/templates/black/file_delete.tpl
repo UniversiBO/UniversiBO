@@ -11,6 +11,7 @@
 
 
 </td></tr><tr><td align="center"> 
+
 {*include file=News/show_news.tpl*}
 </td></tr><tr><td align="center"> 
 <form method="post">
