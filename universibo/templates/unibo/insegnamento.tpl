@@ -7,6 +7,7 @@
 	{else}<img src="tpl/unibo/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
 	{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></div>
 {/if}
+<p>Le informazioni del corso posso essere consultate anche alla pagina<br /><a href="{$ins_homepageAlternativaLink|escape:"htmlall"}">{$ins_homepageAlternativaLink|escape:"htmlall"}</a></p>
 </div>
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
 {if $ins_infoDidEdit != ""}<div class="comandi"><p><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a></p></div>{/if}
