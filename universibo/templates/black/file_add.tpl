@@ -91,6 +91,7 @@
 <input type="password" id="f12_password_confirm" name="f12_password_confirm" size="30" maxlength="130" value="{$f12_password|escape:"htmlall"}" />
 </td>
 </tr>
+{if $fileAdd_flagCanali == 'true'}
 <tr><td colspan="2">
 <fieldset>
 <legend><span class="Normal">Il file verr&agrave; inserito negli argomenti:</span></legend>
@@ -103,11 +104,12 @@
 	</table>
 </fieldset>
 </td></tr>
+{/if}
 <tr>
 <td colspan="2" align="center">
 <input type="submit" id="" name="f12_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">

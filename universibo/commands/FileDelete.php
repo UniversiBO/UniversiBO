@@ -79,7 +79,7 @@ class FileDelete extends UniversiboCommand {
 		
 		$file_canali =& $file->getIdCanali();
 		
-		$f13_canale = array();
+		$f14_canale = array();
 		$num_canali = count($file_canali);
 		for ($i = 0; $i < $num_canali; $i ++)
 		{
@@ -88,24 +88,24 @@ class FileDelete extends UniversiboCommand {
 			$nome_current_canale = $current_canale->getTitolo();
 			if (in_array($id_current_canale, $file->getIdCanali())) 
 			{
-				$f13_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
+				$f14_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
 			}
 		}
 		
-		$f13_accept = false;
+		$f14_accept = false;
 		
 		//postback
 		
-		if (array_key_exists('f13_submit', $_POST)  )
+		if (array_key_exists('f14_submit', $_POST)  )
 		{
 			
-			$f13_accept = true;
+			$f14_accept = true;
 			
-			$f13_canale_app = array();
+			$f14_canale_app = array();
 			//controllo diritti su ogni canale di cui è richiesta la cancellazione
-			if (array_key_exists('f13_canale', $_POST))
+			if (array_key_exists('f14_canale', $_POST))
 			{
-				foreach ($_POST['f13_canale'] as $key => $value)
+				foreach ($_POST['f14_canale'] as $key => $value)
 				{
 					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || ($user_ruoli[$key]->isModeratore() && $autore)));
 					if (!$diritti)
@@ -113,15 +113,15 @@ class FileDelete extends UniversiboCommand {
 						//$user_ruoli[$key]->getIdCanale();
 						$canale = & Canale::retrieveCanale($key);
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di eliminazione nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-						$f13_accept = false;
+						$f14_accept = false;
 					}
 					else
-						$f13_canale_app[$key] = $value;
+						$f14_canale_app[$key] = $value;
 				}
 			}
-			elseif(count($f13_canale) > 0)
+			elseif(count($f14_canale) > 0)
 			{
-				$f13_accept = false;
+				$f14_accept = false;
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 			}
 			
@@ -129,12 +129,12 @@ class FileDelete extends UniversiboCommand {
 		
 		
 		//accettazione della richiesta
-		if ($f13_accept == true)
+		if ($f14_accept == true)
 		{
-//			var_dump($_POST['f13_canale'] );
+//			var_dump($_POST['f14_canale'] );
 //			die();
 			//cancellazione dai canali richiesti
-			foreach ($f13_canale_app as $key => $value)
+			foreach ($f14_canale_app as $key => $value)
 			{
 				$file->removeCanale($key);
 				$canale = Canale::retrieveCanale($key);					
@@ -153,8 +153,8 @@ class FileDelete extends UniversiboCommand {
 		//$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
 		//$this->executePlugin('ShowNews', $param );
 		
-		$template->assign('f13_langAction', "Elimina il file dai seguenti canali:");
-		$template->assign('f13_canale', $f13_canale);
+		$template->assign('f14_langAction', "Elimina il file dai seguenti canali:");
+		$template->assign('f14_canale', $f14_canale);
 		
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		

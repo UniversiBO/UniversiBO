@@ -956,7 +956,7 @@ class FileItem {
 						 $db->quote($this->getHashFile()).' , '.
 						 $db->quote($this->getPassword()).' , '.
 						 $db->quote(FILE_NOT_ELIMINATO).' )';
-						 
+		
 		$res = $db->query($query);
 		//echo $query;
 

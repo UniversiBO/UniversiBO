@@ -19,11 +19,11 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td>
 <fieldset>
-<legend><span class="Normal">{$f13_langAction|escape:"htmlall"}</span></legend>
+<legend><span class="Normal">{$f14_langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
-	{foreach name=canali item=item from=$f13_canale}
+	{foreach name=canali item=item from=$f14_canale}
 	<tr class="Normal" valign="center">
-	<td width="40">&nbsp;&nbsp;<input type="checkbox" id="f13_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f13_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f13_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<td width="40">&nbsp;&nbsp;<input type="checkbox" id="f14_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f14_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f14_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
 	</table>
@@ -31,7 +31,7 @@
 </tr></td>
 <tr>
 <td align="center">
-<input type="submit" id="" name="f13_submit" size="20" value="Elimina" /></td>
+<input type="submit" id="" name="f14_submit" size="20" value="Elimina" /></td>
 </tr>
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></td></tr>
 </table>

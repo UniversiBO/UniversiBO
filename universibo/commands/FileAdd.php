@@ -1,6 +1,6 @@
 <?php    
 
-require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
 
 /**
@@ -24,29 +24,26 @@ class FileAdd extends UniversiboCommand {
 		$krono = & $frontcontroller->getKrono();
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
-		
-		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+
+		if ($user->isOspite())
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id della notizia richiesta non è	valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata', 'file' => __FILE__, 'line' => __LINE__));
+		}		
+/*		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+		{
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
+
 		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 		$id_canale = $canale->getIdCanale();
 		$template->assign('common_canaleURI', $canale->showMe());
 		$template->assign('common_langCanaleNome', $canale->getTitolo());
-
+*/
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
+				
 		$referente = false;
 		$moderatore = false;
-
-		if (array_key_exists($id_canale, $user_ruoli)) {
-			$ruolo = & $user_ruoli[$id_canale];
-
-			$referente = $ruolo->isReferente();
-			$moderatore = $ruolo->isModeratore();
-		}
-		
-		if (!($user->isAdmin() || $referente || $moderatore)) 
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
-		
 
 		// valori default form
 		$f12_file = '';
@@ -61,8 +58,29 @@ class FileAdd extends UniversiboCommand {
 		$f12_password = null;
 		$f12_canale = array ();
 
+		$elenco_canali = array();
+			
+		if (array_key_exists('id_canale', $_GET))
+		{
+			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			$id_canale = $canale->getIdCanale();
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			if (array_key_exists($id_canale, $user_ruoli)) {
+				$ruolo = & $user_ruoli[$id_canale];
+	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			
+			$elenco_canali = array($id_canale);
+				
+		}
+
 		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
-		$elenco_canali = array($id_canale);
 		$ruoli_keys = array_keys($user_ruoli);
 		$num_ruoli = count($ruoli_keys);
 		for ($i = 0; $i<$num_ruoli; $i++)
@@ -82,6 +100,12 @@ class FileAdd extends UniversiboCommand {
 			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
 			$f12_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
 		}
+		
+		if (array_key_exists('id_canale', $_GET))
+			if (!($user->isAdmin() || $referente || $moderatore)) 
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire un file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+		
+
 		
 		$f12_accept = false;
 		
@@ -239,7 +263,7 @@ class FileAdd extends UniversiboCommand {
 			//permessi_download	
 			if (!ereg('^([0-9]{1,3})$', $_POST['f12_permessi_download'])) 
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'I permessi di download non sono validi', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f12_accept = false;
 			}
 			elseif ( $user->isAdmin() ) 
@@ -252,12 +276,13 @@ class FileAdd extends UniversiboCommand {
 				$f12_permessi_download = $_POST['f12_permessi_download'];
 			}
 			else 
-			{
-				if ($_POST['f12_permessi_download'] != USER_ALL || $_POST['f12_permessi_download'] != (USER_STUDENTE & USER_DOCENTE & USER_TUTOR & USER_PERSONALE & USER_COLLABORATORE & USER_ADMIN ) )
+			{	
+				if ($_POST['f12_permessi_download'] != USER_ALL && $_POST['f12_permessi_download'] != (USER_STUDENTE | USER_DOCENTE | USER_TUTOR | USER_PERSONALE | USER_COLLABORATORE | USER_ADMIN ) )
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f12_accept = false;
 				}
+				$f12_permessi_download = $_POST['f12_permessi_download'];
 			}			
 			
 			//password non necessita controlli
@@ -272,25 +297,29 @@ class FileAdd extends UniversiboCommand {
 			}
 			//e i permessi di visualizzazione??
 			// li prendo uguali a quelli del canale,
-			$f12_permessi_visualizza = $canale->getPermessi();
+			if (array_key_exists('id_canale', $_GET))
+				$f12_permessi_visualizza = $canale->getPermessi();
+			else 
+				$f12_permessi_visualizza = USER_ALL;
 			// eventualmente dare la possibilità all'admin di metterli diversamente
 			
 			
 			$f12_canali_inserimento = array();
 			//controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
-			foreach ($_POST['f12_canale'] as $key => $value)
-			{
-				$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
-				if (!$diritti)
+			if (array_key_exists('f12_canale', $_POST))
+				foreach ($_POST['f12_canale'] as $key => $value)
 				{
-					//$user_ruoli[$key]->getIdCanale();
-					$canale =& $elenco_canali_retrieve[$key];
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f12_accept = false;
+					$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
+					if (!$diritti)
+					{
+						//$user_ruoli[$key]->getIdCanale();
+						$canale =& $elenco_canali_retrieve[$key];
+						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f12_accept = false;
+					}
+					
+					$f12_canali_inserimento = $_POST['f12_canale'];
 				}
-				
-				$f12_canali_inserimento = $_POST['f12_canale'];
-			}
 			
 			//echo substr($_FILES['userfile']['name'],-4);
 			$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
@@ -367,6 +396,7 @@ class FileAdd extends UniversiboCommand {
 		$template->assign('f12_categorie', $f12_categorie);
 		$template->assign('f12_abstract', $f12_abstract);
 		$template->assign('f12_canale', $f12_canale);
+		$template->assign('fileAdd_flagCanali', (count($f12_canale)) ? 'true' : 'false');
 		
 		$template->assign('f12_password', $f12_password);
 		$template->assign('f12_permessi_download', $f12_permessi_download);
