@@ -77,7 +77,7 @@ class Receiver{
 			$_SESSION['SID'] = SID;
 		}
 				
-		$pathDelimiter=( strstr($_SERVER['SERVER_SOFTWARE'], 'Unix') ) ? ':' : ';' ;
+		$pathDelimiter=( strstr($_SERVER['SERVER_SOFTWARE'], 'Unix') || strstr($_SERVER['SERVER_SOFTWARE'], 'Linux') ) ? ':' : ';' ;
 		//$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.'/classes'.$pathDelimiter.ini_get('include_path'));
 		
