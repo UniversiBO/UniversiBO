@@ -200,6 +200,18 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_setHomepage', 'Imposta Homepage');
 		$template->assign('common_addBookmarks', 'Aggiungi ai preferiti');
 
+<<<<<<< UniversiboCommand.php
+
+		$session_user = $this->getSessionUser();
+		if ($session_user->isOspite()){
+			$template->assign('common_userLoggedIn', 'false');
+		}
+		else{
+			$template->assign('common_userLoggedIn', 'true');
+		}
+		
+		
+=======
 
 		$session_user = $this->getSessionUser();
 		if ($session_user->isOspite())
@@ -212,6 +224,7 @@ class UniversiboCommand extends BaseCommand {
 		}
 		
 		
+>>>>>>> 1.17
 		$template->assign('common_fac', 'Facoltà');
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
