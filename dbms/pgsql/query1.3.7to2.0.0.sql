@@ -482,3 +482,7 @@ UPDATE file SET id_tipo_file = 13 WHERE id_file IN ( SELECT id_file FROM file2 w
 UPDATE file SET id_tipo_file = 14 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'txt');
 UPDATE file SET id_tipo_file = 15 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'xls');
 UPDATE file SET id_tipo_file = 16 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'bmp');
+
+ALTER TABLE "help_topic" ADD "indice" integer;
+UPDATE "help_topic" SET indice = 0;
+ALTER TABLE "help_topic" ALTER COLUMN "indice" SET NOT NULL;

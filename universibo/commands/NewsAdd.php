@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('News/NewsItem'.PHP_EXTENSION);
+require_once ('Help/ShowTopic'.PHP_EXTENSION);
 
 /**
  * NewsAdd: si occupa dell'inserimento di una news in un canale
@@ -303,7 +304,11 @@ class NewsAdd extends CanaleCommand {
 		$template->assign('f7_scadenza', $f7_scadenza);
 		$template->assign('f7_canale', $f7_canale);
 
-
+		//$topics[] = 
+		$this->executePlugin('ShowTopic', array('reference' => 'News'));
+		
+		
+		
 		return 'default';
 
 	}

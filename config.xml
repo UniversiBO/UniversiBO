@@ -92,6 +92,8 @@
 		<NewsAdd class="NewsAdd">
 			<response type="template" name="default">news_add.tpl</response>
 			<response type="template" name="success">news_add_success.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsAdd>
 		<NewsDelete class="NewsDelete">
 			<response type="template" name="default">news_delete.tpl</response>
