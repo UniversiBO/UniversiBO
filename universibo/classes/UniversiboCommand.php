@@ -200,7 +200,7 @@ class UniversiboCommand extends BaseCommand {
 		// www.universibo.unibo.it
 		$template->assign('common_hostName',	$_SERVER['HTTP_HOST']);
 		// https://www.universibo.unibo.it/path_universibo2/
-		 $template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$fc->getRootPath());
+		$template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$fc->getRootPath());
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php
 		$template->assign('common_receiverUrl',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php?do=SomeCommand
