@@ -104,10 +104,11 @@ class FrontController {
 	*/
 	function FrontController( $receiver ){
 
-		include_once('Error'.PHP_EXTENSION); 
-		include_once('LogHandler'.PHP_EXTENSION);
-		include_once('XmlDoc'.PHP_EXTENSION);
-
+		require_once('Error'.PHP_EXTENSION); 
+		require_once('LogHandler'.PHP_EXTENSION);
+//		include_once('XmlDoc'.PHP_EXTENSION);
+		require_once('XmlDOMFactory'.PHP_EXTENSION);
+		
 		$this->receiverIdentifier = $receiver->getIdentifier();
 
 /*		$log_error_definition = array(0=>'timestamp', 1=>'date', 2=>'remote_ip', 3=>'request', 4=>'referer_page', 5=>'file', 6=>'line', 7=>'description' );
@@ -372,13 +373,17 @@ class FrontController {
 
 		$this->_setErrorHandler();
 
+//
+//		$config = new XmlDoc();
+//		$config->parse($configFile);
 
-		$config = new XmlDoc();
-		$config->parse($configFile);
-
-		if($config->isError()) die ($config->error);
+		$config = XmlDOMFactory::getXmlDOM();
+		//var_dump($config);
+		$config->load($configFile);
+		
+//		if($config->isError()) die ($config->error);
 	
-		$this->config=&$config;
+		$this->config = & $config;
 
 		//Set $this->rootFolder
 		$this->_setRootFolder();
@@ -465,10 +470,12 @@ class FrontController {
 	*/
 	function _setRootFolder()
 	{
-		$elementFolder = &$this->config->root->getChild('rootFolder');
-		if ($elementFolder == NULL)
+		$elementsFolder =& $this->config->getElementsByTagName('rootFolder');
+		if ($elementsFolder == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento rootFolder nel file di config','file'=>__FILE__,'line'=>__LINE__));
-		$this->rootFolder = $elementFolder->charData;
+		$elementFolderItem =& $elementsFolder->item(0);
+		$elementFolderChild =& $elementFolderItem->firstChild;
+		$this->rootFolder = $elementFolderChild->nodeValue;
 		if(is_dir($this->rootFolder)) return;
 		else
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'rootFolder errata nel file di config','file'=>__FILE__,'line'=>__LINE__));
@@ -482,8 +489,23 @@ class FrontController {
 	*/
 	function _setRootUrl()
 	{
-		$elementURL = &$this->config->root->getChild('rootURL');
-		$this->rootUrl = $elementURL->charData;
+		$rootNode	=& $this->config->documentElement;
+		//var_dump($rootNode);
+		// @TODO o completare il MyDOMNodeList o trasformare il foreach in for
+		$figli =& $rootNode->childNodes;
+		//var_dump($figli);
+		for ( $i = 0; $i < $figli->length; $i++ )
+			if (($figlio =& $figli->item($i)) != null)
+			{	
+				if ( $figlio->nodeType == XML_ELEMENT_NODE && $figlio->tagName == 'rootURL')
+				{	
+					$testo		=& $figlio->firstChild;
+					$elementURL =& $testo->nodeValue;
+					break;	
+				}
+			}
+		$this->rootUrl = $elementURL;
+		//var_dump($elementURL);
 	}
 
 
@@ -495,14 +517,21 @@ class FrontController {
 	function _setReceivers()
 	{
 		$this->receivers=array();
-		$node=&$this->config->root->getChild('receivers');		
-		$n=$node->numChildren();		
+		$nodeList =& $this->config->getElementsByTagName('receivers');		
+		$node =& $nodeList->item(0); 
+		$figli =& $node->childNodes;
+		$n =& $figli->length;
+				
 		for($i=0; $i<$n; $i++)
 		{
-			$child=&$node->children[$i];
-			$charData=$child->charData;
-			$this->receivers[$child->name]=$child->charData;
+			$child	  =& $figli->item($i);
+			if ($child->nodeType == XML_ELEMENT_NODE)
+			{
+				$charData =&  $child->firstChild->nodeValue;
+				$this->receivers[$child->tagName] = $charData;
+			}
 		}
+		//var_dump($this->receivers);
 	}
 
 
@@ -513,8 +542,14 @@ class FrontController {
 	*/
 	function _setDefaultCommand()
 	{
-		$elementDefaultCommand = &$this->config->root->getChild('defaultCommand');
-		$this->defaultCommand = $elementDefaultCommand->charData;
+		$figli =& $this->config->documentElement->childNodes;
+		for ($i = 0; $i < $figli->length; $i++)
+		{
+			$iesimoFiglio =& $figli->item($i);
+			if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->tagName == 'defaultCommand')
+				$this->defaultCommand =& $iesimoFiglio->firstChild->nodeValue; 
+		}
+		//var_dump($this->defaultCommand );
 	}
 
 
@@ -525,13 +560,28 @@ class FrontController {
 	*/
 	function _setDbInfo()
 	{
-		$dbinfoNode=&$this->config->root->getChild('dbInfo');		
-		$n = $dbinfoNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$dbinfoNodes =& $this->config->getElementsByTagName('dbInfo');		
+		
+		$dbInfo =& $dbinfoNodes->item(0);
+		$connections =& $dbInfo->getElementsByTagName('connection');
+//		$connections =& $dbInfo->childNodes;
+		$num =& $connections->length;
+//		var_dump($connections);
+	
+		for( $i=0; $i<$num; $i++ )
 		{
-			$dbConnection=&$dbinfoNode->children[$i];
-			$this->getDbConnection( $dbConnection->attributes['identifier'], $dbConnection->charData );
-		}
+			$singleConnection =& $connections->item($i);
+			if ($singleConnection->nodeType == XML_ELEMENT_NODE)
+			{
+				$identifier =& $singleConnection->getAttribute('identifier');
+				//$identifier =& $attributo->nodeValue; 
+	//			var_dump($singleConnection->attributes);
+				$charData =& $singleConnection->firstChild->nodeValue;
+				
+				$this->getDbConnection( $identifier, $charData );
+			}
+		} 
+		
 	}
 
 
@@ -544,48 +594,52 @@ class FrontController {
 	{
 		$this->templateEngine=array();
 		
-		$templateInfoNode = &$this->config->root->getChild('templateInfo');
+		$templateInfoNodes = &$this->config->getElementsByTagName('templateInfo');
+		if ( $templateInfoNodes == NULL )
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		$templateInfoNode = &$templateInfoNodes->item(0);
+//		var_dump($templateInfoNode->attributes);
 		if ( $templateInfoNode == NULL )
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
-		
-		if ( $templateInfoNode->attributes['type'] != 'Smarty' ) 
+	
+		if ( $templateInfoNode->getAttribute('type') != 'Smarty' ) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
-		
-		if ( $templateInfoNode->attributes['debugging'] == 'on' )
-		{ 
-			$this->templateEngine['debugging'] = true;
-		}
-		else
-		{ 
-			$this->templateEngine['debugging'] = false;
-		}
-		
-		
 
-		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');
+		$this->templateEngine['debugging'] = ( $templateInfoNode->getAttribute('debugging') != 'on' );
+
+
+		$templateDirsNodes 	= &$templateInfoNode->getElementsByTagName('template_dirs');
+		if ( $templateDirsNodes == NULL )
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		$templateDirsNode	= &$templateDirsNodes->item(0);
 		if ( $templateDirsNode == NULL )
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
 				
-		$n = $templateDirsNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$figli = $templateDirsNode->childNodes;
+		for( $i=0; $i<$figli->length; $i++ )
 		{
-			$templateSetting = &$templateDirsNode->children[$i];
-			$this->templateEngine[$templateSetting->name] = $templateSetting->charData;
+			$templateSetting = &$figli->item($i);
+			if ($templateSetting->nodeType == XML_ELEMENT_NODE)
+				$this->templateEngine[$templateSetting->tagName] = $templateSetting->firstChild->nodeValue;
 		}
 
 
-		$templateStylesNode = &$templateInfoNode->getChild('template_styles');		
+		$templateStylesNodes = &$templateInfoNode->getElementsByTagName('template_styles');
+		if($templateStylesNodes == NULL)
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		$templateStylesNode	= &$templateStylesNodes->item(0);		
 		if($templateStylesNode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
 
-		$n = $templateStylesNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$figli = $templateStylesNode->childNodes;
+		for( $i=0; $i<$figli->length; $i++ )
 		{
-			$templateSetting = &$templateStylesNode->children[$i];
-			$this->templateEngine['styles'][$templateSetting->attributes['name']] = $templateSetting->attributes['dir'];
+			$templateSetting = &$figli->item($i);
+			if ($templateSetting->nodeType == XML_ELEMENT_NODE)
+				$this->templateEngine['styles'][$templateSetting->getAttribute('name')] = $templateSetting->getAttribute('dir');
 		}
 
-		$this->templateEngine['default_template'] = $templateStylesNode->attributes['default'];  
+		$this->templateEngine['default_template'] = $templateStylesNode->getAttribute('default');
 		
 		if (!array_key_exists($this->templateEngine['default_template'],$this->templateEngine['styles']))
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste il template di default nel file di config','file'=>__FILE__,'line'=>__LINE__));
@@ -616,15 +670,20 @@ class FrontController {
 	*/
 	function _setMailerInfo()
 	{
-		$mailerInfoNode =& $this->config->root->getChild('mailerInfo');
+		$mailerInfoNodes =& $this->config->getElementsByTagName('mailerInfo');
+		if ($mailerInfoNodes == NULL)
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
+		$mailerInfoNode = &$mailerInfoNodes->item(0);
 		if ($mailerInfoNode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
-		$n = $mailerInfoNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$figli = $mailerInfoNode->childNodes;
+		for( $i=0; $i<$figli->length; $i++ )
 		{
-			$aSetting=&$mailerInfoNode->children[$i];
-			$this->mailerInfo[$aSetting->name] = $aSetting->charData;
+			$aSetting = &$figli->item($i);
+			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+				$this->mailerInfo[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
 		}
 	}	
 
@@ -636,15 +695,19 @@ class FrontController {
 	*/
 	function _setLanguageInfo()
 	{
-		$languageInfoNode =& $this->config->root->getChild('langInfo');
+		$languageInfoNodes =& $this->config->getElementsbyTagname('langInfo');
+		if ($languageInfoNodes == NULL)
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento langInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		$languageInfoNode = &$languageInfoNodes->item(0);
 		if ($languageInfoNode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento langInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
-		$n = $languageInfoNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$figli = $languageInfoNode->childNodes;
+		for( $i=0; $i < $figli->length; $i++ )
 		{
-			$aSetting=&$languageInfoNode->children[$i];
-			$this->languageInfo[$aSetting->name] = $aSetting->charData;
+			$aSetting = &$figli->item($i);
+//			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+				$this->languageInfo[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
 		}
 		
 		//linguaggio corrente inpostato uguale a quello di default
@@ -661,13 +724,21 @@ class FrontController {
 	function _appSettings()
 	{
 		$this->appSettings = array();
-		$appSeetingNode = &$this->config->root->getChild("appSettings");
-		if($appSeetingNode == NULL) return;
-		$n = $appSeetingNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
+		$appSettingNodes = &$this->config->getElementsByTagName("appSettings");
+		
+		if($appSettingNodes == NULL) return;
+		
+		$appSettingNode = &$appSettingNodes->item(0);
+		
+		if($appSettingNode == NULL) return;
+		
+		$figli = $appSettingNode->childNodes;
+		for( $i=0; $i < $figli->length; $i++ )
 		{
-			$aSetting=&$appSeetingNode->children[$i];
-			$this->appSettings[$aSetting->name] = $aSetting->charData;
+			$aSetting = &$figli->item($i);
+//			print_r($aSetting);
+//			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+				$this->appSettings[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
 		}
 	}	
 
@@ -680,17 +751,28 @@ class FrontController {
 	function _setPaths()
 	{
 		$this->paths=array();
-		$node=&$this->config->root->getChild('paths');
-		if($node == NULL)
+		$nodes = &$this->config->getElementsByTagName('paths');
+		
+		if($nodes == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento path nel file di config','file'=>__FILE__,'line'=>__LINE__));
-			
-		$n=$node->numChildren();
-		for($i=0; $i<$n; $i++)
+		
+		$node = &$nodes->item(0);	
+		//var_dump($node);
+		if($nodes == NULL)
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento path nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
+		$figli = &$node->childNodes;
+		for($i=0; $i < $figli->length; $i++)
 		{
-			$child=&$node->children[$i];
+			$child = &$figli->item($i);
 //			$this->paths[$child->name]=realpath($this->rootFolder.$child->charData);
-			$this->paths[$child->name]=$this->rootFolder.$child->charData;
+			if ($child->nodeType == XML_ELEMENT_NODE)
+			{
+				$this->paths[$child->tagName] = $this->rootFolder.$child->firstChild->nodeValue;
+				//var_dump($child);
+			}
 		}
+		
 	}
 	
 	/**
@@ -698,42 +780,74 @@ class FrontController {
 	*
 	* @access private
 	*/
-	function _setCommandClass(){		
+	function _setCommandClass()
+	{		
 		$commandString=$this->getCommandRequest();
 		
-		$cinfonode=&$this->config->root->getChild('commands');
+		$figliRoot = &$this->config->documentElement->childNodes;
+//		var_dump($figliRoot);
+		$cinfonode = null;
+		for ( $i = 0; $i < $figliRoot->length; $i++ )
+		{
+			$iesimoFiglio =& $figliRoot->item($i);
+		
+//			if ($iesimoFiglio->nodetype == XML_ELEMENT_NODE
+//				&& $iesimoFiglio->tagName == 'commands' );
+//			{
+//				$cinfonode =& $iesimoFiglio;
+//				break;
+//			}
+			if ($iesimoFiglio != null) 
+				if ($iesimoFiglio->tagName == 'commands' && $iesimoFiglio->nodeType == XML_ELEMENT_NODE )
+				{
+					$cinfonode =& $iesimoFiglio;
+					break;
+				}
+
+		}
+//		var_dump($cinfonode);
 		if($cinfonode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
-		
-		$commandNode = &$cinfonode->getChild($commandString);
+		// @TODO qui migliorerebbe molto o xpath o cache
+		$figli = &$cinfonode->childNodes;
+		//print_r($figli);
+		for($i=0; $i < $figli->length; $i++)
+		{
+			$child = &$figli->item($i);
+			if ($child->tagName == $commandString && $child->nodeType == XML_ELEMENT_NODE)
+			{
+				$commandNode = &$child;
+				break;
+			}
+		}
 		if($commandNode == NULL)
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
-		$this->commandClass=$commandNode->attributes['class'];
-		
+		$this->commandClass = $commandNode->getAttribute('class');
+//		var_dump($commandNode->attributes[0]->value);
 		//reads allowed response for this BaseCommand
 		$this->commandTemplate=array();
-		$responses =& $commandNode->getChildren('response');
-		$n=count($responses);
-		for($i=0;$i<$n;$i++)
+		$responses =& $commandNode->getElementsByTagName('response');
+		
+		for($i=0; $i < $responses->length; $i++)
 		{
-			$response =& $responses[$i];
-			if ($response->attributes['type'] == 'template')
+			$response =& $responses->item($i);
+			if ($response->getAttribute('type') == 'template')
 			{
-				$this->commandTemplate[$response->attributes['name']] = $response->charData;	
+				$this->commandTemplate[$response->getAttribute('name')] = $response->firstChild->nodeValue;	
 			}
 		}
 
-		$plugins =& $commandNode->getChildren('pluginCommand');
-		$n=count($plugins);
-		for($i=0;$i<$n;$i++)
+		$plugins =& $commandNode->getElementsByTagName('pluginCommand');
+		
+		for($i=0; $i < $plugins->length; $i++)
 		{
-			$plugin =& $plugins[$i];
-			$this->plugins[$plugin->attributes['name']] = $plugin->attributes['class'];	
+			$plugin =& $plugins->item($i);
+			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');	
 		}
 
 		if(!isset($this->commandClass))
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? definito l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? definito l\'attributo class relativo al comando specificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
 		if(empty($this->commandClass))
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
@@ -791,8 +905,6 @@ class FrontController {
     	else return Error::throwError(_ERROR_CRITICAL,array('msg'=>'Uso errato dell\'interfaccia di accesso al Database','file'=>__FILE__,'line'=>__LINE__)); 
 
 	}
-
-
 	
 	/**
 	* Factory method that creates a Smarty object
