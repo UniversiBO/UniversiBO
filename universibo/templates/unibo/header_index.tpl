@@ -14,8 +14,8 @@
 <table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
 {* barra in alto, gif di sinistra LOGO a sfondo BIANCO di dimensioni 150x92,gif per il TITOLO a sfondo del colore della tabella con data e menu di navigazione di dimensioni 600x100 *}
  <tr>
-      <td width="150" align="center"><img align="center" border="0" alt="{$common_logo}" src="tpl/unibo/logo_{$common_logoType}.gif"></td>
-      <td colspan="4" bgcolor="#0006C2"> <table width="100%" height="92" border="0" background="tpl/unibo/4.gif" class="table_bg">
+      <td width="150" align="center"><img border="0" src="tpl/unibo/spacer.gif" width="150" height="1" /><img align="center" border="0" alt="" src="tpl/unibo/logo.gif" /></td>
+      <td colspan="4" bgcolor="#0006C2"> <table width="100%" height="92" border="0" background="tpl/unibo/logo_{$common_logoType}.gif" class="table_bg">
           <tr>
             <td><div align="right" class="databar">{$common_longDate} - {$common_time}</div></td>
           </tr>
@@ -32,19 +32,21 @@
     </tr>
     <tr>
       <td bgcolor="#666666" width="150"></td>
-      <td colspan="4" bgcolor="#666666"> <table width="100%" align="center" cellspacing="0" bgcolor="#666666" summary="">
-          <tbody>
+      <td colspan="4" bgcolor="#666666" width=""> <table width="100%" align="center" cellspacing="0" bgcolor="#666666" summary="">
             <tr>
               <td width="37%" class="navbarwhite"><div align="left"> |  <a class="navbarHead" href="{$common_helpUri}" >{$common_help}</a> | 
 			  <a class="navbarHead" href="{$common_settingsUri}">{$common_settings}</a> |  <a class="navbarHead" href="{$common_forumUri}">{$common_forum}</a> | <a class="navbarHead" href="">Cerca</a></div></td>
               {* spazio per il login *}
-              <td width="57%"align="right" class="navbar "> <div align="right">username <input name="username" type="text" class="navbarForm" size="15">
-                  password <input name="password" type="password" class="navbarForm" size="15">
-                </div></td>
-              <td width="6%" align="right"><div align="left"><a class="navbar"target="_blank" href="https://universibo.unibo.it/login"><strong>
-                  Login</strong></a></div></td>
-            </tr>
-          </tbody>
+              <td width="57%" align="right" class="navbar ">
+{if $common_userLoggedIn=='false'}
+<form action="{$common_receiverUrl}?do=Login" name="form1_a" method="post">
+<div align="right">username <input name="f1_username" maxlength="25" type="text" class="navbarForm" size="15" />
+                  password <input name="f1_password" maxlength="25" type="password" class="navbarForm" size="15" />
+</div></td><td width="6%" align="right"><div align="left"><input name="f1_submit" type="submit" value="Login" onclick="document.form1_a.f1_resolution.value = screen.width;" /></div></form>
+{else}
+bevenuto username
+{/if}
+</td></tr>
         </table></td>
     </tr>
     {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
@@ -57,16 +59,16 @@
               <td valign="top"> <table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
                   {* primo blocchetto *}
                     <tr><br/>
-                      <td class="BgMenu1livOn" width="18"><img height="9" alt=""  src="tpl/unibo/navig_freccia3.gif" width="18"></td>
+                      <td class="BgMenu1livOn" width="18"><img height="9" alt=""  src="tpl/unibo/navig_freccia3.gif" width="18" /></td>
                       <td class="BgMenu1livOn" width="100%" colspan="2"><span class="menu">{$common_homepage}</span></td>
                     </tr>
                     <tr>
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18"></td>
+                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
                       <td class="menu">Facoltà</a></td>
                     </tr>
 {foreach from=$common_facLinks item=temp_currLink}
 <tr>
-	<td width="18"><img height="9" width="1" alt="" src="tpl/unibo/spacer.gif" width="18"></td>
+	<td width="18"><img height="9" width="1" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
 	<td colspan="2"><a class="menu_piccolo" href="{$temp_currLink.uri}">- {$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></td>
 </tr>
 {/foreach}
@@ -81,7 +83,7 @@
                   {* secondo blocchetto *}
 {foreach from=$common_servicesLinks item=temp_link}
 <tr>
-  <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18"></td>
+  <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
   <td colspan="2"><a class="menu" href="{$temp_link.uri}">{$temp_link.label}</a></td>
 </tr>
 {/foreach}
@@ -95,11 +97,11 @@
               <td> <table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
                   {* quarto blocchetto *}
                     <tr> 
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18"></td>
+                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
                       <td colspan="2"><a class="menu" href="">My UniversiBO</a></td>
                     </tr>
                     <tr> 
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18"></td>
+                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
                       <td colspan="2"><a class="menu" href="">I miei Link</a></td>
                     </tr>
                 </table></td>

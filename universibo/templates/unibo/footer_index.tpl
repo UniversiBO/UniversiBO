@@ -196,7 +196,9 @@
                     <td bgcolor="#999999" height="1" colspan="3"></td>
                   </tr>
                 </table>
-                <br/> <table width="100%" border="0" cellspacing="0" cellpadding="0" align=""center"" summary="">
+                &nbsp;<br/> 
+                {if $common_isSetVisite == "S"}
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" align=""center"" summary="">
                   {* TABELLA BORDINI GRIGI *}
                   <tr> 
                     <td bgcolor="#999999" height="1" colspan="3"></td>
@@ -209,7 +211,7 @@
                             <td class="menu_bar" align="left" colspan="2">Statistiche</td>
                           </tr>
                           <tr> 
-                            <td class="menu" align="right">&nbsp;90764&nbsp;</td>
+                            <td class="menu" align="right">&nbsp;{$common_visite}&nbsp;</td>
                             <td class="testoVisite">visite in questa pagina</td>
                           </tr>
                       </table></td>
@@ -218,7 +220,8 @@
                   <tr> 
                     <td bgcolor="#999999" height="1" colspan="3"></td>
                   </tr>
-                </table></td>
+                </table>
+                {/if}</td>
             </tr>
         </table></td>
       {* FINE MENU DI DESTRA*}

@@ -3,6 +3,9 @@
 <img src="tpl/black/news_30.gif" width="100" height="39" alt="News" /><br />
 </td>
 </tr>
+<tr><td class="piccolo" align="right">
+&nbsp;{if $showNewsLatest_addNewsFlag == "true"}<a href="{$showNewsLatest_addNewsUri}">{$showNewsLatest_addNews}</a>{/if}<br />
+&nbsp;{if $showNewsLatest_langNewsShowOthers != ""}<a href="{$showNewsLatest_langNewsShowOthersUri}">{$showNewsLatest_langNewsShowOthers}</a>{/if}</td>
 <tr>
 <td class="Normal" align="center">
 {if $showNewsLatest_langNewsAvailableFlag=="true"}
