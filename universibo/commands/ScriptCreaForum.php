@@ -83,7 +83,7 @@ class ScriptCreaForum extends UniversiboCommand
 					$forum->addGroupForumPrivilegies($forum_id, $group_id);
 					echo ' > ','aggiunti privilegi cdl : ',$group_id,' - '.$forum_id,"\n";
 					
-					$cdl->setForumGroupId($forum_id);
+					$cdl->setForumGroupId($group_id);
 				}
 				else
 					echo ' > ','presidente cdl non trovato: ',$forum_id,"\n";
@@ -129,7 +129,7 @@ class ScriptCreaForum extends UniversiboCommand
 								$forum->addGroupForumPrivilegies($ins_forum_id, $ins_group_id);
 								echo '   - ','aggiunti privilegi insegnamento : ',$ins_group_id,' - '.$ins_forum_id,"\n";
 								
-								$insegnamento->setForumGroupId($ins_forum_id);
+								$insegnamento->setForumGroupId($ins_group_id);
 							}
 							else
 								echo '   ### docente insegnamento non trovato: ',$ins_forum_id,"\n";
