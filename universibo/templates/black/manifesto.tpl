@@ -14,10 +14,10 @@
 <img src="tpl/black/manifesto_30.gif" width="171" height="39" alt="{$manifesto_TitleAlt}" /><br />
 </p>
 <p align="center">
-<img src="tpl/black/galileo_galilei.gif" width="357" height="185" alt="{$manifesto_langQuoteAlt|escape:"htmlall"|BBcode2html}" />
+<img src="tpl/black/galileo_galilei.gif" width="357" height="185" alt="{$manifesto_langQuoteAlt|escape:"htmlall"|bbcode2html}" />
 </p>
 <p>
-{$manifesto_langWhatIsIt|escape:"htmlall"|nl2br|BBcode2html}
+{$manifesto_langWhatIsIt|escape:"htmlall"|nl2br|bbcode2html}
 </p>
 <p align="right" class="NormalC">{$manifesto_Author|escape:"htmlall"|capitalize}</p>
 <br /></td></tr></table>

@@ -14,7 +14,7 @@
  <td class="Normal">&nbsp;<br />
   <table width="70%" border="0" cellspacing="1" cellpadding="3" summary="">
   <tr><td class="Normal" bgcolor="#FF0000">
-  {$error_default}
+  {$error_default|escape:"htmlall"}
   </td></tr>
   </table>
  </td></tr>

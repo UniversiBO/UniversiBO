@@ -8,10 +8,10 @@
 
 <table summary="chi siamo" width="90%" border="0" cellspacing="0" cellpadding="0">
 <tr><td class="Normal" align="left">
-		<div align="center">&nbsp;<br /><img src="tpl/black/chi_siamo_30.gif" width="179" height="39" alt="{$contacts_langAltTitle|escape:"htmlall"|BBcode2html}" /></div>
+		<div align="center">&nbsp;<br /><img src="tpl/black/chi_siamo_30.gif" width="179" height="39" alt="{$contacts_langAltTitle|escape:"htmlall"|bbcode2html}" /></div>
         
       <p>
-      {$contacts_langIntro|escape:"htmlall"|BBcode2html}      
+      {$contacts_langIntro|escape:"htmlall"|bbcode2html}      
       </p>
  
 	
