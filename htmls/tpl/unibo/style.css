@@ -257,7 +257,7 @@ td.evidenzia{
 	margin: 3px;
 }
 
-#content h2
+#content h2, #content h2 a
 {
 /*	margin-top: 30px;
 	border-top: dotted 2px #999;
@@ -295,7 +295,7 @@ td.evidenzia{
  *
  */
 
-.news, .elenco
+.news, .elenco, .chi_siamo
 {
 	font-size: 12px;
 	margin: 2em 0;
@@ -304,7 +304,7 @@ td.evidenzia{
 	border-bottom: solid 1px #999;
 	text-align: left;
 }
-.news { padding: 0 0 4px; }
+.news, .chi_siamo { padding: 0 0 4px; }
 .elenco { padding: 0; }
 
 .elenco div
@@ -329,7 +329,7 @@ td.evidenzia{
 	padding: 2px 0 !important;
 }
 
-.news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td
+.news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td, .chi_siamo p, .chi_siamo a, .chi_siamo li, .chi_siamo h3, .chi_siamo td
 {
 	font-size: 12px;
 }
@@ -582,4 +582,56 @@ td.evidenzia{
 .titoloPagina p, .titoloPagina a, .titoloPagina h1, .titoloPagina h2, .titoloPagina h4
 { 
 	text-align: center !important;
+}
+.chi_siamo div
+{
+	background: white url(pixel.gif) repeat;
+}
+.chi_siamo h3
+{
+	margin: 0;
+	padding: 2px;
+	background-color: #ccc;
+}
+.chi_siamo span
+{
+	color: #386dce;
+	font-weight: bold;
+}
+
+.elencoTopic
+{
+	font-size: 12px;
+	margin: 2em 12%;
+	display: block;
+	border-top: dotted 2px #999;
+	border-bottom: dotted 2px #999;
+	padding: 0;
+	width: 76%;
+}
+.elencoTopic p
+{
+	font-size: 12px;
+}	
+.elencoTopic .even
+{
+	background-color: #efefef;
+}
+.elencoTopic .odd
+{
+	background-color: #f8f8f8;
+}
+.help_generale h3
+{
+	color: #386dce;
+	text-align: left !important;
+	font-size: 12px;
+}
+.help_generale p, .help_generale a, .help_generale li
+{
+	font-size: 12px;
+}
+.help_generale div
+{
+	text-align: right;
 }
