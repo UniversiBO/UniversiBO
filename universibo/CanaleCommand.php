@@ -5,10 +5,12 @@ require_once('Canale'.PHP_EXTENSION);
 
 
 /**
- * UniversiboCommand is the abstract super class of all command classes
- * used in the universibo application.
+ * CanaleCommand è la superclasse astratta di tutti i command che utilizzando un oggetto Canale
  *
- * Adds user authorization and double view (popup/index)
+ * Un Canale è una pagina dinamica con a disposizione il collegamento 
+ * verso i vari servizi tramite un indentificativo, gestisce i diritti di
+ * accesso per i diversi gruppi e diritti particolari 'ruoli' per alcuni utenti,
+ * fornisce sistemi di notifica e per assegnare un nome ad un canale
  *
  * @package universibo
  * @version 2.0.0

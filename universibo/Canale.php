@@ -1,6 +1,6 @@
 <?php
 
-include_once('Ruolo'.PHP_EXTENSION);
+require_once('Ruolo'.PHP_EXTENSION);
 
 define('CANALE_DEFAULT'   ,1);
 define('CANALE_HOME'      ,2);

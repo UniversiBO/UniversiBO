@@ -194,6 +194,9 @@ class UniversiboCommand extends BaseCommand {
 
 		$template->assign('common_fac', 'Facoltà');
 		$common_facLinks = array();
+
+
+
 		$common_facLinks[] = array ('label'=>'Ingegneria', 'uri'=>'http://www.example.com'); 
 		$common_facLinks[] = array ('label'=>'Economia', 'uri'=>'http://www.example.com'); 
 		$common_facLinks[] = array ('label'=>'Nome facoltà1', 'uri'=>'http://www.example.com'); 
