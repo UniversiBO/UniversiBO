@@ -41,7 +41,7 @@
 {if $showSettings_showAdminPanel == "true"} 
  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
  <tr><td>
-  <img src="img/admin_18.gif" width="76" height="22" alt="Admin" /><br />
+  <img src="tpl/black/admin_18.gif" width="76" height="22" alt="Admin" /><br />
 	&nbsp;<br />
   {include file=tabellina_due_colonne.tpl arrayToShow=$showSettings_langAdmin}
   

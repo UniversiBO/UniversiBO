@@ -119,7 +119,7 @@ class Canale {
 		$this->immagine = $immagine;
 		$this->nome = $nome;
 		$this->visite = $visite;
-		$this->servizioNotizie = $news_attivo;
+		$this->servizioNews = $news_attivo;
 		$this->servizioFiles = $files_attivo;
 		$this->servizioForum = $forum_attivo;
 		$this->forum['forum_id'] = $forum_forum_id;
@@ -627,6 +627,7 @@ class Canale {
 		$elenco_canali = array();
 		while ($res->fetchInto($row))
 		{
+			//var_dump($row);
 			$elenco_canali[] =& new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
 		}
