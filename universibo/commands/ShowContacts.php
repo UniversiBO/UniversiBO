@@ -51,14 +51,16 @@ class ShowContacts extends UniversiboCommand {
 		
 		
 		
-		$template->assign('contacts_langIntro', 'UniversiBO è l\'associazione studentesca universitaria dell\'Ateneo di Bologna che dal Settembre 2004 si impegna a supportare la Web Community degli studenti.
-		
-		Attraverso l\'utilizzo di tecnologia OpenSource UniversiBO si propone di estendere i confini fisici delle aule e dei muri delle Facoltà, incentivando i partecipanti a partecipare alla vita universitaria attraverso la diffusione e la condivisione delle informazioni. Desidera inoltre porsi come punto di collegamento tra il corpo decente e il mondo studentesco e promuovere e favorire l\'informatizzazione e la filosofia del Software Libero dell\'Ateneo di Bologna.
+		$template->assign('contacts_langIntro', 'UniversiBO è l\'associazione studentesca universitaria dell\'Ateneo di
+Bologna che dal settembre 2004 supporta la Web Community degli studenti.
 
-		Tutte le richieste di aiuto ed informazioni possono essere rivolte all\'indirizzo '.$frontcontroller->getAppSetting('infoEmail').'
-		
-		Nato nel 2002 dall\'idea di tre amici al momento attuale lo staff è composto da '.$rows.' collaboratori la maggiorparte dei quali sono studenti che danno il loro prezioso contributo anche per piccole attività.
-		Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi qualora aveste quesiti o bisogno di contattare qualcuno in particolare.');
+Attraverso l\'utilizzo di tecnologie OpenSource, UniversiBO si impegna a estendere i confini delle aule delle Facoltà ponendosi come innovativo luogo d\'incontro virtuale. Grazie alla diffusione e alla condivisione di "informazione", si propone infatti di incentivare gli studenti a partecipare attivamente alla vita universitaria. Desidera inoltre porsi come punto di collegamento tra il corpo docente e il mondo studentesco. Nel contempo promuove e favorisce l\'informatizzazione e la filosofia del Software Libero per l\'Università di Bologna.
+ 
+Tutte le richieste di aiuto ed informazioni possono essere rivolte all\'indirizzo info_universibo@calvin.ing.unibo.it
+
+UniversiBO nasce nel 2002 dall\'idea di tre studenti. Al momento attuale lo Staff è composto invece da circa '.$rows.' collaboratori, quasi tutti studenti dell\' Ateneo bolognese.
+
+Qui di seguito si presentano divisi per ruoli nel caso vogliate contattarli nello specifico per ogni vostra esigenza.');
 
 		
 		
