@@ -1,6 +1,12 @@
-</td><td width="170" valign="top" align="center" class="Normal">
+</td><td width="170" valign="top" align="center" class="Normal">&nbsp;<br />
 <!-- Inizio MENU Right -->
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+<tr valign="bottom"> 
+<td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
+<td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>
+<td height="12" width="12"><img src="tpl/black/invisible.gif" width="1" height="12" alt="" /></td>
+</tr>
 <tr> 
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
@@ -25,7 +31,7 @@ Password:<br /><input type="password" name="log_password" size="9" maxlength="50
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
 </tr>
 <tr valign="top"> 
-<td height="12" width="12"><img src="tpl/black/menuBL.gif" width="12" height="12" alt="" /></td>
+<td height="12" width="12"><img src="tpl/black/invisible.gif" width="12" height="12" alt="" /></td>
 <td height="12" align="right"><img src="tpl/black/menuB.gif" width="67" height="12" alt="" /></td>
 <td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
 </tr>
@@ -145,7 +151,7 @@ Password:<br /><input type="password" name="log_password" size="9" maxlength="50
 <td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
 </tr>
 </table>
-&nbsp;<br /><p align="center" class="MenuC">Versione 1.3.4</p><!-- Fine MENU Right --></td></tr>
+&nbsp;<br /><p align="center" class="MenuC">Versione 2.0.0</p><!-- Fine MENU Right --></td></tr>
 </table>
 </td></tr>
 <tr><td align="center">
