@@ -143,13 +143,19 @@ class Canale {
 
 
 	/**
-	 * Ritorna lo XOR bit a bit dei gruppi che hanno accesso al canale
+	 * Ritorna il tipo di canale
 	 *
-	 * es:  USER_STUDENTE|USER_ADMIN  =  2|64  =  66
+	 * es: $tipo_canale:
+	 *  define('CANALE_DEFAULT'   ,1);
+	 *  define('CANALE_HOME'      ,2);
+	 *  define('CANALE_FACOLTA'   ,3);
+	 *  define('CANALE_CDL'       ,4);
+	 *  define('CANALE_ESAME_ING' ,5);
+	 *  define('CANALE_ESAME_ECO' ,6);
 	 * 
 	 * @return int
 	 */
-	function getessi()
+	function getTipoCanale()
 	{
 		return $this->permessi;
 	}
