@@ -441,7 +441,7 @@ class FrontController {
 	function getStyle()
 	{
 		if (!array_key_exists('template_name', $_SESSION) )
-			return $fc->getAppSetting('defaultStyle'); 
+			return $this->getAppSetting('defaultStyle'); 
 		
 		return $_SESSION['template_name'];
 	}
