@@ -398,7 +398,7 @@ class NewsItem {
 			return array();
 		
 		//esegue $db->quote() su ogni elemento dell'array
-		array_walk($id_notizie, array($db, 'quote'));
+		//array_walk($id_notizie, array($db, 'quote'));
 		$values = implode(',',$id_notizie);
 		
 		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);

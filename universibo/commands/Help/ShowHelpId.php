@@ -57,14 +57,14 @@ class ShowHelpId extends PluginCommand {
 	
 		$rows = $res->numRows();
 
-		if( $rows == 0) return false;
-		
 		$argomenti	= array();
-				
+		//if( $rows > 0) restituisco comunque l'array vuoto
+	
 		while($res->fetchInto($row))
 		{		
 			$argomenti[] = array('id' => $row[0], 'titolo' => $row[1], 'contenuto' => $row[2]);
 		}
+		$res->free();
 		
 		$template->assign('showHelpId_langArgomento', $argomenti);
 		

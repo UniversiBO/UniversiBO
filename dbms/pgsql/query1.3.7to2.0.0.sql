@@ -284,3 +284,8 @@ id_help int4,
 PRIMARY KEY(riferimento, id_help)
 );
 
+------01-03-04
+CREATE TABLE "help_topic" (
+"riferimento" varchar (32) NOT NULL, 
+"titolo" varchar (256) NOT NULL ,
+PRIMARY KEY ("riferimento"));

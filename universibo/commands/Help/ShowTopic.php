@@ -36,25 +36,43 @@ class ShowTopic extends PluginCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT titolo FROM help_topic ht WHERE ht.riferimento=\''.$reference.'\'';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		if( $rows == 0) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'E\'stato richiesto un argomento dell\'help non presente','file'=>__FILE__,'line'=>__LINE__)); 
+		$res->fetchInto($row);
+		$topic_title = $row[0];
+		$res->free();
+		
+		
 		$query = 'SELECT he.id_help FROM help_riferimento he, help h WHERE h.id_help=he.id_help AND he.riferimento=\''.$reference.'\' ORDER BY h.indice';  //un join solo per ordinare secondo l'indice..
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-
-		if( $rows == 0) return false;
-		
-		$argomenti	= array();
-				
-		while($res->fetchInto($row))
-		{		
-			$argomenti[] = $row[0];
+		if( $rows > 0)
+		{
+			$argomenti	= array();
+					
+			while($res->fetchInto($row))
+			{		
+				$argomenti[] = $row[0];
+			}
+			$res->free();
+			
+			$lang_argomenti =& $this->executePlugin('ShowHelpId', $argomenti);
+	
+			$topic = array('titolo'=>$topic_title ,'reference'=>$reference, 'argomenti'=>$lang_argomenti);
 		}
-
-		$lang_argomenti =& $this->executePlugin('ShowHelpId', $argomenti);
-
-		$topic = array('reference'=>$reference, 'argomenti'=>$lang_argomenti);
+		else
+		{
+			$topic = array();
+		}
 		
 		$template->assign('showTopic_topic', $topic);
 		
