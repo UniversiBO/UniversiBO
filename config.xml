@@ -29,6 +29,9 @@
 		<ShowHome class="ShowHome">
 			 <template type="default">home.tpl</template>
 		</ShowHome>
+		<ShowContributes class="ShowContributes">
+			 <template type="default">contribute.tpl</template>
+		</ShowContributes>
 		<ShowRules class="ShowRules">
 			 <template type="default">regolamento.tpl</template>
 		</ShowRules>
