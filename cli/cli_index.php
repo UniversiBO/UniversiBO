@@ -3,7 +3,7 @@
 list($usec, $sec) = explode(" ", microtime());
 $page_time_start = ((float)$usec + (float)$sec);
 
-
+ 
 /**
  * The receiver. 
  * Code to activate the framework system.
