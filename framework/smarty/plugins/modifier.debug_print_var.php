@@ -10,7 +10,7 @@
  *
  * @package Smarty
  */
-function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40)
+function smarty_modifier_debug_print_var($var, $depth = 0, $length = 100)
 {
     if (is_array($var)) {
         $results = "<b>Array (".count($var).")</b>";
