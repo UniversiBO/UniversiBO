@@ -1,6 +1,8 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('ForumApi'.PHP_EXTENSION);
+
 
 /**
  * Login is an extension of UniversiboCommand class.
@@ -48,9 +50,10 @@ class Login extends UniversiboCommand {
 				$_POST['f1_password'] = '';  //resettata per sicurezza
 				$this->setSessionIdUtente($user->getIdUser());
 				
-				//Forum::login($user);
+				$forum = new ForumApi;
+				$forum->login($user);
 				
-				$fc->redirectCommand('ShowHome');
+				FrontController::redirectCommand('ShowHome');
 			}
 			$_POST['f1_password'] = '';  //resettata per sicurezza
 		
