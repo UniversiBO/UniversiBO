@@ -29,7 +29,7 @@ class ShowContribute extends UniversiboCommand {
         che offriamo sia utile e desiderate che continui a essere disponibile 
         per tutti allora aiutateci a rendere questo portale ancora migliore.</p>');
 		$template->assign('contributes_langTitle','-- Come fare per collaborare? --');
-		$template->assign('contributes_langHowToContribute ','<p>Non vi chiediamo di dedicare al progetto tutta la vostra vita universitaria! 
+		$template->assign('contributes_langHowToContribute','<p>Non vi chiediamo di dedicare al progetto tutta la vostra vita universitaria! 
         Le modalit&agrave; di collaborazione sono tante e ognuna richiede tempi 
         diversi. Eccovi un breve elenco di ci&ograve; che potreste fare per aiutarci:</p>
       <ul>
@@ -56,7 +56,7 @@ class ShowContribute extends UniversiboCommand {
           crescita), occuparvi del contatto con le aule, con i docenti...</li>
       </ul>
 	  <p>Se quindi vi abbiamo convinto con queste poche e semplici parole e volete 
-        collaborare attivamente al progetto compilate <b><a href="index.php?pg=17">questo questionario</a></b>
+        collaborare attivamente al progetto compilate <b><a href="devoFarlo">questo questionario</a></b>
 		e vi contatteremo al pi&ugrave; presto.</p>');
 		
 		
