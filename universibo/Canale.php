@@ -209,11 +209,23 @@ class Canale {
 
 
 	/**
-	 * Ritorna la stringa descrittiva del titolo/nome del canale
+	 * Ritorna la stringa descrittiva del titolo/nome breve del canale
 	 *
 	 * @return string
 	 */
 	function getNome()
+	{
+		return $this->nome;
+	}
+
+
+
+	/**
+	 * Ritorna la stringa descrittiva del titolo/nome completo del canale
+	 *
+	 * @return string
+	 */
+	function getTitolo()
 	{
 		return $this->nome;
 	}
@@ -392,6 +404,31 @@ class Canale {
 	}
 
 
+
+
+	/**
+	 * Dato Inizializza le informazioni del canale di CanaleCommand 
+	 * Esegue il dispatch inizializzndo il corretto sottotipo di 'canale' 
+	 *
+	 * @private
+	 * @param 
+	 * @return string
+	 */
+	function _dispatchCanale()
+	{
+
+		//$tipo_canale =  Canale::getTipoCanaleFromId ( $this->getRequestIdCanale() );
+
+		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
+			  
+		if ( $this->requestCanale === false ) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+		
+		$canale = $this->getRequestCanale();
+		$canale->addVisite();
+			
+	}
+	
 
 
 	/**

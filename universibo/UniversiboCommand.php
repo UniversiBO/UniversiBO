@@ -203,7 +203,7 @@ class UniversiboCommand extends BaseCommand {
 		{
 			$common_facLinks[$i] = array (); 
 			$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&amp;id_canale='.$elenco_facolta[$i]->getIdCanale();  
-			$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNomeFacolta(); 			
+			$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNome(); 			
 		}
 		$template->assign('common_facLinks', $common_facLinks);
 

@@ -2,9 +2,9 @@
 
 require_once('Canale'.PHP_EXTENSION);
 
-global $facoltaElencoCodice;
-global $facoltaElencoAlfabetico;
-global $facoltaElencoCanale;
+global $__facoltaElencoCodice;
+global $__facoltaElencoAlfabetico;
+global $__facoltaElencoCanale;
 
 $facoltaElencoCodice     = NULL;
 $facoltaElencoAlfabetico = NULL;
@@ -60,13 +60,13 @@ class Facolta extends Canale{
 
 	function getNome()
 	{
-		return 'FACOLTA\' DI '.$this->getNomeFacolta();
+		return $this->facoltaNome;
 	}
 
 
-	function getNomeFacolta()
+	function getTitolo()
 	{
-		return $this->facoltaNome;
+		return 'FACOLTA\' DI '.$this->getNomeFacolta();
 	}
 
 
@@ -78,40 +78,40 @@ class Facolta extends Canale{
 
 	function &selectFacoltaCanale($id_canale)
 	{
-		global $facoltaElencoCanale;
+		global $__facoltaElencoCanale;
 		
-		if ( $facoltaElencoCanale == NULL )
+		if ( $__facoltaElencoCanale == NULL )
 		{
 			Facolta::_selectFacolta();
 		}
 		
-		return $facoltaElencoCanale[$id_canale];
+		return $__facoltaElencoCanale[$id_canale];
 	}
 	
 	
 	function &selectFacoltaCodice($cod_facolta)
 	{
-		global $facoltaElencoCodice;
+		global $__facoltaElencoCodice;
 		
-		if ( $facoltaElencoCodice == NULL )
+		if ( $__facoltaElencoCodice == NULL )
 		{
 			Facolta::_selectFacolta();
 		}
 		
-		return $facoltaElencoCodice[$cod_facolta];
+		return $__facoltaElencoCodice[$cod_facolta];
 	}
 	
 	
 	function &selectFacoltaElenco()
 	{
-		global $facoltaElencoAlfabetico;
+		global $__facoltaElencoAlfabetico;
 		
-		if ( $facoltaElencoAlfabetico == NULL )
+		if ( $__facoltaElencoAlfabetico == NULL )
 		{
 			Facolta::_selectFacolta();
 		}
 		
-		return $facoltaElencoAlfabetico;
+		return $__facoltaElencoAlfabetico;
 	}
 	
 	
@@ -122,9 +122,9 @@ class Facolta extends Canale{
 	function _selectFacolta()
 	{
 		
-		global $facoltaElencoCodice;
-		global $facoltaElencoAlfabetico;
-		global $facoltaElencoCanale;
+		global $__facoltaElencoCodice;
+		global $__facoltaElencoAlfabetico;
+		global $__facoltaElencoCanale;
 
 		$db =& FrontController::getDbConnection('main');
 	
@@ -136,18 +136,18 @@ class Facolta extends Canale{
 		$rows = $res->numRows();
 		if( $rows = 0) return false;
 
-		$facoltaElencoAlfabetico = array();
-		$facoltaElencoCanale     = array();
-		$facoltaElencoCodice     = array();
+		$__facoltaElencoAlfabetico = array();
+		$__facoltaElencoCanale     = array();
+		$__facoltaElencoCodice     = array();
 
 		while (	$res->fetchInto($row) )
 		{
 			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15]);
 
-			$facoltaElencoAlfabetico[] =& $facolta;
-			$facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
-			$facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
+			$__facoltaElencoAlfabetico[] =& $facolta;
+			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
+			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
 		}
 
 	}

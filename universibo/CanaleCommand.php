@@ -73,12 +73,15 @@ class CanaleCommand extends UniversiboCommand {
 
 
 	/**
-	 * Inizializza le informazioni del canale di CanaleCommand
+	 * Inizializza le informazioni del canale di CanaleCommand 
+	 * Esegue il dispatch inizializzndo il corretto sottotipo di 'canale' 
 	 *
 	 * @private  
 	 */
 	function _setUpCanaleCanale()
 	{
+
+		//$tipo_canale =  Canale::getTipoCanaleFromId ( $this->getRequestIdCanale() );
 
 		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
 			  
@@ -90,6 +93,7 @@ class CanaleCommand extends UniversiboCommand {
 			
 	}
 	
+
 
 	/**
 	 * Inizializza le informazioni del canale di CanaleCommand

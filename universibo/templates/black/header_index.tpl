@@ -64,7 +64,7 @@
 {foreach from=$common_facLinks item=curr_link}
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu"><a href="{$curr_link.uri}" >{$curr_link.label}</a></td>
+ <td class="Menu" width="100%">&nbsp;<a href="{$curr_link.uri}" >{$curr_link.label|lower|capitalize|escape:"htmlall"}</a></td>
 </tr>
 {/foreach}
 
