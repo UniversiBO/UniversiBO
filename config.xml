@@ -32,6 +32,11 @@
 			<response type="template" name="default">home.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowHome>
+		<ShowCanale class="ShowCanale">
+			<response type="template" name="default">canale.tpl</response>
+			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+			<pluginCommand name="ShowFileTitoli" class="Files.ShowFileTitoli" />
+		</ShowCanale>
 		<ShowHelp class="ShowHelpIndex">
 			<response type="template" name="default">help.tpl</response>
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
