@@ -97,7 +97,7 @@ class Cdl extends Canale{
 	 *
 	 * @return string
 	 */
-	function getTitoloCdl()
+	function getTitolo()
 	{
 		return 'CORSO DI LAUREA DI '.$this->getNome();
 	}
@@ -231,7 +231,7 @@ class Cdl extends Canale{
 	 * 
 	 * @static
 	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
-	 * @return array(Facolta)
+	 * @return array(Cdl)
 	 */
 	function &selectCdlElencoFacolta($cod_facolta)
 	{
@@ -252,7 +252,8 @@ class Cdl extends Canale{
 		while (	$res->fetchInto($row) )
 		{
 			$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
+				$row[13], $row[14], $row[15], $row[16]);
 
 			$elenco[] =& $cdl;
 		}

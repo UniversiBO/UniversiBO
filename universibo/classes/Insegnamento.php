@@ -6,7 +6,7 @@ require_once('Canale'.PHP_EXTENSION);
  * Insegnamento class.
  *
  * Modella un insegnamento e le informazioni associate.
- * Ad un insegnamento possono essere associate da 1 a n attività didattiche (PRG_ATTIVITA_DOCENTE).
+ * Ad un insegnamento possono essere associate da 1 a n attività didattiche (PrgAttivitaDidattica).
  *
  * @package universibo
  * @version 2.0.0
@@ -28,92 +28,12 @@ class Insegnamento extends Canale{
 	 */
 	var $insegnamentoUri = '';
 	
-	/**
-	 * @private
-	 */
-	var $uri = '';
-
-	/**
-	 * @private
-	 */
-	var $obiettivi = '';
-
-	/**
-	 * @private
-	 */
-	var $obiettiviUri = '';
-
-	/**
-	 * @private
-	 */
-	var $programma = '';
-
-	/**
-	 * @private
-	 */
-	var $programmaUri = '';
-
-	/**
-	 * @private
-	 */
-	var $materiale = '';
-
-	/**
-	 * @private
-	 */
-	var $materialeUri = '';
-
-	/**
-	 * @private
-	 */
-	var $modalita = '';
-
-	/**
-	 * @private
-	 */
-	var $modalitaUri = '';
-
-	/**
-	 * @private
-	 */
-	var $orario = '';
-
-	/**
-	 * @private
-	 */
-	var $orarioUri = '';
-
-	/**
-	 * @private
-	 */
-	var $appelli = '';
-
-	/**
-	 * @private
-	 */
-	var $appelliUri = '';
 	
 	
 	/**
 	 * Crea un oggetto Insegnamento 
 	 *
-	var $insegnamentoNome = '';
-	var $insegnamentoUri = '';
-	var $ = '';
-	var $uri = '';
-	var $obiettivi = '';
-	var $obiettiviUri = '';
-	var $programma = '';
-	var $programmaUri = '';
-	var $materiale = '';
-	var $materialeUri = '';
-	var $modalita = '';
-	var $modalitaUri = '';
-	var $orario = '';
-	var $orarioUri = '';
-	var $appelli = '';
-	var $appelliUri = '';
-	 * @param int $id_canale 		identificativo del canae su database
+	 * @param int $id_canale 		identificativo del canale su database
 	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
 	 * @param int $ultima_modifica 	timestamp 
 	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
@@ -133,15 +53,21 @@ class Insegnamento extends Canale{
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
-				 $cod_facolta, $nome_facolta, $uri_facolta)
+				 /* ... */)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
+		/**
+		
+		//id_canale
+		
 		$this->facoltaCodice = $cod_facolta;
 		$this->facoltaNome   = $nome_facolta;
 		$this->facoltaUri    = $uri_facolta;
+		*/
+		
 	}
 
 
@@ -153,33 +79,20 @@ class Insegnamento extends Canale{
 	 */
 	function getNome()
 	{
-		return $this->facoltaNome;
+		return $this->insegnamentoNome;
 	}
 
 
 
 	/**
-	 * Restituisce il titolo/nome completo della facoltà
+	 * Restituisce il titolo/nome completo dell'insegnamento
 	 *
 	 * @return string
 	 */
-	function getTitoloFacolta()
+	function getTitolo()
 	{
-		return 'FACOLTA\' DI '.$this->getNome();
+		return $this->getNome();
 	}
-
-
-
-	/**
-	 * Restituisce il link alla homepage ufficiale della facoltà
-	 *
-	 * @return string
-	 */
-	function getUri()
-	{
-		return $this->facoltaUri;
-	}
-
 
 
 	/**
@@ -195,9 +108,9 @@ class Insegnamento extends Canale{
 
 
 	/**
-	 * Crea un oggetto facolta dato il suo numero identificativo id_canale
+	 * Crea un oggetto Cdl dato il suo numero identificativo id_canale
 	 * Ridefinisce il factory method della classe padre per restituire un oggetto
-	 * del tipo Facolta
+	 * del tipo Cdl
 	 *
 	 * @static
 	 * @param int $id_canale numero identificativo del canale
@@ -205,118 +118,106 @@ class Insegnamento extends Canale{
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Facolta::selectFacoltaCanale($id_canale);
+		return Insegnamento::selectInsegnamentoCanale($id_canale);
 	}
 	
 
 	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * Seleziona da database e restituisce l'oggetto Insegnamento
 	 * corrispondente al codice id_canale 
 	 * 
 	 * @static
-	 * @param int $id_canale id_del canale corrispondente alla facoltà
-	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
+	 * @param int $id_canale identificativo su DB del canale corrispondente al corso di laurea
+	 * @return mixed Insegnamento se eseguita con successo, false se il canale non esiste
 	 */
-	function &selectFacoltaCanale($id_canale)
+	function &selectInsegnamentoCanale($id_canale)
 	{
-		global $__facoltaElencoCanale;
-		
-		if ( $__facoltaElencoCanale == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		if ( !array_key_exists($id_canale,$__facoltaElencoCanale) ) return false;
-		
-		return $__facoltaElencoCanale[$id_canale];
-	}
-	
-	
-
-	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
-	 * corrispondente al codice $cod_facolta 
-	 * 
-	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
-	 * @return Facolta
-	 */
-	function &selectFacoltaCodice($cod_facolta)
-	{
-		global $__facoltaElencoCodice;
-		
-		if ( $__facoltaElencoCodice == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-
-		if ( !array_key_exists($cod_facolta,$__facoltaElencoCodice) ) return false;
-		
-		return $__facoltaElencoCodice[$cod_facolta];
-	}
-	
-
-	
-	/**
-	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine alfabetico di tutte le facoltà 
-	 * 
-	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
-	 * @return array(Facolta)
-	 */
-	function &selectElencoInsegnamentiCdl()
-	{
-		global $__facoltaElencoAlfabetico;
-		
-		if ( $__facoltaElencoAlfabetico == NULL )
-		{
-			Facolta::_selectFacolta();
-		}
-		
-		return $__facoltaElencoAlfabetico;
-	}
-	
-	
-	/**
-	 *
-	 * 
-	 * @static
-	 * @private
-	 * @return none 
-	 */
-	function _selectInsegnamento()
-	{
-		
-		global $__facoltaElencoCodice;
-		global $__facoltaElencoAlfabetico;
-		global $__facoltaElencoCanale;
 
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, a.id_canale, cod_fac, desc_fac, url_facolta FROM canale a , facolta b WHERE a.id_canale = b.id_canale ORDER BY 15';
+		$query = 'SELECT .... WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
+
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
-		$__facoltaElencoAlfabetico = array();
-		$__facoltaElencoCanale     = array();
-		$__facoltaElencoCodice     = array();
+		if( $rows == 0) return false;
 
-		if( $rows = 0) return array();
+		$res->fetchInto($row);
+		$insegnamento =& new Insegnamento( /* ... $row[12], $row[5], */ );
+		
+		return $insegnamento;
+
+	}
+	
+	
+
+	/**
+	 * Seleziona da database e restituisce l'oggetto Cdl 
+	 * corrispondente al codice $cod_cdl 
+	 * 
+	 * @static
+	 * @param string $cod_cdl stringa a 4 cifre del codice d'ateneo del corso di laurea
+	 * @return Facolta
+	 */
+	function &selectInsegnamentoCodice(/* ...tutta la chiave... */)
+	{
+
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT ... WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
+
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows == 0) return false;
+
+		$res->fetchInto($row);
+		$insegnamento =& new Insegnamento( /* ... $row[16] ... */ );
+		
+		return $insegnamento;
+
+	}
+
+	
+	/**
+	 * Seleziona da database e restituisce un'array contenente l'elenco 
+	 * in ordine anno/ciclo/alfabetico di tutti gli insegnamenti appartenenti 
+	 * al corso di laurea in un dato anno accademico
+	 * 
+	 * @static
+	 * @param string $cod_cdl stringa a 4 cifre del codice del corso di laurea
+	 * @param int $anno_accademico anno accademico
+	 * @return array(Insegnamento)
+	 */
+	function &selectInsegnamentoElencoCdl($cod_cdl, $anno_accademico)
+	{
+
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT ... AND b.cod_corso = '.$db->quote($cod_cdl).' ORDER BY ... ';
+
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows == 0) return array();
+		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
-			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15]);
+			$insegnamento =& new Insegnamento( /* ... $row[15], $row[16] ... */ );
 
-			$__facoltaElencoAlfabetico[] =& $facolta;
-			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
-			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
+			$elenco[] =& $insegnamento;
 		}
-		$res->free();
 		
+		return $elenco;
 	}
 	
 }

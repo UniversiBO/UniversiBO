@@ -86,7 +86,7 @@ class ShowFacolta extends CanaleCommand {
 
 		$template -> assign('fac_list', $fac_listCdlType);
 		$template -> assign('fac_langFac', 'FACOLTA\'');
-		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
+		$template -> assign('fac_facTitle', $facolta->getTitolo());
 		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
 		$template -> assign('fac_facName', $facolta->getNome());
 		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());

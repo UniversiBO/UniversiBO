@@ -289,3 +289,13 @@ CREATE TABLE "help_topic" (
 "riferimento" varchar (32) NOT NULL, 
 "titolo" varchar (256) NOT NULL ,
 PRIMARY KEY ("riferimento"));
+
+------15-03-04
+ALTER TABLE "esami_attivi" RENAME TO "prg_insegnamento";
+ALTER TABLE "sdoppiamenti_attivi" RENAME TO "prg_sdoppiamento";
+ALTER TABLE "esami_attivi2" RENAME TO "prg_insegnamento2";
+ALTER TABLE "sdoppiamenti_attivi2" RENAME TO "prg_sdoppiamento2";
+ALTER TABLE "prg_insegnamento" RENAME "id_argomento" TO "id_canale"; 
+
+ALTER TABLE "prg_insegnamento"   DROP COLUMN "prog_cronologico";
+
