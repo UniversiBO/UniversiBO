@@ -415,9 +415,9 @@ class FileItem {
 	 *
 	 * @param array di string 
 	 */
-	function setParoleChiave() {
-		if ($this->paroleChiave == NULL)
-			$this->paroleChiave =& FileKeyWords::updateFileKeyWords($this->getIdFile());
+	function setParoleChiave($paroleChiave) {
+		FileKeyWords::updateFileKeyWords($paroleChiave);
+		$this->paroleChiave = $paroleChiave; 
 		
 		return $this->paroleChiave;
 	}
