@@ -65,6 +65,8 @@ class ShowMyUniversiBO extends UniversiboCommand
 
 		$arrayFilesItems = $this->getLatestFileCanale(5,$arrayIdCanaliFiles);
 		
+		$this->executePlugin('ShowMyFileTitoli', array('files'=>$arrayFilesItems,'chk_diritti'=>false));
+		
 		$template->assign('showMyScheda','index.php?do=ShowUser&id_utente='.$utente->getIdUser());
 //		var_dump($arrayFilesItems);
 //		die();

@@ -15,6 +15,7 @@
 <tr><td>{include file=News/show_my_news.tpl}</td></tr>
 <tr><td align="center">
 <img src="tpl/black/files_18.gif" alt="Files" width="57" height="22" />
+<tr><td>{include file=Files/show_my_file_titoli.tpl}</td></tr>
 </td></tr>
 </table>
 {if $common_pageType == "index"}

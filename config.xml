@@ -99,6 +99,7 @@
 		<ShowMyUniversiBO class="ShowMyUniversiBO">
 			<response type="template" name="default">my_universibo.tpl</response>
 			<pluginCommand name="ShowMyNews" class="News.ShowMyNews" />
+			<pluginCommand name="ShowMyFileTitoli" class="Files.ShowMyFileTitoli" />
 		</ShowMyUniversiBO>
 		<MyUniversiBOAdd class="MyUniversiBOAdd">
 			<response type="template" name="default">my_universibo_add.tpl</response>

@@ -7,7 +7,7 @@
 {include file=avviso_notice.tpl}
 
 <table width="95%" border="0" cellspacing="0" cellpadding="4" summary="" align="center">
-<tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi una nuova pagina al tuo MyUniversiBO<br />&nbsp;</p></td></tr>
+<tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica una pagina del tuo MyUniversiBO<br />&nbsp;</p></td></tr>
 <tr><td align="center" class="Normal">La pagina &egrave; stata modificata con successo.</td></tr>
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
