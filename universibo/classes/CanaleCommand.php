@@ -226,6 +226,8 @@ class CanaleCommand extends UniversiboCommand
 				$template->assign('common_contactsCanale', $arrayPublicUsers);
 				$template->assign('common_contactsEdit', array('label' => 'Modifica diritti', 'uri' => 'index.php?do=RuoliAdminSearch&id_canale='.$canale->getIdCanale() ) ) ;
 				$template->assign('common_contactsEditAvailable', ($attivaModificaDiritti) ? 'true' : 'false');
+				
+				$template->assign('common_langLinksCanale', 'Links');
 			}
 			
 			
