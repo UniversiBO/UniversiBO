@@ -36,15 +36,15 @@
 	{/if}
 	<div class="box"> {* terzo blocchetto *}
 		<h3>Links</h3>
-		<a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Universit&agrave; di BO</a>
-		<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Facolt&agrave; di Ingegneria</a>
-		<a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Uniwex</a>
-		<a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Guida dello Studente</a>
-		<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Elenco Dipartimenti</a>
-		<a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Assoc. Studentesche</a>
-		<a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Ordine Ingegneri</a>
-		<a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />ATC Bologna</a>
-		<a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Trenitalia</a>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Universit&agrave; di BO</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Facolt&agrave; di Ingegneria</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Uniwex</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Guida dello Studente</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Elenco Dipartimenti</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Assoc. Studentesche</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Ordine Ingegneri</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />ATC Bologna</a></p>
+		<p><a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank"><img src="tpl/unibo/freccia_4.gif" width="12" height="11" border="0" alt="->" />Trenitalia</a></p>
 	</div>
 	<div class="box"> {*quarto blocchetto *}
 		<h3>Giugno</h3>

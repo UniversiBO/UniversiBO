@@ -398,6 +398,7 @@ td.evidenzia{
 .box p, .box a
 {
 	font-weight: bold;
+	margin: 2px 0;
 }
 
 .box a
