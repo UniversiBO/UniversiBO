@@ -925,7 +925,7 @@ class User {
         ignore_user_abort(1);
         $db->autoCommit(false);
         
-		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($this->getUsername()).' OR ad_username = '.$db->quote($this->getADUsername()); 
+		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($this->getUsername() ); 
 		$res = $db->query($query);
 		$rows = $res->numRows();
 		
