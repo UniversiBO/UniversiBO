@@ -166,3 +166,8 @@ PRIMARY KEY ("id_news", "id_canale"));
 CREATE INDEX "news_canale_id_news_key" ON "news_canale"("id_news"); 
 CREATE INDEX "news_canale_id_canale_key" ON "news_canale"("id_canale");
 
+------30-10-2003
+
+INSERT INTO news_canale ( "id_news" , "id_canale") 
+SELECT "id_news" ,  "id_argomento" FROM news2 ;
+
