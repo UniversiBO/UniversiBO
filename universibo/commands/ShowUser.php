@@ -46,14 +46,14 @@ class ShowUser extends UniversiboCommand{
 					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
 					if ($canale->isGroupAllowed($current_user->getGroups()))
 					{
-						$Canali = array();
-						$Canali['uri']   = $canale->showMe();
-						$Canali['tipo']  = $canale->getTipoCanale();
-						$Canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
-						$Canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-						$Canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
-						$Canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
-						$arrayCanali[] = $Canali;
+						$canali = array();
+						$canali['uri']   = $canale->showMe();
+						$canali['tipo']  = $canale->getTipoCanale();
+						$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+						$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+						$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
+						$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
+						$arrayCanali[] = $canali;
 					}
 				}
 			}

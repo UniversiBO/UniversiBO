@@ -94,8 +94,6 @@ class RuoliAdminEdit extends UniversiboCommand {
 				$success = true;
 			}
 			
-			
-			
 		}
 		
 		

@@ -40,13 +40,17 @@ class MyUniversiBOEdit extends UniversiboCommand
 		$template->assign('common_langCanaleNome', $canale->getNome());
 		
 		$ruoli =& $utente->getRuoli();
+		if( !array_key_exists($id_canale, $ruoli) )
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il ruolo richiesto non è presente', 'file' => __FILE__, 'line' => __LINE__));
+		
+		$ruolo =& $ruoli[$id_canale];
 		$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
 		
 		if(array_key_exists($id_canale, $ruoli))
 		{
 			$f19_livelli_notifica = Ruolo::getLivelliNotifica();
-			$f19_livello_notifica = $utente->getLivelloNotifica();
-			$f19_nome = $canale->getNome();
+			$f19_livello_notifica = $ruolo->getTipoNotifica();
+			$f19_nome = $ruolo->getNome();
 			
 			$f19_accept = false;
 			if (array_key_exists('f19_submit', $_POST))
@@ -72,18 +76,18 @@ class MyUniversiBOEdit extends UniversiboCommand
 					Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri', 'file' => __FILE__, 'line' => __LINE__));
 					$f19_accept = false;
 				}	
-				elseif($_POST['f19_nome'] == '')
-				{ 
-					$f19_nome = $canale->getNome();
-				}
 				else 
 					$f19_nome = $_POST['f19_nome'];
 				
 				
 				if($f19_accept == true)
 				{
-					$nascosto = false;
-					$ruolo = new Ruolo($utente->getIdUser(), $id_canale, $f19_nome , time(), false, false, true, $f19_livello_notifica, $nascosto);
+					//$nascosto = false;
+					//$ruolo = new Ruolo($utente->getIdUser(), $id_canale,  , time(), false, false, true, $f19_livello_notifica, $nascosto);
+					
+					$ruolo->updateNome($f19_nome);
+					$ruolo->updateTipoNotifica($f19_livello_notifica);
+					
 					$ruolo->updateRuolo();
 					$canale =& Canale::retrieveCanale($id_canale);
 					$template->assign('showUser','index.php?do=ShowUser&id_utente='.$utente->getIdUser());

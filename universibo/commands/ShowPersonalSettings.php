@@ -3,6 +3,8 @@
 require_once ('PluginCommand'.PHP_EXTENSION);
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
 
+require_once  ('ForumApi'.PHP_EXTENSION);
+
 /**
  * ShowPersonalSettings is an extension of UniversiboCommand class.
  *
@@ -109,6 +111,9 @@ class ShowPersonalSettings extends UniversiboCommand
 			$user->setDefaultStyle($f20_personal_style);
 			$user->setLivelloNotifica($f20_livello_notifica);
 			$user->updateUser();
+
+			$forum = new ForumApi();
+			$forum->updateUserStyle($user);
 			
 			$fc->setStyle($f20_personal_style);
 			$template->assign('showPersonalSettings_thanks',"Le impostazioni personali sono state modificate con successo, si consiglia di testarne il corretto funzionamento.\n".

@@ -782,3 +782,15 @@ INSERT INTO "file_tipo" ("id_file_tipo", "descrizione", "pattern_riconoscimento"
 
 UPDATE "utente" SET "default_style" = 'unibo' WHERE 1=1;
  
+-- brain 1-10-2004
+ 
+UPDATE phpbb_users SET config_value='0' WHERE config_name='override_user_style';
+
+-- brain 2-10-2004
+ 
+
+ALTER TABLE "utente_canale" RENAME "nome" TO "nome_errato";
+ALTER TABLE "utente_canale" ADD "nome" varchar(60) ;
+UPDATE "utente_canale" SET nome = nome_errato;
+ALTER TABLE "utente_canale" DROP COLUMN "nome_errato";
+
