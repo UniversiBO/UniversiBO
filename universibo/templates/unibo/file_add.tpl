@@ -2,13 +2,12 @@
 {include file=avviso_notice.tpl}
 <h2>Aggiungi un nuovo file<br />&nbsp;</h2>
 <hr />
-<div id="file_add">
 <form method="post" enctype="multipart/form-data">
 	<p><label for="f12_file">File:</label>
 		 <input type="file" name="f12_file" id="f12_file" size="30" value="{$f12_file|escape:"htmlall"}">
  		<input type="hidden" name="MAX_FILE_SIZE" value="20971520"></p>
-	<p><label for="f12_titolo">Titolo:</label>
-		<input type="text" id="f12_titolo" name="f12_titolo" size="65" maxlength="130" value="{$f12_titolo|escape:"htmlall"}" /></p>
+	<p><label class="label" for="f12_titolo">Titolo:</label>
+		<input type="text" class="casella" id="f12_titolo" name="f12_titolo" size="65" maxlength="130" value="{$f12_titolo|escape:"htmlall"}" /></p>
 	<p><span><label for="f12_abstract"><p>Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f12_abstract" name="f12_abstract">{$f12_abstract|escape:"htmlall"}</textarea></span></p>
 	<p><span><label for="f12_parole_chiave"><p>Parole chiave<br />(una per riga, max 4 parole)</p></label>
@@ -23,16 +22,16 @@
 		</select></p>
 	<p><fieldset>
 		<legend>Data Inserimento:</legend>
-		<p><span><label for="f12_data_ins_gg">Giorno:</label>&nbsp;
-			<input type="text" id="f12_data_ins_gg" name="f12_data_ins_gg" size="2" maxlength="2" value="{$f12_data_ins_gg|escape:"htmlall"}" />
-		<label for="f12_data_ins_mm">Mese:</label>&nbsp;
-			<input type="text" id="f12_data_ins_mm" name="f12_data_ins_mm" size="2" maxlength="2" value="{$f12_data_ins_mm|escape:"htmlall"}" />
-		<label for="f12_data_ins_aa">Anno:</label>&nbsp;
-			<input type="text" id="f12_data_ins_aa" name="f12_data_ins_aa" size="4" maxlength="4" value="{$f12_data_ins_aa|escape:"htmlall"}" />
-		<label for="f12_data_ins_ora">Ore:</label>&nbsp;
-			<input type="text" id="f12_data_ins_ora" name="f12_data_ins_ora" size="2" maxlength="2" value="{$f12_data_ins_ora|escape:"htmlall"}" />
-		<label for="f12_data_ins_min">Minuti:</label>&nbsp;
-			<input type="text" id="f12_data_ins_min" name="f12_data_ins_min" size="2" maxlength="2" value="{$f12_data_ins_min|escape:"htmlall"}" />
+		<p><span><label class="label" for="f12_data_ins_gg">Giorno:</label>&nbsp;
+			<input type="text" class="casella" id="f12_data_ins_gg" name="f12_data_ins_gg" size="2" maxlength="2" value="{$f12_data_ins_gg|escape:"htmlall"}" />
+		<label class="label" for="f12_data_ins_mm">Mese:</label>&nbsp;
+			<input type="text" class="casella" id="f12_data_ins_mm" name="f12_data_ins_mm" size="2" maxlength="2" value="{$f12_data_ins_mm|escape:"htmlall"}" />
+		<label class="label" for="f12_data_ins_aa">Anno:</label>&nbsp;
+			<input type="text" class="casella" id="f12_data_ins_aa" name="f12_data_ins_aa" size="4" maxlength="4" value="{$f12_data_ins_aa|escape:"htmlall"}" />
+		<label class="label" for="f12_data_ins_ora">Ore:</label>&nbsp;
+			<input type="text" class="casella" id="f12_data_ins_ora" name="f12_data_ins_ora" size="2" maxlength="2" value="{$f12_data_ins_ora|escape:"htmlall"}" />
+		<label class="label" for="f12_data_ins_min">Minuti:</label>&nbsp;
+			<input type="text" class="casella" id="f12_data_ins_min" name="f12_data_ins_min" size="2" maxlength="2" value="{$f12_data_ins_min|escape:"htmlall"}" />
 	</span></p>
 	</fieldset>
 	<p><label for="f12_permessi_download">Permessi download:</label>
@@ -57,7 +56,6 @@
 	{/if}
 	<p><input type="submit" id="" name="f12_submit" size="20" value="Invia" /></p>
 </form>
-</div>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 
 <hr />
