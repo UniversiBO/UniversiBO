@@ -616,7 +616,7 @@ class FileItem {
 						 nome_file, A.id_categoria, A.id_tipo_file, hash_file, password,
 						 username, categoria_desc, tipo_desc, tipo_icona, tipo_info
 						 FROM file A, utente B, file_categoria C, file_tipo D 
-						 WHERE A.id_utente = B.id_utente AND A.id_file_categoria = C.id_file_categoria AND A.id_file_tipo = D.id_file_tipo AND A.id_file IN ('.$values.') AND eliminata!='.$db->quote(FILE_ELIMINATO);
+						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND A.id_file_tipo = D.id_file_tipo AND A.id_file IN ('.$values.') AND eliminata!='.$db->quote(FILE_ELIMINATO);
 		//var_dump($query);
 		$res = & $db->query($query);
 
