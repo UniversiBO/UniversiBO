@@ -28,19 +28,15 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 		
-		if (!array_key_exists('id_utente', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_utente']))
+		if (!array_key_exists('id_commento', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_commento']))
 		{
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id dell\'utente non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del commento non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
-		if (!array_key_exists('id_file_studente', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file_studente']))
-		{
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del file richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
-		}
-		$file = & FileItemStudenti::selectFileItem($_GET['id_file_studente']);
-		if ($file === false)
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il file richiesto non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
-		
+		$id_commento = $_GET['id_commento'];
+		$commento =& CommentoItem::selectCommentoItem($id_commento);
+		$id_utente = $commento->getIdUtente();
+		$id_file_studente = $commento->getIdFileStudente();
 		
 		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
 		$template->assign('common_langCanaleNome', 'indietro');
@@ -48,7 +44,7 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 		$referente = false;
 		$moderatore = false;
 		
-		$autore = ($_GET['id_utente'] == $user->getIdUser());
+		$autore = ($id_utente == $user->getIdUser());
 		
 		if (array_key_exists('id_canale', $_GET))
 		{
@@ -67,6 +63,7 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 				$moderatore = $ruolo->isModeratore();
 			}
 			//controllo coerenza parametri
+			$file =& FileItemStudenti::selectFileItem($id_file_studente);
 			$canali_file	=& 	$file->getIdCanali();
 			
 			//TO DO: perché non funziona il controllo???
@@ -89,10 +86,8 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 		
 		// valori default form
 		// $f28_file = '';
-		$id_file_studente=$_GET['id_file_studente'];
-		$id_utente_autore = $_GET['id_utente'];
-		
-		$this->executePlugin('ShowFileStudentiCommento', array( 'id_file_studente' => $id_file_studente,'id_utente' => $id_utente_autore ));
+				
+		$this->executePlugin('ShowFileStudentiCommento', array( 'id_commento' => $id_commento));
 
 		$f28_accept = false;
 		
@@ -104,7 +99,7 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 			if ($f28_accept == true) 
 			{
 				
-				CommentoItem::deleteCommentoItem($id_file_studente,$id_utente_autore);
+				CommentoItem::deleteCommentoItem($id_commento);
 				$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file_studente.'&id_canale='.$id_canale);
 				return 'success';
 			}

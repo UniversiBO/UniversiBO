@@ -38,3 +38,16 @@ ALTER TABLE "docente" ADD PRIMARY KEY ("cod_doc");
 ALTER TABLE "canale" ADD "files_studenti_attivo" character(1);
 UPDATE "canale" SET "files_studenti_attivo" = 'N';
 UPDATE "canale" SET "files_studenti_attivo" = 'S' WHERE tipo_canale = 5;
+
+-- 07-02-2005 LastHope
+DROP TABLE file_studente_commenti;
+CREATE TABLE file_studente_commenti (
+    id_commento serial NOT NULL,
+    id_file integer NOT NULL,
+    id_utente integer NOT NULL,
+    commento text NOT NULL,
+    voto integer NOT NULL,
+    eliminato character(1) NOT NULL,
+    PRIMARY KEY (id_commento),
+    UNIQUE (id_file,id_utente,id_commento)
+);

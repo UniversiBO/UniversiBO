@@ -2,6 +2,8 @@
 
 require_once('Files/FileKeyWords'.PHP_EXTENSION);
 require_once('Files/FileItem'.PHP_EXTENSION);
+require_once('Commenti/CommentoItem'.PHP_EXTENSION);
+
 
 /**
  * FileItemStudenti class
@@ -17,6 +19,9 @@ require_once('Files/FileItem'.PHP_EXTENSION);
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
+ 
+//define('COMMENTO_ELIMINATO', 'S');
+//define('COMMENTO_NOT_ELIMINATO', 'N');
 
 class FileItemStudenti extends FileItem {
 	
@@ -204,7 +209,7 @@ class FileItemStudenti extends FileItem {
 	 	
 		$db = & FrontController :: getDbConnection('main');
 
-		$query = 'SELECT avg(voto) FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' GROUP BY id_file';
+		$query = 'SELECT avg(voto) FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' AND eliminato = '.$db->quote(COMMENTO_NOT_ELIMINATO).' GROUP BY id_file';
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))

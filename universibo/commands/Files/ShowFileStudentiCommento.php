@@ -48,7 +48,7 @@ class ShowFileStudentiCommento extends PluginCommand {
 		$template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
 */
 		
-		$commento =& CommentoItem::selectCommentoItem($param['id_file_studente'],$param['id_utente']);
+		$commento =& CommentoItem::selectCommentoItem($param['id_commento']);
 		$commento_tpl = array();
 //		var_dump($elenco_commenti);
 //	    die();

@@ -101,9 +101,10 @@ class ShowFileStudentiCommenti extends PluginCommand {
 				
 				if($this_diritti)
 					{
+						$id_commento =& $elenco_commenti[$i]->getIdCommento();
 						$commenti['dirittiCommento'] = 'true';
-						$commenti['editCommentoLink'] = 'index.php?do=FileStudentiCommentEdit&id_utente='.$id_utente.'&id_file_studente='.$param['id_file'].'&id_canale='.$id_canale;
-						$commenti['deleteCommentoLink'] = 'index.php?do=FileStudentiCommentDelete&id_utente='.$id_utente.'&id_file_studente='.$param['id_file'].'&id_canale='.$id_canale;
+						$commenti['editCommentoLink'] = 'index.php?do=FileStudentiCommentEdit&id_commento='.$id_commento.'&id_canale='.$id_canale;
+						$commenti['deleteCommentoLink'] = 'index.php?do=FileStudentiCommentDelete&id_commento='.$id_commento.'&id_canale='.$id_canale;
 					}
 				else{$commenti['dirittiCommento']='false';}
 				$elenco_commenti_tpl[$i] = $commenti;

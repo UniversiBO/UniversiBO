@@ -42,7 +42,7 @@ class FileStudentiComment extends UniversiboCommand {
 		//Controllo che non esista giá un commento da parte di questo utente
 		
 		$id_file = $_GET['id_file'];
-		$esiste_commento = CommentoItem::selectCommentoItem($id_file,$user->getIdUser());
+		$esiste_commento = CommentoItem::esisteCommento($id_file,$user->getIdUser());
 		if($esiste_commento!==false)
 		{   $canali = $file->getIdCanali();
 			

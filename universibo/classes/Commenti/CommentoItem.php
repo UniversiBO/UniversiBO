@@ -14,9 +14,16 @@
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
+ 
+define('COMMENTO_ELIMINATO', 'S');
+define('COMMENTO_NOT_ELIMINATO', 'N');
 
 class CommentoItem
 {
+	/**
+	 * @private
+	 */
+	var $id_commento = 0;
 	/**
 	 * @private
 	 */
@@ -35,6 +42,11 @@ class CommentoItem
 	var $voto = -1;
 	
 	/**
+	 * @private
+	 */
+	var $eliminato = COMMENTO_NOT_ELIMINATO;
+	
+	/**
 	 * Crea un oggetto CommentoItem
 	 * @param $id_file_studente id di un File Studente
 	 * @param $id_utente id di un utente, quello che ha fatto il commento
@@ -42,12 +54,26 @@ class CommentoItem
 	 * @param $voto proposto per un file studente
 	 */
 	
-	function CommentoItem($id_file_studente,$id_utente,$commento,$voto)
+	function CommentoItem($id_commento,$id_file_studente,$id_utente,$commento,$voto,$eliminato)
 	{
+		$this->id_commento = $id_commento;
 		$this->id_file_studente = $id_file_studente;
 		$this->id_utente = $id_utente;
 		$this->commento = $commento;
 		$this->voto = $voto;
+		$this->eliminato = $eliminato;
+	}
+	
+	function getIdCommento()
+	{
+		return $this->id_commento;
+	}
+	
+	function isEliminato()
+	{
+		$flag = false;
+		if($this->eliminato == FILE_ELIMINATO) $flag=true;
+		return $flag;
 	}
 	
 	/**
@@ -130,7 +156,7 @@ class CommentoItem
 	 {
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT id_utente,commento,voto FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' ORDER BY voto DESC';
+		$query = 'SELECT id_commento,id_utente,commento,voto FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' AND eliminato = '.$db->quote(COMMENTO_NOT_ELIMINATO).' ORDER BY voto DESC';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -140,7 +166,7 @@ class CommentoItem
 	
 		while ( $res->fetchInto($row) )
 		{
-			$commenti_list[]= &new CommentoItem($id_file,$row[0],$row[1],$row[2]);
+			$commenti_list[]= &new CommentoItem($row[0],$id_file,$row[1],$row[2],$row[3],COMMENTO_NOT_ELIMINATO);
 		}
 		
 		$res->free();
@@ -152,11 +178,11 @@ class CommentoItem
 	  *
 	  */
 	  
-	 function & selectCommentoItem($id_file,$id_utente)
+	 function & selectCommentoItem($id_commento)
 	 {
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT commento,voto FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente);
+		$query = 'SELECT id_file,id_utente,commento,voto FROM file_studente_commenti WHERE id_commento='.$db->quote($id_commento).' AND eliminato = '.$db->quote(COMMENTO_NOT_ELIMINATO);
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -165,7 +191,7 @@ class CommentoItem
 	
 		if($res->fetchInto($row) )
 		{
-			$commenti= &new CommentoItem($id_file,$id_utente,$row[0],$row[1]);
+			$commenti= &new CommentoItem($id_commento,$row[0],$row[1],$row[2],$row[3],COMMENTO_NOT_ELIMINATO);
 		}
 		else return false;
 		
@@ -186,7 +212,7 @@ class CommentoItem
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file = '.$db->quote($id_file).' GROUP BY id_file';
+		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file = '.$db->quote($id_file).' AND eliminato = '.$db->quote(COMMENTO_NOT_ELIMINATO).' GROUP BY id_file';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -230,8 +256,10 @@ class CommentoItem
 	 {
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
+		$next_id = $db->nextID('file_studente_commenti_id_commento');
+		$this->id_commento=$next_id;
 		$return = true;
-        $query = 'INSERT INTO file_studente_commenti (id_file,id_utente,commento,voto) VALUES ('.$db->quote($id_file_studente).','.$db->quote($id_utente).','.$db->quote($commento).','.$db->quote($voto).')';
+        $query = 'INSERT INTO file_studente_commenti (id_commento,id_file,id_utente,commento,voto,eliminato) VALUES ('.$next_id.','.$db->quote($id_file_studente).','.$db->quote($id_utente).','.$db->quote($commento).','.$db->quote($voto).','.$db->quote(COMMENTO_NOT_ELIMINATO).')';
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -247,12 +275,12 @@ class CommentoItem
 	 * Modifica un Commento sul DB
 	 */
 	 
-	 function & updateCommentoItem($id_file_studente,$id_utente,$commento,$voto)
+	 function & updateCommentoItem($id_commento,$commento,$voto)
 	 {
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
 		$return = true;
-        $query = 'UPDATE file_studente_commenti SET commento='.$db->quote($commento).', voto= '.$db->quote($voto).' WHERE id_file='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
+        $query = 'UPDATE file_studente_commenti SET commento='.$db->quote($commento).', voto= '.$db->quote($voto).' WHERE id_commento='.$db->quote($id_commento);
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -268,12 +296,12 @@ class CommentoItem
 	  * Cancella un commento sul DB
 	  */
 	  
-	  function & deleteCommentoItem($id_file_studente,$id_utente)
+	  function & deleteCommentoItem($id_commento)
 	  {
 	  		$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
 		$return = true;
-        $query = 'DELETE FROM file_studente_commenti WHERE id_file='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
+        $query = 'UPDATE file_studente_commenti SET eliminato = '.$db->quote(COMMENTO_ELIMINATO).'WHERE id_commento='.$db->quote($id_commento);
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -297,7 +325,7 @@ class CommentoItem
 		
 		$db = & FrontController :: getDbConnection('main');
 
-		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file ='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente).' GROUP BY id_file_studente,id_utente';
+		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file ='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente).' AND eliminato = '.$db->quote(COMMENTO_NOT_ELIMINATO).'GROUP BY id_file,id_utente';
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
