@@ -24,7 +24,9 @@ class FileShowInfo extends UniversiboCommand {
 		}
 		
 		$frontcontroller = & $this->getFrontController();
+		
 		$template = & $frontcontroller->getTemplateEngine();
+		$krono = & $frontcontroller->getKrono();
 		$user =& $this->getSessionUser();
 		
 		
@@ -38,57 +40,31 @@ class FileShowInfo extends UniversiboCommand {
 			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 
 
-		$template->assign('fileShowInfo_Uri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
-		$template->assign('fileShowInfo_Titolo', $file->getTitolo());
-		$template->assign('fileShowInfo_Descrizione', $file->getDescrizione());
-		$template->assign('fileShowInfo_Username', $file->getUsername());
-		$template->assign('fileShowInfo_DataInserimento', $file->getDataInserimento());
-		$template->assign('fileShowInfo_New', ($file->getDataModifica() < $user->getUltimoAccesso() ) ? 'true' : 'false' );
-		$template->assign('fileShowInfo_NomeFile', $nomeFile);
-		$template->assign('fileShowInfo_Hash',  $file->getHashFile());
-		$template->assign('fileShowInfo_', $file->getIdFile());
-		$template->assign('fileShowInfo_', $file->getIdFile());
-		$template->assign('fileShowInfo_', $file->getIdFile());
-
-		$this->username = $username;
-		$this->categoria_desc = $categoria_desc;
-		$this->tipo_desc = $tipo_desc;
-		$this->tipo_icona = $tipo_icona;
-		$this->tipo_info = $tipo_info;
-
-
-        $directoryFile = $frontcontroller->getAppSetting('directoryFile');
-        //$directoryFileUri = $frontcontroller->getAppSetting('directoryFileUri');
-		
-		$nomeFile = $directoryFile.$file->getNomeFile();
-		if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) 
+		if (($user->isAdmin() || $referente || $this_moderatore))
 		{
-			// had to make it MSIE 5.5 because if 6 has no "attachment;"
-			// in it defaults to "inline"
-			$attachment = "";
+			$file_tpl['modifica']     = 'Modifica';
+			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
+			$file_tpl['elimina']      = 'Elimina';
+			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
 		}
-		else
-		{
-			$attachment = "attachment;";
-		}
-		header('Content-Type: application/octet-stream');
-		header('Cache-Control: private');
-		header('Pragma: dummy-pragma');
-		header("Expires: ". gmdate("D, d M Y H:i:s")." GMT"); // Date in the past
-		header("Last-Modified: ". gmdate("D, d M Y H:i:s")." GMT"); // always modified
-		header("Content-Length: ". @filesize($nomeFile));
-		////header("Content-type: application/force-download");
-		header("Content-type: application/octet-stream");
-		header("Content-Transfer-Encoding: binary");
-		header("Content-disposition: $attachment filename=".basename($nomeFile));
 		
-		//echo $nomeFile; 
-		readfile($nomeFile);
-		
-		/**
-		 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione
-		 */
-		die();
+		$template->assign('fileShowInfo_Downloaduri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('fileShowInfo_uri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
+		$template->assign('fileShowInfo_titolo', $file->getTitolo());
+		$template->assign('fileShowInfo_descrizione', $file->getDescrizione());
+		$template->assign('fileShowInfo_userLink', 'ShowUser&id_utente='.$file->getIdUtente());
+		$template->assign('fileShowInfo_username', $file->getUsername());
+		$template->assign('fileShowInfo_dataInserimento', $krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
+		$template->assign('fileShowInfo_new', ($file->getDataModifica() < $user->getUltimoLogin() ) ? 'true' : 'false' );
+		$template->assign('fileShowInfo_nomeFile', $nomeFile);
+		$template->assign('fileShowInfo_dimensione',  $file->getDimensione());
+		$template->assign('fileShowInfo_download',  $file->getDownload());
+		$template->assign('fileShowInfo_hash',  $file->getHashFile());
+		$template->assign('fileShowInfo_categoria', $file->getCategoriaDesc());
+		$template->assign('fileShowInfo_tipo', $file->getTipoDesc());
+		$template->assign('fileShowInfo_icona', $frontcontroller->getAppSetting('filesTipoIconePath').$file->getTipoIcona());
+		$template->assign('fileShowInfo_info', $file->getTipoInfo());
+
 		
 		return;
 		
