@@ -10,107 +10,80 @@
 {#favIcon#}
 </head>
  
-<body leftmargin="0" topmargin="0">
+<body>
 {* inizio tabella di impaginazione GENERALE  *}
-<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+	<colgroup>
+		<col width="165px" />
+		<col />
+		<col width="168px" />
+	</colgroup>
 {* barra in alto, gif di sinistra LOGO a sfondo BIANCO di dimensioni 150x92,gif per il TITOLO a sfondo del colore della tabella con data e menu di navigazione di dimensioni 600x100 *}
- <tr>
-      <td width="150" align="center"><img border="0" src="tpl/unibo/spacer.gif" width="150" height="1" /><img align="center" border="0" alt="" src="tpl/unibo/logo.gif" /></td>
-      <td colspan="4" bgcolor="#0006C2"> <table width="100%" height="92" border="0" background="tpl/unibo/logo_{$common_logoType}.gif" class="table_bg">
-          <tr>
-            <td><div align="right" class="databar">{$common_longDate} - {$common_time}</div></td>
-          </tr>
-          <tr>
-            <td height="45">&nbsp;</td>
-          </tr>
-          <tr>
-            <td height="19" valign="bottom" class="navbarwhite" >| <a class="navbarHead" href="{$common_manifestoUri}">{$common_manifesto}
-              </a> | <a class="navbarHead" href="{$common_rulesUri}" >{$common_rules}</a>
-              | <a class="navbarHead" href="{$common_contactsUri}" >{$common_contacts}</a>
-              | <a class="navbarHead" href="{$common_contributeUri}" >{$common_contribute}</a></td>
-          </tr>
-        </table></td>
-    </tr>
-    <tr>
-      <td bgcolor="#666666" width="150"></td>
-      <td colspan="4" bgcolor="#666666" width=""> <table width="100%" align="center" cellspacing="0" bgcolor="#666666" summary="">
-            <tr>
-              <td width="37%" class="navbarwhite"><div align="left"> |  <a class="navbarHead" href="{$common_helpUri}" >{$common_help}</a> | 
-			  <a class="navbarHead" href="{$common_settingsUri}">{$common_settings}</a> |  <a class="navbarHead" href="{$common_forumUri}">{$common_forum}</a> | <a class="navbarHead" href="">Cerca</a></div></td>
-              {* spazio per il login *}
-              <td width="57%" align="right" class="navbar ">
-{if $common_userLoggedIn=='false'}
-<form action="{$common_receiverUrl}?do=Login" name="form1_a" method="post">
-<div align="right">username <input name="f1_username" maxlength="25" type="text" class="navbarForm" size="15" />
-                  password <input name="f1_password" maxlength="25" type="password" class="navbarForm" size="15" />
-</div></td><td width="6%" align="right"><div align="left"><input name="f1_submit" type="submit" value="Login" onclick="document.form1_a.f1_resolution.value = screen.width;" /></div></form>
-{else}
-bevenuto username
-{/if}
-</td></tr>
-        </table></td>
-    </tr>
-    {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
-    <tr>
-      {* SECONDA RIGA *}
-      <td class="Normal" valign="top" align="left" width="150">
-        {* COLONNA MENù DI SINISTRA *}
-        <table cellspacing="0" cellpadding="2" border="0" summary="" background="tpl/unibo/pixel_2.gif">
-            <tr valign="top">
-              <td valign="top"> <table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
-                  {* primo blocchetto *}
-                    <tr><br/>
-                      <td class="BgMenu1livOn" width="18"><img height="9" alt=""  src="tpl/unibo/navig_freccia3.gif" width="18" /></td>
-                      <td class="BgMenu1livOn" width="100%" colspan="2"><span class="menu">{$common_homepage}</span></td>
-                    </tr>
-                    <tr>
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
-                      <td class="menu">Facoltà</a></td>
-                    </tr>
-{foreach from=$common_facLinks item=temp_currLink}
 <tr>
-	<td width="18"><img height="9" width="1" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
-	<td colspan="2"><a class="menu_piccolo" href="{$temp_currLink.uri}">- {$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></td>
-</tr>
-{/foreach}
-                </table></td>
-            </tr>
-            <tr>
-              {*linea - separatore*}
-              <td bgcolor="#999999" height="1" colspan="3"></td>
-            </tr>
-            <tr>
-              <td><table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
-                  {* secondo blocchetto *}
-{foreach from=$common_servicesLinks item=temp_link}
-<tr>
-  <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
-  <td colspan="2"><a class="menu" href="{$temp_link.uri}">{$temp_link.label}</a></td>
-</tr>
-{/foreach}
-                </table></td>
-            </tr>
-              {*linea - separatore*}
-            <tr> 
-              <td bgcolor="#999999" height="1" colspan="3" width="150"></td>
-            </tr>
-            <tr> 
-              <td> <table cellspacing="0" cellpadding="1" width="100%" align="center" border="0" summary="">
-                  {* quarto blocchetto *}
-                    <tr> 
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
-                      <td colspan="2"><a class="menu" href="">My UniversiBO</a></td>
-                    </tr>
-                    <tr> 
-                      <td width="18"><img height="9" alt="" src="tpl/unibo/spacer.gif" width="18" /></td>
-                      <td colspan="2"><a class="menu" href="">I miei Link</a></td>
-                    </tr>
-                </table></td>
-            </tr>
-        </table>
-        {* FINE MENù DI SINIStrA*}
-      <td class="Normal" valign="top" align="center" width="90%"> 
+ 	<td colspan="3">
+		<div id="header">
+			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="165" height="92"/></a>
+			<img src="tpl/unibo/logo_{$common_logoType}" alt="Logo UniversiBO" />
+			<p class="TimeInfo">2{$common_longDate} &nbsp;-&nbsp;{$common_time}</p>
+			<a href="#content" class="hide">Salta la navigazione</a>
+			<p id="Info">|&nbsp;<a href="{$common_manifestoUri}">{$common_manifesto}</a>&nbsp;|&nbsp;<a href="{$common_rulesUri}">{$common_rules}</a>&nbsp;|&nbsp;<a href="{$common_contactsUri}">{$common_contacts}</a>&nbsp;|&nbsp;<a href="{$common_contributeUri}">{$common_contribute}</a></p>
+		</div> {* /header *}
+		<div id="menubar">
+			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri}">{$common_help}</a>&nbsp;|&nbsp;<a href="{$common_settingsUri}">{$common_settings}</a>&nbsp;|&nbsp;<a href="{$common_forumUri}">{$common_forum}</a></p>
+			{* spazio per il login *}
 
+		</div> {* /menubar *}
+	</td>
+</tr>
+{* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
+<tr valign="top">
+	<td class="evidenzia" rowspan="2">
+		<div id="leftmenu">
+			<ul>
+				<li><a href="{$common_homepageUri|escape:"htmlall"}">{$common_homepage|lower|capitalize|escape:"htmlall"}</a></li>
+				<li>{$common_fac|lower|capitalize|escape:"htmlall"}
+					<ul>
+						{foreach from=$common_facLinks item=temp_currLink}
+						<li>-&nbsp;<a href="{$temp_currLink.uri|escape:"htmlall"}" >{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></li>
+						{/foreach}
+					</ul>
+				</li>
+			</ul>
+			<ul class="lastElemento">
+				<li>Servizi
+					<ul>	
+					{foreach from=$common_servicesLinks item=temp_link}
+						<li>-&nbsp;<a href="{$temp_link.uri}" >{$temp_link.label}</a></li>
+					{/foreach}
+					<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_helpByTopic}</a></li>
+					<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits}</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<hr class="hide" />
+		{* MyUniversiBO *}
+		{if $common_myLinksAvailable=="true"}
+		<div class="box">
+			<h3>MyUniversiBO</h3>
+				{foreach from=$common_myLinks item=temp_currLink}
+				<a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
+				{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/unibo/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
+				{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/unibo/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
+				{if $temp_currLink.new=="true"}&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}
+				{/foreach}
+				<div class="backlink"><a href="http://www.ing.unibo.it/Ingegneria/Eventi/">Tutti gli eventi</a></div>
+		</div>
+		{/if}
+		
+</td> {* FINE MENù DI SINIStrA*}
+<td>
+	{*<p id="seiIn">sei in: <a href="">Home</a></p>*}
+	<div id="content"> {* COLONNA MENU CENtrALE *}
+	{if $common_alert != ""}
+	<div id="alert">{$common_alert|escape:"htmlall"}</div>
+	{/if}
+	
 
 
 
