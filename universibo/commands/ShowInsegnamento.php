@@ -53,7 +53,8 @@ class ShowInsegnamento extends CanaleCommand
 		//var_dump($info_didattica);
 		
 		
-		$template->assign('ins_langHomepageAlternativa','Homepage alternativa');
+		$template->assign('ins_langHomepageAlternativaLink', 'Le informazioni del corso posso essere consultate anche alla pagina' );
+		$template->assign('ins_homepageAlternativaLink', $info_didattica->getHomepageAlternativaLink() );
 		
 		
 		if ($info_didattica->getObiettiviEsameLink() == '' && $info_didattica->getObiettiviEsame() == '' )

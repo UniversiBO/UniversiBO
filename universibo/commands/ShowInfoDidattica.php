@@ -36,6 +36,8 @@ class ShowInfoDidattica extends UniversiboCommand
 		$insegnamento = Canale::retrieveCanale($id_canale);
 		//var_dump($info_didattica);
 		
+		$homepageAlternativaLink = $info_didattica->getHomepageAlternativaLink();
+		
 		$obiettiviLink = $info_didattica->getObiettiviEsameLink();
 		$obiettiviInfo = $info_didattica->getObiettiviEsame();
 		
@@ -53,6 +55,8 @@ class ShowInfoDidattica extends UniversiboCommand
 		$appelliInfo = $info_didattica->getAppelli();
 		
 		$template->assign('infoDid_title', $insegnamento->getTitolo() );
+		$template->assign('infoDid_langHomepageAlternativaLink', 'Le informazioni del corso posso essere consultate anche alla pagina' );
+		$template->assign('infoDid_homepageAlternativaLink', $homepageAlternativaLink );
 		
 		$template->assign('infoDid_langObiettiviInfo', 'Obiettivi del corso' );
 		$template->assign('infoDid_langObiettiviLink', 'Gli obiettivi del corso posso essere consultati anche a questo link' );

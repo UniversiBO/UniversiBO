@@ -86,9 +86,13 @@
 		<ShowUser class="ShowUser">
 			<response type="template" name="default">show_user.tpl</response>
 		</ShowUser>
+		
 		<ShowInfoDidattica class="ShowInfoDidattica">
 			<response type="template" name="default">show_info_didattica.tpl</response>
 		</ShowInfoDidattica>
+		<InfoDidatticaEdit class="InfoDidatticaEdit">
+			<response type="template" name="default">info_didattica_edit.tpl</response>
+		</InfoDidatticaEdit>
 		
 		
 		<ShowMyUniversiBO class="ShowMyUniversiBO">
