@@ -32,6 +32,9 @@ class NewsAdd extends CanaleCommand {
 			$moderatore = $ruolo->isModeratore();
 		}
 		
+		if ($canale->getServizioNews() == false) 
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il servizio news è disattivato", 'file' => __FILE__, 'line' => __LINE__));
+		
 		if (!($user->isAdmin() || $referente || $moderatore)) 
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		

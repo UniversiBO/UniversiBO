@@ -59,6 +59,9 @@ class FileEdit extends UniversiboCommand {
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 
 			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			if ($canale->getServizioFiles() == false) 
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il servizio files è disattivato", 'file' => __FILE__, 'line' => __LINE__));
+		
 			$id_canale = $canale->getIdCanale();
 			$template->assign('common_canaleURI', $canale->showMe());
 			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());

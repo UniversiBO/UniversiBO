@@ -39,6 +39,9 @@ class NewsDelete extends CanaleCommand {
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id della notizia richiesta non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
+		if ($canale->getServizioNews() == false) 
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il servizio news è disattivato", 'file' => __FILE__, 'line' => __LINE__));
+		
 		
 		/* diritti
 		 -admin
