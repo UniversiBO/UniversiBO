@@ -1,10 +1,13 @@
 <?php
 
-/*
-* String.php
-* 
-* classe su cui faremo i test
-*/ 
+/**
+ * classe da testare per l'esempio d'uso di PHPUnit
+ *
+ * @package universibo_tests
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, http://www.opensource.org/licenses/gpl-license.php
+ * @copyright CopyLeft UniversiBO 2001-2003
+ */
 
 class String
 {

@@ -18,6 +18,15 @@ require_once 'PHPUnit.php';
 require_once 'StringEsempioUsoPhpUnit.php';
 
 
+/**
+ * Esempio d'uso di PHPUnit
+ * Test per la classe String
+ *
+ * @package universibo_tests
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, http://www.opensource.org/licenses/gpl-license.php
+ * @copyright CopyLeft UniversiBO 2001-2003
+ */
 
 class StringTest extends PHPUnit_TestCase
 {

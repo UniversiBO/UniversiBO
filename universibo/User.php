@@ -15,8 +15,9 @@ define('USER_ALL'        ,127);
  *
  * @package universibo
  * @version 2.0.0
- * @author  Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, <http://www.opensource.org/licenses/gpl-license.php>
+ * @copyright CopyLeft UniversiBO 2001-2003
  */
 
 class User {
@@ -26,7 +27,7 @@ class User {
 	var $MD5 = '';
 	var $email = '';
 	var $ultimoLogin = 0;
-	var $bookmark;
+	var $bookmark = array();
 	var $ADUsername = '';
 	var $groups = 0;
 	
@@ -150,16 +151,22 @@ class User {
 		if( $rows == 0) return false;
 		elseif( $rows == 1) return true;
 		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		return false;
 	}
 
 
 
 	/**
-	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se utente ospite
+	 * Crea un oggetto User
 	 *
+	 * In pratica non dovrebbe mai essere necessario utilizzarlo a meno che non si voglia 
+	 * creare un utente "custom", l'utente andrebbe sempre creato attraverso il medoto 
+	 * factory selectUser
+	 *
+	 * @see selectUser
 	 * @param int $id_utente numero identificativo utente, -1 non registrato du DB, 0 utente ospite
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
-	 * @return boolean
+	 * @return User
 	 */
 	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $ultimoLogin=NULL, $bookmark=NULL, $ADUsername=NULL)
 	{
@@ -171,6 +178,7 @@ class User {
 		$this->ultimoLogin = $ultimoLogin;
 		$this->MD5         = $MD5;
 		$this->bookmark    = $bookmark;
+		return $this;
 	}
 
 
@@ -204,7 +212,7 @@ class User {
 	 * 
 	 * @param string $email nuova email da impostare
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * @return boolean
 	 */
 	function updateEmail($email, $updateDB = false)
 	{
@@ -222,7 +230,7 @@ class User {
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
 			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-			
+			return false;
 		}
 		return true;
 	}
@@ -247,14 +255,25 @@ class User {
 	 * 
 	 * @param int $groups nuovo gruppo da impostare
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * @return boolean
 	 */
 	function updateGroups($groups, $updateDB = false)
 	{
 		return $this->groups;
 		if ( $updateDB == true )
 		{
-			
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET groups = '.$db->quote($groups).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			return false;
 		}
 		return true;
 	}
@@ -285,7 +304,18 @@ class User {
 		$this->ultimoLogin = $ultimoLogin;
 		if ( $updateDB == true )
 		{
-			
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET ultimo_login = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			return false;
 		}
 		return true;
 	}
@@ -293,7 +323,8 @@ class User {
 
 
 	/**
-	 * Ritorna l'oggetto bookmark associato all'utente corrente
+	 * Ritorna l'oggetto bookmark associato all'utente corrente  
+	 * ??? da decidere come fare
 	 *
 	 * @return Bookmark
 	 */
@@ -321,14 +352,25 @@ class User {
 	 * 
 	 * @param string $ADUsername username dell'ActiveDirectory di ateneo da impostare
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * @return boolean
 	 */
 	function updateADUsername($ADUsername, $updateDB = false)
 	{
 		$this->ADUsername = $ADUsername;
 		if ( $updateDB == true )
 		{
-			
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET ad_username = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			return false;
 		}
 		return true;
 	}
@@ -352,13 +394,24 @@ class User {
 	 * 
 	 * @param string $hash stringa della codifica esadecimale dell'hash
 	 * @param boolean $updateDB se true e l'id_utente>0 la modifica viene propagata al DB 
-	 * @return int
+	 * @return boolean
 	 */
 	function updatePasswordHash($hash, $updateDB = false)
 	{
 		$this->MD5 = $hash;
 		if ( $updateDB == true )
 		{
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET password = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->id_utente);
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			
 		}
 		return true;
@@ -486,7 +539,7 @@ class User {
 
 
 	/**
-	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se utente ospite
+	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se si vuole creare un utente ospite
 	 *
 	 * @static
 	 * @param int $id_utente numero identificativo utente
@@ -529,10 +582,22 @@ class User {
 	 */
 	function insertUser()
 	{
-/*
-		INSERT INTO  
-		return true;
-*/		
+			$db =& FrontController::getDbConnection('main');
+		
+			$this->id_utente = $db->nextID('utente_id_utente');
+
+			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups) '.
+						'( '.$db->quote($this->id_utente).' , '.
+						$db->quote($this->username).' , '.
+						$db->quote($this->MD5).' , '.
+						$db->quote($this->email).' , '.
+						$db->quote($this->ultimoLogin).' , '.
+						$db->quote($this->ADUsername).' , '.
+						$db->quote($this->groups).' )'; 
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+
 	}
 
 	
@@ -544,10 +609,24 @@ class User {
 	 */
 	function updateUser()
 	{
-/*
-		UPDATE SET 
-		return true;
-*/		
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE utente SET username = '.$db->quote($this->username).
+						', password = '.$db->quote($this->MD5).
+						', email = '.$db->quote($this->email).
+						', ultimo_login = '.$db->quote($this->ultimoLogin).
+						', ad_username = '.$db->quote($this->ADUsername).
+						', groups = '.$db->quote($this->groups).
+						' WHERE id_utente = '.$db->quote($this->id_utente); 
+			
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $res->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 
 	

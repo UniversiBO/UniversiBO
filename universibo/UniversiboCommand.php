@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UniversiboCommand is the abstract super class of all command classes
  * used in the universibo application.
@@ -7,8 +8,9 @@
  *
  * @package universibo
  * @version 2.0.0
- * @author  Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, <http://www.opensource.org/licenses/gpl-license.php>
+ * @copyright CopyLeft UniversiBO 2001-2003
  */
 
 class UniversiboCommand extends BaseCommand {
@@ -104,7 +106,8 @@ class UniversiboCommand extends BaseCommand {
 		}
 		elseif ( $this->getSessionIdUtente() >= 0 )
 		{
-			$this->sessionUser &= User::selectUser( 79 );
+			$this->sessionUser &= User::selectUser( $this->getSessionIdUtente() );
+			
 		}
 		else 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));

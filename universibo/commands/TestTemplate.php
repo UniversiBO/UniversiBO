@@ -2,6 +2,18 @@
 
 include ('UniversiboCommand'.PHP_EXTENSION);
 
+/**
+ * Comando per testare i template i fase di sviluppo, in questo file vengono inserite
+ * le definizione delle interfacce dei template
+ *
+ * Adds user authorization and double view (popup/index)
+ *
+ * @package universibo_tests
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, <http://www.opensource.org/licenses/gpl-license.php>
+ * @copyright CopyLeft UniversiBO 2001-2003
+ */
+
 class TestTemplate extends UniversiboCommand {
 	function execute(){
 

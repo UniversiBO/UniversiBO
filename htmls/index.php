@@ -9,9 +9,12 @@ $page_time_start = ((float)$usec + (float)$sec);
  * 
  * @package framework
  * @version 1.0.0
- * @author  Deepak Dutta, http://www.eocene.net, Ilias Bartolini
- * @copyright UniversiBO 2001-2003
+ * @author Deepak Dutta, http://www.eocene.net, 
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, http://www.opensource.org/licenses/gpl-license.php
+ * @copyright CopyLeft UniversiBO 2001-2003
  */
+
 class Receiver{
 
 	var $frameworkPath = '../framework';

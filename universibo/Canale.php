@@ -18,8 +18,9 @@ define('CANALE_ESAME_ECO' ,6);
  *
  * @package universibo
  * @version 2.0.0
- * @author  Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, <http://www.opensource.org/licenses/gpl-license.php>
+ * @copyright CopyLeft UniversiBO 2001-2003
  */
 
 class Canale {

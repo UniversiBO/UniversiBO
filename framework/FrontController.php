@@ -9,8 +9,9 @@
  *
  * @package framework
  * @version 1.0.0
- * @author  Deepak Dutta, Ilias Bartolini
- * @license http://www.opensource.org/licenses/gpl-license.php
+ * @author  Deepak Dutta
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL, http://www.opensource.org/licenses/gpl-license.php
  */
 
 class FrontController {	
