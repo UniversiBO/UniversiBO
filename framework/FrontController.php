@@ -145,7 +145,7 @@ class FrontController {
 			$_GET['do'] = $this->defaultCommand;
 		}
 
-		if($_GET['do'] == "")
+		if($_GET['do'] == '')
 			$this->writeError(119);
 
 		return $_GET['do'];
