@@ -560,8 +560,8 @@ class Ruolo {
 		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
 		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
 		
-		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome) VALUES '.
-					'( '.$db->quote($this->id_utente).' , '.
+		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome) VALUES ( '.
+					$db->quote($this->id_utente).' , '.
 					$db->quote($this->id_canale).' , '.
 					$db->quote($this->ultimoAccesso).' , '.
 					$db->quote($campo_ruolo).' , '.
@@ -578,34 +578,6 @@ class Ruolo {
 	}
 
 
-	/**
-	 * Inserisce un ruolo nel database, se il ruolo esiste già ritorna false
-	 *
-	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
-	 */
-	function insertfdesRuolo()
-	{
-		$db =& FrontController::getDbConnection('main');
-		
-		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
-		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
-		
-		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome) VALUES '.
-					'( '.$db->quote($this->getIdUtente).' , '.
-					$db->quote($this->getIdCanale).' , '.
-					$db->quote($this->getUltimoAccesso).' , '.
-					$db->quote($campo_ruolo).' , '.
-					$db->quote($my_universibo).' , '.
-					$db->quote($this->getTipoNotifica()).' , '.
-					$db->quote($this->getNome()).' )';
-
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		return true;
-		
-	}
 
 	function deleteRuolo()
 	{

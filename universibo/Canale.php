@@ -52,6 +52,10 @@ class Canale {
 	/**
 	 * @private
 	 */
+	var $visite = 0;
+	/**
+	 * @private
+	 */
 	var $servizioNews = false;
 	/**
 	 * @private
@@ -64,7 +68,7 @@ class Canale {
 	/**
 	 * @private
 	 */
-	var $forum = array();
+	var $forum = 0;
 	/**
 	 * @private
 	 */
@@ -90,6 +94,7 @@ class Canale {
 	 * @param int $tipo_canale 	 
 	 * @param string  $immagine
 	 * @param string $nome
+	 * @param int $visite
 	 * @param boolean $news_attivo
 	 * @param boolean $files_attivo
 	 * @param boolean $forum_attivo
@@ -98,7 +103,7 @@ class Canale {
 	 * @param boolean $links_attivo
 	 * @return Canale
 	 */
-	function &Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome,
+	function &Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
 	{
 		$this->id_canale = $id_canale;
@@ -107,6 +112,7 @@ class Canale {
 		$this->tipoCanale = $tipo_canale;
 		$this->immagine = $immagine;
 		$this->nome = $nome;
+		$this->visite = $visite;
 		$this->servizioNotizie = $news_attivo;
 		$this->servizioFiles = $files_attivo;
 		$this->servizioForum = $forum_attivo;
@@ -194,6 +200,43 @@ class Canale {
 	function getNome()
 	{
 		return $this->nome;
+	}
+
+
+
+	/**
+	 * Ritorna il numero di visite effettuate nel canale
+	 *
+	 * @return int
+	 */
+	function getVisite()
+	{
+		return $this->visite;
+	}
+
+
+
+	/**
+	 * Aumenta il numero di visite effettuate nel canale
+	 *
+	 * @return boolean
+	 */
+	function addVisite($visite = 1)
+	{
+		$this->visite += $visite;
+
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'UPDATE cananle SET visite = visite + '.$db->quote($visite).' WHERE id_canale = '.$db->quote($this->getIdCanale());
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->affectedRows();
+	
+		if( $rows == 1) return true;
+		elseif( $rows == 0) return false;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+
 	}
 
 
@@ -290,7 +333,7 @@ class Canale {
 	 */
 	function getServizioForum()
 	{
-		return $this->servizioLinks;
+		return $this->servizioForum;
 	}
 
 
@@ -311,6 +354,31 @@ class Canale {
 
 
 	/**
+	 * Ritorna il forum_id delle tabelle di phpbb, , NULL se il forum non è attivo
+	 *
+	 * @return mixed
+	 */
+	function getForumForumId()
+	{
+		return $this->forum['forum_id'];
+	}
+
+
+
+	/**
+	 * Ritorna il group_id delle tabelle di phpbb, NULL se il forum non è attivo
+	 *
+	 * @return mixed
+	 */
+	function getForumGroupId()
+	{
+		return $this->forum['group_id'];
+	}
+
+
+
+
+	/**
 	 * Crea un oggetto canale dato il suo numero identificativo id_canale del database
 	 *
 	 * @static
@@ -321,23 +389,132 @@ class Canale {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo FROM canale WHERE id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
-		$ruolo =& new Ruolo($id_utente, $id_canale, $row[4], $row[0], $row[1]==RUOLO_MODERATORE, $row[1]==RUOLO_REFERENTE, $row[2]=='S', $row[3]);
-		return $ruolo;
+		$canale =& new Canale($id_canale, $row[5], $row[4], $row[0], $row[2], $row[1],
+						 $row[7], $row[6], $row[8], $row[9], $row[10], $row[11] );
+
+		return $canale;
 		
 	}
 	
+
+	/**
+	 * Inserisce su Db le informazioni riguardanti un NUOVO canale
+	 *
+	 * @param int $id_canale numero identificativo utente
+	 * @return boolean
+	 */
+	function insertCanale()
+	{
+		$db =& FrontController::getDbConnection('main');
+	
+		$this->id_canale = $db->nextID('canale_id_canale');
+		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
+		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
+		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
+		if ( $this->getForumAttivo() )
+		{
+			$forum_attivo = 'S';
+			$forum_forum_id = $this->getForumForumId();
+			$forum_group_id = $this->getForumGroupId();
+		}
+		else
+		{
+			$forum_attivo = 'N';
+			/**
+			 * @todo testare se gli piace il valore NULL poi quotato nella query
+			 */
+			$forum_forum_id = NULL ;
+			$forum_group_id = NULL ;
+		}	
+			
+		
+		$query = 'INSERT INTO canale (id_canale, tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo) VALUES ('.
+					$db->quote($this->getIdCanale()).' , '.
+					$db->quote($this->getTipoCanale()).' , '.
+					$db->quote($this->getNomeCanale()).' , '.
+					$db->quote($this->getImmagine()).' , '.
+					$db->quote($this->getVisite()).' , '.
+					$db->quote($this->getUltimaModifica()).' , '.
+					$db->quote($this->getPermessi()).' , '.
+					$db->quote($files_attivo).' , '.
+					$db->quote($news_attivo).' , '.
+					$db->quote($forum_attivo).' , '.
+					$db->quote($forum_forum_id).' , '.
+					$db->quote($forum_group_id).' , '.
+					$db->quote($links_attivo).' )';
+		$res = $db->query($query);
+		if (DB::isError($res))
+		{ 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	
+	/**
+	 * Aggiorna il contenuto su DB riguardante le informazioni del canale
+	 *
+	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
+	 */
+	function updateCanale()
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
+		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
+		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
+		if ( $this->getForumAttivo() )
+		{
+			$forum_attivo = 'S';
+			$forum_forum_id = $this->getForumForumId();
+			$forum_group_id = $this->getForumGroupId();
+		}
+		else
+		{
+			$forum_attivo = 'N';
+			/**
+			 * @todo testare se gli piace il valore NULL poi quotato nella query
+			 */
+			$forum_forum_id = NULL ;
+			$forum_group_id = NULL ;
+		}	
+		
+	
+		$query = 'UPDATE canale SET ( id_canale = '.$db->quote($this->getIdCanale()).
+					' , tipo_canale = '.$db->quote($this->getTipoCanale()).
+					' , nome_canale = '.$db->quote($this->getNomeCanale()).
+					' , immagine = '.$db->quote($this->getImmagine()).
+					' , ultima_modifica = '.$db->quote($this->getUltimaModifica()).
+					' , permessi_groups = '.$db->quote($this->getPermessi()).
+					' , files_attivo = '.$db->quote($files_attivo).
+					' , news_attivo = '.$db->quote($news_attivo).
+					' , forum_attivo = '.$db->quote($forum_attivo).
+					' , id_forum = '.$db->quote($forum_forum_id).
+					' , group_id = '.$db->quote($forum_group_id).
+					' , links_attivo = '.$db->quote($links_attivo).' )';
+			
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->affectedRows();
+	
+		if( $rows == 1) return true;
+		elseif( $rows == 0) return false;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+	}
 }
-
-
 
 ?>

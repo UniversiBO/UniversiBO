@@ -95,4 +95,9 @@ ALTER TABLE "utente_canale" DROP COLUMN "diritti";
 ALTER TABLE "utente_canale" ADD "notifica" int4 ;
 ALTER TABLE "utente_canale" ADD "nome" char (60) ;
 
-     
+#-- 15-9-2003
+#-- nuovi campi in canale
+ALTER TABLE "canale" ADD "links_attivo" char (1) ;     
+
+#-- 16-9-2003
+SELECT setval('canale_id_canale_seq', nextval('argomento_id_argomento_seq'));
