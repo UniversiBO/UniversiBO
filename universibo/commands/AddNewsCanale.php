@@ -63,121 +63,121 @@ class AddNewsCanale extends CanaleCommand {
 					$f7_accept = true;
 
 					if (!array_key_exists('f7_titolo', $_POST) || !array_key_exists('f7_data_ins_gg', $_POST) || !array_key_exists('f7_data_ins_mm', $_POST) || !array_key_exists('f7_data_ins_aa', $_POST) || !array_key_exists('f7_data_ins_ora', $_POST) || !array_key_exists('f7_data_ins_min', $_POST) || !array_key_exists('f7_data_scad_gg', $_POST) || !array_key_exists('f7_data_scad_mm', $_POST) || !array_key_exists('f7_data_scad_aa', $_POST) || !array_key_exists('f7_data_scad_ora', $_POST) || !array_key_exists('f7_data_scad_min', $_POST) || !array_key_exists('f7_testo', $_POST)) {
-						Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+						Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 						$f7_accept = false;
 					}
 
 					//titolo	
 					if (strlen($_POST['f7_titolo']) > 150) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					}
 					elseif ($_POST['f7_titolo'] == '') {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il titolo deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il titolo deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_titolo = $_POST['f7_titolo'];
 
 					//data_ins_gg
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_gg'])) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo giorno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo giorno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_data_ins_gg = $_POST['f7_data_ins_gg'];
 
 					//f7_data_ins_mm
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_mm'])) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_data_ins_mm = $_POST['f7_data_ins_mm'];
 
 					//f7_data_ins_aa
 					if (!ereg('^([0-9]{4})$', $_POST['f7_data_ins_aa'])) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					}
 					elseif ($_POST['f7_data_ins_aa'] < 1970 || $_POST['f7_data_ins_aa'] > 2032) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_data_ins_aa = $_POST['f7_data_ins_aa'];
 
 					//f7_data_ins_ora
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_ora'])) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo ora di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo ora di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					}
 					elseif ($_POST['f7_data_ins_ora'] < 0 || $_POST['f7_data_ins_ora'] > 23) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_data_ins_ora = $_POST['f7_data_ins_ora'];
 
 					//f7_data_ins_min
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_min'])) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					}
 					elseif ($_POST['f7_data_ins_min'] < 0 || $_POST['f7_data_ins_min'] > 59) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_data_ins_min = $_POST['f7_data_ins_min'];
 
 					if (!checkdate($_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']))
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'La data di inserimento specificata non esiste',  'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template)); $f7_accept = false;
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La data di inserimento specificata non esiste',  'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template)); $f7_accept = false;
 
 					if (array_key_exists('f7_scadenza', $_POST)) {
 
 						$f7_scadenza = true;
 
 						if (!checkdate($_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']))
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'La data di scadenza specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template)); $f7_accept = false;
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La data di scadenza specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template)); $f7_accept = false;
 
 						//data_scad_gg
 						if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_gg'])) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo giorno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo giorno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						} else
 							$f7_data_scad_gg = $_POST['f7_data_scad_gg'];
 
 						//f7_data_scad_mm
 						if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_mm'])) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						} else
 							$f7_data_scad_mm = $_POST['f7_data_scad_mm'];
 
 						//f7_data_scad_aa
 						if (!ereg('^([0-9]{4})$', $_POST['f7_data_scad_aa'])) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						}
 						elseif ($_POST['f7_data_scad_aa'] < 1970 || $_POST['f7_data_scad_aa'] > 2032) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						} else
 							$f7_data_scad_aa = $_POST['f7_data_scad_aa'];
 
 						//f7_data_scad_ora
 						if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_ora'])) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo ora di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo ora di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						}
 						elseif ($_POST['f7_data_scad_ora'] < 0 || $_POST['f7_data_scad_ora'] > 23) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						} else
 							$f7_data_scad_ora = $_POST['f7_data_scad_ora'];
 
 						//f7_data_scad_min
 						if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_min'])) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						}
 						elseif ($_POST['f7_data_scad_min'] < 0 || $_POST['f7_data_scad_min'] > 59) {
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f7_accept = false;
 						} else
 							$f7_data_scad_min = $_POST['f7_data_scad_min'];
@@ -193,11 +193,11 @@ class AddNewsCanale extends CanaleCommand {
 
 					//testo	
 					if (strlen($_POST['f7_testo']) > 3000) {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il testo della notizia deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il testo della notizia deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					}
 					elseif ($_POST['f7_testo'] == '') {
-						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUtente(), 'msg' => 'Il testo della notizia deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il testo della notizia deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
 					} else
 						$f7_testo = $_POST['f7_testo'];

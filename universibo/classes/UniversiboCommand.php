@@ -171,8 +171,8 @@ class UniversiboCommand extends BaseCommand {
 //			echo $this->sessionUser->getUsername();
 		}
 		else 
-			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUtente(), 'msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
-			
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
+//		var_dump($this->sessionUser);	
 	}
 
 
@@ -483,10 +483,11 @@ class UniversiboCommand extends BaseCommand {
 		
 		$template =& $this->frontController->getTemplateEngine();
 		
-		$session_user = $this->getSessionUser();
+		$session_user =& $this->getSessionUser();
 		
 		//informazioni del MyUniversiBO
 		$attivaMyUniversibo = false;
+//		var_dump($session_user);
 		
 		if(!$session_user->isOspite())
 		{

@@ -30,24 +30,21 @@ class Login extends UniversiboCommand {
 			
 			if (!$user->isOspite())
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-			
-	//		if (! User::isPasswordValid($_POST['f1_password']) )
-	//			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Password non valida, lunghezza minima 5 caratteri','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			
 			$user = User::selectUserUsername($_POST['f1_username']);
 			
 			if ($user === false)
 			{
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => '0', 'msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
 			elseif( $user->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
 			{
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
 			else
 			{
@@ -64,7 +61,6 @@ class Login extends UniversiboCommand {
 				else
 					FrontController::goTo($referer);
 				
-				
 			}
 			$_POST['f1_password'] = '';  //resettata per sicurezza
 		
@@ -77,7 +73,6 @@ class Login extends UniversiboCommand {
 		$template->assign('f1_referer_value',$referer);
 		$template->assign('f1_username_value',$_POST['f1_username']);
 		$template->assign('f1_password_value','');
-
 		return ;
 
 	}
