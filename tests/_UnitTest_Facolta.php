@@ -19,7 +19,7 @@ require_once 'Facolta'.PHP_EXTENSION;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class FacoltaTest extends PHPUnit_TestCase
+class _UnitTest_Facolta extends PHPUnit_TestCase
 {
 
 	var $facolta;	

@@ -93,13 +93,24 @@ class Cdl extends Canale{
 
 
 	/**
-	 * Restituisce il nome del corso di laurea
+	 * Restituisce il nome/descrizione del corso di laurea
 	 *
 	 * @return string
 	 */
 	function getNome()
 	{
 		return $this->cdlNome;
+	}
+
+
+	/**
+	 * Imposta il nome/descrizione del corso di laurea
+	 *
+	 * @param string $nomeCdl nuovo nome CdL
+	 */
+	function setNome($nomeCdl)
+	{
+		$this->cdlNome = $nomeCdl;
 	}
 
 
@@ -129,6 +140,20 @@ class Cdl extends Canale{
 	}
 
 	/**
+	 * Imposta la categoria del cdl
+	 * 
+	 * define('CDL_NUOVO_ORDINAMENTO'   ,1);
+	 * define('CDL_SPECIALISTICA'       ,2);
+	 * define('CDL_VECCHIO_ORDINAMENTO' ,3);
+	 *
+	 * @param int 
+	 */
+	function setCategoriaCdl($categoria)
+	{
+		$this->cdlCategoria = $categoria;
+	}
+
+	/**
 	 * Ritorna la stringa descrittiva del titolo/nome breve del canale per il MyUniversiBO
 	 *
 	 * @return string
@@ -139,7 +164,7 @@ class Cdl extends Canale{
 	}
 
 	/**
-	 * Restituisce il link alla homepage ufficiale della facolt?
+	 * Restituisce il codice della facoltà a cui afferisce il cdl
 	 *
 	 * @return string
 	 */
@@ -149,7 +174,18 @@ class Cdl extends Canale{
 	}
 
 
-
+	/**
+	 * Imposta il codice della facoltà a cui afferisce il cdl
+	 * @todo bisogna estendere a più facoltà perchè la relazione è n-n e non 1-n
+	 *
+	 * @return string
+	 */
+	function setCodiceFacoltaPadre($codFac)
+	{
+		$this->cdlCodiceFacoltaPadre = $codFac;
+	}
+	
+	
 	/**
 	 * Restituisce il codice di ateneo a 4 cifre del cdl
 	 * es: ingegneria informatica -> '0048'
@@ -251,9 +287,9 @@ class Cdl extends Canale{
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
+//		var_dump($res);
 		$rows = $res->numRows();
-
+		
 		if( $rows == 0) return false;
 
 		$res->fetchInto($row);
@@ -319,7 +355,8 @@ class Cdl extends Canale{
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 16 ';
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale
+					 AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 16 , 14 ';
 
 		$res = $db->query($query);
 		if (DB::isError($res))
@@ -351,18 +388,44 @@ class Cdl extends Canale{
 	 	return 'index.php?do=ShowCdl&id_canale='.$this->getIdCanale();
 	 }
 	
-	function getForumCatId()
-	{
-		return $this->cdlForumCatId;
-	}
-	
-	
+	/** 
+	 * Restituisce il codice docente del presidente del CDL
+	 *	
+	 * @return string URI del command 
+	 */
 	function getCodDocente()
 	{
 		return $this->cdlCodDoc;
 	}
 	
 	
+	/** 
+	 * Imposta il codice docente del presidente del CDL
+	 *	
+	 * @return string URI del command 
+	 */
+	function setCodDocente($codDoc)
+	{
+		$this->cdlCodDoc = $codDoc;
+	}
+	
+	
+	/** 
+	 * Ritorna l'id categoria del forum
+	 *	
+	 * @return int $cat_id 
+	 */
+	function getForumCatId()
+	{
+		return $this->cdlForumCatId;
+	}
+	
+	
+	/** 
+	 * Imposta l'id categoria del forum
+	 *	
+	 * @param int $cat_id 
+	 */
 	function setForumCatId($cat_id)
 	{
 		$this->cdlForumCatId = $cat_id;
@@ -374,15 +437,16 @@ class Cdl extends Canale{
 		
 		$db =& FrontController::getDbConnection('main');
 		
-		$query = 'UPDATE classi_corso SET cat_id = '.$db->quote($this->getForumCatId()).
-					', id_canale = '.$db->quote($this->getIdCanale()).
+ 		$query = 'UPDATE classi_corso SET cat_id = '.$db->quote($this->getForumCatId()).
+					', cod_corso = '.$db->quote($this->getCodiceCdl()).
 					', desc_corso = '.$db->quote($this->getNome()).
 					', cod_fac = '.$db->quote($this->getCodiceFacoltaPadre()).
 					', categoria = '.$db->quote($this->getCategoriaCdl()).
 					', cod_doc =' .$db->quote($this->getCodDocente()).
-				' WHERE cod_corso = '.$db->quote($this->getCodiceCdl());
+				' WHERE id_canale = '.$db->quote($this->getIdCanale());
 		
 		$res = $db->query($query);
+//		$rows =  $db->affectedRows();
 		if (DB::isError($res))
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>$query,'file'=>__FILE__,'line'=>__LINE__)); 
 		

@@ -19,7 +19,7 @@ require_once 'Cdl'.PHP_EXTENSION;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class CdlTest extends PHPUnit_TestCase
+class _UnitTest_Cdl extends PHPUnit_TestCase
 {
 
 	var $cdl;	

@@ -27,7 +27,7 @@ class TestUnit extends UniversiboCommand {
 		{
 		    $pathDelimiter = PATH_SEPARATOR;
 		}
-		else 
+		else
 		{
 			$pathDelimiter = ( substr(php_uname(), 0, 7) == "Windows") ? ';' : ':' ;
 		}
@@ -42,7 +42,7 @@ class TestUnit extends UniversiboCommand {
 	        {
 	        	echo $file,' - ',substr($file, 10, -4);
 				include ($file);
-				$suite  = new PHPUnit_TestSuite(substr($file, 10, -4).'Test');
+				$suite  = new PHPUnit_TestSuite(substr($file, 0, -4));
 				$result = PHPUnit::run($suite);
 				//echo $result -> toHTML();
 				echo $result -> toHtmlTable();

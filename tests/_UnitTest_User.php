@@ -20,7 +20,7 @@ require_once 'User'.PHP_EXTENSION;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class UserTest extends PHPUnit_TestCase
+class _UnitTest_User extends PHPUnit_TestCase
 {
 // contains the object handle of the string class
 var $utente;
