@@ -161,6 +161,7 @@ class UniversiboCommand extends BaseCommand {
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
+		$krono =& $this->frontController->getKrono();
         //var_dump($template);
 		
 		if ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' )
@@ -229,7 +230,6 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_title',			'UniversiBO ...il portale dedicato agli studenti universitari di Bologna');
 		
 		//kronos
-		$krono =& $this->frontController->getKrono();
 		$template->assign('common_veryLongDate', $krono->k_date() );
 		$template->assign('common_longDate',     $krono->k_date('%j %F %Y') );
 		$template->assign('common_shortDate',    $krono->k_date('%j/%m/%Y') );
@@ -247,10 +247,25 @@ class UniversiboCommand extends BaseCommand {
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
-		
+		$krono =& $this->frontController->getKrono();
+			
 		//solo nella pagine index
+		$curr_mday=date("j");  //inizializzo giorno corrente
+		$curr_mese=date("n");  //inizializzo mese corrente
+		$curr_anno=date("Y");  //inizializzo anno corrente
+		$logoType = 'default';
+		if    ($curr_mese==8) $logoType = 'estate'; 
+		elseif($curr_mday==8 && $curr_mese==3) $logoType = '8marzo';
+		elseif($curr_mday==31 && $curr_mese==11) $logoType = 'halloween';
+		elseif($curr_mday==14 && $curr_mese==2) $logoType = 'svalentino';
+		elseif(($curr_mese==12 && $curr_mday>=8) || ($curr_mese==1 && $curr_mday<=7) ) $logoType = 'natale';
+		elseif((easter_date($curr_anno)==mktime(0,0,0,$curr_mese,$curr_mday,$curr_anno) ) || (easter_date($curr_anno)==mktime(0,0,0,$curr_mese,$curr_mday-1,$curr_anno) )) $logoType = 'pasqua';
+		elseif(false) $logoType = 'carnevale';  //cambiare questa riga a carnevale o trovare il modo per calcolarlo
+		
+		$template->assign('common_logoType', $logoType); //estate/natale/8marzo/pasqua/carnevale/svalentino/halloween/ecc...
 		$template->assign('common_logo', 'Logo UniversiBO');
-		$template->assign('common_logoType', 'default'); //estate/natale/8marzo/pasqua/carnevale/svalentino/halloween/ecc...
+		
+		
 		$template->assign('common_setHomepage', 'Imposta Homepage');
 		$template->assign('common_addBookmarks', 'Aggiungi ai preferiti');
 		
