@@ -11,9 +11,12 @@ include ('UniversiboCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
+
 class ShowHome extends UniversiboCommand 
 {
-
+/*
+* E' da cambiare e ereditare da CanaleCommand appena implementato
+*/
 	function execute()
 	{
 		$template =& $this->frontController->getTemplateEngine();

@@ -28,30 +28,37 @@ class User {
 	 * @access private
 	 */
 	var $id_utente = 0;
+	
 	/**
 	 * @access private
 	 */
 	var $username = '';
+	
 	/**
 	 * @access private
 	 */
 	var $MD5 = '';
+	
 	/**
 	 * @access private
 	 */
 	var $email = '';
+	
 	/**
 	 * @access private
 	 */
 	var $ultimoLogin = 0;
+	
 	/**
 	 * @access private
 	 */
 	var $bookmark = NULL; //array()
+	
 	/**
 	 * @access private
 	 */
 	var $ADUsername = '';
+	
 	/**
 	 * @access private
 	 */

@@ -34,14 +34,17 @@ class Ruolo {
 	 * @access private
 	 */
 	var $id_utente = 0; 
+
 	/**
 	 * @access private
 	 */
 	var $id_canale = 0;
+
 	/**
 	 * @access private
 	 */
 	var $user = NULL; //riferimento all'oggetto canale
+
 	/**
 	 * @access private
 	 */
@@ -51,10 +54,12 @@ class Ruolo {
 	 * @access private
 	 */
 	var $nome = '';
+
 	/**
 	 * @access private
 	 */
 	var $ultimoAccesso = 0; 
+
 	/**
 	 * @access private
 	 */
@@ -64,10 +69,12 @@ class Ruolo {
 	 * @access private
 	 */
 	var $myUniversibo = true; 
+
 	/**
 	 * @access private
 	 */
 	var $moderatore = false; 
+
 	/**
 	 * @access private
 	 */
