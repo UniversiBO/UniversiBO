@@ -53,9 +53,6 @@ class NewsAdd extends CanaleCommand {
 			$f7_testo = '';
 			$f7_urgente = false;
 			$f7_scadenza = false;
-			/*
-			 * @todo da gestire
-			 */
 			$f7_canale = array ();
 
 			$elenco_canali = array($id_canale);
@@ -63,7 +60,8 @@ class NewsAdd extends CanaleCommand {
 			$num_ruoli = count($ruoli_keys);
 			for ($i = 0; $i<$num_ruoli; $i++)
 			{
-				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+				if ($id_canale != $ruoli_keys[$i])
+					$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 			}
 			
 		
@@ -79,9 +77,8 @@ class NewsAdd extends CanaleCommand {
 			}
 			
 			$f7_accept = false;
-
+			
 			if (array_key_exists('f7_submit', $_POST)) {
-				//var_dump($_POST);
 				$f7_accept = true;
 
 				if (!array_key_exists('f7_titolo', $_POST) || !array_key_exists('f7_data_ins_gg', $_POST) || !array_key_exists('f7_data_ins_mm', $_POST) || !array_key_exists('f7_data_ins_aa', $_POST) || !array_key_exists('f7_data_ins_ora', $_POST) || !array_key_exists('f7_data_ins_min', $_POST) || !array_key_exists('f7_data_scad_gg', $_POST) || !array_key_exists('f7_data_scad_mm', $_POST) || !array_key_exists('f7_data_scad_aa', $_POST) || !array_key_exists('f7_data_scad_ora', $_POST) || !array_key_exists('f7_data_scad_min', $_POST) || !array_key_exists('f7_testo', $_POST)) {
