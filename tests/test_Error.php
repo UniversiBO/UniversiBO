@@ -64,11 +64,10 @@ Error::collect(_ERROR_NOTICE,array('msg'=>'raccoglimi 2','file'=>__FILE__,'line'
 $mio_errore = new Error(_ERROR_NOTICE, array('msg'=>'raccoglimi 1','file'=>__FILE__,'line'=>__LINE__));
 $mio_errore->collect();
 
-
 //retrieving of all previously collected _ERROR_NOTICE and throwing them
 while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
 {
-	//var_dump($current_error);
 	echo $current_error->throw();
 }
+
 ?>

@@ -18,7 +18,7 @@
 									  6 => 'description' );
 		
 		$errorLog = new LogHandler('error',$this->paths['logs'],$log_error_definition); 
-
+		
 		$a = time();
 		$b = $_SERVER['REMOTE_ADDR'];
 		$c = (array_key_exists('HTTP_REFERER',$_SERVER)) ? $_SERVER['HTTP_REFERER'] : '';

@@ -17,7 +17,8 @@ class BaseCommand {
 	}
 	
 	
-	function execute(){
+	function execute()
+	{
 		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo execute del command deve essere ridefinito','file'=>__FILE__,'line'=>__LINE__) );
 	}
 	
