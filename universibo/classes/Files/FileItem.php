@@ -375,6 +375,16 @@ class FileItem {
 	 */
 
 	function getNomeFile() {
+		return $this->getIdFile().'_'.$this->nome_file;
+	}
+
+	/**
+	 * Recupera il nome originale del file come è registrato su database
+	 *
+	 * @return string 
+	 */
+
+	function getRawNomeFile() {
 		return $this->nome_file;
 	}
 
@@ -628,7 +638,7 @@ class FileItem {
 	 * @param string $nome_file 
 	 */
 
-	function setNomeFile($nome_file) {
+	function setRawNomeFile($nome_file) {
 		$this->nome_file = $nome_file;
 	}
 	
@@ -687,7 +697,7 @@ class FileItem {
 	 */
 	function guessTipo($file) {
 		/**
-		 * da implementare
+		 * @todo da implementare
 		 */
 		return 1;
 	}	
@@ -891,6 +901,7 @@ class FileItem {
 		ignore_user_abort(1);
 		$db->autoCommit(false);
 		$next_id = $db->nextID('file_id_file');
+		$this->setIdFile($next_id);
 		$return = true;
 		$eliminata = FILE_NOT_ELIMINATO;
 		$query = 'INSERT INTO file (id_file, permessi_download, permessi_visualizza, id_utente, titolo,
@@ -906,7 +917,7 @@ class FileItem {
 						 $db->quote($this->getDataModifica()).' , '.
 						 $db->quote($this->getDimensione()).' , '.
 						 $db->quote($this->getDownload()).' , '.
-						 $db->quote($this->getNomeFile()).' , '.
+						 $db->quote($this->getRawNomeFile()).' , '.
 						 $db->quote($this->getIdCategoria()).' , '.
 						 $db->quote($this->getIdTipoFile()).' , '.
 						 $db->quote($this->getHashFile()).' , '.
@@ -921,7 +932,6 @@ class FileItem {
 			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB::errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
-		$this->setIdFile($next_id);
 
 		$db->commit();
 		$db->autoCommit(true);
@@ -943,7 +953,7 @@ class FileItem {
 		//$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
 		//$flag_urgente = ($this->isUrgente()) ? NEWS_URGENTE : NEWS_NOT_URGENTE;
 		//$deleted = ($this->isEliminata()) ? NEWS_ELIMINATA : NEWS_NOT_ELIMINATA;
-		$query = 'UPDATE file SET id_file = '.$db->quote($this->getIdFile()).' , permessi_download = '.$db->quote($this->getPermessiDownload()).' , permessi_visualizza = '.$db->quote($this->getPermessiVisualizza()).' , id_utente = '.$db->quote($this->getIdUtente()).' , titolo = '.$db->quote($this->getTitolo()).' , descrizione = '.$db->quote($this->getDescrizione()).' , data_inserimento = '.$db->quote($this->getDataInserimento()).' , data_modifica = '.$db->quote($this->getDataModifica()).' , dimensione = '.$db->quote($this->getDimensione()).' , download = '.$db->quote($this->getDownload()).' , nome_file = '.$db->quote($this->getNomeFile()).' , id_categoria = '.$db->quote($this->getIdCategoria()).' , id_tipo_file = '.$db->quote($this->getIdTipoFile()).' , hash_file = '.$db->quote($this->getHashFile()).' , password = '.$db->quote($this->getPassword()).' WHERE id_file = '.$db->quote($this->getIdFile());
+		$query = 'UPDATE file SET id_file = '.$db->quote($this->getIdFile()).' , permessi_download = '.$db->quote($this->getPermessiDownload()).' , permessi_visualizza = '.$db->quote($this->getPermessiVisualizza()).' , id_utente = '.$db->quote($this->getIdUtente()).' , titolo = '.$db->quote($this->getTitolo()).' , descrizione = '.$db->quote($this->getDescrizione()).' , data_inserimento = '.$db->quote($this->getDataInserimento()).' , data_modifica = '.$db->quote($this->getDataModifica()).' , dimensione = '.$db->quote($this->getDimensione()).' , download = '.$db->quote($this->getDownload()).' , nome_file = '.$db->quote($this->getRawNomeFile()).' , id_categoria = '.$db->quote($this->getIdCategoria()).' , id_tipo_file = '.$db->quote($this->getIdTipoFile()).' , hash_file = '.$db->quote($this->getHashFile()).' , password = '.$db->quote($this->getPassword()).' WHERE id_file = '.$db->quote($this->getIdFile());
 		//echo $query;								 
 		$res = $db->query($query);
 		//var_dump($query);

@@ -363,16 +363,6 @@ class FileAdd extends CanaleCommand {
 		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_inserimento));
 		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_inserimento));
 
-
-
-/* 			if ( !array_key_exists('f12_file', $_FILES) ||
-			 !array_key_exists('f12_parole_chiave', $_POST) || 
-			 !array_key_exists('f12_categoria', $_POST) || 
-			 !array_key_exists('f12_permessi_download', $_POST) || 
-			 !array_key_exists('f12_permessi_visualizza', $_POST) || 
-			 !array_key_exists('f12_password', $_POST) || 
-			 !array_key_exists('f12_canale', $_POST) ) */
-
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		return 'default';
 

@@ -40,7 +40,7 @@ class FileDownload extends UniversiboCommand {
 	        $directoryFile = $frontcontroller->getAppSetting('filesPath');
 	        //$directoryFileUri = $frontcontroller->getAppSetting('directoryFileUri');
 			
-			$nomeFile = $directoryFile.$file->getIdFile().'_'.$file->getNomeFile();
+			$nomeFile = $directoryFile.$file->getNomeFile();
 			//echo $nomeFile;die();
 			
 			if (!file_exists($nomeFile)) 

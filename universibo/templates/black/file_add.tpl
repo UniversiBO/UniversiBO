@@ -106,6 +106,8 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td>
+<br />
+<hr width="90%" />
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>
 
