@@ -233,7 +233,7 @@ class CanaleCommand extends UniversiboCommand
 		
 			// elenco post nuovi contestuale al canale
 			$newposts = 'false';
-			if ($user->isOspite())
+			if (!$user->isOspite())
 			{
 				$fa = new ForumApi();
 				$id_posts_list 	=&  $fa->getLastPostsForum($user, $canale->getForumForumId());
