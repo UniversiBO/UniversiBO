@@ -13,7 +13,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class FileAdd extends UniversiboCommand {
+class FileEdit extends UniversiboCommand {
 
 	function execute() {
 		

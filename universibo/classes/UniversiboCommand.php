@@ -317,8 +317,8 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_settings', 'Impostazioni');
 		$template->assign('common_settingsUri', 'index.php?do=ShowSettings');
 
-		$template->assign('common_myUniversiBO', 'my UniversiBO');
-		$template->assign('common_myUniversiBOUri', 'index.php?do=MyUniversiBO');
+		$template->assign('common_myUniversiBO', 'ShowMyUniversiBO');
+		$template->assign('common_myUniversiBOUri', 'index.php?do=ShowMyUniversiBO');
 
 		$template->assign('common_fac', 'Facoltà');
 		require_once('Facolta'.PHP_EXTENSION);
