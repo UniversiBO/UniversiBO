@@ -7,7 +7,7 @@
 <table width="95%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Cancella la notizia<br />&nbsp;</p></td></tr>
 <tr><td align="center" class="Normal">{$NewsDelete_langSuccess|escape:"htmlall"}</td></tr>
-<tr><td align="center" class="Normal"><a href="index.php?do={$back_command|escape:"htmlall"}&amp;id_canale={$back_id_canale|escape:"htmlall"}">Torna indietro.</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$NewsDelete_back|escape:"htmlall"}">Torna indietro.</a></td></tr>
 </table>
 
 {if $common_pageType == "index"}

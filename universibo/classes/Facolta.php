@@ -270,5 +270,15 @@ class Facolta extends Canale{
 		
 	}
 	
+	/** 
+	 * Restituisce l'uri del command che visulizza il canale
+	 *	
+	 * @return string URI del command 
+	 */
+	 function getShowUri()
+	 {
+	 	return 'index.php?do=ShowFacolta&id_canale='.$this->getIdCanale();
+	 }
+	
 }
 ?>

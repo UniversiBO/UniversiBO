@@ -271,6 +271,16 @@ class Insegnamento extends Canale
 
 	}
 	
+	/** 
+	 * Restituisce l'uri del command che visulizza il canale
+	 *	
+	 * @return string URI del command 
+	 */
+	 function getShowUri()
+	 {
+	 	return 'index.php?do=ShowInsegnamento&id_canale='.$this->getIdCanale();
+	 }	
+	
 	
 	/*
 	 * Seleziona da database e restituisce l'oggetto Cdl 

@@ -112,7 +112,7 @@
 <input type="submit" id="" name="f8_submit" size="20" value="Modifica" /></td>
 </tr>
 
-<tr><td colspan="2" align="center" class="Normal"><a href="index.php?do={$back_command|escape:"htmlall"}&amp;id_canale={$back_id_canale|escape:"htmlall"}">Torna indietro.</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$NewsEdit_back|escape:"htmlall"}"}">Torna indietro.</a></td></tr>
 </table>
 
 

@@ -104,7 +104,7 @@
 <td colspan="2" align="center">
 <input type="submit" id="" name="f7_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td colspan="2" align="center" class="Normal"><a href="index.php?do={$back_command|escape:"htmlall"}&amp;id_canale={$back_id_canale|escape:"htmlall"}">Torna indietro.</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$NewsAdd_back|escape:"htmlall"}">Torna indietro.</a></td></tr>
 </table>
 
 

@@ -416,6 +416,8 @@ class NewsEdit extends CanaleCommand
 		$template->assign('f8_urgente', $f8_urgente);
 		$template->assign('f8_scadenza', $f8_scadenza);
 		$template->assign('f8_canale', $f8_canale);
+		$template->assign('NewsEdit_back', $canale->showMe());
+		
 
 		return 'default';
 

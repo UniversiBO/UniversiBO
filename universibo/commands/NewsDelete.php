@@ -147,6 +147,7 @@ class NewsDelete extends CanaleCommand {
 		
 		$template->assign('f9_langAction', "Elimina la notizia dai seguenti canali:");
 		$template->assign('f9_canale', $f9_canale);
+		$template->assign('NewsDelete_back', $canale->showMe());
 		
 		return 'default';
 	}

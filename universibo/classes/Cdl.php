@@ -272,4 +272,14 @@ class Cdl extends Canale{
 		return $elenco;
 	}
 	
+	/** 
+	 * Restituisce l'uri del command che visulizza il canale
+	 *	
+	 * @return string URI del command 
+	 */
+	 function getShowUri()
+	 {
+	 	return 'index.php?do=ShowCdl&id_canale='.$this->getIdCanale();
+	 }
+	
 }
