@@ -30,7 +30,7 @@
 
 
   {foreach from=$temp_fac.list item=temp_cdl}
-<tr><td class="Normal" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+<tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
 <a href="{$temp_cdl.link}">{$temp_cdl.cod|escape:"html"} - {$temp_cdl.name|escape:"html"}</a> </td></tr>
 
   {/foreach} 
