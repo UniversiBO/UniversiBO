@@ -584,4 +584,8 @@ ALTER TABLE "utente" ALTER COLUMN "notifica" SET NOT NULL;
 UPDATE "utente" SET notifica = 1 WHERE inoltro_email = 'U';
 UPDATE "utente" SET notifica = 2 WHERE inoltro_email = 'T';
 
+-- LastHope 16/9/2004
 
+ALTER TABLE "questionario" ADD "cdl" character varying(50);
+UPDATE "questionario" SET cdl = 0;
+ALTER TABLE "questionario" ALTER COLUMN "cdl" SET NOT NULL;
