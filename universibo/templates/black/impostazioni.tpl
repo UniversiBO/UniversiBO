@@ -12,6 +12,10 @@
 </p>
 <p>
 {$showSettings_langIntro|escape:"htmlall"|bbcode2html}</p>
+ &nbsp;<br />
+ <p align="center"><a href="{$common_homepageUri}&amp;setStyle=unibo">Imposta versione Unibo</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$common_homepageUri}&amp;setStyle=black">Imposta versione black</a></p>
+ &nbsp;<br />
+ &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr bgcolor="#000099"> 
  <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
