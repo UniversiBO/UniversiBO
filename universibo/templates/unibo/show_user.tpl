@@ -3,7 +3,7 @@
 <div class="titoloPagina">
 <h2>Scheda dell'utente: {$showUserNickname}</h2>
 </div>
-<p><span>Email: <a href="mailto:{$showEmailFirstPart}(at){$showEmailSecondPart}">{$showEmailFirstPart}<img src="tpl/unibo/chiocciola.gif" width="9" height="9" alt="(at)" />{$showEmailSecondPart}</a>
+<p><span>Email: <a href="mailto:{$showEmailFirstPart}(at){$showEmailSecondPart}">{$showEmailFirstPart}<img src="tpl/unibo/chiocciola.gif" width="16" height="16" alt="(at)" />{$showEmailSecondPart}</a>
 {if $showDiritti == 'true'}
 	&nbsp;<a href="{$showSettings}">Modifica</a>
 {/if}
