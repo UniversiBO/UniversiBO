@@ -1,6 +1,7 @@
 {include file=header_index.tpl}
-
-<h2>&nbsp;<br />Modifica la notizia<br />&nbsp;</h2>
+<div class="titoloPagina">
+<h2>Modifica la notizia</h2>
+</div>
 {include file=News/show_news.tpl}
 
 {include file=avviso_notice.tpl}

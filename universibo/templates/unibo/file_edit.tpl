@@ -1,7 +1,7 @@
 {include file=header_index.tpl}
-
-<h2>&nbsp;<br />Modifica il file<br />&nbsp;</h2>
-
+<div class="titoloPagina">
+<h2>Modifica il file</h2>
+</div>
 {include file=avviso_notice.tpl}
 <form method="post" enctype="multipart/form-data">
 	<p><label class="label" for="f13_titolo">Titolo:</label>
