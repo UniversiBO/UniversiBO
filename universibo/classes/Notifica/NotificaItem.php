@@ -452,7 +452,8 @@ class NotificaItem {
 		//ocio che non sia un destinatario di piu' parole. il destinatario non pu? contenere "://"		
 		$p = strtolower($not->getProtocollo() );
 		
-		$arrayClassi = array('mail' => 'NotificaMail');
+		$arrayClassi = array(	'mail' => 'NotificaMail', 
+								'sms' => 'NotificaSmsMoby');
 		
 		$className = $arrayClassi[$p];
 		//es: NotificaMail

@@ -67,11 +67,17 @@
 	 	<date_separator>/</date_separator> 
 	</langInfo>	
 	
+	<smsMobyInfo>
+	    <username>your_username</username>
+	    <password>your_password</password>
+	    <fromName>UniversiBO</fromName>
+	</smsMobyInfo>
+
 	<!-- appSettings is an optional node. You can place any thing here 
                 and access it from FrontController->getAppSetting()	-->
 	<appSettings>
 		<adLoginHost>127.0.0.1</adLoginHost>
-		<version>2.0.1</version>
+		<version>2.0.99</version>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
 		<contactsPath>img/contacts/</contactsPath>

@@ -1,15 +1,15 @@
 <?php 
 
 require_once ('Notifica/NotificaItem'.PHP_EXTENSION);
+require_once('mobytSms'.PHP_EXTENSION);
 
 /**
  *
- * NotificaMail class
+ * NotificaSmsMoby class
  *
- * Rappresenta una singola Notifica di tipo Mail.
+ * Rappresenta una singola Notifica di tipo Sms.
  *
- * @package universibo
- * @subpackage Notifica
+ * @package Notifica
  * @version 2.0.0
  * @author GNU/Mel <gnu.mel@gmail.com>
  * @author Ilias Bartolini <brain79@virgilio.it>
@@ -17,10 +17,11 @@ require_once ('Notifica/NotificaItem'.PHP_EXTENSION);
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class NotificaMail extends NotificaItem 
+
+class NotificaSmsMoby extends NotificaItem 
 {
 	
-	function NotificaMail ($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
+	function NotificaSmsMoby ($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
 	{
 		//$id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario
 		parent::NotificaItem($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario);
@@ -36,18 +37,11 @@ class NotificaMail extends NotificaItem
 	function send($fc) {
 		
 		//per usare l'SMTPkeepAlive usa il singleton
-		$mail =& $fc->getMail(MAIL_KEEPALIVE_ALIVE);
+		$sms = $fc->getSmsMoby();
 		
-		$mail->clearAddresses();
-		$mail->AddAddress($this->getIndirizzo());
-
-        $mail->Subject = str_replace( "\n"," - ",  '[UniversiBO] '.$this->getTitolo());
-		$mail->Body = $this->getMessaggio();
+		$result = $sms->sendSms($this->getIndirizzo(), $this->getMessaggio());
 		
-		/**
-		 * @todo fare la mail urgente se $this->isUrgente()
-		 */
-		if (!$mail->send())
+		if (substr($result, 0, 2) != 'OK')
 			return false;
 	}
 	
@@ -55,7 +49,7 @@ class NotificaMail extends NotificaItem
 	function &factoryNotifica($id_notifica)
 	{
 		$not = NotificaItem::selectNotifica($id_notifica);
-		return new NotificaMail($not->getIdNotifica(), $not->getTitolo(), $not->getMessaggio(), $not->getTimestamp(), $not->isUrgente(), $not->isEliminata(), $not->getDestinatario());
+		return new NotificaSmsMoby($not->getIdNotifica(), $not->getTitolo(), $not->getMessaggio(), $not->getTimestamp(), $not->isUrgente(), $not->isEliminata(), $not->getDestinatario());
 		//$notif=NotificaMail::selectNotifica($id_notifica);
 		//$notifMail=new NotificaMail($notif,$fc);
 		//return $notifMail;

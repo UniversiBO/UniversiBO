@@ -253,6 +253,12 @@
 	 	<date_separator>/</date_separator> 
 	</langInfo>	
 	
+	<smsMobyInfo>
+	    <username>your_username</username>
+	    <password>your_password</password>
+	    <fromName>UniversiBO</fromName>
+	</smsMobyInfo>
+	
 	<!-- appSettings is an optional node. You can place any thing here 
                 and access it from FrontController->getAppSetting()	-->
 	<appSettings>

@@ -13,8 +13,9 @@ define('MAIL_KEEPALIVE_CLOSE', 2);
  *
  * @package framework
  * @version 1.0.0
- * @author  Deepak Dutta
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Fabrizio Pinto 
+ * @author GNU/Mel <gnu.mel@gmail.com>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -80,6 +81,11 @@ class FrontController {
 	 */
 	var $mailerInfo = array();
 
+	/**
+	 * @access private
+	 */
+	var $smsMobyInfo = array();
+	
 	/**
 	 * @access private
 	 */
@@ -694,6 +700,27 @@ class FrontController {
 
 
 	/**
+	* Sets the framework mailer settings
+	*
+	* @access private
+	*/
+	function _setSmsMobyInfo()
+	{
+		$smsMobyInfoNode =& $this->config->root->getChild('smsMobyInfo');
+		if ($smsMobyInfoNode == NULL)
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento smsMobyInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+		
+		$n = $smsMobyInfoNode->numChildren();
+		for( $i=0; $i<$n; $i++ )
+		{
+			$aSetting=&$smsMobyInfoNode->children[$i];
+			$this->smsMobyInfo[$aSetting->name] = $aSetting->charData;
+		}
+
+	}	
+
+
+	/**
 	* Sets the framework and application multilanguage info
 	*
 	* @access private
@@ -980,7 +1007,7 @@ class FrontController {
 	
 	function &getMail($keepAlive = MAIL_KEEPALIVE_NO)
 	{
-		require_once('PHPMailer.php');
+		require_once('PHPMailer'.PHP_EXTENSION);
 		
 		static $singleton = null;
     	
@@ -1028,6 +1055,26 @@ class FrontController {
 	}
 
 
+	/**
+	* Factory method that creates a PhpMailer Mail object
+	*
+	* param $keepAlive MAIL_KEEPALIVE_NO||MAIL_KEEPALIVE_ALIVE||MAIL_KEEPALIVE_CLOSE
+	* @return PHPMailer object
+	* @access public 
+	*/
+	
+	function &getSmsMoby()
+	{
+		require_once('mobytSms'.PHP_EXTENSION);
+		
+		$sms = new mobytSms($this->smsMobyInfo['username'], $this->smsMobyInfo['password']);
+		$sms->setFrom($this->smsMobyInfo['fromName']);
+		
+    	return $sms;
+	}
+
+	
+	
 	/**
 	 * Factory method that creates a Kronos object based on the config language info
 	 *

@@ -10,6 +10,7 @@ require_once ('News/NewsItem'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author GNU/Mel <gnu.mel@gmail.com>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -303,6 +304,8 @@ Titolo: '.$f7_titolo.'
 Testo: '.$f7_testo.'
 
 Autore: '.$user->getUsername().'
+
+Link: '.$add_canale->showMe().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Informazioni per la cancellazione:
 
@@ -311,6 +314,9 @@ Per rimuoverti, vai all\'indirizzo:
 e modifica il tuo profilo personale nella dopo aver eseguito il login
 Per altri problemi contattare lo staff di UniversiBO
 '.$frontcontroller->getAppSetting('infoEmail');
+					
+					$notifica_messaggio_sms= 'Novità in '.$add_canale->getNome().' - '.$f7_titolo.' - '.$f7_testo;
+					$notifica_messaggio_sms= substr(substr_replace($notifica_messaggio_sms, '..', 158),0,160);
 					
 					$ruoli_canale =& $add_canale->getRuoli();
 					foreach ($ruoli_canale as $ruolo_canale)
@@ -326,10 +332,19 @@ Per altri problemi contattare lo staff di UniversiBO
 							$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
 							$notifica->insertNotificaItem();
 						}
+						if ($ruolo_canale->isMyUniversiBO() && ($f7_urgente && $ruolo_canale->getTipoNotifica()==NOTIFICA_URGENT)){
+					
+							$notifica_destinatario = 'sms://'.$notifica_user->getPhone();
+							
+							
+							
+							$notifica = new NotificaItem(0, '', $notifica_messaggio_sms, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+							$notifica->insertNotificaItem();
+						}	
 					}
 					
 					//ultima notifica all'archivio
-					$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');;
+					$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');
 					
 					$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
 					$notifica->insertNotificaItem();
