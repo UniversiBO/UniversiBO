@@ -1,19 +1,8 @@
-{if $common_pageType == "index"}
-{include file=header_index.tpl}
-{elseif $common_pageType == "popup"}
-{include file=header_popup.tpl}
-{/if}
-
-{* questo è solo un tentativo di ricreare il questionario... bisogna decidere 
-a chi far controllare la correttezza dei risultati *}
-
-<!-- INIZIO PAGINA CENTRALE -->
-
-{include file=avviso_notice.tpl}
-
 
 &nbsp;<br />
 <img src="tpl/black/questionario_18.gif" width="144" height="22" alt="{$question_TitleAlt|escape}" />
+&nbsp;<br />
+&nbsp;<br />
 <table align="center" cellspacing="0" cellpadding="0" width="90%" summary="">
 <tr>
 <td class="Normal">
@@ -84,124 +73,7 @@ a chi far controllare la correttezza dei risultati *}
 </table>
 
  <p>&nbsp;</p>
-<p class="NormalC">{$question_InformaticKnowledge|escape}</p>
 
-<p class="NormalC">{$question_q4|escape}</p>
-
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q4Sub1|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="win"> {$question_q4AnswersSub1[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="3" name="win"> {$question_q4AnswersSub1[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="1" name="win"> {$question_q4AnswersSub1[2]|escape}</td></tr>
- </table>
-					
-					
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q4Sub2|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="linux"> {$question_q4AnswersSub2[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="3" name="linux"> {$question_q4AnswersSub2[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="1" name="linux"> {$question_q4AnswersSub2[2]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="linux"> {$question_q4AnswersSub2[3]|escape}</td></tr></table>
-					
-					
-<p class="NormalC">{$question_q5|escape}</p>
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub1|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="4" name="html"> {$question_q5AnswersSub1[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="3" name="html"> {$question_q5AnswersSub1[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="html"> {$question_q5AnswersSub1[2]|escape}</td></tr></table>
-				
-				
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub2|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="php"> {$question_q5AnswersSub2[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="php"> {$question_q5AnswersSub2[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="php"> {$question_q5AnswersSub2[2]|escape}</td></tr></table>
-				
-				
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub3|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="javascript"> {$question_q5AnswersSub3[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="javascript"> {$question_q5AnswersSub3[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="javascript"> {$question_q5AnswersSub3[2]|escape}</td></tr></table>
-				
-				
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub4|escape}</td></tr>
-	 
-	<tr>
- <td><input type="radio" value="4" name="xml"> {$question_q5AnswersSub4[0]|escape}</td></tr>
-	<tr>
- <td><input type="radio" value="2" name="xml"> {$question_q5AnswersSub4[1]|escape}</td></tr>
-  <tr>
-	 <td><input type="radio" value="0" name="xml"> {$question_q5AnswersSub4[2]|escape}</td></tr></table>
-				
-				
-				
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub5|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="java"> {$question_q5AnswersSub5[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="java"> {$question_q5AnswersSub5[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="java"> {$question_q5AnswersSub5[2]|escape}</td></tr></table>
-
-
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q5Sub6|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="sql"> {$question_q5AnswersSub6[0]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="sql"> {$question_q5AnswersSub6[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="sql"> {$question_q5AnswersSub6[2]|escape}</td></tr></table>
- 
- <p class="NormalC">{$question_q6}</p>
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q6Sub1|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="photoshop"> {$question_q6AnswersSub1[0]|escape} 
-		</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="photoshop"> {$question_q6AnswersSub1[1]|escape}</td></tr>
-	<tr>
-	 <td><input type="radio" value="0" name="photoshop"> {$question_q6AnswersSub1[2]|escape}</td></tr></table>
- <table width="90%" align="center" class="Normal" summary="">
-	<tr><td>{$question_q6Sub2|escape}</td></tr>
-	 
-	<tr>
-	 <td><input type="radio" value="4" name="gimp"> {$question_q6AnswersSub2[0]|escape} 
-	</td></tr>
-	<tr>
-	 <td><input type="radio" value="2" name="gimp"> {$question_q6AnswersSub2[1]|escape} </td></tr>
-	<tr> 
-	 <td><input type="radio" value="0" name="gimp"> {$question_q6AnswersSub2[2]|escape} </td></tr></table>
-
- <p>&nbsp;</p>
 		
  <p class="NormalC">{$question_PersonalNotes|escape} </p>
  <table width="90%" align="center" class="Normal" summary="">
@@ -218,8 +90,3 @@ a chi far controllare la correttezza dei risultati *}
 
 </td></tr></table>
 
-{if $common_pageType == "index"}
-{include file=footer_index.tpl}
-{elseif $common_pageType == "popup"}
-{include file=footer_popup.tpl}
-{/if}
