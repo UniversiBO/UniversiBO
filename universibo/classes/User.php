@@ -1059,14 +1059,14 @@ class User {
 		    $xml_request = '<?xml version="1.0" encoding="UTF-8"?><ADLogIn><user username="'. $ad_username .'" domain="'. $ad_domain . '" password="'. $ad_password . '" /></ADLogIn>';
 			fputs ($javaADLoginSock, $xml_request."\n");
 		
-			$reply = fgets ($JavaADLoginSock,4);
+			$reply = fgets ($javaADLoginSock,4);
 
 			fclose($javaADLoginSock);
 			
 			$result = substr($reply,0,2);
 			if ($result == 'NO') return false;		// 'Autenticazione fallita';
 			elseif ($result == 'OK') return true;	// 'Autenticazione corretta';
-			else  Error::throw(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida','file'=>__FILE__,'line'=>__LINE__)); 
+			else  die(); Error::throw(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida'.$result,'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		}				 
 	
