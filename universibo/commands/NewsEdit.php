@@ -97,7 +97,7 @@ class NewsEdit extends CanaleCommand
 			$id_current_canale = $elenco_canali[$i];
 			$current_canale = & Canale :: retrieveCanale($id_current_canale);
 			$nome_current_canale = $current_canale->getTitolo();
-			$spunta = ($id_canale == $id_current_canale) ? 'true' : 'false';
+			$spunta = (in_array($id_current_canale, $news->getIdCanali())) ? 'true' : 'false';
 			$f7_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
 		}
 
