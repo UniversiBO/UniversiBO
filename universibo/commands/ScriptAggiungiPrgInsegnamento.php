@@ -59,12 +59,15 @@ class ScriptAggiungiPrgInsegnamento extends UniversiboCommand
 			$res3= $db->query($query3);
 	        if (DB::isError($res3)) die($query3); 
 	        
-			echo $num_rows3 = $res3->numRows();
+			$num_rows3 = $res3->numRows();
+	        if ($num_rows3 > 0)
+				echo $num_rows3 .' - insegnamento gia\' presenti'."\n"; 
+			
 	        if ($num_rows3 == 0)
 	        {
 				
 				$id_canale = $db->nextId('canale_id_canale');
-				echo "$id_canale \n";
+				echo "$id_canale - nuovo canale \n";
 				
 				$query4 = 'INSERT INTO canale(id_canale,tipo_canale,nome_canale,immagine,visite,ultima_modifica,permessi_groups,files_attivo,news_attivo
 				,forum_attivo,id_forum,group_id,links_attivo) VALUES ( '.$id_canale.',5,\'\',\'\',0,'.time().',126,\'S\',\'S\',\'N\',NULL,NULL,\'N\');';

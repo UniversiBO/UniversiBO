@@ -32,6 +32,7 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 		{
 	        $exploded = explode('@',  $row[2]);
     	    $username = $exploded[0];
+    	    if ($username == 'uguzzoni') $username = 'fuguzzoni';
 			
 			if (User::selectUserUsername($username) == false)
 			{
@@ -84,11 +85,11 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 					"Qualora avesse ricevuto questa e-mail per errore lo segnali rispondendo immediatamente a questo messaggio\n\n";
 
                 if(!$mail->Send()) die('email:'.$row2['last_id'].' - '.$mail->ErrorInfo);
-				echo $username."sent"."\n";
+				echo $username." - mail sent"."\n";
 			}
 			else
 			{
-				echo $username.' - non iscritto'."\n";
+				echo $username.' - username gia\' utilizzato'."\n";
 			}
 			
 			

@@ -102,7 +102,7 @@ class ScriptCreaForum extends UniversiboCommand
 			{
 				//AAHHH qui la cache di Canale potrebbe restituire dei casini, non la posso usare,
 				// PrgAttivit? ed Insegnamento hanno gli stessi id_canali
-				if (!$prg_att->isSdoppiato() && $prg_att->isGroupAllowed(USER_OSPITE))
+				if (!$prg_att->isSdoppiato() && $prg_att->isGroupAllowed(USER_OSPITE)  && $prg_att->getServizioForum()==false)
 				{
 					$insegnamento = Insegnamento::selectInsegnamentoCanale($prg_att->getIdCanale());
 					echo '   - ',$insegnamento->getIdCanale(),' - '.str_replace("\n",' ',$insegnamento->getNome()),"\n";
@@ -159,6 +159,9 @@ class ScriptCreaForum extends UniversiboCommand
 					
 					
 				}
+				if($prg_att->getServizioForum()==true) 
+					echo '   -- forum gia\' attivo ',$prg_att->getIdCanale(),"\n";
+				
 				
 			}
 			
