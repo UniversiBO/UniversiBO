@@ -9,5 +9,6 @@
 	</div>
 	<p>{$collaboratore.intro|escape:"htmlall"}</p>
 	<p>{$collaboratore.obiettivi|escape:"htmlall"|bbcode2html|nl2br}</p>
+	<p><a href="#inizio">Torna su</a></p>
 </div>
   
