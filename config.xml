@@ -89,6 +89,7 @@
                 and access it from $fc->appSettings
 	****-->
 	<appSettings>
+		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<forumLocation>forum/</forumLocation>
 		<files>../html/file-universibo</files>

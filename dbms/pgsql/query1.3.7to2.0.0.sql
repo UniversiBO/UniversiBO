@@ -192,4 +192,28 @@ CREATE TABLE "collaboratore" (
  );
  
  
+ ----13-11-2003
 
+ALTER TABLE "collaboratore" ADD "foto" varchar (255) ;
+
+ALTER TABLE "collaboratore" DROP COLUMN "ruolo";
+ALTER TABLE "collaboratore" ADD "ruolo" varchar (255) ;
+ 
+
+---eliminazione della tabella studente
+
+DROP TABLE "studente";
+
+---eliminazione degli attributi non utilizzati della tabella docente
+
+ALTER TABLE "docente"   DROP COLUMN "email";
+ALTER TABLE "docente"   DROP COLUMN "nome";
+ALTER TABLE "docente"   DROP COLUMN "cognome";
+ALTER TABLE "docente"   DROP COLUMN "qualifica";
+ALTER TABLE "docente"   DROP COLUMN "sesso";
+ALTER TABLE "docente"   DROP COLUMN "data_nascita";
+ALTER TABLE "docente"   DROP COLUMN "telefono_1";
+ALTER TABLE "docente"   DROP COLUMN "telefono_2";
+ALTER TABLE "docente"   DROP COLUMN "ufficio";
+ALTER TABLE "docente"   DROP COLUMN "icq";
+ALTER TABLE "docente"   DROP COLUMN "homepage";
