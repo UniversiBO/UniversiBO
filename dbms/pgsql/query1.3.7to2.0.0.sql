@@ -425,6 +425,9 @@ SELECT setval('file_categoria_id_file_categoria_seq', 5);
 UPDATE file SET id_categoria = 5;
 
 
+------08-09-04
+
+
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
 1, 'altro', '', 'formato_.gif', '');
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
