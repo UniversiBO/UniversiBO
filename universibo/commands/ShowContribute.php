@@ -14,6 +14,7 @@ require_once ('Facolta'.PHP_EXTENSION);
  * @version 2.0.0
  * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Daniele Tiles
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
@@ -245,7 +246,7 @@ class ShowContribute extends UniversiboCommand
 			
 			$q3_idQuestionario = $db->nextID('questionario_id_questionari');
 			$q3_idUtente = $this->getSessionIdUtente();
-			$query = 'INSERT INTO questionario (id_questionario, id_utente, data, nome, cognome, mail, telefono, tempo_disp, tempo_internet, attiv_offline, attiv_moderatore, attiv_contenuti, attiv_test, attiv_grafica, attiv_prog, altro) VALUES ( '.$db->quote($q3_idQuestionario).', '.$db->quote($q3_idUtente).', '.$db->quote(time()).', '.$db->quote($q3_nome).', '.$db->quote($q3_cognome).', '.$db->quote($q3_mail).', '.$db->quote($q3_tel).', '.$db->quote($q3_tempo).', '.$db->quote($q3_internet).', '.$db->quote($q3_offline).', '.$db->quote($q3_moderatore).', '.$db->quote($q3_contenuti).', '.$db->quote($q3_test).', '.$db->quote($q3_grafica).', '.$db->quote($q3_prog).', '.$db->quote($q3_altro).');';
+			$query = 'INSERT INTO questionario (id_questionario, id_utente, data, nome, cognome, mail, telefono, cdl, tempo_disp, tempo_internet, attiv_offline, attiv_moderatore, attiv_contenuti, attiv_test, attiv_grafica, attiv_prog, altro) VALUES ( '.$db->quote($q3_idQuestionario).', '.$db->quote($q3_idUtente).', '.$db->quote(time()).', '.$db->quote($q3_nome).', '.$db->quote($q3_cognome).', '.$db->quote($q3_mail).', '.$db->quote($q3_tel).', '.$db->quote($q3_cdl).','.$db->quote($q3_tempo).', '.$db->quote($q3_internet).', '.$db->quote($q3_offline).', '.$db->quote($q3_moderatore).', '.$db->quote($q3_contenuti).', '.$db->quote($q3_test).', '.$db->quote($q3_grafica).', '.$db->quote($q3_prog).', '.$db->quote($q3_altro).');';
 			$res = $db->query($query);
 			if (DB::isError($res))
 			{ 
