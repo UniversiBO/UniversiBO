@@ -105,11 +105,12 @@ UPDATE canale SET nome_canale = 'Homepage', permessi_groups=127 WHERE id_canale=
 
 #-- 17-9-2003
 ALTER TABLE "facolta" RENAME "id_argomento" TO "id_canale"; 
-UPDATE facolta SET id_canale = 2, url_facolta='www.ing.unibo.it' WHERE cod_fac='0021';
-UPDATE canale SET visite =0, ultima_modifica=0, permessi_groups=127, files_attivo='N', news_attivo='S', forum_attivo='N', links_attivo='N' WHERE id_canale = 2;
 
+#-- ATTENZIONE non ho avuto la possibilità di testare le seguenti 4 query.
+UPDATE facolta SET id_canale = 2, url_facolta='http://www.ing.unibo.it' WHERE cod_fac='0021';
+UPDATE canale SET visite =0, ultima_modifica=0, permessi_groups=127, files_attivo='N', news_attivo='S', forum_attivo='N', links_attivo='N' WHERE id_canale = 2;
 INSERT INTO canale (tipo_canale,visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, links_attivo ) VALUES (3, 0, 0, 127, 'N', 'S', 'N', 'N');
-UPDATE facolta SET url_facolta='www.economia.unibo.it' WHERE cod_fac='0054';
+UPDATE facolta SET url_facolta='http://www.economia.unibo.it' WHERE cod_fac='0054';
 #-- @todo IMPORTANTE!!!! manualmente aggiornare id_canale nella tabella facolta riguardo la tupla di economia ...lo si legge dopo la insert due query più su
 
 
