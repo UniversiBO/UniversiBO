@@ -13,13 +13,13 @@
 <tr><td>
 	{foreach from=$showHelpTopic_langReferences item=temp_ref}
 	<tr><td cellpadding="3" class="Normal" bgcolor="{cycle name=index values="#000032,#000016"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
-	<a href="#{$temp_ref.reference|escape:"htmlall"|bbcode2html|nl2br}"> {$temp_ref.reference|escape:"htmlall"|bbcode2html|nl2br}</a></td></tr>
+	<a href="#{$temp_ref|escape:"htmlall"|bbcode2html|nl2br}"> {$temp_ref|escape:"htmlall"|bbcode2html|nl2br}</a></td></tr>
 	{/foreach}
 </td></tr>
 <tr><td>&nbsp</td></tr>
 <tr><td>
-	{foreach from=$showHelpTopic_langReferences item=temp_ref}
-	{include file=Help/topic.tpl idsu=help}
+	{foreach from=$showHelpTopic_topics item=temp_topic}
+	{include file=Help/topic.tpl showTopic_topic=$temp_topic idsu=help}
 	{/foreach}
 </td></tr></table>
 

@@ -10,7 +10,7 @@
 <tr><td class="Normal" align="left">
 		<div align="center">&nbsp;<br /><img id="help" src="tpl/black/help_30.gif" width="84" height="39" alt="{$showHelpIndex_langAltTitle|escape:"htmlall"|bbcode2html}" /></div>
 
-{include file=Help/help_id.tpl indice=true idsu=help}
+{include file=Help/help_id.tpl showHelpId_langArgomento=$showHelpId_langArgomento indice=true idsu=help}
 
 </td></tr></table>
 

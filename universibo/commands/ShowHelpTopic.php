@@ -34,13 +34,14 @@ class ShowHelpTopic extends UniversiboCommand {
 		$reference	= array();
 				
 		while($res->fetchInto($row))
-		{		
-			$reference[] = array('reference' => $row[0]);
-			$this->executePlugin('ShowTopic', array('reference' => $row[0]));
+		{
+			$references[] = $row[0];
+			$topics[] = $this->executePlugin('ShowTopic', array('reference' => $row[0]));
 		}
 		
-		$template->assign('showHelpTopic_langReferences', $reference);
-				
+		$template->assign('showHelpTopic_langReferences', $references);
+		$template->assign('showHelpTopic_topics', $topics);
+		
 		return 'default';
 	}
 }  

@@ -68,6 +68,8 @@ class ShowHelpId extends PluginCommand {
 		
 		$template->assign('showHelpId_langArgomento', $argomenti);
 		
+		return $argomenti;
+		
 	}
 	
 	
