@@ -60,6 +60,7 @@
 			<response type="template" name="default">insegnamento.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 			<pluginCommand name="ShowFileTitoli" class="Files.ShowFileTitoli" />
+			<pluginCommand name="ShowFileStudentiTitoli" class="Files.ShowFileStudentiTitoli" />
 		</ShowInsegnamento>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
@@ -195,6 +196,10 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileAdd>
+		<FileStudentiAdd class="FileStudentiAdd">
+			<response type="template" name="success">file_studenti_add_success.tpl</response>
+			<response type="template" name="default">file_studenti_add.tpl</response>
+		</FileStudentiAdd>
 		<FileEdit class="FileEdit">
 			<response type="template" name="default">file_edit.tpl</response>
 			<response type="template" name="success">file_edit_success.tpl</response>

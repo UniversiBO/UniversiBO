@@ -131,6 +131,7 @@ testi consigliati[/url]';
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		$this->executePlugin('ShowFileTitoli', array());
+		$this->executePlugin('ShowFileStudentiTitoli', array());
 		return 'default';
 	}
 
