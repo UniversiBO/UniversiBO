@@ -97,11 +97,9 @@ class ShowMyNews extends PluginCommand {
 					$canale_tpl = array();
 					$canale_tpl['titolo'] = $canale->getNome();
 					$canale_tpl['link'] = $canale->showMe();
-					$elenco_news_tpl[$i]['canali'][] = $canale_tpl;
-					//$elenco_news_tpl[$i]['Canale']		 = Canale::getNome($this->getCanali($id_news));			
+					$elenco_news_tpl[$i]['canali'][] = $canale_tpl;			
 				}
-				//$elenco_news_tpl[$i]['nuova'] 
-				
+				$elenco_news_tpl[$i]['nuova']	   	 = ($news->getUltimaModifica() > $ultimo_accesso) ? 'true' : 'false';
 				$elenco_news_tpl[$i]['modifica']     = '';
 				$elenco_news_tpl[$i]['modifica_link']= '';
 				$elenco_news_tpl[$i]['elimina']      = '';
@@ -114,29 +112,6 @@ class ShowMyNews extends PluginCommand {
 		$template->assign('showMyNews_newsList', $elenco_news_tpl);
 	}
 	
-	
-	/**
-	* Questa funzione controlla se la notizia é stata inserita prima o dopo 
-	* l'ultimo login eseguito dall'utente...
-	* @param $id_notizia é l'id della notizia come sul db
-	* @param $ultimo_accesso corrisponde all'ultimo accesso dell'utente
-	* @return bool se la notizia é stata inserita prima o dopo l'ultimo login dell'utente
-	*/
-	
-	function isNew($id_notizia, $ultimo_accesso)
-	{
-		$flag = false;		
-		if(NewsItem::getUltimaModifica()> $ultimo_accesso)
-			 $flag = true;
-		return $flag;
-		
-	}
-	
-	/**
-	* Questa funzione restituisce i canali corrispondenti alla notizia
-	* @param $id_notizia é l'id della notizia come sul db
-	* @return $res i canali dove é presente la notizia
-	*/
 
 }
 
