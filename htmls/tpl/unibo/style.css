@@ -39,6 +39,13 @@ form input{
 	border: solid 1px #999;
 }
 
+form textarea{
+	font-size: 11px;
+	height: 80px;
+	width: 350px;
+	border: solid 1px #999;
+}
+
 form input.submit{
 	font-size: 11px;
 	height: 17px;
