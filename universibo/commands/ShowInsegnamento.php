@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('InfoDidattica'.PHP_EXTENSION);
+require_once ('ForumApi'.PHP_EXTENSION);
 
 /**
  * ShowCdl: mostra un corso di laurea
@@ -58,16 +59,16 @@ class ShowInsegnamento extends CanaleCommand
 		if ($info_didattica->getObiettiviEsameLink() == '' && $info_didattica->getObiettiviEsame() == '' )
 			$obiettivi = 'Obiettivi del corso';
 		elseif ($info_didattica->getObiettiviEsameLink() != '' && $info_didattica->getObiettiviEsame() == '' )
-			$obiettivi = '[url="'.$info_didattica->getObiettiviEsameLink().'"]Obiettivi del corso[/url]';
+			$obiettivi = '[url='.$info_didattica->getObiettiviEsameLink().']Obiettivi del corso[/url]';
 		else
-			$obiettivi = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#obiettivi"]Obiettivi del corso[/url]';
+			$obiettivi = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#obiettivi]Obiettivi del corso[/url]';
 		
 		if ($info_didattica->getProgrammaLink() == '' && $info_didattica->getProgramma() == '' )
 			$programma = 'Programma d\'esame';
 		elseif ($info_didattica->getProgrammaLink() != '' && $info_didattica->getProgramma() == '' )
-			$programma = '[url="'.$info_didattica->getProgrammaLink().'"]Programma d\'esame[/url]';
+			$programma = '[url='.$info_didattica->getProgrammaLink().']Programma d\'esame[/url]';
 		else
-			$programma = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#programma"]Programma d\'esame[/url]';
+			$programma = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#programma]Programma d\'esame[/url]';
 		
 		if ($info_didattica->getTestiConsigliatiLink() == '' && $info_didattica->getTestiConsigliati() == '' )
 		{
@@ -75,34 +76,34 @@ class ShowInsegnamento extends CanaleCommand
 testi consigliati';
 		}
 		elseif ($info_didattica->getTestiConsigliatiLink() != '' && $info_didattica->getTestiConsigliati() == '' )
-			$materiale = '[url="'.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
+			$materiale = '[url='.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
 testi consigliati[/url]';
 		else
-			$materiale = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Materiale didattico e 
+			$materiale = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Materiale didattico e 
 testi consigliati[/url]';
 			'';
 
 		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
 			$modalita = 'Modalità d\'esame';
 		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
-			$modalita = '[url="'.$info_didattica->getModalitaLink().'"]Modalità d\'esame[/url]';
+			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalità d\'esame[/url]';
 		else
-			$modalita = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Modalità d\'esame[/url]';
+			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalità d\'esame[/url]';
 		
 		
 		if ($info_didattica->getAppelliLink() == '' && $info_didattica->getAppelli() == '' )
 			$appelli = 'Appelli d\'esame';
 		elseif ($info_didattica->getAppelliLink() != '' && $info_didattica->getAppelli() == '' )
-			$appelli = '[url="'.$info_didattica->getAppelliLink().'"]Appelli d\'esame[/url]';
+			$appelli = '[url='.$info_didattica->getAppelliLink().']Appelli d\'esame[/url]';
 		else
-			$appelli = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#appelli"]Appelli d\'esame[/url]';
+			$appelli = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#appelli]Appelli d\'esame[/url]';
 		
-		$orario = '[url=""]Orario delle lezioni[/url]';
+		$orario = '[url=#]Orario delle lezioni[/url]';
 		
 		$forum = 'Forum';
 		if($insegnamento->getServizioForum())
 		{
-			$forumApi = new Forum();
+			$forumApi = new ForumApi();
 			$link = $forumApi->getForumUri($insegnamento->getForumForumId());
 			$forum = '[url="'.$link.'"]Forum[/url]';
 		}
