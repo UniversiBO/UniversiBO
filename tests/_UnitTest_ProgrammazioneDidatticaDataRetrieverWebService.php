@@ -66,7 +66,7 @@ class _UnitTest_ProgrammazioneDidatticaDataRetrieverWebService extends PHPUnit_T
 //		var_dump($facolta['descFac']);
 		$this->assertEquals($facolta->descFac , "INGEGNERIA");
 		$this->assertEquals($facolta->codFac, "0021" );
-		$this->assertEquals($facolta->codDocPreside, "000000" );
+		$this->assertEquals($facolta->codDocPreside, "000000" );  /** @todo */
 	}
 	
 	function testGetCorsoListDatoCodiceFacolta() {
@@ -79,7 +79,8 @@ class _UnitTest_ProgrammazioneDidatticaDataRetrieverWebService extends PHPUnit_T
 		$corso = $this->data_retriever->getCorso("0051");
 		$this->assertEquals($corso->codCorso, "0051" );
 		$this->assertEquals($corso->descCorso, "INGEGNERIA INFORMATICA" );
-		$this->assertEquals($corso->codDocPresidente, "000000" );
+		$this->assertEquals($corso->codDocPresidente, "000000" );   /** @todo */
+		$this->assertEquals($corso->tipoCorso, "00" );              /** @todo */
 	}
 
 

@@ -2,6 +2,7 @@
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaDataRetrieverFactory'.PHP_EXTENSION);
+require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaAddDocente'.PHP_EXTENSION);
 require_once ('Facolta'.PHP_EXTENSION);
 
 
@@ -94,8 +95,14 @@ class ProgrammazioneDidatticaFacolta extends UniversiboCommand
 					$new_facolta = new Facolta(0, USER_NONE, time(), CANALE_FACOLTA, '', '', 0,
 												true, false, false, null, null, true, false,
 												$elenco_facolta[$i]->codFac, $elenco_facolta[$i]->descFac, '');
+												/** @todo Facolta ancora non gestisce il Preside */
 					
-					if ($new_facolta->insertFacolta())
+					$result = $new_facolta->insertFacolta();
+//	@todo			if ( $elenco_facolta[$i]->codDoc != '000000' )
+//						ProgrammazioneDidatticaAddDocente::addDocente($elenco_facolta[$i]->codDocPreside);
+					
+					
+					if ($result == true)
 					{
 						$facolta_attiva = 'true';
 						$public = 'false';

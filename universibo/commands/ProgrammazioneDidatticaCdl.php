@@ -37,34 +37,34 @@ class ProgrammazioneDidatticaCdl extends UniversiboCommand
 		$username_allowed = explode(';',$fc->getAppSetting('programmazioneDidatticaAdmin'));
 		if (!in_array($session_user->getUsername(), $username_allowed ))
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La gestione della didattica e\' accessibile solo a '.implode(', ',$username_allowed),'file'=>__FILE__,'line'=>__LINE__));
-		
-/*		if ( array_key_exists('f24_submit_publish', $_POST) || array_key_exists('f24_submit_hide', $_POST))
+ 		
+ 		if ( array_key_exists('f25_submit_publish', $_POST) || array_key_exists('f25_submit_hide', $_POST))
 		{
-			if (array_key_exists('f24_submit_publish', $_POST))
+			if (array_key_exists('f25_submit_publish', $_POST))
 			{
-				$keys = array_keys($_POST['f24_submit_publish']);
+				$keys = array_keys($_POST['f25_submit_publish']);
 				$permessi = USER_ALL;
 			}	
 			else 
 			{
-				$keys = array_keys($_POST['f24_submit_hide']);
+				$keys = array_keys($_POST['f25_submit_hide']);
 				$permessi = USER_NONE;
 			}	
 			
 			if (count($keys) == 0) 
 				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il form inviato non e\' valido','file'=>__FILE__,'line'=>__LINE__));
-			$cod_fac = $keys[0];
+			$cod_cdl = $keys[0];
 				
-			if (!ereg('^([0-9A-Z]{4})$', $cod_fac))
+			if (!ereg('^([0-9A-Z]{4})$', $cod_cdl))
 				Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id della facolta\' richiesta non e\' valido', 'file' => __FILE__, 'line' => __LINE__));
 			
-			$facolta =& Facolta::selectFacoltaCodice($cod_fac);
+			$cdl =& Cdl::selectCdlCodice($cod_cdl);
 			
-			$facolta->setPermessi($permessi);
-			$facolta->updateFacolta();
+			$cdl->setPermessi($permessi);
+			$cdl->updateCdl();
 		}
-*/		
 		
+				
 		
 		$data_retriever =& ProgrammazioneDidatticaDataRetrieverFactory::getProgrammazioneDidatticaDataRetriever("web_service");
 		$elenco_cdl =& $data_retriever->getCorsoListFacolta($codFac);
@@ -72,16 +72,16 @@ class ProgrammazioneDidatticaCdl extends UniversiboCommand
 		
 		
 		$keys_nuovi_cod_cdl = array();
-/*		if ( array_key_exists('f24_submit', $_POST) )
+		if ( array_key_exists('f25_submit', $_POST) )
 		{
-			$keys_nuovi_cod_fac = array_keys($_POST['f24_cod_fac']);
-			for($i=0; $i<count($keys_nuovi_cod_fac);  $i++)
+			$keys_nuovi_cod_cdl = array_keys($_POST['f25_cod_corso']);
+			for($i=0; $i<count($keys_nuovi_cod_cdl);  $i++)
 			{
-				if (!ereg('^([0-9A-Z]{4})$', $keys_nuovi_cod_fac[$i]))
-					Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id della facolta\' da aggiungere non e\' valido', 'file' => __FILE__, 'line' => __LINE__));
+				if (!ereg('^([0-9A-Z]{4})$', $keys_nuovi_cod_cdl[$i]))
+					Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id del corso da aggiungere non e\' valido', 'file' => __FILE__, 'line' => __LINE__));
 				}
 		}
-	*/	
+		
 		
 		$tpl_elenco_cdl = array();
 		
@@ -96,15 +96,19 @@ class ProgrammazioneDidatticaCdl extends UniversiboCommand
 				
 				if (in_array($elenco_cdl[$i]->codCorso,$keys_nuovi_cod_cdl))
 				{
-//					$new_cdl = new Facolta(0, USER_NONE, time(), CANALE_FACOLTA, '', '', 0,
-//												true, false, false, null, null, true, false,
-//												$elenco_cdl[$i]->codFac, $elenco_cdl[$i]->descFac, '');
-//					
-//					if ($new_facolta->insertFacolta())
-//					{
-//						$facolta_attiva = 'true';
-//						$public = 'false';
-//					}
+					$presidente =  ($elenco_cdl[$i]->codDocPresidente == '000000') ? null : $elenco_cdl[$i]->codDocPresidente ;
+					
+					$new_cdl = new Cdl(0, USER_NONE, time(), CANALE_CDL, '', '', 0,
+												true, false, false, null, null, true, false,
+												$elenco_cdl[$i]->codCorso, $elenco_cdl[$i]->descCorso, 
+												Cdl::translateCategoriaCdl($elenco_cdl[$i]->tipoCorso), 
+												$codFac, $elenco_cdl[$i]->codDocPresidente , null);
+
+					if ($new_cdl->insertCdl())
+					{
+						$cdl_attiva = 'true';
+						$public = 'false';
+					}
 					
 				}
 

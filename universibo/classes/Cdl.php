@@ -101,8 +101,8 @@ class Cdl extends Canale{
 	{
 		return $this->cdlNome;
 	}
-
-
+	
+	
 	/**
 	 * Imposta il nome/descrizione del corso di laurea
 	 *
@@ -139,6 +139,7 @@ class Cdl extends Canale{
 		return $this->cdlCategoria;
 	}
 
+	
 	/**
 	 * Imposta la categoria del cdl
 	 * 
@@ -153,6 +154,27 @@ class Cdl extends Canale{
 		$this->cdlCategoria = $categoria;
 	}
 
+	/**
+	 * Trasforma i codici di tipo corso del dataretriever (forse)
+	 * a categoria cdl usato in questa classe.
+	 */
+	function translateCategoriaCdl($categoria)
+	{
+		$translationTable = 
+		array(	'LT' => CDL_NUOVO_ORDINAMENTO,
+				'LS' => CDL_SPECIALISTICA,
+				'L'  => CDL_VECCHIO_ORDINAMENTO);
+		
+		if (array_key_exists($categoria, $translationTable))
+			$result = $translationTable[$categoria];
+		else
+			$result = CDL_NUOVO_ORDINAMENTO; //se non so cosa metterci di default butto questo
+		
+		return $result;
+	}
+	
+	
+	
 	/**
 	 * Ritorna la stringa descrittiva del titolo/nome breve del canale per il MyUniversiBO
 	 *
@@ -450,5 +472,34 @@ class Cdl extends Canale{
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>$query,'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$this->updateCanale();
+	}
+
+
+	function insertCdl()
+	{
+		
+		$db =& FrontController::getDbConnection('main');
+		
+		if ($this->insertCanale() != true)
+		{ 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore inserimento Canale','file'=>__FILE__,'line'=>__LINE__));
+			return false;
+		}
+		
+		$query = 'INSERT INTO classi_corso (cod_corso, desc_corso, categoria, cod_doc, cod_fac, id_canale) VALUES ('.
+					$db->quote($this->getCodiceCdl()).' , '.
+					$db->quote($this->getNome()).' , '.
+					$db->quote($this->getCategoriaCdl()).' , '.
+					$db->quote($this->getCodDocente()).' , '.
+					$db->quote($this->getCodiceFacoltaPadre()).' , '.
+					$db->quote($this->getIdCanale()).' )';
+		$res = $db->query($query);
+		if (DB::isError($res))
+		{ 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			return false;
+		}
+		
+		return true;
 	}
 }
