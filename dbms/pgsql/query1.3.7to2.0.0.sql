@@ -631,5 +631,25 @@ testi_consigliati_link, modalita_esame, modalita_esame_link, obiettivi_esame,
 obiettivi_esame_link, appelli_esame, appelli_esame_link, homepage_esame_link 
 FROM esami_info;
 
+-- 22-09-2004 meco
+
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:k]','face_azz.gif','azz');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:b]','face_beer.gif','beer');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[o|]','face_climb.gif','climb');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:<]','face_cry.gif','cry');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[7)]','face_devil.gif','devil');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[|7]','face_guns.gif','guns');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[?(]','face_help.gif','help');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[o)]','face_idea.gif','idea');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[|9]','face_lode.gif','lode');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[3)]','face_love.gif','love');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:j]','face_ok.gif','ok');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[|(]','face_ot.gif','OT');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:s]','face_sick.gif','sick');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[|x]','face_spam.gif','spam');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[o(]','face_wall.gif','wall');
+INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:7]','face_whistle.gif','whistle');
 
 
+UPDATE phpbb_config set config_value='la community degli studenti dell\'Università di Bologna'
+WHERE  config_name='site_desc'
