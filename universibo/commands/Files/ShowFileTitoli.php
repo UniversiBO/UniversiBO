@@ -46,6 +46,7 @@ class ShowFileTitoli extends PluginCommand {
 
 		$personalizza_not_admin = false;
 
+		$template->assign('showFileTitoli_addFileFlag', 'false');
 		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
 		{
 			$personalizza = true;
@@ -62,9 +63,9 @@ class ShowFileTitoli extends PluginCommand {
 			
 			if ( $user->isAdmin() || $referente || $moderatore )
 			{
-				$template->assign('showFilesTitoli_addFileFlag', 'true');
-				$template->assign('showFilesTitoli_addFile', 'Invia un nuovo file');
-				$template->assign('showFilesTitoli_addFileUri', 'index.php?do=FileAdd&id_canale='.$id_canale);
+				$template->assign('showFileTitoli_addFileFlag', 'true');
+				$template->assign('showFileTitoli_addFile', 'Invia un nuovo file');
+				$template->assign('showFileTitoli_addFileUri', 'index.php?do=FileAdd&id_canale='.$id_canale);
 			}
 		}
 		else
@@ -89,7 +90,7 @@ class ShowFileTitoli extends PluginCommand {
 		
 		//var_dump($elenco_id_file); die();
 		$elenco_file =& FileItem::selectFileItems($elenco_id_file);
-		var_dump($elenco_file); die();
+		//var_dump($elenco_file); die();
 
 		$elenco_file_tpl = array();
 
@@ -109,7 +110,7 @@ class ShowFileTitoli extends PluginCommand {
 				{			
 					$elenco_file_tpl[$i]['titolo']       = $file->getTitolo();
 					//$elenco_file_tpl[$i]['notizia']      = $file->getNotizia();
-					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $file->getDataInserimento());
+					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y - %H:%i', $file->getDataInserimento());
 					//echo $personalizza,"-" ,$ultimo_accesso,"-", $file->getUltimaModifica()," -- ";
 					//$elenco_file_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
 					$elenco_file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false';
@@ -120,18 +121,21 @@ class ShowFileTitoli extends PluginCommand {
 					$elenco_file_tpl[$i]['modifica_link']= '';
 					$elenco_file_tpl[$i]['elimina']      = '';
 					$elenco_file_tpl[$i]['elimina_link'] = '';
-					if ( ($user->isAdmin() || $referente || $this_moderatore)  && $flag_chkDiritti)
+					//if ( ($user->isAdmin() || $referente || $this_moderatore)  && $flag_chkDiritti)
+					if (($user->isAdmin() || $referente || $this_moderatore))
 					{
 						$elenco_file_tpl[$i]['modifica']     = 'Modifica';
-						$elenco_file_tpl[$i]['modifica_link']= 'FileEdit&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+						$elenco_file_tpl[$i]['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 						$elenco_file_tpl[$i]['elimina']      = 'Elimina';
-						$elenco_file_tpl[$i]['elimina_link'] = 'FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+						$elenco_file_tpl[$i]['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 					}
-					$elenco_file_tpl[$i]['dimensione'] = '';
+					$elenco_file_tpl[$i]['dimensione'] = $file->getDimensione();
 					$elenco_file_tpl[$i]['download_uri'] = '';
 					$permessi_download = $file->getPermessiDownload();
 					if ($user->isGroupAllowed($permessi_download))
 						$elenco_file_tpl[$i]['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+					$elenco_file_tpl[$i]['categoria'] = $file->getCategoriaDesc();
+					$elenco_file_tpl[$i]['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 				}
 			}
 		
@@ -140,13 +144,13 @@ class ShowFileTitoli extends PluginCommand {
 		$num_file = count($elenco_file_tpl);
 		if ( $num_file == 0 )
 		{
-			$template->assign('showFilesTitoli_langFileAvailable', 'Non ci sono file da visualizzare');
-			$template->assign('showFilesTitoli_langFileAvailableFlag', 'false');
+			$template->assign('showFileTitoli_langFileAvailable', 'Non ci sono file da visualizzare');
+			$template->assign('showFileTitoli_langFileAvailableFlag', 'false');
 		}
 		else
 		{
-			$template->assign('showFilesTitoli_langFileAvailable', 'Ci sono '.$canale_file.' notizie');
-			$template->assign('showFilesTitoli_langFileAvailableFlag', 'true');
+			$template->assign('showFileTitoli_langFileAvailable', 'Ci sono '.$canale_file.' file');
+			$template->assign('showFileTitoli_langFileAvailableFlag', 'true');
 		}
 		
 		$template->assign('showFileTitoli_fileList', $elenco_file_tpl);

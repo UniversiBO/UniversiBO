@@ -9,6 +9,9 @@
 <p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
 
 {include file=News/latest_news.tpl}
+</td></tr>
+<tr><td class="Normal">&nbsp;<br />
+{include file=Files/show_file_titoli.tpl}
 
 </td></tr></table>
 

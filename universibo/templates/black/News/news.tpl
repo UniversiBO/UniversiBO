@@ -52,7 +52,7 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowUser&amp;
 -->
 </script>
 <noscript><a href="index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"}" target="_popup">{$autore|escape:"htmlall"}</a></noscript>*}
-<a href="index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"}" target="_popup">{$autore|escape:"htmlall"}</a>
+<a href="index.php?do={$autore_link|escape:"htmlall"}">{$autore|escape:"htmlall"}</a>
   {*</td></tr></table>*}
   </td></tr></table>
 </td>
