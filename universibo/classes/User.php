@@ -840,6 +840,19 @@ class User {
 	
 	
 	/**
+	 * Restituisce true se il gruppo dell'utente apparteniene ai gruppi specificati in $groups 
+	 * altrimenti false
+	 *
+	 * @param int $groups gruppi di cui si vuole verificare l'accesso
+	 * @return boolean
+	 */
+	function isGroupAllowed($groups)
+	{
+		return (boolean) ((int)$this->groups & (int)$groups);
+	}
+	
+	
+	/**
 	 * Restituisce true se l'utente viene autenticato con successo sull'active directory di ateneo
 	 *
 	 * @static

@@ -52,6 +52,7 @@
 		<ShowInsegnamento class="ShowInsegnamento">
 			<response type="template" name="default">insegnamento.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
+			<pluginCommand name="ShowFileTitoli" class="Files.ShowFileTitoli" />
 		</ShowInsegnamento>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>

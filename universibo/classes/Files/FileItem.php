@@ -264,16 +264,16 @@ class FileItem {
 		return $this->data_modifica;
 	}
 
-	/**
-	 * Recupera l'hash del file (almeno credo)
-	 *
-	 * @return string 
-	 */
-
-	function getHashFile() {
-		return $this->hash_file;
-	}
-	
+//	/**
+//	 * Recupera l'hash del file (almeno credo)
+//	 *
+//	 * @return string 
+//	 */
+//
+//	function getHashFile() {
+//		return $this->hash_file;
+//	}
+//	
 	/**
 	 * Recupera delle informazioni aggiuntive sul file
 	 *
@@ -647,11 +647,11 @@ class FileItem {
 			$values = implode(',', $id_notizie);
 
 		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
-						 descrizione, data_inserimento, data_modifica, dimensione, download,
-						 nome_file, A.id_categoria, A.id_tipo_file, hash_file, password,
-						 username, categoria_desc, tipo_desc, tipo_icona, tipo_info
+						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
+						 nome_file, A.id_categoria, id_tipo_file, hash_file, A.password,
+						 username, C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
 						 FROM file A, utente B, file_categoria C, file_tipo D 
-						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND A.id_file_tipo = D.id_file_tipo AND A.id_file IN ('.$values.') AND eliminata!='.$db->quote(FILE_ELIMINATO);
+						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
 		//var_dump($query);
 		$res = & $db->query($query);
 
@@ -862,7 +862,6 @@ class FileItem {
 		}
 		return false;
 	}
-
 }
 
 ?>

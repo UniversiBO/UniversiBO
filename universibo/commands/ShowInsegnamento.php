@@ -134,6 +134,7 @@ class ShowInsegnamento extends CanaleCommand
 		
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
+		$this->executePlugin('ShowFileTitoli', array());
 		return 'default';
 	}
 
