@@ -8,6 +8,10 @@
 a chi far controllare la correttezza dei risultati *}
 
 <!-- INIZIO PAGINA CENTRALE -->
+
+{include file=avviso_notice.tpl}
+
+
 &nbsp;<br />
 <img src="tpl/black/questionario_18.gif" width="144" height="22" alt="{$question_TitleAlt|escape}" />
 <table align="center" cellspacing="0" cellpadding="0" width="90%" summary="">

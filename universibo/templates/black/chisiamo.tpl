@@ -4,6 +4,8 @@
 {include file=header_popup.tpl}
 {/if}
 
+{include file=avviso_notice.tpl}
+
 <table summary="chi siamo" width="90%" border="0" cellspacing="0" cellpadding="0">
 <tr><td class="Normal" align="left">
 		<div align="center">&nbsp;<br /><img src="tpl/black/chi_siamo_30.gif" width="179" height="39" alt="{$contacts_altTitle|escape:"html"}" /></div>

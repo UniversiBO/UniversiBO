@@ -7,13 +7,7 @@
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal" align="center">
 
-<table width="70%" border="0" cellspacing="1" cellpadding="3" summary="">
-{ foreach from=$error_notice|default:'' item=temp_error_notice }
-<tr><td class="Normal" bgcolor="#FF0000">
-{* $error_notice|escape:"html" * }
-{ $temp_error_notice|escape:"html" }</td></tr>
-{ /foreach } 
-</table>
+{include file=avviso_notice.tpl}
 
 <form action="{$common_receiverUrl}?do=Login" name="form1" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">

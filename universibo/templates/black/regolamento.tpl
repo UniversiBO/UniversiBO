@@ -4,6 +4,9 @@
 {include file=header_popup.tpl}
 {/if}
 
+{include file=avviso_notice.tpl}
+
+
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal">
 <p>
