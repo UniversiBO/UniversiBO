@@ -62,6 +62,8 @@ class FileDownload extends UniversiboCommand {
 			}
 				
 			
+			$file->addDownload();
+			
 			if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) 
 			{
 				// had to make it MSIE 5.5 because if 6 has no "attachment;"
@@ -89,7 +91,7 @@ class FileDownload extends UniversiboCommand {
 			/**
 			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione a fondo pagina
 			 */
-			die();
+			exit();
 			
 			return;
 			

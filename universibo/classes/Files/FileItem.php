@@ -605,10 +605,39 @@ class FileItem {
 	 *
 	 * @param string $download
 	 */
-
-	function setDownload($download) {
+	
+	function setDownload($download, $update_db = false) {
 		$this->download = $download;
+		
+		if ( $update_db == true )
+		{
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE file SET download = '.$db->quote($download).' WHERE id_file = '.$db->quote($this->getIdFile());
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $db->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database file non unico','file'=>__FILE__,'line'=>__LINE__));
+			
+		}
+		
 	}	
+	
+	
+	/**
+	 * Aumenta il contatore dei download
+	 *
+	 * @param string $download
+	 */
+
+	function addDownload() {
+		$this->setDownload(1 + $this->getDownload(), true);
+	}	
+	
 	
 	/**
 	 * Imposta il titolo del file
