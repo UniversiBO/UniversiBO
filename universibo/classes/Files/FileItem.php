@@ -692,36 +692,41 @@ class FileItem {
 	/**
 	 * Restituisce il tipo di un file su hd tra i tipi ammissibili riconosciuti
 	 *
-	 * @param string $file percorso in cui si trova il file
+	 * @param string $nome_file percorso in cui si trova il file
 	 */
-	function guessTipo($file) 
+	function guessTipo($nome_file) 
 	{
 		static $tipi_regex = NULL;
 		
-		if ($tipi != NULL)
-			return $categorie;
-		
-		$db = & FrontController::getDbConnection('main');
-		
-		$query = 'SELECT id_file_tipo, descrizione FROM file_tipo';
-		$res = & $db->query($query);
-		
-		if (DB :: isError($res))
-			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
-		
-		$tipi = array ();
-		
-		while ($res->fetchInto($row)) {
-			$tipi[$row[0]] = $row[1];
+		if ($tipi_regex == NULL)
+		{
+			$db = & FrontController::getDbConnection('main');
+			
+			$query = 'SELECT id_file_tipo, pattern_riconoscimento FROM file_tipo WHERE id_file_tipo != 1';
+			$res = & $db->query($query);
+			
+			if (DB :: isError($res))
+				Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			
+			$tipi_regex = array ();
+				
+			while ($res->fetchInto($row)) {
+				$tipi_regex[$row[0]] = $row[1];
+			}
+			
+			$res->free();
+			
 		}
-
-		$res->free();
-
-		return $tipi;
-		/**
-		 * @todo da implementare
-		 */
+		//echo $nome_file;
+		foreach($tipi_regex as $key => $value)
+		{
+			//echo '['.$value.'-'.ereg($value, $nome_file).']';
+			if ( ereg($value, $nome_file) )
+				return $key;
+		}
+		
 		return 1;
+		
 	}	
 
 	

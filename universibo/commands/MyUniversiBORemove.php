@@ -35,6 +35,8 @@ class MyUniversiBORemove extends UniversiboCommand
 		}
 		$id_canale = $_GET['id_canale'];
 		$canale = & Canale::retrieveCanale($id_canale);
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', $canale->getNome());
 		
 		$ruoli =& $utente->getRuoli();
 		

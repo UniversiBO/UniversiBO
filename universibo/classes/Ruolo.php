@@ -644,7 +644,7 @@ class Ruolo {
 		$db =& FrontController::getDbConnection('main');
 		
 		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
-		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
+		$my_universibo = ($this->isMyUniversibo()) ? 'S' : 'N'; 
 		$nascosto = ($this->isNascosto()) ? 'S' : 'N'; 
 		
 		$query = 'INSERT INTO utente_canale(id_utente, id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto) VALUES ( '.

@@ -4,11 +4,11 @@
 {include file=header_popup.tpl}
 {/if}
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi un nuovo canale al tuo MyUniversiBO<br />&nbsp;</p></td></tr>
+<tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi una nuova pagina al tuo MyUniversiBO<br />&nbsp;</p></td></tr>
 <tr><td align="center"></td></tr>
 </table>
 {include file=avviso_notice.tpl}
-<form method="post" enctype="multipart/form-data">
+<form method="post">
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
 <tr>
 <td class="News" align="right" valign="top"><label for="f15_livello_notifica">Tipo di notifica:</label></td>
@@ -26,7 +26,7 @@
 </tr>
 <tr>
 <td colspan="2" align="center">
-<input type="submit" id="" name="f15_accept" size="20" value="Invia" /></td>
+<input type="submit" id="f15_submit" name="f15_submit" size="20" value="Invia" /></td>
 </tr>
 </table>
 </form>
