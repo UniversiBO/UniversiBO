@@ -5,7 +5,7 @@
 {/if}
 
 <table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
-<tr><td align="center"><p class="Titolo">Cancella il file</p></td></tr>
+<tr><td align="center"><p class="Titolo">Cancella la notizia</p></td></tr>
 <tr><td class="Normal">
 {include file=avviso_notice.tpl}
 
@@ -18,11 +18,11 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td>
 <fieldset>
-<legend><span class="Normal">{$f9langAction|escape:"htmlall"}</span></legend>
+<legend><span class="Normal">{$f13langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
-	{foreach name=canali item=item from=$f12_canale}
+	{foreach name=canali item=item from=$f13_canale}
 	<tr class="Normal" valign="center">
-	<td width="40">&nbsp;&nbsp;<input type="checkbox" id="f12_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f12_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f12_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<td width="40">&nbsp;&nbsp;<input type="checkbox" id="f13_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f13_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f13_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
 	</table>
@@ -30,7 +30,7 @@
 </tr></td>
 <tr>
 <td align="center">
-<input type="submit" id="" name="f12_submit" size="20" value="Elimina" /></td>
+<input type="submit" id="" name="f13_submit" size="20" value="Elimina" /></td>
 </tr>
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
