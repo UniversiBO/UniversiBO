@@ -16,3 +16,16 @@ CREATE TABLE file_studente_commenti (
 
 -- 22-10-2004 brain
 UPDATE canale SET forum_attivo = 'N' WHERE forum_attivo = ''
+
+
+-- 1-12-2004
+CREATE TABLE link (
+    id_link serial NOT NULL,
+    id_canale integer NOT NULL,
+    id_utente integer NOT NULL,
+    uri varchar(255) NOT NULL,
+    label varchar(128),
+    description text,
+    PRIMARY KEY ("id_link"), UNIQUE ("id_link")
+);
+
