@@ -498,7 +498,7 @@ class NewsItem {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	 	
-	 	$query = 'SELECT id_notizia FROM news_canale WHERE id_canale = '.$db->quote($id_canale).' AND id_notizia = '.$db->quote($this->getIdNotizia());
+/*	 	$query = 'SELECT id_notizia FROM news_canale WHERE id_canale = '.$db->quote($id_canale).' AND id_notizia = '.$db->quote($this->getIdNotizia());
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)){
@@ -507,15 +507,15 @@ class NewsItem {
 		} 
 		
 		if ($res->numRows());
-		
+*/		
 		$query = 'INSERT INTO news_canale (id_notizia, id_canale) VALUES ('.$db->quote($this->id_notizia).','.$db->quote($id_canale).')';
 		 //? da testare il funzionamento di =&
-		$res =& $db->query($query);
+		//$res =& $db->query($query);
 		
 		if (DB::isError($res)) {
 			$return = false;
-			$db->rollback();
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		//	$db->rollback();
+		//	Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		} 
 		
 		$res->free();
@@ -559,17 +559,22 @@ class NewsItem {
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
-		foreach ($canale in $id_canali)
+		$num_canali = count($id_canali);
+		for ($i = 0; $i<$num_canali; $i++)
 		{
-			if ($this -> addCanale($canale) != true) $return = false;
+			$canale =& $id_canali[$i];
+			if ($this -> addCanale($canale) === false)
+			{
+				$db->rollback();
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			}
 		}	
 		
-		if (!$return) $db->commit();
+		$db->commit();
 		        
-        $res->free();
-        
-        $db->autoCommit(true);
-        ignore_user_abort(0);
+		$res->free();
+		$db->autoCommit(true);
+		ignore_user_abort(0);
 				
 		return $return;
 	}
