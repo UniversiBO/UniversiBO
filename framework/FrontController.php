@@ -145,6 +145,7 @@ class FrontController {
 		
 		$command->initCommand($this);
 		$response = $command->execute();
+		$command->shutdownCommand();
 		
 		
 		if ($response == NULL) $response='default';
@@ -642,8 +643,7 @@ class FrontController {
 		static $dsnList = array();
 		static $connectionList = array();
 		
-		 
-		if ( $dsn!==NULL )
+		if ( $dsn !==NULL )
 		{
 			 $dsnList[$identifier]=$dsn;
 			 return true; //dsn "added" correcly

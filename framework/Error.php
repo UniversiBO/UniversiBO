@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @todo si può implementare uno stack per gli handlers
+ */
+//global $_Error_handlers_stack;
+//$_Error_handlers_stack = array();
+
 global $_Error_handlers;
 $_Error_handlers = array();
 
@@ -19,8 +25,14 @@ $_Error_repository = array();
 class Error 
 {
 	
+	/**
+	 * @private
+	 */
 	var $error_category;
-	
+
+	/**
+	 * @private
+	 */
 	var $param;
 
 	
@@ -143,7 +155,7 @@ class Error
 	
 	/**
 	 * Method that retrieve the first instance in error repository of given error category
-	 * Errors are removed form repository
+	 * Errors are removed from repository
 	 *
 	 * @static
 	 * @param int $error_category defines the error category, see the predefined constants  

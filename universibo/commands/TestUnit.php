@@ -25,12 +25,20 @@ class TestUnit extends UniversiboCommand {
 		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', '../tests'.$pathDelimiter.ini_get('include_path'));
 
-		include ('_UnitTest_StringEsempioUsoPhpUnit'.PHP_EXTENSION);
-		echo '<br /><br />';
-		
-		include ('_UnitTest_User'.PHP_EXTENSION);
-		echo '<br /><br />';
-		
+		if (!($dir_handle = opendir('../tests')))
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Path directory test non valido','file'=>__FILE__,'line'=>__LINE__)); 
+			
+	    while ( false !== ($file = readdir($dir_handle)) ) 
+	    { 
+	        if ( ('_UnitTest_' == substr($file, 0, 10)) && (substr($file, -4)==PHP_EXTENSION) )
+	        {
+	        	echo $file;
+				include ($file);
+				echo '<br /><br />';
+	        }
+	    }
+
+	    closedir($dir_handle); 		
 	}
 }
 

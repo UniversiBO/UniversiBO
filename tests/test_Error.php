@@ -9,7 +9,7 @@
  * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-require_once(Error.php);
+require_once('Error'.PHP_EXTENSION);
 
  
 //some example callback handler functions... 
@@ -17,7 +17,9 @@ function my_function($param)
 {
 	echo 'Errore critico!!! ',$param['msg'], '<br />
 	file: ',$param['file'], '<br />
-	line: ',$param['line'], '<br /><br />';
+	line: ',$param['line'], '<br />
+	log: ',$param['log'], '<br />';
+	
 	//die('esecuzione interrotta');
 }
 
@@ -26,7 +28,9 @@ class handlers{
 	{
 		echo 'Errore: ',$param['msg'], '<br />
 		file: ',$param['file'], '<br />
-		line: ',$param['line'], '<br /><br />';
+		line: ',$param['line'], '<br />
+		log: ',$param['log'], '<br />';
+
 		//die();
 		//header('Redirect: http://location/error_page.php');
 	}

@@ -40,6 +40,30 @@ class BaseCommand {
 	
 	
 	/**
+	 * Initializes the base command link to fornt controller
+	 * 
+	 * This method must be overridden from Commands that need shutdown
+	 *
+	 * @param FrontController $frontController
+	 */ 
+	function shutdownCommand()
+	{
+
+		while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
+		{
+			echo $current_error->throw();
+		}
+
+		while ( ($current_error = Error::retrieve(_ERROR_DEFAULT)) !== false )
+		{
+			echo $current_error->throw();
+		}
+
+	}
+
+
+
+	/**
 	 * Return front controller
 	 *
 	 * @return FrontController

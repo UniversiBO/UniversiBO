@@ -61,10 +61,10 @@
     <td colspan="2"> <img src="tpl/black/facolta_18.gif" width="89" height="22" alt="{$common_fac}" /></td>
 </tr>
 
-{foreach from=$common_facLinks item=curr_link}
+{foreach from=$common_facLinks item=temp_currLink}
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu" width="100%">&nbsp;<a href="{$curr_link.uri}" >{$curr_link.label|lower|capitalize|escape:"htmlall"}</a></td>
+ <td class="Menu" width="100%">&nbsp;<a href="{$temp_currLink.uri}" >{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></td>
 </tr>
 {/foreach}
 
@@ -95,10 +95,10 @@
 <td colspan="2"><img src="tpl/black/servizi_18.gif" width="83" height="22" alt="{$common_services}" /></td>
 </tr>
 
-{foreach from=$common_servicesLinks item=curr_link}
+{foreach from=$common_servicesLinks item=temp_link}
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu"><a href="{$curr_link.uri}" >{$curr_link.label}</a></td>
+ <td class="Menu"><a href="{$temp_link.uri}" >{$temp_link.label}</a></td>
 </tr>
 {/foreach}
 </table>

@@ -12,14 +12,12 @@
 	
 	<receivers>
 		<main>index.php</main>
-		<error>error.php</error>
 	</receivers>
 
 	<defaultCommand>ShowHome</defaultCommand>
 	<commands>
 		<Login class="Login">
 			 <response type="template" name="default">login.tpl</response>
-			 <response type="template" name="logout">logout.tpl</response>
 		</Login>
 		<ShowManifesto class="ShowManifesto">
 			 <response type="template" name="default">manifesto.tpl</response>

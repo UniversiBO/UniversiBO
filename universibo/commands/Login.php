@@ -17,7 +17,7 @@ class Login extends UniversiboCommand {
 	function execute()
 	{
 		$fc =& $this->getFrontController();
-		//$fc->redirectCommand('ShowHome');
+		$template =& $this->frontController->getTemplateEngine();
 		
 		if ( array_key_exists('f1_submit',$_POST) )
 		{
@@ -28,7 +28,7 @@ class Login extends UniversiboCommand {
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__));
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			
 	//		if (! User::isPasswordValid($_POST['f1_password']) )
 	//			Error::throw(_ERROR_DEFAULT,array('msg'=>'Password non valida, lunghezza minima 5 caratteri','file'=>__FILE__,'line'=>__LINE__));
@@ -37,11 +37,11 @@ class Login extends UniversiboCommand {
 			
 			if ($user === false)
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Username inesistente','file'=>__FILE__,'line'=>__LINE__));
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
 			elseif( $user->getPasswordHash() != md5($_POST['f1_password']) )
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__));
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
 			else
 			{
@@ -59,7 +59,6 @@ class Login extends UniversiboCommand {
 		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
 		$f1_password = '';
 		
-		$template =& $this->frontController->getTemplateEngine();
 		$template->assign('login_langLogin','Login');
 		$template->assign('f1_username_value',$_POST['f1_username']);
 		$template->assign('f1_password_value','');

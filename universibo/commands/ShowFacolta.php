@@ -86,9 +86,10 @@ class ShowFacolta extends CanaleCommand {
 		$fac_listCdlType[] = array('cod' => '3', 'name' => 'Lauree Vecchio Ordinamento', 'list' => $fac_listCdl);
 */
 		$template -> assign('fac_list', $fac_listCdlType);
+		//$template -> assign_by_ref('fac_list', $fac_listCdlType);
 
 		
-		return 'default';						
+		return 'default';
 	}
 
 }

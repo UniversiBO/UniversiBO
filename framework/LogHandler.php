@@ -96,7 +96,7 @@ class LogHandler{
 	
 	
 	/**
-	 * Return cvs header line according to current Log format definition.
+	 * Return csv header line according to current Log format definition.
 	 *
 	 * @return string
 	 * @access private
