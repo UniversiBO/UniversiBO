@@ -8,7 +8,6 @@
 {/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a>
 </p>
 </div>
-<hr />
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
 <hr />
 {include file=News/latest_news.tpl}
