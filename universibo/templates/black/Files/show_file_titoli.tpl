@@ -57,7 +57,7 @@
 &nbsp;&nbsp;&nbsp;<a href="{$temp_file.autore_link|escape:"htmlall"}">{$temp_file.autore|escape:"htmlall"}</a></td>
 <td class="Normal" align="right">&nbsp;&nbsp;&nbsp;{$temp_file.dimensione|escape:"htmlall"}&nbsp;kB&nbsp;&nbsp;</td>
 <td valign="center" align="right">
-{if $temp_file.modifica!=""}&nbsp;<a href="{$temp_file.modifica_link|escape:"htmlall"}"><img src="tpl/black/file_edit.gif" border="0" width="15" height="15" alt="modifica" /></a>{/if}{if $temp_file.elimina!=""}&nbsp;<a href="{$temp_file.elimina_link|escape:"htmlall"}"><img src="tpl/black/file_del.gif" border="0" width="15" height="15" alt="elimina" /></a>{/if}&nbsp;<a href="{$temp_file.download_uri|escape:"htmlall"}"><img src="tpl/black/file_download.gif" border="0" width="15" height="15" alt="scarica il file" /></a>
+{if $temp_file.modifica!=""}&nbsp;<a href="{$temp_file.modifica_link|escape:"htmlall"}"><img src="tpl/black/file_edt.gif" border="0" width="15" height="15" alt="modifica" /></a>{/if}{if $temp_file.elimina!=""}&nbsp;<a href="{$temp_file.elimina_link|escape:"htmlall"}"><img src="tpl/black/file_del.gif" border="0" width="15" height="15" alt="elimina" /></a>{/if}&nbsp;<a href="{$temp_file.download_uri|escape:"htmlall"}"><img src="tpl/black/file_download.gif" border="0" width="15" height="15" alt="scarica il file" /></a>
 </td>
 </tr>
 {/foreach}
