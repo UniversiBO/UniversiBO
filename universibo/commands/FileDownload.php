@@ -29,6 +29,9 @@ class FileDownload extends UniversiboCommand {
 		
 		
 		$file =& FileItem::selectFileItem($_GET['id_file']);
+
+		if ($file === false) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto è stato eliminato o non è disponibile','file'=>__FILE__,'line'=>__LINE__ ));
 		
 		if ($user->isGroupAllowed( $file->getPermessiDownload() ))
 		{
@@ -42,7 +45,20 @@ class FileDownload extends UniversiboCommand {
 			if ( md5_file($nomeFile) != $file->getHashFile() ) 
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto risulta corrotto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
 			
-			//FARE CONTROLLO PASSWORD  $this->password = $password;
+			if ( $file->getPassword() != null)
+			{
+				if (!array_key_exists('f11_submit', $_POST))
+					return 'file_download_password';
+				
+				if  (!array_key_exists('f11_file_password', $_POST))
+					Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+					
+				if  ($file->getPassword() != FileItem::passwordHashFunction($_POST['f11_file_password']))
+				{
+					Error::throw(_ERROR_NOTICE,array('msg'=>'La password inviata è errata','file'=>__FILE__,'line'=>__LINE__,'log' => false, 'template_engine' => & $template  ));
+					return 'file_download_password';
+				}
+			}
 				
 			
 			if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) 
@@ -70,7 +86,7 @@ class FileDownload extends UniversiboCommand {
 			readfile($nomeFile);
 			
 			/**
-			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione
+			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione a fondo pagina
 			 */
 			die();
 			
@@ -89,7 +105,7 @@ class FileDownload extends UniversiboCommand {
 		}
 
 		Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso eseguire il download del file.
-		Non possiedi i diritti necessari al download.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
+		Non possiedi i diritti necessari.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 		
 	}
 

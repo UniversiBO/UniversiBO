@@ -487,6 +487,19 @@ class FileItem {
 		$this->hash = $hash;
 	}
 	
+	
+	/**
+	 * Ritorna l'hash sicuro di una stringa 
+	 *
+	 * @param string $string 
+	 * @return string
+	 */
+	function passwordHashFunction($string)
+	{
+		return md5($string);
+	}
+
+	
 	/**
 	 * Imposta delle informazioni aggiuntive sul file
 	 *
@@ -658,7 +671,7 @@ class FileItem {
 
 		$rows = $res->numRows();
 
-		if ($rows = 0)
+		if ($rows == 0)
 			return false;
 		$files_list = array ();
 

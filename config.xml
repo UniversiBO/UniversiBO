@@ -110,7 +110,6 @@
 
 		<FileDownload class="FileDownload">
 			<response type="template" name="file_download_iscriviti">file_download_iscriviti.tpl</response>
-			<response type="template" name="file_download_not_allowed">file_download_not_allowed.tpl</response>
 			<response type="template" name="file_download_password">file_download_password.tpl</response>
 		</FileDownload>
 		<FileShowInfo class="FileShowInfo">
