@@ -245,28 +245,45 @@ class CanaleCommand extends UniversiboCommand
 	
 	function _compareContattiKeys($b, $a)
 	{
-		$theArrayOrder = array ('Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>'');
-				  
-		$posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
-		$posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
-		if ($posA==$posB) return 0;
-		return ($posA > $posB) ? 1 : -1;
+//		$theArrayOrder = array ('Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>'');		  
+//		$posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
+//		$posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
+//		if ($posA==$posB) return 0;
+//		return ($posA > $posB) ? 1 : -1;	
+		switch ($a)
+		{
+			case 'Docenti': $posA = 0; break;
+			case 'Personale': $posA = 1; break;
+			case 'Tutor': $posA = 2; break;
+			case 'Studenti': $posA = 3; break;
+		}
+		switch ($b)
+		{
+			case 'Docenti': $posB = 0; break;
+			case 'Personale': $posB = 1; break;
+			case 'Tutor': $posB = 2; break;
+			case 'Studenti': $posB = 3; break;
+		} 	 	
+		if ($posA==$posB) 
+			return strcmp($b["label"], $a["label"]);
+		return ($posA < $posB) ? 1 : -1;
 	}
 		
 		
 	//where is my key in my array
-	function _keyPosInArray($key,$array)
-	{
-		$i=0;
-		reset($array);
-		while(current($array)){ 
-			if(key($array) == $key){
-				return $i;
-			}
-			next($array);
-		}
-		return $i + 1;
-	}
+//	function _keyPosInArray($key,$array)
+//	{
+//		$i=0;
+//		reset($array);
+//		while(current($array)){
+//			$i++;
+//			if(key($array) == $key){
+//				return $i;
+//			}
+//			next($array);
+//		}
+//		return $i + 1;
+//	}
 }
 
 ?>

@@ -340,7 +340,25 @@ class ForumApi
 	{
 		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSid();
 	}
-
+	
+	/**
+	 * @param  int   $id_post  
+	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getPostUri($id_post)
+	{
+		return $this->getPath().'viewforum.php?p='.$id_post.'#'.$id_post.'&'.ForumApi::getSid();
+	}
+	
+	/**
+	 * @param	int   id del forum di cui controllare i messaggi nuovi. se non passato vengono
+	 * cercati gli ultimi post su tutto il forum a cui l'utente ha diritto di accesso 
+	 * @return 	array string: gli ultimi messaggi del forum
+	 */
+	function getLastPost($id_forum = 0)
+	{
+		//
+	}
 
 }
 

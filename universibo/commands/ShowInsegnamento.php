@@ -44,7 +44,7 @@ class ShowInsegnamento extends CanaleCommand
 		$user_ruoli =& $session_user->getRuoli();
 			
 
-		
+		// ??
 		$insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
