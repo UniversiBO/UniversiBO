@@ -1,9 +1,11 @@
 .head {
-	FONT-SIZE: 10pt; COLOR:yellow; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
+	FONT-SIZE: 10pt; COLOR:yellow; BACKGROUND: #000063; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
 }
 A:link {
-	COLOR:'#FFFF66'; 
+	COLOR:#FFFF66;
+        BACKGROUND: #000063; 
 }
 A:visited {
-	COLOR:'#FFFFCC';
+	COLOR:#FFFFCC;
+        BACKGROUND: #000063;
 }

@@ -1,5 +1,5 @@
 BODY {
-	FONT-SIZE: 12pt; BACKGROUND: "#ffff99"; COLOR: black; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
+	FONT-SIZE: 12pt; BACKGROUND: #ffff99; COLOR: black; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
 }
 .body {
 	FONT-SIZE: 10pt; BACKGROUND: #000033; COLOR: #ffffff; FONT-FAMILY: Arial, Tahoma, Verdana, Helvetica, sans-serif
@@ -11,7 +11,7 @@ BODY {
 	PADDING-LEFT: 10pt; FONT-WEIGHT: bold; FONT-SIZE: 18pt; BACKGROUND: #000033; COLOR: #ffffff; FONT-FAMILY: Tahoma, Verdana
 }
 A {
-	FONT-SIZE: 12pt; COLOR:'navy';  FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif; FONT-STYLE: 'italic';
+	FONT-SIZE: 12pt; COLOR:navy;  FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif; FONT-STYLE: italic;
 }
 A:link {
 	TEXT-DECORATION: none; 
@@ -47,21 +47,21 @@ TD.minimenu {
 	FONT-SIZE: 8pt; BACKGROUND: #000033; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; HEIGHT: 24pt; TEXT-ALIGN: right
 }
 i{
-FONT-SIZE: 12pt; COLOR:'navy'; FONT-WEIGHT: bold;
+FONT-SIZE: 12pt; COLOR:navy; FONT-WEIGHT: bold;
 }
 
 h2{
-COLOR:'navy'; FONT-WEIGHT: bold; 
+COLOR:navy; FONT-WEIGHT: bold; 
 }
 
 h3{
-COLOR:'navy'; FONT-WEIGHT: bold;FONT-SIZE: 14pt;
+COLOR:navy; FONT-WEIGHT: bold;FONT-SIZE: 14pt;
 }
 
 h4{
-COLOR:'#993366'; FONT-WEIGHT: bold; FONT-SIZE: 12pt;
+COLOR:#993366; FONT-WEIGHT: bold; FONT-SIZE: 12pt;
 }
 
 code{
-FONT-SIZE: 12pt; COLOR:'#cc0033'; FONT-WEIGHT: bold; FONT-STYLE: 'normal'
+FONT-SIZE: 12pt; COLOR:#cc0033; FONT-WEIGHT: bold; FONT-STYLE: normal
 }

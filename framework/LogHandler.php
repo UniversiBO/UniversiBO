@@ -54,8 +54,11 @@ class LogHandler{
 	}
 
 
+
 	/**
 	 * Adds an entry in log file.
+	 * 
+	 * If entry parameter is undefined default value is an empty string
 	 *
 	 * @param array $entry associative array of column<->values to add
 	 * @return boolean true: successfull, false: error
@@ -65,7 +68,14 @@ class LogHandler{
 		$string='';
 		for ($i=0; $i < $this->count_values; $i++)
 		{
-			$curr_value = $entry[$this->definition[$i]];
+			if (!array_key_exists($this->definition[$i],$entry) )
+			{
+				$curr_value = '';
+			}
+			else
+			{
+				$curr_value = $entry[$this->definition[$i]];
+			}
 			
 			$curr_value = str_replace($this->csv_text_delimiter, $this->csv_text_delimiter.$this->csv_text_delimiter, $curr_value);
 			$string .= $this->csv_text_delimiter.$curr_value.$this->csv_text_delimiter;
@@ -77,12 +87,42 @@ class LogHandler{
 
 		$string .= "\n";
 		
-		//$string='# '.time().' # '.$_SERVER['REMOTE_ADDR'].' # '.session_id_utente().' # '.$_SERVER['REQUEST_URI'].' # '.$query." # \r\n";
-		
 		$this->_addCsvLine($this->path.$this->file_name, $string);
 		
-	}  //end log_error
+	}  
 	
+	
+	
+	
+	/**
+	 * Return cvs header line according to current Log format definition.
+	 *
+	 * @return string
+	 * @access private
+	 */
+	function _getHeaderLine()
+	{
+		$string = '';
+		for ($i=0; $i < $this->count_values; $i++)
+		{
+			$curr_value = $this->definition[$i];
+			
+			$curr_value = str_replace($this->csv_text_delimiter, $this->csv_text_delimiter.$this->csv_text_delimiter, $curr_value);
+			$string .= $this->csv_text_delimiter.$curr_value.$this->csv_text_delimiter;
+			if ($i < $this->count_values -1) 
+			{
+				$string .= $this->csv_separator;
+		    }
+		}
+		
+		$string .= "\n";
+		
+		return $string;
+		
+	}
+
+
+
 
 	/**
 	 * Adds a new entry in the csv log file
@@ -95,13 +135,24 @@ class LogHandler{
 	 */
 	function _addCsvLine($full_file_name, $string)
 	{
+		$addHeader = false;
+		if ( !file_exists($full_file_name) == true ){
+			$addHeader = true;	
+		}
+		
 		$fp = fopen ($full_file_name, "a");
 		flock ($fp,2);
+		if ( $addHeader == true )
+		{
+			$header = $this->_getHeaderLine();
+			fwrite($fp, $header);
+		} 
 		fwrite($fp, $string);
 		fflush ($fp);
 		flock($fp,3);
 		fclose($fp);
 	}
+
 	
 }
 

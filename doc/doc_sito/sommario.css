@@ -1,5 +1,5 @@
 BODY {
-	FONT-SIZE: 12pt; BACKGROUND: "#ffff99"; COLOR: black; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	FONT-SIZE: 12pt; BACKGROUND: #ffff99; COLOR: black; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 .body {
 	FONT-SIZE: 10pt; BACKGROUND: #000033; COLOR: #ffffff; FONT-FAMILY: Arial, Tahoma, Verdana, Helvetica, sans-serif
@@ -17,7 +17,7 @@ A:link {
 	FONT-WEIGHT: bold; TEXT-DECORATION: none; 
 }
 A:visited {
-	FONT-WEIGHT: bold; TEXT-DECORATION: none
+	FONT-WEIGHT: bold; TEXT-DECORATION: none;
 }
 A:active {
 	FONT-WEIGHT: bold; TEXT-DECORATION: none
@@ -47,6 +47,6 @@ TD.minimenu {
 	FONT-SIZE: 8pt; BACKGROUND: #000033; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; HEIGHT: 24pt; TEXT-ALIGN: right
 }
 i{
-COLOR:'black'; FONT-WEIGHT: bold;
+COLOR:black; FONT-WEIGHT: bold;
 }
 
