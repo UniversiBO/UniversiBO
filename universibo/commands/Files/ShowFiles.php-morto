@@ -6,7 +6,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
 /**
  * ShowFileTitoli è un'implementazione di PluginCommand.
  *
- * Mostra i file del canale
+ * Mostra i files del canale
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
  * 
  *

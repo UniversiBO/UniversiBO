@@ -144,6 +144,7 @@
 		</FileDownload>
 		<FileShowInfo class="FileShowInfo">
 			<response type="template" name="default">file_show_info.tpl</response>
+			<pluginCommand name="ShowFileInfo" class="Files.ShowFileInfo" />
 		</FileShowInfo>
 		<FileAdd class="FileAdd">
 			<response type="template" name="success">file_add_success.tpl</response>

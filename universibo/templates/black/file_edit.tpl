@@ -105,6 +105,7 @@
 <input type="password" id="f13_password_confirm" name="f13_password_confirm" size="30" maxlength="130" value="{$f13_password|escape:"htmlall"}" />
 </td>
 </tr>
+{if $fileEdit_flagCanali == 'true'}
 <tr><td colspan="2">
 <fieldset>
 <legend><span class="Normal">Il file verr&agrave; modificato nei seguenti argomenti:</span></legend>
@@ -118,11 +119,13 @@
 	</table>
 </fieldset>
 </td></tr>
+{/if}
 <tr>
 <td colspan="2" align="center">
 <input type="submit" id="" name="f13_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td colspan="2" align="center" class="Normal"><a href="{$deleteFile_fileUri|escape:"htmlall"}">Torna&nbsp;al&nbsp;file</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$fileEdit_fileUri|escape:"htmlall"}">Torna&nbsp;ai&nbsp;dettagli&nbsp;del&nbsp;file</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">

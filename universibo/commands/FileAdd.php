@@ -27,7 +27,7 @@ class FileAdd extends UniversiboCommand {
 
 		if ($user->isOspite())
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__));
 		}		
 /*		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{

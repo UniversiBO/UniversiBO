@@ -10,6 +10,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Fabrizio Pinto
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -17,16 +18,14 @@ class FileEdit extends UniversiboCommand {
 
 	function execute() {
 		
+		$frontcontroller = & $this->getFrontController();
+		$template = & $frontcontroller->getTemplateEngine();
+				
+		$krono = & $frontcontroller->getKrono();
+		
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 		
-		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
-		}
-		$canale = & Canale::retrieveCanale($_GET['id_canale']);
-		$id_canale = $canale->getIdCanale();
-
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file']))
 		{
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del file richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
@@ -35,27 +34,48 @@ class FileEdit extends UniversiboCommand {
 		if ($file === false)
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
-		//$id_canale = $canale->getIdCanale();
+		$template->assign('fileEdit_fileUri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
+		
+		
+//		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+//		{
+//			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+//		}
+//		$canale = & Canale::retrieveCanale($_GET['id_canale']);
+//		$id_canale = $canale->getIdCanale();
 
+
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
+		
 		$referente = false;
 		$moderatore = false;
 
-		if (array_key_exists($id_canale, $user_ruoli)) {
-			$ruolo = & $user_ruoli[$id_canale];
+		if (array_key_exists('id_canale', $_GET))
+		{
+			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 
-			$referente = $ruolo->isReferente();
-			$moderatore = $ruolo->isModeratore();
+			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			$id_canale = $canale->getIdCanale();
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			if (array_key_exists($id_canale, $user_ruoli)) {
+				$ruolo = & $user_ruoli[$id_canale];
+	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			
+			$elenco_canali = array($id_canale);
+				
 		}
+
 		
 		if (!($user->isAdmin() || $referente || $moderatore)) 
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per inserire una notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 		
-		$frontcontroller = & $this->getFrontController();
-		$template = & $frontcontroller->getTemplateEngine();
-		$template->assign('deleteFile_fileUri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
-
-		$krono = & $frontcontroller->getKrono();
-
+		
 		// valori default form
 		// $f13_file = '';
 		$f13_titolo = $file->getTitolo();
@@ -69,10 +89,10 @@ class FileEdit extends UniversiboCommand {
 		$f13_permessi_download = $file->getPermessiDownload();
 		$f13_permessi_visualizza = $file->getPermessiVisualizza();
 		$f13_password_enable = ($file->getPassword() != null);
-	
+		$f13_canale = array();
 		$f13_password = '';
 
-		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
+		//prendo tutti i canali tra i ruoli più (??) il canale corrente (che per l'admin può essere diverso)
 		$elenco_canali = $file->getIdCanali();
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
@@ -270,7 +290,7 @@ class FileEdit extends UniversiboCommand {
 			}
 			else 
 			{
-				if ($_POST['f13_permessi_download'] != USER_ALL || $_POST['f13_permessi_download'] != (USER_STUDENTE & USER_DOCENTE & USER_TUTOR & USER_PERSONALE & USER_COLLABORATORE & USER_ADMIN ) )
+				if ($_POST['f13_permessi_download'] != USER_ALL && $_POST['f13_permessi_download'] != (USER_STUDENTE | USER_DOCENTE | USER_TUTOR | USER_PERSONALE | USER_COLLABORATORE | USER_ADMIN ) )
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
@@ -307,7 +327,10 @@ class FileEdit extends UniversiboCommand {
 			
 			//e i permessi di visualizzazione??
 			// li prendo uguali a quelli del canale,
-			$f13_permessi_visualizza = $canale->getPermessi();
+			if (array_key_exists('id_canale', $_GET))
+				$f13_permessi_visualizza = $canale->getPermessi();
+			else 
+				$f13_permessi_visualizza = USER_ALL;
 			// eventualmente dare la possibilità all'admin di metterli diversamente
 			
 			
@@ -359,6 +382,8 @@ class FileEdit extends UniversiboCommand {
 		$template->assign('f13_tipi', $f13_tipi);
 		$template->assign('f13_abstract', $f13_abstract);
 		$template->assign('f13_canale', $f13_canale);
+		$template->assign('fileEdit_flagCanali', (count($f13_canale)) ? 'true' : 'false');
+		
 		
 		$template->assign('f13_password', $f13_password);
 		$template->assign('f13_password_confirm', $f13_password);

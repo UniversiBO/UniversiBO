@@ -155,6 +155,7 @@ class FileDelete extends UniversiboCommand {
 		
 		$template->assign('f14_langAction', "Elimina il file dai seguenti canali:");
 		$template->assign('f14_canale', $f14_canale);
+		$template->assign('fileDelete_flagCanali', (count($f14_canale)) ? 'true' : 'false');
 		
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		

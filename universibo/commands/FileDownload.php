@@ -18,16 +18,26 @@ class FileDownload extends UniversiboCommand {
 
 	function execute() 
 	{
+		$frontcontroller = & $this->getFrontController();
+		$template = & $frontcontroller->getTemplateEngine();
+		$user =& $this->getSessionUser();
+		
+		if ($user->isOspite() )
+		{
+			Error :: throw (_ERROR_NOTICE, array ('msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
+			return 'file_download_iscriviti';
+		}
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
-		$frontcontroller = & $this->getFrontController();
-		$template = & $frontcontroller->getTemplateEngine();
-		$user =& $this->getSessionUser();
 		
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
+				
 		$file =& FileItem::selectFileItem($_GET['id_file']);
 
 		if ($file === false) 
@@ -104,13 +114,6 @@ class FileDownload extends UniversiboCommand {
 			
 		}
 		
-		
-		if ($user->isOspite() )
-		{
-			Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non è permesso eseguire il download del file', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-			$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
-			return 'file_download_iscriviti';
-		}
 
 		Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso eseguire il download del file.
 		Non possiedi i diritti necessari.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));

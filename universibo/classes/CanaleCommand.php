@@ -133,6 +133,8 @@ class CanaleCommand extends UniversiboCommand
 				$template->assign( 'common_canaleMyUniversiBO', 'index.php?do=MyUniversiBOAdd&id_canale='.$canale->getIdCanale());
 			}
 		}
+		else
+			$template->assign( 'common_langCanaleMyUniversiBO', '');
 		
 		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );

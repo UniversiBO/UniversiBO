@@ -6,17 +6,16 @@
 
 <table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td align="center"><p class="Titolo">Cancella il file</p></td></tr>
-<tr><td class="Normal">
+<tr><td class="Normal" align="center">
 {include file=avviso_notice.tpl}
 
-
 </td></tr><tr><td align="center"> 
-
-{*include file=News/show_news.tpl*}
+{*{include file=Files/show_info.tpl}*}
 </td></tr><tr><td align="center"> 
 <form method="post">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
+{if $fileDelete_flagCanali == 'true'}
 <tr><td>
 <fieldset>
 <legend><span class="Normal">{$f14_langAction|escape:"htmlall"}</span></legend>
@@ -29,6 +28,7 @@
 	</table>
 </fieldset>	  
 </tr></td>
+{/if}
 <tr>
 <td align="center">
 <input type="submit" id="" name="f14_submit" size="20" value="Elimina" /></td>
