@@ -54,6 +54,7 @@ class Receiver{
 		
 		define ('PHP_EXTENSION', '.php');
 		
+		
 	}
 	
 	

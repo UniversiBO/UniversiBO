@@ -1,4 +1,6 @@
-<?php require_once ('CanaleCommand'.PHP_EXTENSION);
+<?php 
+
+require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
  * ShowFacolta: mostra una facoltà
@@ -35,9 +37,10 @@ class ShowFacolta extends CanaleCommand {
 		require_once('Cdl'.PHP_EXTENSION);
 
 		$template -> assign('fac_langFac', 'FACOLTA\'');
-		$template -> assign('fac_facTitle', $facolta -> getTitoloFacolta());
-		$template -> assign('fac_facName', $facolta -> getNome());
-		$template -> assign('fac_facLink', $facolta -> getUri());
+		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
+		$template -> assign('fac_facName', $facolta->getNome());
+		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
+		$template -> assign('fac_facLink', $facolta->getUri());
 		$template -> assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
 
 		$elencoCdl =& Cdl :: selectCdlElencoFacolta($facolta -> getCodiceFacolta());
