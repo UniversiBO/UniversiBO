@@ -22,7 +22,7 @@ class FileDelete extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 
 		
-		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_canaleURI', 'index.php?do=ShowMyUniversiBO');
 		$template->assign('common_langCanaleNome', 'indietro');
 		
 		$user =& $this->getSessionUser();
@@ -41,7 +41,8 @@ class FileDelete extends UniversiboCommand {
 		if ($file === false)
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 			
-				
+		$autore = ($user->getIdUser() == $file->getIdUtente());
+							
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
@@ -51,6 +52,7 @@ class FileDelete extends UniversiboCommand {
 			$id_canale = $canale->getIdCanale();
 			$template->assign('common_canaleURI', $canale->showMe());
 			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			
 			if (array_key_exists($id_canale, $user_ruoli)) {
 				$ruolo = & $user_ruoli[$id_canale];
 	
@@ -64,9 +66,11 @@ class FileDelete extends UniversiboCommand {
 				 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
 				 
 			$elenco_canali 	= 	array($id_canale);
+			
+			if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			
 		}
-		
-		
 		
 		/* diritti
 		 -admin
@@ -74,15 +78,10 @@ class FileDelete extends UniversiboCommand {
 		 -referenti canale
 		*/
 		
+		if (!($user->isAdmin() || $autore))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			
 
-		//$news-> getIdCanali();
-		/*var_dump($news->getNotizia());
-		die();
-		*/		
-		$autore = ($user->getIdUser() == $file->getIdUtente());
-		if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
-		
 		//$elenco_canali = array ($id_canale);
 		$ruoli_keys = array_keys($user_ruoli);
 		$num_ruoli = count($ruoli_keys);

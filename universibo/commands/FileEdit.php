@@ -50,7 +50,9 @@ class FileEdit extends UniversiboCommand {
 		
 		$referente = false;
 		$moderatore = false;
-
+		
+		$autore = ($user->getIdUser() == $file->getIdUtente());
+			
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
@@ -72,12 +74,15 @@ class FileEdit extends UniversiboCommand {
 				 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
 			
 			$elenco_canali = array($id_canale);
+			
+			//controllo diritti sul canale
+			if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 				
 		}
 
-		
-		if (!($user->isAdmin() || $referente || $moderatore)) 
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+		if (!($user->isAdmin() || $autore)) 
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
 		
 		
 		// valori default form
