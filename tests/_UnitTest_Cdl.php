@@ -11,10 +11,10 @@ require_once 'Cdl'.PHP_EXTENSION;
 
 
 /**
- * Test per la classe Faoclta
+ * Test per la classe Cdl
  *
  * @package universibo_tests
- * @author Fabrizio Pinto
+ * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
