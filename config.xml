@@ -87,6 +87,7 @@
 		<!-- leave smtp empty if don't want to use a smtp server -->
 	    <smtp>joker.ing.unibo.it</smtp>
 	    <fromAddress>universibo@joker.ing.unibo.it</fromAddress>
+	    <replyToAddress>universibo@joker.ing.unibo.it</replyToAddress>
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
 	
@@ -120,7 +121,7 @@
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<files>../html/file-universibo</files>
 		<fotoDefault>no_foto.png</fotoDefault>
-		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;</questionariReceiver>
+		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it</questionariReceiver>
         <alertMessage>Messaggio di avviso importante ed urgente</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
         <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
