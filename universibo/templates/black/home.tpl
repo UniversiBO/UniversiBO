@@ -4,14 +4,13 @@
 {include file=header_popup.tpl}
 {/if}
 
-{include file=avviso_notice.tpl}
-
-
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal"><br />
+<tr><td class="Normal"><br /> 
 <p class="Titolo">{$home_langWelcome|escape:"htmlall"}</p>
 <p>{$home_langWhatIs|escape:"htmlall"}</p>
 <p>{$home_langMission|escape:"htmlall"}</p>
+
+{include file=avviso_notice.tpl}
 
 &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">

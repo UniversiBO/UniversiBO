@@ -51,7 +51,7 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;
 <form action="{$common_receiverUrl}?do=Logout" name="form2" method="post">
 <tr><td class="Normal" valign="center" align="center">&nbsp;<br />
 {$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{$common_userUsername|escape:"htmlall"}</font><br />
-{$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{$common_userLivello|escape:"htmlall"}</font><br />
+{$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}</font><br />
 &nbsp;<br />
 <input name="f2_submit" type="submit" value="LogOut" /><br />&nbsp;
 </td></tr>

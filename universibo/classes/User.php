@@ -599,6 +599,33 @@ class User {
 
 
 	/**
+	 * Restituisce l'array dell'elenco dei nomi dei gruppi
+	 * a cui appartiene una persona
+	 *
+	 * @static
+	 * @param boolean $singolare 
+	 * @return array
+	 */
+	function getUserGroupsNames( $singolare = true )
+	{
+		$nomi_gruppi = User::groupsNames($singolare);
+		$return = array();
+		
+		if ($this->isOspite())		$return[]=$nomi_gruppi[USER_OSPITE];
+		if ($this->isStudente())	$return[]=$nomi_gruppi[USER_STUDENTE];
+		if ($this->isModeratore())	$return[]=$nomi_gruppi[USER_MODERATORE];
+		if ($this->isTutor())		$return[]=$nomi_gruppi[USER_TUTOR];
+		if ($this->isDocente())		$return[]=$nomi_gruppi[USER_DOCENTE];
+		if ($this->isPersonale())	$return[]=$nomi_gruppi[USER_PERSONALE];
+		if ($this->isAdmin())		$return[]=$nomi_gruppi[USER_ADMIN];
+
+		return $return;
+		
+	}
+
+
+
+	/**
 	 * Restituisce true se lo username specificato è già registrato sul DB
 	 *
 	 * @static

@@ -264,8 +264,8 @@ class UniversiboCommand extends BaseCommand {
 		{
 			$template->assign('common_userLoggedIn', 'true');
 			$template->assign('common_userUsername', $session_user->getUsername());
-			$livelli = User::groupsNames();
-			$template->assign('common_userLivello', $livelli[$session_user->getGroups()]);
+			//$livelli = User::groupsNames();
+			$template->assign('common_userLivello', $session_user->getUserGroupsNames());
 
 			$template->assign('common_langWelcomeMsg', 'Benvenuto');
 			$template->assign('common_langUserLivello', 'Il tuo livello di utenza è');
