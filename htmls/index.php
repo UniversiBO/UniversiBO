@@ -65,7 +65,7 @@ class Receiver{
 }
 
 $receiver = new Receiver;
-$receiver->main()
+$receiver->main();
 
 
 ?>

@@ -55,7 +55,7 @@ class FrontController {
 		$errorLog = new LogHandler('error',$this->paths['logs'],$log_error_definition); 
 
 		
-		var_dump($this);
+		//var_dump($this);
 		//temp
 
 
@@ -117,7 +117,7 @@ class FrontController {
 		else return $explodedCC[$theSize-1];
 	}
 
-
+/*
 	//insert an error and abort
 	//writeError will take variable-length argument list
 	//The first argument can be a string or an integer.
@@ -141,7 +141,7 @@ class FrontController {
 		}
 		$error = new Error($theMessage);
 	}
-
+*/
 
 	/**
 	* Gets the current command string request

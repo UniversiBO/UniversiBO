@@ -31,26 +31,29 @@
  * @license http://www.opensource.org/licenses/gpl-license.php
  */
 class BaseCommand {
+	
 	var $templateEngine;
 	var $frontController;
 
-
-	function setFrontController(&frontController)
+	function setFrontController( &frontController )
 	{
 		$this->frontController =& $frontController;
 	}
 	
 	
-	function initBase(){
+	function initBase()
+	{
 		global $fc;
-		if(empty($fc->templateEngine)){
+		if(empty($fc->templateEngine))
+		{
 			$this->_initializeEoceneTemplateEngine();
 			return;
 		}
 		
 		$engineType=$fc->templateEngine;
 		$engineType=strtoupper($engineType);
-		switch($engineType){
+		switch($engineType)
+		{
 			case "SMARTY":
 				$fc->import('SmartyWrapper');
 				$this->templateEngine=new SmartyWrapper();
