@@ -66,6 +66,10 @@ class FileEdit extends UniversiboCommand {
 				$referente = $ruolo->isReferente();
 				$moderatore = $ruolo->isModeratore();
 			}
+			//controllo coerenza parametri
+			$canali_file	=& 	$file->getIdCanali();
+			if (!in_array($id_canale, $canali_file))
+				 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
 			
 			$elenco_canali = array($id_canale);
 				

@@ -31,7 +31,17 @@ class FileDelete extends UniversiboCommand {
 		$moderatore = false;
 					
 		$user_ruoli = $user->getRuoli();
-					
+		
+		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
+			
+		$file = & FileItem::selectFileItem($_GET['id_file']);
+		if ($file === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			
+				
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
@@ -48,14 +58,15 @@ class FileDelete extends UniversiboCommand {
 				$moderatore = $ruolo->isModeratore();
 			}
 			
-			$elenco_canali = array($id_canale);
+			//controllo coerenza parametri
+			$canali_file	=& 	$file->getIdCanali();
+			if (!in_array($id_canale, $canali_file))
+				 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+				 
+			$elenco_canali 	= 	array($id_canale);
 		}
 		
 		
-		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
-		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
-		}
 		
 		/* diritti
 		 -admin
@@ -64,9 +75,6 @@ class FileDelete extends UniversiboCommand {
 		*/
 		
 
-		$file = & FileItem::selectFileItem($_GET['id_file']);
-		if ($file === false)
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		//$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
