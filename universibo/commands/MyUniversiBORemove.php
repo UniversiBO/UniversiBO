@@ -1,6 +1,8 @@
 <?php
 
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
+require_once  ('ForumApi'.PHP_EXTENSION);
+
 
 /**
  * ShowMyPage is an extension of UniversiboCommand class.
@@ -45,6 +47,9 @@ class MyUniversiBORemove extends UniversiboCommand
 		{
 			$ruolo =& $ruoli[$id_canale];
 			$ruolo->setMyUniversiBO(false, true);
+			
+			$forum = new ForumApi();
+			$forum->removeUserGroup($canale->getForumGroupId(), $utente->getIdUser());
 			
 			return 'success';
 		}

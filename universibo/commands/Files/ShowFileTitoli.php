@@ -122,7 +122,7 @@ class ShowFileTitoli extends PluginCommand {
 					//$file_tpl['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
 					$file_tpl['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
 					$file_tpl['autore']       = $file->getUsername();
-					$file_tpl['autore_link']  = 'ShowUser&id_utente='.$file->getIdUtente();
+					$file_tpl['autore_link']  = 'index.php?do=ShowUser&id_utente='.$file->getIdUtente();
 					$file_tpl['id_autore']    = $file->getIdUtente();
 					$file_tpl['modifica']     = '';
 					$file_tpl['modifica_link']= '';

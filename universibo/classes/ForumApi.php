@@ -241,6 +241,50 @@ class ForumApi
 	}
 
 
+	/**
+	 * Aggiunge un utente ad un gruppo di moderazione sul database del forum
+	 * 
+	 * @static 
+	 */
+	function addUserGroup($user, $group)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+
+		$query = 'SELECT * FROM '.$this->table_prefix.'user_group WHERE group_id = '.$db->quote($group).' AND user_id = '.$db->quote($user);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		if ($res->numRows() > 0 ) return;
+		
+		$query = 'INSERT INTO '.$this->table_prefix.'user_group (group_id, user_id, user_pending) VALUES ('.$db->quote($group).', '.$db->quote($user).', 0)';
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
+
+	/**
+	 * Remove un utente ad un gruppo di moderazione sul database del forum
+	 * 
+	 * @static 
+	 */
+	function removeUserGroup($user, $group)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+
+		$query = 'DELETE FROM '.$this->table_prefix.'user_group WHERE group_id = '.$db->quote($group).' AND user_id = '.$db->quote($user);
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
 
 	/**
 	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false

@@ -46,6 +46,10 @@ class MyUniversiBOAdd extends UniversiboCommand
 		{
 			$ruolo =& $ruoli[$id_canale];
 			$ruolo->setMyUniversiBO(true, true);
+			
+			$forum = new ForumApi();
+			$forum->addUserGroup($canale->getForumGroupId(), $utente->getIdUser());
+			
 			return 'success';
 		}
 		else

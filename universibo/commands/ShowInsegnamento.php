@@ -55,7 +55,6 @@ class ShowInsegnamento extends CanaleCommand
 		if ( $session_user->isAdmin() || (array_key_exists($id_canale, $user_ruoli) && $user_ruoli[$id_canale]->isReferente()) )
 			$template->assign('ins_infoDidEdit', 'index.php?do=InfoDidatticaEdit&id_canale='.$id_canale );
 		
-		
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
 		//var_dump($info_didattica);
 		
@@ -113,7 +112,7 @@ testi consigliati[/url]';
 		{
 			$forumApi = new ForumApi();
 			$link = $forumApi->getForumUri($insegnamento->getForumForumId());
-			$forum = '[url="'.$link.'"]Forum[/url]';
+			$forum = '[url='.$link.']Forum[/url]';
 		}
 		
 		$tpl_tabella[] = $obiettivi;

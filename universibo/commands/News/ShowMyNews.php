@@ -94,10 +94,13 @@ class ShowMyNews extends PluginCommand {
 				for ($j = 0; $j < $num_canali; $j++)
 				{
 					$canale = Canale::retrieveCanale($canali[$j]);
-					$canale_tpl = array();
-					$canale_tpl['titolo'] = $canale->getNome();
-					$canale_tpl['link'] = $canale->showMe();
-					$elenco_news_tpl[$i]['canali'][] = $canale_tpl;			
+					if ($canale->isGroupAllowed($user->getGroups()))
+					{
+						$canale_tpl = array();
+						$canale_tpl['titolo'] = $canale->getNome();
+						$canale_tpl['link'] = $canale->showMe();
+						$elenco_news_tpl[$i]['canali'][] = $canale_tpl;
+					}			
 				}
 				$elenco_news_tpl[$i]['nuova']	   	 = ($news->getUltimaModifica() > $ultimo_accesso) ? 'true' : 'false';
 				$elenco_news_tpl[$i]['modifica']     = '';
