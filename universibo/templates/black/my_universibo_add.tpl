@@ -21,7 +21,7 @@
 </td>
 </tr>
 <tr>
-<td class="News" align="right" valign="top"><label for="f15_nome">Nome:</label></td>
+<td class="News" align="right" valign="top"><label for="f15_nome">Nome personalizzato del canale (opzionale):</label></td>
 <td><input type="text" id="f15_nome" name="f15_nome" size="65" maxlength="130" value="{$f15_nome|escape:"htmlall"}" /></td>
 </tr>
 <tr>
@@ -30,6 +30,14 @@
 </tr>
 </table>
 </form>
+
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<tr><td>
+<br />
+<hr width="90%" />
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+</td></tr></table>
+
 
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}

@@ -99,7 +99,7 @@ class MyUniversiBOAdd extends UniversiboCommand
 			$template->assign('f15_nome', $f15_nome);
 			$template->assign('f15_livelli_notifica', $f15_livelli_notifica);
 			$template->assign('f15_livello_notifica', $f15_livello_notifica);
-			
+			$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
 			return 'default';
 		}
 		
