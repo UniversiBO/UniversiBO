@@ -341,7 +341,7 @@ INSERT INTO "collaboratore" ("id_utente", "intro", "recapito", "obiettivi", "fot
 
 
 
-ALTER TABLE "files" RENAME TO "files2";
+ALTER TABLE "file" RENAME TO "file2";
 
 --ATTENZIONE qui bisogna fare a mano il drop della costrain sull'indice della tabella files2!!
 
@@ -390,9 +390,9 @@ PRIMARY KEY ("id_file_categoria"));
 INSERT INTO file ( "id_file", "permessi_download", "permessi_visualizza", "id_utente",
 "titolo", "descrizione", "data_inserimento", "data_modifica", "dimensione", "download",
 "nome_file", "id_categoria", "id_tipo_file", "hash_file", "password", "eliminato" ) 
-SELECT "f2.id_file" , '127' , '127', "f2.id_autore",
-'' , "f2.descrizione", f2.data, f2.data, f2.dimensione, f2.contatore,
-f2.nome_file, 0 , 0 , '', NULL, 'N' FROM file2;
+SELECT "id_file" , '127' , '127', "id_autore",
+'' , "descrizione", data, data, dimensione, contatore,
+nome_file, 0 , 0 , '', NULL, 'N' FROM file2;
 
 --se in v1 un file era stato eliminato da tutti gli argomenti allora viene 
 --impostato come eliminato
@@ -422,7 +422,7 @@ INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
 5, 'altro');
 
 SELECT setval('file_categoria_id_file_categoria_seq', 5);
-UPDATE file SET id_file_categoria = 5;
+UPDATE file SET id_categoria = 5;
 
 
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (

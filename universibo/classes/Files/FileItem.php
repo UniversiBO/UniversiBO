@@ -383,7 +383,42 @@ class FileItem {
 		return $this->download;
 	}	
 	
+	/**
+	 * Recupera l'id del file
+	 *
+	 * @return int 
+	 */
+	function getIdFile() {
+		return $this->id_file;
+	}
 
+	/**
+	 * Imposta l'id del file
+	 *
+	 * @param int 
+	 */
+	function setIdFile($id_file) {
+		$this->id_file = $id_file;
+	}
+	
+	/**
+	 * Recupera l'id dell'utente che ha inserito il file
+	 *
+	 * @return int 
+	 */
+	function getIdUtente() {
+		return $this->id_utente;
+	}
+
+	/**
+	 * Imposta l'id dell'utente che ha inserito il file
+	 *
+	 * @param int 
+	 */
+	function setIdUtente($id_utente) {
+		$this->id_utente = $id_utente;
+	}
+	
 	/**
 	 * Imposta la descrizione completa del file
 	 *
