@@ -408,7 +408,8 @@ class FrontController {
 
 		//set $this->languageInfo
 		$this->_setLanguageInfo();
-
+		
+// @bug: dopo la chiamata ad appSettings l'albero del config cambia
 		//set $this->appSettings
 		$this->_appSettings();
 		
@@ -425,6 +426,8 @@ class FrontController {
 
 		//set $this->commandClass must be placed after $this->_setDefaultCommand();
 		$this->_setCommandClass();
+		
+//		var_dump($this); die();
 		
 		unset($this->config);
 		
@@ -501,6 +504,7 @@ class FrontController {
 				{	
 					$testo		=& $figlio->firstChild;
 					$elementURL =& $testo->nodeValue;
+//					var_dump($figlio);
 					break;	
 				}
 			}
@@ -543,6 +547,7 @@ class FrontController {
 	function _setDefaultCommand()
 	{
 		$figli =& $this->config->documentElement->childNodes;
+//		var_dump($figli);
 		for ($i = 0; $i < $figli->length; $i++)
 		{
 			$iesimoFiglio =& $figli->item($i);
@@ -706,7 +711,7 @@ class FrontController {
 		for( $i=0; $i < $figli->length; $i++ )
 		{
 			$aSetting = &$figli->item($i);
-//			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+			if ($aSetting->nodeType == XML_ELEMENT_NODE)
 				$this->languageInfo[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
 		}
 		
@@ -724,21 +729,33 @@ class FrontController {
 	function _appSettings()
 	{
 		$this->appSettings = array();
-		$appSettingNodes = &$this->config->getElementsByTagName("appSettings");
-		
-		if($appSettingNodes == NULL) return;
-		
-		$appSettingNode = &$appSettingNodes->item(0);
-		
+//		$appSettingNodes = &$this->config->getElementsByTagName("appSettings");
+//		var_dump($appSettingNodes);
+
+		$figli =& $this->config->documentElement->childNodes;
+		//var_dump($figli);
+		for ( $i = 0; $i < $figli->length; $i++ )
+			if (($figlio =& $figli->item($i)) != null)
+			{	
+				if ( $figlio->nodeType == XML_ELEMENT_NODE && $figlio->tagName == 'appSettings')
+				{	
+					$appSettingNode =& $figlio;
+					break;	
+				}
+			}
+
 		if($appSettingNode == NULL) return;
 		
-		$figli = $appSettingNode->childNodes;
-		for( $i=0; $i < $figli->length; $i++ )
+		$figliAppSettingNode = $appSettingNode->childNodes;
+		for( $i=0; $i < $figliAppSettingNode->length; $i++ )
 		{
-			$aSetting = &$figli->item($i);
-//			print_r($aSetting);
-//			if ($aSetting->nodeType == XML_ELEMENT_NODE)
-				$this->appSettings[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
+			$aSetting = &$figliAppSettingNode->item($i);
+//			echo $i.' '.$aSetting->nodeName.'<br>';
+//				var_dump($aSetting);
+			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+			{
+				$this->appSettings[$aSetting->tagName] = ($aSetting->hasChildNodes() == true) ? $aSetting->firstChild->nodeValue : '';
+			}
 		}
 	}	
 
@@ -783,28 +800,37 @@ class FrontController {
 	function _setCommandClass()
 	{		
 		$commandString=$this->getCommandRequest();
-		
-		$figliRoot = &$this->config->documentElement->childNodes;
-//		var_dump($figliRoot);
+		// @bug: qui il ->childNodes mi restituisce i figli di appsettings invce che dei figli di root
+		$figliRoot =& $this->config->documentElement->childNodes;
+//		var_dump($this);
+//		$listaNodiCommands =& $this->config->getElementsByTagName("commands");
 		$cinfonode = null;
 		for ( $i = 0; $i < $figliRoot->length; $i++ )
 		{
 			$iesimoFiglio =& $figliRoot->item($i);
-		
-//			if ($iesimoFiglio->nodetype == XML_ELEMENT_NODE
-//				&& $iesimoFiglio->tagName == 'commands' );
-//			{
-//				$cinfonode =& $iesimoFiglio;
-//				break;
-//			}
+//			var_dump($iesimoFiglio);
 			if ($iesimoFiglio != null) 
-				if ($iesimoFiglio->tagName == 'commands' && $iesimoFiglio->nodeType == XML_ELEMENT_NODE )
+				if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->tagName == 'commands' )
 				{
 					$cinfonode =& $iesimoFiglio;
 					break;
 				}
 
 		}
+
+//	for ( $i = 0; $i < $listaNodiCommands->length; $i++ )
+//		{
+//			$iesimoFiglio =& $listaNodiCommands->item($i);
+//			var_dump($iesimoFiglio);
+//			if ($iesimoFiglio != null) 
+//				if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->parentNode->nodeName == 'config' )
+//				{
+//					$cinfonode =& $iesimoFiglio;
+//					break;
+//				}
+//
+//		}
+
 //		var_dump($cinfonode);
 		if($cinfonode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
@@ -814,7 +840,7 @@ class FrontController {
 		for($i=0; $i < $figli->length; $i++)
 		{
 			$child = &$figli->item($i);
-			if ($child->tagName == $commandString && $child->nodeType == XML_ELEMENT_NODE)
+			if ( $child->nodeType == XML_ELEMENT_NODE && $child->tagName == $commandString )
 			{
 				$commandNode = &$child;
 				break;
