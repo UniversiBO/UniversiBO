@@ -81,6 +81,17 @@ class Receiver{
 		//$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.'/classes'.$pathDelimiter.ini_get('include_path'));
 		
+		if (get_magic_quotes_gpc()) {
+		   function stripslashes_deep($value)
+		   {
+		       return is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value);
+		   }
+		
+		   $_POST = array_map('stripslashes_deep', $_POST);
+		   $_GET = array_map('stripslashes_deep', $_GET);
+		   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+		}
+
 		if ( get_magic_quotes_runtime() == 1 )
 		{
 			 set_magic_quotes_runtime(0);
