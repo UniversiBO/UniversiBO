@@ -33,14 +33,21 @@ class TestUnit extends UniversiboCommand {
 		}
 		ini_set('include_path', '../tests'.$pathDelimiter.ini_get('include_path'));
 
+		$test_name = NULL;
+		if (array_key_exists('test_name', $_GET))
+		{
+			$test_name = $_GET['test_name'];
+		}	
+		
 		if (!($dir_handle = opendir('../tests')))
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Path directory test non valido','file'=>__FILE__,'line'=>__LINE__)); 
 			
 	    while ( false !== ($file = readdir($dir_handle)) ) 
 	    { 
-	        if ( ('_UnitTest_' == substr($file, 0, 10)) && (substr($file, -4)==PHP_EXTENSION) )
+	        if ( ('_UnitTest_' == substr($file, 0, 10)) && (substr($file, -4)==PHP_EXTENSION) && 
+	        		($test_name == NULL || $test_name == substr(substr($file, 10), 0, -4) ) )
 	        {
-	        	echo $file,' - ',substr($file, 10, -4);
+	        	echo '<a href="index.php?do=TestUnit&amp;test_name='.substr(substr($file, 10), 0, -4).'">'.$file,' - ',substr($file, 10, -4),'</a>';
 				include ($file);
 				$suite  = new PHPUnit_TestSuite(substr($file, 0, -4));
 				$result = PHPUnit::run($suite);
