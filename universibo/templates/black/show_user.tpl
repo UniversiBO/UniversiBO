@@ -40,6 +40,8 @@
 	{/if}
 	</td></tr>
 	{/foreach}
+	{if $smarty.foreach.showCanali.total == 0}<tr><td class="Menu" bgcolor="#000032">&nbsp;Nessun ruolo</td></tr>{/if}
+	
 </table>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"><tr><td bgcolor="#000099" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
 </td></tr>

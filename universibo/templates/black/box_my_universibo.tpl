@@ -12,7 +12,7 @@
 {if $temp_currLink.new == "true"}&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="9" alt="!NEW!" title="!NEW!" />{/if}</td>
 </tr>
 {/foreach}
-{if $smarty.foreach.my_universibo.total == 0}Non hai pagine in MyUniversiBO{/if}
+{if $smarty.foreach.my_universibo.total == 0}<tr><td class="Menu" align="center" width="100%">Non hai pagine in MyUniversiBO</td></tr>{/if}
 </table>
 {include file=box_end.tpl}
 {/if}
