@@ -386,16 +386,16 @@ class InfoDidattica
 		
 		$query = 'UPDATE info_didattica SET '
 					.' programma = '.$db->quote($this->getProgramma())
-					.' programma_link = '.$db->quote($this->getProgrammaLink())
-					.' testi_consigliati = '.$db->quote($this->getTestiConsigliati())
-					.' testi_consigliati_link = '.$db->quote($this->getTestiConsigliatiLink())
-					.' modalita = '.$db->quote($this->getModalita())
-					.' modalita_link = '.$db->quote($this->getModalitaLink())
-					.' obiettivi_esame = '.$db->quote($this->getObiettiviEsame())
-					.' obiettivi_esame_link = '.$db->quote($this->getObiettiviEsameLink())
-					.' appelli = '.$db->quote($this->getAppelli())
-					.' appelli_link = '.$db->quote($this->getAppelliLink())
-					.' homepage_alternativa_link= '.$db->quote($this->getHomepageAlternativaLink()).
+					.', programma_link = '.$db->quote($this->getProgrammaLink())
+					.', testi_consigliati = '.$db->quote($this->getTestiConsigliati())
+					.', testi_consigliati_link = '.$db->quote($this->getTestiConsigliatiLink())
+					.', modalita = '.$db->quote($this->getModalita())
+					.', modalita_link = '.$db->quote($this->getModalitaLink())
+					.', obiettivi_esame = '.$db->quote($this->getObiettiviEsame())
+					.', obiettivi_esame_link = '.$db->quote($this->getObiettiviEsameLink())
+					.', appelli = '.$db->quote($this->getAppelli())
+					.', appelli_link = '.$db->quote($this->getAppelliLink())
+					.', homepage_alternativa_link= '.$db->quote($this->getHomepageAlternativaLink()).
 					' WHERE id_canale = '.$db->quote($this->getIdCanale()); 
 					
 		$res = $db->query($query);

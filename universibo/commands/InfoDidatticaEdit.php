@@ -30,10 +30,18 @@ class InfoDidatticaEdit extends UniversiboCommand
 			Error::throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$id_canale = $_GET['id_canale'];
-		$session_user =& $this->getSessionUser();
+		if (!$user->isAdmin() && !$user_ruoli[$id_canale]->isReferente())
+			Error::throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eseguire l\'perazione richiesta.\nLa sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+		
 		
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
 		$insegnamento = Canale::retrieveCanale($id_canale);
+		
+		
+		
+		$template->assign('infoDid_title', $insegnamento->getTitolo() );
+		$template->assign('infoDid_backUri', $insegnamento->showMe() );
+		
 		//var_dump($info_didattica);
 		$f18_homepageLink = $info_didattica->getHomepageAlternativaLink();
 		
@@ -56,7 +64,7 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$f18_accept = false;
 		if(array_key_exists('f18_submit', $_POST))
 		{
-			
+			$f18_accept = true;
 			if( !array_key_exists('f18_homepageLink', $_POST) ||
 				!array_key_exists('f18_obiettiviLink', $_POST) ||
 				!array_key_exists('f18_obiettiviInfo', $_POST) ||
@@ -69,91 +77,94 @@ class InfoDidatticaEdit extends UniversiboCommand
 				!array_key_exists('f18_appelliLink', $_POST) ||
 				!array_key_exists('f18_appelliInfo', $_POST) )
 			{
-				$f18_homepageLink = $_POST['f18_homepageLink'];
-				$f18_obiettiviInfo = $_POST['f18_obiettiviInfo'];
-				$f18_programmaInfo = $_POST['f18_programmaInfo'];
-				$f18_materialeInfo = $_POST['f18_materialeInfo'];
-				$f18_modalitaInfo = $_POST['f18_modalitaInfo'];
-				$f18_appelliInfo = $_POST['f18_appelliInfo'];
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_accept = false;
+			}
+			
+			$f18_homepageLink = $_POST['f18_homepageLink'];
+			$f18_obiettiviInfo = $_POST['f18_obiettiviInfo'];
+			$f18_programmaInfo = $_POST['f18_programmaInfo'];
+			$f18_materialeInfo = $_POST['f18_materialeInfo'];
+			$f18_modalitaInfo = $_POST['f18_modalitaInfo'];
+			$f18_appelliInfo = $_POST['f18_appelliInfo'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_obiettiviLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_obiettiviLink = 'http://';
+				$f18_accept = false;
+			}
+			else $f18_obiettiviLink = $_POST['f18_obiettiviLink'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_programmaLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina del programma deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_programmaLink = 'http://';
+				$f18_accept = false;
+			}
+			else $f18_programmaLink = $_POST['f18_programmaLink'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_materialeLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina del materiale deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_materialeLink = 'http://';
+				$f18_accept = false;
+			}
+			else $f18_materialeLink = $_POST['f18_materialeLink'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_modalitaLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina delle modalità d\'esame deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_modalitaLink = 'http://';
+				$f18_accept = false;
+			}
+			$f18_modalitaLink = $_POST['f18_modalitaLink'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_appelliLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_appelliLink = 'http://';
+				$f18_accept = false;
+			}
+			else $f18_appelliLink = $_POST['f18_appelliLink'];
+			
+			if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_homepageLink'] ) ) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f18_homepageLink = 'http://';
+				$f18_accept = false;
+			}
+			else $f18_homepageLink = $_POST['f18_homepageLink'];
+			
+			
+			
+			if($f18_accept)
+			{
+				$info_didattica->setObiettiviEsameLink($f18_obiettiviLink);
+				$info_didattica->setObiettiviEsame($f18_obiettiviInfo);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_obiettiviLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_obiettiviLink = '';
-					$f18_accept = false;
-				}
-				else $f18_obiettiviLink = $_POST['f18_obiettiviLink'];
+				$info_didattica->setProgrammaLink($f18_programmaLink);
+				$info_didattica->setProgramma($f18_programmaInfo);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_programmaLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina del programma deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_programmaLink = '';
-					$f18_accept = false;
-				}
-				else $f18_programmaLink = $_POST['f18_programmaLink'];
+				$info_didattica->setTestiConsigliatiLink($f18_materialeLink);
+				$info_didattica->setTestiConsigliati($f18_materialeInfo);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_materialeLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina del materiale deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_materialeLink = '';
-					$f18_accept = false;
-				}
-				else $f18_materialeLink = $_POST['f18_materialeLink'];
+				$info_didattica->setModalitaLink($f18_modalitaLink);
+				$info_didattica->setModalita($f18_modalitaInfo);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_modalitaLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina delle modalità d\'esame deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_modalitaLink = '';
-					$f18_accept = false;
-				}
-				$f18_modalitaLink = $_POST['f18_modalitaLink'];
+				$info_didattica->setAppelliLink($f18_appelliLink);
+				$info_didattica->setAppelli($f18_appelliInfo);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_appelliLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_appelliLink = '';
-					$f18_accept = false;
-				}
-				else $f18_appelliLink = $_POST['f18_appelliLink'];
+				$info_didattica->setHomepageAlternativaLink($f18_homepageLink);
 				
-				if (!ereg('(^(http(s)?|ftp)://|^.{0}$)', $_POST['f18_homepageLink'] ) ) 
-				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f18_homepageLink = '';
-					$f18_accept = false;
-				}
-				else $f18_homepageLink = $_POST['f18_homepageLink'];
+				$info_didattica->updateInfoDidattica();
 				
-				
-				
-				if($f18_accept)
-				{
-					$info_didattica->setObiettiviEsameLink($f18_obiettiviLink);
-					$info_didattica->setObiettiviEsame($f18_obiettiviInfo);
-					
-					$info_didattica->setProgrammaLink($f18_programmaLink);
-					$info_didattica->setProgramma($f18_programmaInfo);
-					
-					$info_didattica->setTestiConsigliatiLink($f18_materialeLink);
-					$info_didattica->setTestiConsigliati($f18_materialeInfo);
-					
-					$info_didattica->setModalitaLink($f18_modalitaLink);
-					$info_didattica->setModalita($f18_modalitaInfo);
-					
-					$info_didattica->setAppelliLink($f18_appelliLink);
-					$info_didattica->setAppelli($f18_appelliInfo);
-					
-					$info_didattica->setHomepageAlternativaLink($f18_homepageLink);
-					
-					$info_didattica->updateInfoDidattica();
-					
-				}
+				return 'success';
 				
 			}
+			
 		}
 		
-		
-		$template->assign('infoDid_title', $insegnamento->getTitolo() );
 		
 		
 		$template->assign('infoDid_langHomepageAlternativaLink', 'Link ad una homepage alternativa' );

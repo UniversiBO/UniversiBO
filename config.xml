@@ -92,6 +92,7 @@
 		</ShowInfoDidattica>
 		<InfoDidatticaEdit class="InfoDidatticaEdit">
 			<response type="template" name="default">info_didattica_edit.tpl</response>
+			<response type="template" name="success">info_didattica_edit_success.tpl</response>
 		</InfoDidatticaEdit>
 		
 		
