@@ -76,7 +76,7 @@ class FileShowInfo extends UniversiboCommand {
 		$template->assign('fileShowInfo_canali', $canali_tpl);
 		$template->assign('fileShowInfo_paroleChiave', $file->getParoleChiave());
 		
-		return;
+		return ;
 		
 	}
 

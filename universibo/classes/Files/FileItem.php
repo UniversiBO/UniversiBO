@@ -1,5 +1,6 @@
 <?php  
 
+require_once('Files/FileKeyWords'.PHP_EXTENSION);
 
 define('FILE_ELIMINATO', 'S');
 define('FILE_NOT_ELIMINATO', 'N');
@@ -151,6 +152,11 @@ class FileItem {
 	 * @private
 	 */
 	var $elencoCanali = NULL;
+
+	/**
+	 * @private
+	 */
+	var $paroleChiave = NULL;
 
 	/**
 	 * Crea un oggetto FileItem con i parametri passati
@@ -390,6 +396,32 @@ class FileItem {
 	function getIdFile() {
 		return $this->id_file;
 	}
+
+	/**
+	 * Recupera le parole chiave
+	 *
+	 * @return array di string 
+	 */
+	function getParoleChiave() {
+		if ($this->paroleChiave == NULL)
+			$this->paroleChiave =& FileKeyWords::selectFileKeyWords($this->getIdFile());
+		
+		return $this->paroleChiave;
+	}
+
+
+	/**
+	 * Imposta le parole chiave
+	 *
+	 * @param array di string 
+	 */
+	function setParoleChiave() {
+		if ($this->paroleChiave == NULL)
+			$this->paroleChiave =& FileKeyWords::updateFileKeyWords($this->getIdFile());
+		
+		return $this->paroleChiave;
+	}
+
 
 	/**
 	 * Imposta l'id del file
