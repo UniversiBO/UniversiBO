@@ -5,13 +5,15 @@
 {/if}
 {include file=avviso_notice.tpl}
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
-<tr><td align="center"><p class="Titolo">&nbsp;<br />Scheda dell'utente: {$showUserNickname}<br />&nbsp;</p></td></tr>
+<tr><td align="center"><p class="Titolo">&nbsp;<br />Utente: {$showUserNickname}<br />&nbsp;</p></td></tr>
 <tr><td>
 <tr><td<span>Email: <a href="mailto:{$showEmailFirstPart}(at){$showEmailSecondPart}">{$showEmailFirstPart}<img src="tpl/black/chiocciola.gif" border="0" width="16" height="16" alt="(at)" />{$showEmailSecondPart}</a>
 {if $showDiritti == 'true'}
 	&nbsp;<a href="{$showSettings}">Modifica</a>
 {/if}
 </span></td></tr>
+<tr><td>&nbsp</td></tr>
+<tr><td><p>Livello: {$showUserLivelli|escape:"htmlall"}</p></td></tr>
 <tr><td>&nbsp</td></tr>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"> 
 			    <tr><td bgcolor="#000099">
@@ -29,10 +31,10 @@
 	{foreach from=$showCanali item=temp_currLink name=showCanali}
 	<tr><td class="Menu" bgcolor="{if $smarty.foreach.showCanali.iteration%2 == 0}#000032{else}#000016{/if}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
 	<a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a></td>
-	<td class="Menu" bgcolor="{if $smarty.foreach.showCanali.iteration%2 == 0}#000032{else}#000016{/if}">{$temp_currLink.categoria}
-	{if $temp_currLink.ruolo=="R"},<img src="tpl/black/icona_3_r.gif" width="9" height="9" alt="Referente" />
+	<td class="Menu" bgcolor="{if $smarty.foreach.showCanali.iteration%2 == 0}#000032{else}#000016{/if}">
+	{if $temp_currLink.ruolo=="R"}<img src="tpl/black/icona_3_r.gif" width="9" height="9" alt="Referente" />
 	{/if}
-	{if $temp_currLink.ruolo=="M"},<img src="tpl/black/icona_3_m.gif" width="9" height="9" alt="Moderatore" />
+	{if $temp_currLink.ruolo=="M"}<img src="tpl/black/icona_3_m.gif" width="9" height="9" alt="Moderatore" />
 	{/if}
 	{if $temp_currLink.ruolo!="M" && $temp_currLink.ruolo!="R"}&nbsp;&nbsp;&nbsp;{/if}
 	{if $showDiritti == 'true'}
