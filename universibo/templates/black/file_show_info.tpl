@@ -13,6 +13,10 @@
 </td></tr>
 </table>
 
+{if $isFileStudente=="true"}
+{include file=Files/show_file_studenti_commenti.tpl }
+{/if}
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

@@ -40,6 +40,10 @@
  {if $showFileInfo_deleteFlag == 'true'}
  <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:</span></td><td class="Normal" valign="middle" width="100%"><a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/black/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
  {/if}
+ {if $isFileStudente == 'true'}
+ <tr><td class="Normal"><span class="NormalC">&nbsp;Voto:</span></td><td class="Normal" valign="middle" width="100%">&nbsp;{$showFileInfo_voto|escape:"htmlall"}</td></tr>
+ <tr><td class="Normal">&nbsp;</td><td class="Normal"><a href="{$showFileInfo_addComment|escape:"htmlall"}">Aggiungi il tuo commento!</a></td></tr>
+ {/if}
  </table>
 </td></tr>
 <tr bgcolor="#000099">
