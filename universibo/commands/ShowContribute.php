@@ -248,7 +248,7 @@ class ShowContribute extends UniversiboCommand
 			{
 				$mail->AddAddress($value);
 			}
-
+			
 			$mail->Subject = '[UniversiBO] Nuovo questionario';
 			$mail->Body = 'nome: '.$f3_nome."\n".
 			    'cognome: '.$f3_cognome."\n".
