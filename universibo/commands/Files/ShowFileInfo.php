@@ -92,7 +92,7 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile());
 		$template->assign('showFileInfo_titolo', $file->getTitolo());
 		$template->assign('showFileInfo_descrizione', $file->getDescrizione());
-		$template->assign('showFileInfo_userLink', 'ShowUser&id_utente='.$file->getIdUtente());
+		$template->assign('showFileInfo_userLink', 'index.php?ShowUser&id_utente='.$file->getIdUtente());
 		$template->assign('showFileInfo_username', $file->getUsername());
 		$template->assign('showFileInfo_dataInserimento', $krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
 		$template->assign('showFileInfo_new', ($file->getDataModifica() < $user->getUltimoLogin() ) ? 'true' : 'false' );
