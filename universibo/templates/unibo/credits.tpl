@@ -18,7 +18,7 @@
 	<img src="img/credits/pear.png" width="88" height="31" alt="PEAR Logo" vspace="2" /><br />
 	<img src="img/credits/phpmailer.png" width="88" height="31" alt="PhpMailer Logo" vspace="2" /><br />
 	<img src="img/credits/phpbb.png" width="88" height="31" alt="PHPBB Logo" vspace="2" /></td></tr>
-<tr align="left"><td><img src="img/credits/valid-html401" width="88" height="31" alt="Valid HTML 4.01 Logo" vspace="2" /></td><td colspan="2">{$showCredits_langW3c|escape:"htmlall"|bbcode2html|nl2br}</td></tr>
+<tr align="left"><td><img src="img/credits/valid-html401.gif" width="88" height="31" alt="Valid HTML 4.01 Logo" vspace="2" /></td><td colspan="2">{$showCredits_langW3c|escape:"htmlall"|bbcode2html|nl2br}</td></tr>
 </table>
 <br />
 {include file=footer_index.tpl}
