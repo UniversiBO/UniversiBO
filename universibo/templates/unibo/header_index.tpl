@@ -21,7 +21,7 @@
 			<img id="logo" src="tpl/unibo/logo_{$common_logoType}.gif" alt="Logo UniversiBO" height="92" width="600" /><p class="TimeInfo">{$common_longDate|escape:"htmlall"} &nbsp;-&nbsp;{$common_time|escape:"htmlall"}</p><a href="#content" class="hide">Salta la navigazione</a><p id="Info">|&nbsp;<a href="{$common_contactsUri|escape:"htmlall"}">{$common_contacts|lower|capitalize|escape:"htmlall"|ereg_replace:" ":"&nbsp;"}</a>&nbsp;|&nbsp;<a href="{$common_contributeUri|escape:"htmlall"}">{$common_contribute|lower|capitalize|escape:"htmlall"}</a></p>
 		</div> {* /header *}
 		<div id="menubar">
-			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;{if $common_userLoggedIn == 'true'}|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;{/if}|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_chatUri|escape:"htmlall"}">{$common_chat|lower|capitalize|escape:"htmlall"|ereg_replace:" ":"&nbsp;"}</a></p>
+			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;{if $common_userLoggedIn == 'true'}|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;{/if}|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a></p>
 		</div> {* /menubar *}
 </td></tr>
 <tr valign="top"> {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
