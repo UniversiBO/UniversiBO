@@ -145,7 +145,7 @@ class Insegnamento extends Canale
 			//costruisce la mappa dei nomi
 			for ($i = 0; $i < $num_att; $i++)
 			{
-				$app_nomi[$i] = $nomi[$i].$cod_ril.' aa. '.$anni[$i]." \n ".$att->getNomeDoc();
+				$app_nomi[$i] = $nomi[$i].$cod_ril.' aa. '.$anni[$i]." \nprof. ". ucwords(strtolower($att->getNomeDoc()));
 			}
 			
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
