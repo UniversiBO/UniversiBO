@@ -5,8 +5,10 @@
 			&nbsp;<img src="tpl/unibo/icona_new.gif" alt="nuova" height="9" width="21" />
 		{/if}
 	{/foreach}
+	<span>
 	{foreach from=$showMyNews_notizia.canali item=temp_canale}
 		<p><a href={$temp_canale.link|escape:"htmlall"}>{$temp_canale.titolo|escape:"htmlall"} </a><p>
 	{/foreach}
+	</span>
 &nbsp;<br />
 {/foreach}

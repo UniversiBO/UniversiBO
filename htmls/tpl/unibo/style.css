@@ -68,6 +68,7 @@ form .label
 	text-align: right;
 	display: inline;
 }
+
 /**
  *	Tips per accessibilità
  */
@@ -279,6 +280,11 @@ td.evidenzia{
 	text-align: left;
 }
 
+#content span p
+{
+	margin: 4px; 
+	padding: 0; 
+}
 
 #content #home
 {
