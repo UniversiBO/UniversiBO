@@ -196,11 +196,13 @@ class UniversiboCommand extends BaseCommand {
 		
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
+		//var_dump($elenco_facolta);
 		
 		$num_facolta = count($elenco_facolta);
 		$i = 0;
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
+		$common_facLinks = array();
 		for ($i=0; $i<$num_facolta; $i++)
 		{
 			if ( $elenco_facolta[$i]->isGroupAllowed( $session_user_groups ) ) 
