@@ -350,7 +350,18 @@ class UniversiboCommand extends BaseCommand {
 		$common_servicesLinks[] = array ('label'=>'Biblioteca', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Erasmus', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Eventi', 'uri'=>'http://www.example.com'); 
-		$common_servicesLinks[] = array ('label'=>'Moderatori', 'uri'=>'http://www.example.com'); 
+		 
+		// servizi personali per i quali l'utente ha i diritti di accesso
+		$user_ruoli =& $session_user->getRuoli();
+		//var_dump($user_ruoli);
+		foreach ($user_ruoli as $myruolo )
+		{
+			$mycanale =& $myruolo->getCanale();
+			//var_dump($mycanale);
+			if ($mycanale->getTipoCanale() == CANALE_DEFAULT)
+				$common_servicesLinks[] = array ('label'=>''.$mycanale->getNome(), 'uri'=>'index.php?do=ShowCanale&id_canale='.$mycanale->getIdCanale());
+		}
+		
 		$template->assign('common_servicesLinks', $common_servicesLinks);
 		
 		$template->assign('common_info', 'Informazioni');
@@ -360,7 +371,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_helpByTopicUri', 'index.php?do=ShowHelpTopic');
 		$template->assign('common_rules', 'Regolamento');
 		$template->assign('common_rulesUri', 'index.php?do=ShowRules');
-		$template->assign('common_contacts', 'Contatti - (chi siamo)');
+		$template->assign('common_contacts', 'Chi siamo');
 		$template->assign('common_contactsUri', 'index.php?do=ShowContacts');
 		$template->assign('common_contribute', 'Collabora');
 		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');

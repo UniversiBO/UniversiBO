@@ -26,7 +26,7 @@
 			<p id="Info">|&nbsp;<a href="{$common_manifestoUri|escape:"htmlall"}">{$common_manifesto|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_rulesUri|escape:"htmlall"}">{$common_rules|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_contactsUri|escape:"htmlall"}">{$common_contacts|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_contributeUri|escape:"htmlall"}">{$common_contribute|lower|capitalize|escape:"htmlall"}</a></p>
 		</div> {* /header *}
 		<div id="menubar">
-			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a></p>
+			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;{if $common_userLoggedIn == 'true'}|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;{/if}|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a></p>
 		</div> {* /menubar *}
 </td></tr>
 {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}

@@ -58,6 +58,7 @@ form fieldset
 }
 form p
 {
+	vertical-align: top;
 	clear: both;
 }
 /*
