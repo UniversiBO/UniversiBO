@@ -132,6 +132,9 @@ class UniversiboCommand extends BaseCommand {
 			echo $current_error->throw();
 		}
 		
+		$fc =& $this->getFrontController();
+		$fc->getMail(MAIL_KEEPALIVE_CLOSE);
+		
 	}
 	
 	

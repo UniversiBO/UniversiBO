@@ -285,9 +285,9 @@ class Ruolo {
 	
 	/**
 	 * restituisce il livello di notifica dell'utente nel canale corrente
-	 * define('RUOLO_NOTIFICA_NONE'   ,0);
-	 * define('RUOLO_NOTIFICA_URGENT' ,1);
-	 * define('RUOLO_NOTIFICA_ALL'    ,2);
+	 * define('NOTIFICA_NONE'   ,0);
+	 * define('NOTIFICA_URGENT' ,1);
+	 * define('NOTIFICA_ALL'    ,2);
 	 *
 	 * @return int livello di notifica
 	 */
@@ -302,9 +302,9 @@ class Ruolo {
 	
 	/**
 	 * Imposta il livello di notifica dell'utente nel canale corrente
-	 * define('RUOLO_NOTIFICA_NONE'   ,0);
-	 * define('RUOLO_NOTIFICA_URGENT' ,1);
-	 * define('RUOLO_NOTIFICA_ALL'    ,2);
+	 * define('NOTIFICA_NONE'   ,0);
+	 * define('NOTIFICA_URGENT' ,1);
+	 * define('NOTIFICA_ALL'    ,2);
 	 *
 	 * @param int $tipo_notifica livello di notifica
 	 * @param boolean $updateDB se true la modifica viene propagata al DB 

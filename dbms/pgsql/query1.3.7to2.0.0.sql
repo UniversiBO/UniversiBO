@@ -597,3 +597,9 @@ riferimento='Preferiti';
 
 update help_topic set riferimento='myuniversibo' where 
 riferimento='Preferiti';
+
+--- 18/9/2004
+
+UPDATE utente_canale SET notifica = 0 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'N');
+UPDATE utente_canale SET notifica = 1 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'U');
+UPDATE utente_canale SET notifica = 2 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'T');

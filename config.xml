@@ -222,7 +222,7 @@
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
         <alertMessage>Messaggio di avviso importante ed urgente</alertMessage>
-        <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
+        <rootEmail>universibo@mail.ing.unibo.it</rootEmail>
         <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
         <regolamento>../universibo/files/regolamento.txt</regolamento>
         <informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>

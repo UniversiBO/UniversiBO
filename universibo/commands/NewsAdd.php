@@ -284,6 +284,55 @@ class NewsAdd extends CanaleCommand {
 					$notizia->addCanale($key);
 					$canale = Canale::retrieveCanale($key);
 					$canale->setUltimaModifica(time(), true);
+					
+					
+					//notifiche
+					require_once('Notifica/NotificaItem'.PHP_EXTENSION);
+					$notifica_titolo = 'Nuova notizia inserita in '.$canale->getNome();
+					$notifica_titolo = substr($notifica_titolo,0 , 199);
+					$notifica_dataIns = $data_inserimento;
+					$notifica_urgente = $f7_urgente;
+					$notifica_eliminata = false;
+					$notifica_messaggio = 
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Titolo: '.$f7_titolo.'
+
+Testo: '.$f7_testo.'
+
+Autore: '.$user->getUsername().'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Informazioni per la cancellazione:
+
+Per rimuoverti, vai all\'indirizzo:
+'.$frontcontroller->getAppSetting('rootUrl').' 
+e modifica il tuo profilo personale nella dopo aver eseguito il login
+Per altri problemi contattare lo staff di UniversiBO
+'.$frontcontroller->getAppSetting('infoEmail');
+					
+					$ruoli_canale =& $canale->getRuoli();
+					foreach ($ruoli_canale as $ruolo_canale)
+					{
+								//define('NOTIFICA_NONE'   ,0);
+								//define('NOTIFICA_URGENT' ,1);
+								//define('NOTIFICA_ALL'    ,2);
+						if ($ruolo_canale->isMyUniversiBO() && (($f7_urgente && $ruolo_canale->getTipoNotifica()==NOTIFICA_URGENT) || $ruolo_canale->getTipoNotifica()==NOTIFICA_ALL) )
+						{
+							$notifica_user = $ruolo_canale->getUser();
+							$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
+							
+							$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+							$notifica->insertNotificaItem();
+						}
+					}
+					
+					//ultima notifica all'archivio
+					$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');;
+					
+					$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+					$notifica->insertNotificaItem();
+					
+					
+					
 				}
 				return 'success';
 			}

@@ -16,9 +16,8 @@
 
 require_once ('Notifica/NotificaItem'.PHP_EXTENSION);
 
-class NotificaMail extends NotificaItem {
-	
-	
+class NotificaMail extends NotificaItem 
+{
 	
 	function NotificaMail ($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
 	{
@@ -34,14 +33,18 @@ class NotificaMail extends NotificaItem {
 	* @return boolean true "success" or false "failed"
 	*/
 	function send($fc) {
-		$mail =& $fc->getMail();
+		
+		//per usare l'SMTPkeepAlive usa il singleton
+		$mail =& $fc->getMail(MAIL_KEEPALIVE_ALIVE);
 		
 		$mail->AddAddress($this->getDestinatario());
 
 		$mail->Subject =$this->getTitolo();
 		$mail->Body = $this->getMessaggio();
-
-		//$msg = "messaggio in caso di fallimento";
+		
+		/**
+		 * @todo fare la mail urgente se $this->isUrgente()
+		 */
 		if (!$mail->send())
 			return false;
 	}

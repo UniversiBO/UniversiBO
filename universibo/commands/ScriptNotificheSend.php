@@ -73,8 +73,7 @@ class ScriptNotificheSend extends UniversiboCommand
 			
 		}
 		
-		//$mail->SMTPKeepAlive = true;
-		//$mail->SmtpClose(); // Manually close the SMTP connection
+		
         
         //$db->autoCommit(true);
         //ignore_user_abort(0);

@@ -329,7 +329,8 @@ class NotificaItem {
 	 * @static
 	 * @return array di oggetti che implemetano l'interfaccia NotificaItem 
 	 */
-	function &selectNotificheSend($fc) {
+	function &selectNotificheSend() 
+	{
 		//var_dump($id_notifiche);
 		$db = & FrontController::getDbConnection('main');
 		
@@ -346,7 +347,7 @@ class NotificaItem {
 		
 		while ($res->fetchInto($row)) 
 		{
-			$notifiche_list[] =& NotificaItem::retrieveNotifica($row[0], $fc);
+			$notifiche_list[] =& NotificaItem::retrieveNotifica($row[0]);
 		}
 		
 		$res->free();
@@ -373,7 +374,8 @@ class NotificaItem {
 		$urgente = ($this->isUrgente()) ? NOTIFICA_URGENTE : NOTIFICA_NOT_URGENTE;
 		//id_notifica urgente messaggio titolo timestamp destinatario eliminata
 
-		$query = 'INSERT INTO news (id_notifica, urgente, messaggio, titolo, timestamp, destinatario, eliminata) VALUES '.'( '.$next_id.' , '.$db->quote($flag_urgente).' , '.$db->quote($this->getMessaggio()).' , '.$db->quote($this->getTitolo()).' , '.$db->quote($this->getDataIns()).' , '.$db->quote($this->getMessaggio()).' , '.$db->quote($eliminata).' ) ';
+		$query = 'INSERT INTO notifica (id_notifica, urgente, messaggio, titolo, timestamp, destinatario, eliminata) VALUES '.'( '.$next_id.' , '.$db->quote($urgente).' , '.$db->quote($this->getMessaggio()).' , '.$db->quote($this->getTitolo()).' , '.$db->quote($this->getDataIns()).' , '.$db->quote($this->getDestinatario()).' , '.$db->quote($eliminata).' ) ';
+		//echo $query;
 		$res = $db->query($query);
 		//var_dump($query);
 		if (DB :: isError($res)) {
@@ -381,7 +383,7 @@ class NotificaItem {
 			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
-		$this->setIdNotizia($next_id);
+		$this->setIdNotifica($next_id);
 
 		$db->commit();
 		$db->autoCommit(true);

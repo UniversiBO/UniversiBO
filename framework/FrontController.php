@@ -1,5 +1,9 @@
 <?php
 
+define('MAIL_KEEPALIVE_NO', 0);
+define('MAIL_KEEPALIVE_ALIVE', 1);
+define('MAIL_KEEPALIVE_CLOSE', 2);
+
 /**
  * It is a front controller.
  * Instantiate it using a config file and run executeCommand method
@@ -819,23 +823,57 @@ class FrontController {
 	/**
 	* Factory method that creates a PhpMailer Mail object
 	*
+	* param $keepAlive MAIL_KEEPALIVE_NO||MAIL_KEEPALIVE_ALIVE||MAIL_KEEPALIVE_CLOSE
 	* @return PHPMailer object
 	* @access public 
 	*/
-	function &getMail()
+	
+	function &getMail($keepAlive = MAIL_KEEPALIVE_NO)
 	{
 		require_once('PHPMailer.php');
-
-    	$mail = new PHPMailer();
-    	$mail -> IsSMTP(); 							// send via SMTP
-    	$mail -> Host = $this->mailerInfo['smtp'];	// SMTP server
-    	$mail -> SMTPAuth = false; 					// off SMTP authentication
-    	$mail -> From = $this->mailerInfo['fromAddress']; 
-		$mail -> FromName = $this->mailerInfo['fromName'];
-		$mail -> WordWrap = 80;
-		$mail -> IsHTML(false);
-		$mail -> AddReplyTo($this->mailerInfo['replyToAddress'], $this->mailerInfo['fromName']);
 		
+		static $singleton = null;
+    	
+    	if ($keepAlive == MAIL_KEEPALIVE_ALIVE)
+    	{
+    		if ($singleton == null)
+    		{
+		    	$singleton = new PHPMailer();
+		    	$singleton->IsSMTP(); 							// send via SMTP
+		    	$singleton->Host = $this->mailerInfo['smtp'];	// SMTP server
+		    	$singleton->SMTPAuth = false; 					// off SMTP authentication
+		    	$singleton->From = $this->mailerInfo['fromAddress']; 
+				$singleton->FromName = $this->mailerInfo['fromName'];
+				$singleton->WordWrap = 80;
+				$singleton->IsHTML(false);
+				$singleton->AddReplyTo($this->mailerInfo['replyToAddress'], $this->mailerInfo['fromName']);
+ 				$singleton->SMTPKeepAlive = true;
+    		}
+    		
+    		return $singleton;
+    		
+    	}
+    	elseif ($keepAlive == MAIL_KEEPALIVE_CLOSE)
+    	{
+    		if ($singleton != null)
+    		{
+				$singleton->SMTPKeepAlive = true;
+    		}
+    		
+    	}
+		elseif($keepAlive == MAIL_KEEPALIVE_NO)
+		{
+	    	$mail = new PHPMailer();
+	    	$mail -> IsSMTP(); 							// send via SMTP
+	    	$mail -> Host = $this->mailerInfo['smtp'];	// SMTP server
+	    	$mail -> SMTPAuth = false; 					// off SMTP authentication
+	    	$mail -> From = $this->mailerInfo['fromAddress']; 
+			$mail -> FromName = $this->mailerInfo['fromName'];
+			$mail -> WordWrap = 80;
+			$mail -> IsHTML(false);
+			$mail -> AddReplyTo($this->mailerInfo['replyToAddress'], $this->mailerInfo['fromName']);
+		}
+				
     	return $mail;
 	}
 
