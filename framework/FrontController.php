@@ -36,8 +36,11 @@ class FrontController {
 	*/
 	function FrontController( $configFile ){
 
-		include_once("XmlDoc.php");
-		include_once("LogHandler.php");
+
+		include_once('Error'.PHP_EXTENSION); 
+		include_once('LogHandler'.PHP_EXTENSION);
+		include_once('XmlDoc'.PHP_EXTENSION);
+
 
 		//include bootstrap classes from core library
 		$this->setConfig( $configFile );
@@ -54,20 +57,16 @@ class FrontController {
 		$errorLog = new LogHandler('error',$this->paths['logs'],$log_error_definition); 
 */
 
-		include_once("MultiLanguage.php");
+//		include_once("MultiLanguage.php");
 
-		$language = new MultiLanguage('it',$this->defaultLanguage);
+//		$language = new MultiLanguage('it',$this->defaultLanguage);
 		
-		var_dump($language);
+//		var_dump($language);
 		//temp
 
 
 		return;
 		
-
-		
-		include_once("Error.php");
-	
 
 		//Initialize Request and Response objects and set $this->request, $this->response
 //		$this->import("Request");
@@ -91,16 +90,16 @@ class FrontController {
 		//Need to set the language first because it handles errors.
 		include_once ('BaseCommand.php');	
 		//$cc=&$this->commandClass;
-		$cc=$this->getCommandClass();
-		$cr=$this->getCommandRequest();
+		$command_class=$this->getCommandClass();
+		//$command_request=$this->getCommandRequest();
 		
-		include_once($this->paths['commands'].'/'.$cc.'.php');
+		include_once($this->paths['commands'].'/'.$command_class.'.php');
 		//Now load the user language file
 		//$this->language->loadUserMsg();
 		
-		$command=new $cc;
-		$command->setFrontController($this);
+		$command = new $command_class($this);
 		$command->execute();
+		
 	}
 	
 
@@ -117,31 +116,6 @@ class FrontController {
 		else return $explodedCC[$theSize-1];
 	}
 
-/*
-	//insert an error and abort
-	//writeError will take variable-length argument list
-	//The first argument can be a string or an integer.
-	//If the first argument is an integer, a language string is extracted from a language file
-	//if the first argument is a string, it will sent to Error class as it is
-	//If the first argument is an integer, more parameters can be passed to writeError for 
-	//       for variable substitution in the string. Please refer manual or readme.txt
-	function writeError($messageOrID){
-		var_dump($messageOrID); 
-		$numArgs=func_get_args();
-		$theMessage="";
-		if(count($numArgs)==1 && is_string($numArgs[0]))
-			$theMessage=$messageOrID;
-		else{
-			$args = func_get_args() ; 
-			unset( $args[0]);
-			$languageObject=&$this->language;
-			$currentLanguage=$languageObject->language;
-			$messageString=$languageObject->messages[$currentLanguage][$messageOrID];
-			$theMessage= vsprintf($messageString, $args);
-		}
-		$error = new Error($theMessage);
-	}
-*/
 
 	/**
 	* Gets the current command string request
@@ -172,6 +146,10 @@ class FrontController {
 	*/
 	function setConfig( $configFile )
 	{
+
+		$this->_setErrorHandler();
+
+
 		$config = new XmlDoc();
 		$config->parse($configFile);
 
@@ -228,6 +206,26 @@ class FrontController {
 	}
 	
 	
+	/**
+ 	* Defines error categories, sets the error handlers
+	*/
+	function _setErrorHandler(){
+		
+		require_once('ErrorHandlers'.PHP_EXTENSION);
+		
+		define('_ERROR_DEFAULT',0);
+		define('_ERROR_CRITICAL',1);
+		define('_ERROR_NOTICE',2);
+		
+		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','critical_handler'));
+		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','default_handler'));
+		Error::setHandler(_ERROR_DEFAULT,array('ErrorHandlers','notice_handler'));
+		
+		
+		
+	}
+
+
 	/**
 	* Sets the RootFolder
 	*
@@ -311,13 +309,41 @@ class FrontController {
 	function _setTemplateEngineInfo()
 	{
 		$this->templateEngine=array();
+		
 		$templateInfoNode = &$this->config->root->getChild('templateInfo');		
-		$n = $templateInfoNode->numChildren();
+		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');		
+		$n = $templateDirsNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
-			$templateSetting = &$templateInfoNode->children[$i];
+			$templateSetting = &$templateDirsNode->children[$i];
 			$this->templateEngine[$templateSetting->name] = $templateSetting->charData;
 		}
+
+		$templateStylesNode = &$templateInfoNode->getChild('template_styles');		
+		$n = $templateStylesNode->numChildren();
+		for( $i=0; $i<$n; $i++ )
+		{
+			$templateSetting = &$templateStylesNode->children[$i];
+			$this->templateEngine['styles'][$templateSetting->attributes['name']] = $templateSetting->attributes['dir'];
+		}
+
+		$this->templateEngine['default_template'] = $templateStylesNode->attributes['default'];  
+		
+		if (!array_key_exists($this->templateEngine['default_template'],$this->templateEngine['styles']))
+		{
+			die('non esiste il template di default');			
+		}	
+		
+		//assegno il template in uso	
+		if (array_key_exists('template_name', $_SESSION) && $_SESSION['template_name']!='') 
+		{
+			$this->templateEngine['template_name'] = $_SESSION['template_name'];
+		}
+		else
+		{
+			$this->templateEngine['template_name'] = $this->templateEngine['default_template'];
+		}
+		
 	}
 
 
@@ -347,11 +373,11 @@ class FrontController {
 	function _setLanguageInfo()
 	{
 		$languageInfoNode = &$this->config->root->getChild("languageInfo");
-		if ($mailerInfoNode == NULL) return;
-		$n = $mailerInfoNode->numChildren();
+		if ($languageInfoNode == NULL) return;
+		$n = $languageInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
 		{
-			$aSetting=&$mailerInfoNode->children[$i];
+			$aSetting=&$languageInfoNode->children[$i];
 			$this->mailerInfo[$aSetting->name] = $aSetting->charData;
 		}
 	}	
@@ -488,10 +514,10 @@ class FrontController {
 			
 			$smarty = new Smarty();
 			
-			$smarty->template_dir = $this->templateEngine['smarty_template'];
-			$smarty->compile_dir  = $this->templateEngine['smarty_compile'];
-			$smarty->config_dir   = $this->templateEngine['smarty_config'];
-			$smarty->cache_dir    = $this->templateEngine['smarty_cache'];
+			$smarty->template_dir = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$smarty->compile_dir  = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$smarty->config_dir   = $this->templateEngine['smarty_config'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
+			$smarty->cache_dir    = $this->templateEngine['smarty_cache'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 
 			$myTemplateObject =& $smarty; 
 			

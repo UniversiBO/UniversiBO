@@ -13,11 +13,9 @@
 
 	<defaultCommand>StartExample1</defaultCommand>
 	<paths>
+		<application>../universibo/</application>
 		<logs>../universibo/log-universibo/</logs>
-		<commands>../universibo/commands</commands>
-		<templates>../universibo/templates</templates>
-		<application>../universibo</application>
-		<files>../html/file-universibo</files>
+		<commands>../universibo/commands/</commands>
 	</paths>
 	<receivers>
 		<main>index.php</main>
@@ -61,15 +59,24 @@
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
 	<templateInfo type="Smarty">
-		<smarty_dir>../framework/smarty</smarty_dir>
-		<smarty_template>../framework/smarty/templates</smarty_template>
-		<smarty_compile>../framework/smarty/templates_c</smarty_compile>
-		<smarty_config>../framework/smarty/config</smarty_config>
-		<smarty_cache>../framework/smarty/cache</smarty_cache>
+		<template_dirs>
+			<smarty_dir>../framework/smarty</smarty_dir>
+			<smarty_template>../universibo/templates</smarty_template>
+			<smarty_compile>../universibo/templates_compile</smarty_compile>
+			<smarty_config>../universibo/templates_config</smarty_config>
+			<smarty_cache>../universibo/templates_cache</smarty_cache>
+		</template_dirs>
+		
+		<template_styles default="black">
+			<style name="black" dir="black/" > </style>
+			<style name="unibo" dir="unibo/" > </style>
+			<style name="simple" dir="simple/" > </style>
+		</template_styles>
 	</templateInfo>	
+	
 	<languageInfo>
-	 	<lang_dir>../framework/smarty</lang_dir> 
-	 	<lang_default>it</lang_defualt> 
+	 	<lang_dir>../universibo/lang/</lang_dir> 
+	 	<lang_default>it</lang_default> 
 	</languageInfo>	
 		
 	<!--****appSettings is an optional node. You can place any thing here 
@@ -82,6 +89,7 @@
 		       To use a language file, change the langFile1 node below to langFile
                 ****-->
 		<langFile1>/location/of/userLanguageFile.txt</langFile1>
+		<files>../html/file-universibo</files>
 		<questionariReceiver>eagleone@libero.it</questionariReceiver>
 
 	</appSettings>

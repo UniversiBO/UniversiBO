@@ -1,9 +1,5 @@
 <?php
 
-define('_ERROR_DEFAULT',0);
-define('_ERROR_CRITICAL',1);
-define('_ERROR_NOTICE',2);
-
 global $_Error_handlers;
 $_Error_handlers = array();
 

@@ -7,28 +7,29 @@
  * @version 1.0.0
  * @author  Deepak Dutta, http://www.eocene.net, Ilias Bartolini
  * @copyright UniversiBO 2001-2003
- * @license http://www.opensource.org/licenses/gpl-license.php
-*/
-
-
-/**
-* Receiver class for framework activation.
-*/
+ */
 class Receiver{
 
-	var $eocenePath = '../framework';
+	var $frameworkPath = '../framework';
+	var $applicationPath = '../universibo';
 
 	var $configFile = '../config.xml';
 	
 	/**
  	* Set PHP language settings (path, gpc, etc...)
 	*/
-	
 	function _setPhpEnvirorment()
 	{
 		
+		session_start();
+		if (!array_key_exists('SID',$_SESSION) )
+		{
+			$_SESSION['SID'] = SID;
+		}
+		// echo SID,' - ' ,$_SESSION['SID'];
+				
 		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
-		ini_set('include_path', $this->eocenePath.$pathDelimiter.ini_get('include_path'));
+		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.$pathDelimiter.ini_get('include_path'));
 		
 		error_reporting(E_ALL);
 		
@@ -41,8 +42,10 @@ class Receiver{
 		
 	}
 	
+	
 	/**
- 	* Main code for framework activation, instantiates FrontController
+ 	* Main code for framework activation, includes Error definitions
+ 	* and instantiates FrontController
 	*/
 	function main()
 	{
@@ -55,13 +58,14 @@ class Receiver{
 		
 		//var_dump($smarty);
 		
+		//$response = $fc->executeCommand( $request );
 		$fc->executeCommand();
-
-		//modifica brain
-		echo $fc->response->content;
 		
-	}	
-	
+		//modifica brain
+		//echo $fc->response->content;
+		
+	}
+
 }
 
 $receiver = new Receiver;

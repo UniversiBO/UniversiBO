@@ -35,12 +35,13 @@ class BaseCommand {
 	var $templateEngine;
 	var $frontController;
 
-	function setFrontController( &frontController )
+	function BaseCommand( &$frontController )
 	{
 		$this->frontController =& $frontController;
 	}
 	
 	
+/**
 	function initBase()
 	{
 		global $fc;
@@ -160,15 +161,13 @@ class BaseCommand {
 		$fc->writeError(102);
 	}
 	
-	/******************************************************************************
-	PRIVATE METHODS AND PROPERTIES
-	*******************************************************************************/
+*/
+	
 	function execute(){
-		global $fc;
-		$c=&$fc->commandClass;
-		$fc->writeError(103,$c,$c);
+		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo execute del command deve essere ridefinito','file'=>__FILE__,'line'=>__LINE__) );
 	}
 	
+/**
 	function _initializeEoceneTemplateEngine(){
 		global $fc;
 		include_once('TemplateEngine.php');
@@ -206,7 +205,9 @@ class BaseCommand {
 		global $fc;
 		$this->templateEngine->process($templateName,$fc->paths['templates']);
 		$fc->response->write($this->templateEngine->fileContents);
-	}	
+	}
+	
+	*/	
 
 }
 ?>
