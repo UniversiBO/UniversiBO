@@ -90,7 +90,7 @@ class ShowFacolta extends CanaleCommand {
 		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
 		$template -> assign('fac_facName', $facolta->getNome());
 		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
-		$template -> assign('fac_facLink', $facolta->getUri());
+		$template -> assign('fac_facLink', 'http://'.$facolta->getUri());
 		$template -> assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
 
 		$param = array( 'num' => 4 );
