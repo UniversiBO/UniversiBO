@@ -450,7 +450,9 @@ class ForumApi
 		// controllo post pi? recenti dell'ultimo accesso
 		
 		$db =& FrontController::getDbConnection($this->database);
-
+		/**
+		 * @todo rendere portabile la query sostituendo in qualche modo il LIMIT 1
+		 */
 		$query = 'SELECT p.post_id, t.topic_title FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
 					WHERE t.topic_id = p.topic_id 
 					AND p.forum_id = '.$db->quote($id_forum).'
