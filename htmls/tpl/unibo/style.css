@@ -331,11 +331,13 @@ td.evidenzia{
 	margin: 2em 0 0;
 	display: block;
 	border-top: solid 1px #999;
-	border-bottom: solid 1px #999;
+	border: solid 1px #999;
 	text-align: left;
 }
+.news { width: 90%; margin: 2em 5% 0; background-color: #eff3fc;}
 .news, .chi_siamo { padding: 0 0 4px; }
 .elenco { padding: 0; }
+.elenco p { padding: 2px 4px !important; }
 .elenco div
 {
 	border-bottom: dotted 2px #999
@@ -400,6 +402,7 @@ td.evidenzia{
 {
 	float: right;
 	display: inline;
+	padding-right: 4px
 }
 
 /*.news span
