@@ -31,9 +31,7 @@ class TestUnit extends UniversiboCommand {
 		include ('_UnitTest_User'.PHP_EXTENSION);
 		echo '<br /><br />';
 
-		include ('_UnitTest_User'.PHP_EXTENSION);
-		echo '<br /><br />';
-
+		
 	}
 }
 
