@@ -1,5 +1,5 @@
-<div id=file_info>
-<h4>Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</h4>
+<div class="file_info">
+<h3>Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</h3>
 <p>&nbsp;Inserito da:&nbsp;<a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></p>
 <p>&nbsp;Inserito il:&nbsp;{$showFileInfo_dataInserimento|escape:"htmlall"}</p>
 <p>&nbsp;Titolo:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
@@ -20,5 +20,5 @@
  <p>&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/unibo/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></p>
  {/if}
 </div>
-<p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</p>
+<p class="comandi"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</p>
 
