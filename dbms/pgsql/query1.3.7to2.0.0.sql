@@ -217,3 +217,17 @@ ALTER TABLE "docente"   DROP COLUMN "telefono_2";
 ALTER TABLE "docente"   DROP COLUMN "ufficio";
 ALTER TABLE "docente"   DROP COLUMN "icq";
 ALTER TABLE "docente"   DROP COLUMN "homepage";
+
+----04-12-2003
+
+----eliminazione attributi non utilizzati in questionario
+
+ALTER TABLE "questionario" DROP COLUMN "win";
+ALTER TABLE "questionario" DROP COLUMN "linux";
+ALTER TABLE "questionario" DROP COLUMN "html";
+ALTER TABLE "questionario" DROP COLUMN "php";
+ALTER TABLE "questionario" DROP COLUMN "javascript";
+ALTER TABLE "questionario" DROP COLUMN "xml";
+ALTER TABLE "questionario" DROP COLUMN "java";
+ALTER TABLE "questionario" DROP COLUMN "photoshop";
+ALTER TABLE "questionario" DROP COLUMN "gimp";
