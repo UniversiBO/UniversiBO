@@ -31,6 +31,7 @@
 		</ShowManifesto>
 		<ShowHome class="ShowHome">
 			 <response type="template" name="default">home.tpl</response>
+			 <pluginCommand name="News" class="news.ShowLatestNews" />
 		</ShowHome>
 		<ShowFacolta class="ShowFacolta">
 			 <response type="template" name="default">facolta.tpl</response>
