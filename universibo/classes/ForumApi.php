@@ -29,10 +29,16 @@ class ForumApi
 	var $table_prefix = 'phpbb_';
 	
 	/**
+	 * @access private
+	 */
+	var $forumPath = 'forum/';
+
+	/**
 	 * esegue la codifica esadecimale di un ipv4 nel formato separato da punti
 	 * es: '127.0.0.1' -> '7f000001'
 	 *
 	 * @access private
+	 * @static
 	 * @param string codifica separata da punti di un numero ip
 	 * @return string codifica esadecimale del numero ip
 	 */
@@ -44,13 +50,22 @@ class ForumApi
 
 
 	/**
-	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 * @return string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
 	 */
-	function getForumSid()
+	function getSid()
 	{
 		//echo $_SESSION['phpbb_sid'];
 		if (array_key_exists('phpbb_sid', $_SESSION) && $_SESSION['phpbb_sid']!='') return 'sid='.$_SESSION['phpbb_sid'];
 		return '';
+	}
+
+
+	/**
+	 * @return string path della cartella in cui si trova il forum
+	 */
+	function getPath()
+	{
+		return $this->forumPath;
 	}
 
 
@@ -137,7 +152,7 @@ class ForumApi
 		$cookie_value = '';
 		setcookie ('phpbb2_data', $cookie_value, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
-		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getForumSid()).';';
+		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getSid()).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
@@ -145,6 +160,25 @@ class ForumApi
 		$_SESSION['phpbb_sid'] = '';
 		
 	}
+
+	/**
+	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getMainUri()
+	{
+		return $this->getPath().'index.php?'.ForumApi::getSid();
+	}
+
+
+	/**
+	 * @param  int   $id_forum  
+	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getForumUri($id_forum)
+	{
+		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSid();
+	}
+
 
 }
 

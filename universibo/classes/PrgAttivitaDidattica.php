@@ -380,6 +380,21 @@ class PrgAttivitaDidattica extends Canale{
 	{
 		return  $this->sdoppiato;
 	}
+
+
+	/**
+	 * Restituisce 
+	 *
+	 * @return string
+	 */
+	function getTranslatedCodRil($cod_ril = NULL)
+	{
+		if ($cod_ril == NULL) $cod_ril = $this->getCodRil();
+		
+		return  ($cod_ril == 'A-Z') ? '' : '('.$cod_ril.')';
+	}
+	
+
 	
 
 

@@ -25,21 +25,25 @@
 						</table>
 						</td></tr>
 				<tr><td class="Titolo" align="center" bgcolor="#000050"><p>{$temp_anno.name|escape:"html"|upper}</p></td></tr>
-     			<tr bgcolor="#000099"><td><img src="tpl/black/invisible.gif" width="200" height="2" alt="" /></td></tr>
-</table>
-
-<table width="90%" border="0" cellspacing="0" cellpadding="1" summary="">
 
 
 {foreach from=$temp_anno.list item=temp_ciclo}
+<tr bgcolor="#000099"><td><img src="tpl/black/invisible.gif" width="200" height="2" alt="" /></td></tr>
 {foreach from=$temp_ciclo.list item=temp_ins}
-<tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
-<a href="{$temp_ins.link}">{$temp_ciclo.name|escape:"htmlall"} - {$temp_ins.name|escape:"htmlall"}</a> </td></tr>
+<tr><td colspan="2" class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> </td></tr>
 {/foreach} 
 {/foreach} 
 
-</table>
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
+<tr><td bgcolor="#000099" align="left">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" summary=""> 
+						<tr>
+						 <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
+						 <td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
+						 </tr>
+						</table>
+						</td></tr>
+</td></tr></table> 
 <p>&nbsp;</p>
 {/foreach}
 

@@ -50,7 +50,6 @@ class ShowCdl extends CanaleCommand {
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
 		
-		
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
 		for ($i=0; $i < $num_ins; $i++)
 		{
@@ -71,10 +70,12 @@ class ShowCdl extends CanaleCommand {
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
 				
-				
+				$forum = new ForumApi;
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
-					array( 'name' => $elencoPrgAttDid[$i]->getNomeMateriaIns().' - '.$elencoPrgAttDid[$i]->getNomeDoc(), 
-						   'link' => 'index.php?do=ShowInsegnamento&amp;id_canale='.$elencoPrgAttDid[$i]->getIdCanale() );
+					array( 'name' => $elencoPrgAttDid[$i]->getNomeMateriaIns().' '.$elencoPrgAttDid[$i]->getTranslatedCodRil(),
+						   'nomeDoc' => $elencoPrgAttDid[$i]->getNomeDoc(), 
+						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$elencoPrgAttDid[$i]->getIdCanale(),
+						   'forumUri' => $forum->getForumUri($elencoPrgAttDid[$i]->getForumForumId()) );
 			}
 		}
 		//var_dump($fac_listCdlType);
