@@ -113,7 +113,7 @@ class ShowFileTitoli extends PluginCommand {
 					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y - %H:%i', $file->getDataInserimento());
 					//echo $personalizza,"-" ,$ultimo_accesso,"-", $file->getUltimaModifica()," -- ";
 					//$elenco_file_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
-					$elenco_file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false';
+					$elenco_file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
 					$elenco_file_tpl[$i]['autore']       = $file->getUsername();
 					$elenco_file_tpl[$i]['autore_link']  = 'ShowUser&id_utente='.$file->getIdUtente();
 					$elenco_file_tpl[$i]['id_autore']    = $file->getIdUtente();
@@ -149,7 +149,7 @@ class ShowFileTitoli extends PluginCommand {
 		}
 		else
 		{
-			$template->assign('showFileTitoli_langFileAvailable', 'Ci sono '.$canale_file.' file');
+			$template->assign('showFileTitoli_langFileAvailable', 'Ci sono '.$num_file.' file');
 			$template->assign('showFileTitoli_langFileAvailableFlag', 'true');
 		}
 		

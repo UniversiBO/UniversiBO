@@ -250,7 +250,7 @@ class FileItem {
 	 */
 
 	function getDataInserimento() {
-		return $this->data_iserimento;
+		return $this->data_inserimento;
 	}
 
 	/**
