@@ -77,39 +77,76 @@ class FileItemStudenti extends FileItem {
 	}
 	
 	/**
-	 * Seleziona gli id_canale per i quali il file ? inerente 
-	 * non si possono fare garanzie sull'ordine dei canali
-	 *
+	 * Seleziona l' id_canale per i quali il file é inerente 
+	 * 
 	 * @return array	elenco degli id_canale
 	 */
 	
 	function & getIdCanali() {
-		if ($this->elencoIdCanali != NULL)
+		if ($this->elencoIdCanali != null)
 			return $this->elencoIdCanali;
 
 		$id_file = $this->getIdFile();
-
+		
 		$db = & FrontController :: getDbConnection('main');
 
-		$query = 'SELECT id_canale FROM file_studente_canale WHERE id_file='.$db->quote($id_file).' ORDER BY id_canale';
+		$query = 'SELECT id_canale FROM file_studente_canale WHERE id_file='.$db->quote($id_file).' GROUP BY id_file';
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
 			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
-		$elenco_id_canale = array ();
+	
+		$res->fetchInto($row);
 
-		while ($res->fetchInto($row)) {
-			$elenco_id_canale[] = $row[0];
-		}
-
-		$res->free();
-
-		$this->elencoIdCanali = & $elenco_id_canale;
-
-		return $this->elencoIdCanali;
+		return $row[0];
 
 	}
+	
+	/**
+	 * Questa funzione verifica, dato un certo
+	 * id_file se é un file di tipo studente 
+	 *
+	 * @param $id_file  id del file da verificare
+	 * @return $flag	true o false
+	 */
+	
+	function & isFileStudenti($id_file)
+	{
+		$flag = true;
+		
+		$db = & FrontController :: getDbConnection('main');
+
+		$query = 'SELECT count(id_file) FROM file_studente_canale WHERE id_file='.$db->quote($id_file).' GROUP BY id_file';
+		$res = & $db->query($query);
+
+		if (DB :: isError($res))
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		$res->fetchInto($ris);	
+		if($ris[0]==0) $flag=false;
+		
+		return $flag;
+	}
+	
+	/**
+	 * Questa funzione restituisce il voto associato al file studente
+	 *
+	 * @param $id_file id del file
+	 */
+	 function & getVoto($id_file)
+	 {
+	 	
+		$db = & FrontController :: getDbConnection('main');
+
+		$query = 'SELECT avg(voto) FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file).' GROUP BY id_file_studente';
+		$res = & $db->query($query);
+
+		if (DB :: isError($res))
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		$res->fetchInto($ris);	
+			
+		return $ris[0];
+	 }
 	
 }
 
