@@ -870,7 +870,7 @@ class FileItem {
 	}
 
 	/**
-	 * rimuove la notizia dal canale specificato
+	 * rimuove il file dal canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
 	 */
@@ -889,7 +889,7 @@ class FileItem {
 		$this->elencoIdCanali = array_diff($this->elencoIdCanali, array ($id_canale));
 
 		/**
-		 * @TODO settare eliminata = 'S' quando la notizia viene tolta dall'ultimo canale
+		 * @TODO settare eliminata = 'S' quando il file viene tolto dall'ultimo canale
 		 */
 	}
 
