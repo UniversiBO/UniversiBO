@@ -31,8 +31,9 @@ class ShowFacolta extends CanaleCommand {
 	}
 
 	function execute() {
-		$template = & $this -> frontController -> getTemplateEngine();
-
+		$frontcontroller =& $this->getFrontController();
+		$template =& $frontcontroller->getTemplateEngine();
+		
 		$facolta = & $this -> getRequestCanale();
 
 		require_once('Cdl'.PHP_EXTENSION);

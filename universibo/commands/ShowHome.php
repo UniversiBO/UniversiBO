@@ -35,7 +35,8 @@ class ShowHome extends CanaleCommand
 
 	function execute()
 	{
-		$template =& $this->frontController->getTemplateEngine();
+		$frontcontroller =& $this->getFrontController();
+		$template =& $frontcontroller->getTemplateEngine();
 		
 		$template->assign('home_langWelcome', 'Benvenuto in UniversiBO!');
 		$template->assign('home_langWhatIs', 'Questo è il nuovo portale per la didattica, dedicato agli studenti dell\'università di Bologna.');

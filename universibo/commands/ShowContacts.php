@@ -19,10 +19,11 @@ class ShowContacts extends UniversiboCommand {
 	function execute()
 	{
 
-		$template =& $this->frontController->getTemplateEngine();
+		$frontcontroller =& $this->getFrontController();
+		$template =& $frontcontroller->getTemplateEngine();
 		
-		$template->assign('contacts_altTitle', 'Chi Siamo');
-		$template->assign('contacts_intro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
+		$template->assign('contacts_langAltTitle', 'Chi Siamo');
+		$template->assign('contacts_langIntro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
 
 		$contacts_path = $this->frontController->appSettings['contactsPath'];
 		$template->assign('contacts_path', $contacts_path);
@@ -47,7 +48,7 @@ class ShowContacts extends UniversiboCommand {
 			$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');
 			$arrayContatti[] = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
 		}
-		$template->assign('contacts_personal', $arrayContatti);
+		$template->assign('contacts_langPersonal', $arrayContatti);
 		
 		
 		return 'default';

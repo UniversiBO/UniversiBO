@@ -13,13 +13,20 @@
 </td></tr>
 <tr>
     <td class="Normal" align="left">
-    {$contributes_langIntro}
+    {foreach from=$contribute_langIntro item=temp_intro}
+    {$temp_intro|escape:"htmlall"|BBcode2html}
+    <br /><br />
+    {/foreach}
     
     <div align="center" class="Titolo">
-    {$contributes_langTitle}
+    {$contribute_langTitle|escape:"htmlall"|BBcode2html}
+    <br /><br />
     </div>
     
-    {$contributes_langHowToContribute}
+    {foreach from=$contribute_langHowToContribute item=temp_HowToContribute}
+    {$temp_HowToContribute|escape:"htmlall"|BBcode2html}
+    <br />
+    {/foreach}
     
     </td>
 </tr>

@@ -18,7 +18,8 @@ include ('UniversiboCommand'.PHP_EXTENSION);
 class ShowQuestions extends UniversiboCommand {
 	function execute(){
 
-		$template =& $this->frontController->getTemplateEngine();
+		$frontcontroller =& $this->getFrontController();
+		$template =& $frontcontroller->getTemplateEngine();
 		
 		$template->assign('question_PersonalInfo', 'Dati personali: ');
 		$template->assign('question_PersonalInfoData', array('Nome','Cognome','E-mail','Telefono'));
