@@ -50,7 +50,7 @@ class ShowUser extends UniversiboCommand{
 					$canali = array();
 					$canali['uri']   = $canale->showMe();
 					$canali['tipo']  = $canale->getTipoCanale();
-					$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+					$canali['label'] = ($canale->getNome() != '') ? $canale->getNome() : $canale->getNomeMyUniversibo();
 					$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
 					$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
 					$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
