@@ -13,9 +13,15 @@
 </td></tr>
 </table>
 
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr><td align="center"><p class="Titolo">&nbsp;<br />Commenti degli studenti<br />&nbsp;</p></td></tr>
+</table>
+
 {if $isFileStudente=="true"}
 {include file=Files/show_file_studenti_commenti.tpl }
 {/if}
+
+
 
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
