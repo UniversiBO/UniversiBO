@@ -10,7 +10,8 @@
  <tr>
  <td colspan="7" class="CalMese" align="center">
  <img src="tpl/black/invisible.gif" width="1" height="4" alt="" /><br />
- <a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a><br />
+ {*<a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a><br />*}
+ {$common_calendarLink.label|escape:"htmlall"}<br />
  <img src="tpl/black/invisible.gif" width="1" height="4" alt="" /></td>
  </tr>
 <tr><td colspan="7"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td></tr>
