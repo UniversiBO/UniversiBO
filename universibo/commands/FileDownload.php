@@ -22,12 +22,7 @@ class FileDownload extends UniversiboCommand {
 		$template = & $frontcontroller->getTemplateEngine();
 		$user =& $this->getSessionUser();
 		
-		if ($user->isOspite() )
-		{
-			Error :: throw (_ERROR_NOTICE, array ('msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-			$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
-			return 'file_download_iscriviti';
-		}
+		
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
@@ -117,6 +112,12 @@ class FileDownload extends UniversiboCommand {
 		Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso eseguire il download del file.
 		Non possiedi i diritti necessari.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 		
+		if ($user->isOspite() )
+		{
+			Error :: throw (_ERROR_NOTICE, array ('msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
+			return 'file_download_iscriviti';
+		}
 	}
 
 }
