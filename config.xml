@@ -26,6 +26,9 @@
 		<ShowManifesto class="ShowManifesto">
 			 <template type="default">manifesto.tpl</template>
 		</ShowManifesto>
+		<ShowHome class="ShowHome">
+			 <template type="default">home.tpl</template>
+		</ShowHome>
 		<ShowRules class="ShowRules">
 			 <template type="default">regolamento.tpl</template>
 		</ShowRules>
