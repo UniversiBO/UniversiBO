@@ -94,6 +94,7 @@ class FileDelete extends UniversiboCommand {
 		
 		if (array_key_exists('f13_submit', $_POST)  )
 		{
+			
 			$f13_accept = true;
 			
 			//controllo diritti su ogni canale di cui è richiesta la cancellazione
@@ -105,7 +106,7 @@ class FileDelete extends UniversiboCommand {
 					if (!$diritti)
 					{
 						//$user_ruoli[$key]->getIdCanale();
-						$canale = & Canale :: retrieveCanale($key);
+						$canale = & Canale::retrieveCanale($key);
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di eliminazione nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f13_accept = false;
 					}
@@ -127,16 +128,16 @@ class FileDelete extends UniversiboCommand {
 //			die();
 			//cancellazione dai canali richiesti
 			foreach ($_POST['f13_canale'] as $key => $value)
-				{
-					$file->removeCanale($key);
-					$canale = Canale::retrieveCanale($key);					
-				}
+			{
+				$file->removeCanale($key);
+				$canale = Canale::retrieveCanale($key);					
+			}
 			
 			$file->deleteFileItem();
 			/**
 			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */
-			$template->assign('NewsDelete_langSuccess', "La notizia è stata cancellata dai canali scelti.");
+			$template->assign('FileDelete_langSuccess', "La notizia è stata cancellata dai canali scelti.");
 			
 			return 'success';
 		}
@@ -147,7 +148,9 @@ class FileDelete extends UniversiboCommand {
 		
 		$template->assign('f13_langAction', "Elimina il file dai seguenti canali:");
 		$template->assign('f13_canale', $f13_canale);
-
+		$template->assign('common_canaleURI', $canale->showMe());
+		$template->assign('common_langCanaleNome', $canale->getTitolo());
+		
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		
 		return 'default';

@@ -33,7 +33,7 @@
 <td align="center">
 <input type="submit" id="" name="f13_submit" size="20" value="Elimina" /></td>
 </tr>
-<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></td></tr>
 </table>
 
 </form>
@@ -42,7 +42,7 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td>
-{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+{*include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference*}
 </td></tr></table>
 
 {if $common_pageType == "index"}
