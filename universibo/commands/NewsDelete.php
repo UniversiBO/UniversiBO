@@ -1,6 +1,7 @@
 <?php 
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
  * NewsDelete: elimina una notizia, mostra il form e gestisce la cancellazione 
@@ -10,6 +11,7 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Daniele Tiles
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -31,7 +33,7 @@ class NewsDelete extends CanaleCommand {
 		/* diritti
 		 -admin
 		 -autore notizia
-		 -referente canale
+		 -referenti canale
 		*/
 		
 		$news =& NewsItem::selectNewsItem($_GET['id_news']);
@@ -46,7 +48,7 @@ class NewsDelete extends CanaleCommand {
 		}
 		 else {Error::throw(_ERROR_DEFAULT,array('msg'=>'Non possiedi i diritti per eliminare la notizia o la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ));}
 		
-		if(!($id_user==$id_user_writer)||!($user->isAdmin())||!($user_ruolo_canale->isReferente()))
+		if(!($id_user==$id_user_writer)&&!($user->isAdmin())&&!($user_ruolo_canale->isReferente()))
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non hai i diritti per eliminare la notizia o la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ));
 		}
