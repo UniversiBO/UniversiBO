@@ -6,6 +6,13 @@
 
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
+
+{if $infoDid_homepageAlternativaLink!=""}
+<p class="Normal" align="center">{$infoDid_langHomepageAlternativaLink|escape:"htmlall"}<br />
+<a href="{$infoDid_homepageAlternativaLink|escape:"htmlall"}">{$infoDid_homepageAlternativaLink|escape:"htmlall"}</a></p>
+{/if}
+
+
 {if $infoDid_obiettiviInfo!=""}
 <p class="NormalC">{$infoDid_langObiettiviInfo|escape:"htmlall"}</p>
 <p class="Normal">{$infoDid_obiettiviInfo|escape:"htmlall"}</p>

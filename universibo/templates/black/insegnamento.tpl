@@ -7,6 +7,10 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal">&nbsp;<br /> 
 <p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
+{if $ins_homepageAlternativaLink!=""}
+<p class="Normal" align="center">{$ins_langHomepageAlternativaLink|escape:"htmlall"}<br />
+<a href="{$ins_homepageAlternativaLink|escape:"htmlall"}">{$ins_homepageAlternativaLink|escape:"htmlall"}</a></p>
+{/if}
 
 {if $common_canaleMyUniversiBO != ''}
 <p align="center">

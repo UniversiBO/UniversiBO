@@ -155,6 +155,8 @@ class InfoDidatticaEdit extends UniversiboCommand
 		
 		$template->assign('infoDid_title', $insegnamento->getTitolo() );
 		
+		
+		$template->assign('infoDid_langHomepageAlternativaLink', $f18_homepageLink );
 		$template->assign('f18_homepageLink', $f18_homepageLink );
 		
 		$template->assign('infoDid_langObiettiviInfo', 'Obiettivi del corso' );
