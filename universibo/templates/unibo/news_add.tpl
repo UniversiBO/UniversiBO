@@ -9,16 +9,16 @@
 		<input type="text" class="casella" id="f7_titolo" name="f7_titolo" size="65" maxlength="130" value="{$f7_titolo|escape:"htmlall"}" /></p>
 	<p><fieldset>
 		<legend>Data Inserimento:</legend>
-			<span><label class="label" for="f7_data_ins_gg">Giorno:</label>&nbsp;
-				<input type="text" class="casella" id="f7_data_ins_gg" name="f7_data_ins_gg" size="2" maxlength="2" value="{$f7_data_ins_gg|escape:"htmlall"}" />
-			<label class="label" for="f7_data_ins_mm">Mese:</label>&nbsp;
-				<input type="text" class="casella" id="f7_data_ins_mm" name="f7_data_ins_mm" size="2" maxlength="2" value="{$f7_data_ins_mm|escape:"htmlall"}" />
-			<label class="label" for="f7_data_ins_aa">Anno:</label>&nbsp;
-				<input type="text" class="casella" id="f7_data_ins_aa" name="f7_data_ins_aa" size="4" maxlength="4" value="{$f7_data_ins_aa|escape:"htmlall"}" />
-			<label class="label" for="f7_data_ins_ora">Ore:</label>&nbsp;
-				<input type="text" class="casella" id="f7_data_ins_ora" name="f7_data_ins_ora" size="2" maxlength="2" value="{$f7_data_ins_ora|escape:"htmlall"}" />
-			<label class="label" for="f7_data_ins_min">Minuti:</label>&nbsp;
-				<input type="text" class="casella" id="f7_data_ins_min" name="f7_data_ins_min" size="2" maxlength="2" value="{$f7_data_ins_min|escape:"htmlall"}" />
+			<span><label for="f7_data_ins_gg">Giorno:</label>&nbsp;
+				<input type="text" id="f7_data_ins_gg" name="f7_data_ins_gg" size="2" maxlength="2" value="{$f7_data_ins_gg|escape:"htmlall"}" />
+			<label for="f7_data_ins_mm">Mese:</label>&nbsp;
+				<input type="text" id="f7_data_ins_mm" name="f7_data_ins_mm" size="2" maxlength="2" value="{$f7_data_ins_mm|escape:"htmlall"}" />
+			<label for="f7_data_ins_aa">Anno:</label>&nbsp;
+				<input type="text" id="f7_data_ins_aa" name="f7_data_ins_aa" size="4" maxlength="4" value="{$f7_data_ins_aa|escape:"htmlall"}" />
+			<label for="f7_data_ins_ora">Ore:</label>&nbsp;
+				<input type="text" id="f7_data_ins_ora" name="f7_data_ins_ora" size="2" maxlength="2" value="{$f7_data_ins_ora|escape:"htmlall"}" />
+			<label for="f7_data_ins_min">Minuti:</label>&nbsp;
+				<input type="text" id="f7_data_ins_min" name="f7_data_ins_min" size="2" maxlength="2" value="{$f7_data_ins_min|escape:"htmlall"}" />
 			</span>
 	</fieldset></p>
 	<p><span><label for="f7_testo"><p> Notizia:<br />(max 2500 <br />caratteri)</p></label>
@@ -26,16 +26,16 @@
 	<p><label for="f7_scadenza"><input type="checkbox" id="f7_scadenza" name="f7_scadenza" {if $f7_scadenza=='true'}checked="checked"{/if} />&nbsp;Attiva Scadenza</label></p>
 	<p><fieldset>
 	<legend>Data Scadenza:</legend>
-		<span><label class="label" for="f7_data_scad_gg">Giorno:</label>&nbsp;
-			<input type="text" class="casella" id="f7_data_scad_gg" name="f7_data_scad_gg" size="2" maxlength="2" value="{$f7_data_scad_gg|escape:"htmlall"}" />
-		<label class="label" for="f7_data_scad_mm">Mese:</label>&nbsp;
-			<input type="text" class="casella" id="f7_data_scad_mm" name="f7_data_scad_mm" size="2" maxlength="2" value="{$f7_data_scad_mm|escape:"htmlall"}" />
-		<label class="label" for="f7_data_scad_aa">Anno:</label>&nbsp;
-			<input type="text" class="casella" id="f7_data_scad_aa" name="f7_data_scad_aa" size="4" maxlength="4" value="{$f7_data_scad_aa|escape:"htmlall"}" />
-		<label class="label" for="f7_data_scad_ora">Ore:</label>&nbsp;
-			<input type="text" class="casella" id="f7_data_scad_ora" name="f7_data_scad_ora" size="2" maxlength="2" value="{$f7_data_scad_ora|escape:"htmlall"}" />
-		<label class="label" for="f7_data_scad_min">Minuti:</label>&nbsp;
-			<input type="text" class="casella" id="f7_data_scad_min" name="f7_data_scad_min" size="2" maxlength="2" value="{$f7_data_scad_min|escape:"htmlall"}" />
+		<span><label for="f7_data_scad_gg">Giorno:</label>&nbsp;
+			<input type="text" id="f7_data_scad_gg" name="f7_data_scad_gg" size="2" maxlength="2" value="{$f7_data_scad_gg|escape:"htmlall"}" />
+		<label for="f7_data_scad_mm">Mese:</label>&nbsp;
+			<input type="text" id="f7_data_scad_mm" name="f7_data_scad_mm" size="2" maxlength="2" value="{$f7_data_scad_mm|escape:"htmlall"}" />
+		<label for="f7_data_scad_aa">Anno:</label>&nbsp;
+			<input type="text" id="f7_data_scad_aa" name="f7_data_scad_aa" size="4" maxlength="4" value="{$f7_data_scad_aa|escape:"htmlall"}" />
+		<label for="f7_data_scad_ora">Ore:</label>&nbsp;
+			<input type="text" id="f7_data_scad_ora" name="f7_data_scad_ora" size="2" maxlength="2" value="{$f7_data_scad_ora|escape:"htmlall"}" />
+		<label for="f7_data_scad_min">Minuti:</label>&nbsp;
+			<input type="text" id="f7_data_scad_min" name="f7_data_scad_min" size="2" maxlength="2" value="{$f7_data_scad_min|escape:"htmlall"}" />
 		</span>
 	</fieldset></p>
 	<p><fieldset>

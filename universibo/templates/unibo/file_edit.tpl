@@ -20,16 +20,16 @@
 		</select></p>
 	<p><fieldset>
 		<legend>Data Inserimento:</legend>
-			<p><span><label class="label" for="f13_data_ins_gg">Giorno:</label>&nbsp;
-				<input type="text" class="casella" id="f13_data_ins_gg" name="f13_data_ins_gg" size="2" maxlength="2" value="{$f13_data_ins_gg|escape:"htmlall"}" />
-			<label class="label" for="f13_data_ins_mm">Mese:</label>&nbsp;
-				<input type="text" class="casella" id="f13_data_ins_mm" name="f13_data_ins_mm" size="2" maxlength="2" value="{$f13_data_ins_mm|escape:"htmlall"}" />
-			<label class="label" for="f13_data_ins_aa">Anno:</label>&nbsp;
-				<input type="text" class="casella" id="f13_data_ins_aa" name="f13_data_ins_aa" size="4" maxlength="4" value="{$f13_data_ins_aa|escape:"htmlall"}" />
-			<label class="label" for="f13_data_ins_ora">Ore:</label>&nbsp;
-				<input type="text" class="casella" id="f13_data_ins_ora" name="f13_data_ins_ora" size="2" maxlength="2" value="{$f13_data_ins_ora|escape:"htmlall"}" />
-			<label class="label" for="f13_data_ins_min">Minuti:</label>&nbsp;
-				<input type="text" class="casella" id="f13_data_ins_min" name="f13_data_ins_min" size="2" maxlength="2" value="{$f13_data_ins_min|escape:"htmlall"}" /></span></p>
+			<p><span><label for="f13_data_ins_gg">Giorno:</label>&nbsp;
+				<input type="text" id="f13_data_ins_gg" name="f13_data_ins_gg" size="2" maxlength="2" value="{$f13_data_ins_gg|escape:"htmlall"}" />
+			<label for="f13_data_ins_mm">Mese:</label>&nbsp;
+				<input type="text"id="f13_data_ins_mm" name="f13_data_ins_mm" size="2" maxlength="2" value="{$f13_data_ins_mm|escape:"htmlall"}" />
+			<label for="f13_data_ins_aa">Anno:</label>&nbsp;
+				<input type="text" id="f13_data_ins_aa" name="f13_data_ins_aa" size="4" maxlength="4" value="{$f13_data_ins_aa|escape:"htmlall"}" />
+			<label for="f13_data_ins_ora">Ore:</label>&nbsp;
+				<input type="text" id="f13_data_ins_ora" name="f13_data_ins_ora" size="2" maxlength="2" value="{$f13_data_ins_ora|escape:"htmlall"}" />
+			<label for="f13_data_ins_min">Minuti:</label>&nbsp;
+				<input type="text" id="f13_data_ins_min" name="f13_data_ins_min" size="2" maxlength="2" value="{$f13_data_ins_min|escape:"htmlall"}" /></span></p>
 		</fieldset></p>
 	<p><label for="f13_tipo">Tipo file:</label>
 		<select id="f13_tipo" name="f13_tipo">
