@@ -25,6 +25,7 @@ class Login extends UniversiboCommand {
 		
 		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : $_SERVER['HTTP_REFERER'];
 		
+
 		if ( array_key_exists('f1_submit',$_POST) )
 		{
 			
@@ -36,15 +37,15 @@ class Login extends UniversiboCommand {
 			if (! User::isUsernameValid($_POST['f1_username']) )
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			
-			$user = User::selectUserUsername($_POST['f1_username']);
+			$userLogin = User::selectUserUsername($_POST['f1_username']);
 			
-			if ($user === false)
+			if ($userLogin === false)
 			{
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => '0', 'msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
-			elseif( $user->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
+			elseif( $userLogin->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
 			{
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $userLogin->getIdUser(), 'msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
 			else
 			{
@@ -58,7 +59,8 @@ class Login extends UniversiboCommand {
 				$forum = new ForumApi;
 				$forum->login($user);
 				
-				if ( !strstr('do',$referer) || strstr('do=ShowHome', $referer) )
+				
+				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome') )
 					FrontController::redirectCommand('ShowMyUniversiBO');
 				else
 					FrontController::goTo($referer);
@@ -68,6 +70,7 @@ class Login extends UniversiboCommand {
 		
 		}
 		
+			
 		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
 		$f1_password = '';
 		
