@@ -39,8 +39,10 @@
   <font class="NormalC">&nbsp;Categoria:</font>&nbsp;&nbsp;{$fileShowInfo_categoria|escape:"htmlall"}<br /><br />
   <font class="NormalC">&nbsp;Dimensione:</font>&nbsp;&nbsp;{$fileShowInfo_dimensione|escape:"htmlall"} kB<br /><br />
   <font class="NormalC">&nbsp;Scaricato:</font>&nbsp;&nbsp;{$fileShowInfo_download|escape:"htmlall"} volte<br /><br />
-  <font class="NormalC">&nbsp;Formato file:</font><br />&nbsp;&nbsp;<img src="{$fileShowInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$fileShowInfo_tipo|escape:"htmlall"}" border="0" /></a> {$fileShowInfo_info|escape:"htmlall"}<br /><br />
+  <font class="NormalC">&nbsp;Formato file:</font><p>&nbsp;&nbsp;<img src="{$fileShowInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$fileShowInfo_tipo|escape:"htmlall"}" border="0" vspace="2"/></a> {$fileShowInfo_info|escape:"htmlall"}<br /></p>
   <font class="NormalC">&nbsp;Hash MD5:</font><br />&nbsp;&nbsp;{$fileShowInfo_hash|escape:"htmlall"}<br /><br />
+  <font class="NormalC">&nbsp;Presente in:</font><br />{foreach from=$fileShowInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}
+  <br />
   <font class="NormalC">&nbsp;Download:</font><br />&nbsp;&nbsp;<a href="{$fileShowInfo_Downloaduri|escape:"htmlall"}"><img src="icona_download" width="32" height="32" alt="scarica" border="0" /></a><br /><br />
  </td>
  </tr></table>

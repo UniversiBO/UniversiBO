@@ -27,12 +27,13 @@ class FileDownload extends UniversiboCommand {
 		$template = & $frontcontroller->getTemplateEngine();
 		$user =& $this->getSessionUser();
 		
-		
 		$file =& FileItem::selectFileItem($_GET['id_file']);
 
 		if ($file === false) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto è stato eliminato o non è disponibile','file'=>__FILE__,'line'=>__LINE__ ));
 		
+		$template->assign('fileDownload_InfoURI', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
+
 		if ($user->isGroupAllowed( $file->getPermessiDownload() ))
 		{
 	        $directoryFile = $frontcontroller->getAppSetting('filesPath');
@@ -49,7 +50,7 @@ class FileDownload extends UniversiboCommand {
 			{
 				if (!array_key_exists('f11_submit', $_POST))
 					return 'file_download_password';
-				
+
 				if  (!array_key_exists('f11_file_password', $_POST))
 					Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 					
@@ -94,9 +95,6 @@ class FileDownload extends UniversiboCommand {
 			
 		}
 		
-		
-		
-		$template->assign('fileDownload_InfoURI', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 		
 		if ($user->isOspite() )
 		{
