@@ -397,9 +397,6 @@ class FileStudentiAdd extends UniversiboCommand {
 							}
 						}
 						
-						if (!in_array($session_user->getUsername(), $username_allowed ))
-							Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La gestione della didattica e\' accessibile solo a '.implode(', ',$username_allowed),'file'=>__FILE__,'line'=>__LINE__));
-						
 //						var_dump($arrayEmailRef);
 //						die();
 						
