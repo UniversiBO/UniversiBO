@@ -36,33 +36,17 @@
 			<ul>
 				<li><a href="{$common_homepageUri|escape:"htmlall"}">{$common_homepage|lower|capitalize|escape:"htmlall"}</a></li>
 				<li>{$common_fac|lower|capitalize|escape:"htmlall"}
-					<ul>
-						{foreach from=$common_facLinks item=temp_currLink}
-						<li><a href="{$temp_currLink.uri|escape:"htmlall"}" >-&nbsp;{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></li>
-						{/foreach}
-					</ul>
+					<ul>{foreach from=$common_facLinks item=temp_currLink}<li><a href="{$temp_currLink.uri|escape:"htmlall"}" >-&nbsp;{$temp_currLink.label|lower|capitalize|escape:"htmlall"}</a></li>{/foreach}</ul>
 				</li>
 			</ul>
 			<ul>
 				<li>Servizi
-					<ul>	
-					{foreach from=$common_servicesLinks item=temp_link}
-						<li><a href="{$temp_link.uri|escape:"htmlall"}" >-&nbsp;{$temp_link.label|lower|capitalize|escape:"htmlall"}</a></li>
-					{/foreach}
-					</ul>
+					<ul>{foreach from=$common_servicesLinks item=temp_link}<li><a href="{$temp_link.uri|escape:"htmlall"}" >-&nbsp;{$temp_link.label|lower|capitalize|escape:"htmlall"}</a></li>{/foreach}</ul>
 				</li>
 			</ul>
 			<ul class="lastElemento">
 				<li>Informazioni
-					<ul>
-						{*<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_help|lower|capitalize|escape:"htmlall"}</a></li>*}
-						<li><a href="{$common_rulesUri}" >-&nbsp;{$common_rules|lower|capitalize|escape:"htmlall"}</a></li>
-						{*<li>-&nbsp;<a href="{$common_contactsUri}" >-&nbsp;{$common_contacts|lower|capitalize|escape:"htmlall"}</a></li>*}
-						{*<li>-&nbsp;<a href="{$common_contributeUri}" >-&nbsp;{$common_contribute|lower|capitalize|escape:"htmlall"}</a></li>*}
-						<li><a href="{$common_manifestoUri}" >-&nbsp;{$common_manifesto|lower|capitalize|escape:"htmlall"}</a></li>
-						<li><a href="{$common_creditsUri}" >-&nbsp;{$common_credits|lower|capitalize|escape:"htmlall"}</a></li>
-						<li><a href="{$common_docSfUri|escape:"htmlall"}" target="_blank"  title="Apre in un altra finestra" >-&nbsp;{$common_docSf|lower|capitalize|escape:"htmlall"}</a></li>
-
+					<ul>{*<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_help|lower|capitalize|escape:"htmlall"}</a></li>*}<li><a href="{$common_rulesUri}" >-&nbsp;{$common_rules|lower|capitalize|escape:"htmlall"}</a></li>{*<li>-&nbsp;<a href="{$common_contactsUri}" >-&nbsp;{$common_contacts|lower|capitalize|escape:"htmlall"}</a></li>*}{*<li>-&nbsp;<a href="{$common_contributeUri}" >-&nbsp;{$common_contribute|lower|capitalize|escape:"htmlall"}</a></li>*}<li><a href="{$common_manifestoUri}" >-&nbsp;{$common_manifesto|lower|capitalize|escape:"htmlall"}</a></li><li><a href="{$common_creditsUri}" >-&nbsp;{$common_credits|lower|capitalize|escape:"htmlall"}</a></li><li><a href="{$common_docSfUri|escape:"htmlall"}" target="_blank"  title="Apre in un altra finestra" >-&nbsp;{$common_docSf|lower|capitalize|escape:"htmlall"}</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -191,6 +191,7 @@ td.evidenzia{
 	font-size: 11px;
 	text-decoration: none;
 	display: block !important;
+	width: 100%;	
 }
 
 #leftmenu a:hover
@@ -231,7 +232,7 @@ td.evidenzia{
 	font-weight: normal;
 	margin-left: 0;
 	border-bottom: 0; 
-	padding: 0;
+	padding: 1px 0;
 }
 
 .lastElemento
