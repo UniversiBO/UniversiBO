@@ -128,6 +128,7 @@
 			<response type="template" name="default">file_show_info.tpl</response>
 		</FileShowInfo>
 		<FileAdd class="FileAdd">
+			<response type="template" name="success">file_add_success.tpl</response>
 			<response type="template" name="default">file_add.tpl</response>
 		</FileAdd>
 		<FileAdd class="FileEdit">

@@ -61,6 +61,10 @@ class FileKeyWords{
 	{
 		$old_elenco_keywords = FileKeyWords::selectFileKeyWords($id_file);
 		
+		$db = FrontController::getDbConnection('main');
+		ignore_user_abort(1);
+        $db->autoCommit(false);
+		
 		foreach ($elenco_keywords as $value){
 			if (!in_array($value, $old_elenco_keywords))
 				FileKeyWords::addKeyWord($id_file, $value);
@@ -70,6 +74,11 @@ class FileKeyWords{
 			if (!in_array($value,$elenco_keywords))
 				FileKeyWords::removeKeyWord($id_file, $value);
 		}
+		
+		$db->commit();
+		
+		$db->autoCommit(true);
+		ignore_user_abort(0);
 	}
 
 	/**

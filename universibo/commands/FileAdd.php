@@ -18,8 +18,14 @@ class FileAdd extends CanaleCommand {
 	function execute() {
 
 		$user = & $this->getSessionUser();
-		$canale = & $this->getRequestCanale();
 		$user_ruoli = & $user->getRuoli();
+
+
+		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+		{
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id della notizia richiesta non è	valido', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 		$id_canale = $canale->getIdCanale();
 
 		$referente = false;
@@ -44,13 +50,9 @@ class FileAdd extends CanaleCommand {
 		$f12_file = '';
 		$f12_titolo = '';
 		$f12_abstract = '';
-		$f12_parole_chiave = '';
+		$f12_parole_chiave = array();
 		$f12_categoria = '';
-		$f12_data_ins_gg = $krono->k_date('%j');
-		$f12_data_ins_mm = $krono->k_date('%m');
-		$f12_data_ins_aa = $krono->k_date('%Y');
-		$f12_data_ins_ora = $krono->k_date('%H');
-		$f12_data_ins_min = $krono->k_date('%i');
+		$f12_data_inserimento = time();
 		$f12_permessi_download = '';
 		$f12_permessi_visualizza = '';
 		$f12_password = false;
@@ -66,11 +68,13 @@ class FileAdd extends CanaleCommand {
 				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 		}
 		
+		$elenco_canali_retrieve = array();
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
 		{
 			$id_current_canale = $elenco_canali[$i];
 			$current_canale =& Canale::retrieveCanale($id_current_canale);
+			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
 			$nome_current_canale = $current_canale->getTitolo();
 			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
 			$f12_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
@@ -98,7 +102,8 @@ class FileAdd extends CanaleCommand {
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f12_accept = false;
 			}
-
+			
+			
 			//titolo	
 			if (strlen($_POST['f12_titolo']) > 150) {
 				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
@@ -109,6 +114,11 @@ class FileAdd extends CanaleCommand {
 				$f12_accept = false;
 			} else
 				$f12_titolo = $_POST['f12_titolo'];
+			
+			
+			//abstract
+			$f12_abstract = $_POST['f12_abstract'];
+			
 			
 			$checkdate_ins = true;
 			//data_ins_gg
@@ -168,7 +178,7 @@ class FileAdd extends CanaleCommand {
 				$f12_accept = false;
 			}
 			
-			$data_inserimento = mktime($_POST['f12_data_ins_ora'], $_POST['f12_data_ins_min'], "0", $_POST['f12_data_ins_mm'], $_POST['f12_data_ins_gg'], $_POST['f12_data_ins_aa']);
+			$f12_data_inserimento = mktime($_POST['f12_data_ins_ora'], $_POST['f12_data_ins_min'], "0", $_POST['f12_data_ins_mm'], $_POST['f12_data_ins_gg'], $_POST['f12_data_ins_aa']);
 			
 			//abstract	
 			if (strlen($_POST['f12_abstract']) > 3000) {
@@ -218,6 +228,7 @@ class FileAdd extends CanaleCommand {
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f12_accept = false;
 				}
+				$f12_permessi_download = $_POST['f12_permessi_download'];
 			}
 			else 
 			{
@@ -232,30 +243,70 @@ class FileAdd extends CanaleCommand {
 			
 			
 			//e i permessi di visualizzazione??
+			// li prendo uguali a quelli del canale,
+			$f12_permessi_visualizza = $canale->getPermessi();
+			// eventualmente dare la possibilità all'admin di metterli diversamente
 			
 			
-			//diritti_su_tutti_i_canali
+			$f12_canali_inserimento = array();
+			//controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
 			foreach ($_POST['f12_canale'] as $key => $value)
 			{
 				$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
 				if (!$diritti)
 				{
 					//$user_ruoli[$key]->getIdCanale();
-					$canale =& Canale::retrieveCanale($key);
+					$canale =& $elenco_canali_retrieve[$key];
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f12_accept = false;
 				}
+				
+				$f12_canali_inserimento = 
 			}
 			
 			
 			//esecuzione operazioni accettazione del form
-			if ($f12_accept == true) {
+			if ($f12_accept == true) 
+			{
+				
+				$db = FrontController::getDbConnection('main');
+				ignore_user_abort(1);
+        		$db->autoCommit(false);
+				
+				$newFile = new FileItem(FileItem(0, $f12_permessi_download, $f12_permessi_visualizza, $user->getIdUtente(), $f12_titolo, $f12_abstract,
+					 $f12_data_inserimento, $data_modifica, $dimensione, $download, $nome_file, $id_categoria, $id_tipo_file, $hash_file, $password, $username, $categoria_desc, $tipo_desc, $tipo_icona, $tipo_info /*, $eliminato*/));
+				
+				
+				$newFile->insertFileItem();
 
-				//id_news = 0 per inserimento, $id_canali array dei canali in cui inserire
-				$notizia = new NewsItem(0, $f12_titolo, $f12_testo, $data_inserimento, $data_scadenza, $data_inserimento, $f12_urgente, false, $user->getIdUser(), $user->getUsername());
+				$table = (array_key_exists('approfondimento', $_GET) && $_GET['approfondimento']=='true') ? 'canale_approfondimenti' : 'canale_canale';
+				$newCanale->setPadre($canale->getIdCanale(), $table);
+				
+				$nomeFile = $newCanale->getIdCanale()."_".$_FILES['f10_file']['name'];
 
-
-				$notizia->insertNewsItem();
+				//echo substr($_FILES['userfile']['name'],-4);
+				$estensione = strtolower ( substr($_FILES['f10_file']['name'],-4) );
+				if ( $estensione == '.php') {
+					$db->rollback();
+					Error::throw(_ERROR_DEFAULT,array('msg'=>'Non e\' permesso inserire file con estensione .php'.': impossibile impostare la dipendenza tra il canale e il file','file'=>__FILE__,'line'=>__LINE__));
+				}	
+				if (is_uploaded_file($_FILES['f10_file']['tmp_name'])) {
+					if ( move_uploaded_file($_FILES['f10_file']['tmp_name'],$fc->getAppSetting('directoryFile').$nomeFile ) === false )
+					{
+						$db->rollback();
+						Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
+					}
+				}
+				else{
+					$db->rollback();
+					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__));
+				}
+				
+				$db->commit();
+				
+				$db->autoCommit(true);
+				ignore_user_abort(0);
+				
 					
 				//$num_canali = count($f12_canale);
 				//var_dump($f12_canale);
@@ -263,7 +314,7 @@ class FileAdd extends CanaleCommand {
 				foreach ($_POST['f12_canale'] as $key => $value)
 				{
 					$notizia->addCanale($key);
-					$canale = Canale::retrieveCanale($key);
+					$canale =& $elenco_canali_retrieve[$key];
 					$canale->setUltimaModifica(time(), true);
 				}
 				return 'success';
@@ -272,11 +323,12 @@ class FileAdd extends CanaleCommand {
 		} //end if (array_key_exists('f12_submit', $_POST))
 
 		$template->assign('f12_titolo', $f12_titolo);
-		$template->assign('f12_data_ins_mm', $f12_data_ins_mm);
-		$template->assign('f12_data_ins_gg', $f12_data_ins_gg);
-		$template->assign('f12_data_ins_aa', $f12_data_ins_aa);
-		$template->assign('f12_data_ins_ora', $f12_data_ins_ora);
-		$template->assign('f12_data_ins_min', $f12_data_ins_min);
+
+		$template->assign('f12_data_ins_mm', $krono->k_date('%j',$f12_data_ins_mm));
+		$template->assign('f12_data_ins_gg', $krono->k_date('%m',$f12_data_ins_gg));
+		$template->assign('f12_data_ins_aa', $krono->k_date('%Y',$f12_data_ins_aa));
+		$template->assign('f12_data_ins_ora', $krono->k_date('%H',$f12_data_ins_ora));
+		$template->assign('f12_data_ins_min', $krono->k_date('%i',$f12_data_ins_min));
 
 
 		return 'default';

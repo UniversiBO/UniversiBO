@@ -513,6 +513,13 @@ class Canale {
 	 */
 	function &retrieveCanale($id_canale)
 	{
+		//spalata la cache!!! 
+		//dimezza i tempi di esecuzione!!
+		static $cache_canali = array();
+		
+		if (array_key_exists($id_canale, $cache_canali))
+			return $cache_canali[$id_canale];
+		
 		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
 		if ($tipo_canale === false )
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
@@ -530,7 +537,9 @@ class Canale {
 		
 		require_once($class_name.PHP_EXTENSION);
 		
-		return call_user_func(array($class_name,'factoryCanale'), $id_canale);
+		$cache_canali[$id_canale] =& call_user_func(array($class_name,'factoryCanale'), $id_canale);
+
+		return $cache_canali[$id_canale];
 	}
 	
 	
