@@ -485,19 +485,26 @@ class NewsItem {
 	 * aggiunge la notizia al canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
+	 * @return boolean  true se esito positivo 
 	 */
 	function addCanale($id_canale)
 	{
-	 	if ( ! Canale::canaleExists($id_canale) )
+		$return = true;
+		
+	 	if ( ! Canale::canaleExists($id_canale) ){
+	 		$return = false;
 	 		Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
+	 	}
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	 	
 	 	$query = 'SELECT id_notizia FROM news_canale WHERE id_canale = '.$db->quote($id_canale).' AND id_notizia = '.$db->quote($this->getIdNotizia());
 		$res =& $db->query($query);
 		
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		if (DB::isError($res)){
+		 	$return = false;
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		} 
 		
 		if ($res->numRows());
 		
@@ -505,12 +512,17 @@ class NewsItem {
 		 //? da testare il funzionamento di =&
 		$res =& $db->query($query);
 		
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		if (DB::isError($res)) {
+			$return = false;
+			$db->rollback();
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		} 
 		
 		$res->free();
 		
 		$this->elencoIdCanale[] = $id_canale;
+		
+		return $return;
 		
 	}	 
 	
@@ -526,37 +538,34 @@ class NewsItem {
 		
         ignore_user_abort(1);
         $db->autoCommit(false);
-        
-		$query = 'SELECT id_news FROM news WHERE id_news = '.$db->quote($this->getIdNotizia()); 
-		$res = $db->query($query);
-		$rows = $res->numRows();
+        		
+		$return = true;
+				
+		$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.
+					'( '.$db->nextID('id_news').' , '.
+					$db->quote($this->getTitolo()).' , '.
+					$db->quote($this->getDataIns()).' , '.
+					$db->quote($this->getDataScadenza()).' , '.
+					$db->quote($this->getNotizia()).' , '.
+					$db->quote($this->getIdUtente()).' , '.
+					$db->quote($this->getEliminata()).' , '.
+					$db->quote($this->getUrgente()).' , '.
+					$db->quote($this->getUltimaModifica()).' )'; 
 		
-		if( $rows > 0) 
-		{
-			$return = false;
+		$res = $db->query($query);
+		
+		if (DB::isError($res)){
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
-		else
+		
+		foreach ($canale in $id_canali)
 		{
-			$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.
-						'( '.$db->quote($this->getIdNotizia()).' , '.
-						$db->quote($this->getTitolo()).' , '.
-						$db->quote($this->getDataIns()).' , '.
-						$db->quote($this->getDataScadenza()).' , '.
-						$db->quote($this->getNotizia()).' , '.
-						$db->quote($this->getIdUtente()).' , '.
-						$db->quote($this->getEliminata()).' , '.
-						$db->quote($this->getUrgente()).' , '.
-						$db->quote($this->getUltimaModifica()).' )'; 
-			$res = $db->query($query);
-			
-			if (DB::isError($res))
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
-			
-			$db->commit();
-			
-			$return = true;
-		}
-        
+			if ($this -> addCanale($canale) != true) $return = false;
+		}	
+		
+		if (!$return) $db->commit();
+		        
         $res->free();
         
         $db->autoCommit(true);
