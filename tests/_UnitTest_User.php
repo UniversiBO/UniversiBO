@@ -23,7 +23,7 @@ require_once '../universibo/User'.PHP_EXTENSION;
  * Test per la classe String
  *
  * @package universibo_tests
- * @author Ilias Bartolini <brain79@inwind.it>
+ * @author Fabrizio Pinto
  * @license GPL, http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
@@ -35,13 +35,16 @@ var $utente;
 
 // valori del test..
 var $username = '<pippo>';
-var $id_utente = 0;
+var $id_utente = 55;
 var $MD5 = '';
 var $email = '';
 var $ultimoLogin = 0;
 var $bookmark = array();
 var $ADUsername = '';
-var $groups = 0;
+var $groups = 1;
+
+var $staticgroups = 64;
+var $singolare = true;
 
 // constructor of the test suite
 function UserTest($name) {
@@ -53,7 +56,7 @@ $this->PHPUnit_TestCase($name);
 // here
 function setUp() {
 // create a new instance of User.
-$this->utente = new User(USER_ALL, 0, $this->username);
+$this->utente = new User($this->id_utente, $this->groups, $this->username=NULL, $this->MD5=NULL, $this->email=NULL, $this->ultimo_login=NULL, $this->AD_username=NULL, $this->bookmark=NULL);
 }
 
 // called after the test functions are executed
@@ -93,6 +96,27 @@ $expected = $this->ultimoLogin;
 $this->assertTrue($result == $expected);
 }
 
+// test of the getIdUser function
+function testGetIdUser() {
+$result = $this->utente->getIdUser();
+$expected = $this->id_utente;
+$this->assertTrue($result == $expected);
+}
+
+// test of the getGroups function
+function testGetGroups() {
+$result = $this->utente->getGroups();
+$expected = $this->groups;
+$this->assertTrue($result == $expected);
+}
+
+// test of the getADUsername function
+function testGetADUsername() {
+$result = $this->utente->getADUsername();
+$expected = $this->ADUsername;
+$this->assertTrue($result == $expected);
+}
+
 // test of the isUsernameValid function
 function testIsUsernameValid() {
 $result = $this->utente->isUsernameValid($this->utente->getUsername());
@@ -100,7 +124,117 @@ $expected = true;
 $this->assertTrue($result == $expected);
 }
 
+// test of the isAdmin function
+function testIsAdmin() {
+$result = $this->utente->isAdmin();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
 
+// test of the isAdmin function - static use
+function testIsAdminStatic() {
+$result = $this->utente->isAdmin($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isPersonale function
+function testIsPersonale() {
+$result = $this->utente->isPersonale();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isPersonale function - static use
+function testIsPersonaleStatic() {
+$result = $this->utente->isPersonale($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isTutor function
+function testIsTutor() {
+$result = $this->utente->isTutor();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isTutor function - static use
+function testIsTutorStatic() {
+$result = $this->utente->isTutor($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isModeratore function
+function testIsModeratore() {
+$result = $this->utente->isModeratore();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isModeratore function - static use
+function testIsModeratoreStatic() {
+$result = $this->utente->isModeratore($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isStudente function
+function testIsStudente() {
+$result = $this->utente->isStudente();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isStudente function - static use
+function testIsStudenteStatic() {
+$result = $this->utente->isStudente($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isOspite function
+function testIsOspite() {
+$result = $this->utente->isOspite();
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the isOspite function - static use
+function testIsOspiteStatic() {
+$result = $this->utente->isOspite($this->staticgroups);
+$expected = true;
+$this->assertTrue($result == $expected);
+}
+
+// test of the groupsNames function   NB compare tra array?
+function testGroupsNames() {
+$result = $this->utente->groupsNames($this->singolare);
+if ( $this->singolare == true )
+		{
+			$expected = array(
+			 USER_OSPITE     => "Ospite",
+			 USER_STUDENTE   => "Studente",
+			 USER_MODERATORE => "Moderatore",
+			 USER_TUTOR      => "Tutor",
+			 USER_DOCENTE    => "Docente",
+			 USER_PERSONALE  => "Personale non docente",
+			 USER_ADMIN      => "Admin");
+		} 
+		else
+		{
+			$expected = array(
+			 USER_OSPITE     => "Ospiti",
+			 USER_STUDENTE   => "Studenti",
+			 USER_MODERATORE => "Moderatori",
+			 USER_TUTOR      => "Tutor",
+			 USER_DOCENTE    => "Docenti",
+			 USER_PERSONALE  => "Personale non docente",
+			 USER_ADMIN      => "Admin");
+		}	
+$this->assertTrue($result == $expected);
+}
 /*// test of the isPasswordValid function
 function testIsPasswordValid() {
 $result = $this->utente->isPasswordValid($this->utente->????);
