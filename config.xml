@@ -20,21 +20,16 @@
 	</receivers>
 	
 	<commands>
-		<StartExample1 class="Example1">
-			 <template type="default">example1.htm</template>
-		</StartExample1>
 		<TestTemplate class="TestTemplate">
-			 <template type="default">example1_a.htm</template>
+			 <template type="default">home.tpl</template>
 		</TestTemplate>
 		<ShowManifesto class="ShowManifesto">
-			 <template type="default">example1_a.htm</template>
+			 <template type="default">manifesto.tpl</template>
 		</ShowManifesto>
 		<ShowRules class="ShowRules">
-			 <template type="default">example1_a.htm</template>
+			 <template type="default">regolamento.tpl</template>
 		</ShowRules>
-		<TestUnit class="TestUnit">
-			 <template type="default">example1_a.htm</template>
-		</TestUnit>
+		<TestUnit class="TestUnit" />
 	</commands>
 	<dbInfo type="DB">
 	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo</connection>

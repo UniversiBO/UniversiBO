@@ -104,7 +104,7 @@ class TestTemplate extends UniversiboCommand {
 
 		//...home_news... DA DEFINIRE ...include news.tpl
 		
-		$template->display('home.tpl');
+		//$template->display('home.tpl');
 
 	
 //-------------------- FAC (Facoltà)

@@ -100,7 +100,19 @@ class FrontController {
 		
 		$command->initCommand($this);
 		
-		$command->execute();
+		$template = $command->execute();
+		
+		//ora non do la possibilità ad un comando di avere più viste
+		//ma si può fare leggendolo dal suo valore di ritorno
+		$template = 'default';  
+		if (array_key_exists('default',$this->commandTemplate))
+		{
+			$template = $this->commandTemplate['default'];
+			 		
+			$templateEngine =& $this->getTemplateEngine();
+			$templateEngine->display($template);
+		}
+		
 		
 	}
 	
@@ -485,7 +497,7 @@ class FrontController {
 		for($i=0;$i<$n;$i++)
 		{
 			$child=&$commandNode->children[$i];
-			$this->templates[$child->attributes['type']]=$child->charData;			
+			$this->commandTemplate[$child->attributes['type']] = $child->charData;			
 		}
 		if(!isset($this->commandClass))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definita l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
