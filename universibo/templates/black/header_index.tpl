@@ -17,26 +17,26 @@
 <tr><td class="Normal" align="center"><font color="#FF0000">{$common_alert|escape:"htmlall"}</font></td></tr>
 {/if}
 <tr><td bgcolor="#000099"><img src="tpl/black/rule_grande.gif" width="625" height="4" alt="" /></td></tr>
+
 <tr><td bgcolor="#000099"><img src="tpl/black/universibo_45_{$common_logoType}.gif" width="516" height="54" alt="{$common_logo}" /></td></tr>
 <tr><td bgcolor="#000099"><img src="tpl/black/rule_grande.gif" width="625" height="4" alt="" /></td></tr>
+
 <tr><td bgcolor="#000050">
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr>
- <td valign="middle" align="left" class="Navbar">&nbsp;&nbsp;<a href="forum/" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;Forum&nbsp;</a>&nbsp;&nbsp;&nbsp;</td><td width="100%">
- <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-	<tr><td class="Titolo" align="right">{$common_longDate} - {$common_time}&nbsp;&nbsp;</td></tr>
-	<tr><td bgcolor="#000099"><img src="tpl/black/rule_darkL.gif" width="100" height="2" alt="" /></td></tr>
- 	<tr><td class="PiccoloC" align="right">
- <a style="cursor:hand" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('{$common_rootUrl}');" ><img src="tpl/black/add_home.gif" width="13" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_setHomepage|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
- <a href="javascript:window.external.AddFavorite('{$common_rootUrl}','{$common_universibo}')"><img src="tpl/black/add_preferiti.gif" width="14" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_addBookmarks|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
- </td>
- </tr>
- </table>
-
- </td>
- </tr>
+ <td valign="middle" align="left" class="Navbar">&nbsp;&nbsp;<a href="index.php?pg=1">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;Homepage&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="forum/" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;Forum&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="index.php?pg=3">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;MyPage&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td width="100%">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+  <tr><td class="Titolo" align="right">{$common_longDate} - {$common_time}&nbsp;&nbsp;</td></tr>
+  <tr><td bgcolor="#000099"><img src="tpl/black/rule_darkL.gif" width="100" height="2" alt="" /></td></tr>
+  <tr><td class="PiccoloC" align="right">
+  <a style="cursor:hand" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('{$common_rootUrl}');" ><img src="tpl/black/add_home.gif" width="13" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_setHomepage|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
+  <a href="javascript:window.external.AddFavorite('{$common_rootUrl}','{$common_universibo}')"><img src="tpl/black/add_preferiti.gif" width="14" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_addBookmarks|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
+  </td></tr>
+  </table>
+ </td></tr>
  </table>
 </td></tr>
+
 <tr><td bgcolor="#000099"><img src="tpl/black/rule_grande.gif" width="625" height="4" alt="" /></td></tr>
 </table>
 <!-- Fine Testa --> </td></tr>
@@ -146,22 +146,6 @@
  <td class="Menu"><a href="{$common_contributeUri}" >{$common_contribute}</a></td>
 </tr>
 
-
-
-<tr> 
-<td class="Menu" colspan="2"><a href="index.php?pg=10" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Manifesto</a></td>
-</tr>
-<!--
-<tr> 
-<td class="Menu" colspan="2"><a href="index.php?pg=15" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Ringraziamenti</a></td>
-</tr>
--->
-<tr> 
-<td class="Menu" colspan="2"><a href="index.php?pg=16" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Credits</a></td>
-</tr>
-<tr> 
-<td class="Menu" colspan="2"><a href="http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Documentazione</a></td>
-</tr>
 </table>
 
 </td>
