@@ -126,69 +126,79 @@ class _UnitTest_PrgAttivitaDidattica extends PHPUnit_TestCase
 
 	}
 	
-	function testRetrieveAndUpdate()
+	function testRetrieveKey()
 	{
 		
-//		$pad =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($this->cdl->getIdCanale());
-//		
+		$new_pad =& PrgAttivitaDidattica::selectPrgAttivitaDidattica($this->pad->getAnnoAccademico(), $this->pad->getCodiceCdl(), $this->pad->getCodInd(), 
+					$this->pad->getCodOri(), $this->pad->getCodMateria(), $this->pad->getCodMateriaIns(), $this->pad->getAnnoCorso(),
+					$this->pad->getAnnoCorsoIns(), $this->pad->getCodRil(), $this->pad->getCodAte());
+		
+		$this->assertTrue(count($new_pad) > 0);
+		
+		$pad2 =& $new_pad[0];
+		$this->assertTrue($pad2->isSdoppiato() == false);
+		
 //		$value1 = 2005;
-//		$this->pad->setAnnoAccademico($value1);
+//		$pad2->setAnnoAccademico($value1);
 //	
 //		$value2 = 0049;
-//		$this->pad->getCodiceCdl();
+//		$pad2->getCodiceCdl();
 //	
 //		$value3 = 000;
-//		$this->pad->getCodInd();
+//		$pad2->getCodInd();
 //	
 //		$value4 = 000;
-//		$this->pad->getCodOri();
+//		$pad2->getCodOri();
 //	
 //		$value5 = 35049;
-//		$this->pad->getCodMateria();
+//		$pad2->getCodMateria();
 //	
 //		$value6 = 'STUDI DI FABBRICAZIONE';
-//		$this->pad->getNomeMateria();
+//		$pad2->getNomeMateria();
 //	
 //		$value7 = 3;
-//		$this->pad->getAnnoCorso();
+//		$pad2->getAnnoCorso();
 //	
 //		$value8 = 35049;
-//		$this->pad->getCodMateriaIns();
+//		$pad2->getCodMateriaIns();
 //	
 //		$value9 = 'STUDI DI FABBRICAZIONE';
-//		$this->pad->getNomeMateriaIns();
+//		$pad2->getNomeMateriaIns();
 //	
 //		$value10= 2;
-//		$this->pad->getAnnoCorsoIns();
+//		$pad2->getAnnoCorsoIns();
 //	
 //		$value11= 'A-T';
-//		$this->pad->getCodRil();
+//		$pad2->getCodRil();
 //	
 //		$value12= 2;
-//		$this->pad->getCodModulo();
+//		$pad2->getCodModulo();
 //	
 //		$value13= '013160';
-//		$this->pad->getCodDoc();
+//		$pad2->getCodDoc();
 //	
 //		$value14= 'ESORCICCIO';
-//		$this->pad->getNomeDoc();
+//		$pad2->getNomeDoc();
 //	
 //		$value15= true;
-//		$this->pad->isTitolareModulo();
+//		$pad2->isTitolareModulo();
 //		
 //		$value16= 2;
-//		$this->pad->getTipoCiclo();
+//		$pad2->getTipoCiclo();
 //		
 //		$value17= '010';
-//		$this->pad->getCodAte();
+//		$pad2->getCodAte();
 //	
 //		$value18= 3;
-//		$this->pad->getAnnoCorsoUniversibo();
+//		$pad2->getAnnoCorsoUniversibo();
 //	
 //		$value20= '0021';
-//		$this->pad->getCodiceFacolta();
+//		$pad2->getCodiceFacolta();
 //		
-//		$this->pad->updatePrgAttivitaDidattica();
+//		$pad2->updatePrgAttivitaDidattica();
+
+
+		
 //		$pad2 =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($this->cdl->getIdCanale());
 //		
 //		$this->assertTrue($value1, $this->pad2->getAnnoAccademico());
