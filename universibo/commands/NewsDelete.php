@@ -3,7 +3,7 @@
 require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * DeleteNewsCanale: elimina una notizia, mostra il form e gestisce la cancellazione 
+ * NewsDelete: elimina una notizia, mostra il form e gestisce la cancellazione 
  * 
  *
  * @package universibo
@@ -13,7 +13,7 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class DeleteNewsCanale extends CanaleCommand {
+class NewsDelete extends CanaleCommand {
 
 
 	function execute() {
