@@ -103,10 +103,13 @@ class UniversiboCommand extends BaseCommand {
 		{
 			$this->sessionUser = new User(0, USER_OSPITE);
 			$this->setSessionIdUtente(0);
+//			$this->sessionUser =& User::selectUser(79);
+//			var_dump($this->sessionUser->getRuoli());
+			  
 		}
 		elseif ( $this->getSessionIdUtente() >= 0 )
 		{
-			$this->sessionUser &= User::selectUser( $this->getSessionIdUtente() );
+			$this->sessionUser =& User::selectUser( $this->getSessionIdUtente() );
 			
 		}
 		else 

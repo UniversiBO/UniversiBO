@@ -357,7 +357,11 @@ class User {
 	{
 		if ($this->bookmark == NULL)
 		{
-			$this->bookmark =& Ruolo::selectUserRuoli($id_utente);
+			$ruoli =& Ruolo::selectUserRuoli($this->getIdUser());
+			foreach ($ruoli as $ruolo)
+			{
+				$this->bookmark[$ruolo->getIdCanale()] = $ruolo;
+			}
 		}
 		return $this->bookmark;
 	}

@@ -3,7 +3,7 @@
 /**
  * Examples for LogHandler Class
  *
- * @package universibo_test
+ * @package universibo_tests
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@inwind.it>
  * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}

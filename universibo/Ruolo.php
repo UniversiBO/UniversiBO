@@ -471,7 +471,7 @@ class Ruolo {
 	 */
 	function ruoloExists($id_utente, $id_canale)
 	{
-		$query = 'SELECT id_utente, id_canale FROM utente_argomento WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
+		$query = 'SELECT id_utente, id_canale FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -497,7 +497,7 @@ class Ruolo {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_argomento WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
+		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -524,7 +524,7 @@ class Ruolo {
 	{
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_argomento WHERE id_utente = '.$db->quote($id_utente);
+		$query = 'SELECT id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome FROM utente_canale WHERE id_utente = '.$db->quote($id_utente);
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -534,7 +534,7 @@ class Ruolo {
 
 		while (	$res->fetchInto($row) )
 		{
-			$ruoli[] =& new Ruolo($id_utente, $id_canale, $row[4], $row[0], $row[1]==RUOLO_MODERATORE, $row[1]==RUOLO_REFERENTE, $row[2]=='S', $row[3]);
+			$ruoli[] =& new Ruolo($id_utente, $row[0], $row[5], $row[1], $row[2]==RUOLO_MODERATORE, $row[2]==RUOLO_REFERENTE, $row[3]=='S', $row[4]);
 		}
 		return $ruoli;
 		

@@ -19,149 +19,113 @@ define('CANALE_ESAME_ECO' ,6);
  * @package universibo
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@inwind.it>
- * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
+ * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
 class Canale {
 	
+	/**
+	 * @private
+	 */
 	var $id_canale = 0;
+	/**
+	 * @private
+	 */
 	var $permessi = 0;  
-	var $ultimoUpdate = 0;
+	/**
+	 * @private
+	 */
+	var $ultimaModifica = 0;
+	/**
+	 * @private
+	 */
+	var $tipoCanale = 0;
+	/**
+	 * @private
+	 */
+	var $immagine = '';
+	/**
+	 * @private
+	 */
 	var $nome = '';
+	/**
+	 * @private
+	 */
 	var $servizioNotizie = false;
+	/**
+	 * @private
+	 */
 	var $servizioFiles = false;
+	/**
+	 * @private
+	 */
 	var $servizioForum = false;
+	/**
+	 * @private
+	 */
+	var $forum = array();
+	/**
+	 * @private
+	 */
 	var $servizioLinks = false;
 	
 	
 	
 	/**
-	 * Restituisce true se un argomento ט stato registrato nella sessione corrente
+	 * Crea un oggetto canale 
 	 *
-	 * @static
-	 * @return boolean
+	 * $tipo_canale:
+	 *  define('CANALE_DEFAULT'   ,1);
+	 *  define('CANALE_HOME'      ,2);
+	 *  define('CANALE_FACOLTA'   ,3);
+	 *  define('CANALE_CDL'       ,4);
+	 *  define('CANALE_ESAME_ING' ,5);
+	 *  define('CANALE_ESAME_ECO' ,6);
+	 *
+	 * @see selectCanale
+	 * @param int $id_canale
+	 * @param int $permessi {@see User}
+	 * @param int $ultima_modifica timestamp 
+	 * @param int $tipo_canale 	 
+	 * @param string  $immagine
+	 * @param string $nome
+	 * @param boolean $news_attivo
+	 * @param boolean $files_attivo
+	 * @param boolean $forum_attivo
+	 * @param int $forum_forum_id
+	 * @param int $forum_group_id
+	 * @param boolean $links_attivo
+	 * @return Canale
 	 */
-	function sessionUserExists()
+	function &Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome,
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
 	{
-		return array_key_exists('id_utente', $_SESSION);
+		$this->id_canale = $id_canale;
+		$this->permessi = $permessi;  
+		$this->ultimaModifica = $ultima_modifica;
+		$this->tipoCanale = $tipo_canale;
+		$this->immagine = $immagine;
+		$this->nome = $nome;
+		$this->servizioNotizie = $news_attivo;
+		$this->servizioFiles = $files_attivo;
+		$this->servizioForum = $forum_attivo;
+		$this->forum['forum_id'] = $forum_forum_id;
+		$this->forum['group_id'] = $forum_group_id;
+		$this->servizioLinks = $links_attivo;
+		$this->bookmark = $bookmark;
 	}
 
 
 
 	/**
-	 * Restituisce l'id_utente del dello user nella sessione corrente
-	 *
-	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
-	 */
-	function sessionIdUser()
-	{
-		return $_SESSION['id_utente'];
-	}
-
-	
-	
-	/**
-	 *  Verifica se la sintassi dello username ט valido.
-	 *  Sono permessi fino a 25 caratteri: alfanumerici, lettere accentate, spazi, punti, underscore
-	 *
-	 * @param string $username stringa dello username da verificare
-	 * @return boolean
-	 */
-	function isUsernameValid( $username )
-	{
-		$username_pattern='^([[:alnum:]אטעילש ._]{1,25})$';
-		return ereg($username_pattern , $username );
-	}
-	
-
-
-	/**
-	 *  Verifica se la sintassi della password ט valida.
-	 *  Lunghezza min 5, max 30 caratteri
-	 *
-	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
-	 */
-	function isPasswordValid( $password )
-	{
-		//$password_pattern='^([[:alnum:]]{5,30})$';
-		//ereg($password_pattern , $password );
-		$length = strlen( $password );
-		return ( $lenght > 5 && $length < 30 );
-	}
-	 
-	
-	
-	/**
-	 * Genera una password casuale
-	 *
-	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
-	 */
-	function generateRandomPassword(){
-		$begin  = rand(0,24);
-		$length = rand(6,8);
-		return substr(md5(uniqid('')), $begin , $length);
-	}
-	
-
-	
-
-
-
-	/**
-	 * Restituisce true se lo username specificato ט giא registrato sul DB
-	 *
-	 * @param string $username username da ricercare
-	 * @return boolean
-	 */
-	function usernameExists( $username )
-	{
-/*		global $pg_conn;
-		
-		$query='SELECT * FROM utente WHERE username = \''.$username.'\'';
-
-		$dati = pg_exec($pg_conn,$query) or errore(pg_errormessage($pg_conn),__FILE__,__LINE__);
-
-		$rows =  pg_numrows($dati);
-		if( $rows == 0) return false;
-		elseif( $rows == 1) return true;
-		else errore('Errore generale database utenti: username non unico',__FILE__,__LINE__);
-*/
-	}
-
-
-
-	/**
-	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se utente ospite
-	 *
-	 * @param int $id_utente numero identificativo utente, -1 non registrato du DB, 0 utente ospite
-	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
-	 * @return boolean
-	 */
-	function User($id_utente, $group, $username = '', $ADUsername='', $MD5='', $ultimoLogin='', $bookmark=NULL)
-	{
-		
-
-		
-		
-	}
-
-
-
-	/**
-	 * Ritorna lo username dello User
+	 * Ritorna l'id_canale che identifica il canale
 	 *
 	 * @return string
 	 */
-	function getUsername()
+	function getIdCanale()
 	{
-		return $this->username;
+		return $this->id_canale;
 	}
 
 
