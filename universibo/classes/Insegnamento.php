@@ -71,6 +71,7 @@ class Insegnamento extends Canale
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
+		//echo $id_canale,'-';
 		//inizializza l'elenco delle attività padre/non sdoppiate
 		//var_dump($elenco_attivita);
 		$this->elencoAttivita =& $elenco_attivita;
@@ -91,7 +92,11 @@ class Insegnamento extends Canale
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
 			//var_dump($cod_ril);
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n ".$att->getNomeDoc();
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n prof. ".ucwords(strtolower($att->getNomeDoc()));
+		}
+		elseif($nome != '' )
+		{
+			$this->insegnamentoNome = $nome;
 		}
 		else
 		{
@@ -115,7 +120,7 @@ class Insegnamento extends Canale
 				//var_dump($app_elenco_attivita);
 				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
 				$b_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
-				$e_nomi[$i]  = substr($nomi[$i], -3, 0);    //ultime 3 lettere del nome materia
+				$e_nomi[$i]  = substr($nomi[$i], -3, 3);    //ultime 3 lettere del nome materia
 				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
 				if ($max_anno < $anni[$i]) $max_anno = $anni[$i];
 				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
@@ -124,7 +129,7 @@ class Insegnamento extends Canale
 			
 			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
 			//var_dump($e_nomi);
-			$fin = array_values($e_nomi);
+			$fin = array_unique($e_nomi);
 			if ( (count(array_unique($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
 				$nome = $b_nomi[0].$fin[0].' + '.$fin[1];
