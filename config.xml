@@ -34,6 +34,9 @@
 		<ShowContribute class="ShowContribute">
 			 <template type="default">contribute.tpl</template>
 		</ShowContribute>
+		<ShowContacts class="ShowContacts">
+			 <template type="default">chisiamo.tpl</template>
+		</ShowContacts>
 		<ShowQuestions class="ShowQuestions">
 			 <template type="default">questionario.tpl</template>
 		</ShowQuestions>
