@@ -89,7 +89,7 @@ class NewPasswordDocente extends UniversiboCommand
 				"E' stata inoltrata una richiesta di aggiornamento della sua password per l'accesso ad UniversiBO.\n\n".
 				"Le nuove informazioni per permetterle l'accesso ai servizi offerti sono:\n".
 				"Username: ".$username."\n".
-				"Username: ".$randomPassword."\n".
+				"Password: ".$randomPassword."\n".
 				"Questa password e' stata generata in modo casuale, sul sito e' disponibile la funzionalita' per poterla cambiare\n\n".
 				"Se vuole iscrivere dei suoi \"assistenti\" risponda a questa mail con i loro nomi e indirizzi email ed uno username di loro gradimento.\n".
 				"Provvederemo ad iscriverli al piu' presto e a dar loro i diritti opportuni sulle sue pagine.\n\n".
