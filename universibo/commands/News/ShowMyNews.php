@@ -82,10 +82,10 @@ class ShowMyNews extends PluginCommand {
 				$elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();
 				
 				$elenco_news_tpl[$i]['scadenza']     = '';
-				if ( ($news->getDataScadenza()!=NULL) && ( $user->isAdmin() || $referente || $this_moderatore ) && $flag_chkDiritti)
-				{
-					$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
-				}
+				//if ( ($news->getDataScadenza()!=NULL) && ( $user->isAdmin() || $referente || $this_moderatore ) && $flag_chkDiritti)
+				//{
+				//	$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
+				//}
 				
 				//roba mia
 				$canali = $news->getIdCanali();
