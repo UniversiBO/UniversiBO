@@ -12,6 +12,7 @@
 	&nbsp;<a href="{$showSettings}">Modifica</a>
 {/if}
 </span></td></tr>
+<tr><td>&nbsp</td></tr>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"> 
 			    <tr><td bgcolor="#000099">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">

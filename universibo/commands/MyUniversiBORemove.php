@@ -37,6 +37,7 @@ class MyUniversiBORemove extends UniversiboCommand
 		$canale = & Canale::retrieveCanale($id_canale);
 		$template->assign('common_canaleURI', $canale->showMe());
 		$template->assign('common_langCanaleNome', $canale->getNome());
+		$template->assign('showUser','index.php?do=ShowUser&id_utente='.$utente->getIdUser());
 		
 		$ruoli =& $utente->getRuoli();
 		$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));

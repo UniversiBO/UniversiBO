@@ -1,6 +1,7 @@
 <?php
 
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
+require_once  ('CanaleCommand'.PHP_EXTENSION);
 
 /**
  * ShowMyPage is an extension of UniversiboCommand class.
@@ -91,6 +92,11 @@ class MyUniversiBOAdd extends UniversiboCommand
 					$nascosto = false;
 					$ruolo = new Ruolo($utente->getIdUser(), $id_canale, $f15_nome , time(), false, false, true, $f15_livello_notifica, $nascosto);
 					$ruolo->insertRuolo();
+					$canale =& Canale::retrieveCanale($id_canale);
+					if($canale->getTipoCanale() == CANALE_INSEGNAMENTO)
+					{
+						//troveró un modo per ottenere il cdl! lo giuro!!!
+					}
 					return 'success';
 				}
 				

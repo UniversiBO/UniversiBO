@@ -32,6 +32,8 @@ class ShowUser extends UniversiboCommand{
 		foreach ($keys as $key)
 			{
 				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
 				$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
 				$Canali = array();
 				$Canali['uri']   = $canale->showMe();
@@ -42,8 +44,9 @@ class ShowUser extends UniversiboCommand{
 				$Canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
 				$Canali['categoria'] = implode($Canali['categoria']);
 				$arrayCanali[] = $Canali;
+				}
 			}
-//		usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
+		usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
 		$email = $user->getEmail();
 		$template->assign('showUserNickname',$user->getUsername());
 		$template->assign('showUserEmail',$email);
