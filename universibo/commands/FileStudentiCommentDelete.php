@@ -28,6 +28,11 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 		
+		if (!array_key_exists('id_utente', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_utente']))
+		{
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id dell\'utente non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		
 		if (!array_key_exists('id_file_studente', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file_studente']))
 		{
 			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del file richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
@@ -75,12 +80,11 @@ class FileStudentiCommentDelete extends UniversiboCommand {
 			
 			//controllo diritti sul canale
 			if (!($user->isAdmin() || $referente || $moderatore || $autore))
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il commento\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per eliminare il commento\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 				
 		}
-
-		if (!($user->isAdmin() || $autore)) 
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il commento\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
+		elseif (!($user->isAdmin() || $autore)) 
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per eliminare il commento\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
 		
 		
 		// valori default form

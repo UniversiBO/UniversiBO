@@ -77,14 +77,7 @@ class FileStudentiDelete extends UniversiboCommand {
 				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 			
 		}
-		
-		/* diritti
-		 -admin
-		 -autore file
-		 -referenti canale
-		*/
-		
-		if (!($user->isAdmin() || $autore))
+		elseif (!($user->isAdmin() || $autore))
 				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 			
 

@@ -40,8 +40,9 @@ class ShowFileStudentiCommenti extends PluginCommand {
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
 
-		
-		$id_canale = $param['id_canale'];
+	    $file = FileItemStudenti::selectFileItem($param['id_file']);
+		$id_canali = $file->getIdCanali();
+		$id_canale = $id_canali[0];
 		$user_ruoli =& $user->getRuoli();
 
 		$personalizza_not_admin = false;

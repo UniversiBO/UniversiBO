@@ -83,8 +83,7 @@ class FileEdit extends UniversiboCommand {
 				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 				
 		}
-
-		if (!($user->isAdmin() || $autore)) 
+		elseif (!($user->isAdmin() || $autore)) 
 				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
 		
 		

@@ -21,6 +21,72 @@ require_once('Files/FileItem'.PHP_EXTENSION);
 class FileItemStudenti extends FileItem {
 	
 	/**
+	 * Recupera un file dal database
+	 *
+	 * @static
+	 * @param int $id_file  id del file
+	 * @return FileItem 
+	 */
+	function & selectFileItem($id_file) {
+		$id_files = array ($id_file);
+		$files = & FileItemStudenti :: selectFileItems($id_files);
+		if ($files === false)
+			return false;
+		return $files[0];
+	}
+
+	/**
+	 * Recupera un elenco di file dal database
+	 * non ritorna i files eliminati
+	 *
+	 * @static
+	 * @param array $id_file array elenco di id dei file
+	 * @return array FileItem 
+	 */
+	function & selectFileItems($id_files) {
+
+		$db = & FrontController :: getDbConnection('main');
+
+		if (count($id_files) == 0)
+			return array ();
+
+		//esegue $db->quote() su ogni elemento dell'array
+		//array_walk($id_notizie, array($db, 'quote'));
+		if (count($id_files) == 1)
+			$values = $id_files[0];
+		else
+			$values = implode(',', $id_files);
+
+		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
+						 nome_file, A.id_categoria, id_tipo_file, hash_file, A.password,
+						 username, C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
+						 FROM file A, utente B, file_categoria C, file_tipo D 
+						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
+		$res = & $db->query($query);
+
+		//echo $query;
+		
+		if (DB :: isError($res))
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+
+		$rows = $res->numRows();
+
+		if ($rows == 0)
+			return false;
+		$files_list = array ();
+
+		while ($res->fetchInto($row)) {
+			$files_list[] = & new FileItemStudenti($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
+		}
+
+		$res->free();
+
+		return $files_list;
+	}
+	
+	
+	/**
 	 * aggiunge il file al canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
@@ -90,7 +156,7 @@ class FileItemStudenti extends FileItem {
 		
 		$db = & FrontController :: getDbConnection('main');
 
-		$query = 'SELECT id_canale FROM file_studente_canale WHERE id_file='.$db->quote($id_file).' GROUP BY id_file';
+		$query = 'SELECT id_canale FROM file_studente_canale WHERE id_file='.$db->quote($id_file);
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
@@ -99,7 +165,7 @@ class FileItemStudenti extends FileItem {
 	
 		$res->fetchInto($row);
 
-		return $row[0];
+		return array($row[0]);
 
 	}
 	
@@ -138,7 +204,7 @@ class FileItemStudenti extends FileItem {
 	 	
 		$db = & FrontController :: getDbConnection('main');
 
-		$query = 'SELECT avg(voto) FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file).' GROUP BY id_file_studente';
+		$query = 'SELECT avg(voto) FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' GROUP BY id_file';
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))

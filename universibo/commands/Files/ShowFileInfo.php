@@ -46,10 +46,14 @@ class ShowFileInfo extends PluginCommand {
 			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
 		}
 				
-		$file =& FileItem::selectFileItem($param['id_file']);
+		$tipo_file = FileItemStudenti::isFileStudenti($param['id_file']);
+		
+		if ($tipo_file)
+			$file =& FileItemStudenti::selectFileItem($param['id_file']);
+		else	
+			$file =& FileItem::selectFileItem($param['id_file']);
 		//Con questo passaggio dovrei riuscire a verificare se il file che si vuole modificare é un file studente o no
 		//true -> é un file studente
-		$tipo_file = FileItemStudenti::isFileStudenti($param['id_file']);
 //		var_dump($tipo_file);
 //		die();
 		
@@ -66,40 +70,57 @@ class ShowFileInfo extends PluginCommand {
 
 		$template->assign('showFileInfo_editFlag', 'false');
 		$template->assign('showFileInfo_deleteFlag', 'false');
-		if(!$tipo_file)
+		$referente = false;
+	    $moderatore = false;
+		
+
+		if (array_key_exists('id_canale', $_GET))
 		{
-			//mancano dei diritti
-			if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non é valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			if ($canale->getServizioFiles() == false) 
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il servizio files é disattivato", 'file' => __FILE__, 'line' => __LINE__));
+		
+			$id_canale = $canale->getIdCanale();
+			$user_ruoli = $canale->getRuoli();
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			if (array_key_exists($id_canale, $user_ruoli)) {
+				$ruolo = & $user_ruoli[$id_canale];
+	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			//controllo coerenza parametri
+			$canali_file	=& 	$file->getIdCanali();
+			if (!in_array($id_canale, $canali_file))
+				 Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		
+		
+		$autore = ($user->getIdUser() == $file->getIdUtente());
+		if($autore||$user->isAdmin()||$referente||$moderatore)
+		{
+			$template->assign('showFileInfo_editFlag', 'true');
+			$template->assign('showFileInfo_deleteFlag', 'true');
+			if($tipo_file)
 			{
-	//			$file_tpl['modifica']     = 'Modifica';
-	//			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
-	//			$file_tpl['elimina']      = 'Elimina';
-	//			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
-				$template->assign('showFileInfo_editFlag', 'true');
-				$template->assign('showFileInfo_deleteFlag', 'true');
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
+			}
+			else
+			{
 				$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
 				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
 			}
 		}
-		else
+		
+
+		if($tipo_file)
 		{
-			$autore = ($user->getIdUser() == $file->getIdUtente());
-			$user_ruoli = & $user->getRuoli();
-			if (array_key_exists($param['id_canale'], $user_ruoli)) 
-			{
-				$ruolo = & $user_ruoli[$param['id_canale']];
-	
-				$referente = $ruolo->isReferente();
-				$moderatore = $ruolo->isModeratore();
-				if($autore||$user->isAdmin()||$referente||$moderatore)
-				{
-					$template->assign('showFileInfo_editFlag', 'true');
-					$template->assign('showFileInfo_deleteFlag', 'true');
-					$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
-					$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
-				}
-			}
-			$voto = FileItemStudenti::getVoto($param['id_file']);
+    		$voto = FileItemStudenti::getVoto($param['id_file']);
 //			var_dump($voto);
 //			die();
 			if($voto==NULL)

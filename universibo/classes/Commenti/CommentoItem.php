@@ -130,7 +130,7 @@ class CommentoItem
 	 {
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT id_utente,commento,voto FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file).' ORDER BY voto DESC';
+		$query = 'SELECT id_utente,commento,voto FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' ORDER BY voto DESC';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -156,22 +156,22 @@ class CommentoItem
 	 {
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT commento,voto FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente);
+		$query = 'SELECT commento,voto FROM file_studente_commenti WHERE id_file='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente);
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$commenti_list = array();
 	
-		while ( $res->fetchInto($row) )
+		if($res->fetchInto($row) )
 		{
-			$commenti_list= &new CommentoItem($id_file,$id_utente,$row[0],$row[1]);
+			$commenti= &new CommentoItem($id_file,$id_utente,$row[0],$row[1]);
 		}
+		else return false;
 		
 		$res->free();
 		
-		return $commenti_list;
+		return $commenti;
 	 }
 	 
 	 /**
@@ -186,7 +186,7 @@ class CommentoItem
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file_studente = '.$db->quote($id_file).' GROUP BY id_file_studente';
+		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file = '.$db->quote($id_file).' GROUP BY id_file';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
@@ -231,7 +231,7 @@ class CommentoItem
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
 		$return = true;
-        $query = 'INSERT INTO file_studente_commenti VALUES ('.$db->quote($id_file_studente).','.$db->quote($id_utente).','.$db->quote($commento).','.$db->quote($voto).')';
+        $query = 'INSERT INTO file_studente_commenti (id_file,id_utente,commento,voto) VALUES ('.$db->quote($id_file_studente).','.$db->quote($id_utente).','.$db->quote($commento).','.$db->quote($voto).')';
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -252,7 +252,7 @@ class CommentoItem
 	 	$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
 		$return = true;
-        $query = 'UPDATE file_studente_commenti SET commento='.$db->quote($commento).', voto= '.$db->quote($voto).' WHERE id_file_studente='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
+        $query = 'UPDATE file_studente_commenti SET commento='.$db->quote($commento).', voto= '.$db->quote($voto).' WHERE id_file='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -273,7 +273,7 @@ class CommentoItem
 	  		$db = FrontController::getDbConnection('main');
 		ignore_user_abort(1);
 		$return = true;
-        $query = 'DELETE FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
+        $query = 'DELETE FROM file_studente_commenti WHERE id_file='.$db->quote($id_file_studente).' AND id_utente ='.$db->quote($id_utente);
 		$res = $db->query($query);
 		if (DB :: isError($res))
 			{				
@@ -284,6 +284,29 @@ class CommentoItem
 			ignore_user_abort(0);
 		return $return;
 	  }
+	  /**
+	 * Questa funzione verifica se esiste giá un commento inserito dall'utente
+	 * 
+	 * @param $id_file, $id_utente id del file e dell'utente
+	 * @return un valore booleano
+	 */
+	
+	function & esisteCommento($id_file,$id_utente)
+	{
+		$flag = false;
+		
+		$db = & FrontController :: getDbConnection('main');
+
+		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file ='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente).' GROUP BY id_file_studente,id_utente';
+		$res = & $db->query($query);
+
+		if (DB :: isError($res))
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		$res->fetchInto($ris);	
+		if($ris[0]==1) $flag=true;
+		
+		return $flag;
+	}
 }
 
 ?>

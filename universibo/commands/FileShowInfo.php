@@ -84,7 +84,7 @@ class FileShowInfo extends UniversiboCommand {
 		if($tipo_file==true) 
 		{
 		    $template->assign('isFileStudente','true');
-			$this->executePlugin('ShowFileStudentiCommenti', array( 'id_file' => $id_file,'id_canale' => $_GET['id_canale'] ));
+			$this->executePlugin('ShowFileStudentiCommenti', array( 'id_file' => $id_file));
 		}
 		else
 			$template->assign('isFileStudente','false');	

@@ -42,12 +42,12 @@ class FileStudentiComment extends UniversiboCommand {
 		//Controllo che non esista giá un commento da parte di questo utente
 		
 		$id_file = $_GET['id_file'];
-		$esiste_commento = $this->esisteCommento($id_file,$user->getIdUser());
-		if($esiste_commento)
-		{   
-			$canali = $file->getIdCanali();
+		$esiste_commento = CommentoItem::selectCommentoItem($id_file,$user->getIdUser());
+		if($esiste_commento!==false)
+		{   $canali = $file->getIdCanali();
+			
 			$template->assign('FileStudentiComment_ris','Esiste giá un tuo commento');
-			$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali);
+			$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali[0]);
 			return 'success';
 		}
 		
@@ -152,7 +152,7 @@ class FileStudentiComment extends UniversiboCommand {
 				
 				$canali = $file->getIdCanali();
 				$template->assign('FileStudentiComment_ris','Il tuo commento é stato inserito con successo.');
-				$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali);
+				$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali[0]);
 				return 'success';
 			}
 
@@ -169,29 +169,7 @@ class FileStudentiComment extends UniversiboCommand {
 
 	}
 	
-	/**
-	 * Questa funzione verifica se esiste giá un commento inserito dall'utente
-	 * 
-	 * @param $id_file, $id_utente id del file e dell'utente
-	 * @return un valore booleano
-	 */
 	
-	function & esisteCommento($id_file,$id_utente)
-	{
-		$flag = false;
-		
-		$db = & FrontController :: getDbConnection('main');
-
-		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file_studente ='.$db->quote($id_file).' AND id_utente = '.$db->quote($id_utente).' GROUP BY id_file_studente,id_utente';
-		$res = & $db->query($query);
-
-		if (DB :: isError($res))
-			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
-		$res->fetchInto($ris);	
-		if($ris[0]==1) $flag=true;
-		
-		return $flag;
-	}
 
 }
 

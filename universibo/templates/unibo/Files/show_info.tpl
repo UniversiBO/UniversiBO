@@ -2,7 +2,7 @@
 <h3>Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</h3>
 <p>&nbsp;Inserito da:&nbsp;<a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></p>
 <p>&nbsp;Inserito il:&nbsp;{$showFileInfo_dataInserimento|escape:"htmlall"}</p>
-<p>&nbsp;Titolo:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
+<p>&nbsp;Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</p>
 <p>&nbsp;Descrizione/abstract:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
 <p>&nbsp;Parole chiave:&nbsp;{foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}<p>
 <p>&nbsp;Categoria:&nbsp;{$showFileInfo_categoria|escape:"htmlall"}</p>
