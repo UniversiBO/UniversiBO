@@ -365,6 +365,9 @@ class NewsItem {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
+		if ( count($id_notizie) == 0 )
+			return array();
+		
 		//esegue $db->quote() su ogni elemento dell'array
 		array_walk($id_notizie, array($db, 'quote'));
 		$values = implode(',',$id_notizie);

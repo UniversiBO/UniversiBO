@@ -42,6 +42,7 @@
 <p>&nbsp;</p>
 {/foreach}
 
+{include file=News/latest_news.tpl}
 
 
 </td></tr>

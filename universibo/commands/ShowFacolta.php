@@ -89,6 +89,8 @@ class ShowFacolta extends CanaleCommand {
 		$template -> assign('fac_list', $fac_listCdlType);
 		//$template -> assign_by_ref('fac_list', $fac_listCdlType);
 
+		$param = array( 'num' => 4 );
+		$this->executePlugin('ShowNewsLatest', $param );
 		
 		return 'default';
 	}

@@ -82,11 +82,13 @@ class ShowNewsLatest extends PluginCommand {
 
 		if ( $canale_news == 0 )
 		{
-			$template->assign('showNewsLatest_langNewsAwailable', 'Non ci sono notizie in questo canale');
+			$template->assign('showNewsLatest_langNewsAvailable', 'Non ci sono notizie in questo canale');
+			$template->assign('showNewsLatest_langNewsAvailableFlag', 'false');
 		}
 		else
 		{
-			$template->assign('showNewsLatest_langNewsAwailable', 'Ci sono '.$canale_news.' notizie in questo canale');
+			$template->assign('showNewsLatest_langNewsAvailable', 'Ci sono '.$canale_news.' notizie in questo canale');
+			$template->assign('showNewsLatest_langNewsAvailableFlag', 'true');
 			if ( $canale_news > $num_news )
 			{
 				$template->assign('showNewsLatest_langNewsShowOthers', 'Mostra le altre notizie di questa pagina');
@@ -96,9 +98,10 @@ class ShowNewsLatest extends PluginCommand {
 		
 		$elenco_news =& $this->getLatestNewsCanale($num_news, $id_canale);
 		
+		$elenco_news_tpl = array();
+
 		if ($elenco_news ==! false )
 		{
-			$elenco_news_tpl = array();
 			
 			$ret_news = count($elenco_news);
 			

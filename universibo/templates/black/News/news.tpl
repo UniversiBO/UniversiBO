@@ -11,7 +11,7 @@
   </table>
 </td></tr>
 <tr bgcolor="#000050"> 
-<td class="Titolo">{$titolo|escape:"htmlall"}</td>
+<td class="Titolo">&nbsp;::&nbsp;{$titolo|escape:"htmlall"}&nbsp;::&nbsp;</td>
 </tr>
 <tr bgcolor="#000099" align="center"> 
 <td><img src="tpl/black/invisible.gif" height="2" width="1" alt="" /></td>

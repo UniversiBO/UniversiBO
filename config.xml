@@ -34,6 +34,7 @@
 		</ShowHome>
 		<ShowFacolta class="ShowFacolta">
 			<response type="template" name="default">facolta.tpl</response>
+			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowFacolta>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
@@ -63,7 +64,7 @@
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
 	
-	<templateInfo type="Smarty" debugging="on">
+	<templateInfo type="Smarty" debugging="off">
 		<template_dirs>
 			<web_dir>tpl/</web_dir>
 			<smarty_dir>../framework/smarty/</smarty_dir>
