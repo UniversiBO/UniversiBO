@@ -52,119 +52,23 @@
 <tr> 
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
-<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
+
+
+
+<table width="95%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
-    <td colspan="2"> <img src="tpl/black/facolta_di_ingegneria_18.gif" width="111" height="42" alt="Facolt&agrave;" /></td>
-</tr>
-<tr>
-    <td class="Menu" colspan="2" align="center">&nbsp;<br />Lauree Triennali</td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-		<td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0046&amp;anno_accademico=2002" >0046 - delle Telecomunicazioni</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0047&amp;anno_accademico=2002" >0047 - Elettrica</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0048&amp;anno_accademico=2002" >0048 - Elettronica</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0049&amp;anno_accademico=2002" >0049 - Gestionale</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0050&amp;anno_accademico=2002" >0050 - dei Processi Gestionali</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0051&amp;anno_accademico=2002" >0051 - Informatica</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0055&amp;anno_accademico=2002" >0055 - dell'Automazione</a>
-    </td>
+    <td colspan="2"> <img src="tpl/black/facolta_18.gif" width="89" height="22" alt="{$common_fac}" /></td>
 </tr>
 
-
+{foreach from=$common_facLinks item=curr_link}
 <tr>
-    <td class="Menu" colspan="2" align="center">&nbsp;<br />Lauree Specialistiche</td>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$curr_link.uri}" >{$curr_link.label}</a></td>
 </tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0231&amp;anno_accademico=2002" >0231 - delle Telecomunicazioni</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0232&amp;anno_accademico=2002" >0232 - Elettrica</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0233&amp;anno_accademico=2002" >0233 - Elettronica</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0234&amp;anno_accademico=2002" >0234 - Informatica</a>
-    </td>
-</tr>
-
-<tr>
-    <td class="Menu" colspan="2" align="center">&nbsp;<br />Vecchio Ordinamento</td>
-</tr>
-
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=2147&amp;anno_accademico=2002" >2147 - Gestionale</a>
-    </td>
-</tr>
-<tr>
-    <td class="Menu" colspan="2" align="middle">&nbsp;</td>
-</tr>
-
-<!--
-
-<tr>
-    <td class="Menu" colspan="2"><b><br />di Economia</b></td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0023&amp;anno_accademico=2002" >0023 - Economia e Professione</a>
-    </td>
-</tr>
-<tr>
-    <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
-    <td class="Menu">
-    <a href="index.php?pg=5&amp;cod_corso=0221&amp;anno_accademico=2002" >0221 - Economia e Professione</a>
-    </td>
-</tr>
--->
+{/foreach}
 
 </table>
+
 
 </td>
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
@@ -185,11 +89,20 @@
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
  
-<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
-<td colspan="2"><img src="tpl/black/servizi_18.gif" width="83" height="22" alt="Servizi" /></td>
+<td colspan="2"><img src="tpl/black/servizi_18.gif" width="83" height="22" alt="{$common_services}" /></td>
 </tr>
-<tr><td valign="top" width="12"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td><td class="Menu"><a href="index.php?pg=20&amp;id_argomento=31" >Appunti - LaTeX</a></td></tr><tr><td valign="top" width="12"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td><td class="Menu"><a href="index.php?pg=20&amp;id_argomento=71" >Eventi</a></td></tr></table></td>
+
+{foreach from=$common_servicesLinks item=curr_link}
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$curr_link.uri}" >{$curr_link.label}</a></td>
+</tr>
+{/foreach}
+</table>
+
+</td>
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
 </tr>
 <tr valign="top"> 
@@ -207,37 +120,51 @@
 <tr> 
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
-<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
+
+<table width="95%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
-<td><img src="tpl/black/informazioni_18.gif" width="142" height="22" alt="Informazioni" /></td>
+<td colspan="2"><img src="tpl/black/informazioni_18.gif" width="136" height="22" alt="{$common_info}" /></td>
 </tr>
-<tr> 
-<td class="Menu"><a href="index.php?pg=10" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Manifesto</a></td>
+
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_helpUri}" >{$common_help}</a></td>
 </tr>
-<tr> 
-<td class="Menu"><a href="index.php?pg=11" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Regolamento</a></td>
+
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_rulesUri}" >{$common_rules}</a></td>
 </tr>
-<tr> 
-<td class="Menu"><a href="index.php?pg=12" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Chi siamo</a></td>
+
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_contactsUri}" >{$common_contacts}</a></td>
 </tr>
-<tr> 
-<td class="Menu"><a href="index.php?pg=13" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Help</a></td>
+
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_contributeUri}" >{$common_contribute}</a></td>
 </tr>
+
+
+
 <tr> 
-<td class="Menu"><a href="index.php?pg=14" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Collabora</a></td>
+<td class="Menu" colspan="2"><a href="index.php?pg=10" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Manifesto</a></td>
 </tr>
 <!--
 <tr> 
-<td class="Menu"><a href="index.php?pg=15" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Ringraziamenti</a></td>
+<td class="Menu" colspan="2"><a href="index.php?pg=15" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Ringraziamenti</a></td>
 </tr>
 -->
 <tr> 
-<td class="Menu"><a href="index.php?pg=16" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Credits</a></td>
+<td class="Menu" colspan="2"><a href="index.php?pg=16" ><img border="0" src="tpl/black/pallino1.gif" width="12" height="11" alt="" />Credits</a></td>
 </tr>
 <tr> 
-<td class="Menu"><a href="http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Documentazione</a></td>
+<td class="Menu" colspan="2"><a href="http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/" target="_blank"><img src="tpl/black/freccia_4.gif" width="12" height="11" border="0" alt="" />Documentazione</a></td>
 </tr>
-</table></td>
+</table>
+
+</td>
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
 </tr>
 <tr valign="top"> 

@@ -36,16 +36,36 @@ class TestTemplate extends BaseCommand {
 		$template->assign('common_addBookmarks', 'Aggiungi ai preferiti');
 
 
-		$template->assign('common_faculty', 'Facoltà');
+		$template->assign('common_fac', 'Facoltà');
 		
-		$facultyLinks = array();
-		$facultyLinks[] = array('Ingegneria',)
-		$template->assign('common_facultyLinks', 'Facoltà');
-		
+		$common_facLinks = array();
+		$common_facLinks[] = array ('label'=>'Ingegneria', 'uri'=>'http://www.example.com'); 
+		$common_facLinks[] = array ('label'=>'Economia', 'uri'=>'http://www.example.com'); 
+		$common_facLinks[] = array ('label'=>'Nome facoltà', 'uri'=>'http://www.example.com'); 
+		$common_facLinks[] = array ('label'=>'Altro nome', 'uri'=>'http://www.example.com'); 
+		$template->assign('common_facLinks', $common_facLinks);
 
 
+		$template->assign('common_services', 'Servizi');
+	
+		$common_servicesLinks = array();
+		$common_servicesLinks[] = array ('label'=>'Appunti - Latex', 'uri'=>'http://www.example.com'); 
+		$common_servicesLinks[] = array ('label'=>'Biblioteca', 'uri'=>'http://www.example.com'); 
+		$common_servicesLinks[] = array ('label'=>'Eventi', 'uri'=>'http://www.example.com'); 
+		$common_servicesLinks[] = array ('label'=>'Moderatori', 'uri'=>'http://www.example.com'); 
+		$common_servicesLinks[] = array ('label'=>'Grafica', 'uri'=>'http://www.example.com'); 
+		$template->assign('common_servicesLinks', $common_servicesLinks);
 
+		$template->assign('common_info', 'Informazioni');
 
+		$template->assign('common_help', 'Help');
+		$template->assign('common_helpUri', 'index.php?do=ShowHelp');
+		$template->assign('common_rules', 'Regolamento');
+		$template->assign('common_rulesUri', 'index.php?do=ShowRules');
+		$template->assign('common_contacts', 'Contatti - (chi siamo)');
+		$template->assign('common_contactsUri', 'index.php?do=ShowContacts');
+		$template->assign('common_contribute', 'Collabora');
+		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');
 
 
 		$template->assign('home_welcome', 'Benvenuto in UniversiBO!');
