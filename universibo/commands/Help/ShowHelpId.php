@@ -40,14 +40,14 @@ class ShowHelpId extends PluginCommand {
 		if ($id_help === 0)
 			$query = 'SELECT id_help, titolo, contenuto FROM help ORDER BY indice';
 		else 
-			$query = 'SELECT id_help, titolo, contenuto FROM help WHERE id_help=\''.$id_help.'\' ORDER BY indice';
+			$query = 'SELECT id_help, titolo, contenuto FROM help WHERE id_help=\''.$id_help.'\'';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 		
 		$argomenti	= array();
 				

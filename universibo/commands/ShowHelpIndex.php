@@ -3,9 +3,9 @@
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
- * ShowContributes is an extension of UniversiboCommand class.
+ * ShowHelpIndex is an extension of UniversiboCommand class.
  *
- * It shows Contribute page
+ * It shows help page order by index
  *
  * @package universibo
  * @subpackage commands

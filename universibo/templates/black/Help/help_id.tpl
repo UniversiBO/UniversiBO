@@ -19,8 +19,8 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 	{foreach from=$showHelpId_langArgomento item=temp_helpid}
 	
-	<tr bgcolor="{cycle values="#000032,#000016"}"><td class="Titolo">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
-	<a name="{$temp_helpid.id|escape:"htmlall"}" id="{$temp_helpid.id|escape:"htmlall"}"> <strong>{$temp_helpid.titolo|escape:"htmlall"}</strong></a></td>
+	<tr bgcolor="{cycle values="#000032,#000016"}"><td id="{$temp_helpid.id|escape:"htmlall"}" class="Titolo">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+	<strong>{$temp_helpid.titolo|escape:"htmlall"}</strong></td>
 	<td align="right" class="Piccolo"><a href="#index">torna su</a> </td></tr>
 	<tr><td colspan="2" class="Normal" bgcolor="{cycle values="#000032,#000016"}">{$temp_helpid.contenuto|escape:"htmlall"|bbcode2html|nl2br}</td></tr>
 	<td>&nbsp;</td></tr>
