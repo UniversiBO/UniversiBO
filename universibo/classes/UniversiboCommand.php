@@ -346,19 +346,13 @@ class UniversiboCommand extends BaseCommand {
 		
 		$template->assign('common_services', 'Servizi');
 		$common_servicesLinks = array();
-		$common_servicesLinks[] = array ('label'=>'Appunti - Latex', 'uri'=>'http://www.example.com'); 
-		$common_servicesLinks[] = array ('label'=>'Biblioteca', 'uri'=>'http://www.example.com'); 
-		$common_servicesLinks[] = array ('label'=>'Erasmus', 'uri'=>'http://www.example.com'); 
-		$common_servicesLinks[] = array ('label'=>'Eventi', 'uri'=>'http://www.example.com'); 
-		 
-		// servizi personali per i quali l'utente ha i diritti di accesso
-		$user_ruoli =& $session_user->getRuoli();
-		//var_dump($user_ruoli);
-		foreach ($user_ruoli as $myruolo )
+		
+		// servizi per i quali l'utente ha i diritti di accesso
+		$list_id_canali =& Canale::selectCanaliTipo(CANALE_DEFAULT);
+		$list_canali	=& Canale::selectCanali($list_id_canali);
+		foreach ($list_canali as $mycanale )
 		{
-			$mycanale =& $myruolo->getCanale();
-			//var_dump($mycanale);
-			if ($mycanale->getTipoCanale() == CANALE_DEFAULT)
+			if ($mycanale->isGroupAllowed($session_user_groups))
 				$common_servicesLinks[] = array ('label'=>''.$mycanale->getNome(), 'uri'=>'index.php?do=ShowCanale&id_canale='.$mycanale->getIdCanale());
 		}
 		

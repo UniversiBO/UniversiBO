@@ -796,6 +796,40 @@ class Canale {
 		
 		return false;
 	}
+	
+	
+	/**
+	 * Crea un elenco (array) di oggetti Canale dato un elenco (array) di loro numeri identificativi id_canale del database
+	 *
+	 * @static
+	 * @param array $tipoCanali array contenente ila tipologia del canale
+	 * @return mixed array di id_canali se eseguita con successo, false se il canale non esiste
+	 */
+	function &selectCanaliTipo($tipoCanale)
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_canale FROM canale WHERE tipo_canale = '.$db->quote($tipoCanale);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows == 0) return false;
+
+		$elenco_canali = array();
+		while ($res->fetchInto($row))
+		{
+			//var_dump($row);
+			$elenco_canali[] = $row[0];
+		}
+		$res->free();
+		
+		return $elenco_canali;
+		
+	}
+	
+	
 }
 
 
