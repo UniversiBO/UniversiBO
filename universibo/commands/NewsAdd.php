@@ -97,11 +97,13 @@ class NewsAdd extends CanaleCommand {
 					$f7_accept = false;
 				} else
 					$f7_titolo = $_POST['f7_titolo'];
-
+				
+				$checkdate_ins = true;
 				//data_ins_gg
 				if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_gg'])) {
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
+					$checkdate_ins = false;
 				} else
 					$f7_data_ins_gg = $_POST['f7_data_ins_gg'];
 
@@ -109,6 +111,7 @@ class NewsAdd extends CanaleCommand {
 				if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_ins_mm'])) {
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
+					$checkdate_ins = false;
 				} else
 					$f7_data_ins_mm = $_POST['f7_data_ins_mm'];
 
@@ -116,10 +119,12 @@ class NewsAdd extends CanaleCommand {
 				if (!ereg('^([0-9]{4})$', $_POST['f7_data_ins_aa'])) {
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
+					$checkdate_ins = false;
 				}
 				elseif ($_POST['f7_data_ins_aa'] < 1970 || $_POST['f7_data_ins_aa'] > 2032) {
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
+					$checkdate_ins = false;
 				} else
 					$f7_data_ins_aa = $_POST['f7_data_ins_aa'];
 
@@ -145,7 +150,7 @@ class NewsAdd extends CanaleCommand {
 				} else
 					$f7_data_ins_min = $_POST['f7_data_ins_min'];
 
-				if (!checkdate($_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']))
+				if ( $checkdate_ins == true && !checkdate($_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']))
 				{
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f7_accept = false;
@@ -157,11 +162,12 @@ class NewsAdd extends CanaleCommand {
 				if (array_key_exists('f7_scadenza', $_POST)) {
 
 					$f7_scadenza = true;
-
+					$checkdate_scad = true;
 					//data_scad_gg
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_gg'])) {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
+						$checkdate_scad = false;
 					} else
 						$f7_data_scad_gg = $_POST['f7_data_scad_gg'];
 
@@ -169,6 +175,7 @@ class NewsAdd extends CanaleCommand {
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_mm'])) {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
+						$checkdate_scad = false;
 					} else
 						$f7_data_scad_mm = $_POST['f7_data_scad_mm'];
 
@@ -176,10 +183,12 @@ class NewsAdd extends CanaleCommand {
 					if (!ereg('^([0-9]{4})$', $_POST['f7_data_scad_aa'])) {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
+						$checkdate_scad = false;
 					}
 					elseif ($_POST['f7_data_scad_aa'] < 1970 || $_POST['f7_data_scad_aa'] > 2032) {
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
+						$checkdate_scad = false;
 					} else
 						$f7_data_scad_aa = $_POST['f7_data_scad_aa'];
 
@@ -205,7 +214,7 @@ class NewsAdd extends CanaleCommand {
 					} else
 						$f7_data_scad_min = $_POST['f7_data_scad_min'];
 
-					if (!checkdate($_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']))
+					if ( $checkdate_scad == true && !checkdate($_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']))
 					{
 						Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f7_accept = false;
