@@ -66,7 +66,7 @@ class ShowFacolta extends CanaleCommand {
 				}
 				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
 															 'name' => $elencoCdl[$i]->getNome(), 
-															 'link' => 'index.php?do=ShowCDL&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
+															 'link' => 'index.php?do=ShowCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
 			}
 		}
 		//var_dump($fac_listCdlType);

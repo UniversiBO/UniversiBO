@@ -39,41 +39,41 @@ class ShowCdl extends CanaleCommand {
 
 		require_once('Insegnamento'.PHP_EXTENSION);
 
-		$template -> assign('fac_langFac', 'FACOLTA\'');
-		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
-		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
-		$template -> assign('fac_facName', $facolta->getNome());
-		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
-		$template -> assign('fac_facLink', $facolta->getUri());
-		$template -> assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
+		$elencoIns =& Cdl :: selectInsegnamentoElencoCdl($cdl -> getCodiceCdl());
 
-		$elencoCdl =& Cdl :: selectCdlElencoFacolta($facolta -> getCodiceFacolta());
-
-		$num_cdl = count($elencoCdl);
-		$cdlType = NULL;
-		$fac_listCdlType = array();
-		$default_anno_accademico = $this->frontController->appSettings['defaultAnnoAccademico'];
+		$num_ins = count($elencoIns);
+		$insAnnoCorso  = NULL;   //ultimo anno dell'insegnamento precedente
+		$insCiclo = NULL;   //ultimo ciclo dell'insegnamento precedente
+		$cdl_listInsYears = array();    //elenco insegnamenti raggruppati per anni
+		$default_anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
 
-		for ($i=0; $i < $num_cdl; $i++)
+
+		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
+		for ($i=0; $i < $num_ins; $i++)
 		{
-			if ($elencoCdl[$i]->isGroupAllowed( $session_user_groups ))
+			if ($elencoIns[$i]->isGroupAllowed( $session_user_groups ))
 			{
-				if ( $cdlType != $elencoCdl[$i]->getCategoriaCdl() )
+				if ( $insAnnoCorso != $elencoIns[$i]->getAnnoCorso() )
 				{
-					$cdlType = $elencoCdl[$i]->getCategoriaCdl();
-					switch ($cdlType)
-					{
-						case 1: $name = 'CORSI DI LAUREA TRIENNALI'; break;
-						case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
-						case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
-					}
-					$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
+					$insAnnoCorso = $elencoIns[$i]->getAnnoCorso();
+					$insCiclo = NULL;
+					
+					//$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
-				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
-															 'name' => $elencoCdl[$i]->getNome(), 
-															 'link' => 'index.php?do=ShowCDL&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
+
+				if ( $insCiclo != $elencoIns[$i]->getCiclo() )
+				{
+					$insCiclo = $elencoIns[$i]->getCiclo();
+
+					//$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
+				}
+				
+				
+				//$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
+				//											 'name' => $elencoCdl[$i]->getNome(), 
+				//											 'link' => 'index.php?do=ShowCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale().'&amp;anno_accademico='.$default_anno_accademico );
 			}
 		}
 		//var_dump($fac_listCdlType);
@@ -90,7 +90,14 @@ class ShowCdl extends CanaleCommand {
 		$fac_listCdlType[] = array('cod' => '3', 'name' => 'Lauree Vecchio Ordinamento', 'list' => $fac_listCdl);
 */
 		$template -> assign('fac_list', $fac_listCdlType);
-		//$template -> assign_by_ref('fac_list', $fac_listCdlType);
+
+		$template -> assign('fac_langFac', 'FACOLTA\'');
+		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
+		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
+		$template -> assign('fac_facName', $facolta->getNome());
+		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
+		$template -> assign('cdl_facLink', $facolta->getUri());
+		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
 		
