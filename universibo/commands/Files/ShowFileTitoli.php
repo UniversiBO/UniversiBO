@@ -92,54 +92,64 @@ class ShowFileTitoli extends PluginCommand {
 		$elenco_file =& FileItem::selectFileItems($elenco_id_file);
 		//var_dump($elenco_file); die();
 
+		//$elenco_categorie_file_tpl = array();
+		$categorie_tpl = array();
 		$elenco_file_tpl = array();
-
+		
+		
+		
 		if ($elenco_file ==! false )
 		{
-			
 			$ret_file = count($elenco_file);
-
+			
 			for ($i = 0; $i < $ret_file; $i++)
 			{
+				
 				$file =& $elenco_file[$i];
 				//var_dump($file);
 				$this_moderatore = ($user->isAdmin() || ($moderatore && $file->getIdUtente()==$user->getIdUser()));
 		
 				$permessi_lettura = $file->getPermessiVisualizza();
 				if ($user->isGroupAllowed($permessi_lettura))
-				{			
-					$elenco_file_tpl[$i]['titolo']       = $file->getTitolo();
-					//$elenco_file_tpl[$i]['notizia']      = $file->getNotizia();
-					$elenco_file_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $file->getDataInserimento());
+				{
+					$file_tpl = array();			
+					$file_tpl['titolo']       = $file->getTitolo();
+					//$file_tpl['notizia']      = $file->getNotizia();
+					$file_tpl['data']         = $krono->k_date('%j/%m/%Y', $file->getDataInserimento());
 					//echo $personalizza,"-" ,$ultimo_accesso,"-", $file->getUltimaModifica()," -- ";
-					//$elenco_file_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
-					$elenco_file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
-					$elenco_file_tpl[$i]['autore']       = $file->getUsername();
-					$elenco_file_tpl[$i]['autore_link']  = 'ShowUser&id_utente='.$file->getIdUtente();
-					$elenco_file_tpl[$i]['id_autore']    = $file->getIdUtente();
-					$elenco_file_tpl[$i]['modifica']     = '';
-					$elenco_file_tpl[$i]['modifica_link']= '';
-					$elenco_file_tpl[$i]['elimina']      = '';
-					$elenco_file_tpl[$i]['elimina_link'] = '';
+					//$file_tpl['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
+					$file_tpl['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
+					$file_tpl['autore']       = $file->getUsername();
+					$file_tpl['autore_link']  = 'ShowUser&id_utente='.$file->getIdUtente();
+					$file_tpl['id_autore']    = $file->getIdUtente();
+					$file_tpl['modifica']     = '';
+					$file_tpl['modifica_link']= '';
+					$file_tpl['elimina']      = '';
+					$file_tpl['elimina_link'] = '';
 					//if ( ($user->isAdmin() || $referente || $this_moderatore)  && $flag_chkDiritti)
 					if (($user->isAdmin() || $referente || $this_moderatore))
 					{
-						$elenco_file_tpl[$i]['modifica']     = 'Modifica';
-						$elenco_file_tpl[$i]['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-						$elenco_file_tpl[$i]['elimina']      = 'Elimina';
-						$elenco_file_tpl[$i]['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+						$file_tpl['modifica']     = 'Modifica';
+						$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+						$file_tpl['elimina']      = 'Elimina';
+						$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 					}
-					$elenco_file_tpl[$i]['dimensione'] = $file->getDimensione();
+					$file_tpl['dimensione'] = $file->getDimensione();
 //	tolto controllo: Il link download va mostrato sempre, il controllo è effettuato successivamente 
-//					$elenco_file_tpl[$i]['download_uri'] = '';
+//					$file_tpl['download_uri'] = '';
 //					$permessi_download = $file->getPermessiDownload();
 //					if ($user->isGroupAllowed($permessi_download))
-					$elenco_file_tpl[$i]['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-					$elenco_file_tpl[$i]['categoria'] = $file->getCategoriaDesc();
-					$elenco_file_tpl[$i]['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+					$file_tpl['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+					$file_tpl['categoria'] = $file->getCategoriaDesc();
+					$file_tpl['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
+					
+					if (!array_key_exists($file->getIdCategoria(), $elenco_file_tpl))
+						$elenco_file_tpl[$file->getIdCategoria()]['desc'] = $file->getCategoriaDesc();
+
+					$elenco_file_tpl[$file->getIdCategoria()]['file'][$i] = $file_tpl;
+					
 				}
 			}
-		
 		}
 		
 		$num_file = count($elenco_file_tpl);
@@ -155,7 +165,7 @@ class ShowFileTitoli extends PluginCommand {
 		}
 		
 		$template->assign('showFileTitoli_fileList', $elenco_file_tpl);
-
+		
 		
 	}
 	
@@ -175,7 +185,7 @@ class ShowFileTitoli extends PluginCommand {
 		$query = 'SELECT A.id_file  FROM file A, file_canale B 
 					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
 					' AND B.id_canale = '.$db->quote($id_canale).' 
-					ORDER BY A.data_inserimento DESC';
+					ORDER BY A.id_categoria, A.data_inserimento DESC';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
