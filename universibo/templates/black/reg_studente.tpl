@@ -3,11 +3,10 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td><img src="tpl/black/registrazione_18.gif" width="149" height="22" alt="{$regStudente_langRegAlt}" /></td></tr>
+<tr><td><img src="tpl/black/registrazione_18.gif" width="149" height="22" alt="{$regStudente_langRegAlt|escape:"htmall"}}" /></td></tr>
 <tr align="center"><td class="Normal">
-<form action="index.php?do=RegStudente" id="f4" method="post">
+<form action="index.php?do=RegStudente&amp;{$common_pageTypeExt|escape:"htmlall"}" id="f4" method="post">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 <tr><td class="Normal" colspan="2">&nbsp;<br />{$regStudente_langInfoReg|escape:"htmlall"|bbcode2html|nl2br}</td></tr>
 <tr>
@@ -33,9 +32,13 @@
 <textarea name="f4_privacy" id="f4_privacy" rows="5" cols="60" readonly="readonly" />{$f4_privacy|escape:"htmlall"}</textarea><br />
 <input type="checkbox" name="f4_confirm" id="f4_confirm" />&nbsp;&nbsp;<label for="f4_confirm"><strong>Confermo di aver letto il regolamento</strong></label><br />&nbsp;<br /></td>
 </tr>
-<tr><td colspan="2" font class="Normal" align="center">
+<tr><td colspan="2" class="Normal" align="center">
 &nbsp;<br /><input type="submit" name="f4_submit" id="f4_submit" value="{$f4_submit|escape:"htmlall"}"></td>
-</tr></table>
+</tr>
+<tr><td colspan="2" class="Normal">
+&nbsp;<br />{$regStudente_langHelp|escape:"htmlall"|bbcode2html|nl2br}</td>
+</tr>
+</table>
 </form>
 </td></tr></table>
 

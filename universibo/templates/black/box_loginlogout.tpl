@@ -31,10 +31,10 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=RegStudente&a
 <noscript><a href="index.php?do=RegStudente&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></noscript>
 <script type="text/javascript" language="JavaScript">
 <!--
-document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\">Password smarrita...<\/a><br \/>");
+document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordStudente&amp;pageType=popup');\">Password smarrita...<\/a><br \/>");
 -->
 </script>
-<noscript><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></noscript>
+<noscript><a href="index.php?do=NewPasswordStudente&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></noscript>
 </td></tr>
 </table></form>
 {else}

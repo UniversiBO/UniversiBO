@@ -1,0 +1,191 @@
+<?php
+
+require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('ForumApi'.PHP_EXTENSION);
+
+
+/**
+ * Login is an extension of UniversiboCommand class.
+ *
+ * Manages Users Login/Logout actions
+ *
+ * @package universibo
+ * @subpackage commands
+ * @version 2.0.0
+ * @author Ilias Bartolini <brain79@virgilio.it>
+ * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
+ */
+ 
+class NewPasswordStudente extends UniversiboCommand {
+	function execute()
+	{
+		$fc =& $this->getFrontController();
+		$template =& $this->frontController->getTemplateEngine();
+		
+		if (!$this->sessionUser->isOspite())
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione può essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+		}
+
+		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
+		$f1_password = '';
+		
+		$template->assign('newPasswordStudente_langNewPasswordAlt','Recupera Password');
+		$template->assign('newPasswordStudente_langMail','e-mail di ateneo:');
+		$template->assign('newPasswordStudente_langPassword','Password:');
+		$template->assign('newPasswordStudente_langUsername','Username:');
+		$template->assign('newPasswordStudente_domain','@studio.unibo.it');
+		$template->assign('newPasswordStudente_langInfoNewPassword','Gli studenti che hanno smarrito la password di accesso ad UniversiBO possono ottenerne una nuova, ricevendola all\'e-mail di ateneo utilizzata al momento dell\'iscrizione.'."\n".
+							'Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore successive[/b] all\'iscrizione al portale [url]http://www.unibo.it[/url] e potete accedervi tramite il sito [url]https://posta.studio.unibo.it[/url], vi preghiamo di apettare che la mail di ateneo sia attiva prima di iscrivervi.');
+		$template->assign('newPasswordStudente_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
+							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
+
+		// valori default form
+		$f5_username =	'';
+		$f5_password =	'';
+		$f5_ad_user =	'';
+		
+		$f5_accept = false;
+		
+		if ( array_key_exists('f5_submit', $_POST)  )
+		{
+			$f5_accept = true;
+
+			//var_dump($_POST);
+			if ( !array_key_exists('f5_username', $_POST) ||
+				 !array_key_exists('f5_password', $_POST) ||
+				 !array_key_exists('f5_ad_user', $_POST) ) 
+			{
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+				$f5_accept = false;
+			}
+			
+			//ad_user
+			if ( $_POST['f5_ad_user'] == '' ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire la e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif ( strlen($_POST['f5_ad_user']) > 30 ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Lo username di ateneo indicato può essere massimo 30 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif(ereg('@studio\.unibo\.it$',$_POST['f5_ad_user'])){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Non inserire il suffisso "@studio.unibo.it" nella email di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif(!eregi('^([[:alnum:]])+\.[[[:alnum:]]+$',$_POST['f5_ad_user'])){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'La mail di ateneo inserita '.$_POST['f5_ad_user'].' non è sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif(!User::activeDirectoryUsernameExists($_POST['f5_ad_user'].'@studio.unibo.it')){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'La mail di ateneo '.$_POST['f5_ad_user'].'@studio.unibo.it'.' non appartiene ad alcun un utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			else{
+				$f5_ad_user = strtolower($_POST['f5_ad_user']);
+				$q5_ad_user = strtolower($f5_ad_user.'@studio.unibo.it');
+			}
+			
+			//password
+			if ( $_POST['f5_password'] == '' ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire la password della e-mail di ateneo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif ( strlen($_POST['f5_password']) > 50 ){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'La lunghezza massima della password accettata dal sistema è di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			else $q5_password = $f5_password = $_POST['f5_password'];
+			
+			//username
+			if ( $_POST['f5_username'] == '' ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire il proprio username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif ( !User::isUsernameValid( $_POST['f5_username'] ) ){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			elseif ( !User::usernameExists( $_POST['f5_username'] ) ){
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Lo username richiesto non è registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f5_accept = false;
+			}
+			else $q5_username = $f5_username = $_POST['f5_username'];
+			
+		}
+
+		// riassegna valori form
+		$template->assign('f5_username',	$f5_username);
+		$template->assign('f5_password',	'');
+		$template->assign('f5_ad_user',		$f5_ad_user);
+		$template->assign('f5_submit',		'Registra');
+
+		if ( $f5_accept == true )
+		{
+		
+			//controllo active directory
+			$adl_host = $fc->getAppSetting('adLoginHost');
+			$adl_port = $fc->getAppSetting('adLoginPort'); 
+			if (! User::activeDirectoryLogin($f5_ad_user, 'studio.unibo.it', $q5_password, $adl_host, $adl_port ) )
+			{
+				Error::throw(_ERROR_NOTICE,array('msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				return 'default';
+			}
+			
+			//controllo corrispondenza usarname-usernamen di ateneo
+			$user = User::selectUserUsername($q5_username);
+			if ( $user->getADUsername() != $q5_ad_user )
+			{
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Lo username inserito non corrisponde con la mail di ateneo precedentemente registrata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				return 'default';
+			}
+			
+			//azioni
+			$randomPassword = User::generateRandomPassword();
+			
+			if ($user->updatePasswordHash(User::passwordHashFunction($randomPassword),true) == false)
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'Si è verificato un errore durante l\'aggiornamento della password relativa allo username '.$q5_username.' mail '.$q5_ad_user,'file'=>__FILE__,'line'=>__LINE__));
+
+			$forum = new ForumApi();
+			$forum->updatePasswordHash($user);
+			//	Error::throw(_ERROR_DEFAULT,'msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q5_username.' mail '.$q5_ad_user,'file'=>__FILE__,'line'=>__LINE__));
+			
+			
+			$mail =& $frontcontroller->getMail();
+
+			$mail->AddAddress($user->getADUsername());
+
+			$mail->Subject = "Registrazione UniversiBO";
+			$mail->Body = "Ciao \"".$user->getUsername()."\"\nE' stata richiesta la generazione di una nuova password per permetterti l'accesso ad UniversiBO\n\n".
+				"Per accedere al sito utilizza l'indirizzo https://www.universibo.unibo.it\n\n".
+				"Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
+				"Username: ".$user->getUsername()."\n".
+				"Password: ".$randomPassword."\n\n".
+				"Questa password e' stata generata in modo casuale, sul sito  e' disponibile attraverso la MyPage la funzionalita' per poterla cambiare a tuo piacimento\n\n".
+				"Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
+			
+			
+			$msg = "L'iscrizione è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
+				"Le informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono:\n".
+				"Username: ".$new_user->getUsername()."\n".
+				"Password: ".$randomPassword."\n\n";
+			
+			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+			
+			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
+			
+			//elimino la password
+			$randomPassword = '';
+			$mail->Body = '';
+			$msg = '';
+			
+			return 'new_password_success';
+			
+		}
+		
+		return 'default';
+		
+	}
+}
+
+?>

@@ -418,6 +418,19 @@ class User {
 
 
 	/**
+	 * Ritorna l'hash sicuro di una stringa 
+	 *
+	 * @param string $string 
+	 * @return string
+	 */
+	function passwordHashFunction($string)
+	{
+		return md5($string);
+	}
+
+
+
+	/**
 	 * Ritorna l'hash MD5 della password dell'utente
 	 *
 	 * @return string
@@ -745,7 +758,7 @@ class User {
 			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups, ban) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
-						$db->quote($this->getMD5()).' , '.
+						$db->quote($this->getPasswordHash()).' , '.
 						$db->quote($this->getEmail()).' , '.
 						$db->quote($this->getUltimoLogin()).' , '.
 						$db->quote($this->getADUsername()).' , '.
@@ -835,7 +848,7 @@ class User {
 	function activeDirectoryLogin($ad_username, $ad_domain, $ad_password, $adl_host, $adl_port )
 	{
 	
-		$javaADLoginSock = fsockopen($adl_host,    # the host of the server
+		@$javaADLoginSock = fsockopen($adl_host,    # the host of the server
 		                             $adl_port,    # the port to use
 		                             $errno,   # error number if any
 		                             $errstr,  # error message if any
@@ -843,7 +856,7 @@ class User {
 	
 		if ( $javaADLoginSock == false )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare più tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
 		}
 		else
 		{

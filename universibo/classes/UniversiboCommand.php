@@ -166,11 +166,13 @@ class UniversiboCommand extends BaseCommand {
 		if ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' )
 		{
 			$template->assign('common_pageType', 'popup');
+			$template->assign('common_pageTypeExt', 'pageType=popup&');
 			$this->_setUpTemplatePopupUniversibo();
 		}
 		else
 		{
 			$template->assign('common_pageType', 'index');
+			$template->assign('common_pageTypeExt', '');
 			$this->_setUpTemplateIndexUniversibo();
 		}
 		

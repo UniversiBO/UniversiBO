@@ -78,6 +78,9 @@
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>
 		</RegStudente>
+		<NewPasswordStudente class="NewPasswordStudente">
+			<response type="template" name="default">new_password_studente.tpl</response>
+		</NewPasswordStudente>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

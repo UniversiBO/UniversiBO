@@ -222,6 +222,27 @@ class ForumApi
 
 
 	/**
+	 * Modifca la password di un utente sul database del forum dato uno User
+	 * 
+	 * @static 
+	 */
+	function updatePasswordHash($user)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+		if ($user->isOspite()) return;
+
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_password = '.$db->quote($user->getPasswordHash()).' WHERE user_id = '.$db->quote($user->getIdUser());
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
+
+
+	/**
 	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
 	 */
 	function getMainUri()

@@ -27,37 +27,6 @@ class RegStudente extends UniversiboCommand {
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'iscrizione può essere richiesta solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 		}
 
-		if ( array_key_exists('f4_submit',$_POST) )
-		{
-			
-/*			if (! User::isUsernameValid($_POST['f1_username']) )
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-			
-			
-			$user = User::selectUserUsername($_POST['f1_username']);
-			
-			if ($user === false)
-			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-			}
-			elseif( $user->getPasswordHash() != md5($_POST['f1_password']) )
-			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-			}
-			else
-			{
-				$_POST['f1_password'] = '';  //resettata per sicurezza
-				$this->setSessionIdUtente($user->getIdUser());
-				
-				$forum = new ForumApi;
-				$forum->login($user);
-				
-				FrontController::redirectCommand('ShowHome');
-			}
-			$_POST['f1_password'] = '';  //resettata per sicurezza
-*/			
-		}
-		
 		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
 		$f1_password = '';
 		
@@ -70,10 +39,13 @@ class RegStudente extends UniversiboCommand {
 Il sistema genererà una password casuale che sarà inviata alla vostra casella e-mail d\'ateneo.');
 		$template->assign('regStudente_langInfoReg','Per garantire la massima sicurezza, l\'identificazione degli studenti al loro primo accesso avviene tramite la casella e-mail d\'ateneo e la relativa password.
 Se non possedete ancora la e-mail di ateneo andate sul sito [url]http://www.unibo.it[/url] cliccate sul "Login" in alto a destra e seguite le istruzioni.
-Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore successive[/b] dopo le quali potrete venire ad iscrivervi.');
+Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore successive[/b] e potete accedervi tramite il sito [url]https://posta.studio.unibo.it[/url], vi preghiamo di apettare che la mail di ateneo sia attiva prima di iscrivervi.');
 		$template->assign('regStudente_langReg','Regolamento per l\'utilizzo dei servizi:');
 		$template->assign('regStudente_langPrivacy','Informativa sulla privacy:');
 		$template->assign('regStudente_langConfirm','Confermo di aver letto il regolamento');
+		$template->assign('regStudente_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
+							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
+
 
 		
 		// valori default form
@@ -117,9 +89,11 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 				Error::throw(_ERROR_NOTICE,array('msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente già registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
-			else{
-				$f4_ad_user = $_POST['f4_ad_user'];
-				$q4_ad_user = $f4_ad_user.'@studio.unibo.it';
+			else
+			{
+				$f4_ad_user = strtolower($_POST['f4_ad_user']);
+				$q4_ad_user = strtolower($f4_ad_user.'@studio.unibo.it');
+			}
 			
 			//password
 			if ( $_POST['f4_password'] == '' ) {
@@ -170,7 +144,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 			//controllo active directory
 			$adl_host = $fc->getAppSetting('adLoginHost');
 			$adl_port = $fc->getAppSetting('adLoginPort'); 
-			if (! User::activeDirectoryLogin($q4_ad_user, 'studio.unibo.it', $q4_password, $adl_host, $adl_port ) )
+			if (! User::activeDirectoryLogin($f4_ad_user, 'studio.unibo.it', $q4_password, $adl_host, $adl_port ) )
 			{
 				Error::throw(_ERROR_NOTICE,array('msg'=>'L\'autenticazione tramite e-mail di ateneo ha fornito risultato negativo','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				return 'default';
@@ -178,7 +152,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 			
 			$randomPassword = User::generateRandomPassword();
 			
-			$new_user = new User(-1, USER_STUDENTE, $q4_username ,md5($randomPassword), $q4_ad_user, 0, $q4_ad_user );
+			$new_user = new User(-1, USER_STUDENTE, $q4_username ,User::passwordHashFunction($randomPassword), $q4_ad_user, 0, $q4_ad_user );
 			
 			if ($new_user->insertUser() == false)
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q4_username.' mail '.$q4_ad_user,'file'=>__FILE__,'line'=>__LINE__));
