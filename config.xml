@@ -143,6 +143,10 @@
 			<response type="template" name="default">new_password_studente.tpl</response>
 			<response type="template" name="success">new_password_studente_success.tpl</response>
 		</NewPasswordStudente>
+		<NewPasswordDocente class="NewPasswordDocente">
+			<response type="template" name="default">new_password_docente.tpl</response>
+			<response type="template" name="success">new_password_docente_success.tpl</response>
+		</NewPasswordDocente>
 		<ChangePassword class="ChangePassword">
 			<response type="template" name="default">change_password.tpl</response>
 			<response type="template" name="success">change_password_success.tpl</response>
@@ -250,13 +254,15 @@
 		<version>2.0.1</version>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
+		<notificheLock>../universibo/notifiche.lock</notificheLock>
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<filesPath>../universibo/file-universibo/</filesPath>
 		<filesTipoIconePath>img/icone_file/</filesTipoIconePath>
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
-		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
+		<questionariReceiver>andrea,scavolini@gmail.com;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
+		<passwordDocentiAdmin>spiff1281;brain</passwordDocentiAdmin>
 		<alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>
 		<rootEmail>universibo@mail.ing.unibo.it</rootEmail>
