@@ -19,6 +19,7 @@
 		<Login class="Login">
 			 <response type="template" name="default">login.tpl</response>
 		</Login>
+		<Logout class="Logout" />
 		<ShowManifesto class="ShowManifesto">
 			 <response type="template" name="default">manifesto.tpl</response>
 		</ShowManifesto>
