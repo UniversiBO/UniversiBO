@@ -7,7 +7,7 @@
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
 
-<form action="post">
+<form method="post">
 <label for="f18_homepageLink">{$infoDid_langHomepageAlternativaLink|escape:"htmlall"}&nbsp;<label><br />
 <input type="text" name="f18_homepageLink" id="f18_homepageLink" value="{$f18_homepageLink|escape:"htmlall"}" /><br /><br />
 
