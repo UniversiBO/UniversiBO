@@ -12,7 +12,7 @@
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
 
 <tr>
-<td class="News" align="right" valign="top"><label for="f8_titolo">Titolo:</label></td>
+<td width="90" class="News" align="right" valign="top"><label for="f8_titolo">Titolo:</label></td>
 <td><input type="text" id="f8_titolo" name="f8_titolo" size="65" maxlength="130" value="{$f8_titolo|escape:"htmlall"}" /></td>
 </tr>
 

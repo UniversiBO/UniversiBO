@@ -8,7 +8,7 @@
 <tr><td align="center"><p class="Titolo">Cancella la notizia</p></td></tr>
 <tr><td class="Normal">
 {include file=avviso_notice.tpl}
-</td></tr><tr><td> 
+</td></tr><tr><td align="center"> 
 {include file=News/show_news.tpl}
 </td></tr><tr><td align="center"> 
 <form method="post">
@@ -20,7 +20,7 @@
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f9_canale}
 	<tr class="Normal" valign="center">
-	<td>&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<td width="40">&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td align="left"><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
 	</table>
