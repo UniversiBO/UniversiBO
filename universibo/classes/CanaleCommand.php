@@ -135,6 +135,23 @@ class CanaleCommand extends UniversiboCommand
 	}
 
 
+	/**
+	 * Imposta l'ultimo accesso dell'utente al canale
+	 *
+	 * @return boolean true se avvenuta con successo
+	 */
+	function updateUltimoAccesso()
+	{
+		$id_canale = $this->getRequestIdCanale();
+		$user =& $this->getSessionUser();
+		$user_ruoli =& $user->getRuoli();
+		
+		if (array_key_exists($id_canale, $user_ruoli))
+		{
+			$user_ruoli[$id_canale]->updateUltimoAccesso(time(), true);
+		}
+	}
+	
 }
 
 ?>

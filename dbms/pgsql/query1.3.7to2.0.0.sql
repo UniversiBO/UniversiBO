@@ -236,3 +236,4 @@ ALTER TABLE "questionario" DROP COLUMN "gimp";
 ----09-12-2003
 ALTER TABLE "news" ADD "data_modifica" int4 ;
 UPDATE news SET data_modifica = data_inserimento;
+UPDATE utente_canale SET ruolo=0 WHERE ruolo is NULL;
