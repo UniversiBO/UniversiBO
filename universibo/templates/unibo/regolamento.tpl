@@ -2,9 +2,10 @@
 
 {include file=avviso_notice.tpl}
 
-<h2>Regolamento</h2>
-<h4>{$rules_langTitle|escape:"htmlall"|bbcode2html}</h4>
+<div class="titoloPagina">
+<h2>{$rules_langTitle|escape:"htmlall"|bbcode2html}</h2>
 <h4>{$rules_langFacSubtitle|escape:"htmlall"|bbcode2html}</h4>
+</div>
 <p>{$rules_langServicesRules|escape:"htmlall"|bbcode2html|nl2br}</p>
 <h4>{$rules_langPrivacySubTitle|escape:"htmlall"}</h4>
 <p>{$rules_langPrivacy|escape:"htmlall"|bbcode2html|nl2br}</p>

@@ -1,22 +1,23 @@
 <?php
 
 require_once('Canale'.PHP_EXTENSION);
+require_once('Insegnamento'.PHP_EXTENSION);
 require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 
 /**
- * Insegnamento class.
+ * InfoDidattica class.
  *
- * Modella un insegnamento e le informazioni associate.
- * Ad un insegnamento possono essere associate da 1 a n attività didattiche (PrgAttivitaDidattica).
+ * Modella le informazioni per la didattica.
+ * Separata da Insegnamento per non appesantirlo
  *
  * @package universibo
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
- * @copyright CopyLeft UniversiBO 2001-2003
+ * @copyright CopyLeft UniversiBO 2001-2004
  */
 
-class Insegnamento extends Canale
+class InfoDidattica
 {
 	
 	/**
@@ -43,6 +44,11 @@ class Insegnamento extends Canale
 	 */
 	var $elencoAttivitaPadre = NULL;
 	
+	
+	
+	
+	
+	
 	/**
 	 * Crea un oggetto Insegnamento 
 	 *
@@ -51,7 +57,94 @@ class Insegnamento extends Canale
 	 * @param int $ultima_modifica 	timestamp 
 	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
-	 * @param string $nome			nome del canale
+	 * @param string $nome			nome del canale/**
+	 * 
+	 * Ritorna il nome dell'insegnamento
+	 *
+	 * @return string 
+	 */
+	function getInsegnamentoNome()
+	{
+		return $this->insegnamentoNome;	
+	}
+	
+	/**
+	 * 
+	 * Imposta il nome dell'insegnamento
+	 *
+	 * @param string 
+	 */
+	function setInsegnamentoNome($nome)
+	{
+		$this->insegnamentoNome = $nome;
+	}
+	
+	/**
+	 * 
+	 * Ritorna il titolo dell'insegnamento
+	 *
+	 * @return string 
+	 */
+	function getInsegnamentoTitle()
+	{
+		return $this->insegnamentoTitle;	
+	}
+	
+	/**
+	 * 
+	 * Imposta il titolo dell'insegnamento
+	 *
+	 * @param string 
+	 */
+	function setInsegnamentoTitle($Title)
+	{
+		$this->insegnamentoTitle = $Title;
+	}
+	
+	/**
+	 * 
+	 * Ritorna l'elenco delle attività dell'insegnamento
+	 *
+	 * @return array 
+	 */
+	function getElencoAttivita()
+	{
+		return $this->elencoAttivita;	
+	}
+	
+	/**
+	 * 
+	 * Imposta l'elenco delle attività dell'insegnamento
+	 *
+	 * @param array
+	 */
+	function setElencoAttivita($elencoAttivita)
+	{
+		$this->elencoAttivita = $elencoAttivita;
+	}
+	
+	/**
+	 * 
+	 * Ritorna l'elenco delle attività dell'insegnamento
+	 *
+	 * @return array 
+	 */
+	function getElencoAttivitaPadre()
+	{
+		return $this->elencoAttivitaPadre;	
+	}
+	
+	/**
+	 * 
+	 * Imposta l'elenco delle attività dell'insegnamento
+	 *
+	 * @param array
+	 */
+	function setElencoAttivitaPadre($elencoAttivitaPadre)
+	{
+		$this->elencoAttivita = $elencoAttivitaPadre;
+	}
+	 
 	 * @param int $visite			numero visite effettuate sul canale
 	 * @param boolean $news_attivo	se true il servizio notizie è attivo
 	 * @param boolean $files_attivo	se true il servizio false è attivo
@@ -154,7 +247,7 @@ class Insegnamento extends Canale
 		
 	}
 	
-	
+		
 	
 	/**
 	 * Crea un oggetto Insegnamento dato il suo numero identificativo id_canale

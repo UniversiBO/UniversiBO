@@ -603,3 +603,24 @@ riferimento='Preferiti';
 UPDATE utente_canale SET notifica = 0 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'N');
 UPDATE utente_canale SET notifica = 1 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'U');
 UPDATE utente_canale SET notifica = 2 WHERE id_utente IN (SELECT id_utente FROM utente WHERE inoltro_email = 'T');
+
+--- 20/9/2004
+
+CREATE TABLE "info_didattica" (
+    "id_canale" integer NOT NULL,
+    "programma" text NOT NULL,
+    "programma_link" varchar(256) NOT NULL,
+    "testi_consigliati" text NOT NULL,
+    "testi_consigliati_link" varchar(256) NOT NULL,
+    "modalita" text NOT NULL,
+    "modalita_link" varchar(256) NOT NULL,
+    "obiettivi_esame" text NOT NULL,
+    "obiettivi_esame_link" varchar(256) NOT NULL,
+	"appelli" text NOT NULL,
+	"appelli_link" varchar(256) NOT NULL,
+	"homepage_alternativa_link" varchar(256)  NOT NULL,   
+    CONSTRAINT "info_didattica_pkey" PRIMARY KEY (id_canale)
+) WITH OIDS;
+
+ 
+
