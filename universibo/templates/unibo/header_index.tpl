@@ -59,6 +59,17 @@
 					<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits|lower|capitalize|escape:"htmlall"}</a></li>
 					</ul>
 				</li>
+				<li>Informazioni
+					<ul>
+						<li>-&nbsp;<a href="{$common_helpUri}" >{$common_help}</a></li>
+						<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_helpByTopic}</a></li>
+						<li>-&nbsp;<a href="{$common_rulesUri}" >{$common_rules}</a></li>
+						<li>-&nbsp;<a href="{$common_contactsUri}" >{$common_contacts}</a></li>
+						<li>-&nbsp;<a href="{$common_contributeUri}" >{$common_contribute}</a></li>
+						<li>-&nbsp;<a href="{$common_manifestoUri}" >{$common_manifesto}</a></li>
+						<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits}</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<hr class="hide" />
