@@ -33,3 +33,8 @@ CREATE TABLE link (
 -- sposto la chiave primaria su cod_doc invece che id_utente
 ALTER TABLE ONLY docente DROP CONSTRAINT docente_pkey;
 ALTER TABLE "docente" ADD PRIMARY KEY ("cod_doc");
+
+-- 12-1-2005 brain
+ALTER TABLE "canale" ADD "files_studenti_attivo" character(1);
+UPDATE "canale" SET "files_studenti_attivo" = 'N';
+UPDATE "canale" SET "files_studenti_attivo" = 'S' WHERE tipo_canale = 5;
