@@ -8,7 +8,7 @@
 {if %allitem.last% && %allitem.index% is even}
 	<p class="lastRow">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
 {elseif %allitem.last% && %allitem.index% is odd}
-	<p class="lastColRow">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
+	<p class="lastRow,lastCol">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
 {else}
 	{if %allitem.index% is odd}
 	 	<p class="lastCol">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
