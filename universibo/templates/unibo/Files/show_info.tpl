@@ -20,5 +20,5 @@
  <p>&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/unibo/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></p>
  {/if}
 </div>
-<h4><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</h4>
+<p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</p>
 
