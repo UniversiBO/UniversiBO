@@ -21,6 +21,8 @@ class Logout extends UniversiboCommand {
 			$this->setSessionIdUtente(0);
 		}
 		
+		$this->redirectCommand();
+				
 		return ;
 
 	}
