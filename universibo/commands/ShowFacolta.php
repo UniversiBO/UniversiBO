@@ -39,14 +39,6 @@ class ShowFacolta extends CanaleCommand {
 
 		require_once('Cdl'.PHP_EXTENSION);
 
-		$template -> assign('fac_langFac', 'FACOLTA\'');
-		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
-		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
-		$template -> assign('fac_facName', $facolta->getNome());
-		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
-		$template -> assign('fac_facLink', $facolta->getUri());
-		$template -> assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
-
 		$elencoCdl =& Cdl :: selectCdlElencoFacolta($facolta -> getCodiceFacolta());
 
 		$num_cdl = count($elencoCdl);
@@ -78,7 +70,8 @@ class ShowFacolta extends CanaleCommand {
 		}
 		//var_dump($fac_listCdlType);
 		
-/*		$fac_listCdl = array(); //cat := lista di cdl
+/*  esempio:
+		$fac_listCdl = array(); //cat := lista di cdl
 		$fac_listCdl[] = array('cod' => '0048', 'name' => 'ELETTRONICA', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0048&amp;anno_accademico=2003');
 		$fac_listCdl[] = array('cod' => '0049', 'name' => 'GESTIONALE', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0049&amp;anno_accademico=2003');
 		$fac_listCdl[] = array('cod' => '0050', 'name' => 'DEI PROCESSI GESTIONALI', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0050&amp;anno_accademico=2003');
@@ -89,8 +82,15 @@ class ShowFacolta extends CanaleCommand {
 		$fac_listCdlType[] = array('cod' => '2', 'name' => 'Lauree Specialistiche', 'list' => $fac_listCdl);
 		$fac_listCdlType[] = array('cod' => '3', 'name' => 'Lauree Vecchio Ordinamento', 'list' => $fac_listCdl);
 */
+
 		$template -> assign('fac_list', $fac_listCdlType);
-		//$template -> assign_by_ref('fac_list', $fac_listCdlType);
+		$template -> assign('fac_langFac', 'FACOLTA\'');
+		$template -> assign('fac_facTitle', $facolta->getTitoloFacolta());
+		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');
+		$template -> assign('fac_facName', $facolta->getNome());
+		$template -> assign('fac_facCodice', $facolta->getCodiceFacolta());
+		$template -> assign('fac_facLink', $facolta->getUri());
+		$template -> assign('fac_langList', 'Elenco corsi di laurea attivati su UniversiBO');
 
 		$param = array( 'num' => 4 );
 		$this->executePlugin('ShowNewsLatest', $param );
