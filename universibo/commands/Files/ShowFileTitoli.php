@@ -186,8 +186,8 @@ class ShowFileTitoli extends PluginCommand {
 		
 		$query = 'SELECT A.id_file  FROM file A, file_canale B 
 					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					' AND B.id_canale = '.$db->quote($id_canale).' 
-					ORDER BY A.id_categoria, A.data_inserimento DESC';
+					' AND B.id_canale = '.$db->quote($id_canale).' AND A.data_inserimento < '.$db->quote(time()). 
+					'ORDER BY A.id_categoria, A.data_inserimento DESC';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 

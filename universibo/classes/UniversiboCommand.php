@@ -259,7 +259,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_title',			'UniversiBO: la community degli studenti dell\'Università di Bologna');
 		$template->assign('common_langNewWindow',	'apre una nuova finestra');
 		
-		//kronos
+		//krono
 		$template->assign('common_veryLongDate', $krono->k_date() );
 		$template->assign('common_longDate',     $krono->k_date('%j %F %Y') );
 		$template->assign('common_shortDate',    $krono->k_date('%j/%m/%Y') );
@@ -370,10 +370,6 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
 		
-		$template->assign('common_calendar', 'Calendario');
-		$common_calendarLink = array ('label'=>'Agosto', 'uri'=>'index.php?do=ShowCalendar&amp;month=8'); 
-		$template->assign('common_calendarLink', $common_calendarLink);
-		
 		$template->assign('common_docUri', 'http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/');
 		$template->assign('common_doc', 'Documentazione');
 		$template->assign('common_docUri', 'http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/');
@@ -385,6 +381,64 @@ class UniversiboCommand extends BaseCommand {
 												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
 		
 		$template->assign( 'common_isSetVisite', 'N' );
+		
+		
+		
+		
+		//calendario
+		$curr_timestamp = time();
+		$curr_mday = date("j",$curr_timestamp);  //inizializzo giorno corrente
+		$curr_mese = date("n",$curr_timestamp);  //inizializzo mese corrente
+		$curr_anno = date("Y",$curr_timestamp);  //inizializzo anno corrente
+	
+		//inizializzo variabili del primo giorno del mese
+		$inizio_mese_timestamp = mktime(0,0,0,$curr_mese,1,$curr_anno);
+		$inizio_mese_wday = date("w",$inizio_mese_timestamp);
+	
+		$giorni_del_mese=date("t",$curr_timestamp); //inizializzo numero giorni del mese corrente
+	
+		//inizializzazione contatore dei giorni del mese (con offset giorni vuoti prima dell'1 del mese)
+		$conta_mday = ($inizio_mese_wday==0) ? -5 : 2-$inizio_mese_wday; 
+	
+		/*if($inizio_mese_wday==0) $conta_mday=-5;
+		else $conta_mday=2-$inizio_mese_wday;*/ 
+	
+		$conta_wday = 1;  //variabile contatore dei giorni della settimana 
+		$tpl_mese = array();
+		
+		while($conta_mday <= $giorni_del_mese)
+		{  
+			$tpl_settimana = array();
+
+			//disegno una settimana
+			do
+			{
+				//disegna_giorno($tipo,$numero);
+				$c_string = "$conta_mday";
+				$today = ($conta_mday==$curr_mday) ? 'true' : 'false';
+				if($conta_mday<1 || $conta_mday>$giorni_del_mese) 
+					$tpl_day = array('numero' => '-', 'tipo' => 'empty', 'today' => $today);
+				elseif($this->_isFestivo($conta_mday,$curr_mese,$curr_anno)) 
+					$tpl_day = array('numero' => $c_string, 'tipo' => 'festivo', 'today' => $today);
+				elseif($conta_wday % 7 == 0) 
+					$tpl_day = array('numero' => $c_string, 'tipo' => 'domenica', 'today' => $today);
+				else 
+					$tpl_day = array('numero' => $c_string, 'tipo' => 'feriale', 'today' => $today);
+				
+				//$tpl_day = array('numero' => $c_string, 'tipo' => $tipo, 'today' => $today);
+				$tpl_settimana[] = $tpl_day;
+				$conta_wday++;
+				$conta_mday++;
+			}
+			while($conta_wday % 7 != 1);
+			
+			$tpl_mese[] = $tpl_settimana; 
+		}
+		$template->assign( 'common_calendarWeekDays', array('L', 'M', 'M', 'G', 'V', 'S', 'D') );
+		$template->assign( 'common_calendar', $tpl_mese );
+		$template->assign('common_langCalendar', 'Calendario');
+		$common_calendarLink = array ('label'=>$krono->k_date('%F'), 'uri'=>'index.php?do=ShowCalendar&month='.$krono->k_date('%n')); 
+		$template->assign('common_calendarLink', $common_calendarLink);
 		
 	}
 	
@@ -475,16 +529,30 @@ class UniversiboCommand extends BaseCommand {
 	
 	
 	/**
-	 * Ordina la struttura del MyUniversiBO
-	 *	$myCanali['uri']   = $canale->showMe();
-	 *	$myCanali['tipo']  = $canale->getTipoCanale();
-	 *	$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
-	 *	$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
-	 *	$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+	 * Restituisce se un giorno è festivo o no
 	 * 
 	 * @static
 	 * @private
-	 * @todo implementare  
+	 * @return boolean  
+	 */
+	function _isFestivo( $mday, $mese, $anno )
+	{
+		return ( ($mese==1 && ($mday==1 || $mday==6 )) ||
+				 ($mese==4 && $mday==25) ||
+				 ($mese==5 && $mday==1) ||
+				 ($mese==8 && $mday==15) ||
+				 ($mese==11 && $mday==1) ||
+				 ($mese==12 && ($mday==8 || $mday==25 || $mday==26) ) ||
+				 (easter_date($anno)==mktime(0,0,0,$mese,$mday,$anno) ) ||
+				 (easter_date($anno)==mktime(0,0,0,$mese,$mday-1,$anno) ) ) ;
+	} 
+		
+	
+	/**
+	 * Ordina la struttura del MyUniversiBO
+	 * 
+	 * @static
+	 * @private
 	 */
 	function _compareMyUniversiBO($a, $b)
 	{
@@ -495,6 +563,8 @@ class UniversiboCommand extends BaseCommand {
 		if ($a['ruolo']<$b['ruolo']) return -1;
 		if ($a['ruolo']>$b['ruolo']) return +1;
 	}
+	
+	
 	
 }
 ?>
