@@ -133,3 +133,6 @@ UPDATE "canale" SET "permessi_groups"=127 WHERE tipo_canale=4 OR tipo_canale=5 O
 
 --------16-10-2003
 UPDATE canale SET permessi_groups=127 WHERE tipo_canale=3;
+
+--------21-10-2003
+ALTER TABLE "esami_attivi" DROP COLUMN "cod_attivita";
