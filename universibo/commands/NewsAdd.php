@@ -1,6 +1,7 @@
 <?php    
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
  * NewsAdd: si occupa dell'inserimento di una news in un canale
@@ -239,7 +240,7 @@ class NewsAdd extends CanaleCommand {
 
 					//id_news = 0 per inserimento, $id_canali array dei canali in cui inserire
 					$notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, ($f7_urgente) ? 'S' : 'N', 'N', $user->getIdUser(), $user->getUsername());
-					if ($notizia->insertNewsItem($id_canali)) {
+					if ($notizia->insertNewsItem($f7_canale)) {
 						return 'success';
 					}
 				}
