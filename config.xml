@@ -87,6 +87,11 @@
 			<response type="template" name="default">change_password.tpl</response>
 			<response type="template" name="success">change_password_success.tpl</response>
 		</ChangePassword>
+		<NewsAdd class="NewsAdd">
+			<response type="template" name="default">news_add.tpl</response>
+			<response type="template" name="success">news_add_success.tpl</response>
+			<pluginCommand name="PlAddNews" class="News.PlAddNews" />
+		</NewsAdd>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

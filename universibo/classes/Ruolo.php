@@ -172,11 +172,11 @@ class Ruolo {
 	 */
 	function &getCanale()
 	{
-		if ($this->user == NULL)
+		if ($this->canale == NULL)
 		{
-			$this->user =& User::selectCanale($this->getIdCanale());
+			$this->canale =& Canale::selectCanale($this->getIdCanale());
 		}
-		return $this->user;
+		return $this->canale;
 	}
 
 

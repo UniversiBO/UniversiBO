@@ -455,10 +455,6 @@ class NewsItem {
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$rows = $res->numRows();
-		
-		if( $rows = 0) return false;
-		
 		$elenco_id_canale = array();
 		
 		while($res->fetchInto($row))
@@ -474,57 +470,7 @@ class NewsItem {
 		
 	}
 	 
-
-	/**
-	 * Seleziona i canali per i quali la notizia è inerente 
-	 *
-	 * @static
-	 * @return array	elenco dei canali
-	 */
-	function &getCanali() 
-	{
-	 	if ($this->elencoCanali != NULL) 
-	 		return $this->elencoCanali;
- 		/*
- 		$id_notizia = $this->getIdNotizia();
-	 	
-	 	$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_canale FROM news_canale WHERE id_news='.$db->quote($id_notizia).' ORDER BY id_canale';
-		$res =& $db->query($query);
-		
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$rows = $res->numRows();
-		
-		if( $rows = 0) return false;
-		
-		$elenco_id_canale = array();
-		
-		while($res->fetchInto($row))
-		{
-			$elenco_id_canale[] = $row[0];
-		}
-		
-		$this->elencoIdCanale = $elenco_id_canale;
-		*/
-		$elenco_id =& $this->getIdCanali();
-		
-		if ($elenco_id === false)
-		{
-			$this->elencoCanali = array();
-		}
-		else
-		{
-			$this->elencoCanali =& Canale::selectCanali( $elenco_id  );
-		}
-		
- 		return $this->elencoCanali;
-		
-	}
-	 
-
 	/**
 	 * rimuove la notizia dal canale specificato
 	 *
@@ -534,20 +480,19 @@ class NewsItem {
 	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
-	
+		
 		$query = 'DELETE FROM news_canale WHERE id_canale='.$db->quote($id_canale).' AND id_news='.$db->quote($this->id_notizia);
 		 //è da testare il funzionamento di =&
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-
-		$this->elencoIdCanali  = NULL;
-		$this->elencoCanali    = NULL;
-	 
+		
+		// rimuove l'id del canale dall'elenco completo
+		$this->elencoIdCanali = array_diff ($this->elencoIdCanali, array($id_canale));
 	}
 
-	 
+		 
 	/**
 	 * aggiunge la notizia al canale specificato
 	 *
@@ -555,28 +500,40 @@ class NewsItem {
 	 */
 	function addCanale($id_canale)
 	{
+	 	if ( ! Canale::canaleExists($id_canale) )
+	 		Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
 	 	
 	 	$db =& FrontController::getDbConnection('main');
-	
-		$query = 'INSERT INTO news_canale VALUES ('.$db->quote($this->id_notizia).','.$db->quote($id_canale).')';
+	 	
+	 	$query = 'SELECT id_notizia FROM news_canale WHERE id_canale = '.$db->quote($id_canale).' AND id_notizia = '.$db->quote($this->getIdNotizia());
+		$res =& $db->query($query);
+		
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		if ($res->numRows());
+		
+		$query = 'INSERT INTO news_canale (id_notizia, id_canale) VALUES ('.$db->quote($this->id_notizia).','.$db->quote($id_canale).')';
 		 //è da testare il funzionamento di =&
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$this->elencoIdCanali  = NULL;
-		$this->elencoCanali    = NULL;
+		$res->free();
+		
+		$this->elencoIdCanale[] = $id_canale;
 		
 	}	 
 	
 	/**
 	 * Inserisce su DB le informazioni riguardanti un nuovo utente
 	 *
-	 * @return boolean true se avvenua con successo, altrimenti Error object
+	 * @param	 array 	$array_id_canali 	elenco dei canali in cui bisogna inserire la notizia. Se non si passa un canale si recupera quello corrente.
+	 * @return	 boolean true se avvenua con successo, altrimenti Error object
 	 */
-	function insertNewsItem()
-	{
+	function insertNewsItem($id_canali)
+	{				 
 		$db =& FrontController::getDbConnection('main');
 		
         ignore_user_abort(1);
@@ -612,9 +569,11 @@ class NewsItem {
 			$return = true;
 		}
         
+        $res->free();
+        
         $db->autoCommit(true);
         ignore_user_abort(0);
-		
+				
 		return $return;
 	}
 

@@ -188,10 +188,8 @@ class CanaleCommand extends UniversiboCommand
 				$template->assign('common_langContactsCanale', 'Contatti');
 				$template->assign('common_contactsCanale', $arrayUsers);
 			}
-			else
-			{
-				$template->assign('common_contactsCanaleAvailable', 'false');
-			}
+				//$template->assign('common_contactsCanaleAvailable', 'false');
+
 			
 			
 		}

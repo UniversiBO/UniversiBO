@@ -471,7 +471,7 @@ class Canale {
 	
 	
 	/**
-	 * Crea un oggetto canale dato il suo numero identificativo id_canale
+	 * Crea un oggetto "figlio di Canale" dato il suo numero identificativo id_canale
 	 * Questo metodo utilizza il metodo factory che viene ridefinito nelle 
 	 * sottoclassi per restituire un oggetto del tipo corrispondente
 	 *
@@ -503,7 +503,7 @@ class Canale {
 	
 	
 	/**
-	 * Crea un oggetto canale dato il suo numero identificativo id_canale
+	 * Crea un oggetto Canale dato il suo numero identificativo id_canale
 	 * Questo metodo viene ridefinito nelle sottoclassi per restituire un oggetto
 	 * del tipo corrispondente
 	 *
@@ -581,7 +581,7 @@ class Canale {
 	
 		$rows = $res->numRows();
 		if( $rows > count($elenco_id_canali)) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 
 		$elenco_canali = array();
 		while ($res->fetchInto($row))
@@ -727,6 +727,31 @@ class Canale {
 		return $this->ruoli;
 	}
 	
+	/**
+	 * Controlla se esiste un canale
+	 *
+	 * @static
+	 *
+	 * @param int $id_canale	id del canale da controllare
+	 * @return boolean true se esiste tale canale
+	 */
+	function canaleExists($id_canale){
+		
+		if ( $id_canale < 0 ) return false;
+		
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		
+		if( $rows == 1) return true;
+		
+		return false;
+	}
 }
 
 

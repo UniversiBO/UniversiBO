@@ -1,4 +1,4 @@
-{if $common_contactsCanaleAvailable=="true"}
+{if $common_contactsCanaleAvailable|default:"false" =="true"}
 {include file=box_begin.tpl}
 <table width="98%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr><td colspan="3"><img src="tpl/black/contatti_18.gif" width="90" height="22" alt="{$common_langContactsCanale|escape:"htmlall"}" /></td></tr>

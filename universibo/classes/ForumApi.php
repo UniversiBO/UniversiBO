@@ -91,7 +91,7 @@ class ForumApi
 	 * Se l'opreazione avviene con successo viene impostata nella sessione la variabile 'phpbb_sid'
 	 * 
 	 * @static 
-	 * @param User Oggetto User che deve effettuare l'accesso al fourm
+	 * @param User Oggetto User che deve effettuare l'accesso al forum
 	 */
 	function login($user)
 	{

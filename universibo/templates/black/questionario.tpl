@@ -14,19 +14,19 @@
 <table width="90%" align="center" class="Normal" summary="">
 <tr>
 <td><label for="f3_nome">{$question_PersonalInfoData[0]|escape:"htmlall"}</label></td>
-<td><input id="f3_nome" maxLength="50" size="50" name="f3_nome" value="{$f3_nome|escape:"htmlall"}" /></td>
+<td><input id="f3_nome" maxlength="50" size="50" name="f3_nome" value="{$f3_nome|escape:"htmlall"}" /></td>
 </tr>
 <tr>
 <td><label for="f3_cognome">{$question_PersonalInfoData[1]|escape:"htmlall"}</label></td>
-<td><input id="f3_cognome" maxLength="50" size="50" name="f3_cognome" value="{$f3_cognome|escape:"htmlall"}" /></td>
+<td><input id="f3_cognome" maxlength="50" size="50" name="f3_cognome" value="{$f3_cognome|escape:"htmlall"}" /></td>
 </tr>
 <tr>
 <td><label for="f3_mail">{$question_PersonalInfoData[2]|escape:"htmlall"}</label></td>
-<td><input id="f3_mail" maxLength="50" size="50" name="f3_mail" value="{$f3_mail|escape:"htmlall"}" /></td>
+<td><input id="f3_mail" maxlength="50" size="50" name="f3_mail" value="{$f3_mail|escape:"htmlall"}" /></td>
 </tr>
 <tr>
 <td><label for="f3_tel">{$question_PersonalInfoData[3]|escape:"htmlall"}</label></td>
-<td><input id="f3_tel" maxLength="50" size="50" name="f3_tel" value="{$f3_tel|escape:"htmlall"}" /></td>
+<td><input id="f3_tel" maxlength="50" size="50" name="f3_tel" value="{$f3_tel|escape:"htmlall"}" /></td>
 </tr>
 </table>
 </fieldset>
