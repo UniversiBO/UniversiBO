@@ -33,7 +33,13 @@
  <tr><td class="Normal"><img src="{$showFileInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$showFileInfo_tipo|escape:"htmlall"}" border="0" /></td><td class="Normal" valign="middle" width="100%">   {$showFileInfo_info|escape:"htmlall"|nl2br|bbcode2html}</td></tr>
  <tr><td class="Normal" colspan="2"<span class="NormalC">Hash MD5:</span> {$showFileInfo_hash|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Presente in:</span><br />{foreach from=$showFileInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}</td></tr>
- <tr><td class="Normal" colspan="2"><span class="NormalC">&nbsp;Download:</span>&nbsp;&nbsp;<a href="{$showFileInfo_downloadUri|escape:"htmlall"}"><img src="tpl/black/file_download_32.gif" width="32" height="32" alt="scarica" border="0" align="top" /></a></td></tr>
+ <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langDownload|escape:"htmlall"}:</span></td><td class="Normal" valign="bottom" width="100%"><a href="{$showFileInfo_downloadUri|escape:"htmlall"}"><img src="tpl/black/file_download_32.gif" width="32" height="32" alt="{$showFileInfo_langDownload|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
+ {if $showFileInfo_editFlag == 'true'}
+ <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langEdit|escape:"htmlall"}:</span></td><td class="Normal" valign="middle" width="100%"><a href="{$showFileInfo_editUri|escape:"htmlall"}"><img src="tpl/black/file_edit_32.gif" width="32" height="32" alt="{$showFileInfo_langEdit|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
+ {/if}
+ {if $showFileInfo_deleteFlag == 'true'}
+ <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:</span></td><td class="Normal" valign="middle" width="100%"><a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/black/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
+ {/if}
  </table>
 </td></tr>
 <tr bgcolor="#000099" align="center">

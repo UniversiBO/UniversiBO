@@ -894,7 +894,7 @@ class FileItem {
 	}
 
 	/**
-	 * aggiunge la notizia al canale specificato
+	 * aggiunge il file al canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
 	 * @return boolean  true se esito positivo 
@@ -925,9 +925,9 @@ class FileItem {
 	}
 
 	/**
-	 * Inserisce una notizia sul DB
+	 * Inserisce un file sul DB
 	 *
-	 * @param	 array 	$array_id_canali 	elenco dei canali in cui bisogna inserire la notizia. Se non si passa un canale si recupera quello corrente.
+	 * @param	 array 	$array_id_canali 	elenco dei canali in cui bisogna inserire il file. Se non si passa un canale si recupera quello corrente.
 	 * @return	 boolean true se avvenua con successo, altrimenti Error object
 	 */
 	function insertFileItem() {

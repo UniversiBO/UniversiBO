@@ -48,13 +48,20 @@ class ShowFileInfo extends PluginCommand {
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso visualizzare il file.
 			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 
-
+		$template->assign('showFileInfo_editFlag', 'false');
+		$template->assign('showFileInfo_deleteFlag', 'false');
+		
+		//mancano dei diritti
 		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
 		{
-			$file_tpl['modifica']     = 'Modifica';
-			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
-			$file_tpl['elimina']      = 'Elimina';
-			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
+//			$file_tpl['modifica']     = 'Modifica';
+//			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
+//			$file_tpl['elimina']      = 'Elimina';
+//			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
+			$template->assign('showFileInfo_editFlag', 'true');
+			$template->assign('showFileInfo_deleteFlag', 'true');
+			$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
+			$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
 		}
 		
 		$canali_tpl = array();
@@ -68,6 +75,9 @@ class ShowFileInfo extends PluginCommand {
 		}
 		
 		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_langDelete', 'Elimina');
+		$template->assign('showFileInfo_langDownload', 'Scarica');
+		$template->assign('showFileInfo_langEdit', 'Modifica');
 		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile());
 		$template->assign('showFileInfo_titolo', $file->getTitolo());
 		$template->assign('showFileInfo_descrizione', $file->getDescrizione());
