@@ -95,11 +95,20 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	min-width: 715px;
 }
 
-#header img
+#header a img
 {
 	background: white;
 	border-style: none;
-	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+#header #logo
+{
+	border-style: none;
+	position: relative;
+	left: 200px;
+	top: 0;
 }
 
 #header p, #header a, #menubar p, #menubar a
@@ -542,38 +551,16 @@ td.evidenzia{
 	display: block;
 	border-top: solid 1px #999;
 	border-bottom: solid 1px #999;
-	text-align: center;	
 }
-.tbl2col div { clear: both;}
 
-.tbl2col p, .tbl2col a
+.tbl2col table
 {
-	display: inline !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	text-align: center;
+	font-size: 12px;
+	border-color: #999 !important;
+	border-width: 0 !important;
+	border-collapse: collapse;
 }
-.tbl2col p.leftCol
-{
-	float: left;
-}
-.tbl2col p { 
-	width: 45%;
-	border-right: solid 1px #999;
-	border-bottom: solid 1px #999;	
-}
-.tbl2col p.lastCol, .tbl2col p.lastColRow
-{
-	border-right: 0 none;
-	display: inline;
-	float: right !important;
-}
-.tbl2col p.lastRow, .tbl2col p.lastColRow
-{
-	border-bottom: 0 none;
-}
-.tbl2col p.lastColRow { float: right;}
-.tbl2col p.lastRow { float: left;}
+
 .titolo
 {
 	padding: 0;
