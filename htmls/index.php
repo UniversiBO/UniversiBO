@@ -38,7 +38,7 @@ class Receiver{
 	
 	
 	/**
- 	* Set PHP language settings (path, gpc, etc...)
+ 	* Set PHP language settings (path, gpc, error_reporting)
 	*/
 	function _setPhpEnvirorment()
 	{
@@ -58,8 +58,6 @@ class Receiver{
 				
 		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.$pathDelimiter.ini_get('include_path'));
-		
-		error_reporting(E_ALL);
 		
 		if ( get_magic_quotes_runtime() == 1 )
 		{
