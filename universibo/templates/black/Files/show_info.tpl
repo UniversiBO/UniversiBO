@@ -52,4 +52,6 @@
   </tr>
   </table>
 </td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></td></tr>
 </table>

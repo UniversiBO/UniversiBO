@@ -33,7 +33,7 @@
 <td align="center">
 <input type="submit" id="" name="f14_submit" size="20" value="Elimina" /></td>
 </tr>
-<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></td></tr>
 </table>
 
 </form>

@@ -27,7 +27,7 @@ class ShowFileInfo extends PluginCommand {
 		{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
-		
+				
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
 		$fc        =& $bc->getFrontController();
@@ -35,6 +35,16 @@ class ShowFileInfo extends PluginCommand {
 		$krono     =& $fc->getKrono();
 		
 		
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
+		
+		if (array_key_exists('id_canale', $param) && ereg('^([0-9]{1,9})$', $param['id_canale']))
+		{
+			$canale = & Canale::retrieveCanale($param['id_canale']);
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+		}
+				
 		$file =& FileItem::selectFileItem($param['id_file']);
 		
 		if ($file === false)
@@ -63,6 +73,7 @@ class ShowFileInfo extends PluginCommand {
 			$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
 			$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
 		}
+		
 		
 		$canali_tpl = array();
 		$id_canali = $file->getIdCanali();
