@@ -146,6 +146,17 @@ class Facolta extends Canale{
 	
 
 	/**
+	 * Restituisce l'uri/link che mostra un canale
+	 *
+	 * @return string uri/link che mostra un canale
+	 */
+	function showMe()
+	{
+		return 'index.php?do=ShowFacolta&id_canale='.$this->id_canale;
+	}
+	
+	
+	/**
 	 * Seleziona da database e restituisce l'oggetto facoltà 
 	 * corrispondente al codice id_canale 
 	 * 

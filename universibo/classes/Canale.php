@@ -465,8 +465,40 @@ class Canale {
 			
 	}
 	
-
-
+	
+	
+	/**
+	 * Crea un oggetto canale dato il suo numero identificativo id_canale
+	 * Questo metodo utilizza il metodo factory che viene ridefinito nelle 
+	 * sottoclassi per restituire un oggetto del tipo corrispondente
+	 *
+	 * @static
+	 * @param int $id_canale numero identificativo del canale
+	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
+	 */
+	function &retrieveCanale($id_canale)
+	{
+		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
+		if ($tipo_canale === false )
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
+		
+		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
+									CANALE_HOME         => 'Canale',
+									CANALE_FACOLTA      => 'Facolta',
+									CANALE_CDL          => 'Cdl',
+									CANALE_INSEGNAMENTO => 'Insegnamento');
+		
+		if (!array_key_exists($tipo_canale, $dispatch_array))
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff','file'=>__FILE__,'line'=>__LINE__));
+		
+		$class_name = $dispatch_array[$tipo_canale];
+		
+		require_once($class_name.PHP_EXTENSION);
+		
+		return call_user_func(array($class_name,'factoryCanale'), $id_canale);
+	}
+	
+	
 	/**
 	 * Crea un oggetto canale dato il suo numero identificativo id_canale
 	 * Questo metodo viene ridefinito nelle sottoclassi per restituire un oggetto
@@ -481,7 +513,19 @@ class Canale {
 		return Canale::selectCanale($id_canale);
 	}
 	
-
+	
+	/**
+	 * Restituisce l'uri/link che mostra un canale
+	 *
+	 * @return string uri/link che mostra un canale
+	 */
+	function showMe()
+	{
+		if ($this->getTipoCanale() == CANALE_HOME) return 'index.php?do=ShowHome';
+		else return 'index.php?do=ShowCanale&id_canale='.$this->id_canale;
+	}
+	
+	
 	/**
 	 * Crea un oggetto canale dato il suo numero identificativo id_canale del database
 	 *

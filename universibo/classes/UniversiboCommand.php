@@ -1,6 +1,8 @@
 <?php
 
 require_once('User'.PHP_EXTENSION);
+require_once('Canale'.PHP_EXTENSION);
+require_once('Ruolo'.PHP_EXTENSION);
 
 /**
  * UniversiboCommand is the abstract super class of all command classes
@@ -92,7 +94,6 @@ class UniversiboCommand extends BaseCommand {
 		$this->_setUpUserUniversibo();
 		
 		$this->_setUpTemplateUniversibo();
-		
 	}
 	
 	
@@ -359,6 +360,42 @@ class UniversiboCommand extends BaseCommand {
 		
 		$template->assign( 'common_isSetVisite', 'N' );
 		
+				
+		//preparo le informazioni sui preferiti
+		$attivaMyUniverbo = false;
+		
+		if(!$session_user->isOspite())
+		{
+			$arrayCanali = array();
+			$arrayRuoli =& $session_user->getRuoli();
+			$keys = array_keys($arrayRuoli);
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
+					$attivaMyUniverbo = true;
+					
+					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+					$link = array();
+					$link['uri']   = $canale->showMe();
+					$link['label'] = $canale->getNome();
+					$link['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
+					$arrayCanali[] = $link;
+				}
+			}
+		}
+		
+		if ($attivaMyUniverbo)
+		{
+			$template->assign('common_myLinksAvailable', 'true');
+			$template->assign('common_langMyUniversibo', 'My UniversiBO');
+			$template->assign('common_myLinks', $arrayCanali);
+		}
+		else
+		{
+			$template->assign('common_myLinksAvailable', 'false');
+		}
 		
 	}
 	

@@ -350,9 +350,9 @@ class User {
 		}
 		return true;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Ritorna un array contenente gli oggetti Ruolo associati ai canali dell'utente
 	 *

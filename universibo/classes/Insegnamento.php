@@ -170,6 +170,17 @@ class Insegnamento extends Canale
 	
 	
 	/**
+	 * Restituisce l'uri/link che mostra un canale
+	 *
+	 * @return string uri/link che mostra un canale
+	 */
+	function showMe()
+	{
+		return 'index.php?do=ShowInsegnamento&id_canale='.$this->id_canale;
+	}
+	
+	
+	/**
 	 * Restituisce il nome dell'insegnamento:
 	 * Se è impostato un nome del canale nella tabella canale lo restituisce
 	 * Altrimenti se l'Insegnamento è composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
@@ -257,7 +268,6 @@ class Insegnamento extends Canale
 		return $insegnamento;
 
 	}
-	
 	
 	
 	/*

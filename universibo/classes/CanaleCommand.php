@@ -83,28 +83,11 @@ class CanaleCommand extends UniversiboCommand
 	 */
 	function _setUpCanaleCanale()
 	{
-
-		$tipo_canale =  Canale::getTipoCanaleFromId ( $this->getRequestIdCanale() );
-		if ($tipo_canale === false )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
-		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
-									CANALE_HOME         => 'Canale',
-									CANALE_FACOLTA      => 'Facolta',
-									CANALE_CDL          => 'Cdl',
-									CANALE_INSEGNAMENTO => 'Insegnamento');
-
-		if (!array_key_exists($tipo_canale, $dispatch_array))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff','file'=>__FILE__,'line'=>__LINE__));
+		$this->requestCanale =& Canale::retrieveCanale($this->getRequestIdCanale());
 		
-		$class_name = $dispatch_array[$tipo_canale];
-		
-		require_once($class_name.PHP_EXTENSION);
-		
-		$this->requestCanale =& call_user_func(array($class_name,'factoryCanale'), $this->getRequestIdCanale());
-
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
-			  
+		
 		if ( $this->requestCanale === false ) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
@@ -113,8 +96,8 @@ class CanaleCommand extends UniversiboCommand
 			
 	}
 	
-
-
+	
+	
 	/**
 	 * Inizializza le informazioni del canale di CanaleCommand
 	 *
@@ -132,7 +115,7 @@ class CanaleCommand extends UniversiboCommand
 		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
 			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
-		$template->assign( 'common_isSetVisite', 'S' );
+		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );
 			
 	}

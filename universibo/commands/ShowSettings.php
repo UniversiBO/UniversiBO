@@ -15,7 +15,8 @@ require_once  ('UniversiboCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowSettings extends UniversiboCommand {
+class ShowSettings extends UniversiboCommand 
+{
 	function execute(){
 
 		$frontcontroller =& $this->getFrontController();
