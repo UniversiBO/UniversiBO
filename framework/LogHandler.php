@@ -87,7 +87,6 @@ class LogHandler{
 		}
 
 		$string .= "\n";
-		
 		$this->_addCsvLine($this->path.$this->file_name, $string);
 		
 	}  
