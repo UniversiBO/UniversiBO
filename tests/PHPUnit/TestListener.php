@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestListener.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: TestListener.php,v 1.1.2.1 2004-10-21 13:10:43 brain_79 Exp $
 //
 
 /**
@@ -20,59 +20,63 @@
  *
  * Here is an example:
  *
- *   <?php
- *   require_once 'PHPUnit.php';
- *   require_once 'PHPUnit/TestListener.php';
+ * <code>
+ * <?php
+ * require_once 'PHPUnit.php';
+ * require_once 'PHPUnit/TestListener.php';
  *
- *   class MathTest extends PHPUnit_TestCase {
+ * class MathTest extends PHPUnit_TestCase {
  *     var $fValue1;
  *     var $fValue2;
  *
  *     function MathTest($name) {
- *       $this->PHPUnit_TestCase($name);
+ *         $this->PHPUnit_TestCase($name);
  *     }
  *
  *     function setUp() {
- *       $this->fValue1 = 2;
- *       $this->fValue2 = 3;
+ *         $this->fValue1 = 2;
+ *         $this->fValue2 = 3;
  *     }
  *
  *     function testAdd() {
- *       $this->assertTrue($this->fValue1 + $this->fValue2 == 4);
+ *         $this->assertTrue($this->fValue1 + $this->fValue2 == 4);
  *     }
- *   }
+ * }
  *
- *   class MyListener extends PHPUnit_TestListener {
+ * class MyListener extends PHPUnit_TestListener {
  *     function addError(&$test, &$t) {
- *       echo "MyListener::addError() called.\n";
+ *         print "MyListener::addError() called.\n";
  *     }
  *
  *     function addFailure(&$test, &$t) {
- *       echo "MyListener::addFailure() called.\n";
+ *         print "MyListener::addFailure() called.\n";
  *     }
  *
  *     function endTest(&$test) {
- *       echo "MyListener::endTest() called.\n";
+ *         print "MyListener::endTest() called.\n";
  *     }
  *
  *     function startTest(&$test) {
- *       echo "MyListener::startTest() called.\n";
+ *         print "MyListener::startTest() called.\n";
  *     }
- *   }
+ * }
  *
- *   $suite = new PHPUnit_TestSuite;
- *   $suite->addTest(new MathTest('testAdd'));
+ * $suite = new PHPUnit_TestSuite;
+ * $suite->addTest(new MathTest('testAdd'));
  *
- *   $result = new PHPUnit_TestResult;
- *   $result->addListener(new MyListener);
+ * $result = new PHPUnit_TestResult;
+ * $result->addListener(new MyListener);
  *
- *   $suite->run($result);
- *   echo $result->toString();
- *   ?>
+ * $suite->run($result);
+ * print $result->toString();
+ * ?>
+ * </code>
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_TestListener {
     /**

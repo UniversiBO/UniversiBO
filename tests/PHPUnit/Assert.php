@@ -12,22 +12,70 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: Assert.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: Assert.php,v 1.1.2.1 2004-10-21 13:09:56 brain_79 Exp $
 //
 
 /**
  * A set of assert methods.
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_Assert {
     /**
     * @var    boolean
     * @access private
     */
-    var $_looselyTyped = false;
+    var $_looselyTyped = FALSE;
+
+    /**
+    * Asserts that a haystack contains a needle.
+    *
+    * @param  mixed
+    * @param  mixed
+    * @param  string
+    * @access public
+    * @since  1.1.0
+    */
+    function assertContains($needle, $haystack, $message = '') {
+        if (is_string($needle) && is_string($haystack)) {
+            $this->assertTrue(strpos($haystack, $needle) !== FALSE ? TRUE : FALSE);
+        }
+
+        else if (is_array($haystack) && !is_object($needle)) {
+            $this->assertTrue(in_array($needle, $haystack), $message);
+        }
+
+        else {
+            $this->fail('Unsupported parameter passed to assertContains().');
+        }
+    }
+
+    /**
+    * Asserts that a haystack does not contain a needle.
+    *
+    * @param  mixed
+    * @param  mixed
+    * @param  string
+    * @access public
+    * @since  1.1.0
+    */
+    function assertNotContains($needle, $haystack, $message = '') {
+        if (is_string($needle) && is_string($haystack)) {
+            $this->assertFalse(strpos($haystack, $needle) !== FALSE ? TRUE : FALSE);
+        }
+
+        else if (is_array($haystack) && !is_object($needle)) {
+            $this->assertFalse(in_array($needle, $haystack), $message);
+        }
+
+        else {
+            $this->fail('Unsupported parameter passed to assertNotContains().');
+        }
+    }
 
     /**
     * Asserts that two variables are equal.
@@ -62,7 +110,7 @@ class PHPUnit_Assert {
               $actual
             );
 
-            if ($actual != $expected) {
+            if ($actual !== $expected) {
                 return $this->fail($message);
             }
         }
@@ -91,7 +139,7 @@ class PHPUnit_Assert {
               $actual
             );
 
-            if ($actual != $expected) {
+            if ($actual !== $expected) {
                 return $this->fail($message);
             }
         }
@@ -111,7 +159,7 @@ class PHPUnit_Assert {
           !empty($message) ? $message . ' ' : ''
         );
 
-        if ($object === null) {
+        if ($object === NULL) {
             return $this->fail($message);
         }
     }
@@ -130,49 +178,7 @@ class PHPUnit_Assert {
           !empty($message) ? $message . ' ' : ''
         );
 
-        if ($object !== null) {
-            return $this->fail($message);
-        }
-    }
-
-    /**
-    * Asserts that two objects refer to the same object.
-    * This requires the Zend Engine 2 (to work properly).
-    *
-    * @param  object
-    * @param  object
-    * @param  string
-    * @access public
-    */
-    function assertSame($expected, $actual, $message = '') {
-        $message = sprintf(
-          '%sexpected two variables to refer to the same object',
-
-          !empty($message) ? $message . ' ' : ''
-        );
-
-        if ($actual !== $expected) {
-            return $this->fail($message);
-        }
-    }
-
-    /**
-    * Asserts that two objects refer not to the same object.
-    * This requires the Zend Engine 2 (to work properly).
-    *
-    * @param  object
-    * @param  object
-    * @param  string
-    * @access public
-    */
-    function assertNotSame($expected, $actual, $message = '') {
-        $message = sprintf(
-          '%sexpected two variables to refer to different objects',
-
-          !empty($message) ? $message . ' ' : ''
-        );
-
-        if ($actual === $expected) {
+        if ($object !== NULL) {
             return $this->fail($message);
         }
     }
@@ -186,7 +192,7 @@ class PHPUnit_Assert {
     */
     function assertTrue($condition, $message = '') {
         $message = sprintf(
-          '%sexpected true, actual false',
+          '%sexpected TRUE, actual FALSE',
 
           !empty($message) ? $message . ' ' : ''
         );
@@ -205,7 +211,7 @@ class PHPUnit_Assert {
     */
     function assertFalse($condition, $message = '') {
         $message = sprintf(
-          '%sexpected false, actual true',
+          '%sexpected FALSE, actual TRUE',
 
           !empty($message) ? $message . ' ' : ''
         );
@@ -216,35 +222,71 @@ class PHPUnit_Assert {
     }
 
     /**
-    * Asserts that a string matches a given
-    * regular expression.
+    * Asserts that a string matches a given regular expression.
     *
-    * @param string
-    * @param string
-    * @param string
+    * @param  string
+    * @param  string
+    * @param  string
     * @access public
-    * @author Sébastien Hordeaux <marms@marms.com>
     */
-    function assertRegExp($expected, $actual, $message = '') {
+    function assertRegExp($pattern, $string, $message = '') {
         $message = sprintf(
-          '%sexpected %s, actual %s',
+          '%s"%s" does not match pattern "%s"',
 
           !empty($message) ? $message . ' ' : '',
-          $expected,
-          $actual
+          $string,
+          $pattern
         );
 
-        if (!preg_match($expected, $actual)) {
+        if (!preg_match($pattern, $string)) {
             return $this->fail($message);
         }
     }
-        
+
+    /**
+    * Asserts that a string does not match a given regular expression.
+    *
+    * @param  string
+    * @param  string
+    * @param  string
+    * @access public
+    * @since  1.1.0
+    */
+    function assertNotRegExp($pattern, $string, $message = '') {
+        $message = sprintf(
+          '%s"%s" matches pattern "%s"',
+
+          !empty($message) ? $message . ' ' : '',
+          $string,
+          $pattern
+        );
+
+        if (preg_match($pattern, $string)) {
+            return $this->fail($message);
+        }
+    }
+
+    /**
+    * Asserts that a variable is of a given type.
+    *
+    * @param  string          $expected
+    * @param  mixed           $actual
+    * @param  optional string $message
+    * @access public
+    */
+    function assertType($expected, $actual, $message = '') {
+        return $this->assertEquals(
+          $expected,
+          gettype($actual),
+          $message
+        );
+    }
+
     /**
     * Converts a value to a string.
     *
     * @param  mixed   $value
     * @access private
-    * @static
     */
     function _convertToString($value) {
         foreach ($value as $k => $v) {
@@ -261,7 +303,6 @@ class PHPUnit_Assert {
     /**
     * @param  boolean $looselyTyped
     * @access public
-    * @static
     */
     function setLooselyTyped($looselyTyped) {
         if (is_bool($looselyTyped)) {

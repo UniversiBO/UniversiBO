@@ -22,7 +22,14 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
 class TestUnit extends UniversiboCommand {
 	function execute()
 	{
-		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
+		if (defined('PATH_SEPARATOR')) 
+		{
+		    $pathDelimiter = PATH_SEPARATOR;
+		}
+		else 
+		{
+			$pathDelimiter = ( substr(php_uname(), 0, 7) == "Windows") ? ';' : ':' ;
+		}
 		ini_set('include_path', '../tests'.$pathDelimiter.ini_get('include_path'));
 
 		if (!($dir_handle = opendir('../tests')))

@@ -12,15 +12,17 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestFailure.php,v 1.1 2003-09-09 12:57:22 brain_79 Exp $
+// $Id: TestFailure.php,v 1.1.2.1 2004-10-21 13:10:43 brain_79 Exp $
 //
 
 /**
  * A TestFailure collects a failed test together with the caught exception.
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_TestFailure {
     /**

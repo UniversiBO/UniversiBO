@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestDecorator.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: TestDecorator.php,v 1.1.2.1 2004-10-21 13:10:43 brain_79 Exp $
 //
 
 require_once 'PHPUnit/TestCase.php';
@@ -21,13 +21,15 @@ require_once 'PHPUnit/TestSuite.php';
 /**
  * A Decorator for Tests.
  *
- * Use TestDecorator as the base class for defining new 
+ * Use TestDecorator as the base class for defining new
  * test decorators. Test decorator subclasses can be introduced
  * to add behaviour before or after a test is run.
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_TestDecorator {
     /**
@@ -36,7 +38,7 @@ class PHPUnit_TestDecorator {
     * @var    object
     * @access protected
     */
-    var $_test = null;
+    var $_test = NULL;
 
     /**
     * Constructor.
