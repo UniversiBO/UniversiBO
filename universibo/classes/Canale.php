@@ -483,6 +483,25 @@ class Canale {
 	}
 
 
+	
+	/**
+	 * Imposta il forum_id delle tabelle di phpbb, , NULL se il forum non ? attivo
+	 */
+	function setForumForumId($forum_id)
+	{
+		$this->forum['forum_id'] = $forum_id;
+	}
+
+
+
+	/**
+	 * Imposta il group_id delle tabelle di phpbb, NULL se il forum non ? attivo
+	 */
+	function setForumGroupId($group_id)
+	{
+		$this->forum['group_id'] = $group_id;
+	}
+
 
 
 	/**
@@ -715,10 +734,10 @@ class Canale {
 	{
 		$db =& FrontController::getDbConnection('main');
 		
-		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
-		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
-		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
-		if ( $this->getForumAttivo() )
+		$files_attivo = ( $this->getServizioFiles() ) ? 'S' : 'N';
+		$news_attivo  = ( $this->getServizioNews()  ) ? 'S' : 'N';
+		$links_attivo = ( $this->getServizioLinks() ) ? 'S' : 'N';
+		if ( $this->getServizioForum() )
 		{
 			$forum_attivo = 'S';
 			$forum_forum_id = $this->getForumForumId();
@@ -727,16 +746,14 @@ class Canale {
 		else
 		{
 			$forum_attivo = 'N';
-			/**
-			 * @todo testare se gli piace il valore NULL poi quotato nella query
-			 */
-			$forum_forum_id = NULL ;
-			$forum_group_id = NULL ;
+			
+			$forum_forum_id = $this->getForumForumId();
+			$forum_group_id = $this->getForumGroupId();
 		}	
 		
 		
-		$query = 'UPDATE canale SET ( tipo_canale = '.$db->quote($this->getTipoCanale()).
-					' , nome_canale = '.$db->quote($this->getNomeCanale()).
+		$query = 'UPDATE canale SET tipo_canale = '.$db->quote($this->getTipoCanale()).
+					' , nome_canale = '.$db->quote($this->nome).   //<--attento
 					' , immagine = '.$db->quote($this->getImmagine()).
 					' , ultima_modifica = '.$db->quote($this->getUltimaModifica()).
 					' , permessi_groups = '.$db->quote($this->getPermessi()).
@@ -745,7 +762,7 @@ class Canale {
 					' , forum_attivo = '.$db->quote($forum_attivo).
 					' , id_forum = '.$db->quote($forum_forum_id).
 					' , group_id = '.$db->quote($forum_group_id).
-					' , links_attivo = '.$db->quote($links_attivo).' ) WHERE id_canale ='.$db->quote($this->getIdCanale());
+					' , links_attivo = '.$db->quote($links_attivo).' WHERE id_canale ='.$db->quote($this->getIdCanale());
 			
 		$res = $db->query($query);
 		if (DB::isError($res)) 
