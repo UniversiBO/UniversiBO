@@ -94,3 +94,68 @@ ALTER TABLE "utente_canale" DROP COLUMN "diritti";
 #-- nuovi campi in utente_argomento
 ALTER TABLE "utente_canale" ADD "notifica" int4 ;
 ALTER TABLE "utente_canale" ADD "nome" char (60) ;
+
+#-- query statistiche universibo 1.3.4
+SELECT DISTINCT anno_corso_universibo, q1.id_argomento, 
+	anno_accademico, q1.cod_corso,
+	q1.tipo_ciclo, q1.desc_materia, q1.cod_ril, q1.nome_doc, username, livello,
+	ultimo_login, ultimo_accesso, "Num stud", "Num files online", "Num news online", visite, forum_posts,
+    programma_esame, programma_esame_link ,testi_consigliati ,modalita_esame ,faq_link ,obiettivi_esame ,obiettivi_esame_link 
+
+,modalita_esame_link ,testi_consigliati_link ,homepage_esame_link ,appelli_esame ,appelli_esame_link  
+FROM ((
+	SELECT h.anno_corso_universibo, h.anno_corso_ins, h.id_argomento, 
+	h.anno_accademico, h.cod_corso,h.cod_ind, h.cod_ori, h.cod_materia, h.anno_corso,
+	h.cod_materia_ins, h.cod_ril, h.tipo_ciclo, g.desc_materia, i.nome_doc 
+		FROM esami_attivi h, classi_materie g, docente i
+		WHERE h.cod_materia_ins=g.cod_materia 
+		AND h.cod_doc=i.cod_doc 
+		AND h.cod_corso='0049'
+		AND h.anno_accademico='2002')
+	UNION 
+	(SELECT s.anno_corso_universibo, s.anno_corso_ins,
+	 e.id_argomento, s.anno_accademico, s.cod_corso,
+	 s.cod_ind, s.cod_ori, s.cod_materia, s.anno_corso,
+	 s.cod_materia_ins, s.cod_ril, e.tipo_ciclo,
+	 f.desc_materia, d.nome_doc 
+		FROM esami_attivi e, sdoppiamenti_attivi s, classi_materie f, docente d 
+		WHERE e.anno_accademico=s.anno_accademico_fis 
+		AND e.cod_corso=s.cod_corso_fis 
+		AND e.cod_ind=s.cod_ind_fis 
+		AND e.cod_ori=s.cod_ori_fis 
+		AND e.cod_materia=s.cod_materia_fis 
+		AND s.cod_materia_ins=f.cod_materia 
+		AND e.anno_corso=s.anno_corso_fis 
+		AND e.cod_materia_ins=s.cod_materia_ins_fis 
+		AND e.anno_corso_ins=s.anno_corso_ins_fis 
+		AND e.cod_ril=s.cod_ril_fis
+		AND e.cod_doc=d.cod_doc  AND s.cod_corso='0049'
+		AND s.anno_accademico='2002' ORDER BY 1, 4, 6)
+     ) AS q1 
+
+     LEFT JOIN 
+      (SELECT id_argomento, count(diritti) AS "Num stud"
+FROM utente_argomento WHERE diritti='F' GROUP BY id_argomento) AS q4 USING (id_argomento) 
+	
+    LEFT JOIN (SELECT id_argomento, count(id_file) AS "Num files online" 
+    	FROM file_riguarda_argomento WHERE
+		eliminato='N' GROUP BY id_argomento
+    ) AS q5 USING(id_argomento) 
+    LEFT JOIN 
+    (SELECT id_argomento, count(id_news) AS "Num news online" 
+    	FROM news WHERE eliminata='N' GROUP BY id_argomento
+    ) AS q6 USING (id_argomento) 
+    LEFT JOIN 
+    (SELECT id_argomento, visite, forum_posts 
+    	FROM argomento LEFT JOIN phpbb_forums ON forum_id=id_forum
+    ) AS q7 USING (id_argomento)
+	LEFT JOIN esami_info 
+     USING (id_argomento)
+
+     LEFT JOIN (
+     	SELECT id_argomento, username, livello, ultimo_login, ultimo_accesso
+        	FROM utente_argomento LEFT JOIN utente
+			USING (id_utente) 
+            WHERE diritti!='F'
+     )AS q3 USING (id_argomento) ORDER BY anno_corso_universibo ASC, id_argomento ASC, desc_materia, livello DESC
+     
