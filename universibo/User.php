@@ -1,6 +1,6 @@
 <?php
 
-include_once('Ruolo'.PHP_EXTENSION);
+require_once('Ruolo'.PHP_EXTENSION);
 
 define('USER_OSPITE'     ,1);
 define('USER_STUDENTE'   ,2);
