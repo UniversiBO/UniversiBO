@@ -106,12 +106,13 @@ class ForumApi
 		$query = 'SELECT config_name, config_value FROM '.$this->table_prefix.'config WHERE config_name IN ('.
 					$db->quote('cookie_path').','.
 					$db->quote('cookie_secure').','.
-					$db->quote('cookie_domain').')';
+					$db->quote('cookie_domain').','.
+					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
-		if( $rows != 3) 
+		if( $rows != 4) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
@@ -125,9 +126,12 @@ class ForumApi
 		$phpbb2_cookie['autologinid'] = ''; 
 		$phpbb2_cookie['userid'] = (string)$user->getIdUser() ; 
 		$cookie_value = serialize($phpbb2_cookie);
-		setcookie ('phpbb2_data', $cookie_value, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
+		
+		setcookie ($cookie_name.'_data', $cookie_value, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
 		$sid = md5(uniqid(rand(),1));
+		
+		setcookie ($cookie_name.'_sid', $sid, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
 		$query = 'INSERT INTO '.$this->table_prefix.'sessions (session_id, session_user_id, session_start, session_time, session_ip, session_page, session_logged_in) VALUES ('.
 			$db->quote($sid).', '.$user->getIdUser().', '.time().', '.time().', '.$db->quote($this->_encodeIp($_SERVER['REMOTE_ADDR'])).', 0, 1)';
@@ -153,12 +157,13 @@ class ForumApi
 		$query = 'SELECT config_name, config_value FROM '.$this->table_prefix.'config WHERE config_name IN ('.
 					$db->quote('cookie_path').','.
 					$db->quote('cookie_secure').','.
-					$db->quote('cookie_domain').')';
+					$db->quote('cookie_domain').','.
+					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
-		if( $rows != 3) 
+		if( $rows != 4) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
@@ -166,7 +171,11 @@ class ForumApi
 		}
 
 		$cookie_value = '';
-		setcookie ('phpbb2_data', $cookie_value, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
+		
+		//bug qui: errore nome cookie
+		setcookie ($cookie_name.'_data', $cookie_value, time()+3600, $cookie_path, $cookie_domain , $cookie_secure);
+		
+		setcookie ($cookie_name.'_sid', '', time()-3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
 		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getSid()).';';
 		$res = $db->query($query);
