@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
  * ShowHome: mostra la homepage
@@ -12,15 +12,13 @@ include ('UniversiboCommand'.PHP_EXTENSION);
  */
 
 
-class ShowHome extends UniversiboCommand 
+class ShowHome extends CanaleCommand 
 {
-/*
-* E' da cambiare e ereditare da CanaleCommand appena implementato
-*/
+	
 	function execute()
 	{
 		$template =& $this->frontController->getTemplateEngine();
-	
+		
 		$template->assign('home_langWelcome', 'Benvenuto in UniversiBO!');
 		$template->assign('home_langWhatIs', 'Questo è il nuovo portale per la didattica, dedicato agli studenti dell\'università di Bologna.');
 		$template->assign('home_langMission', 'L\'obiettivo verso cui è tracciata la rotta delle iniziative e dei servizi che trovate su questo portale è di "aiutare gli studenti ad aiutarsi tra loro", fornirgli un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');

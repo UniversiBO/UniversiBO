@@ -235,7 +235,10 @@ class UniversiboCommand extends BaseCommand {
 
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
 												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
-
+		
+		$template->assign( 'common_isSetVisite', 'N' );
+		
+		
 	}
 	
 

@@ -117,7 +117,10 @@ Password:<br /><input type="password" name="log_password" size="9" maxlength="50
 <td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
 </tr>
 </table>
-&nbsp;<br /><table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+&nbsp;<br />
+
+{if $common_isSetVisite == "S"}
+<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr valign="bottom"> 
 <td height="12" width="12"><img src="tpl/black/menuTL.gif" width="12" height="12" alt="" /></td>
 <td height="12" align="left"><img src="tpl/black/menuT.gif" width="67" height="12" alt="" /></td>
@@ -136,7 +139,7 @@ Password:<br /><input type="password" name="log_password" size="9" maxlength="50
 &nbsp;<br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr>
-	 <td class="Normal" align="right">&nbsp;75237&nbsp;</td>
+	 <td class="Normal" align="right">&nbsp;{$common_visite}&nbsp;</td>
 	 <td class="MenuC">visite in questa pagina</td>
 	 </tr></table>
 &nbsp;<br />
@@ -151,7 +154,10 @@ Password:<br /><input type="password" name="log_password" size="9" maxlength="50
 <td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
 </tr>
 </table>
-&nbsp;<br /><p align="center" class="MenuC">Versione 2.0.0</p><!-- Fine MENU Right --></td></tr>
+&nbsp;<br />
+{/if}
+
+<p align="center" class="MenuC">Versione 2.0.0</p><!-- Fine MENU Right --></td></tr>
 </table>
 </td></tr>
 <tr><td align="center">

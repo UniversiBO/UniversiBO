@@ -204,7 +204,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -248,7 +248,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -298,7 +298,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -343,7 +343,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -388,7 +388,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -448,7 +448,7 @@ class Ruolo {
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-			$rows = $res->affectedRows();
+			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
@@ -543,7 +543,25 @@ class Ruolo {
 
 	function updateRuolo()
 	{
+		$db =& FrontController::getDbConnection('main');
 		
+		$campo_ruolo = ($this->isModeratore()) ? RUOLO_MODERATORE : 0 + ($this->isReferente()) ? RUOLO_REFERENTE : 0; 
+		$my_universibo = ($this->myUniversibo()) ? 'S' : 'N'; 
+		
+		$query = 'UPDATE utente_canale SET ( id_utente = '.$db->quote($this->id_utente).
+					' id_canale = '.$db->quote($this->id_canale).
+					' ultimo_accesso = '.$db->quote($this->ultimoAccesso).
+					' ruolo = '.$db->quote($campo_ruolo).
+					' my_universibo = '.$db->quote($my_universibo).
+					' notifica = '.$db->quote($this->getTipoNotifica()).
+					' nome = '.$db->quote($this->getNome()).' )';
+
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		return true;
+
 	}
 
 

@@ -1,5 +1,7 @@
 <?php
 
+include_once('Ruolo'.PHP_EXTENSION);
+
 define('CANALE_DEFAULT'   ,1);
 define('CANALE_HOME'      ,2);
 define('CANALE_FACOLTA'   ,3);
@@ -68,7 +70,7 @@ class Canale {
 	/**
 	 * @private
 	 */
-	var $forum = 0;
+	var $forum = array();
 	/**
 	 * @private
 	 */
@@ -119,7 +121,7 @@ class Canale {
 		$this->forum['forum_id'] = $forum_forum_id;
 		$this->forum['group_id'] = $forum_group_id;
 		$this->servizioLinks = $links_attivo;
-		$this->bookmark = $bookmark;
+		$this->bookmark = NULL;
 	}
 
 
@@ -227,11 +229,11 @@ class Canale {
 
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'UPDATE cananle SET visite = visite + '.$db->quote($visite).' WHERE id_canale = '.$db->quote($this->getIdCanale());
+		$query = 'UPDATE canale SET visite = visite + '.$db->quote($visite).' WHERE id_canale = '.$db->quote($this->getIdCanale());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		$rows = $res->affectedRows();
+		$rows = $db->affectedRows();
 	
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
@@ -399,7 +401,7 @@ class Canale {
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
-		$canale =& new Canale($id_canale, $row[5], $row[4], $row[0], $row[2], $row[1],
+		$canale =& new Canale($id_canale, $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 						 $row[7], $row[6], $row[8], $row[9], $row[10], $row[11] );
 
 		return $canale;
@@ -509,12 +511,13 @@ class Canale {
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		$rows = $res->affectedRows();
+		$rows = $db->affectedRows();
 	
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 }
+
 
 ?>
