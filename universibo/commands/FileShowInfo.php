@@ -40,7 +40,7 @@ class FileShowInfo extends UniversiboCommand {
 			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 
 
-		if (($user->isAdmin() || $referente || $this_moderatore))
+		if (($user->isAdmin() || $user->getIdUtente() == $file->autore() ))
 		{
 			$file_tpl['modifica']     = 'Modifica';
 			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
@@ -58,7 +58,7 @@ class FileShowInfo extends UniversiboCommand {
 			$canali_tpl[$id_canale]['uri'] = $canale->showMe();
 		}
 		
-		$template->assign('fileShowInfo_Downloaduri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('fileShowInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
 		$template->assign('fileShowInfo_uri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 		$template->assign('fileShowInfo_titolo', $file->getTitolo());
 		$template->assign('fileShowInfo_descrizione', $file->getDescrizione());
@@ -75,6 +75,7 @@ class FileShowInfo extends UniversiboCommand {
 		$template->assign('fileShowInfo_icona', $frontcontroller->getAppSetting('filesTipoIconePath').$file->getTipoIcona());
 		$template->assign('fileShowInfo_info', $file->getTipoInfo());
 		$template->assign('fileShowInfo_canali', $canali_tpl);
+		$template->assign('fileShowInfo_paroleChiave', array());
 
 		
 		return;
