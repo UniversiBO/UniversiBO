@@ -8,7 +8,7 @@ require_once ('News/NewsItem'.PHP_EXTENSION);
  *
  * Mostra le ultime $num notizie del canale.
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
- * Nel paramentro di ingresso del deve essere specificato il numero di notizie da visualizzare.
+ * Nel parametro di ingresso del deve essere specificato il numero di notizie da visualizzare.
  *
  * @package universibo
  * @subpackage News
