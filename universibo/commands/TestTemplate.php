@@ -97,11 +97,11 @@ class TestTemplate extends UniversiboCommand {
 */
 		
 //-------------------- HOME
-
+/*
 		$template->assign('home_langWelcome', 'Benvenuto in UniversiBO!');
 		$template->assign('home_langWhatIs', 'Questo è il nuovo portale per la didattica, dedicato agli studenti dell\'università di Bologna.');
 		$template->assign('home_langMission', 'L\'obiettivo verso cui è tracciata la rotta delle iniziative e dei servizi che trovate su questo portale è di "aiutare gli studenti ad aiutarsi tra loro", fornirgli un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');
-
+*/
 		//...home_news... DA DEFINIRE ...include news.tpl
 		
 		//$template->display('home.tpl');
@@ -110,31 +110,32 @@ class TestTemplate extends UniversiboCommand {
 //-------------------- FAC (Facoltà)
 /*   QUESTA PAGINA E' DA INVENTARE... io gli ho dato una struttura simile a quella dei cdl,
 			solo che sono elencati di vari corsi di laurea invece che gli insegnamenti 
+*/
+		$template =& $this->frontController->getTemplateEngine();
 
-		$template->assign('fac_langFac', 'Facoltà');
-		$template->assign('fac_facName', 'Ingegneria');
+		$fac_listCdl = array(); 	//cat := lista di cdl
+		$fac_listCdl[] =  array('cod'=>'0048' , 'name'=>'ELETTRONICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0049' , 'name'=>'GESTIONALE', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0049&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0050' , 'name'=>'DEI PROCESSI GESTIONALI', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0050&amp;anno_accademico=2003');
+		$fac_listCdl[] =  array('cod'=>'0051' , 'name'=>'INFORMATICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0051&amp;anno_accademico=2003');
+	
+		$fac_listCdlType   =  array();   //fac := lista categorie degli anni di cdl
+		$fac_listCdlType[] =  array('cod'=>'L' , 'name'=>'Lauree Triennali/Primo Livello', 'list'=> $fac_listCdl);
+		$fac_listCdlType[] =  array('cod'=>'S' , 'name'=>'Lauree Specialistiche', 'list'=> $fac_listCdl); 
+		$fac_listCdlType[] =  array('cod'=>'V' , 'name'=>'Lauree Vecchio Ordinamento', 'list'=> $fac_listCdl);
+
+		$template->assign('fac_list', $fac_listCdl );
+
+		$template->assign('fac_langFac', 'FACOLTA\'');
+		$template->assign('fac_facName', 'INGEGNERIA');
 		$template->assign('fac_facLink', 'http://www.ing.unibo.it');
 		$template->assign('fac_langList', 'Elenco corsi di laurea attivi su UniversiBO');
 
-		$fac_cat   =  array(); 	//cat := lista di cdl
-		$fac_cat[] =  array('cod'=>0048 , 'name'='ELETTRONICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0048&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>0049 , 'name'='GESTIONALE', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0049&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>0050 , 'name'='DEI PROCESSI GESTIONALI', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0050&amp;anno_accademico=2003');
-		$fac_cat[] =  array('cod'=>0051 , 'name'='INFORMATICA', 'link'=> 'index.php?do=showCdl&amp;id_cdl=0051&amp;anno_accademico=2003');
-		$fac_list   =  array();   //fac := lista categorie degli anni di cdl
-		$fac_list[] =  array('cod'=>'L' , 'name'='Lauree Triennali/Primo Livello', 'list'=> $fac_cat);
-		$fac_list[] =  array('cod'=>'S' , 'name'='Lauree Specialistiche', 'list'=> $fac_cat); 
-		$fac_list[] =  array('cod'=>'V' , 'name'='Lauree Vecchio Ordinamento', 'list'=> $fac_cat);
-
-		$template->assign('fac_list', $cdl_list );
-
 		//...cdl_news... DA DEFINIRE ...include news.tpl
 
-		$template->assign('home_mission', 'L\'obiettivo verso cui è tracciata la rotta delle iniziative e dei servizi che trovate su questo portale è di "aiutare gli studenti ad aiutarsi tra loro", fornirgli un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');
-
-		$template->display('fac.tpl');
+		$template->display('facolta.tpl');
 		
-*/
+
 
 
 //-------------------- CDL (Corso di laurea)

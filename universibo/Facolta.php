@@ -43,8 +43,33 @@ class Facolta extends Canale{
 	
 	
 	
+	/**
+	 * Crea un oggetto facolta 
+	 *
+	 * @see selectFacoltaCanale
+	 * @see selectFacoltaCodice
+	 * @see selectFacoltaElenco
+	 * @param int $id_canale 		identificativo del canae su database
+	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
+	 * @param int $ultima_modifica 	timestamp 
+	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
+	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
+	 * @param string $nome			nome del canale
+	 * @param int $visite			numero visite effettuate sul canale
+	 * @param boolean $news_attivo	se true il servizio notizie è attivo
+	 * @param boolean $files_attivo	se true il servizio false è attivo
+	 * @param boolean $forum_attivo	se true il servizio forum è attivo
+	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links è attivo
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
+	 * @param string $nome_facolta	descrizione del nome della facoltà
+	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
+	 * @return Facolta
+	 */
 	function Facolta($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $cod_facolta, $nome_facolta, $uri_facolta)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
+				 $cod_facolta, $nome_facolta, $uri_facolta)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,

@@ -26,44 +26,69 @@ class Cdl extends Canale{
 	 * @private
 	 */
 	var $cdlNome = '';
+	/**
+	 * @private
+	 */
+	var $cdlCodiceFacoltaPadre = '';
 
 	
 	
-	
-	function Facolta($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $cod_facolta, $nome_facolta, $uri_facolta)
+	/**
+	 * Crea un oggetto Cdl 
+	 *
+	 * @param int $id_canale 		identificativo del canae su database
+	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
+	 * @param int $ultima_modifica 	timestamp 
+	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
+	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
+	 * @param string $nome			nome del canale
+	 * @param int $visite			numero visite effettuate sul canale
+	 * @param boolean $news_attivo	se true il servizio notizie è attivo
+	 * @param boolean $files_attivo	se true il servizio false è attivo
+	 * @param boolean $forum_attivo	se true il servizio forum è attivo
+	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links è attivo
+	 * @param string $cod_cdl		codice identificativo d'ateneo del corso di laurea a 4 cifre 
+	 * @param string $nome_cdl		descrizione del nome del cdl
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a cui appartiene il corso di laurea
+	 * @return Facolta
+	 */
+	function Cdl($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
+				 $cod_cdl, $nome_cdl, $cod_facolta_padre)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
-		$this->facoltaCodice = $cod_facolta;
-		$this->facoltaNome   = $nome_facolta;
-		$this->facoltaUri    = $uri_facolta;
+		$this->cdlCodice = $cod_cdl;
+		$this->cdlNome   = $nome_cdl;
+		$this->cdlCodiceFacoltaPadre   = $cod_facolta_padre;
 	}
 
 
 
 	/**
-	 * Restituisce il nome della facoltà
+	 * Restituisce il nome del corso di laurea
 	 *
 	 * @return string
 	 */
 	function getNome()
 	{
-		return $this->facoltaNome;
+		return $this->cdlNome;
 	}
 
 
 
 	/**
-	 * Restituisce il titolo/nome completo della facoltà
+	 * Restituisce il titolo/nome completo del cdl
 	 *
 	 * @return string
 	 */
-	function getTitoloFacolta()
+	function getTitoloCdl()
 	{
-		return 'FACOLTA\' DI '.$this->getNome();
+		return 'CORSO DI LAUREA DI '.$this->getNome();
 	}
 
 
@@ -73,22 +98,22 @@ class Cdl extends Canale{
 	 *
 	 * @return string
 	 */
-	function getUri()
+	function getCodiceFacoltaPadre()
 	{
-		return $this->facoltaUri;
+		return $this->cldCodiceFacoltaPadre;
 	}
 
 
 
 	/**
-	 * Restituisce il codice di ateneo a 4 cifre della facoltà
-	 * es: ingegneria -> '0021'
+	 * Restituisce il codice di ateneo a 4 cifre del cdl
+	 * es: ingegneria informatica -> '0048'
 	 *
 	 * @return string
 	 */
-	function getCodiceFacolta()
+	function getCodiceCdl()
 	{
-		return $this->facoltaCodice;
+		return $this->cdlCodice;
 	}
 
 

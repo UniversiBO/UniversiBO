@@ -90,19 +90,19 @@ class Canale {
 	 *  define('CANALE_ESAME_ECO' ,6);
 	 *
 	 * @see selectCanale
-	 * @param int $id_canale
-	 * @param int $permessi {@see User}
-	 * @param int $ultima_modifica timestamp 
-	 * @param int $tipo_canale 	 
-	 * @param string  $immagine
-	 * @param string $nome
-	 * @param int $visite
-	 * @param boolean $news_attivo
-	 * @param boolean $files_attivo
-	 * @param boolean $forum_attivo
-	 * @param int $forum_forum_id
-	 * @param int $forum_group_id
-	 * @param boolean $links_attivo
+	 * @param int $id_canale 		identificativo del canae su database
+	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
+	 * @param int $ultima_modifica 	timestamp 
+	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
+	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
+	 * @param string $nome			nome del canale
+	 * @param int $visite			numero visite effettuate sul canale
+	 * @param boolean $news_attivo	se true il servizio notizie è attivo
+	 * @param boolean $files_attivo	se true il servizio false è attivo
+	 * @param boolean $forum_attivo	se true il servizio forum è attivo
+	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links è attivo
 	 * @return Canale
 	 */
 	function Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,

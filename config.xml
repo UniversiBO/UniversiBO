@@ -21,7 +21,6 @@
 	
 	<commands>
 		<TestTemplate class="TestTemplate">
-			 <template type="default">home.tpl</template>
 		</TestTemplate>
 		<ShowManifesto class="ShowManifesto">
 			 <template type="default">manifesto.tpl</template>
