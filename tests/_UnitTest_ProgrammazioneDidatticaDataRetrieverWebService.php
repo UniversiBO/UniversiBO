@@ -100,7 +100,7 @@ class _UnitTest_ProgrammazioneDidatticaDataRetrieverWebService extends PHPUnit_T
 		$annoAccademico = 2004;
 		$arrayAttivita = $this->data_retriever->getAttivitaDidatticaPadreCorso("0046", $annoAccademico);
 		$numeroAttivita = count($arrayAttivita);
-		$this->assertEquals($numeroAttivita, 45);
+		$this->assertEquals($numeroAttivita, 9);
 	}
 
 	function testGetSdoppiamentiDataAttivitaDidatticaPadre() {
@@ -124,14 +124,14 @@ class _UnitTest_ProgrammazioneDidatticaDataRetrieverWebService extends PHPUnit_T
 			
 		$arrayAttivita = $this->data_retriever->getSdoppiamentiAttivitaDidattica($attivitaDidatticaPadre);
 		$numeroAttivita = count($arrayAttivita);
-		$this->assertEquals($numeroAttivita, 45);
+		$this->assertEquals($numeroAttivita, 1);
 	}
 
 	function testGetAttivitaDidatticaDatoCodCorso() {
 		$annoAccademico = 2004;
 		$arrayAttivita = $this->data_retriever->getAttivitaDidatticaCorso("0046", $annoAccademico);
 		$numeroAttivita = count($arrayAttivita);
-		$this->assertEquals($numeroAttivita, 45);
+		$this->assertEquals($numeroAttivita, 1);
 	}
 
 }

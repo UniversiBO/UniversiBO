@@ -158,6 +158,11 @@ class Canale {
 	}
 	
 	
+	function setPermessi($permessi)
+	{
+		return $this->permessi = $permessi;
+	}
+
 	
 	/**
 	 * Restituisce true se il gruppo o uno dei gruppi appartenenti a $groups 

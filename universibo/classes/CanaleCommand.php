@@ -144,6 +144,9 @@ class CanaleCommand extends UniversiboCommand
 		$template->assign( 'common_langCanaleNome', $canale->getNome());
 		$template->assign( 'common_canaleURI', $canale->showMe());
 		
+		if($canale->getTipoCanale() != 2)
+			$template->assign('common_title', 'UniversiBO: '.$canale->getTitolo());
+		
 	}
 
 

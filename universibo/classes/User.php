@@ -2,6 +2,7 @@
 
 require_once('Ruolo'.PHP_EXTENSION);
 
+define('USER_NONE'	     	,0);
 define('USER_OSPITE'     	,1);
 define('USER_STUDENTE'   	,2);
 define('USER_COLLABORATORE' ,4);

@@ -276,9 +276,83 @@ class UniversiboCommand extends BaseCommand {
 	function _initTemplateIndexUniversibo()
 	{
 		
+		
+	}
+	
+
+
+	/**
+	 * Inizializza le variabili del template per le pagine popup
+	 * 
+	 * @private
+	 * @todo implementare  
+	 */
+	function _initTemplatePopupUniversibo()
+	{
+		
+	}
+		
+	
+	/**
+	 * Inizializza le variabili del template per le pagine con indice completo
+	 *
+	 * @private
+	 */
+	function _shutdownTemplateIndexUniversibo()
+	{
+		
 		$template =& $this->frontController->getTemplateEngine();
 		$krono =& $this->frontController->getKrono();
-			
+		
+		$session_user =& $this->getSessionUser();
+		
+		//informazioni del MyUniversiBO
+		$attivaMyUniversibo = false;
+//		var_dump($session_user);
+		
+		if(!$session_user->isOspite())
+		{
+			$attivaMyUniversibo = true;
+			$arrayCanali = array();
+			$arrayRuoli =& $session_user->getRuoli();
+			$keys = array_keys($arrayRuoli);
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
+					//$attivaMyUniversibo = true;
+					
+					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+					$myCanali = array();
+					$myCanali['uri']   = $canale->showMe();
+					$myCanali['tipo']  = $canale->getTipoCanale();
+					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
+					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
+					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					//var_dump($ruolo);
+					$arrayCanali[] = $myCanali;
+				}
+			}
+			//ordina $arrayCanali
+			usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
+		}
+		
+		
+		//assegna al template
+		if ($attivaMyUniversibo)
+		{
+			$template->assign('common_myLinksAvailable', 'true');
+			$template->assign('common_langMyUniversibo', 'My UniversiBO');
+			$template->assign('common_myLinks', $arrayCanali);
+		}
+		else
+		{
+			$template->assign('common_myLinksAvailable', 'false');
+		}
+		
+		
+
 		//solo nella pagine index
 		$curr_mday=date("j");  //inizializzo giorno corrente
 		$curr_mese=date("n");  //inizializzo mese corrente
@@ -456,79 +530,6 @@ class UniversiboCommand extends BaseCommand {
 		$common_calendarLink = array ('label'=>$krono->k_date('%F'), 'uri'=>'index.php?do=ShowCalendar&month='.$krono->k_date('%n')); 
 		$template->assign('common_calendarLink', $common_calendarLink);
 		$template->assign('common_version', $this->frontController->getAppSetting('version'));
-		
-	}
-	
-
-
-	/**
-	 * Inizializza le variabili del template per le pagine popup
-	 * 
-	 * @private
-	 * @todo implementare  
-	 */
-	function _initTemplatePopupUniversibo()
-	{
-		
-	}
-		
-	
-	/**
-	 * Inizializza le variabili del template per le pagine con indice completo
-	 *
-	 * @private
-	 */
-	function _shutdownTemplateIndexUniversibo()
-	{
-		
-		$template =& $this->frontController->getTemplateEngine();
-		
-		$session_user =& $this->getSessionUser();
-		
-		//informazioni del MyUniversiBO
-		$attivaMyUniversibo = false;
-//		var_dump($session_user);
-		
-		if(!$session_user->isOspite())
-		{
-			$attivaMyUniversibo = true;
-			$arrayCanali = array();
-			$arrayRuoli =& $session_user->getRuoli();
-			$keys = array_keys($arrayRuoli);
-			foreach ($keys as $key)
-			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
-				{
-					//$attivaMyUniversibo = true;
-					
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$myCanali = array();
-					$myCanali['uri']   = $canale->showMe();
-					$myCanali['tipo']  = $canale->getTipoCanale();
-					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
-					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
-					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-					//var_dump($ruolo);
-					$arrayCanali[] = $myCanali;
-				}
-			}
-			//ordina $arrayCanali
-			usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
-		}
-		
-		
-		//assegna al template
-		if ($attivaMyUniversibo)
-		{
-			$template->assign('common_myLinksAvailable', 'true');
-			$template->assign('common_langMyUniversibo', 'My UniversiBO');
-			$template->assign('common_myLinks', $arrayCanali);
-		}
-		else
-		{
-			$template->assign('common_myLinksAvailable', 'false');
-		}
 		
 	}
 	
