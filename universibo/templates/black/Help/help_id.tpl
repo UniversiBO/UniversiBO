@@ -6,10 +6,10 @@
 <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left">
     <a id="index" /><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table></td></tr>
 <tr><td>	
-	<table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
+	<table width="100%" border="0" cellspacing="0" cellpadding="3" summary="">
 	
 	{foreach from=$showHelpId_langArgomento item=temp_helpid}
-	<tr><td cellpadding="3" class="Normal" bgcolor="{cycle name=index values="#000032,#000016"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+	<tr><td class="Normal" bgcolor="{cycle name=index values="#000032,#000016"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
 	<a href="#{$temp_helpid.id|escape:"htmlall"}"> {$temp_helpid.titolo|escape:"htmlall"}</a></td></tr>
 	{/foreach}
 	 
@@ -27,7 +27,7 @@
 	<tr bgcolor="#000032"><td id="{$temp_helpid.id|escape:"htmlall"}" class="NormalC">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />{$temp_helpid.titolo|escape:"htmlall"}</td>
 	<td align="right" class="Piccolo"><a href="#{$idsu}">torna su</a> </td></tr>
 	<tr><td colspan="2" class="Normal" bgcolor="#000016">{$temp_helpid.contenuto|escape:"htmlall"|bbcode2html|nl2br}</td></tr>
-	<td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td></tr>
 	{/foreach} 
 	</table>
 

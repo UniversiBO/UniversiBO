@@ -26,6 +26,7 @@ document.write("<a href=\"javascript:universiboPopup('{$showNewsLatest_langNewsS
 {/if}
 </td>
 </tr></table>
+</td></tr>
 <tr>
 <td class="Normal" align="center">
 {if $showNewsLatest_langNewsAvailableFlag=="true"}

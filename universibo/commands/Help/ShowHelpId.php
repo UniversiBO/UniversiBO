@@ -63,7 +63,7 @@ class ShowHelpId extends PluginCommand {
 	
 		while($res->fetchInto($row))
 		{		
-			$argomenti[] = array('id' => $row[0], 'titolo' => $row[1], 'contenuto' => $row[2]);
+			$argomenti[] = array('id' => 'id'.$row[0], 'titolo' => $row[1], 'contenuto' => $row[2]);
 		}
 		$res->free();
 		

@@ -12,8 +12,9 @@
 
 {include file=avviso_notice.tpl}
 
-
+{if $common_langCanaleMyUniversiBO != ''}
 <p align="right"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+{/if}
 
 
 &nbsp;<br />
