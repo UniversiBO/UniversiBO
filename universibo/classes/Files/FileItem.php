@@ -6,7 +6,6 @@ define('FILE_ELIMINATO', 'S');
 define('FILE_NOT_ELIMINATO', 'N');
 
 /**
- *
  * FileItem class
  *
  * Rappresenta un singolo file.
@@ -335,7 +334,8 @@ class FileItem {
 	 * @return string 
 	 */
 
-	function getPassword() {
+	function getPassword() 
+	{
 		return $this->password;
 	}
 	
@@ -702,6 +702,40 @@ class FileItem {
 		return 1;
 	}	
 
+	
+	/**
+	 * Recupera i possibili tipi di un file
+	 *
+	 * @static
+	 * @return array [id_tipo] => 'descrizione' 
+	 */
+	function getTipi() 
+	{
+		static $tipi = NULL;
+		
+		if ($tipi != NULL)
+			return $categorie;
+		
+		$db = & FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_file_tipo, descrizione FROM file_tipo';
+		$res = & $db->query($query);
+		
+		if (DB :: isError($res))
+			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+		
+		$tipi = array ();
+		
+		while ($res->fetchInto($row)) {
+			$tipi[$row[0]] = $row[1];
+		}
+
+		$res->free();
+
+		return $tipi;
+	}
+	
+	
 	
 	/**
 	 * Recupera le categorie possibili di un file

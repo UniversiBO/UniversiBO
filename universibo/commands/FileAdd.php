@@ -295,7 +295,7 @@ class FileAdd extends UniversiboCommand {
 			
 			//echo substr($_FILES['userfile']['name'],-4);
 			$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
-			if ( $estensione == '.php') 
+			if ( $estensione == PHP_EXTENSION) 
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
 				$f12_accept = false;

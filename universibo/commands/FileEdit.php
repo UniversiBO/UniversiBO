@@ -22,10 +22,20 @@ class FileEdit extends UniversiboCommand {
 		
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id della notizia richiesta non è	valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 		$id_canale = $canale->getIdCanale();
+
+		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file']))
+		{
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del file richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		$file = & FileItem::selectFileItem($_GET['id_file']);
+		if ($file === false)
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+		
+		//$id_canale = $canale->getIdCanale();
 
 		$referente = false;
 		$moderatore = false;
@@ -46,40 +56,32 @@ class FileEdit extends UniversiboCommand {
 		$krono = & $frontcontroller->getKrono();
 
 		// valori default form
-		$f13_file = '';
-		$f13_titolo = '';
-		$f13_abstract = '';
-		$f13_parole_chiave = array();
+		// $f13_file = '';
+		$f13_titolo = $file->getTitolo();
+		$f13_abstract = $file->getDescrizione();
+		$f13_parole_chiave =  $file->getParolechiave();
 		$f13_categorie = FileItem::getCategorie();
-		$f13_categoria = 5;
-		$f13_data_inserimento = time();
-		$f13_permessi_download = '';
-		$f13_permessi_visualizza = '';
-		$f13_password = null;
-		$f13_canale = array ();
+		$f13_categoria = $file->getIdCategoria();
+		$f13_tipi = FileItem::getTipi();
+		$f13_tipo = $file->getIdTipoFile();
+		$f13_data_inserimento = $file->getDataInserimento();
+		$f13_permessi_download = $file->getPermessiDownload();
+		$f13_permessi_visualizza = $file->getPermessiVisualizza();
+		$f13_password_enable = ($file->getPassword() == null);
+		$f13_password = '';
 
 		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
-		$elenco_canali = array($id_canale);
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i<$num_ruoli; $i++)
-		{
-			if ($id_canale != $ruoli_keys[$i] && ($user->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isModeratore() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) )
-				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-		}
-		
-		$elenco_canali_retrieve = array();
+		$elenco_canali = $file->getIdCanali();
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
 		{
 			$id_current_canale = $elenco_canali[$i];
 			$current_canale =& Canale::retrieveCanale($id_current_canale);
-			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
 			$nome_current_canale = $current_canale->getTitolo();
-			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-			$f13_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
+			$f13_canale[] = array ('nome_canale'=> $nome_current_canale);
 		}
-		
+
+
 		$f13_accept = false;
 		
 		if (array_key_exists('f13_submit', $_POST)) 
@@ -293,7 +295,7 @@ class FileEdit extends UniversiboCommand {
 			
 			//echo substr($_FILES['userfile']['name'],-4);
 			$estensione = strtolower ( substr($_FILES['f13_file']['name'],-4) );
-			if ( $estensione == '.php') 
+			if ( $estensione == '.php')
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
 				$f13_accept = false;
@@ -358,16 +360,19 @@ class FileEdit extends UniversiboCommand {
 		
 		// resta da sistemare qui sotto, fare il form e fare debugging
 		
-		$template->assign('f13_file', $f13_file);
 		$template->assign('f13_titolo', $f13_titolo);
 		$template->assign('f13_abstract', $f13_abstract);
 		$template->assign('f13_parole_chiave', $f13_parole_chiave);
 		$template->assign('f13_categoria', $f13_categoria);
 		$template->assign('f13_categorie', $f13_categorie);
+		$template->assign('f13_tipo', $f13_tipo);
+		$template->assign('f13_tipi', $f13_tipi);
 		$template->assign('f13_abstract', $f13_abstract);
 		$template->assign('f13_canale', $f13_canale);
 		
 		$template->assign('f13_password', $f13_password);
+		$template->assign('f13_password_confirm', $f13_password);
+		$template->assign('f13_password_enable', ($f13_password_enable) ? 'true' : 'false' );
 		$template->assign('f13_permessi_download', $f13_permessi_download);
 		$template->assign('f13_permessi_visualizza', $f13_permessi_visualizza);
 		$template->assign('f13_data_ins_gg', $krono->k_date('%j',$f13_data_inserimento));
