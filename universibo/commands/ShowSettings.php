@@ -41,11 +41,11 @@ class ShowSettings extends UniversiboCommand
 		
 		if ($utente->isCollaboratore())
 		{
-			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni forum[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica MyUniversiBO[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]','[url=]Docenti da contattare[/url]'));
+			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni forum[/url]','[url=]Impostazioni personali[/url]','[url=index.php?do=ShowUser&id_utente='.$utente->getIdUser().']Modifica MyUniversiBO[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]','[url=]Docenti da contattare[/url]'));
 		}
 		else
 		{
-			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni forum[/url]', '[url=]Impostazioni personali[/url]','[url=]Modifica MyUniversiBO[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]'));
+			$template->assign('showSettings_langPreferences',array('[url=index.php?do=ChangePassword]Modifica password[/url]', '[url=]Informazioni forum[/url]','[url=]Impostazioni personali[/url]','[url=index.php?do=ShowUser&id_utente='.$utente->getIdUser().']Modifica MyUniversiBO[/url]','[url=https://posta.studio.unibo.it/horde/?username='.$utente->getADUsername().']Posta di ateneo[/url]'));
 		}
 
 		$template->assign('showSettings_langTitleAlt','MyPage');
