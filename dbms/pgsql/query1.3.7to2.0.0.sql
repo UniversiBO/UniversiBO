@@ -439,7 +439,7 @@ INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona,
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
 5, 'html', '\.(html|htm)$', 'formato_html.gif', 'HyperText Mark-Up Language');
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
-6, 'jpeg', '\.jpg$', 'formato_jpg.gif', 'Joint Photographic Experts Group');
+6, 'jpeg', '\.(jpeg|jpg)$', 'formato_jpg.gif', 'Joint Photographic Experts Group');
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
 7, 'mp3', '\.mp3$', 'formato_mp3.gif', 'Mpeg1 Layer 3');
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
@@ -460,4 +460,5 @@ INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona,
 15, 'xls', '\.xls$', 'formato_xls.gif', 'Microsoft Excel');
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
 16, 'bmp', '\.bmp$', 'formato_bmp.gif', 'Bitmap');
+
 
