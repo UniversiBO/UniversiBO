@@ -24,7 +24,7 @@
 		<div id="header">
 			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="200" height="92"/></a>
 			<img src="tpl/unibo/logo_{$common_logoType}" alt="Logo UniversiBO" />
-			<p class="TimeInfo">2{$common_longDate} &nbsp;-&nbsp;{$common_time}</p>
+			<p class="TimeInfo">{$common_longDate} &nbsp;-&nbsp;{$common_time}</p>
 			<a href="#content" class="hide">Salta la navigazione</a>
 			<p id="Info">|&nbsp;<a href="{$common_manifestoUri}">{$common_manifesto}</a>&nbsp;|&nbsp;<a href="{$common_rulesUri}">{$common_rules}</a>&nbsp;|&nbsp;<a href="{$common_contactsUri}">{$common_contacts}</a>&nbsp;|&nbsp;<a href="{$common_contributeUri}">{$common_contribute}</a></p>
 		</div> {* /header *}

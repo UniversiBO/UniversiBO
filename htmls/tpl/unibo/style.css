@@ -83,7 +83,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 {
 	clear: none;
 	position: absolute;
-	left: 167px;
+	left: 202px;
 	top: 74px;
 	font-weight: bold;
 }
@@ -101,7 +101,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 #Menu
 {
 	position: relative;
-	left: 167px;
+	left: 202px;
 	font-weight: bold;
 }
 
@@ -134,12 +134,14 @@ td.evidenzia{
 {
 	color: #333;
 	font-size: 12px;
+	text-decoration: none;
 }
 
 #leftmenu li
 {
 	margin-left: 20px;
 	margin-bottom: 2px;
+	font-size: 12px;
 }
 
 #Qui
@@ -361,7 +363,7 @@ td.evidenzia{
 	margin: 15px 8px;
 }
 
-.box form *{
+.box form input, .box form label{
 	margin: 2px;
 	text-align: center;
 }
