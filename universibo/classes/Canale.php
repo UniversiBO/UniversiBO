@@ -509,7 +509,6 @@ class Canale {
 	 * Esegue il dispatch inizializzndo il corretto sottotipo di 'canale' 
 	 *
 	 * @private
-	 * @param 
 	 * @return string
 	 */
 	function _dispatchCanale()

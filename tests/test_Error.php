@@ -1,5 +1,7 @@
 <?php
 
+require_once('Error'.PHP_EXTENSION);
+
 /**
  * Examples for Error Class
  *
@@ -9,7 +11,6 @@
  * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-require_once('Error'.PHP_EXTENSION);
 
  
 //some example callback handler functions... 

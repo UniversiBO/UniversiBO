@@ -15,7 +15,8 @@ define('NEWS_NOT_URGENTE','N');
  *
  * Rappresenta una singola news.
  *
- * @package News
+ * @package universibo
+ * @subpackage News
  * @version 2.0.0
  * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>

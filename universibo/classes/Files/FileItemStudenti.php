@@ -9,6 +9,7 @@ require_once('Files/FileItem'.PHP_EXTENSION);
  * Rappresenta un singolo file degli studenti.
  *
  * @package universibo
+ * @subpackage Files
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>

@@ -1,5 +1,7 @@
 <?php
 
+require_once ('UniversiboCommand'.PHP_EXTENSION);
+
 /**
  * UnitTest command class
  *
@@ -7,7 +9,8 @@
  * del framework stesso necessarie al corretto funzionamento della maggiorparte delle
  * entit? da testare che sono ad esso accoppiate.
  *
- * @package universibo_tests
+ * @package universibo
+ * @subpackage tests
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabrizio Pinto 
@@ -15,9 +18,6 @@
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-
-
-require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 class TestUnit extends UniversiboCommand {
 	function execute()

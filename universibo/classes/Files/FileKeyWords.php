@@ -7,6 +7,7 @@
  * Rappresenta un singolo file.
  *
  * @package universibo
+ * @subpackage Files
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>
