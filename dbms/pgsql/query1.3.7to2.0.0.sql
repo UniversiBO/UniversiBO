@@ -11,7 +11,8 @@ ALTER TABLE ONLY phpbb_confirm
 
 INSERT INTO "phpbb_config" ("config_name", "config_value") VALUES ('enable_confirm', '0');
 INSERT INTO "phpbb_config" ("config_name", "config_value") VALUES ('sendmail_fix', '0');
-UPDATE "phpbb_config" SET config_value = '.0.6' WHERE config_name='version';
+UPDATE "phpbb_config" SET config_value = '.0.10' WHERE config_name='version';
+
 -- modifiche tabella utente livello -> groups
 ALTER TABLE "utente" ADD "groups" int4 ;
 
