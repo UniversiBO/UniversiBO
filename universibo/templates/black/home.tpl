@@ -6,17 +6,9 @@
 
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal"><br />
-<p class="Titolo">Benvenuto in UniversiBO!</p>
-<p>
-Questo &egrave; il nuovo portale sperimentale per la didattica, dedicato agli
-studenti dell'universit&agrave; di Bologna.</p>
-<p>
-L'obiettivo verso cui &egrave; tracciata la rotta delle iniziative e dei
-servizi che trovate su questo portale &egrave; di &quot;aiutare gli studenti
-ad aiutarsi tra loro&quot;, fornirgli un punto di riferimento centralizzato in 
-cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di
-studio e offrire un mezzo di interazione semplice e veloce con i docenti che
-partecipano all'iniziativa.</p>
+<p class="Titolo">{$home_langWelcome}</p>
+<p>{$home_langWhatIs}</p>
+<p>{$home_langMission}</p>
 
 &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
