@@ -10,6 +10,7 @@
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica una pagina del tuo MyUniversiBO<br />&nbsp;</p></td></tr>
 <tr><td align="center" class="Normal">La pagina &egrave; stata modificata con successo.</td></tr>
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$showUser|escape:"htmlall"}">Torna&nbsp;alla&nbsp;tua&nbsp;scheda</a></td></tr>
 </table>
 
 <br />
