@@ -143,7 +143,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 #menubar
 {
 	clear: left;
-	background: #666666;
+	background: #888;
 	margin: 0;
 	padding: 2px 0 4px;
 	width: 100%;
@@ -282,10 +282,13 @@ td.evidenzia{
 	border-top: dotted 2px #999;
 	padding-top: 10px;*/
 	display: block;
-	font-size: 15px;
+	font-size: 17px;
+	margin-left: 5%;
+	margin-bottom: 0 !important;
 	clear: left;
 	color: #386dce;
 	text-align: left;
+	font-family: Georgia, "New Century Schoolbook", "Bitstream Vera Serif", Utopia, "Times New Roman", times, serif;
 }
 #content th
 {
@@ -579,10 +582,11 @@ td.evidenzia{
 .tbl2col
 {
 	font-size: 11px;
-	margin: 2em 0;
+	margin: 2em 10%;
 	display: block;
-	border-top: solid 1px #999;
-	border-bottom: solid 1px #999;
+	width: 80%;
+	border-top: solid 2px #999;
+	border-bottom: solid 2px #999;
 }
 
 .tbl2col table
@@ -592,6 +596,7 @@ td.evidenzia{
 	border-width: 0 !important;
 	border-collapse: collapse;
 }
+.tbl2col p { text-align: center !important;}
 
 .titolo /* da chi è usato?*/
 {
@@ -672,3 +677,4 @@ td.evidenzia{
 	display: inline !important;
 }
 .comandi { font-size: 11px; text-align: center;}
+p.comandi {margin-left: 5% !important;}

@@ -12,9 +12,9 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr><td colspan="2"><h3>Ruoli</h3></td></tr>
 	{foreach name=ruoli from=$showCanali item=temp_currLink}
-	<tr align="left"><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}">
-				<p class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
-		</td><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><span>{$temp_currLink.categoria}
+	<tr align="left"><td class="{if ($smarty.foreach.ruoli.iteration % 2) == 0}odd{else}even{/if}">
+				<p class="{if $smarty.foreach.ruoli.iteration%2 == 0}odd{else}even{/if}"><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
+		</td><td class="{if $smarty.foreach.ruoli.iteration%2 == 0}odd{else}even{/if}"><span>{$temp_currLink.categoria}
 				{if $temp_currLink.ruolo=="R"},<img src="tpl/unibo/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
 				{if $temp_currLink.ruolo=="M"},<img src="tpl/unibo/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
 				{if $showDiritti == 'true'}
