@@ -16,7 +16,9 @@ require_once ('ForumApi'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class NewPasswordStudente extends UniversiboCommand {
+class NewPasswordStudente extends UniversiboCommand 
+{
+	
 	function execute()
 	{
 		$fc =& $this->getFrontController();
@@ -37,6 +39,7 @@ class NewPasswordStudente extends UniversiboCommand {
 		$template->assign('newPasswordStudente_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
 							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non ? tenuto a conoscerle');
 		$template->assign('f5_submit',		'Invia');
+							
 
 		// valori default form
 		$f5_username =	'';
@@ -162,7 +165,8 @@ class NewPasswordStudente extends UniversiboCommand {
 				"Username: ".$user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n";
 			
-			if(!$mail->Send()){ Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
+			if(!$mail->Send())
+				Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('newPasswordStudente_thanks',"Una nuova password ? stata generata, la tua richiesta ? stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
