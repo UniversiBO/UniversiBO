@@ -18,7 +18,7 @@
 <td><input type="text" id="f12_titolo" name="f12_titolo" size="65" maxlength="130" value="{$f12_titolo|escape:"htmlall"}" /></td>
 </tr>
 <tr>
-<td class="News" align="right" valign="top"><label for="f12_abstract"> Abstract del file:<br />(max 2500 <br />caratteri)</label></td>
+<td class="News" align="right" valign="top"><label for="f12_abstract"> Abstract del file:<br />(max 3000 <br />caratteri)</label></td>
 <td colspan="2"><textarea cols="50" rows="10" id="f12_abstract" name="f12_abstract">{$f12_abstract|escape:"htmlall"}</textarea></td>
 </tr>
 <tr>
