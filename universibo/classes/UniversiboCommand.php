@@ -17,6 +17,10 @@ require_once('User'.PHP_EXTENSION);
 
 class UniversiboCommand extends BaseCommand {
 	
+	/**
+	 * User
+	 * @private 
+	 */
 	var $sessionUser;
 
 
@@ -58,9 +62,9 @@ class UniversiboCommand extends BaseCommand {
 	{
 		return array_key_exists('id_utente', $_SESSION) && isset($_SESSION['id_utente']);
 	}
-
-
-
+	
+	
+	
 	/**
 	 * Restituisce l'oggetto utente della sessione corrente.
 	 *
@@ -106,22 +110,22 @@ class UniversiboCommand extends BaseCommand {
 		{
 			echo $current_error->throw();
 		}
-
+		
 		while ( ($current_error = Error::retrieve(_ERROR_DEFAULT)) !== false )
 		{
 			echo $current_error->throw();
 		}
-
+		
 		while ( ($current_error = Error::retrieve(_ERROR_CRITICAL)) !== false )
 		{
 			echo $current_error->throw();
 		}
-
+		
 	}
 	
-
-
-
+	
+	
+	
 	/**
 	 * Inizializza le informazioni utente dell' UniversiboCommand
 	 *
@@ -273,7 +277,7 @@ class UniversiboCommand extends BaseCommand {
 			}
 		}
 		$template->assign('common_facLinks', $common_facLinks);
-
+		
 		$template->assign('common_services', 'Servizi');
 		$common_servicesLinks = array();
 		$common_servicesLinks[] = array ('label'=>'Appunti - Latex', 'uri'=>'http://www.example.com'); 
@@ -282,7 +286,7 @@ class UniversiboCommand extends BaseCommand {
 		$common_servicesLinks[] = array ('label'=>'Moderatori', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Grafica', 'uri'=>'http://www.example.com'); 
 		$template->assign('common_servicesLinks', $common_servicesLinks);
-
+		
 		$template->assign('common_info', 'Informazioni');
 		$template->assign('common_help', 'Help');
 		$template->assign('common_helpUri', 'index.php?do=ShowHelp');
@@ -292,10 +296,10 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_contactsUri', 'index.php?do=ShowContacts');
 		$template->assign('common_contribute', 'Collabora');
 		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');
-
+		
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
-
+		
 		$template->assign('common_calendar', 'Calendario');
 		$common_calendarLink = array ('label'=>'Agosto', 'uri'=>'index.php?do=ShowCalendar&amp;month=8'); 
 		$template->assign('common_calendarLink', $common_calendarLink);
@@ -305,8 +309,8 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_docUri', 'http://nikita.ing.unibo.it/~eagleone/documentazione_progetto/');
 		$template->assign('common_project', 'UniversiBO Open Source Project');
 		$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
-
-
+		
+		
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
 												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
 		
@@ -325,7 +329,7 @@ class UniversiboCommand extends BaseCommand {
 	 */
 	function _setUpTemplatePopupUniversibo()
 	{
-
+		
 	}
 		
 }

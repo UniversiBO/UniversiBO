@@ -19,8 +19,11 @@ require_once('Canale'.PHP_EXTENSION);
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class CanaleCommand extends UniversiboCommand {
-	
+class CanaleCommand extends UniversiboCommand 
+{
+	/**
+	 * @private 
+	 */
 	var $requestCanale;
 
 	
@@ -135,5 +138,3 @@ class CanaleCommand extends UniversiboCommand {
 }
 
 ?>
-
-	

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PluginCommand is the abstract super class of all plugin command classes.
  *
@@ -11,7 +12,8 @@
  * @author  Ilias Bartolini <brain79@virgilio.it>
  * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
-class PluginCommand {
+class PluginCommand 
+{
 	
 	/**
 	 * @private
@@ -19,9 +21,10 @@ class PluginCommand {
 	var $baseCommand;
 
 	/**
-	 * Sets the link to the caller BaseCommand
+	 * 
+	 * @param BaseCommand $baseCommand BaseCommand chiamante del plugin
 	 */ 
-	function BaseCommand( &$baseCommand )
+	function PluginCommand( &$baseCommand)
 	{
 		$this->baseCommand =& $baseCommand;
 	}
@@ -29,8 +32,10 @@ class PluginCommand {
 	
 	/**
 	 * Abstract method must be overridden from sons-classes
+	 *
+	 * @param mixed $param optional parameter, must be handled from the chosen implementation of PluginCommand
 	 */ 
-	function execute()
+	function execute($param=NULL)
 	{
 		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo execute del command deve essere ridefinito','file'=>__FILE__,'line'=>__LINE__) );
 	}
@@ -46,6 +51,21 @@ class PluginCommand {
 		return $this->baseCommand;
 	}
 
+	/**
+	 * Executes a sub PluginComand
+	 *
+	 * @param string $name identifier name for this plugin
+	 * @param mixed $param a parameter handled by PluginCommand 
+	 * @return mixed return value of plugin
+	 */ 
+	function executePlugin($name, $param)
+	{
+		$bc =& $this->getBaseCommand();
+		$fc =& $bc->getFrontController();
+		return $fc->executePlugin($name, $bc, $param);
+	}
+	
+	
 }
 
 ?>

@@ -7,7 +7,8 @@
  * @author  Ilias Bartolini <brain79@virgilio.it>
  * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
-class BaseCommand {
+class BaseCommand 
+{
 	
 	/**
 	 * @private
@@ -60,6 +61,21 @@ class BaseCommand {
 	{
 		return $this->frontController;
 	}
+
+
+	/**
+	 * Executes plugin
+	 *
+	 * @param string $name identifier name for this plugin
+	 * @param mixed $param a parameter handled by PluginCommand 
+	 * @return mixed return value of plugin
+	 */ 
+	function executePlugin($name, $param)
+	{
+		$fc =& $this->getFrontController();
+		return $fc->executePlugin($name,$this, $param);
+	}
+
 
 }
 

@@ -50,7 +50,7 @@ class ShowContacts extends UniversiboCommand {
 		$template->assign('contacts_personal', $arrayContatti);
 		
 		
-		return 'default';						
+		return 'default';
 	}
 }
 

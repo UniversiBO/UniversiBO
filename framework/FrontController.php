@@ -84,7 +84,7 @@ class FrontController {
 	/**
 	 * @access private
 	 */
-	var $plugs;
+	var $plugins;
 
 	/**
 	 * @access private
@@ -165,6 +165,44 @@ class FrontController {
 
 
 	/**
+	* Executes a plugin action.
+	*
+	* A class SomePlugin should exists and someAction should be
+    * associated with this class in the config file.
+	*
+	* @param string $name identifier name for this plugin
+	* @param BaseCommand $base_command the caller BaseCommand
+	* @param mixed $param a parameter handled by PluginCommand 
+	* @access public
+	*/
+	function executePlugin($name, &$base_command, $param=NULL){
+
+		include_once ('PluginCommand'.PHP_EXTENSION);	
+
+		//$plugin_class=$this->getPluginClass($name);
+		
+		if (!array_key_exists($name, $this->plugins) )
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non è stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__));
+			return;
+		}	
+			
+		$pc = $this->plugins[$name];
+		$explodedPc = explode(".",$pc);
+		$file_namepath = implode("/",$explodedPc);
+		$class_name = $explodedPc[count($explodedPc)-1];
+		
+		require_once($this->paths['commands'].$file_namepath.PHP_EXTENSION);
+		
+		$plugin = new $class_name($base_command);
+		
+		return $plugin->execute($param);
+		 
+	}
+	
+
+
+	/**
 	 * Permette di redirigere la richiesa su un nuovo Command del receiver corrente
 	 *
 	 * @param string $command command identifier to redirect to with parameters in uri sintax es: 'do=ShowFacolta&cod_fac=2148' 
@@ -214,7 +252,7 @@ class FrontController {
 
 
 	/**
-	* Returns the command class name only (without .) 
+	* Returns the command class name and path (without .) 
 	*
 	* @return string
 	* @access public
@@ -223,9 +261,29 @@ class FrontController {
 	{
 		$cc=&$this->commandClass;
 		$explodedCC=explode(".",$cc);
-		$theSize=count($explodedCC);
-		if($theSize==1) return $explodedCC[0];
-		else return $explodedCC[$theSize-1];
+		//$theSize=count($explodedCC);
+		//if($theSize==1) return $explodedCC[0];
+		//else return $explodedCC[$theSize-1];
+		return implode("/",$explodedCC);
+	}
+
+
+
+	/**
+	* Returns the plugin command class associated in config file 
+	*
+	* @param string $name PluginCommand name associated in config file
+	* @return string PluginCommand class path/file
+	* @access public
+	*/
+	function getPluginClass($name)
+	{
+		$pc = $this->plugins[$plugin->attributes[$name]];	
+		$explodedCC=explode(".",$cc);
+		//$theSize=count($explodedCC);
+		//if($theSize==1) return $explodedCC[0];
+		//else return $explodedCC[$theSize-1];
+		return implode("/",$explodedCC);
 	}
 
 
@@ -630,8 +688,8 @@ class FrontController {
 		
 		$this->commandClass=$commandNode->attributes['class'];
 		
+		//reads allowed response for this BaseCommand
 		$this->commandTemplate=array();
-		//$templatePath=$this->paths['templates'];		
 		$responses =& $commandNode->getChildren('response');
 		$n=count($responses);
 		for($i=0;$i<$n;$i++)
@@ -640,24 +698,19 @@ class FrontController {
 			if ($response->attributes['type'] == 'template')
 			{
 				$this->commandTemplate[$response->attributes['name']] = $response->charData;	
-			}		
+			}
 		}
 
-/*
-		$responses =& $commandNode->getChildren('pluginCommand');
-		$n=count($responses);
+		$plugins =& $commandNode->getChildren('pluginCommand');
+		$n=count($plugins);
 		for($i=0;$i<$n;$i++)
 		{
-			$response =& $responses[$i];
-			//if ($response->attributes['type'] == 'template')
-			//{
-			//	$this->commandTemplate[$response->attributes['name']] = $response->charData;	
-			//}		
+			$plugin =& $plugins[$i];
+			$this->plugins[$plugin->attributes['name']] = $plugin->attributes['class'];	
 		}
-*/
 
 		if(!isset($this->commandClass))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definita l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definito l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
 		if(empty($this->commandClass))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
@@ -781,7 +834,7 @@ class FrontController {
 	* Factory method that creates a Kronos object based on the config language info
 	*
 	* @return Krono object
-	* @access public 
+	* @access public
 	*/
 	function &getKrono()
 	{

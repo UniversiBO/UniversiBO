@@ -13,7 +13,8 @@
  * @copyright CopyLeft UniversiBO 2001-2003
  */
  
- class News{
+class News
+{
  	
  	/**
  	*
@@ -21,6 +22,6 @@
  	*/
  	
  	
- }
+}
  
 ?>

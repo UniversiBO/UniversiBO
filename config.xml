@@ -6,7 +6,6 @@
 	<rootURL>universibo2/htmls/</rootURL>
 	<paths>
 		<application>../universibo/</application>
-		<logs>../universibo/log-universibo/</logs>
 		<commands>../universibo/commands/</commands>
 	</paths>
 	
@@ -31,7 +30,7 @@
 		</ShowManifesto>
 		<ShowHome class="ShowHome">
 			 <response type="template" name="default">home.tpl</response>
-			 <pluginCommand name="News" class="news.ShowLatestNews" />
+			 <pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowHome>
 		<ShowFacolta class="ShowFacolta">
 			 <response type="template" name="default">facolta.tpl</response>
@@ -86,10 +85,10 @@
 	 	<date_separator>/</date_separator> 
 	</langInfo>	
 	
-	<!--****appSettings is an optional node. You can place any thing here 
-                and access it from $fc->appSettings
-	****-->
+	<!-- appSettings is an optional node. You can place any thing here 
+                and access it from FrontController->getAppSetting()	-->
 	<appSettings>
+		<logs>../universibo/log-universibo/</logs>
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<forumLocation>forum/</forumLocation>
