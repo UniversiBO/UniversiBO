@@ -8,7 +8,7 @@
 
 <table summary="help" width="90%" border="0" cellspacing="0" cellpadding="0">
 <tr><td class="Normal" align="left">
-		<div align="center">&nbsp;<br /><img src="tpl/black/help_30.gif" width="84" height="39" alt="{$showHelpTopic_langAltTitle|escape:"htmlall"|bbcode2html}" /></div>
+		<div align="center">&nbsp;<br /><img id="help" src="tpl/black/help_30.gif" width="84" height="39" alt="{$showHelpTopic_langAltTitle|escape:"htmlall"|bbcode2html}" /></div>
 </td></tr>
 <tr><td>
 	{foreach from=$showHelpTopic_langReferences item=temp_ref}
@@ -19,7 +19,7 @@
 <tr><td>&nbsp</td></tr>
 <tr><td>
 	{foreach from=$showHelpTopic_langReferences item=temp_ref}
-	{include file=Help/topic.tpl}
+	{include file=Help/topic.tpl idsu=help}
 	{/foreach}
 </td></tr></table>
 
