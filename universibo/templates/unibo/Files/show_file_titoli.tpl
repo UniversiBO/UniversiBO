@@ -4,9 +4,8 @@
 	<img src="tpl/unibo/file_new.gif" width="15" height="15" alt="" />
 	<a href="{$showFileTitoli_addFileUri|escape:"htmlall"}">{$showFileTitoli_addFile|escape:"htmlall"|bbcode2html|nl2br}</a>
 </div>
-{/if}<br />
-	{if $showFileTitoli_langFileAvailableFlag=="true"}
-
+{/if}
+{if $showFileTitoli_langFileAvailableFlag=="true"}
 {foreach name=listacategorie from=$showFileTitoli_fileList item=temp_categoria}
 	<div class="elenco">
 			<h3>{$temp_categoria.desc|escape:"htmlall"}</h3>
@@ -22,7 +21,7 @@
 				</span></p>
 			{/foreach}
 </div>
-		{/foreach}
-	{else}
-		<p>{$showFileTitoli_langFileAvailable}</p>
-	{/if}
+{/foreach}
+{else}
+<p>{$showFileTitoli_langFileAvailable|escape:htmlall}</p>
+{/if}
