@@ -340,6 +340,31 @@ class ForumApi
 	{
 		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSid();
 	}
+	
+	
+	/**
+	 * Ritorna il massimo id_fourm dal database ...succedaneo dell'utilizzo delle sequenze
+	 *
+	 * @return int massimo id_fourm dal database 
+	 */
+	function getMaxForumId()
+	{
+		$db =& FrontController::getDbConnection($this->database);
+
+		$query = 'SELECT MAX(forum_id) as forum_id FROM '.$this->table_prefix.'forums';
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		if ($res->numRows() != 1 ) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'query max fourm_id non valida', 'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$res->fetchInto($row);
+			
+		return $row[0];
+	
+	}
 
 
 }

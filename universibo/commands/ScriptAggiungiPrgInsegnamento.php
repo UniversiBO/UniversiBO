@@ -7,6 +7,7 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
  * ChangePassword is an extension of UniversiboCommand class.
  *
  * Si occupa della modifica della password di un utente
+ * NON ASTRAE DAL LIVELLO DATABASE!!!
  *
  * @package universibo
  * @subpackage commands
