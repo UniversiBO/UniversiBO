@@ -161,7 +161,8 @@ class ShowLinks extends PluginCommand {
 
 		}
 
-		$template->assign('showLinks_linksList', $lista_links);
+		$template->assign('showLinks_linksList', $elenco_links_tpl);	
+		$template->assign('showLinks_linksListAvailable', (count($elenco_links_tpl) > 0));
 		
 	}
 		
