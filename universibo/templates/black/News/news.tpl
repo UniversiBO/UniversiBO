@@ -46,13 +46,13 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do={$elimina_lin
   *}
   
   <td class="News" align="right">{$data|escape:"htmlall"|nl2br}<br />
-<script type="text/javascript" language="JavaScript">
+{*<script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$autore|escape:"htmlall"}<\/a>");
 -->
 </script>
-<noscript><a href="index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"}" target="_popup">{$autore|escape:"htmlall"}</a></noscript>
-
+<noscript><a href="index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"}" target="_popup">{$autore|escape:"htmlall"}</a></noscript>*}
+<a href="index.php?do=ShowUser&amp;id_utente={$id_autore|escape:"htmlall"}" target="_popup">{$autore|escape:"htmlall"}</a>
   {*</td></tr></table>*}
   </td></tr></table>
 </td>
@@ -75,18 +75,20 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowUser&amp;
 
 <td class="Piccolo" valign="bottom">  
   {if $modifica!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_edt.gif" width="15" height="15" alt="modifica" />
-<script type="text/javascript" language="JavaScript">
+{*<script type="text/javascript" language="JavaScript">
 document.write("<a href=\"javascript:universiboPopup('index.php?do={$modifica_link|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$modifica|escape:"htmlall"|nl2br}</a>");
 </script>
-<noscript><a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a></noscript>
+<noscript><a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a></noscript>*}
+<a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a>
 {/if}
 {if $elimina!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_del.gif" width="15" height="15" alt="elimina" />
-<script type="text/javascript" language="JavaScript">
+{*<script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do={$elimina_link|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$elimina|escape:"htmlall"|bbcode2html|nl2br}<\/a>");
 -->
 </script>
-<noscript><a href="index.php?do={$elimina_link|escape:"htmlall"}" target="_popup">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>
+<noscript><a href="index.php?do={$elimina_link|escape:"htmlall"}">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>*}
+<a href="index.php?do={$elimina_link|escape:"htmlall"}">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a>
 {/if}&nbsp;
 </td>
 

@@ -10,17 +10,19 @@
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="piccolo">
 &nbsp;{if $showNewsLatest_addNewsFlag == "true"}<img src="tpl/black/news_new.gif" width="15" height="15" alt="" />
-<script type="text/javascript" language="JavaScript"><!--
+{*<script type="text/javascript" language="JavaScript"><!--
 document.write("<a href=\"javascript:universiboPopup('{$showNewsLatest_addNewsUri|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$showNewsLatest_addNews|escape:"htmlall"|bbcode2html|nl2br}<\/a>");
 --></script>
-<noscript><a href="index.php?do={$showNewsLatest_addNewsUri|escape:"htmlall"}" target="_popup">{$showNewsLatest_addNews|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>
+<noscript><a href="index.php?do={$showNewsLatest_addNewsUri|escape:"htmlall"}" target="_popup">{$showNewsLatest_addNews|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>*}
+<a href="{$showNewsLatest_addNewsUri|escape:"htmlall"}">{$showNewsLatest_addNews|escape:"htmlall"|bbcode2html|nl2br}</a>
 &nbsp;&nbsp;&nbsp;{/if}
 </td><td class="piccolo" align="right">
 &nbsp;{if $showNewsLatest_langNewsShowOthers != ""}<img src="tpl/black/news_all.gif" width="15" height="15" alt="" />
-<script type="text/javascript" language="JavaScript"><!--
+{*<script type="text/javascript" language="JavaScript"><!--
 document.write("<a href=\"javascript:universiboPopup('{$showNewsLatest_langNewsShowOthersUri|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$showNewsLatest_langNewsShowOthers|escape:"htmlall"|bbcode2html|nl2br}<\/a>");
 --></script>
-<noscript><a href="index.php?do={$showNewsLatest_langNewsShowOthersUri|escape:"htmlall"}" target="_popup">{$showNewsLatest_langNewsShowOthers|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>
+<noscript><a href="index.php?do={$showNewsLatest_langNewsShowOthersUri|escape:"htmlall"}" target="_popup">{$showNewsLatest_langNewsShowOthers|escape:"htmlall"|bbcode2html|nl2br}</a></noscript>*}
+<a href="{$showNewsLatest_langNewsShowOthersUri|escape:"htmlall"}">{$showNewsLatest_langNewsShowOthers|escape:"htmlall"|bbcode2html|nl2br}</a>
 {/if}
 </td>
 </tr></table>
