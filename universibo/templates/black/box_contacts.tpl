@@ -6,10 +6,9 @@
 <tr>
 <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
 <td><img src="tpl/black/invisible.gif" width="4" height="2" alt="" /></td>
-<td class="Menu" width="100%"><a href="mailto:{$temp_currLink.mail}">{$temp_currLink.label|escape:"htmlall"}</a>
-<!--{*if $temp_currLink.ruolo=="R"*}&nbsp;<img src="tpl/black/icona_R.gif" width="15" height="11" alt="Referente" />{*/if*}
-{*if $temp_currLink.ruolo=="M"*}&nbsp;<img src="tpl/black/icona_M.gif" width="15" height="11" alt="Moderatore" />{*/if*}
-{*if $temp_currLink.new=="true"*}&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="9" alt="!NEW!" />{*/if*}-->
+<td class="Menu" width="100%"><a href="{$temp_currLink.utente_link}">{$temp_currLink.label|escape:"htmlall"}</a>
+{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/black/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
+{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/black/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
 </td>
 </tr>
 {/foreach}

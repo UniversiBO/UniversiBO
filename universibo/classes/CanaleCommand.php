@@ -172,7 +172,7 @@ class CanaleCommand extends UniversiboCommand
 					$user =& User::selectUser($ruolo->getIdUser());
 					//var_dump($user);
 					$contactUser = array();
-					$contactUser['mail']  = $user->getEmail();
+					$contactUser['utente_link']  = 'ShowUser&id_utente='.$user->getIdUser();
 					$contactUser['tipo']  = $user->getUserGroupsNames();
 					$contactUser['label'] = $user->getUsername();
 					$contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
