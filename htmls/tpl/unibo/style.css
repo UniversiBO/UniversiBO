@@ -608,7 +608,7 @@ td.evidenzia{
 }
 .elencoTopic p
 {
-	font-size: 11px;
+	font-size: 12px;
 }	
 .elencoTopic .even
 {
@@ -622,12 +622,12 @@ td.evidenzia{
 {
 	color: #386dce;
 	text-align: left !important;
-	font-size: 11px;
+	font-size: 12px;
 }
 .help_generale p, .help_generale a, .help_generale li, .help_generale ul, .help_generale
 {
 	text-align: left;
-	font-size: 11px;
+	font-size: 12px;
 }
 .help_generale div
 {
