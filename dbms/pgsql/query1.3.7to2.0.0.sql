@@ -247,3 +247,19 @@ ALTER TABLE "utente_canale" ALTER "nascosto" SET DEFAULT 'N';
 UPDATE utente_canale SET nascosto = 'N';
 --aggiunto preside alle tabelle
 ALTER TABLE "facolta" ADD "cod_doc" char (6) ;   ---bisogna ancora inserire manualmente i dati dei presidi di facolta
+
+
+
+-----29-01-04
+CREATE TABLE help(
+id_help int4 PRIMARY KEY,
+titolo varchar(255) NOT NULL,
+contenuto text NOT NULL,
+ultima_modifica int4 NOT NULL,
+indice int4 NOT NULL);
+
+CREATE TABLE help_riferimento(
+riferimento varchar(15) PRIMARY KEY,
+id_help int4 NOT NULL
+);
+
