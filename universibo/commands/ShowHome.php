@@ -29,7 +29,7 @@ class ShowHome extends CanaleCommand
 		
 		if ( $canale->getTipoCanale() != CANALE_HOME )
 			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo canale richiesto non corrisponde al comando selezionato','file'=>__FILE__,'line'=>__LINE__));
-				
+		
 	}
 
 
