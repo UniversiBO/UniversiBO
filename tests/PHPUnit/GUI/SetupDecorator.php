@@ -1,6 +1,6 @@
 <?php
 //
-//  $Id: SetupDecorator.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+//  $Id: SetupDecorator.php,v 1.2 2003-09-09 13:04:37 brain_79 Exp $
 //
 
 /**
@@ -44,7 +44,6 @@ class PHPUnit_GUI_SetupDecorator
     *   <code>getSuitesFromDir($dir,'.*_UnitTest_.*')</code>.
     *   There you can already see that the pattern is built for the use within a regular expression.
     *   
-    *   @param
     *
     */
     function getSuitesFromDir($dir,$filenamePattern='',$exclude=array())
