@@ -45,7 +45,7 @@
 			<response type="template" name="default">facolta.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowFacolta>
-		<ShowCld class="ShowCdl">
+		<ShowCdl class="ShowCdl">
 			<response type="template" name="default">cdl.tpl</response>
 			<pluginCommand name="ShowNewsLatest" class="News.ShowNewsLatest" />
 		</ShowCdl>
