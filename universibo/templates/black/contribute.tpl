@@ -32,6 +32,8 @@
 </tr>
 </table>
 
+<br />
+{include file=questionario.tpl}
 
 
 {if $common_pageType == "index"}
