@@ -62,6 +62,7 @@ class ShowFacolta extends CanaleCommand {
 						case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
 						case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
 					}
+					if (!array_key_exists($cdlType,$fac_listCdlType) )
 					$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
 				}
 				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,

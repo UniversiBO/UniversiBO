@@ -56,6 +56,7 @@ class ShowCdl extends CanaleCommand {
 		$session_user_groups = $session_user->getGroups();
 		$cdl_listIns = array();
 		
+		$forum = new ForumApi;
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
 		for ($i=0; $i < $num_ins; $i++)
 		{
@@ -77,7 +78,6 @@ class ShowCdl extends CanaleCommand {
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
 				
-				$forum = new ForumApi;
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
 					array( 'name' => $tempPrgAttDid->getNome(),
 						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 

@@ -25,6 +25,7 @@
 		<ScriptIscriviDocenti2 class="ScriptIscriviDocenti2" />
 		<ScriptAggiungiPrgInsegnamento class="ScriptAggiungiPrgInsegnamento" />
 		
+		<ScriptCreaForum class="ScriptCreaForum" />
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
