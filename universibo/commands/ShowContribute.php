@@ -128,8 +128,8 @@ class ShowContribute extends UniversiboCommand
 			else $q3_cognome = $f3_cognome = $_POST['f3_cognome'];
 			
 			//telefono
-			if ( strlen($_POST['f3_tel']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il numero di cellulare indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			if ( (strlen($_POST['f3_tel']) > 50)||!ereg('^([0-9]{1,50})$', $_POST['f3_tel'])) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il numero di cellulare indicato può essere massimo 20 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_tel = $f3_tel = $_POST['f3_tel'];
