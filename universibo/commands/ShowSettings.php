@@ -96,12 +96,13 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 			var_dump($arrayNewsItems[1]);
 			
 			//to do: perché non mi restituisce il numero delle notizie?
+			//to do: prendere l'elenco dei FileItems
 			
 			
 			$keys = array_keys($arrayNewsItems);
 			foreach ($keys as $key)
 			{
-				
+				//todo: mettere in ordine le notizie
 			}
 		}
 		
