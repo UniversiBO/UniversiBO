@@ -1,7 +1,17 @@
 <?php
 
+/**
+ * Examples for Error Class
+ *
+ * @package universibo_test
+ * @version 2.0.0
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}
+ */
+
 require_once(Error.php);
 
+ 
 //some example callback handler functions... 
 function my_function($param)
 {

@@ -1,4 +1,7 @@
 <?php
+
+include ('UniversiboCommand'.PHP_EXTENSION);
+
 /**
  * ShowRules is an extension of UniversiboCommand class.
  *
@@ -11,9 +14,6 @@
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
- 
-include ('UniversiboCommand'.PHP_EXTENSION);
-
 class ShowRules extends UniversiboCommand {
 	function execute(){
 

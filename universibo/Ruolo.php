@@ -89,7 +89,7 @@ class Ruolo {
 	 * @param int		$id_utente		numero identificativo utente
 	 * @param int		$id_canale		numero identificativo canale
 	 * @param string	$nome nome		identificativo del ruolo (stringa personalizzata dall'utente per identificare il canale)
-	 * @param int		$ultimo_acceso	timestamp dell'ultimo accesso al canale da parete dell'utente
+	 * @param int		$ultimo_accesso	timestamp dell'ultimo accesso al canale da parete dell'utente
 	 * @param boolean	$moderatore		true se l'utente possiede diritti di moderatore sul canale
 	 * @param boolean	$referente		true se l'utente possiede diritti di referente sul canale
 	 * @param boolean	$my_universibo	true se l'utente ha inserito il canale tra i suoi preferiti
@@ -98,14 +98,14 @@ class Ruolo {
 	 * @return Ruolo
 	 */
 	
-	function Ruolo($id_utente, $id_canale, $nome, $ulitmo_accesso, $moderatore, $referente, $my_universibo, $notifica, $user=NULL, $canale=NULL)
+	function Ruolo($id_utente, $id_canale, $nome, $ultimo_accesso, $moderatore, $referente, $my_universibo, $notifica, $user=NULL, $canale=NULL)
 	{
 		$this->id_utente = $id_utente; 
 		$this->id_canale = $id_canale;
 		$this->user =& $user; //riferimento all'oggetto canale
 		$this->canale =& $canale;  //riferimento all'oggetto user
 
-		$this->ultimoAccesso = $ulitmo_accesso; 
+		$this->ultimoAccesso = $ultimo_accesso; 
 		$this->tipoNotifica = $notifica;
 		$this->nome = $nome;
 

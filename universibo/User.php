@@ -349,9 +349,9 @@ class User {
 
 
 	/**
-	 * Ritorna l'oggetto bookmark associato all'utente corrente  
+	 * Ritorna un array contenente gli oggetti Ruolo associati ai canali dell'utente
 	 *
-	 * @return Bookmark
+	 * @return array 
 	 */
 	function getRuoli()
 	{

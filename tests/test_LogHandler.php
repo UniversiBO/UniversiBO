@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Examples for LogHandler Class
+ *
+ * @package universibo_test
+ * @version 2.0.0
+ * @author Ilias Bartolini <brain79@inwind.it>
+ * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}
+ */
 
 		$log_error_definition = array(0 => 'time',
 									  1 => 'remote_ip',
