@@ -356,7 +356,7 @@ td.evidenzia{
 .elenco p, .elencoFile p { padding: 2px 4px !important; }
 .elenco div, .elencoFile div
 {
-	border-bottom: dotted 2px #999
+	border-bottom: dotted 2px #999;
 }
 /*
 .elenco		TODO non riesco a centrare sto cacchio di div
