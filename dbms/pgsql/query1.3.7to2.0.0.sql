@@ -136,3 +136,27 @@ UPDATE canale SET permessi_groups=127 WHERE tipo_canale=3;
 
 --------21-10-2003
 ALTER TABLE "esami_attivi" DROP COLUMN "cod_attivita";
+
+--------22-10-2003
+
+ALTER TABLE "news" RENAME TO "news2";
+
+ALTER TABLE news2
+ DROP CONSTRAINT news_pkey
+
+CREATE TABLE "news" (
+   "id_news" int4 DEFAULT nextval('"news_id_news_seq"'::text) NOT NULL,
+   "titolo" varchar(150) NOT NULL,
+   "data_inserimento" int4 NOT NULL,
+   "data_scadenza" int4,
+   "notizia" text,
+   "id_utente" int4 NOT NULL,
+   "eliminata" char(1) DEFAULT 'N' NOT NULL,
+   "flag_urgente" char(1) DEFAULT 'N' NOT NULL,
+   CONSTRAINT "news_pkey" PRIMARY KEY ("id_news")
+);
+
+INSERT INTO news ( "id_news" , "titolo" , "data_inserimento", "data_scadenza", "notizia" , "id_utente", "eliminata") 
+SELECT "id_news" , "titolo" , "data_inserimento", "data_scadenza", "notizia" , "id_utente", "eliminata" FROM news2 ;
+
+
