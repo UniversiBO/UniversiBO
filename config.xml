@@ -48,6 +48,9 @@
 		<ShowRules class="ShowRules">
 			<response type="template" name="default">regolamento.tpl</response>
 		</ShowRules>
+		<ShowSettings class="ShowSettings">
+			<response type="template" name="default">impostazioni.tpl</response>
+		</ShowSettings>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>
