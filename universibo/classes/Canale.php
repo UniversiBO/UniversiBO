@@ -113,7 +113,7 @@ class Canale {
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
 	{
 		$this->id_canale = $id_canale;
-		$this->permessi = $permessi;  
+		$this->permessi = $permessi;
 		$this->ultimaModifica = $ultima_modifica;
 		$this->tipoCanale = $tipo_canale;
 		$this->immagine = $immagine;
@@ -537,13 +537,13 @@ class Canale {
 	 * @param int $id_canale numero identificativo del canale
 	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
 	 */
-	function &retrieveCanale($id_canale)
+	function &retrieveCanale($id_canale, $cache = true)
 	{
 		//spalata la cache!!! 
 		//dimezza i tempi di esecuzione!!
 		static $cache_canali = array();
 		
-		if (array_key_exists($id_canale, $cache_canali))
+		if ($cache == true && array_key_exists($id_canale, $cache_canali))
 			return $cache_canali[$id_canale];
 		
 		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );

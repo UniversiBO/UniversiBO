@@ -451,11 +451,12 @@ class ForumApi
 		
 		$db =& FrontController::getDbConnection($this->database);
 
-		$query = 	'SELECT p.post_id, t.topic_title FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
+		$query = 'SELECT p.post_id, t.topic_title FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
 					WHERE t.topic_id = p.topic_id 
 					AND p.forum_id = '.$db->quote($id_forum).'
 					AND p.post_id IN (SELECT pp.post_id FROM '.$this->table_prefix.'posts pp WHERE t.topic_id = pp.topic_id AND pp.post_time > '.$user->getUltimoLogin().' ORDER BY pp.post_time ASC LIMIT 1)
 					ORDER BY p.post_edit_time DESC';
+		
 		//var_dump($query);
 		$res = $db->query($query);
 		if (DB::isError($res)) 

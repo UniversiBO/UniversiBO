@@ -22,6 +22,7 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
 class TestUnit extends UniversiboCommand {
 	function execute()
 	{
+		echo "<html><body>";
 		if (defined('PATH_SEPARATOR')) 
 		{
 		    $pathDelimiter = PATH_SEPARATOR;
@@ -39,13 +40,18 @@ class TestUnit extends UniversiboCommand {
 	    { 
 	        if ( ('_UnitTest_' == substr($file, 0, 10)) && (substr($file, -4)==PHP_EXTENSION) )
 	        {
-	        	echo $file;
+	        	echo $file,' - ',substr($file, 10, -4);
 				include ($file);
+				$suite  = new PHPUnit_TestSuite(substr($file, 10, -4).'Test');
+				$result = PHPUnit::run($suite);
+				//echo $result -> toHTML();
+				echo $result -> toHtmlTable();
 				echo '<br /><br />';
 	        }
 	    }
 
 	    closedir($dir_handle); 		
+		echo "</body></html>";
 	}
 }
 

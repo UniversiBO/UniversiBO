@@ -6,15 +6,7 @@
 */ 
 
 
-/*
-* classe PHPUnit 
-*/
 require_once 'PHPUnit'.PHP_EXTENSION;
-
-
-/*
-* classe da testare 
-*/
 require_once 'User'.PHP_EXTENSION;
 
 
@@ -219,10 +211,5 @@ $this->assertTrue($result == $expected);
 }
 
 }
-
-$suite  = new PHPUnit_TestSuite('UserTest');
-$result = PHPUnit::run($suite);
-//echo $result -> toHTML();
-echo $result -> toHtmlTable();
 
 ?>

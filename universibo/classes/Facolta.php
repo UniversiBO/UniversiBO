@@ -92,6 +92,15 @@ class Facolta extends Canale{
 		return $this->facoltaNome;
 	}
 
+	/**
+	 * Imposta il nome della facolt?
+	 *
+	 * @param string 'INGEGNERIA'
+	 */
+	function setNome($nome_fac)
+	{
+		$this->facoltaNome = $nome_fac;
+	}
 
 
 	/**
@@ -117,6 +126,15 @@ class Facolta extends Canale{
 	}
 
 
+	/**
+	 * Imposta il link alla homepage ufficiale della facolt?
+	 *
+	 * @param string $uri
+	 */
+	function setUri($uri)
+	{
+		$this->facoltaUri = $uri;
+	}
 
 	/**
 	 * Restituisce il codice di ateneo a 4 cifre della facolt?
@@ -127,6 +145,16 @@ class Facolta extends Canale{
 	function getCodiceFacolta()
 	{
 		return $this->facoltaCodice;
+	}
+
+
+	/**
+	 * Imposta il codice di ateneo a 4 cifre della facolt?
+	 * @param string $cod_fac es: ingegneria -> '0021'
+	 */
+	function setCodiceFacolta($cod_fac)
+	{
+		$this->facoltaCodice = $cod_fac;
 	}
 
 
@@ -164,7 +192,7 @@ class Facolta extends Canale{
 	 * @param int $id_canale id_del canale corrispondente alla facolt?
 	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
 	 */
-	function &selectFacoltaCanale($id_canale)
+	function selectFacoltaCanale($id_canale)
 	{
 		global $__facoltaElencoCanale;
 		
@@ -188,7 +216,7 @@ class Facolta extends Canale{
 	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
 	 * @return Facolta
 	 */
-	function &selectFacoltaCodice($cod_facolta)
+	function selectFacoltaCodice($cod_facolta)
 	{
 		global $__facoltaElencoCodice;
 		
@@ -222,6 +250,22 @@ class Facolta extends Canale{
 		}
 		
 		return $__facoltaElencoAlfabetico;
+	}
+	
+	
+	function updateFacolta()
+	{
+		$db =& FrontController::getDbConnection('main');
+		$query = 'UPDATE facolta SET cod_fac = '.$db->quote($this->getCodiceFacolta()).
+					', desc_fac = '.$db->quote($this->getNome()).
+					', url_facolta = '.$db->quote($this->getUri()).
+				' WHERE id_canale = '.$db->quote($this->getIdCanale());
+		
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>$query,'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$this->updateCanale();
 	}
 	
 	
