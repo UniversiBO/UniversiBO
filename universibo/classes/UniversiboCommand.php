@@ -176,7 +176,7 @@ class UniversiboCommand extends BaseCommand {
 		
 		//riferimenti per ottimizzare gli accessi
 		$templateInfo =& $this->frontController->templateInfo;
-		$appSettings =& $this->frontController->appSettings;
+		$fc = $this->getFrontController();
 		
 		$template->assign('common_templateBaseDir', $templateInfo['web_dir'].$templateInfo['styles'][$templateInfo['template_name']]);
 		
@@ -206,14 +206,21 @@ class UniversiboCommand extends BaseCommand {
 		// /path_universibo2/receiver.php?do=SomeCommand
 		$template->assign('common_shortUri',	$_SERVER['REQUEST_URI']);
 		
+		$template->assign('common_homepage',	'Homepage');
+		$template->assign('common_homepageUri',	'index.php?do=ShowHome');
+
 		require_once ('ForumApi'.PHP_EXTENSION);
+		$template->assign('common_forum',		'Forum');
 		$template->assign('common_forumDir',	'forum/');
 		$template->assign('common_forumUri',	'forum/index.php?'.ForumApi::getForumSid() );
 		
-		$template->assign('common_rootEmail',	$appSettings['rootEmail'] );
-		$template->assign('common_infoEmail',	$appSettings['infoEmail'] );
-		$template->assign('common_staffEmail',	$appSettings['staffEmail'] );
-		$template->assign('common_alert',		$appSettings['alertMessage'] );
+		$template->assign('common_homepage',	'Homepage');
+		$template->assign('common_homepageUri',	'index.php?do=ShowHome');
+
+		$template->assign('common_rootEmail',	$fc->getAppSetting('rootEmail') );
+		$template->assign('common_infoEmail',	$fc->getAppSetting('infoEmail') );
+		$template->assign('common_staffEmail',	$fc->getAppSetting('staffEmail') );
+		$template->assign('common_alert',		$fc->getAppSetting('alertMessage') );
 		
 		//generali
 		$template->assign('common_universibo',		'UniversiBO');
@@ -257,6 +264,12 @@ class UniversiboCommand extends BaseCommand {
 			$template->assign('common_userLoggedIn', 'true');
 		}
 		
+		$template->assign('common_settings', 'Impostazioni');
+		$template->assign('common_settingsUri', 'index.php?do=ShowSettings');
+
+		$template->assign('common_myUniversiBO', 'my UniversiBO');
+		$template->assign('common_myUniversiBOUri', 'index.php?do=MyUniversiBO');
+
 		$template->assign('common_fac', 'Facoltà');
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
@@ -282,9 +295,9 @@ class UniversiboCommand extends BaseCommand {
 		$common_servicesLinks = array();
 		$common_servicesLinks[] = array ('label'=>'Appunti - Latex', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Biblioteca', 'uri'=>'http://www.example.com'); 
+		$common_servicesLinks[] = array ('label'=>'Erasmus', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Eventi', 'uri'=>'http://www.example.com'); 
 		$common_servicesLinks[] = array ('label'=>'Moderatori', 'uri'=>'http://www.example.com'); 
-		$common_servicesLinks[] = array ('label'=>'Grafica', 'uri'=>'http://www.example.com'); 
 		$template->assign('common_servicesLinks', $common_servicesLinks);
 		
 		$template->assign('common_info', 'Informazioni');

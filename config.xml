@@ -96,7 +96,7 @@
 		<files>../html/file-universibo</files>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;</questionariReceiver>
-        <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione - Ci scusiamo per il disagio</alertMessage>
+        <alertMessage>Messaggio di avviso importante ed urgente</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
         <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
         <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>

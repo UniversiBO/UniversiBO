@@ -2,15 +2,6 @@
 
 require_once('Canale'.PHP_EXTENSION);
 
-global $__facoltaElencoCodice;
-global $__facoltaElencoAlfabetico;
-global $__facoltaElencoCanale;
-
-$facoltaElencoCodice     = NULL;
-$facoltaElencoAlfabetico = NULL;
-$facoltaElencoCanale     = NULL;
-
-
 /**
  * Insegnamento class.
  *
@@ -24,11 +15,11 @@ $facoltaElencoCanale     = NULL;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class Insergnamento extends Canale{
+class Insegnamento extends Canale{
 	
 	/**
-	 * per il caching del nome dell'insegnamento
 	 * @private
+	 * per il caching del nome dell'insegnamento
 	 */
 	var $insegnamentoNome = '';
 	/**
@@ -95,7 +86,7 @@ class Insergnamento extends Canale{
 	
 	
 	/**
-	 * Crea un oggetto facolta 
+	 * Crea un oggetto Insegnamento 
 	 *
 	 * @see selectFacoltaCanale
 	 * @see selectFacoltaCodice
@@ -118,7 +109,7 @@ class Insergnamento extends Canale{
 	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
 	 * @return Facolta
 	 */
-	function Facolta($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
+	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
 				 $cod_facolta, $nome_facolta, $uri_facolta)
 	{

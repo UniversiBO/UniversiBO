@@ -1,0 +1,133 @@
+.menu_bar_2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #386dce
+}
+.databar_2 {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.table_bg {
+	background-repeat: no-repeat
+}
+.spallaEventi {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #0099FF
+}
+.bgFilo {
+	BACKGROUND-COLOR: #999999
+}
+A.navbar {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
+}
+.navbar {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
+}
+A.navbar:hover {
+	COLOR: #ffffff
+}
+A.navbar:visited {
+	COLOR: #ffffff
+}
+A.navbar_2 {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
+}
+.navbar_2 {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
+}
+A.navbar:hover_2 {
+	COLOR: #ffffff
+}
+A.navbar:visited_2 {
+	COLOR: #ffffff
+}
+.databar {
+	FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
+}
+.menu {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.menu_on {
+	FONT-WEIGHT: bold; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.menu_cal {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+.menu_blu {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #386dce; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.menu_bar {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #386dce
+}
+.testoFooter {
+	FONT-SIZE: 70%; COLOR: #666666; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.Feriali {
+	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.Festivi {
+	FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.Domeniche {
+	FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.Oggi {
+	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.Piccolo {
+	FONT-SIZE: 7pt; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.titoloHome {
+	FONT-WEIGHT: bolder; FONT-SIZE: 130%; MARGIN: 0px; COLOR: #386dce; FONT-FAMILY: "Times New Roman", Times, serif
+}
+A.menu_piccolo {
+	FONT-WEIGHT: normal; FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.menu_piccolo {
+	FONT-WEIGHT: normal; FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.BgMenu1livOn {
+	BACKGROUND-COLOR: #cccccc
+}
+.login {
+	FONT-WEIGHT: bold; FONT-SIZE: 100%; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #666666
+}
+.testoOcchiello {
+	FONT-SIZE: 85%;
+	COLOR: #333333;
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+
+}
+.sei_in {
+	FONT-SIZE: 85%; COLOR: #333333; FONT-STYLE: italic; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+.testoNormale {
+	FONT-SIZE: 74%; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+
+
+
+
+.testoDestra {
+	FONT-SIZE: 86%;
+	COLOR: #666666;
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+}
+.navbarForm {
+	FONT-SIZE: 86%;
+	COLOR: #000000;
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+	BACKGROUND-COLOR: #FFFFFF;
+}
+.navbarHead {
+	 COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.navbarwhite {
+	FONT-SIZE: 70%;	COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.provaFondino {
+	background-color: #0000CC;
+	background-image: url(TESTATA2.gif);
+	background-repeat: no-repeat;
+}
+.testoVisite {
+	FONT-SIZE: 70%;
+	COLOR: #666666;
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+}
