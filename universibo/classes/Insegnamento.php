@@ -83,12 +83,14 @@ class Insegnamento extends Canale
 			}
 		}
 		
+		//var_dump($this->elencoAttivitaPadre);
 		$num = count($this->elencoAttivitaPadre);
 		$att = $this->elencoAttivitaPadre[0];
 		//inizializza il nome dell'esame
 		if ( $num == 1 )
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
+			//var_dump($cod_ril);
 			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n ".$att->getNomeDoc();
 		}
 		else
@@ -121,6 +123,7 @@ class Insegnamento extends Canale
 			}
 			
 			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
+			//var_dump($e_nomi);
 			$fin = array_values($e_nomi);
 			if ( (count(array_values($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
@@ -145,9 +148,12 @@ class Insegnamento extends Canale
 			//costruisce la mappa dei nomi
 			for ($i = 0; $i < $num_att; $i++)
 			{
-				$app_nomi[$i] = $nomi[$i].$cod_ril.' aa. '.$anni[$i]." \nprof. ". ucwords(strtolower($att->getNomeDoc()));
+				//se A-Z non lo metto nel nome
+				if ($cod_ril[$i] == "A-Z") $codice_ril = " ";
+				else $codice_ril = " (".$cod_ril[$i].")";
+				$app_nomi[$i] = $nomi[$i].$codice_ril.' aa. '.$anni[$i]." \nprof. ". ucwords(strtolower($att->getNomeDoc()));
 			}
-			
+			//var_dump($cod_ril);
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
 			
 		}
@@ -263,7 +269,7 @@ class Insegnamento extends Canale
 		if( $rows = 0) return false;
 		
 		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
-		
+		//var_dump($row);
 		$insegnamento =& new Insegnamento($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $elenco_attivita);
 		
