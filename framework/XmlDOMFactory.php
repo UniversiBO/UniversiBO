@@ -21,7 +21,7 @@ class XmlDOMFactory
 		}	
 		else
 			//php5
-			return new DOMDocument;
+			return new DOMDocument();
 		
 	}	
 

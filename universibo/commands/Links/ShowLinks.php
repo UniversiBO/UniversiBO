@@ -70,6 +70,7 @@ class ShowLinks extends PluginCommand {
 		$lista_links =& Link::selectCanaleLinks($id_canale);
 		 
 		$ret_links = count($lista_links);
+		$elenco_links_tpl = array();
 	
 		for ($i = 0; $i < $ret_links; $i++)
 		{

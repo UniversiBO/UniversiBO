@@ -707,7 +707,7 @@ class FrontController {
 	{
 		$smsMobyInfoNode =& $this->config->root->getChild('smsMobyInfo');
 		if ($smsMobyInfoNode == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento smsMobyInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento smsMobyInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$n = $smsMobyInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
