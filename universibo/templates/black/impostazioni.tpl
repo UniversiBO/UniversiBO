@@ -10,7 +10,7 @@
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td  align="center" class="Normal">
 &nbsp;<br /><img src="tpl/black/mypage_30.gif" width="138" height="39" alt="MyPage" /><br />
-{$mypage_intro|escape:"htmlall"}
+{$mypage_intro}
  &nbsp;<br />
  &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
@@ -71,6 +71,7 @@
  &nbsp;<br />
  &nbsp;<br />
  
+{if $mypage_showAdminPanel == "true"} 
  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
  <tr><td>
   <img src="img/admin_18.gif" width="76" height="22" alt="Admin" /><br />
@@ -91,7 +92,7 @@
   <tr bgcolor="#000032">
   <td align="center" class="Titolo">&nbsp;<br /><a href="https://universibo.ing.unibo.it/phpMyAdmin" target="_blank">{$mypage_admin.mysql|escape:"htmlall"}</a><br />&nbsp;<br /></td>
   <td bgcolor="#000099" width="1"><img src="tpl/black/invisible.gif" width="1" height="1" alt="" /></td>
-  <td align="center" class="Titolo">&nbsp;<br /><a href="#" onclick="window.open('popup.php?pg=50','','width=500,height=500,scrollbars=yes,resizable=yes,scrolling=yes,top=50,left=100')">{$mypage_admin.nuovi|escape:"htmlall"}</a><br />&nbsp;<br /></td>
+  <td align="center" class="Titolo">&nbsp;<br /><a href="index.php?do=RegistraStudente">{$mypage_admin.nuovi|escape:"htmlall"}</a><br />&nbsp;<br /></td>
   </tr>
   <tr bgcolor="#000099"> 
   <td colspan="1" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
@@ -102,7 +103,7 @@
  </table> 
 </td></tr>
 </table>
-
+{/if}
 
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
