@@ -1,11 +1,12 @@
-{$config_docType}
+{config_load file="main.conf"}
+{#docType#}
 <html>
 <head>
 <title>{$common_title|escape:"html"}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}">
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
-{$config_styleSheet}
+{#styleSheet#}
 </head>
  
 <body text="#FFFFFF" bgcolor="#000000" > <!--leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"-->

@@ -17,12 +17,7 @@ class ShowManifesto extends UniversiboCommand {
 	function execute(){
 
 		$template =& $this->frontController->getTemplateEngine();
-
-
-		//mettetere nel config del template 
-		$template->assign('config_docType', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">');
-		$template->assign('config_styleSheet', '<link rel="stylesheet" href="tpl/black/style.css" type="text/css">');
-
+		
 		$template->assign('manifesto_TitleAlt','Manifesto');
 		$template->assign('manifesto_langQuoteAlt', 'Galileo Galilei: Ma sopra tutte le invezioni stupende qual eminenza di mente fu quella di colui che s\'immaginò di trovar modo di comunicare i suoi più reconditi pensieri a qualsivoglia altra persona, benché distante per lunghissimo intervallo di luogo e di tempo?');
 		$template->assign('manifesto_langWhatIsIt', 'Forse l\'avrete banalmente già notato, ma lo scopo di questo sito è quello di aiutare una specie animale che da tempo immemorabile s\'inerpica tutte le mattine per una salitella ai piedi dei colli Bolognesi... si tratta dello studente d\'ingegneria.

@@ -1,4 +1,5 @@
-{$header_docType}
+{config_load file="main.conf"}
+{#docType#}
 
 <html>
 <head>

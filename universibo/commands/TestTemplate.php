@@ -31,10 +31,6 @@ class TestTemplate extends UniversiboCommand {
 		//...nell'UniversiBO command
 
 
-		//mettetere nel config del template 
-		$template->assign('config_docType', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">');
-		$template->assign('config_styleSheet', '<link rel="stylesheet" href="tpl/black/style.css" type="text/css">');
-
 
 /*
 		//solo nella pagine index
