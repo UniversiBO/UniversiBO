@@ -6,12 +6,8 @@
 	<h2>{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}<h2>
 	<p><a href="{$fac_facLink|escape:"htmlall"}" target="_blank">{$fac_facLink|escape:"htmlall"}</a></p>
 	{if $common_langCanaleMyUniversiBO != '' }
-	<p>
-	{if $common_canaleMyUniversiBO == "remove"}
-		<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;
-	{else}<img src="tpl/black/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
-	{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
-{/if}
+	<p>{if $common_canaleMyUniversiBO == "remove"}<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;{else}<img src="tpl/black/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+	{/if}
 </div>
 <h2>{$fac_langList|escape:"htmlall"}</h2>
 {foreach from=$fac_list item=temp_fac}

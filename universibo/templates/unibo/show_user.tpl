@@ -9,18 +9,20 @@
 {/if}
 </span></p>
 <div class="elenco">
-	<h3>Ruoli</h3>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+	<tr><td colspan="2"><h3>Ruoli</h3></td></tr>
 	{foreach from=$showCanali item=temp_currLink name=showCanali}
-	
+	<tr align="left"><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}">
 				<p class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
-				<span>{$temp_currLink.categoria}
+		</td><td class="{if $smarty.foreach.showCanali.iteration%2 == 0}odd{else}even{/if}"><span>{$temp_currLink.categoria}
 				{if $temp_currLink.ruolo=="R"},<img src="tpl/unibo/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
 				{if $temp_currLink.ruolo=="M"},<img src="tpl/unibo/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
 				{if $showDiritti == 'true'}
 					&nbsp;<img src="tpl/unibo/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;<a href="{$temp_currLink.rimuovi}">Rimuovi dal tuo MyUniversiBO</a>
 				{/if}</span></p>
-	
+	</td></tr>
 	{/foreach}
+</table>
 	</div>
 </p>
 {include file=footer_index.tpl}

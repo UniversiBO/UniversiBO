@@ -66,7 +66,7 @@
 		<table width="100%" cellspacing="0" cellpadding="1" border="0" summary="Calendario">
 			<tr align="center">
 			{foreach name=weekday from=$common_calendarWeekDays item=temp_weekday}
-			 <th class="{if %weekday.last%}Domeniche{else}Feriali{/if}">{$temp_weekday.numero|escape:"htmlall"|capitalize}</th>
+			 <th class="{if $smarty.foreach.weekday.last}Domeniche{else}Feriali{/if}">{$temp_weekday.numero|escape:"htmlall"|capitalize}</th>
 			{/foreach}
 			</tr>
 			{foreach from=$common_calendar item=temp_week}
