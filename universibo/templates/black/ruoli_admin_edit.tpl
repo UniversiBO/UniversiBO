@@ -18,7 +18,7 @@
 {include file=avviso_notice.tpl}
 <fieldset>
 <legend>Livello diritti nella pagina</legend>
-</td></tr>
+<table width="98%" border="0" cellspacing="0" cellpadding="2" align="center" summary="">
 <tr><td><input name="f17_livello" id="f17_livello_0" type="radio" {if $ruoliAdminEdit_userLivello == 'none'}checked="checked"{/if} value="none" />
 </td><td width="100%" class="Normal">
 <label for="f17_livello_0">Nessuno</label>
@@ -34,7 +34,10 @@
 <label for="f17_livello_2">Referente</label>
 </td>
 </tr>
+</table>
 </fieldset>
+</td>
+</tr>
 <tr><td colspan="4" align="center">
 <input name="f17_submit" id="f17_submit" type="submit" value="Modifica" />
 </td></tr>
