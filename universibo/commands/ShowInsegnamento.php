@@ -38,7 +38,7 @@ class ShowInsegnamento extends CanaleCommand
 		$session_user_groups = $session_user->getGroups();
 		$insegnamento =& $this -> getRequestCanale();
 		
-		echo $insegnamento->getTitolo();
+		$insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
 		$frontcontroller =& $this->getFrontController();
@@ -107,8 +107,31 @@ class ShowInsegnamento extends CanaleCommand
 		$template -> assign('cdl_thisYear', ($anno_accademico).'/'.($anno_accademico+1) );
 		$template -> assign('cdl_nextYear', ($anno_accademico+1).'/'.($anno_accademico+2) );
 		$template -> assign('cdl_prevYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico-1) );
-		$template -> assign('cdl_nextYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico+1) );
-*/		
+*/
+
+		$template->assign("ins_nomeDoc","RCnome docenteEK");
+		$template->assign("ins_annoAccademico","RC0000/6666EK");
+		$template->assign("ins_lang","RCnome esameEK");
+		$template->assign("ins_langForum","RCforum insegnamentoEK");
+		$template->assign("ins_langForumLink","http://www.recek.it");
+		$template->assign("ins_langAppelli","RCappelli esameEK");
+		$template->assign("ins_langAppelliLink","http://www.recek.it");
+		$template->assign("ins_langOrario","RCorario lezioniEK");
+		$template->assign("ins_langOrarioLink","http://www.recek.it");
+		
+		$template->assign("ins_langObiettivi","RCobiettivi del corsoEK");
+		$template->assign("ins_langObiettiviLink","http://www.recek.it");
+		$template->assign("ins_langProgramma","RCProgramma del corsoEK");
+		$template->assign("ins_langProgrammaLink","http://www.recek.it");
+		$template->assign("ins_langMateriale","RCMateriale didattico e testi 
+		consiglitEK");
+		$template->assign("ins_langMaterialeLink","http://www.recek.it");
+		$template->assign("ins_langModalita","RCModalit' del corsoEK'");
+		$template->assign("ins_langModalitaLink","");
+
+
+		$template -> assign('ins_title', $insegnamento->getTitolo() );
+		
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		return 'default';

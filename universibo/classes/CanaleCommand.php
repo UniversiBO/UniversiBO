@@ -154,6 +154,17 @@ class CanaleCommand extends UniversiboCommand
 			$user_ruoli[$id_canale]->updateUltimoAccesso(time(), true);
 		}
 	}
+
+
+	/**
+	 * Chiude il CanaleCommand ridefinisce lo shutdownCommand() dell'UniversiboCommand.
+	 */
+	function shutdownCommand()
+	{
+		$this->updateUltimoAccesso();
+		parent::shutdownCommand();
+	}
+	
 	
 }
 

@@ -225,6 +225,5 @@
 <td height="12" width="12"><img src="tpl/black/menuBR.gif" width="12" height="12" alt="" /></td>
 </tr>
 </table>
-&nbsp;<br /><!-- Fine MENU Left -->
-</td>
-<td valign="top" align="center"> 
+&nbsp;<br /></td>
+<td valign="top" align="center" class="Normal">&nbsp;<br /> 

@@ -102,6 +102,7 @@ class ShowCdl extends CanaleCommand {
 		$template -> assign('cdl_nextYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico+1) );
 		
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
+		$template -> assign('cdl_langGoToForum', 'Link al forum');
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
 		

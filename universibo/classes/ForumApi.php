@@ -1,5 +1,5 @@
 <?php
-
+require_once('User'.PHP_EXTENSION);
 
 /**
  * La classe Forum fornisce un'API esterna per le operazioni sul forum PHPBB 2.0.x
@@ -19,19 +19,35 @@ class ForumApi
 {
 	
 	/**
+	 * Identificativo di connessione al database da utilizzare
 	 * @access private
 	 */
 	var $database = 'main';
 	
 	/**
+	 * Prefisso del nome delle tabelle del database
 	 * @access private
 	 */
 	var $table_prefix = 'phpbb_';
 	
 	/**
+	 * Cartella percorso dell'url del forum
 	 * @access private
 	 */
 	var $forumPath = 'forum/';
+
+	/**
+	 * Stile del forum di default - implica la modifica anche nella tabella di config di phpbb
+	 * @access private
+	 */
+	var $defaultUserStyle = 7;
+
+	/**
+	 * Ranks e livelli da assegnare agli utenti inizialmente
+	 * @access private
+	 */
+	var $defaultRanks = array(USER_STUDENTE => 0, USER_MODERATORE => 9, USER_TUTOR => 10, USER_DOCENTE => 11, USER_PERSONALE => 12, USER_ADMIN =>  1);
+
 
 	/**
 	 * esegue la codifica esadecimale di un ipv4 nel formato separato da punti
@@ -160,6 +176,50 @@ class ForumApi
 		$_SESSION['phpbb_sid'] = '';
 		
 	}
+
+
+	/**
+	 * Crea un nuovo utente sul database del forum dato uno User
+	 * 
+	 * @todo renderla funzionante anche per utenti che appartengono a più gruppi
+	 * @static 
+	 */
+	function insertUser($user)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+		if ($user->isOspite()) return;
+
+		$groups = $user->getGroups();
+		if ( $groups != USER_OSPITE && $groups != USER_STUDENTE && $groups != USER_MODERATORE && $groups != USER_TUTOR && $groups != USER_DOCENTE && $groups != USER_PERSONALE && $groups != USER_ADMIN ) return;
+		// @todo renderla funzionante anche per utenti che appartengono a più gruppi
+		
+		$user_style = $this->defaultUserStyle;
+		$user_rank  = $this->defaultRanks[$groups];
+		$user_level = ( $user->isAdmin() == true ) ? 1 : ( $user->isModeratore() == true ) ? 2 : 0 ;
+		
+		require_once('Krono'.PHP_EXTENSION);
+		$user_timezone =  (Krono::_is_daylight(time()) == true) ? 2 : 1;
+		
+		if ($user->isDocente() || $user->isTutor()){
+			$user_notify_pm = 0;
+			$user_popup_pm = 0;
+		}
+		else{
+			$user_notify_pm = 1;
+			$user_popup_pm = 1;
+		}
+		
+		$query = 'INSERT INTO '.$this->table_prefix.'users (user_id, user_active, username, user_regdate, user_password, user_session_time, user_session_page, user_lastvisit, user_email, user_icq, user_website, user_occ, user_from, user_interests, user_sig, user_sig_bbcode_uid, user_style, user_aim, user_yim, user_msnm, user_posts, user_new_privmsg, user_unread_privmsg, user_last_privmsg, user_emailtime, user_viewemail, user_attachsig, user_allowhtml, user_allowbbcode, user_allowsmile, user_allow_pm, user_allowavatar, user_allow_viewonline, user_rank, user_avatar, user_avatar_type, user_level, user_lang, user_timezone, user_dateformat, user_notify_pm, user_popup_pm, user_notify, user_actkey, user_newpasswd)
+					VALUES('.$db->quote($user->getIdUser()).', 1, '.$db->quote($user->getUsername()).', '.$db->quote(time()).','.$db->quote($user->getPasswordHash()).', 0, 0, 0,'.$db->quote($user->getEmail()).', \'\', \'\', \'\', \'\', \'\', \'\', \'          \', '.$user_style.', \'\', \'\', \'\', 0, 0, 0, 0, NULL, 0, 1, 0, 1, 1, 1, 1, 1, '.$user_rank.', \'\', 0, '.$user_level.', '.$db->quote('italian').', '.$user_timezone.', '.$db->quote('D d M Y G:i').', '.$user_notify_pm.', '.$user_popup_pm.', 0, \'\', \'\')';
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
+
 
 	/**
 	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false

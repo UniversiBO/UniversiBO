@@ -165,42 +165,42 @@ class ShowContribute extends UniversiboCommand
 				$q3_offline = 'S';
 				$f3_offline = true;
 			}
-			else $q3_offline = 'N' ;
+			else $q3_offline = 'N';
 			
 			//moderatore check
 			if ( array_key_exists('f3_moderatore', $_POST) ) {
 				$q3_moderatore = 'S';
 				$f3_moderatore = true;
 			}
-			else $q3_moderatore = 'N' ;
+			else $q3_moderatore = 'N';
 			
 			//stesura contenuti check
 			if ( array_key_exists('f3_contenuti', $_POST) ) {
 				$q3_contenuti = 'S';
 				$f3_contenuti = true;
 			}
-			else $q3_contenuti = 'N' ;
+			else $q3_contenuti = 'N';
 			
 			//test check
 			if ( array_key_exists('f3_test', $_POST) ) {
 				$q3_test = 'S';
 				$f3_test = true;
 			}
-			else $q3_test = 'N' ;
+			else $q3_test = 'N';
 			
 			//grafica check
 			if ( array_key_exists('f3_grafica', $_POST) ) {
 				$q3_grafica = 'S';
 				$f3_grafica = true;
 			}
-			else $q3_grafica = 'N' ;
+			else $q3_grafica = 'N';
 			
 			//progettazione check
 			if ( array_key_exists('f3_prog', $_POST) ) {
 				$q3_prog = 'S';
 				$f3_prog = true;
 			}
-			else $q3_prog = 'N' ;
+			else $q3_prog = 'N';
 			
 		}
 		
@@ -269,12 +269,14 @@ class ShowContribute extends UniversiboCommand
 			//var_dump($mail);
 			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			//return '';
+			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
+			return 'questionario_success';
 		}
 		
 		return 'default';
-	}
 		
+	}
+	
 }
 
 ?>

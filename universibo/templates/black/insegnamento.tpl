@@ -5,11 +5,10 @@
 {/if}
 
 <table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal"><br /> 
-
+<tr><td class="Normal">&nbsp;<br /> 
+<p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
 
 {include file=News/latest_news.tpl}
-
 
 </td></tr></table>
 

@@ -14,7 +14,7 @@
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class FrontController {	
+class FrontController {
 
 	/**
 	 * @access private
@@ -850,11 +850,11 @@ class FrontController {
 
 
 	/**
-	* Factory method that creates a Kronos object based on the config language info
-	*
-	* @return Krono object
-	* @access public
-	*/
+	 * Factory method that creates a Kronos object based on the config language info
+	 *
+	 * @return Krono object
+	 * @access public
+	 */
 	function &getKrono()
 	{
 

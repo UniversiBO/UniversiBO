@@ -10,7 +10,7 @@
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="Normal" align="center">
 &nbsp;<br /> <img src="tpl/black/facolta_30.gif" width="132" height="39" alt="{$fac_langTitleAlt|escape:"htmlall"}" />
-<p align="center" class="Titolo">{$fac_facTitle|escape:"htmlall"}</p>
+<p align="center" class="Titolo">{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}</p>
 
 <p>{$fac_langList|escape:"htmlall"}</p>
 

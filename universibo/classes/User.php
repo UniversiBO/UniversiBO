@@ -108,10 +108,9 @@ class User {
 	 * Genera una password casuale
 	 *
 	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
+	 * @return string password casuale
 	 */
-	function generateRandomPassword()
+	function generateRandomPassword($length = 8)
 	{
 		$chars = array( 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J',  'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T',  'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
 		$max_chars = count($chars) - 1;
@@ -124,7 +123,7 @@ class User {
 		mt_srand( $seed );
 	
 		$rand_str = '';
-		for($i = 0; $i < 8; $i++)
+		for($i = 0; $i < $length; $i++)
 		{
 			$rand_str = $rand_str . $chars[mt_rand(0, $max_chars)];
 		}
@@ -721,15 +720,28 @@ class User {
 	/**
 	 * Inserisce su DB le informazioni riguardanti un nuovo utente
 	 *
-	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
+	 * @return boolean true se avvenua con successo, altrimenti Error object
 	 */
 	function insertUser()
 	{
-			$db =& FrontController::getDbConnection('main');
+		$db =& FrontController::getDbConnection('main');
 		
+        ignore_user_abort(1);
+        $db->autoCommit(false);
+        
+		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($this->getUsername()).' OR ad_username = '.$db->quote($this->getADUsername()); 
+		$res = $db->query($query);
+		$rows = $res->numRows();
+		
+		if( $rows > 0) 
+		{
+			$return = false;
+		}
+		else
+		{
 			$this->id_utente = $db->nextID('utente_id_utente');
-			$utente_ban = ( $this->getBan() ) ? 'S' : 'N';
-
+			$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
+			
 			$query = 'INSERT INTO utente (id_utente, username, password, email, ultimo_login, ad_username, groups, ban) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
@@ -742,12 +754,17 @@ class User {
 			$res = $db->query($query);
 			
 			if (DB::isError($res))
-			{ 
 				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
-				return false;
-			}
-				 
-			return true;
+			
+			$db->commit();
+			
+			$return = true;
+		}
+        
+        $db->autoCommit(true);
+        ignore_user_abort(0);
+		
+		return $return;
 	}
 
 	
@@ -782,6 +799,69 @@ class User {
 			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 
+	/**
+	 * Restituisce true se l'utente dell'active directory è già registrato sul DB
+	 *
+	 * @static
+	 * @param string $ad_username username da ricercare
+	 * @return boolean
+	 */
+	function activeDirectoryUsernameExists( $ad_username )
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_utente FROM utente WHERE ad_username = '.$db->quote($ad_username);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		
+		if( $rows == 0) return false;
+		elseif( $rows == 1) return true;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		return false;
+	}
+
+
+	/**
+	 * Restituisce true se l'utente viene autenticato con successo sull'active directory di ateneo
+	 *
+	 * @static
+	 * @param string $ad_username username utente
+	 * @param string $ad_domain dominio dell'active directory
+	 * @param string $ad_password password dell'utente
+	 * @return boolean
+	 */
+	function activeDirectoryLogin($ad_username, $ad_domain, $ad_password, $adl_host, $adl_port )
+	{
+	
+		$javaADLoginSock = fsockopen($adl_host,    # the host of the server
+		                             $adl_port,    # the port to use
+		                             $errno,   # error number if any
+		                             $errstr,  # error message if any
+		                             3);   # give up after 5 secs
+	
+		if ( $javaADLoginSock == false )
+		{
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo','file'=>__FILE__,'line'=>__LINE__)); 
+		}
+		else
+		{
+		    $xml_request = '<?xml version="1.0" encoding="UTF-8"?><ADLogIn><user username="'. $ad_username .'" domain="'. $ad_domain . '" password="'. $ad_password . '" /></ADLogIn>';
+			fputs ($javaADLoginSock, $xml_request."\n");
+		
+			$reply = fgets ($JavaADLoginSock,4);
+
+			fclose($javaADLoginSock);
+			
+			$result = substr($reply,0,2);
+			if ($result == 'NO') return false;		// 'Autenticazione fallita';
+			elseif ($result == 'OK') return true;	// 'Autenticazione corretta';
+			else  Error::throw(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida','file'=>__FILE__,'line'=>__LINE__)); 
+		
+		}				 
+
+	}
 	
 }
 

@@ -55,6 +55,7 @@
 		</ShowInsegnamento>
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
+			<response type="template" name="questionario_success">questionario_success.tpl</response>
 		</ShowContribute>
 		<ShowCredits class="ShowCredits">
 			<response type="template" name="default">credits.tpl</response>
@@ -74,6 +75,9 @@
 		<ShowSettings class="ShowSettings">
 			<response type="template" name="default">impostazioni.tpl</response>
 		</ShowSettings>
+		<RegStudente class="RegStudente">
+			<response type="template" name="default">reg_studente.tpl</response>
+		</RegStudente>
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>
@@ -116,15 +120,19 @@
 	<!-- appSettings is an optional node. You can place any thing here 
                 and access it from FrontController->getAppSetting()	-->
 	<appSettings>
+		<adLoginHost>127.0.0.1</adLoginHost>
+		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<files>../html/file-universibo</files>
 		<fotoDefault>no_foto.png</fotoDefault>
-		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it</questionariReceiver>
+		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
         <alertMessage>Messaggio di avviso importante ed urgente</alertMessage>
         <rootEmail>universibo@joker.ing.unibo.it</rootEmail>
         <infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
+        <regolamento>../universibo/files/regolamento.txt</regolamento>
+        <informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
         <staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
         <defaultAnnoAccademico>2003</defaultAnnoAccademico>
 	</appSettings>

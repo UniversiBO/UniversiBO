@@ -46,13 +46,7 @@ class ShowHome extends CanaleCommand
 		
 		return 'default';
 	}
-
-	function shutdownCommand()
-	{
-		$this->updateUltimoAccesso();
-		parent::shutdownCommand();
-	}
-
+	
 }
 
 ?>
