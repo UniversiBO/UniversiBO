@@ -18,7 +18,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td>
 <fieldset>
-<legend><span class="Normal">{$f13langAction|escape:"htmlall"}</span></legend>
+<legend><span class="Normal">{$f13_langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f13_canale}
 	<tr class="Normal" valign="center">
