@@ -83,7 +83,7 @@ class ShowInsegnamento extends CanaleCommand
 testi consigliati';
 		}
 		elseif ($info_didattica->getTestiConsigliatiLink() != '' && $info_didattica->getTestiConsigliati() == '' )
-			$materiale = '[url='.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
+			$materiale = '[url='.$info_didattica->getTestiConsigliatiLink().']Materiale didattico e 
 testi consigliati[/url]';
 		else
 			$materiale = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Materiale didattico e 
