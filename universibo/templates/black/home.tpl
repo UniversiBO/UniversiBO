@@ -23,7 +23,7 @@
 &nbsp;<br />
 
 
-Qui vanno incluse le news
+{include file=News/latest_news.tpl}
 
 
 </td></tr></table>

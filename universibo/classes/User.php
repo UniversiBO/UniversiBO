@@ -363,6 +363,7 @@ class User {
 	{
 		if ($this->bookmark == NULL)
 		{
+			$this->bookmark = array();
 			$ruoli =& Ruolo::selectUserRuoli($this->getIdUser());
 			$num_elementi = count($ruoli);
 			for ($i=0; $i<$num_elementi; $i++)

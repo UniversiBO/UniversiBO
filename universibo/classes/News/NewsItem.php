@@ -41,7 +41,12 @@ class NewsItem {
 	/**
 	 * @private
 	 */
-	var $idUtente=0; 
+	var $id_utente=0; 
+
+	/**
+	 * @private
+	 */
+	var $username=''; 
 
 	/**
 	 * data e ora di inserimento
@@ -53,7 +58,7 @@ class NewsItem {
 	/**
 	 * @private
 	 */
-	var $dataScadenza=0;
+	var $dataScadenza=NULL;
 	
 		
 	/**
@@ -64,7 +69,7 @@ class NewsItem {
 	/**
 	 * @private
 	 */
-	var $idNotizia=0; 
+	var $id_notizia=0; 
 	 
 	/**
 	 * @private
@@ -95,10 +100,12 @@ class NewsItem {
 	 * @param  boolean $urgente flag notizia urgente o meno
 	 * @param  boolean $eliminata flag stato della news
 	 * @param  int $id_utente id dell'autore della news
+	 * @param  string $username username dell'autore della news
 	 * @return NewsItem
 	 */
 	 
-	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $urgente, $eliminata, $id_utente){
+	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $urgente, $eliminata, $id_utente, $username)
+	 {
 	 	
 	 	$this->id_notizia=$id_notizia;
 	 	$this->titolo=$titolo;
@@ -108,6 +115,7 @@ class NewsItem {
 	 	$this->urgente=$urgente;
 	 	$this->eliminata=$eliminata;
 	 	$this->id_utente=$id_utente;
+	 	$this->username=$username;
 	 
 	 }
 
@@ -118,7 +126,8 @@ class NewsItem {
 	  *
 	  * @return String 
 	  */
-	 function getTitolo(){
+	 function getTitolo()
+	 {
 	 	return $this->titolo;
 	 }
 
@@ -141,7 +150,18 @@ class NewsItem {
 	 */
 	 function getIdUtente() 
 	 {
-	 	return $this->idUtente;
+	 	return $this->id_utente;
+	 }
+	 
+
+	 /**
+	 * Recupera lo username dell'autore della notizia
+	 *
+	 * @return string 
+	 */
+	 function getUsername() 
+	 {
+	 	return $this->username;
 	 }
 	 
 
@@ -186,7 +206,7 @@ class NewsItem {
 	 */
 	function getIdNotizia() 
 	{
-	 	return $this->idNotizia;
+	 	return $this->id_notizia;
 	}
 	 
 	/**
@@ -229,10 +249,21 @@ class NewsItem {
 	 */
 	function setIdUtente($id_utente) 
 	{
-	 	$this->idUtente=$id_utente;
+	 	$this->id_utente = $id_utente;
 	}
 	 
 	 
+	 /**
+	 * Imposta lo username dell'autore della notizia
+	 *
+	 * @param  string $username username dell'autore della news 
+	 */
+	 function setUsername($username) 
+	 {
+	 	$this->username = $username;
+	 }
+	 
+
 	/**
 	 * Imposta la data di inserimento della notizia
 	 *
@@ -276,7 +307,7 @@ class NewsItem {
 	 */
 	function setIdNotizia($id_notizia) 
 	{
-	 	$this->idNotizia=$id_notizia;
+	 	$this->id_notizia=$id_notizia;
 	}
 	 
 	
@@ -299,11 +330,12 @@ class NewsItem {
 	 * @param int $id_notizia  id della news
 	 * @return NewsItem 
 	 */
-	 function &selectNewsItem ($id_notizia){
+	 function &selectNewsItem ($id_notizia)
+	 {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente FROM news WHERE id_news='.$db->quote($id_notizia).'AND eliminata!='.$db->quote($this->ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, username FROM news A, utente B WHERE A.id_autore = B.id_utente AND id_news='.$db->quote($id_notizia).'AND eliminata!='.$db->quote($this->ELIMINATA);
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -315,7 +347,7 @@ class NewsItem {
 		$res->fetchInto($row);	
 		$res->free();
 		
-		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
+		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[8]);
 		return $news;
 	 }
 	
@@ -328,7 +360,8 @@ class NewsItem {
 	 * @param array $id_notizie array elenco di id della news
 	 * @return NewsItems 
 	 */
-	 function &selectNewsItems ($id_notizie){
+	 function &selectNewsItems ($id_notizie)
+	 {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
@@ -336,7 +369,7 @@ class NewsItem {
 		array_walk($id_notizie, array($db, 'quote'));
 		$values = implode(',',$id_notizie);
 		
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, id_news FROM news WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote($this->ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -348,7 +381,7 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
+			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[8]);
 		}
 		
 		$res->free();
