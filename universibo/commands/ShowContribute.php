@@ -11,7 +11,7 @@ include ('UniversiboCommand'.PHP_EXTENSION);
  * @subpackage commands
  * @version 2.0.0
  * @author Fabrizio Pinto
- * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Ilias Bartolini <brain79@inwind.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
@@ -52,10 +52,25 @@ class ShowContribute extends UniversiboCommand {
           crescita), occuparvi del contatto con le aule, con i docenti...
       [/list]',
 	  'Se quindi vi abbiamo convinto con queste poche e semplici parole e volete 
-        collaborare attivamente al progetto compilate [b][url=index?do=ShowQuestions]questo questionario[/url][/b]
+        collaborare attivamente al progetto compilate questo questionario
 		e vi contatteremo al più presto.'));
 		
-		
+		//domande questionario 	
+		$template->assign('question_PersonalInfo', 'Dati personali: '); 
+		$template->assign('question_PersonalInfoData', array('Nome','Cognome','E-mail','Telefono')); 
+		$template->assign('question_q1', 'Saresti disponibile a darci un piccolo contributo(di tempo) per il progetto?'); 
+		$template->assign('question_q1Answers', array('una giornata alla settimana o più;','poche ore alla settimana;','pochi minuti alla settimana;')); 
+		$template->assign('question_q2', 'Quanto tempo ti connetti a Internet?'); 
+		$template->assign('question_q2Answers', array('quasi mai;','una volta alla settimana;','una volta al giorno;','vivo connesso;')); 
+		$template->assign('question_q3', 'Quali di queste attività pensi di poter svolgere(anche più di una scelta)?'); 
+		$template->assign('question_q3AnswersMulti', array('attività off-line(contatti con i docenti o studenti, reperimento materiale...);','moderatore  
+		(controllare che la gente non scriva cose non permesse...);','scrittura contenuti riguardanti i corsi che frequento;','testare le nuove versioni dei sevizi  
+		provandoli on-line;','elaborazione grafica di immagini (icone, scritte, ecc...);','aiutare nella progettazione e programmazione del sito;')); 
+		$template->assign('question_PersonalNotes', 'Altre informazioni personali:'); 
+		$template->assign('question_Privacy', 'Acconsento al trattamento dei miei dati personali ai sensi della legge sulla privacy 1996 N. 675/96;'); 
+		$template->assign('question_Send', 'Invia'); 
+		$template->assign('question_TitleAlt', 'Questionario'); 
+				
 		
 		return 'default';						
 	}
