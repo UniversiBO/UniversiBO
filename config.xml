@@ -20,9 +20,6 @@
 		<ShowError class="ShowError">
 			<response type="template" name="default">error.tpl</response>
 		</ShowError>
-		<RegistraStudente class="RegistraStudente">
-			<response type="template" name="default">registra_studente.tpl</response>
-		</RegistraStudente>
 		<Login class="Login">
 			<response type="template" name="default">login.tpl</response>
 		</Login>
@@ -139,6 +136,10 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</RegStudente>
+		<RegUser class="RegUser">
+			<response type="template" name="default">reg_user.tpl</response>
+			<response type="template" name="success">reg_user_success.tpl</response>
+		</RegUser>
 		<NewPasswordStudente class="NewPasswordStudente">
 			<response type="template" name="default">new_password_studente.tpl</response>
 			<response type="template" name="success">new_password_studente_success.tpl</response>
