@@ -146,6 +146,7 @@
 		</FileAdd>
 		<FileEdit class="FileEdit">
 			<response type="template" name="default">file_edit.tpl</response>
+			<response type="template" name="success">file_edit_success.tpl</response>
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileEdit>

@@ -76,8 +76,8 @@
 <td class="News" align="right" valign="top"><label for="f13_permessi_download">Permessi download:</label></td>
 <td>
 <select id="f13_permessi_download" name="f13_permessi_download">
-<option value="127" selected="selected">Tutti</option>
-<option value="126" selected="selected">Solo iscritti</option>
+<option value="127" {if "127"==$f13_permessi_download}selected="selected"{/if}>Tutti</option>
+<option value="126" {if "126"==$f13_permessi_download}selected="selected"{/if}>Solo iscritti</option>
 </select>
 <input type="hidden" id="f13_permessi_visualizza" name="f13_permessi_visualizza" value="127" />
 </td>
@@ -88,6 +88,10 @@
 <td>
 <input type="checkbox" id="f13_password_enable" name="f13_password_enable" {if $f13_password_enable=="true"}checked="checked"{/if} />
 </td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td class="News">Lasciare vuoto per non modificare la password corrente</td>
 </tr>
 <tr>
 <td class="News" align="right" valign="top"><label for="f13_password">Password:</label></td>
@@ -118,7 +122,7 @@
 <td colspan="2" align="center">
 <input type="submit" id="" name="f13_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$deleteFile_fileUri|escape:"htmlall"}">Torna&nbsp;al&nbsp;file</a></td></tr>
 </table>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">

@@ -52,6 +52,7 @@ class FileEdit extends UniversiboCommand {
 		
 		$frontcontroller = & $this->getFrontController();
 		$template = & $frontcontroller->getTemplateEngine();
+		$template->assign('deleteFile_fileUri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 
 		$krono = & $frontcontroller->getKrono();
 
@@ -67,7 +68,8 @@ class FileEdit extends UniversiboCommand {
 		$f13_data_inserimento = $file->getDataInserimento();
 		$f13_permessi_download = $file->getPermessiDownload();
 		$f13_permessi_visualizza = $file->getPermessiVisualizza();
-		$f13_password_enable = ($file->getPassword() == null);
+		$f13_password_enable = ($file->getPassword() != null);
+	
 		$f13_password = '';
 
 		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin può essere diverso)
@@ -88,8 +90,7 @@ class FileEdit extends UniversiboCommand {
 		{
 			$f13_accept = true;
 
-			if ( !array_key_exists('f13_file', $_FILES) ||
-			 !array_key_exists('f13_titolo', $_POST) ||
+			if ( !array_key_exists('f13_titolo', $_POST) ||
 			 !array_key_exists('f13_data_ins_gg', $_POST) || 
 			 !array_key_exists('f13_data_ins_mm', $_POST) || 
 			 !array_key_exists('f13_data_ins_aa', $_POST) || 
@@ -98,13 +99,12 @@ class FileEdit extends UniversiboCommand {
 			 !array_key_exists('f13_abstract', $_POST) || 
 			 !array_key_exists('f13_parole_chiave', $_POST) || 
 			 !array_key_exists('f13_categoria', $_POST) || 
+			 !array_key_exists('f13_tipo', $_POST) || 
 			 !array_key_exists('f13_permessi_download', $_POST) || 
 			 !array_key_exists('f13_permessi_visualizza', $_POST) || 
 			 !array_key_exists('f13_password', $_POST) || 
-			 !array_key_exists('f13_password_confirm', $_POST) || 
-			 !array_key_exists('f13_canale', $_POST) ) 
+			 !array_key_exists('f13_password_confirm', $_POST) ) 
 			{
-				var_dump($_POST);die();
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f13_accept = false;
 			}
@@ -198,29 +198,31 @@ class FileEdit extends UniversiboCommand {
 				$f13_testo = $_POST['f13_abstract'];
 
 			//parole chiave
+			$f13_parole_chiave = array();
 			if ($_POST['f13_parole_chiave'] != '')
 			{	
-				$parole_chiave = explode("\n", $_POST['f13_parole_chiave']);
-				if (count($parole_chiave) > 4) 
+				$parole_chiave = explode("\r\n", $_POST['f13_parole_chiave']);
+
+				foreach($parole_chiave as $parola)
 				{
+					if (strlen($parola > 40))
+					{
+						Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f13_accept = false;
+					}
+					else
+					{
+						if($parola != '')
+							$f13_parole_chiave[] = $parola;
+					}
+				}
+				
+				if (count($f13_parole_chiave) > 4) 
+				{
+					var_dump($f13_parole_chiave);
 					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f13_accept = false;
 				}
-				else 
-				{
-					foreach($parole_chiave as $parola)
-					{
-						if (strlen($parola > 40))
-						{
-							Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-							$f13_accept = false;
-						}
-						else
-						{
-							$f13_parole_chiave[] = $parola;
-						}
-					}
-				}			
 			}
 			
 			//categoria	
@@ -235,6 +237,21 @@ class FileEdit extends UniversiboCommand {
 				$f13_accept = false;
 			}
 			else $f13_categoria = $_POST['f13_categoria'];
+			
+			
+			//tipi	
+			if (!ereg('^([0-9]{1,9})$', $_POST['f13_tipo'])) 
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo tipo non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f13_accept = false;
+			}
+			elseif ( !array_key_exists($_POST['f13_tipo'], $f13_tipi) )
+			{
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il tipo inviato contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f13_accept = false;
+			}
+			else $f13_tipo = $_POST['f13_tipo'];
+			
 			
 			//permessi_download	
 			if (!ereg('^([0-9]{1,3})$', $_POST['f13_permessi_download'])) 
@@ -255,57 +272,43 @@ class FileEdit extends UniversiboCommand {
 			{
 				if ($_POST['f13_permessi_download'] != USER_ALL || $_POST['f13_permessi_download'] != (USER_STUDENTE & USER_DOCENTE & USER_TUTOR & USER_PERSONALE & USER_COLLABORATORE & USER_ADMIN ) )
 				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
 				}
+				$f13_permessi_download = $_POST['f13_permessi_download'];
+				
 			}			
 			
-			//password non necessita controlli
-			if ($_POST['f13_password'] != $_POST['f13_password_confirm'])
-			{ 
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
-				$f12_accept = false;
+			$edit_password = true;
+			//password
+			if (array_key_exists('f13_password_enable', $_POST))
+			{
+				if ($_POST['f13_password'] != $_POST['f13_password_confirm'])
+				{ 
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					$f13_accept = false;
+				}
+				elseif( $file->getPassword() == null && $_POST['f13_password'] == '')
+				{ 
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password inserita è vuota', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					$f13_accept = false;
+				}
+				elseif( $file->getPassword() != null && $_POST['f13_password'] == '')
+				{ 
+					$edit_password = false;
+				}
+				else
+					$f13_password = $_POST['f13_password'];
 			}
-			elseif($_POST['f13_password'] != '')
-			{ 
-				$f13_password = $_POST['f13_password'];
+			else
+			{
+				$f13_password = null;
 			}
 			
 			//e i permessi di visualizzazione??
 			// li prendo uguali a quelli del canale,
 			$f13_permessi_visualizza = $canale->getPermessi();
 			// eventualmente dare la possibilità all'admin di metterli diversamente
-			
-			
-			$f13_canali_inserimento = array();
-			//controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
-			foreach ($_POST['f13_canale'] as $key => $value)
-			{
-				$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
-				if (!$diritti)
-				{
-					//$user_ruoli[$key]->getIdCanale();
-					$canale =& $elenco_canali_retrieve[$key];
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f13_accept = false;
-				}
-				
-				$f13_canali_inserimento = $_POST['f13_canale'];
-			}
-			
-			//echo substr($_FILES['userfile']['name'],-4);
-			$estensione = strtolower ( substr($_FILES['f13_file']['name'],-4) );
-			if ( $estensione == '.php')
-			{
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'E\' severamente vietato inserire file con estensione .php','file'=>__FILE__,'line'=>__LINE__));
-				$f13_accept = false;
-			}	
-			elseif (!is_uploaded_file($_FILES['f13_file']['tmp_name'])) 
-			{
-				Error :: throw(_ERROR_NOTICE, array('msg' => 'Non e\' stato inviato nessun file', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f13_accept = false;
-			}
-			
 			
 			
 			//esecuzione operazioni accettazione del form
@@ -316,35 +319,22 @@ class FileEdit extends UniversiboCommand {
 				ignore_user_abort(1);
         		$db->autoCommit(false);
 			
-				$newFile = new FileItem(0, $f13_permessi_download, $f13_permessi_visualizza, $user->getIdUser(), $f13_titolo, $f13_abstract,
-				$f13_data_inserimento, time(), $_FILES['f13_file']['size'] / 1024, 0, $_FILES['f13_file']['name'], $f13_categoria, 
-				FileItem::guessTipo($_FILES['f13_file']['tmp_name']), md5_file($_FILES['f13_file']['tmp_name']), ($f13_password == null) ? $f13_password : FileItem::passwordHashFunction($f13_password), 
-				'', '', '', '', '');
-				/* gli ultimi parametri dipendono da altre tabelle e
-				 il loro valore viene insegnato internamente a FileItem 
-				 bisognerebbe non usare il costruttore per dover fare l'insert
-				 ma...*/
+				$file->setPermessiDownload($f13_permessi_download);
+				$file->setPermessiVisualizza($f13_permessi_visualizza);
+				$file->setTitolo($f13_titolo);
+				$file->setDescrizione($f13_abstract);
+				$file->setDataInserimento($f13_data_inserimento);
+				$file->setIdCategoria($f13_categoria);
+				$file->setIdTipoFile($f13_tipo);
+				if ($edit_password)
+					$file->setPassword( ($f13_password == null) ? $f13_password : FileItem::passwordHashFunction($f13_password));
 				
-				$newFile->insertFileItem();
+				$file->updateFileItem();
+				$file->setParoleChiave($f13_parole_chiave);
 				
-				$newFile->setParoleChiave($f13_parole_chiave);
-
-				$nomeFile = $newFile->getNomeFile();
-				
-				if ( move_uploaded_file($_FILES['f13_file']['tmp_name'],$frontcontroller->getAppSetting('filesPath').$nomeFile ) === false )
+				foreach ($elenco_canali as $value)
 				{
-					$db->rollback();
-					Error :: throw(_ERROR_DEFAULT, array('msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
-				}
-				
-				
-				//$num_canali = count($f13_canale);
-				//var_dump($f13_canale);
-				//var_dump($_POST['f13_canale']);
-				foreach ($_POST['f13_canale'] as $key => $value)
-				{
-					$newFile->addCanale($key);
-					$canale =& $elenco_canali_retrieve[$key];
+					$canale =& Canale::retrieveCanale($value);
 					$canale->setUltimaModifica(time(), true);
 				}
 				
@@ -380,8 +370,6 @@ class FileEdit extends UniversiboCommand {
 		$template->assign('f13_data_ins_aa', $krono->k_date('%Y',$f13_data_inserimento));
 		$template->assign('f13_data_ins_ora', $krono->k_date('%H',$f13_data_inserimento));
 		$template->assign('f13_data_ins_min', $krono->k_date('%i',$f13_data_inserimento));
-		$template->assign('common_canaleURI', $canale->showMe());
-		$template->assign('common_langCanaleNome', $canale->getTitolo());
 
 		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		return 'default';

@@ -192,8 +192,7 @@ class FileItem {
 		$this->tipo_desc = $tipo_desc;
 		$this->tipo_icona = $tipo_icona;
 		$this->tipo_info = $tipo_info;
-		//		$this->eliminato = $eliminato;
-
+		// $this->eliminato = $eliminato;
 	}
 
 	/**
@@ -428,7 +427,6 @@ class FileItem {
 	function setParoleChiave($paroleChiave) {
 		FileKeyWords::updateFileKeyWords($this->getIdFile(), $paroleChiave);
 		$this->paroleChiave = $paroleChiave; 
-		
 		return $this->paroleChiave;
 	}
 
@@ -466,7 +464,8 @@ class FileItem {
 	 * @param string $descrizione descrizione completa del file
 	 */
 	 
-	function setDescrizione($descrizione) {
+	function setDescrizione($descrizione) 
+	{
 		$this->descrizione = $descrizione;
 	}
 

@@ -102,10 +102,9 @@ class FileAdd extends UniversiboCommand {
 			 !array_key_exists('f12_permessi_download', $_POST) || 
 			 !array_key_exists('f12_permessi_visualizza', $_POST) || 
 			 !array_key_exists('f12_password', $_POST) || 
-			 !array_key_exists('f12_password_confirm', $_POST) || 
-			 !array_key_exists('f12_canale', $_POST) ) 
+			 !array_key_exists('f12_password_confirm', $_POST) ) 
 			{
-				var_dump($_POST);die();
+				//var_dump($_POST);die();
 				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f12_accept = false;
 			}

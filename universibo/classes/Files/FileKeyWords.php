@@ -106,7 +106,7 @@ class FileKeyWords{
 	function removeKeyWord($id_file, $keyword) 
 	{
 		$db = & FrontController::getDbConnection('main');
-		$query = 'DELETE FROM file_keywords WHERE id_file = '.$db->quote($id_file).' AND keyword = '.$db->quote($keyword) .');';
+		$query = 'DELETE FROM file_keywords WHERE id_file = '.$db->quote($id_file).' AND keyword = '.$db->quote($keyword);
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
