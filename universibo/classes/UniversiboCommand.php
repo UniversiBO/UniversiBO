@@ -258,10 +258,18 @@ class UniversiboCommand extends BaseCommand {
 		if ($session_user->isOspite())
 		{
 			$template->assign('common_userLoggedIn', 'false');
+			
 		}
 		else
 		{
 			$template->assign('common_userLoggedIn', 'true');
+			$template->assign('common_userUsername', $session_user->getUsername());
+			$livelli = User::groupsNames();
+			$template->assign('common_userLivello', $livelli[$session_user->getGroups()]);
+
+			$template->assign('common_langWelcomeMsg', 'Benvenuto');
+			$template->assign('common_langUserLivello', 'Il tuo livello di utenza è');
+			
 		}
 		
 		$template->assign('common_settings', 'Impostazioni');
