@@ -1,5 +1,8 @@
 {config_load file="main.conf"}
-{#docType#}
+{* #docType# *}
+{*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml">*}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>{$common_title|escape:"html"}</title>
@@ -13,7 +16,7 @@
  
 <body text="#FFFFFF" bgcolor="#000000" > <!--leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"-->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td align="center">
+<tr><td>
 <!-- Inizio Testa -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 {if $common_alert != ""}
@@ -46,7 +49,7 @@
 <!-- Fine Testa --> </td></tr>
 <tr><td>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td width="175" valign="top" align="center" class="Normal">&nbsp;<br />
+<tr><td width="175" valign="top" class="Normal">&nbsp;<br />
 <!-- Inizio MENU Left -->
 {include file=box_facolta.tpl}
 
@@ -196,3 +199,5 @@
 </table>
 &nbsp;<br /></td>
 <td valign="top" align="center" class="Normal">&nbsp;<br /> 
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<tr><td class="Normal" align="left">

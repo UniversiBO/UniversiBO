@@ -1,4 +1,6 @@
-</td><td width="170" valign="top" align="center" class="Normal">&nbsp;<br />
+</td></tr></table>
+
+</td><td width="170" valign="top" class="Normal">&nbsp;<br />
 <!-- Inizio MENU Right -->
 {include file=box_loginlogout.tpl}
 

@@ -3,7 +3,7 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi una nuova pagina al tuo MyUniversiBO<br />&nbsp;</p></td></tr>
 <tr><td align="center"></td></tr>
 </table>
@@ -21,7 +21,7 @@
 </td>
 </tr>
 <tr>
-<td class="News" align="right" valign="top"><label for="f15_nome">Nome personalizzato del canale (opzionale):</label></td>
+<td class="News" align="right" valign="top"><label for="f15_nome">Voce personalizzata del menu:<br />(opzionale)</label></td>
 <td><input type="text" id="f15_nome" name="f15_nome" size="65" maxlength="130" value="{$f15_nome|escape:"htmlall"}" /></td>
 </tr>
 <tr>
@@ -31,10 +31,10 @@
 </table>
 </form>
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td>
 <br />
-<hr width="90%" />
+<hr width="90%" align="center"/>
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr><td>
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>
 

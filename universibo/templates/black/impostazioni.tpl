@@ -7,12 +7,11 @@
 {include file=avviso_notice.tpl}
 
 
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td align="center" class="Normal">
+<p align="center" class="Normal">
 &nbsp;<br /><img src="tpl/black/mypage_30.gif" width="138" height="39" alt="{$showSettings_langTitleAlt|escape:"htmlall"}" />
-</td></tr>
-<tr><td class="Normal">
-{$showSettings_langIntro|escape:"htmlall"|bbcode2html}&nbsp;<br />&nbsp;<br />
+</p>
+<p>
+{$showSettings_langIntro|escape:"htmlall"|bbcode2html}</p>
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr bgcolor="#000099"> 
  <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
@@ -48,8 +47,6 @@
  </td></tr>
  </table> 
 {/if}
-</td></tr>
-</table>
 
 
 {if $common_pageType == "index"}

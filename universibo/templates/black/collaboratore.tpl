@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table summary="chi siamo" width="90%" border="0" cellspacing="0" cellpadding="0">
+<table summary="chi siamo" width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td class="Normal" align="left">
 	{include file=avviso_notice.tpl}
 	<div align="center">&nbsp;<br /><a href="{$common_contactsUri|escape:"htmlall"}"><img src="tpl/black/chi_siamo_30.gif" width="179" height="39" border="0" alt="{$collaboratore_langAltTitle|escape:"htmlall"|bbcode2html}" /></a></div>

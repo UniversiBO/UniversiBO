@@ -1,5 +1,5 @@
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr bgcolor="#000099" align="center">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr bgcolor="#000099">
 <td>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
   <tr>
@@ -9,7 +9,7 @@
   </table>
 </td></tr>
 <tr><td bgcolor="#000050" class="Titolo">&nbsp;&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</td></tr>
-<tr bgcolor="#000099" align="center">
+<tr bgcolor="#000099">
 <td>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
   <tr>
@@ -20,7 +20,7 @@
 </td></tr>
 <tr bgcolor="#000032">
 <td> 
- <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" summary="">
+ <table width="100%" border="0" cellspacing="0" cellpadding="5" summary="">
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito da:</span> <a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito il:</span> {$showFileInfo_dataInserimento|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Titolo:</span> {$showFileInfo_descrizione|escape:"htmlall"}</td></tr>
@@ -30,8 +30,8 @@
  <tr><td class="Normal" colspan="2"><span class="NormalC">Dimensione:</span> {$showFileInfo_dimensione|escape:"htmlall"} kB</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Scaricato:</span> {$showFileInfo_download|escape:"htmlall"} volte</td></tr>
  <tr><td class="NormalC" colspan="2">Formato file:</td></tr>
- <tr><td class="Normal"><img src="{$showFileInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$showFileInfo_tipo|escape:"htmlall"}" border="0" /></td><td class="Normal" valign="middle" width="100%">   {$showFileInfo_info|escape:"htmlall"|nl2br|bbcode2html}</td></tr>
- <tr><td class="Normal" colspan="2"<span class="NormalC">Hash MD5:</span> {$showFileInfo_hash|escape:"htmlall"}</td></tr>
+ <tr><td class="Normal"><img src="{$showFileInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$showFileInfo_tipo|escape:"htmlall"}" border="0" /></td><td class="Normal" valign="top" width="100%">{$showFileInfo_info|escape:"htmlall"|nl2br|bbcode2html}</td></tr>
+ <tr><td class="Normal" colspan="2"><span class="NormalC">Hash MD5:</span> {$showFileInfo_hash|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Presente in:</span><br />{foreach from=$showFileInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}</td></tr>
  <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langDownload|escape:"htmlall"}:</span></td><td class="Normal" valign="bottom" width="100%"><a href="{$showFileInfo_downloadUri|escape:"htmlall"}"><img src="tpl/black/file_download_32.gif" width="32" height="32" alt="{$showFileInfo_langDownload|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
  {if $showFileInfo_editFlag == 'true'}
@@ -42,7 +42,7 @@
  {/if}
  </table>
 </td></tr>
-<tr bgcolor="#000099" align="center">
+<tr bgcolor="#000099">
 <td>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
   <tr>

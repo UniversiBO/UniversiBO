@@ -6,7 +6,7 @@
 
 {include file=avviso_notice.tpl}
 
-<table summary="help" width="90%" border="0" cellspacing="0" cellpadding="0">
+<table summary="help" width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td class="Normal" align="left">
 		<div align="center">&nbsp;<br /><a href="{$common_helpUri|escape:"htmlall"}"><img id="help" src="tpl/black/help_30.gif" border="0" width="84" height="39" alt="{$showHelpTopic_langAltTitle|escape:"htmlall"}" /></a></div>
 </td></tr>

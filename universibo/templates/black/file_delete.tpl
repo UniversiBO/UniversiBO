@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="" align="center">
 <tr><td align="center"><p class="Titolo">Cancella il file</p></td></tr>
 <tr><td class="Normal" align="center">
 {include file=avviso_notice.tpl}

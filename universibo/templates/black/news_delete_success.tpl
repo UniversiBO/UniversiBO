@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 {include file=avviso_notice.tpl}
-<table width="95%" border="0" cellspacing="0" cellpadding="4" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="4" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Cancella la notizia<br />&nbsp;</p></td></tr>
 <tr><td align="center" class="Normal">{$NewsDelete_langSuccess|escape:"htmlall"}</td></tr>
 <tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>

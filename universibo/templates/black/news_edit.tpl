@@ -3,14 +3,14 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica la notizia<br />&nbsp;</p></td></tr>
 <tr><td align="center">{include file=News/show_news.tpl}</td></tr>
-<tr><td align="center">
+<tr><td>
 {include file=avviso_notice.tpl}
 <form method="post">
 
-<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
+<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="" align="center">
 
 <tr>
 <td width="90" class="News" align="right" valign="top"><label for="f8_titolo">Titolo:</label></td>
@@ -121,6 +121,8 @@
 </td></tr>
 </table>
 
+<br />
+<hr width="90%" align="center"/>
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td>
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}

@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="" align="center">
 <tr><td align="center"><p class="Titolo">Cancella la notizia</p></td></tr>
 <tr><td class="Normal">
 {include file=avviso_notice.tpl}
@@ -37,7 +37,9 @@
 </td></tr>
 </table>
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<br />
+<hr width="90%" align="center"/>
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td>
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>

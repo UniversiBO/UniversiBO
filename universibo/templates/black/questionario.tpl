@@ -4,7 +4,7 @@
 &nbsp;<br />
 {include file=avviso_notice.tpl}
 &nbsp;<br />
-<table align="center" cellspacing="0" cellpadding="0" width="90%" summary="">
+<table align="center" cellspacing="0" cellpadding="0" width="90%" summary="" align="center">
 <tr>
 <td class="Normal">
 

@@ -7,19 +7,20 @@
 {include file=avviso_notice.tpl}
 
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal" align="center">
 <!--&nbsp;<br /> <img src="tpl/black/corsi_di_laurea_30.gif" width="132" height="39" alt="{$cdl_langTitleAlt|escape:"htmlall"}" />-->
-<p align="center" class="Titolo">{$cdl_cdlTitle|escape:"htmlall"} - {$cdl_cdlCodice|escape:"htmlall"}</p>
-<p>{$cdl_langYear|escape:"htmlall"}<br />
+<p align="center" class="Titolo">&nbsp;<br />{$cdl_cdlTitle|escape:"htmlall"} - {$cdl_cdlCodice|escape:"htmlall"}</p>
+{if $common_langCanaleMyUniversiBO != ''}
+<p align="center"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+{/if}
+<p align="center">{$cdl_langYear|escape:"htmlall"}<br />
 <a href="{$cdl_prevYearUri|escape:"htmlall"}">{$cdl_prevYear|escape:"htmlall"}</a>&nbsp;&lt;&lt;
 &nbsp;&nbsp;<font color="FF0000">{$cdl_thisYear|escape:"htmlall"}</font>&nbsp;&nbsp;
 &gt;&gt;&nbsp;<a href="{$cdl_nextYearUri|escape:"htmlall"}">{$cdl_nextYear|escape:"htmlall"}</a> </p>
 
-<p>{$cdl_langList|escape:"htmlall"}</p>
+<p align="center">{$cdl_langList|escape:"htmlall"}</p>
 
 {foreach from=$cdl_list item=temp_anno}
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""> 
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"> 
 <tr><td bgcolor="#000099">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr>
@@ -56,11 +57,6 @@
 {/foreach}
 
 {include file=News/latest_news.tpl}
-
-
-</td></tr>
-</table>
-
 
 
 {if $common_pageType == "index"}

@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="98%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal">&nbsp;<br /> 
 <p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
 

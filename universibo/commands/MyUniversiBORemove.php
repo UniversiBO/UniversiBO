@@ -39,7 +39,7 @@ class MyUniversiBORemove extends UniversiboCommand
 		$template->assign('common_langCanaleNome', $canale->getNome());
 		
 		$ruoli =& $utente->getRuoli();
-		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+		$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
 		if(array_key_exists($id_canale, $ruoli))
 		{
 			$ruolo =& $ruoli[$id_canale];

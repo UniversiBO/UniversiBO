@@ -6,7 +6,7 @@
 
 {include file=avviso_notice.tpl}
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal" align="center">
 	&nbsp;<br />
 	<img src="tpl/black/credits_30.gif" width="124" height="39" alt="{$showCredits_langTitleAlt|escape:"htmlall"}" /><br />&nbsp;

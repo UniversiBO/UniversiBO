@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td colspan="2">
 {include file=avviso_notice.tpl}
 </td></tr>
@@ -35,9 +35,9 @@
 <tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
-&nbsp;
-<hr>
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+&nbsp;<br />
+<hr width="90%" align="center" />
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td>
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>

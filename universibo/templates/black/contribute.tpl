@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal" align="center">
 	&nbsp;<br />
 	<img src="tpl/black/collabora_30.gif" width="167" height="39" alt="{$contribute_langTitleAlt|escape:"htmlall"}" /><br />&nbsp;

@@ -6,7 +6,7 @@
 
 {include file=avviso_notice.tpl}
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal">
 <p align="center"><img src="tpl/black/regolamento_30.gif" width="234" height="39" alt="{$rules_langTitleAlt|escape:"htmlall"|bbcode2html}" /><br /></p>
 <font class="NormalC">{$rules_langTitle|escape:"htmlall"|bbcode2html}</font>

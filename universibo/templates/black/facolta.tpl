@@ -7,17 +7,19 @@
 {include file=avviso_notice.tpl}
 
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal" align="center">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr><td class="Normal">
 <!--&nbsp;<br /> <img src="tpl/black/facolta_30.gif" width="132" height="39" alt="{$fac_langTitleAlt|escape:"htmlall"}" />-->
-<p align="center" class="Titolo">{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}</p>
-<p align="center" class="Normal"><a href="{$fac_facLink|escape:"htmlall"}" target="_blank">Apri il sito ufficiale della facoltá</a></p>
+<p align="center" class="Titolo">&nbsp;<br />{$fac_facTitle|escape:"htmlall"} - {$fac_facCodice}</p>
+<p align="center" class="Normal"><a href="{$fac_facLink|escape:"htmlall"}" target="_blank">{$fac_facLink|escape:"htmlall"}</a><br />&nbsp;<br />
+{if $common_langCanaleMyUniversiBO != ''}
 <p align="center"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+{/if}
 
-<p>{$fac_langList|escape:"htmlall"}</p>
+<p align="center">{$fac_langList|escape:"htmlall"}</p>
 
 {foreach from=$fac_list item=temp_fac}
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""> 
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"> 
 			    <tr><td bgcolor="#000099">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 						<tr>
@@ -26,11 +28,11 @@
 						 </tr>
 						</table>
 						</td></tr>
-				<tr><td class="Titolo" align="center" bgcolor="#000050"><p>{$temp_fac.name|escape:"html"|upper}</p></td></tr>
+				<tr><td class="Titolo" align="center" bgcolor="#000050">{$temp_fac.name|escape:"html"|upper}</td></tr>
      			<tr bgcolor="#000099"><td><img src="tpl/black/invisible.gif" width="200" height="2" alt="" /></td></tr>
 </table>
 
-<table width="90%" border="0" cellspacing="0" cellpadding="1" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="1" summary="" align="center">
 
 
   {foreach from=$temp_fac.list item=temp_cdl}
@@ -40,7 +42,7 @@
   {/foreach} 
 
 </table>
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center"><tr><td bgcolor="#000099" align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table> 
 <p>&nbsp;</p>
 {/foreach}
 

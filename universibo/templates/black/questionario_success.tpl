@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table align="center" cellspacing="0" cellpadding="0" width="90%" summary="">
+<table align="center" cellspacing="0" cellpadding="0" width="90%" summary="" align="center">
 <tr>
 <td class="Normal" align="center">&nbsp;<br />&nbsp;<br />
 <img src="tpl/black/questionario_18.gif" width="144" height="22" alt="{$question_TitleAlt|escape:"htmlall"}" />

@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr> 
 <td class="Normal"><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
 </tr>

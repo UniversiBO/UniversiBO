@@ -4,9 +4,9 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Informazioni file<br />&nbsp;</p></td></tr>
-<tr><td align="center" class="Normal">
+<tr><td class="Normal">
 
 {include file=Files/show_info.tpl }
 

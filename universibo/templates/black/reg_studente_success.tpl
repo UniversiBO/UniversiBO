@@ -4,7 +4,7 @@
 {include file=header_popup.tpl}
 {/if}
 
-<table align="center" cellspacing="0" cellpadding="0" width="95%" summary="">
+<table align="center" cellspacing="0" cellpadding="0" width="95%" summary="" align="center">
 <tr><td>
 <img src="tpl/black/registrazione_18.gif" width="149" height="22" alt="{$regStudente_langRegAlt|escape:"htmall"}}" />
 </td></tr>

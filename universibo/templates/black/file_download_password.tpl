@@ -3,7 +3,7 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Password file<br />&nbsp;</p></td></tr>
 <tr><td align="center">
 <p class="Normal">Il file richiesto è stato protetto dall'autore con una password,<br />
@@ -28,7 +28,7 @@ Per per proseguire con il download è necessario inserirla nel seguente form.</p>
 
 &nbsp;
 <hr>
-<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="4" summary="" align="center">
 <tr><td>
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>

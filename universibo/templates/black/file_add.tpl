@@ -3,12 +3,12 @@
 {elseif $common_pageType == "popup"}
 {include file=header_popup.tpl}
 {/if}
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi un nuovo file<br />&nbsp;</p></td></tr>
-<tr><td align="center">
+<tr><td align="left">
 {include file=avviso_notice.tpl}
 <form method="post" enctype="multipart/form-data">
-<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
+<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="" align="center">
 <tr>
 <td class="News" align="right" valign="top"><label for="f12_file">File:</label></td>
 <td>
@@ -112,9 +112,10 @@
 <tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td>
-<br />
+&nbsp;<br />
+&nbsp;<br />
 <hr width="90%" />
 {include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
 </td></tr></table>

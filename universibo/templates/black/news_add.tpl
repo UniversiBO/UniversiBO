@@ -4,11 +4,11 @@
 {include file=header_popup.tpl}
 {/if}
 {include file=avviso_notice.tpl}
-<table width="95%" border="0" cellspacing="0" cellpadding="0" summary="">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Aggiungi una nuova notizia<br />&nbsp;</p></td></tr>
-<tr><td align="center">
+<tr><td>
 <form method="post">
-<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
+<table width="95%" cellspacing="0" cellpadding="4" border="0" summary="" align="center">
 <tr>
 <td class="News" align="right" valign="top"><label for="f7_titolo">Titolo:</label></td>
 <td><input type="text" id="f7_titolo" name="f7_titolo" size="65" maxlength="130" value="{$f7_titolo|escape:"htmlall"}" /></td>
@@ -59,7 +59,7 @@
 <tr class="News"><td>
 	<fieldset>
 	<legend>Data Scadenza:</legend>
-	<table width="98%" cellspacing="0" cellpadding="0" border="0" summary="">
+	<table width="98%" cellspacing="0" cellpadding="0" border="0" summary="" align="center">
 	<tr class="News"><td>
 	<label for="f7_data_scad_gg">Giorno:</label>&nbsp;
 	<input type="text" id="f7_data_scad_gg" name="f7_data_scad_gg" size="2" maxlength="2" value="{$f7_data_scad_gg|escape:"htmlall"}" />
@@ -105,14 +105,14 @@
 <tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
-<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td>
-{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
-</td></tr></table>
-
 </form>
 </td></tr>
 </table>
+
+<table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+<tr><td>
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+</td></tr></table>
 
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
