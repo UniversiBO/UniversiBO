@@ -5,7 +5,7 @@
 	<rootFolder>../framework/</rootFolder>
 
 	<!--Here root URL is virtual to the Web root****-->
-	<rootURL>/universibo_2/htmls/</rootURL>
+	<rootURL>/EclipseProject/progettazione/universibo2/htmls/</rootURL>
 
 	<defaultCommand>TestTemplate</defaultCommand>
 	
@@ -26,6 +26,9 @@
 		<TestTemplate class="TestTemplate">
 			 <template type="default">example1_a.htm</template>
 		</TestTemplate>
+		<ShowManifesto class="ShowManifesto">
+			 <template type="default">example1_a.htm</template>
+		</ShowManifesto>
 		<DisplayRightFrame class="Example1">
 			 <template type="default">example1_b.htm</template>
 		</DisplayRightFrame>

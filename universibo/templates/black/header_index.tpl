@@ -146,6 +146,11 @@
  <td class="Menu"><a href="{$common_contributeUri}" >{$common_contribute}</a></td>
 </tr>
 
+<tr>
+ <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
+ <td class="Menu"><a href="{$common_manifestoUri}" >{$common_manifesto}</a></td>
+</tr>
+
 </table>
 
 </td>
