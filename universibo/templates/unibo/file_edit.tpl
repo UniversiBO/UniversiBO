@@ -58,7 +58,7 @@
 			{/foreach}
 	</fieldset></p>
 	{/if}
-	<p><input type="submit" id="" name="f13_submit" size="20" value="Invia" /></p>
+	<p><input class="submit" type="submit" id="" name="f13_submit" size="20" value="Invia" /></p>
 </form>
 <p><a href="{$fileEdit_fileUri|escape:"htmlall"}">Torna&nbsp;ai&nbsp;dettagli&nbsp;del&nbsp;file</a></p>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>

@@ -13,7 +13,7 @@
 		{/foreach}
 	</fieldset></p>	  
 	{/if}
-	<p><input type="submit" id="" name="f14_submit" size="20" value="Elimina" /></p>
+	<p><input class="submit" type="submit" id="" name="f14_submit" size="20" value="Elimina" /></p>
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></p>
 

@@ -11,7 +11,7 @@
 	<p>Password:<input type="password" name="f1_password" size="9" maxlength="25" style="width: 120px" value="{$f1_password_value|escape:"htmlall"}" /></p>
 	<input type="hidden" name="f1_resolution" value="" />
 	<input type="hidden" name="f1_referer" value="{$f1_referer_value|escape:"htmlall"}" />
-	<p><input name="f1_submit" type="submit" value="Entra" onclick="document.form1.f1_resolution.value = screen.width;" /></td>
+	<p><input class="submit" name="f1_submit" type="submit" value="Entra" onsubmit="document.form1.f1_resolution.value = screen.width;" /></p>
 </form>
 
 {include file=footer_index.tpl}

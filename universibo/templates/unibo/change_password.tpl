@@ -12,7 +12,7 @@
 		<input type="password" name="f6_new_password1" id="f6_new_password1" size="20" maxlength="50" value="{$f6_new_password1|escape:"html"}" /></p>
 	<p><label for="f6_new_password2">{$changePassword_langReNewPassword|escape:"htmlall"}</label>&nbsp;
 		<input type="password" name="f6_new_password2" id="f6_new_password2" size="20" maxlength="50" value="{$f6_new_password2|escape:"html"}" /></p>
-	<p><input type="submit" name="f6_submit" id="f6_submit" value="{$f6_submit|escape:"htmlall"}"></p>
+	<p><input class="submit" type="submit" name="f6_submit" id="f6_submit" value="{$f6_submit|escape:"htmlall"}"></p>
 	<p>{$changePassword_langHelp|escape:"htmlall"|bbcode2html|nl2br}</p>
 </form>
 

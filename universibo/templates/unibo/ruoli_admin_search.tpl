@@ -20,7 +20,7 @@
 		<input name="f16_username" id="f16_username" type="text" value="" /></p>
 	<p><label for="f16_email">Cerca per e-mail: </label>
 		<input name="f16_email" id="f16_email" type="text" value="" /></p>
-	<p><input name="f16_submit" id="f16_submit" type="submit" value="Cerca" /></p>
+	<p><input class="submit" name="f16_submit" id="f16_submit" type="submit" value="Cerca" /></p>
 </form>
 <p><a href=" Torna {$common_langCanaleUri|escape:"htmlall"|nl2br}">Torna {$common_langCanaleNome|escape:"htmlall"|nl2br}</a></p>
 

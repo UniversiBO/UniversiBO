@@ -55,7 +55,7 @@
 		{/foreach}
 	</fieldset>
 	{/if}
-	<p><input type="submit" id="" name="f12_submit" size="20" value="Invia" /></p>
+	<p><input class="submit" type="submit" id="" name="f12_submit" size="20" value="Invia" /></p>
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 

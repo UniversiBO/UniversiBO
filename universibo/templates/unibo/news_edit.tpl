@@ -45,7 +45,7 @@
 				<p>{$item.nome_canale|escape:"htmlall"}</p>
 			{/foreach}
 	</fieldset></p>
-	<p><input type="submit" id="" name="f8_submit" size="20" value="Modifica" /></p>
+	<p><input class="submit" type="submit" id="" name="f8_submit" size="20" value="Modifica" /></p>
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></p>
 

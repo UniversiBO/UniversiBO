@@ -15,7 +15,7 @@
 			<p><input name="f17_livello" id="f17_livello_2" type="radio" {if $ruoliAdminEdit_userLivello == 'R'}checked="checked"{/if} value="R" />
 			<label for="f17_livello_2">Referente</label></p>
 	</fieldset></p>
-<p><input name="f17_submit" id="f17_submit" type="submit" value="Modifica" /></p>
+<p><input class="submit" name="f17_submit" id="f17_submit" type="submit" value="Modifica" /></p>
 </form>
 
 <p><a href="{$common_canaleURI|escape:"htmlall"|nl2br}">Torna {$common_langCanaleNome|escape:"htmlall"|nl2br}</a></p>
