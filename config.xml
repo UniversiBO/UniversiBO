@@ -84,7 +84,7 @@
 		
 		<ShowMyPage class="ShowMyPage">
 			<response type="template" name="default">my_page.tpl</response>
-			<pluginCommand name="ShowNews" class="News.ShowNews" />
+			<pluginCommand name="ShowMyNews" class="News.ShowMyNews" />
 		</ShowMyPage>
 		
 		<RegStudente class="RegStudente">

@@ -74,7 +74,7 @@ class ShowMyPage extends UniversiboCommand
 			else
 			{
 				$arrayNewsItems = $this->getLatestNewsCanale(5,$arrayCanali);
-				$this->executePlugin('ShowNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
+				$this->executePlugin('ShowMyNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
 			}
 			if($canali_senza_servizio_files==count($arrayRuoli))
 			{
