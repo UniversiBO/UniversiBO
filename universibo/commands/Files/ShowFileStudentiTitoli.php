@@ -39,7 +39,9 @@ class ShowFileStudentiTitoli extends PluginCommand {
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
 
-
+		$files_studenti_attivo =& $canale->getServizioFilesStudenti();
+        if ( $files_studenti_attivo )
+		{
 		$id_canale = $canale->getIdCanale();
 		$titolo_canale =  $canale->getTitolo();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
@@ -81,10 +83,6 @@ class ShowFileStudentiTitoli extends PluginCommand {
 
 		$template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
 */
-//		var_dump($elenco_id_news);
-//		die();
-//		var_dump($elenco_id_news);
-//		die();
 
 		$elenco_id_file =& $this->getFileCanale($id_canale);
 		
@@ -158,20 +156,14 @@ class ShowFileStudentiTitoli extends PluginCommand {
 						
 		
 		$num_file = count($elenco_file_tpl);
-		if ( $num_file == 0 )
-		{
-			$template->assign('showFileStudentiTitoli_langFileAvailable', 'Non ci sono file da visualizzare');
-			$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'false');
-		}
-		else
-		{
+		
 			$template->assign('showFileStudentiTitoli_langFileAvailable', 'Ci sono '.$num_file.' file');
 			$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'true');
+			$template->assign('showFileStudentiTitoli_fileList', $elenco_file_tpl);
 		}
-		
-		$template->assign('showFileStudentiTitoli_fileList', $elenco_file_tpl);
-		
-		
+	
+	else{$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'false');}
+
 	}
 	
 	
