@@ -2,6 +2,7 @@
 
 require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
 
 /**
  * ShowFileInfo: mostra tutte le informazioni correlate ad un file
@@ -46,6 +47,11 @@ class ShowFileInfo extends PluginCommand {
 		}
 				
 		$file =& FileItem::selectFileItem($param['id_file']);
+		//Con questo passaggio dovrei riuscire a verificare se il file che si vuole modificare é un file studente o no
+		//true -> é un file studente
+		$tipo_file = FileItemStudenti::isFileStudenti($param['id_file']);
+//		var_dump($tipo_file);
+//		die();
 		
 		if ($file === false)
 			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il file richiesto non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
@@ -60,18 +66,47 @@ class ShowFileInfo extends PluginCommand {
 
 		$template->assign('showFileInfo_editFlag', 'false');
 		$template->assign('showFileInfo_deleteFlag', 'false');
-		
-		//mancano dei diritti
-		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+		if(!$tipo_file)
 		{
-//			$file_tpl['modifica']     = 'Modifica';
-//			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
-//			$file_tpl['elimina']      = 'Elimina';
-//			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
-			$template->assign('showFileInfo_editFlag', 'true');
-			$template->assign('showFileInfo_deleteFlag', 'true');
-			$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
-			$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
+			//mancano dei diritti
+			if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+			{
+	//			$file_tpl['modifica']     = 'Modifica';
+	//			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
+	//			$file_tpl['elimina']      = 'Elimina';
+	//			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
+				$template->assign('showFileInfo_editFlag', 'true');
+				$template->assign('showFileInfo_deleteFlag', 'true');
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
+			}
+		}
+		else
+		{
+			$autore = ($user->getIdUser() == $file->getIdUtente());
+			$user_ruoli = & $user->getRuoli();
+			if (array_key_exists($param['id_canale'], $user_ruoli)) {
+				$ruolo = & $user_ruoli[$param['id_canale']];
+	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			if($autore||$user->isAdmin||$referente||$moderatore)
+			{
+				$template->assign('showFileInfo_editFlag', 'true');
+				$template->assign('showFileInfo_deleteFlag', 'true');
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
+			}
+			$voto = FileItemStudenti::getVoto($param['id_file']);
+//			var_dump($voto);
+//			die();
+			if($voto==NULL)
+				$voto='Non esistono ancora commenti per questo file';
+			else
+				$voto = round($voto);	
+			$template->assign('showFileInfo_voto',$voto);
+			$template->assign('showFileInfo_addComment','index.php?do=FileStudentiComment&id_file='.$file->getIdFile());
 		}
 		
 		
@@ -106,6 +141,7 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('showFileInfo_info', $file->getTipoInfo());
 		$template->assign('showFileInfo_canali', $canali_tpl);
 		$template->assign('showFileInfo_paroleChiave', $file->getParoleChiave());
+		$template->assign('isFileStudente',(($tipo_file==true) ? 'true' : 'false'));
 		
 		return ;
 		
