@@ -665,6 +665,19 @@ class FrontController {
 
 
 	/**
+	* Returns values of elements added into the <appSettings> XML tag in config file
+	*
+	* @param string $identifier Setting name identifier of XML element tag
+	* @return string text content of XML tag
+	* @access public 
+	*/
+	function getAppSetting( $identifier )
+	{
+		return $this->appSettings['identifier'];
+	}
+
+
+	/**
 	* Factory method that creates a Pear::DB Connection object
 	* If called with optional $dsn parameter sets the connection information
 	* Implements singleton pattern for each connection
