@@ -117,6 +117,7 @@ class CanaleCommand extends UniversiboCommand
 		$id_canale = $this->getRequestIdCanale();
 		$user =& $this->getSessionUser();
 		
+		$template->assign( 'common_canaleMyUniversiBO', 'none');
 		if(!$user->isOspite())
 		{
 			$user_ruoli =& $user->getRuoli();

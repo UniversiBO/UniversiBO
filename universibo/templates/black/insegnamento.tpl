@@ -8,12 +8,14 @@
 <tr><td class="Normal">&nbsp;<br /> 
 <p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
 
+{if $common_canaleMyUniversiBO != "none"}
 <p align="center">
 {if $common_canaleMyUniversiBO == "remove"}
 	<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;
 {else}<img src="tpl/black/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
 {/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a>
 </p>
+{/if}
 
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
 &nbsp;<br />
