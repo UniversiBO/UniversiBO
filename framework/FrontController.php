@@ -10,7 +10,7 @@
  * @package framework
  * @version 1.0.0
  * @author  Deepak Dutta
- * @author Ilias Bartolini <brain79@inwind.it>
+ * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 

@@ -10,6 +10,7 @@
 <tr> 
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
+{$common_userLoggedIn}
 <form action="{$common_receiverUrl}?do=Login" name="form1" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
@@ -27,6 +28,9 @@ Password:<br /><input type="password" name="f1_password" size="9" maxlength="25"
 <a href="#" onclick="window.open('popup.php?pg=2','','scrollbars=yes,resizable=yes,scrolling=yes,top=20,left=50')">Password smarrita...</a><br />
 </tr>
 </table></form>
+<form action="{$common_receiverUrl}?do=Login&action=logout" name="form2" method="post">
+<input name="f2_submit" type="submit" value="LogOut" /></td>
+</form>
 </td>
 <td width="12" valign="bottom"><img src="tpl/black/menuR.gif" width="12" height="67" alt="" /></td>
 </tr>

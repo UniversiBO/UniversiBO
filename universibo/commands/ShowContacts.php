@@ -10,7 +10,7 @@ include ('UniversiboCommand'.PHP_EXTENSION);
  * @package universibo
  * @version 2.0.0
  * @author Fabrizio Pinto
- * @author Ilias Bartolini <brain79@inwind.it>
+ * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
@@ -23,8 +23,9 @@ class ShowContacts extends UniversiboCommand {
 		$template->assign('contacts_altTitle', 'Chi Siamo');
 		$template->assign('contacts_intro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
 		//inizio array di array contenenti i vari chi siamo 
+
 		$template->assign('contacts_personal', array(
-			'contacts_brain'=>array('nick'=>'brain', 'intro'=>'Brain è un caparbio studente di Ingegneria Informatica. Nel progetto si occupa del lavoro più importante: la progettazione del software e di buona parte della grafica.', 'ruolo'=>'amministratore - progettista software', 'email'=>'brain79@inwind.it', 'recapito'=>'3381407176', 'obiettivi'=>'Obiettivo iniziale del mio progetto era semplicemente mettere in pratica le prime conoscenze acquisite riguardo HTML, PHP e la realizzazione di applicazioni Web.
+			'contacts_brain'=>array('nick'=>'brain', 'intro'=>'Brain è un caparbio studente di Ingegneria Informatica. Nel progetto si occupa del lavoro più importante: la progettazione del software e di buona parte della grafica.', 'ruolo'=>'amministratore - progettista software', 'email'=>'brain79@virgilio.it', 'recapito'=>'3381407176', 'obiettivi'=>'Obiettivo iniziale del mio progetto era semplicemente mettere in pratica le prime conoscenze acquisite riguardo HTML, PHP e la realizzazione di applicazioni Web.
 Aver portato avanti il mio primo progetto mi ha sicuramente fatto piacevolmente imparare molte cose e insieme al lato didattico sono arrivate enormi gratificazioni personali da altri amici, studenti e anche docenti, per aver creato nel mio piccolo qualcosa di grosso aiuto per gli altri... e queste gratificazioni mi hanno spinto ad impegnarmi ancora di più ad accrescere le mie conoscenze... un circolo virtuoso...
 Appena ho conosciuto altri due matti con un progetto simile al mio... beh, quale migliore occasione per aprire un manicomio... e subito altri matti hanno risposto all\'appello 
 Ora c\'è il piacere di poter imparare a lavorare in gruppo, dividere e condividere il lavoro pur mantenendo ognuno la libertà di fare quel che gli pare!!!

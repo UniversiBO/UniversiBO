@@ -10,7 +10,7 @@ require_once('User'.PHP_EXTENSION);
  *
  * @package universibo
  * @version 2.0.0
- * @author Ilias Bartolini <brain79@inwind.it>
+ * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  * @copyright CopyLeft UniversiBO 2001-2003
  */

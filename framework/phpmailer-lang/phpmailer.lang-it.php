@@ -4,7 +4,7 @@
  * Italian version
  *
  * @package PHPMailer
- * @author Ilias Bartolini <brain79@inwind.it> 
+ * @author Ilias Bartolini <brain79@virgilio.it> 
  */
 
 $PHPMAILER_LANG = array();

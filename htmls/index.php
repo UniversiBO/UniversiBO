@@ -10,7 +10,7 @@ $page_time_start = ((float)$usec + (float)$sec);
  * @package framework
  * @version 1.0.0
  * @author Deepak Dutta, http://www.eocene.net, 
- * @author Ilias Bartolini <brain79@inwind.it>
+ * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  * @copyright CopyLeft UniversiBO 2001-2003
  */

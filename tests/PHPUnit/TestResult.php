@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestResult.php,v 1.3 2003-09-17 13:37:57 brain_79 Exp $
+// $Id: TestResult.php,v 1.4 2003-10-21 01:14:25 brain_79 Exp $
 //
 
 require_once 'PHPUnit/TestFailure.php';
@@ -24,7 +24,7 @@ require_once 'PHPUnit/TestListener.php';
  * @package PHPUnit
  * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
  *          Based upon JUnit, see http://www.junit.org/ for details.
- *          Ilias Bartolini <brain79@inwind.it>
+ *          Ilias Bartolini <brain79@virgilio.it>
  */
 class PHPUnit_TestResult {
     /**
