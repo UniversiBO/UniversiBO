@@ -132,7 +132,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	font-size: 10px ;
 }
 
-#Info
+/*#Info
 {
 	clear: none;
 	position: absolute;
@@ -140,6 +140,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	top: 74px;
 	font-weight: bold;
 }
+*/
 
 #menubar
 {
