@@ -77,7 +77,15 @@ class Receiver{
 			$_SESSION['SID'] = SID;
 		}
 				
-		$pathDelimiter = ( substr(php_uname(), 0, 7) == "Windows") ? ';' : ':' ;
+		if (defined('PATH_SEPARATOR')) 
+		{
+		    $pathDelimiter = PATH_SEPARATOR;
+		}
+		else 
+		{
+			$pathDelimiter = ( substr(php_uname(), 0, 7) == "Windows") ? ';' : ':' ;
+		}
+		
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.'/classes'.$pathDelimiter.ini_get('include_path'));
 		
 		if (get_magic_quotes_gpc()) {
