@@ -19,9 +19,13 @@ class Logout extends UniversiboCommand {
 		if ( array_key_exists('f2_submit',$_POST) )
 		{
 			$this->setSessionIdUtente(0);
+			
+			require_once('ForumApi'.PHP_EXTENSION);
+			$forum = new ForumApi();
+			$forum->logout();
 		}
 		
-		$this->redirectCommand();
+		FrontController::redirectCommand();
 				
 		return ;
 
