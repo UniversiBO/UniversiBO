@@ -462,24 +462,24 @@ class PrgAttivitaDidattica extends Canale{
 	 */
 	function &selectPrgAttivitaDidatticaCanale($id_canale)
 	{
-
+/*
 		$db =& FrontController::getDbConnection('main');
-	
+		
 		$query = 'SELECT .... WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
-
+		
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
+		
 		$rows = $res->numRows();
-
+		
 		if( $rows == 0) return false;
-
+		
 		$res->fetchInto($row);
-		$prgAtt =& new PrgAttivitaDidattica( /* ... $row[12], $row[5], */ );
+		$prgAtt =& new PrgAttivitaDidattica(  ... $row[12], $row[5],  );
 		
 		return $prgAtt;
-
+*/
 	}
 	
 	
@@ -494,33 +494,33 @@ class PrgAttivitaDidattica extends Canale{
 	 */
 	function &selectPrgAttivitaDidatticaCodice(/* ...tutta la chiave... */)
 	{
-
+/*		
 		$db =& FrontController::getDbConnection('main');
-	
+		
 		$query = 'SELECT ... WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
-
+		
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
+		
 		$rows = $res->numRows();
-
+		
 		if( $rows == 0) return false;
-
+		
 		$res->fetchInto($row);
-		$prgAtt =& new PrgAttivitaDidattica( /* ... $row[16] ... */ );
+		$prgAtt =& new PrgAttivitaDidattica(  ... $row[16] ...  );
 		
 		return $prgAtt;
-
+*/		
 	}
-
+	
 	
 	/**
 	 * Seleziona da database e restituisce un'array contenente l'elenco 
 	 * in ordine anno/ciclo/alfabetico di tutti le distinte attività didattiche
 	 * appartenenti al corso di laurea in un dato anno accademico.
 	 * Ritorna solo una volta le attività mutuate/comuni appartenenti a due 
-	 * indirizzi/orientamenti distinti
+	 * indirizzi/orientamenti distinti, o moduli identici in tutto il resto della chiave
 	 * 
 	 * @static
 	 * @param string $cod_cdl stringa a 4 cifre del codice del corso di laurea
@@ -529,53 +529,56 @@ class PrgAttivitaDidattica extends Canale{
 	 */
 	function &selectPrgAttivitaDidatticaElencoCdl($cod_cdl, $anno_accademico)
 	{
-
+		
 		$db =& FrontController::getDbConnection('main');
 		
 		$cod_cdl         = $db->quote($cod_cdl);
 		$anno_accademico = $db->quote($anno_accademico);
-	
-					//h.cod_attivita, h.prog_cronologico,  
+		
 		$query = 'SELECT *
 					FROM (
-						SELECT DISTINCT ON (tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, anno_accademico, cod_corso, cod_ind, cod_ori, cod_materia, desc_materia, anno_corso, cod_materia_ins, desc_materia_ins, anno_corso_ins, cod_ril, cod_modulo, cod_doc, nome_doc, flag_titolare_modulo, tipo_ciclo, cod_ate, anno_corso_universibo, sdoppiato ) *
+						SELECT DISTINCT ON (id_canale, anno_accademico, cod_corso, cod_materia, anno_corso, cod_materia_ins, anno_corso_ins, cod_ril, cod_doc, tipo_ciclo, cod_ate, anno_corso_universibo ) *
 						FROM (
 							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, i.anno_accademico, i.cod_corso, i.cod_ind, i.cod_ori, i.cod_materia, m1.desc_materia, i.anno_corso, i.cod_materia_ins, m2.desc_materia AS desc_materia_ins, i.anno_corso_ins, i.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, i.tipo_ciclo, i.cod_ate, i.anno_corso_universibo, '.$db->quote('N').' AS sdoppiato
 							FROM canale c, prg_insegnamento i, classi_materie m1, classi_materie m2, docente d
-							WHERE c.id_canale = i.id_canale 
+							WHERE c.id_canale = i.id_canale
 							AND cod_corso='.$cod_cdl.'
-							AND i.cod_materia=m1.cod_materia 
-							AND i.cod_materia_ins=m2.cod_materia 
+							AND i.cod_materia=m1.cod_materia
+							AND i.cod_materia_ins=m2.cod_materia
 							AND i.cod_doc=d.cod_doc
 							AND i.anno_accademico='.$anno_accademico.'
-						UNION 
+						UNION
 							SELECT c.tipo_canale, c.nome_canale, c.immagine, c.visite, c.ultima_modifica, c.permessi_groups, c.files_attivo, c.news_attivo, c.forum_attivo, c.id_forum, c.group_id, c.links_attivo, c.id_canale, s.anno_accademico, s.cod_corso, s.cod_ind, s.cod_ori, s.cod_materia, m1.desc_materia, i.anno_corso, s.cod_materia_ins, m2.desc_materia AS desc_materia_ins, s.anno_corso_ins, s.cod_ril, i.cod_modulo, i.cod_doc, d.nome_doc, i.flag_titolare_modulo, s.tipo_ciclo, s.cod_ate, s.anno_corso_universibo, '.$db->quote('S').' AS sdoppiato
-							FROM canale c, prg_insegnamento i, prg_sdoppiamento s, classi_materie m1, classi_materie m2, docente d 
-							WHERE c.id_canale = i.id_canale 
-							AND i.anno_accademico=s.anno_accademico_fis 
-							AND i.cod_corso=s.cod_corso_fis 
-							AND i.cod_ind=s.cod_ind_fis 
-							AND i.cod_ori=s.cod_ori_fis 
-							AND i.cod_materia=s.cod_materia_fis 
-							AND s.cod_materia=m1.cod_materia 
-							AND s.cod_materia_ins=m2.cod_materia 
-							AND i.anno_corso=s.anno_corso_fis 
-							AND i.cod_materia_ins=s.cod_materia_ins_fis 
-							AND i.anno_corso_ins=s.anno_corso_ins_fis 
+							FROM canale c, prg_insegnamento i, prg_sdoppiamento s, classi_materie m1, classi_materie m2, docente d
+							WHERE c.id_canale = i.id_canale
+							AND i.anno_accademico=s.anno_accademico_fis
+							AND i.cod_corso=s.cod_corso_fis
+							AND i.cod_ind=s.cod_ind_fis
+							AND i.cod_ori=s.cod_ori_fis
+							AND i.cod_materia=s.cod_materia_fis
+							AND s.cod_materia=m1.cod_materia
+							AND s.cod_materia_ins=m2.cod_materia
+							AND i.anno_corso=s.anno_corso_fis
+							AND i.cod_materia_ins=s.cod_materia_ins_fis
+							AND i.anno_corso_ins=s.anno_corso_ins_fis
 							AND i.cod_ril=s.cod_ril_fis
-							AND s.cod_corso='.$cod_cdl.' 
+							AND s.cod_corso='.$cod_cdl.'
 							AND s.anno_accademico='.$anno_accademico.'
 							AND i.cod_doc=d.cod_doc
 						) AS cdl
 					) AS cdl1
 					ORDER BY 31, 29, 22';
+		/**
+		 * @todo ATTENZIONE! ...questa query non è portabile.
+		 * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
+		 */ 
 
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
+		
 		$rows = $res->numRows();
-
+		
 		if( $rows == 0) return array();
 		$elenco = array();
 		while (	$res->fetchInto($row) )
@@ -585,7 +588,7 @@ class PrgAttivitaDidattica extends Canale{
 				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20],
 				$row[21], $row[22], $row[23], $row[24], $row[25], $row[26], $row[27], $row[28],
 				$row[29], $row[30], $row[31]=='S' );
-
+			
 			$elenco[] =& $prgAtt;
 		}
 		

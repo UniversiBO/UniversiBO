@@ -18,16 +18,15 @@ class ShowCdl extends CanaleCommand {
 	/**
 	 * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
 	 */
-	function initCommand(& $frontController) {
-		
-		parent :: initCommand($frontController);
+	function initCommand(& $frontController) 
+	{
+		parent::initCommand($frontController);
 		
 		$canale = & $this->getRequestCanale();
 		//var_dump($canale);
 		
 		if ($canale->getTipoCanale() != CANALE_CDL)
-			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
-		
+			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	function execute() {
@@ -39,9 +38,15 @@ class ShowCdl extends CanaleCommand {
 		
 		require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 		
-		$default_anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
+		if ( !array_key_exists('anno_accademico', $_GET) )
+			$anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
+		elseif( !ereg( '^([0-9]{4})$', $_GET['anno_accademico'] ) )
+			Error::throw(_ERROR_DEFAULT, array('msg' => 'L\'anno accademico richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+		else 
+			$anno_accademico = $_GET['anno_accademico'];
+		
 
-		$elencoPrgAttDid =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($cdl -> getCodiceCdl(), $default_anno_accademico);
+		$elencoPrgAttDid =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($cdl -> getCodiceCdl(), $anno_accademico);
 		
 		$num_ins = count($elencoPrgAttDid);
 		$insAnnoCorso  = NULL;   //ultimo anno dell'insegnamento precedente
@@ -49,48 +54,38 @@ class ShowCdl extends CanaleCommand {
 		$cdl_listInsYears = array();    //elenco insegnamenti raggruppati per anni
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
+		$cdl_listIns = array();
 		
 		//3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
 		for ($i=0; $i < $num_ins; $i++)
 		{
-			if ($elencoPrgAttDid[$i]->isGroupAllowed( $session_user_groups ))
+			$tempPrgAttDid =& $elencoPrgAttDid[$i];
+			if ($tempPrgAttDid->isGroupAllowed( $session_user_groups ))
 			{
-				if ( $insAnnoCorso != $elencoPrgAttDid[$i]->getAnnoCorsoUniversibo() )
+				if ( $insAnnoCorso != $tempPrgAttDid->getAnnoCorsoUniversibo() )
 				{
-					$insAnnoCorso = $elencoPrgAttDid[$i]->getAnnoCorsoUniversibo();
+					$insAnnoCorso = $tempPrgAttDid->getAnnoCorsoUniversibo();
 					$insCiclo = NULL; //$elencoPrgAttDid[$i]->getTipoCiclo();
 					
 					$cdl_listIns[$insAnnoCorso] = array('anno' => $insAnnoCorso, 'name' => 'anno '.$insAnnoCorso, 'list' => array() );
 				}
 				
-				if ( $insCiclo != $elencoPrgAttDid[$i]->getTipoCiclo() )
+				if ( $insCiclo != $tempPrgAttDid->getTipoCiclo() )
 				{
-					$insCiclo = $elencoPrgAttDid[$i]->getTipoCiclo();
+					$insCiclo = $tempPrgAttDid->getTipoCiclo();
 					
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
 				
 				$forum = new ForumApi;
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
-					array( 'name' => $elencoPrgAttDid[$i]->getNomeMateriaIns().' '.$elencoPrgAttDid[$i]->getTranslatedCodRil(),
-						   'nomeDoc' => $elencoPrgAttDid[$i]->getNomeDoc(), 
-						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$elencoPrgAttDid[$i]->getIdCanale(),
-						   'forumUri' => $forum->getForumUri($elencoPrgAttDid[$i]->getForumForumId()) );
+					array( 'name' => $tempPrgAttDid->getNomeMateriaIns().' '.$tempPrgAttDid->getTranslatedCodRil(),
+						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 
+						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$tempPrgAttDid->getIdCanale(),
+						   'forumUri' => $forum->getForumUri($tempPrgAttDid->getForumForumId()) );
 			}
 		}
 		//var_dump($fac_listCdlType);
-		
-/*		$fac_listCdl = array(); //cat := lista di cdl
-		$fac_listCdl[] = array('cod' => '0048', 'name' => 'ELETTRONICA', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0048&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0049', 'name' => 'GESTIONALE', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0049&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0050', 'name' => 'DEI PROCESSI GESTIONALI', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0050&amp;anno_accademico=2003');
-		$fac_listCdl[] = array('cod' => '0051', 'name' => 'INFORMATICA', 'link' => 'index.php?do=ShowCDL&amp;id_cdl=0051&amp;anno_accademico=2003');
-
-		$fac_listCdlType = array(); //fac := lista categorie degli anni di cdl
-		$fac_listCdlType[] = array('cod' => '1', 'name' => 'Lauree Triennali/Primo Livello', 'list' => $fac_listCdl);
-		$fac_listCdlType[] = array('cod' => '2', 'name' => 'Lauree Specialistiche', 'list' => $fac_listCdl);
-		$fac_listCdlType[] = array('cod' => '3', 'name' => 'Lauree Vecchio Ordinamento', 'list' => $fac_listCdl);
-*/
 		$template -> assign('cdl_list', $cdl_listIns);
 
 		$template -> assign('cdl_langCdl', 'CORSO DI LAUREA');
@@ -98,7 +93,14 @@ class ShowCdl extends CanaleCommand {
 		$template -> assign('cdl_langTitleAlt', 'Corsi di Laurea');
 		$template -> assign('cdl_cdlName', $cdl->getNome());
 		$template -> assign('cdl_cdlCodice', $cdl->getCodiceCdl());
-		//$template -> assign('cdl_facLink', 'pippo');  //@todo
+
+		$template -> assign('cdl_langYear', 'anno accademico' );
+		$template -> assign('cdl_prevYear', ($anno_accademico-1).'/'.($anno_accademico) );
+		$template -> assign('cdl_thisYear', ($anno_accademico).'/'.($anno_accademico+1) );
+		$template -> assign('cdl_nextYear', ($anno_accademico+1).'/'.($anno_accademico+2) );
+		$template -> assign('cdl_prevYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico-1) );
+		$template -> assign('cdl_nextYearUri', 'index.php?do=ShowCdl&id_canale='.$cdl->getIdCanale().'&anno_accademico='.($anno_accademico+1) );
+		
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));

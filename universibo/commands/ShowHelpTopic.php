@@ -16,9 +16,8 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
  */
  
 class ShowHelpTopic extends UniversiboCommand {
-	function execute(){
-		
-		
+	function execute()
+	{
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
