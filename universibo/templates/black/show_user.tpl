@@ -35,7 +35,7 @@
 	{/if}
 	{if $temp_currLink.ruolo!="M" && $temp_currLink.ruolo!="R"}&nbsp;&nbsp;&nbsp;{/if}
 	{if $showDiritti == 'true'}
-	&nbsp;<a href="{$temp_currLink.rimuovi}"><img src="tpl/black/news_del.gif" border="0" width="15" height="15" alt="Rimuovi dal tuo MyUniversiBO" /></a>
+	&nbsp;<a href="{$temp_currLink.rimuovi}"><img src="tpl/black/esame_myuniversibo_del.gif" border="0" width="15" height="15" alt="Rimuovi dal tuo MyUniversiBO" /></a>
 	{/if}
 	</td></tr>
 	{/foreach}

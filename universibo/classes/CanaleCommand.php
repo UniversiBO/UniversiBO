@@ -124,13 +124,13 @@ class CanaleCommand extends UniversiboCommand
 			{
 				$template->assign( 'common_canaleMyUniversiBO', 'remove');
 				$template->assign( 'common_langCanaleMyUniversiBO', 'Rimuovi questa pagina da MyUniversiBO');
-				$template->assign( 'common_canaleMyUniversiBO', 'index.php?do=MyUniversiBORemove&id_canale='.$canale->getIdCanale());
+				$template->assign( 'common_canaleMyUniversiBOUri', 'index.php?do=MyUniversiBORemove&id_canale='.$canale->getIdCanale());
 			}
 			else
 			{
 				$template->assign( 'common_canaleMyUniversiBO', 'add');
 				$template->assign( 'common_langCanaleMyUniversiBO', 'Aggiungi questa pagina a MyUniversiBO');
-				$template->assign( 'common_canaleMyUniversiBO', 'index.php?do=MyUniversiBOAdd&id_canale='.$canale->getIdCanale());
+				$template->assign( 'common_canaleMyUniversiBOUri', 'index.php?do=MyUniversiBOAdd&id_canale='.$canale->getIdCanale());
 			}
 		}
 		else

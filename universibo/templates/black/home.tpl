@@ -11,7 +11,11 @@
 {include file=avviso_notice.tpl}
 
 {if $common_langCanaleMyUniversiBO != ''}
-<p align="right"><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
+<p align="right">
+	{if $common_canaleMyUniversiBO == "remove"}
+	<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;
+{else}<img src="tpl/black/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
+{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
 {/if}
 
 
