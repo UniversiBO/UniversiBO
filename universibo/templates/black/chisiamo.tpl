@@ -53,10 +53,10 @@
 				<td class="Normal">{$curr_people.recapito|escape:"html"}<br />&nbsp;</td>
 			</tr>
 			<tr bgcolor="#000032">
-				<td width="30%" class="NormalC" valign="top" align="left">obiettivi:</td>
-				
-          <td class="Normal">&quot;{$curr_people.obiettivi|escape:"html"}&quot;</td>
-			</tr>
+				<td width="30%" class="NormalC" valign="top" align="left">obiettivi:</td>			
+                <td class="Normal">&quot;{$curr_people.obiettivi|escape:"html"}&quot;</td>
+          	</tr>
+			<tr bgcolor="#000032"><td colspan=2>&nbsp;</td></tr>
 
 			<tr bgcolor="#000099"> 
 				<td colspan="2">
