@@ -112,6 +112,8 @@
 		<NewsShowCanale class="NewsShowCanale">
 			<response type="template" name="default">news_show_canale.tpl</response>
 			<pluginCommand name="ShowNews" class="News.ShowNews" />
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsShowCanale>
 
 		<FileDownload class="FileDownload">

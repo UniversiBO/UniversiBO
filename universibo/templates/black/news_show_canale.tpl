@@ -35,6 +35,10 @@
 <tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
+&nbsp;
+<hr>
+{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}
+
 {if $common_pageType == "index"}
 {include file=footer_index.tpl}
 {elseif $common_pageType == "popup"}

@@ -70,10 +70,11 @@ class NewsShowCanale extends CanaleCommand {
 		$param = array('id_notizie'=> $lista_notizie, 'chk_diritti' => true);
 		$this->executePlugin('ShowNews', $param );
 		
-				
+		$this->executePlugin('ShowTopic', array('reference' => 'newsutenti'));		
 
 		return 'default';
-
+		
+		
 	}
 	
 	/**
