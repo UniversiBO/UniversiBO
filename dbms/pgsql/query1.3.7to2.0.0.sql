@@ -40,6 +40,7 @@ CREATE TABLE "canale" (
 PRIMARY KEY ("id_canale"), UNIQUE ("id_canale"));
 CREATE INDEX "canale_id_canale_key" ON "canale"("id_canale"); 
 -- importa dati argomento->canale
+UPDATE argomento SET visite=0 WHERE visite IS NULL;
 INSERT INTO "canale" ( "id_canale" ,"tipo_canale" , "nome_canale" , "immagine" , "visite" , "ultima_modifica" , "permessi_groups" , "files_attivo" , "news_attivo" , "forum_attivo" , "id_forum" , "group_id" ) 
     SELECT "id_argomento" ,0 , "nome_argomento" , "immagine" , "visite" , "ultima_modifica" , 0, "files_attivo" , "news_attivo" , "forum_attivo" , "id_forum" , "group_id" FROM argomento;
 
@@ -84,7 +85,7 @@ ALTER TABLE "classi_corso" RENAME "id_argomento" TO "id_canale";
 ALTER TABLE "classi_corso" ADD "categoria" int4;
 
 UPDATE classi_corso SET categoria=2 WHERE cod_corso='0067';
-UPDATE classi_corso SET categoria=? WHERE cod_corso='0023';
+UPDATE classi_corso SET categoria=1 WHERE cod_corso='0023';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0044';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0045';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0049';
@@ -110,16 +111,16 @@ UPDATE classi_corso SET categoria=3 WHERE cod_corso='2150';
 UPDATE classi_corso SET categoria=3 WHERE cod_corso='2163';
 UPDATE classi_corso SET categoria=3 WHERE cod_corso='2151';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0054';
-UPDATE classi_corso SET categoria=? WHERE cod_corso='0022';
-UPDATE classi_corso SET categoria=? WHERE cod_corso='0218';
+UPDATE classi_corso SET categoria=1 WHERE cod_corso='0022';
+UPDATE classi_corso SET categoria=2 WHERE cod_corso='0218';
 UPDATE classi_corso SET categoria=3 WHERE cod_corso='2140';
 UPDATE classi_corso SET categoria=3 WHERE cod_corso='5402';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0048';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0047';
 UPDATE classi_corso SET categoria=1 WHERE cod_corso='0046';
 UPDATE classi_corso SET categoria=2 WHERE cod_corso='0233';
-UPDATE "classi_corso" SET categoria=1 WHERE cod_corso='0025';
-UPDATE "classi_corso" SET categoria=3 WHERE cod_corso='5407';
+UPDATE classi_corso SET categoria=1 WHERE cod_corso='0025';
+UPDATE classi_corso SET categoria=3 WHERE cod_corso='5407';
 
 ALTER TABLE "classi_corso" DROP COLUMN "menu_corso";
 -- 19-9-2003
