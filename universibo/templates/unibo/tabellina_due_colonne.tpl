@@ -13,7 +13,7 @@
 	{if $smarty.section.allitem.index is odd}
 	 	<p class="lastCol">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
 	{elseif $smarty.section.allitem.index is even}
-		<p>{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
+		<p class="leftCol">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p>
 	{/if}	
 {/if}
 {/section}

@@ -58,11 +58,13 @@ form fieldset .casella
 {
 	float: right;
 	text-align: left;
+	display: inline;	
 }
-form fieldset label
+form fieldset .label
 {
 	float: left;
-	width: 20%;
+	width: 120px;
+	padding-right: 15px !important;
 	text-align: right;
 	display: inline;
 }
@@ -540,25 +542,37 @@ td.evidenzia{
 	display: block;
 	border-top: solid 1px #999;
 	border-bottom: solid 1px #999;
-	text-align: left;
+	text-align: center;
+	clear: both;
 }
-
-.tbl2col p
+.tbl2col p, .tbl2col a
 {
+	display: inline !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-align: center;
+}
+.tbl2col p.leftCol
+{
+	float: left;
+}
+.tbl2col p { 
+	width: 45%;
 	border-right: solid 1px #999;
 	border-bottom: solid 1px #999;	
-	width: 50%;
 }
 .tbl2col p.lastCol, .tbl2col p.lastColRow
 {
 	border-right: 0 none;
-	display: block;
+	display: inline;
+	float: right !important;
 }
 .tbl2col p.lastRow, .tbl2col p.lastColRow
 {
 	border-bottom: 0 none;
 }
-
+.tbl2col p.lastColRow { float: right;}
+.tbl2col p.lastRow { float: left;}
 .titolo
 {
 	padding: 0;
