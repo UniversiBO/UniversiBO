@@ -106,6 +106,12 @@
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</MyUniversiBOAdd>
+		<MyUniversiBOEdit class="MyUniversiBOEdit">
+			<response type="template" name="default">my_universibo_edit.tpl</response>
+			<response type="template" name="success">my_universibo_edit_success.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
+		</MyUniversiBOEdit>
 		<MyUniversiBORemove class="MyUniversiBORemove">
 			<response type="template" name="success">my_universibo_remove_success.tpl</response>
 			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
