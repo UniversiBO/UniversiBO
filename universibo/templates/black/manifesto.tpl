@@ -14,7 +14,7 @@
 <img src="{$manifesto_langQuoteImg}" width="357" height="185" alt="{$manifesto_langQuoteAlt|escape:html}" />
 </p>
 <p>
-{$manifesto_langWhatIsIt|escape:html_all|nl2br}
+{$manifesto_langWhatIsIt|escape:"html"|nl2br}
 <p align="right" class="NormalC">{$manifesto_langAuthor|capitalize}</p>
 &nbsp;<br /></td></tr></table>
 
