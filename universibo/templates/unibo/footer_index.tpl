@@ -34,7 +34,7 @@
 			{foreach from=$common_contactsCanale key=temp_key item=temp_currGroup}
 				<p>{$temp_key|escape:"htmlall"}</p>
 				{foreach from=$temp_currGroup item=temp_currLink}
-					<p><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" />&nbsp;
+					<p><img src="tpl/unibo/pallino1.gif" width="11" height="10" alt="" />&nbsp;
 					<a href="{$temp_currLink.utente_link|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a>
 					{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Referente" title="Referente" />{/if}
 					{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Moderatore" title="Moderatore" />{/if}</p>
