@@ -120,7 +120,8 @@ testi consigliati[/url]';
 		$tpl_tabella[] = $materiale;
 		$tpl_tabella[] = $modalita;
 		$tpl_tabella[] = $appelli;
-		$tpl_tabella[] = $orario;
+		// per rimettere l'orario decommentare qui
+		//$tpl_tabella[] = $orario;
 		$tpl_tabella[] = $forum;
 		
 		$template->assign('ins_tabella', $tpl_tabella );
