@@ -8,7 +8,7 @@ body
 }
 
 /* si gentile con netscape*/
-p, td, ul, ol, ul, li, dl, dt, dd
+p, td, ul, ol, ul, li, dl, dt, dd, a
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -561,7 +561,7 @@ td.evidenzia{
 	border-collapse: collapse;
 }
 
-.titolo
+.titolo /* da chi è usato?*/
 {
 	padding: 0;
 	margin: 40px 0 !important;
@@ -569,6 +569,16 @@ td.evidenzia{
 .titoloPagina p, .titoloPagina a, .titoloPagina h1, .titoloPagina h2, .titoloPagina h4
 { 
 	text-align: center !important;
+	width: auto;
+}
+.titoloPagina a
+{
+	font-size: 11px !important;
+	display: inline;
+}
+.titoloPagina
+{
+	margin-bottom: 30px;
 }
 .chi_siamo div
 {
@@ -614,8 +624,9 @@ td.evidenzia{
 	text-align: left !important;
 	font-size: 11px;
 }
-.help_generale p, .help_generale a, .help_generale li
+.help_generale p, .help_generale a, .help_generale li, .help_generale ul, .help_generale
 {
+	text-align: left;
 	font-size: 11px;
 }
 .help_generale div
