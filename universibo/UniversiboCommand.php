@@ -15,32 +15,111 @@ class UniversiboCommand extends BaseCommand {
 	
 	var $sessionUser;
 
+
+
+	/**
+	 * Restituisce l'id_utente del dello user nella sessione corrente
+	 *
+	 * @static
+	 * @param string $password stringa della password da verificare
+	 * @return boolean
+	 */
+	function getSessionIdUtente()
+	{
+		return $_SESSION['id_utente'];
+	}
+
+	
+
+	/**
+	 * Salva l'id_utente dello user nella sessione corrente
+	 *
+	 * @static
+	 * @protected
+	 * @param int $id_utente id_utente dello user
+	 */
+	function setSessionIdUtente($id_utente)
+	{
+		$_SESSION['id_utente'] = $id_utente;
+	}
+
+	
+
+	/**
+	 * Restituisce true se un utente (anche ospite) è stato registrato nella sessione corrente
+	 *
+	 * @static
+	 * @return boolean
+	 */
+	function sessionUserExists()
+	{
+		return array_key_exists('id_utente', $_SESSION) && isset($_SESSION['id_utente']);
+	}
+
+
+
+	/**
+	 * Restituisce l'oggetto utente della sessione corrente.
+	 *
+	 * Può essere chiamata solo dopo che è stata eseguita initCommand altrimenti
+	 * il valore di ritorno è indefinito
+	 *
+	 * @return User
+	 */
+	function &getSessionUser()
+	{
+		return $this->sessionUser;
+	}
+
+	
+
+	/**
+	 * Inizializza l' UniversiboCommand ridefinisce l'init() del BaseCommand.
+	 */
 	function initCommand( &$frontController )
 	{
 		parent::initCommand( $frontController );
 		
 		$this->_setUpUser();
 		
-		$this->_setUpView();
-		
+		$this->_setUpTemplate();
 		
 	}
 	
+
+
+	/**
+	 * Inizializza le informazioni utente dell' UniversiboCommand
+	 *
+	 * @private  
+	 */
 	function _setUpUser()
 	{
-		
 		require_once('User.php');
 		
-		if (! array_key_exists('id_user',$_SESSION) || ! isset($_SESSION['id_user']) )
+		if (! $this->sessionUserExists() )
 		{
-		 	$_SESSION['id_user'] = 0;
+			$this->sessionUser = new User(0, USER_OSPITE);
+			$this->setSessionIdUtente(0);
 		}
-
-		
-				
+		elseif ( $this->getSessionIdUtente() >= 0 )
+		{
+			$this->sessionUser &= User::selectUser( $this->getSessionIdUtente() );
+		}
+		else 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
+			
 	}
 
-	function _setUpView()
+
+
+	/**
+	 * Inizializza le informazioni comuni del template dell' UniversiboCommand
+	 * esegue distizione tra pagine con indice completo e popup
+	 *
+	 * @private  
+	 */
+	function _setUpTemplate()
 	{
 		
 		$template =& $this->frontController->getTemplateEngine();
@@ -49,11 +128,12 @@ class UniversiboCommand extends BaseCommand {
 		if ( array_key_exists('pageType', $_GET) && $_GET['pageType']=='popup' )
 		{ 
 			$template->assign('common_pageType', 'popup');
+			$this->_setUpTemplatePopup();
 		}
 		else
 		{
 			$template->assign('common_pageType', 'index');
-			$this->_setUpPageIndex();
+			$this->_setUpTemplateIndex();
 		}
 		
 		//riferimenti per ottimizzare gli accessi
@@ -89,7 +169,12 @@ class UniversiboCommand extends BaseCommand {
 	}
 
 
-	function _setUpPageIndex()
+	/**
+	 * Inizializza le variabili del template per le pagine con indice completo
+	 *
+	 * @private  
+	 */
+	function _setUpTemplateIndex()
 	{
 			
 		$template =& $this->frontController->getTemplateEngine();
@@ -144,8 +229,19 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
 												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
 
-
 	}
 	
+
+
+	/**
+	 * Inizializza le variabili del template per le pagine popup
+	 *
+	 * @private  
+	 */
+	function _setUpTemplatePopup()
+	{
+
+	}
+		
 }
 ?>
