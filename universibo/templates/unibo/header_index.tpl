@@ -15,11 +15,6 @@
 <body>
 {* inizio tabella di impaginazione GENERALE  *}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<colgroup>
-	<col width="200px" />
-	<col />
-	<col width="170px" />
-</colgroup>
 <tr><td colspan="3"> {* barra in alto, gif di sinistra LOGO a sfondo BIANCO di dimensioni 150x92,gif per il TITOLO a sfondo del colore della tabella con data e menu di navigazione di dimensioni 600x100 *}
 		<div id="header">
 			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="200" height="92" /></a>
@@ -29,9 +24,8 @@
 			<p id="Menu">|&nbsp;<a href="{$common_helpByTopicUri|escape:"htmlall"}">{$common_help|lower|capitalize|escape:"htmlall"}</a>&nbsp;{if $common_userLoggedIn == 'true'}|&nbsp;<a href="{$common_settingsUri|escape:"htmlall"}">{$common_settings|lower|capitalize|escape:"htmlall"}</a>&nbsp;{/if}|&nbsp;<a href="{$common_forumUri|escape:"htmlall"}">{$common_forum|lower|capitalize|escape:"htmlall"}</a></p>
 		</div> {* /menubar *}
 </td></tr>
-{* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
-<tr valign="top">
-	<td class="evidenzia" rowspan="2">
+<tr valign="top"> {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
+	<td class="evidenzia" rowspan="2" width="200px">
 		<div id="leftmenu">
 			<ul>
 				<li><a href="{$common_homepageUri|escape:"htmlall"}">{$common_homepage|lower|capitalize|escape:"htmlall"}</a></li>
@@ -67,11 +61,11 @@
 			</div>
 		</div>
 		{/if}
-		
-</td> {* FINE MENù DI SINIStrA*}
+	  {* FINE MENù DI SINIStrA*}	
+</td>
 <td>
 	{*<p id="seiIn">sei in: <a href="">Home</a></p>*}
-	<div id="content"> {* COLONNA MENU CENtrALE *}
+	<div id="content" width="100%"> {* COLONNA MENU CENtrALE *}
 	{if $common_alert != ""}
 	<div id="alert">{$common_alert|escape:"htmlall"}</div>
 	{/if}

@@ -3,7 +3,7 @@
 {*parametro: array $arrayToShow*}
 
 <div class="tbl2col">
-<table width="100%" border="1" cellspacing="0" cellpadding="0" summary="">
+<table border="1" cellspacing="0" cellpadding="0" summary="">
 {section loop=$arrayToShow name=allitem} 
 {if $smarty.section.allitem.last && $smarty.section.allitem.index is even}
 	<tr><td width="50%" align="center"><p class="lastRow">{$arrayToShow[allitem]|escape:"htmlall"|bbcode2html}</p></td><td>&nbsp;</td></tr>

@@ -13,7 +13,6 @@ p, td, ul, ol, ul, li, dl, dt, dd, a
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 }
-
 hr
 {
 	border-style: none;
@@ -244,12 +243,9 @@ td.evidenzia{
 
 #rightmenu
 {
-/*	float: right;	*/
-	/*padding-right: 10px;*/
 	margin-right: 10px;
-	padding: 0;
-	width: 168px;
-	/*text-align: center;*/
+	padding: 0;/*
+	width: 170px;*/
 }
 
 #versione
@@ -598,19 +594,20 @@ td.evidenzia{
 .tbl2col
 {
 	font-size: 11px;
-	margin: 2em 10%;
+	/*margin: 2em 10%;*/
 	display: block;
 	width: 80%;
 	border-right: solid 3px #777;
 	border-bottom: solid 3px #777;
+	padding: 0;
 }
 
 .tbl2col table
 {
 	font-size: 11px;
-	border-color: #999 !important;
+	border-color:  #999 !important;
 	border-collapse: collapse;
-	
+	width: 100%;	
 }
 .tbl2col p, .tbl2col a { 
 	text-align: center !important;

@@ -1,6 +1,6 @@
 	</div>
 </td> {* FINE MENU CENTRALE*}
-<td id="rightmenu"> {* COLONNA MENU DI DESTRA*}
+<td id="rightmenu" width="170px"> {* COLONNA MENU DI DESTRA*}
 	<div class="box"> {* primo blocchetto *} 
 		{if $common_userLoggedIn=='false'}
 		<h3>Login</h3>
@@ -49,15 +49,7 @@
 	<div class="box"> {* terzo blocchetto *}
 		<h3>Links</h3>
 		<div class="contenuto">
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank">Universit&agrave; di BO</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank">Facolt&agrave; di Ingegneria</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank">Uniwex</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank">Guida dello Studente</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank">Elenco Dipartimenti</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank">Assoc. Studentesche</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank">Ordine Ingegneri</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank">ATC Bologna</a></p>
-			<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank">Trenitalia</a></p>
+<p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank">Universit&agrave; di BO</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank">Facolt&agrave; di Ingegneria</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank">Uniwex</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank">Guida dello Studente</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank">Elenco Dipartimenti</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank">Assoc. Studentesche</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank">Ordine Ingegneri</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank">ATC Bologna</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank">Trenitalia</a></p>
 		</div>
 	</div>
 	<div class="box"> {*quarto blocchetto *}
