@@ -98,6 +98,7 @@ class Krono
 	/**
 	*	Set to desidered date format 
 	* 	@access public
+	*
 	* + possible values: 
 	* + it -> italian (dd-mm-yyyy)
 	* + en,std -> international (mm-dd-yyyy)
