@@ -398,6 +398,9 @@ class NewsEdit extends CanaleCommand
 //						
 //				}
 				
+				/**
+				 * @todo l'ultima modifica influenza tutti i canali
+				 */
 				$canale->setUltimaModifica(time(), true);
 				
 				$template->assign('NewsEdit_langSuccess', "La notizia è stata modificata con successo.");

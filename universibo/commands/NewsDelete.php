@@ -139,7 +139,7 @@ class NewsDelete extends CanaleCommand {
 			foreach ($f9_canale_app as $key => $value)
 			{
 				$news->removeCanale($key);
-				$canale = Canale::retrieveCanale($key);					
+				//$canale = Canale::retrieveCanale($key);					
 			}
 			
 			$news->deleteNewsItem();

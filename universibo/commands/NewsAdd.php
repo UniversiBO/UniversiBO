@@ -282,13 +282,13 @@ class NewsAdd extends CanaleCommand {
 				foreach ($_POST['f7_canale'] as $key => $value)
 				{
 					$notizia->addCanale($key);
-					$canale = Canale::retrieveCanale($key);
-					$canale->setUltimaModifica(time(), true);
+					$add_canale =& Canale::retrieveCanale($key);
+					$add_canale->setUltimaModifica(time(), true);
 					
 					
 					//notifiche
 					require_once('Notifica/NotificaItem'.PHP_EXTENSION);
-					$notifica_titolo = 'Nuova notizia inserita in '.$canale->getNome();
+					$notifica_titolo = 'Nuova notizia inserita in '.$add_canale->getNome();
 					$notifica_titolo = substr($notifica_titolo,0 , 199);
 					$notifica_dataIns = $data_inserimento;
 					$notifica_urgente = $f7_urgente;
@@ -309,7 +309,7 @@ e modifica il tuo profilo personale nella dopo aver eseguito il login
 Per altri problemi contattare lo staff di UniversiBO
 '.$frontcontroller->getAppSetting('infoEmail');
 					
-					$ruoli_canale =& $canale->getRuoli();
+					$ruoli_canale =& $add_canale->getRuoli();
 					foreach ($ruoli_canale as $ruolo_canale)
 					{
 								//define('NOTIFICA_NONE'   ,0);
