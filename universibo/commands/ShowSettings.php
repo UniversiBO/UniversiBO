@@ -50,62 +50,7 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 		
 		$template->assign('showSettings_langAdmin',array('[url=https://www.universibo.unibo.it/phppgadmin242/]DB Postgresql locale[/url]', '[url=https://www.universibo.unibo.it/phporacleadmin/]DB Oracle ateneo[/url]', '[url=https://universibo.ing.unibo.it/phpMyAdmin]DB MySql facoltà[/url]', '[url=index.php?do=RegistraStudente]Iscrivi nuovo utente[/url]'));
 		
-		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
-		
-		if(!$utente->isOspite())
-		{
-			$arrayNewsItems[] = array();
-			$arrayFilesItems[] = array();
-			$arrayCanali = array();
-			$arrayRuoli =& $utente->getRuoli();
-			$keys = array_keys($arrayRuoli);
-			foreach ($keys as $key)
-			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
-				{
-								
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$arrayCanali[] = $canale;
-				}
-			}
-			///ho ottenuto tutti i canali a cui é iscritto l'utente
-			
-			$keys = array_keys($arrayCanali);
-			$num = 0;
-			foreach ($keys as $key)
-			{
-				$canale =& $arrayCanali[$key];
-				if ($canale->getServizioNews())
-				{
-					$id_canale = $canale->getIdCanale();
-					$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
-					$arrayNewsItems[] = ShowNewsLatest::getLatestNumNewsCanale($canale_news,$id_canale);
-					$num = $num + $canale_news;
-					echo($canale_news);
-				}
 				
-				if ($canale->getServizioFiles())
-				{
-					$id_canale = $canale->getIdCanale();
-				}
-			
-			}
-			
-			var_dump($num);
-			var_dump($arrayNewsItems[1]);
-			
-			//to do: perché non mi restituisce il numero delle notizie?
-			//to do: prendere l'elenco dei FileItems
-			
-			
-			$keys = array_keys($arrayNewsItems);
-			foreach ($keys as $key)
-			{
-				//todo: mettere in ordine le notizie
-			}
-		}
-		
 		return 'default';						
 	}
 		

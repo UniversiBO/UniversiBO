@@ -81,6 +81,11 @@
 		<ShowSettings class="ShowSettings">
 			<response type="template" name="default">impostazioni.tpl</response>
 		</ShowSettings>
+		
+		<ShowMyPage class="ShowMyPage">
+			<response type="template" name="default">my_page.tpl</response>
+		</ShowMyPage>
+		
 		<RegStudente class="RegStudente">
 			<response type="template" name="default">reg_studente.tpl</response>
 			<response type="template" name="success">reg_studente_success.tpl</response>
