@@ -320,7 +320,8 @@
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>andrea.scavolini@gmail.com;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
-		<passwordDocentiAdmin>spiff1281;brain</passwordDocentiAdmin>
+		<passwordDocentiAdmin>sissi;spiff1281;brain</passwordDocentiAdmin>
+		<modFileStudenti>brain</modFileStudenti>
 		<programmazioneDidatticaAdmin>Elisa;brain;eagleone</programmazioneDidatticaAdmin>
 		<alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>

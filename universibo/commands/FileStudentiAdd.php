@@ -386,6 +386,20 @@ class FileStudentiAdd extends UniversiboCommand {
 								}
 							}
 						}
+						$modFileStudenti = explode(';',$frontcontroller->getAppSetting('modFileStudenti'));
+						foreach ($modFileStudenti as $usernameMod)
+						{
+							$user_temp =& User::selectUserUsername($usernameMod);
+						    if(! in_array($user_temp->getEmail(), $arrayEmailRef) )
+						    {
+									$arrayEmailRef[$i] = $user_temp->getEmail();
+									$i++;
+							}
+						}
+						
+						if (!in_array($session_user->getUsername(), $username_allowed ))
+							Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La gestione della didattica e\' accessibile solo a '.implode(', ',$username_allowed),'file'=>__FILE__,'line'=>__LINE__));
+						
 //						var_dump($arrayEmailRef);
 //						die();
 						
