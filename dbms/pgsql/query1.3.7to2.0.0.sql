@@ -407,3 +407,54 @@ UPDATE file SET eliminato = 'S' WHERE id_file IN (
 UPDATE file SET titolo = substring(descrizione from 1 for 100);
 
 -- eseguire lo script: index.php?do=ScriptUpdateFileHash
+
+
+
+INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
+1, 'dispense');
+INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
+2, 'esercitazioni');
+INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
+3, 'lucidi');
+INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
+4, 'appunti');
+INSERT INTO file_categoria (id_file_categoria, descrizione) VALUES (
+5, 'altro');
+
+SELECT setval('file_categoria_id_file_categoria_seq', 5);
+UPDATE file SET id_file_categoria = 5;
+
+
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+1, 'altro', '', 'formato_.gif', '');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+2, 'pdf', '\.pdf$', 'formato_pdf.gif', 'Adobe Portable Document Format');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+3, 'doc', '\.doc$', 'formato_doc.gif', 'Microsoft Word');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+4, 'gif', '\.gif$', 'formato_gif.gif', 'Graphic Interchange Format');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+5, 'html', '\.(html|htm)$', 'formato_html.gif', 'HyperText Mark-Up Language');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+6, 'jpeg', '\.jpg$', 'formato_jpg.gif', 'Joint Photographic Experts Group');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+7, 'mp3', '\.mp3$', 'formato_mp3.gif', 'Mpeg1 Layer 3');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+8, 'sxw', '\.sxw$', 'formato_sxw.gif', 'Open Office Writer');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+9, 'sxc', '\.sxc$', 'formato_sxc.gif', 'Open Office Calc');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+10, 'sxi', '\.sxi$', 'formato_sxi.gif', 'Open Office Impress');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+11, 'ppt', '\.ppt$', 'formato_ppt.gif', 'Microsoft Power Point');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+12, 'rtf', '\.rtf$', 'formato_rtf.gif', 'Rich Text Format');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+13, 'tex', '\.tex$', 'formato_tex.gif', 'TeX Document');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+14, 'txt', '\.txt$', 'formato_txt.gif', 'File di testo');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+15, 'xls', '\.xls$', 'formato_xls.gif', 'Microsoft Excel');
+INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
+16, 'bmp', '\.bmp$', 'formato_bmp.gif', 'Bitmap');
+
