@@ -139,10 +139,10 @@ class ForumApi
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-//		$query = 'UPDATE '.$this->table_prefix.'_users SET user_lastvisit = '.time();
-//		$res = $db->query($query);
-//		if (DB::isError($res)) 
-//			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$query = 'UPDATE '.$this->table_prefix.'_users SET user_lastvisit = '.time();
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		
 		
@@ -361,7 +361,7 @@ class ForumApi
 	{
 		// teoricamente se uno ha accesso al canale ha anche accesso al forum
 		
-		// controllo post più recenti dell'ultimo accesso
+		// controllo post pi? recenti dell'ultimo accesso
 		
 		$db =& FrontController::getDbConnection($this->database);
 
