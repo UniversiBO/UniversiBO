@@ -54,8 +54,8 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 		
 		if(!$utente->isOspite())
 		{
-			$newsItems[] = array();
-			$fileItems[] = array();
+			$arrayNewsItems[] = array();
+			$arrayFilesItems[] = array();
 			$arrayCanali = array();
 			$arrayRuoli =& $utente->getRuoli();
 			$keys = array_keys($arrayRuoli);
@@ -72,6 +72,7 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 			///ho ottenuto tutti i canali a cui é iscritto l'utente
 			
 			$keys = array_keys($arrayCanali);
+			$num = 0;
 			foreach ($keys as $key)
 			{
 				$canale =& $arrayCanali[$key];
@@ -79,15 +80,34 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 				{
 					$id_canale = $canale->getIdCanale();
 					$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
-					
+					$arrayNewsItems[] = ShowNewsLatest::getLatestNumNewsCanale($canale_news,$id_canale);
+					$num = $num + $canale_news;
+					echo($canale_news);
 				}
+				
+				if ($canale->getServizioFiles())
+				{
+					$id_canale = $canale->getIdCanale();
+				}
+			
 			}
-
+			
+			var_dump($num);
+			var_dump($arrayNewsItems[1]);
+			
+			//to do: perché non mi restituisce il numero delle notizie?
+			
+			
+			$keys = array_keys($arrayNewsItems);
+			foreach ($keys as $key)
+			{
+				
+			}
 		}
 		
 		return 'default';						
 	}
-	
+		
 }
 
 ?>
