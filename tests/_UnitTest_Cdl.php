@@ -47,23 +47,29 @@ class CdlTest extends PHPUnit_TestCase
 	
 	function testSetGet()
 	{
-		$this->cdl->getNome();
-		$this->cdl->getCodiceFacoltaPadre();
-		$this->cdl->getCodiceCdl();
-
 		$cod_new = '0022';
 		$this->cdl->setCodiceCdl($cod_new);
 		$this->assertEquals($cod_new, $this->cdl->getCodiceCdl());
 
-#	 * define('CDL_NUOVO_ORDINAMENTO'   ,1);
-#	 * define('CDL_SPECIALISTICA'       ,2);
-#	 * define('CDL_VECCHIO_ORDINAMENTO' ,3);
+		$codFac_new = '0028';
+		$this->cdl->setCodiceFacoltaPadre($codFac_new);
+		$this->assertEquals($codFac_new, $this->cdl->getCodiceFacoltaPadre());
+		
+		$nome_new = 'INOSUX';
+		$this->cdl->setNome($nome_new);
+		$this->assertEquals($nome_new, $this->cdl->getNome());
 
-//	function getCategoriaCdl()
-//	function getNomeMyUniversiBO()
-//	{
-//	function getTitolo()
-//		return "CORSO DI LAUREA DI \n".$this->getNome();
+		$codDoc_new = '666666';
+		$this->cdl->setCodDocente($codDoc_new);
+		$this->assertEquals($codDoc_new, $this->cdl->getCodDocente());
+
+		$catId_new = '666';
+		$this->cdl->setForumCatId($catId_new);
+		$this->assertEquals($catId_new, $this->cdl->getForumCatId());
+
+		$cat_new = '3';
+		$this->cdl->setCategoriaCdl($cat_new);
+		$this->assertEquals($cat_new, $this->cdl->getCategoriaCdl());
 
 	}
 	
@@ -72,33 +78,49 @@ class CdlTest extends PHPUnit_TestCase
 		
 		$cdl =& Cdl::selectCdlCanale($this->cdl->getIdCanale());
 		
-		$new_link = 'http://www.ing.example.com';
-		$cdl->setUri($new_link);
-		$nome_cdl = 'INGEGNIERIAHAH';
-		$cdl->setNome($nome_cdl);
-		$cod_new = '0022';
+		$cod_new = '6666';
 		$cdl->setCodiceCdl($cod_new);
+
+		$codFac_new = '0028';
+		$cdl->setCodiceFacoltaPadre($codFac_new);
 		
+		$nome_new = 'INOSUX';
+		$cdl->setNome($nome_new);
+
+		$codDoc_new = '666666';
+		$cdl->setCodDocente($codDoc_new);
+		
+		$catId_new = '666';
+		$cdl->setForumCatId($catId_new);
+		
+		$cat_new = '3';
+		$cdl->setCategoriaCdl($cat_new);
+
 		$cdl->updateCdl();
+//		var_dump($cdl);
 		
 		$cdl2 =& Cdl::selectCdlCanale($this->cdl->getIdCanale());
 		
-		$this->assertEquals($new_link, $cdl2->getUri());
-		$this->assertEquals($nome_cdl, $cdl2->getNome());
 		$this->assertEquals($cod_new, $cdl2->getCodiceCdl());
+		$this->assertEquals($codFac_new, $cdl2->getCodiceFacoltaPadre());
+		$this->assertEquals($nome_new, $cdl2->getNome());
+		$this->assertEquals($codDoc_new, $cdl2->getCodDocente());
+		$this->assertEquals($catId_new, $cdl2->getForumCatId());
+		$this->assertEquals($cat_new, $cdl2->getCategoriaCdl());
 		
 	}
 	
 	
 	function testCdlElenco()
 	{
-		$elenco =& Cdl::selectCdlElenco();
+		$cod_facolta = '0021';
+		$elenco =& Cdl::selectCdlElencoFacolta($cod_facolta);
 		
 		foreach ( $elenco as $cdl)
 		{
-			$value = $cdl->getNome();
+			$value = $cdl->getCategoriaCdl();
 			if (isset($value_old))
-				$this->assertTrue( strcmp($value_old, $value) < 0 );
+				$this->assertTrue( $value >= $value_old );
 			$value_old = $value;
 		}
 		
@@ -107,5 +129,3 @@ class CdlTest extends PHPUnit_TestCase
 }
 
 ?>
-	
-	
