@@ -138,7 +138,7 @@ class ShowNewsLatest extends PluginCommand {
 				if ( $user->isAdmin() || $referente || $this_moderatore )
 				{
 					$elenco_news_tpl[$i]['modifica']     = 'Modifica';
-					$elenco_news_tpl[$i]['modifica_link']= 'NewsEdit&id_news='.$news->getIdNotizia();
+					$elenco_news_tpl[$i]['modifica_link']= 'NewsEdit&id_news='.$news->getIdNotizia().'&id_canale='.$id_canale;
 					$elenco_news_tpl[$i]['elimina']      = 'Elimina';
 					$elenco_news_tpl[$i]['elimina_link'] = 'NewsDelete&id_news='.$news->getIdNotizia().'&id_canale='.$id_canale;
 				}

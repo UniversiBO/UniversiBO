@@ -92,8 +92,8 @@
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	<tr class="News"><td>
 	{foreach name=canali item=item from=$f7_canale}
-	<tr class="Normal">
-	<td valign="top">&nbsp;&nbsp;<input type="checkbox" id="f7_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f7_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f7_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	<tr class="Normal" valign="top">
+	<td>&nbsp;&nbsp;<input type="checkbox" id="f7_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f7_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f7_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
 	</td></tr>

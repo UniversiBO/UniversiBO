@@ -65,7 +65,7 @@ class NewsItem {
 	/**
 	 * @private
 	 */
-	var $ultimaModifica = false; 
+	var $ultimaModifica = NULL; 
 	
 	/**
 	 * @private
@@ -321,11 +321,11 @@ class NewsItem {
 	/**
 	 * Imposta il timestamp dell'ultima modifica della notizia
 	 *
-	 * @return int timestamp dell'ultima modifica della notizia
+	 * @param int timestamp dell'ultima modifica della notizia
 	 */
-	function setUltimaModifica() 
+	function setUltimaModifica($ultimaModifica) 
 	{
-	 	return $this->ultimaModifica;
+	 	$this->ultimaModifica = $ultimaModifica;
 	}
 	 
 
@@ -401,7 +401,9 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8] );
+			$news =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8] );
+			$news->getIdCanali();
+			$news_list[] =& $news;
 		}
 		
 		$res->free();
@@ -478,6 +480,10 @@ class NewsItem {
 		
 		// rimuove l'id del canale dall'elenco completo
 		$this->elencoIdCanali = array_diff ($this->elencoIdCanali, array($id_canale));
+		
+		/**
+		 * @TODO settare eliminata = 'S' quando la notizia viene tolta dall'ultimo canale
+		 */
 	}
 
 		 
@@ -524,7 +530,7 @@ class NewsItem {
 	}	 
 	
 	/**
-	 * Inserisce su DB le informazioni riguardanti un nuovo utente
+	 * Inserisce una notizia sul DB
 	 *
 	 * @param	 array 	$array_id_canali 	elenco dei canali in cui bisogna inserire la notizia. Se non si passa un canale si recupera quello corrente.
 	 * @return	 boolean true se avvenua con successo, altrimenti Error object
@@ -557,6 +563,42 @@ class NewsItem {
 		}
 		
 		$this->setIdNotizia($next_id);
+		
+		$db->commit();
+		$db->autoCommit(true);
+		ignore_user_abort(0);
+	}
+	
+	/**
+	 * Aggiorna le modifiche alla notizia nel DB
+	 *
+	 * @return	 boolean true se avvenua con successo, altrimenti Error object
+	 */
+	function updateNewsItem()
+	{				 
+		$db =& FrontController::getDbConnection('main');
+		
+        ignore_user_abort(1);
+        $db->autoCommit(false);
+        $return = true;
+		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
+				
+		$query = 'UPDATE news SET titolo = '.$db->quote($this->getTitolo())
+					.' , data_inserimento = '.$db->quote($this->getDataIns())
+					.' , data_scadenza = '.$scadenza
+					.' , notizia = '.$db->quote($this->getNotizia())
+					.' , id_utente = '.$db->quote($this->getIdUtente())
+					.' , eliminata = '.$db->quote($this->getEliminata())
+					.' , flag_urgente = '.$db->quote($this->getUrgente())
+					.' , data_modifica = '.$db->quote($this->getUltimaModifica())
+					.' WHERE id_news = '.$db->quote($this->getIdNotizia());
+										 
+		$res = $db->query($query);
+		
+		if (DB::isError($res)){
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
 		
 		$db->commit();
 		$db->autoCommit(true);
