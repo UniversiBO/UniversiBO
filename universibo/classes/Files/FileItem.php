@@ -14,11 +14,14 @@ define('FILE_NOT_ELIMINATO', 'N');
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>
+ * @author Daniele Tiles
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
 class FileItem {
+
+//Todo: mancano le get&set dell'id_file e id_utente
 
 	/**
 	 * @private
@@ -80,15 +83,18 @@ class FileItem {
 	 */
 	var $id_categoria = 0;
 
+
 	/**
 	 * @private
 	 */
 	var $id_tipo_file = 0;
 
+
 	/**
 	 * @private
 	 */
 	var $hash_file = '';
+
 
 	/**
 	 * @private
@@ -99,36 +105,38 @@ class FileItem {
 	 * @private
 	 */
 	var $username = '';
-
+	
+	
 	/**
 	 * @private
 	 */
 	//	var $eliminato = false
-
+		
 
 	/**
 	 * @private
 	 */
 	var $categoria_desc = '';
 
+	
 	/**
 	 * @private
 	 */
 	var $tipo_desc = '';
+	
 	
 	/**
 	 * @private
 	 */
 	var $tipo_icona = '';
 	
+		
 	/**
 	 * @private
 	 */
 	var $tipo_info = '';
 	
 	
-	
-	///////////////////////////////////////////
 	/**
 	 * @private
 	 */
@@ -264,13 +272,123 @@ class FileItem {
 	function getHashFile() {
 		return $this->hash_file;
 	}
+	
+	/**
+	 * Recupera delle informazioni aggiuntive sul file
+	 *
+	 * @return string 
+	 */
 
+	function getTipoInfo() {
+		return $this->tipo_info;
+	}
+	
+	/**
+	 * Recupera delle informazioni sull'icona del file
+	 *
+	 * @return string 
+	 */
+
+	function getTipoIcona() {
+		return $this->tipo_icona;
+	}
+	
+	/**
+	 * Recupera la descrizione del file (il formato)
+	 *
+	 * @return string 
+	 */
+
+	function getTipoDesc() {
+		return $this->tipo_desc;
+	}
+	
+	/**
+	 * Recupera la descrizione del file (la tipologia del documento...appunti, esami...)
+	 *
+	 * @return string 
+	 */
+
+	function getCategoriaDesc() {
+		return $this->categoria_desc;
+	}
+	
+	/**
+	 * Recupera lo username dell'autore del file
+	 *
+	 * @return string 
+	 */
+
+	function getUsername() {
+		return $this->username;
+	}
+	
+	/**
+	 * Recupera la password del file
+	 *
+	 * @return string 
+	 */
+
+	function getPassword() {
+		return $this->password;
+	}
+	
+	/**
+	 * Recupera l'hash del file
+	 *
+	 * @return string 
+	 */
+
+	function getHashFile() {
+		return $this->hash_file;
+	}
+	
+	/**
+	 * Recupera l'id del tipo del file
+	 *
+	 * @return string 
+	 */
+
+	function getIdTipoFile() {
+		return $this->id_tipo_file;
+	}
+	
+	/**
+	 * Recupera l'identificativo della categoria del file
+	 *
+	 * @return string 
+	 */
+
+	function getIdCategoria() {
+		return $this->id_categoria;
+	}
+	
+	/**
+	 * Recupera il nome del file
+	 *
+	 * @return string 
+	 */
+
+	function getNomeFile() {
+		return $this->nome_file;
+	}
+
+	/**
+	 * Recupera il numero dei download eseguiti del file
+	 *
+	 * @return string 
+	 */
+
+	function getDownLoad() {
+		return $this->download;
+	}	
+	
 	/**
 	 * Imposta la descrizione completa del file
 	 *
 	 * @param string $descrizione descrizione completa del file
 	 */
-
+	 
 	function setDescrizione($descrizione) {
 		$this->descrizione = $descrizione;
 	}
@@ -286,23 +404,43 @@ class FileItem {
 	}
 
 	/**
-	 * Imposta l'id della categoria di utenti ai quali e permesso il download
+	 * Imposta l'id della categoria di utenti ai quali é permesso il download
 	 *
-	 * @param int $permessi categoria utenti ai quali è permesso il download
+	 * @param int $permessi_download categoria utenti ai quali è permesso il download
 	 */
 
-	function setPermessi($permessi) {
-		$this->permessi = $permessi;
+	function setPermessiDownload($permessi_download) {
+		$this->permessi_download = $permessi_download;
+	}
+	
+	/**
+	 * Imposta l'id della categoria di utenti ai quali é permesso visualizzare il file
+	 *
+	 * @param int $permessi_visualizza categoria utenti ai quali è visualizzare il file
+	 */
+
+	function setPermessiVisualizza($permessi_visualizza) {
+		$this->permessi_visualizza = $permessi_visualizza;
 	}
 
 	/**
-	 * Imposta la data di caricamento del file (timestamp)
+	 * Imposta la data di inserimento del file (timestamp)
 	 *
-	 * @param int $data timestamp del giorno dell'ultima operazione sul file
+	 * @param int $data_inserimento timestamp del giorno di caricamento del file
 	 */
 
-	function setData($data) {
-		$this->data = $data;
+	function setDataInserimento($data_inserimento) {
+		$this->data_inserimento = $data_inserimento;
+	}
+	
+	/**
+	 * Imposta la data di modifica del file
+	 *
+	 * @param int $data_modifica timestamp del giorno dell'ultima operazione sul file
+	 */
+
+	function setDataModifica($data_modifica) {
+		$this->data_modifica = $data_modifica;
 	}
 
 	/**
@@ -314,6 +452,126 @@ class FileItem {
 	function setHash($hash) {
 		$this->hash = $hash;
 	}
+	
+	/**
+	 * Imposta delle informazioni aggiuntive sul file
+	 *
+	 * @param string $tipo_info informarzioni aggiuntive 
+	 */
+
+	function setTipoInfo($tipo_info) {
+		$this->tipo_info = $tipo_info;
+	}
+	
+	/**
+	 * Imposta delle informazioni sull'icona del file
+	 *
+	 * @param string $tipo_icona 
+	 */
+
+	function setTipoIcona($tipo_icona) {
+		$this->tipo_icona = $tipo_icona;
+	}
+	
+	 /**
+	 * Imposta la descrizione del file (il formato)
+	 *
+	 * @param string $tipo_desc 
+	 */
+
+	function setTipoDesc($tipo_desc) {
+		$this->tipo_icona = $tipo_desc;
+	}
+	
+	/**
+	 * Imposta la descrizione del file (la tipologia del documento...appunti, esami...)
+	 *
+	 * @param string $categoria_desc 
+	 */
+
+	function setCategoriaDesc($categoria_desc) {
+		$this->categoria_desc = $categoria_desc;
+	}
+	
+	/**
+	 * Imposta lo username dell'autore
+	 *
+	 * @param string $username 
+	 */
+
+	function setUsername($username) {
+		$this->username = $username;
+	}
+	
+	/**
+	 * Imposta la password dell'utente del file
+	 *
+	 * @param string $password 
+	 */
+
+	function setPassword($password) {
+		$this->password = $password;
+	}
+	
+	/**
+	 * Imposta l'hash del file
+	 *
+	 * @param string $hash_file 
+	 */
+
+	function setHashFile($hash_file) {
+		$this->hash_file = $hash_file;
+	}
+	
+	/**
+	 * Imposta l'identificativo del tipo del file
+	 *
+	 * @param string $id_tipo_file 
+	 */
+
+	function setIdTipoFile($id_tipo_file) {
+		$this->id_tipo_file = $id_tipo_file;
+	}
+	
+	/**
+	 * Imposta l'identificativo della categoria del file
+	 *
+	 * @param string $id_categoria 
+	 */
+
+	function setIdCategoria($id_categoria) {
+		$this->id_categoria = $id_categoria;
+	}
+	
+	/**
+	 * Imposta il nome del file
+	 *
+	 * @param string $nome_file 
+	 */
+
+	function setNomeFile($nome_file) {
+		$this->nome_file = $nome_file;
+	}
+	
+	/**
+	 * Imposta il numero dei download dei file
+	 *
+	 * @param string $download
+	 */
+
+	function setDownload($download) {
+		$this->download = $download;
+	}	
+	
+	/**
+	 * Imposta il titolo del file
+	 *
+	 * @param string $titolo
+	 */
+
+	function setTitolo($titolo) {
+		$this->titolo = $titolo;
+	}	
 
 	//ilias: da qui in giù sto sistemando dal copia e incolla da NewsItem
 
