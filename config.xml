@@ -153,7 +153,7 @@
 		<logs>../universibo/log-universibo/</logs>
 		<contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
-		<files>../html/file-universibo</files>
+		<filesPath>../universibo/file-universibo/</filesPath>
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
