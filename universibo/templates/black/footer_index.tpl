@@ -10,6 +10,8 @@
 
 {include file=box_forum.tpl}
 
+{include file=box_show_files_studenti.tpl}
+
 {include file=box_calendar.tpl}
 
 {include file=box_visite.tpl}
