@@ -347,16 +347,28 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_services', 'Servizi');
 		$common_servicesLinks = array();
 		
+		
 		// servizi per i quali l'utente ha i diritti di accesso
 		$list_id_canali =& Canale::selectCanaliTipo(CANALE_DEFAULT);
 		$list_canali	=& Canale::selectCanali($list_id_canali);
-		foreach ($list_canali as $mycanale )
+		$keys = array_keys($list_canali);
+		foreach ($keys as $key )
 		{
-			if ($mycanale->isGroupAllowed($session_user_groups))
-				$common_servicesLinks[] = array ('label'=>''.$mycanale->getNome(), 'uri'=>'index.php?do=ShowCanale&id_canale='.$mycanale->getIdCanale());
+			$my_canale =& $list_canali[$key];
+			if ($my_canale->isGroupAllowed($session_user_groups))
+			{
+
+					$myCanali['uri']   = $my_canale->showMe();
+					$myCanali['tipo']  = $my_canale->getTipoCanale();
+					$myCanali['label'] = $my_canale->getNome();
+					//var_dump($ruolo);
+					$common_servicesLinks[] = $myCanali;
+			}
+
 		}
-		
+		usort($common_servicesLinks, array('UniversiboCommand','_compareServices'));
 		$template->assign('common_servicesLinks', $common_servicesLinks);
+		
 		
 		$template->assign('common_info', 'Informazioni');
 		$template->assign('common_help', 'Help');
@@ -569,6 +581,18 @@ class UniversiboCommand extends BaseCommand {
 		if ($a['ruolo']>$b['ruolo']) return +1;
 	}
 	
+	
+	/**
+	 * Ordina la struttura del MyUniversiBO
+	 * 
+	 * @static
+	 * @private
+	 */
+	function _compareServices($a, $b)
+	{
+		if ($a['label']<$b['label']) return -1;
+		if ($a['label']>$b['label']) return +1;
+	}
 	
 	
 }
