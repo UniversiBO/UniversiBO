@@ -18,4 +18,5 @@
 	<div class="piePagina">
 		{$data|escape:"htmlall"|nl2br}&nbsp;|&nbsp;<a href="index.php?do={$autore_link|escape:"htmlall"}">{$autore|escape:"htmlall"}</a>
 	</div>
+	</td></tr></table>
 </div>
