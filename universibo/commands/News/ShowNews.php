@@ -56,7 +56,7 @@ class ShowNews extends PluginCommand {
 			if ( $referente || $moderatore  || $user->isAdmin() )
 			{
 				$template->assign('showNews_addNews', 'Scrivi nuova notizia');
-				$template->assign('showNews_addNewsUri', 'index.php?do&AddNews&id_canale='.$id_canale);
+				$template->assign('showNews_addNewsUri', 'index.php?do=AddNews&amp;id_canale='.$id_canale);
 			}
 		}
 		else
@@ -77,7 +77,7 @@ class ShowNews extends PluginCommand {
 		//echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
 		$elenco_news_tpl['nuova']        = ($personalizza==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
 		$elenco_news_tpl['autore']       = $news->getUsername();
-		$elenco_news_tpl['autore_link']  = 'ShowUser&id_utente='.$news->getIdUtente();
+		$elenco_news_tpl['autore_link']  = 'ShowUser&amp;id_utente='.$news->getIdUtente();
 		$elenco_news_tpl['id_autore']    = $news->getIdUtente();
 				
 		$elenco_news_tpl['scadenza']     = '';
@@ -93,9 +93,9 @@ class ShowNews extends PluginCommand {
 		if ( $user->isAdmin() || $referente || $this_moderatore )
 		{
 			$elenco_news_tpl[$i]['modifica']     = 'Modifica';
-			$elenco_news_tpl[$i]['modifica_link']= 'EditNews&id_news='.$news->getIdNotizia();
+			$elenco_news_tpl[$i]['modifica_link']= 'EditNews&amp;id_news='.$news->getIdNotizia();
 			$elenco_news_tpl[$i]['elimina']      = 'Elimina';
-			$elenco_news_tpl[$i]['elimina_link'] = 'DeleteNews&id_news='.$news->getIdNotizia().'&$id_canale='.$id_canale;
+			$elenco_news_tpl[$i]['elimina_link'] = 'DeleteNews&amp;id_news='.$news->getIdNotizia().'&amp;$id_canale='.$id_canale;
 		}
 		
 		$template->assign('showNews_notizia', $elenco_news_tpl);
