@@ -466,19 +466,19 @@ INSERT INTO file_canale (id_file, id_canale) SELECT id_file, id_argomento FROM f
 
 -- 10-09-2004
 
-UPDATE file SET id_file_tipo = 1 WHERE id_file IN ( SELECT id_file FROM file2 where estensione IS NULL);
-UPDATE file SET id_file_tipo = 2 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'pdf');
-UPDATE file SET id_file_tipo = 3 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'doc');
-UPDATE file SET id_file_tipo = 4 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'gif');
-UPDATE file SET id_file_tipo = 5 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'htm');
-UPDATE file SET id_file_tipo = 6 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'jpg');
-UPDATE file SET id_file_tipo = 7 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'mp3');
-UPDATE file SET id_file_tipo = 8 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'sxw');
-UPDATE file SET id_file_tipo = 9 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'sxc');
-UPDATE file SET id_file_tipo = 10 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'sxi');
-UPDATE file SET id_file_tipo = 11 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'ppt');
-UPDATE file SET id_file_tipo = 12 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'rtf');
-UPDATE file SET id_file_tipo = 13 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'tex');
-UPDATE file SET id_file_tipo = 14 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'txt');
-UPDATE file SET id_file_tipo = 15 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'xls');
-UPDATE file SET id_file_tipo = 16 WHERE id_file IN ( SELECT id_file FROM file2 where estensione == 'bmp');
+UPDATE file SET id_tipo_file = 1 WHERE id_file IN ( SELECT id_file FROM file2 where estensione IS NULL);
+UPDATE file SET id_tipo_file = 2 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'pdf');
+UPDATE file SET id_tipo_file = 3 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'doc');
+UPDATE file SET id_tipo_file = 4 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'gif');
+UPDATE file SET id_tipo_file = 5 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'htm');
+UPDATE file SET id_tipo_file = 6 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'jpg');
+UPDATE file SET id_tipo_file = 7 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'mp3');
+UPDATE file SET id_tipo_file = 8 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'sxw');
+UPDATE file SET id_tipo_file = 9 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'sxc');
+UPDATE file SET id_tipo_file = 10 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'sxi');
+UPDATE file SET id_tipo_file = 11 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'ppt');
+UPDATE file SET id_tipo_file = 12 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'rtf');
+UPDATE file SET id_tipo_file = 13 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'tex');
+UPDATE file SET id_tipo_file = 14 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'txt');
+UPDATE file SET id_tipo_file = 15 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'xls');
+UPDATE file SET id_tipo_file = 16 WHERE id_file IN ( SELECT id_file FROM file2 where estensione = 'bmp');
