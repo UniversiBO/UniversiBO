@@ -569,6 +569,54 @@ class NewsItem {
 		$this->elencoCanali    = NULL;
 		
 	}	 
+	
+	/**
+	 * Inserisce su DB le informazioni riguardanti un nuovo utente
+	 *
+	 * @return boolean true se avvenua con successo, altrimenti Error object
+	 */
+	function insertNewsItem()
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+        ignore_user_abort(1);
+        $db->autoCommit(false);
+        
+		$query = 'SELECT id_news FROM news WHERE id_news = '.$db->quote($this->getIdNotizia()); 
+		$res = $db->query($query);
+		$rows = $res->numRows();
+		
+		if( $rows > 0) 
+		{
+			$return = false;
+		}
+		else
+		{
+			$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.
+						'( '.$db->quote($this->getIdNotizia()).' , '.
+						$db->quote($this->getTitolo()).' , '.
+						$db->quote($this->getDataIns()).' , '.
+						$db->quote($this->getDataScadenza()).' , '.
+						$db->quote($this->getNotizia()).' , '.
+						$db->quote($this->getIdUtente()).' , '.
+						$db->quote($this->getEliminata()).' , '.
+						$db->quote($this->getUrgente()).' , '.
+						$db->quote($this->getUltimaModifica()).' )'; 
+			$res = $db->query($query);
+			
+			if (DB::isError($res))
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			
+			$db->commit();
+			
+			$return = true;
+		}
+        
+        $db->autoCommit(true);
+        ignore_user_abort(0);
+		
+		return $return;
+	}
 
 } 
  
