@@ -29,14 +29,8 @@
 <td><input id="f3_tel" maxlength="50" size="50" name="f3_tel" value="{$f3_tel|escape:"htmlall"}" /></td>
 </tr>
 <tr>
-<td><label for="f3_corsi_di_laurea">{$question_PersonalInfoData[4]|escape:"htmlall"}</label></td>
-<td>
-<select id="f3_corsi_di_laurea" name="f3_corsi_di_laurea">
-{foreach from=$f3_nomi_cdl item=temp_nome_cdl key=temp_key}
-<option value="{$temp_key}" {if $temp_key==$f3_corsi_di_laurea} selected="selected"{/if}>{$temp_nome_cdl|escape:"htmlall"}</option>
-{/foreach}
-</select>
-</td>
+<td><label for="f3_cdl">{$question_PersonalInfoData[4]|escape:"htmlall"}</label></td>
+<td><input id="f3_cdl" maxlength="50" size="50" name="f3_cdl" value="{$f3_cdl|escape:"htmlall"}" /></td>
 </tr>
 </table>
 </fieldset>

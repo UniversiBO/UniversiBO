@@ -81,6 +81,7 @@ class ShowContribute extends UniversiboCommand
 		$f3_mail =		'';
 		$f3_tel  =		'';
 		$f3_altro =		''; 
+		$f3_cdl =		'';
 		$f3_offline    = false;
 		$f3_moderatore = false;
 		$f3_contenuti  = false;
@@ -90,41 +91,9 @@ class ShowContribute extends UniversiboCommand
 		$f3_tempo	 = NULL;
 		$f3_internet = NULL;
 		
-		//calcolo dei corsi di laurea
-		$facolta =& Facolta::selectFacoltaElenco();
-		$num_fac = count($facolta);
-		$corsi_laurea_fac = array();
-		$num_corsi = array();
-		$f3_corsi_di_laurea = 0;
-		for($i=0;$i<$num_fac;$i++)
-		{
-			$corsi_laurea_fac[$i] =& Cdl::selectCdlElencoFacolta($facolta[$i]->getCodiceFacolta());
-			$num_corsi[$i] = count($corsi_laurea_fac[$i]);
-			$f3_corsi_di_laurea = $f3_corsi_di_laurea + count($corsi_laurea_fac[$i]);
-		}
-		//todo: come distinguere i corsi triennali dalle specialistiche e dal VO? Ricompaiono due volte alcuni...
-		
-		$corsi_laurea = array();
-		$fac = 0;
-		for($i=0;$i<$num_fac;$i++)
-		{
-			for($j=0;$j<$num_corsi[$i];$j++)
-			{
-				$corsi_laurea[] =& $corsi_laurea_fac[$i][$j];
-			}
-		}
-		$f3_nomi_cdl = array();
-		for($i=0;$i<$f3_corsi_di_laurea;$i++)
-		{
-			$f3_nomi_cdl[$i] =& $corsi_laurea[$i]->getNome();
-		}
 		
 		$f3_accept = false;
 		
-		/**
-		*
-		* To do: non funzia il post...non capisco perché...
-		*/
 		
 		if (array_key_exists('f3_submit', $_POST)  )
 		{
@@ -135,7 +104,7 @@ class ShowContribute extends UniversiboCommand
 				 !array_key_exists('f3_cognome', $_POST) ||
 				 !array_key_exists('f3_mail', $_POST) ||
 				 !array_key_exists('f3_tel', $_POST) ||
-				 !array_key_exists('f3_corsi_di_laurea', $_POST)||
+				 !array_key_exists('f3_cdl', $_POST)||
 				 !array_key_exists('f3_altro', $_POST) ) 
 			{
 				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
@@ -242,17 +211,11 @@ class ShowContribute extends UniversiboCommand
 			
 			//corso di laurea
 			
-			if (!ereg('^([0-9]{1,9})$', $_POST['f3_corsi_di_laurea'])) 
-			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo Corso di laurea non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			if ( strlen($_POST['f3_cdl']) > 50 ) {
+				Error::throw(_ERROR_NOTICE,array('msg'=>'Il corso di laurea indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
-			elseif ( !array_key_exists($_POST['f3_corsi_di_laurea'], $f3_nomi_cdl) )
-			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il corso di laurea inviato contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f3_accept = false;
-			}
-			else $f3_corsi_di_laurea = $_POST['f3_corsi_di_laurea'];
+			else $q3_cdl = $f3_cdl = $_POST['f3_cdl'];
 			
 		}
 		
@@ -262,8 +225,7 @@ class ShowContribute extends UniversiboCommand
 		$template->assign('f3_cognome',	$f3_cognome);
 		$template->assign('f3_mail',	$f3_mail);
 		$template->assign('f3_tel',		$f3_tel);
-		$template->assign('f3_corsi_di_laurea',	$f3_corsi_di_laurea);
-		$template->assign('f3_nomi_cdl',	$f3_nomi_cdl);
+		$template->assign('f3_cdl',		$f3_cdl);
 		$template->assign('f3_altro',	$f3_altro); 
 		$template->assign('f3_offline',	$f3_offline);
 		$template->assign('f3_moderatore',	$f3_moderatore);
@@ -308,7 +270,7 @@ class ShowContribute extends UniversiboCommand
 			    'cognome: '.$f3_cognome."\n".
 				'mail: '.$f3_mail."\n".
 				'telefono: '.$f3_tel."\n".
-				'corso di laurea: '.$f3_corsi_di_laurea."\n".
+				'corso di laurea: '.$f3_cdl."\n".
 				'username: '.$session_user->getUsername()."\n".
 				'id_utente: '.$q3_idUtente."\n\n".
 				'tempo_disponibile: '.$f3_tempo."\n".
@@ -321,7 +283,7 @@ class ShowContribute extends UniversiboCommand
 				'attivita_prog: '.$q3_prog."\n".
 				'altre_informazioni: '.$f3_altro."\n\n";
 			
-			var_dump($mail);die();
+//			var_dump($mail);die();
 			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
