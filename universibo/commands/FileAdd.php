@@ -85,6 +85,7 @@ class FileAdd extends UniversiboCommand {
 		$num_ruoli = count($ruoli_keys);
 		for ($i = 0; $i<$num_ruoli; $i++)
 		{
+			// qui c'è errore TODO
 			if ($id_canale != $ruoli_keys[$i] && ($user->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isModeratore() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) )
 				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 		}
