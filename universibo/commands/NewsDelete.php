@@ -12,6 +12,7 @@ require_once ('News/NewsItem'.PHP_EXTENSION);
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Daniele Tiles
+ * @author Fabrizio Pinto
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -53,36 +54,13 @@ class NewsDelete extends CanaleCommand {
 		}
 
 		$news = & NewsItem :: selectNewsItem($_GET['id_news']);
+		$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
 		*/		
 		$autore = ($user->getIdUser() == $news->getIdUtente());
 		if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eliminare la notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
-		
-		
-//		/*
-//		$news =& NewsItem::selectNewsItem($_GET['id_news']);
-//		$id_user = $user->getIdUser();
-//		$id_user_writer = $news->getIdUtente();
-//				
-//		$user_ruoli = $user->getRuoli();
-//		$id_canale = $canale->getIdCanale();
-//	
-//		if(array_key_exists($id_canale,$user_ruoli))
-//		{
-//			$user_ruolo_canale = $user_ruoli[$id_canale];
-//		}
-//		 else {Error::throw(_ERROR_DEFAULT,array('msg'=>'Non possiedi i diritti per eliminare la notizia o la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ));}
-//		
-//		if(!($user_ruolo_canale->isModeratore()&&$id_user==$id_user_writer)&&!($user->isAdmin())&&!($user_ruolo_canale->isReferente()))
-//		{
-//			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non hai i diritti per eliminare la notizia o la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ));
-//		}
-//		*/
-		/*var_dump($id_user);
-		die();
-		*/
 		
 		//$elenco_canali = array ($id_canale);
 		$ruoli_keys = array_keys($user_ruoli);
@@ -105,11 +83,13 @@ class NewsDelete extends CanaleCommand {
 			$nome_current_canale = $current_canale->getTitolo();
 			if (in_array($id_current_canale, $news->getIdCanali())) 
 			{
-				$f9_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'false');
+				$f9_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => 'true');
 			}
 		}
 		
 		$f9_accept = false;
+		
+		//postback
 		
 		if (array_key_exists('f9_submit', $_POST)  )
 		{
@@ -120,7 +100,7 @@ class NewsDelete extends CanaleCommand {
 			{
 				foreach ($_POST['f9_canale'] as $key => $value)
 				{
-					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore()));
+					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || ($user_ruoli[$key]->isModeratore() && $autore)));
 					if (!$diritti)
 					{
 						//$user_ruoli[$key]->getIdCanale();
@@ -138,6 +118,8 @@ class NewsDelete extends CanaleCommand {
 			
 		}
 		
+		
+		//accettazione della richiesta
 		if ($f9_accept == true)
 		{
 //			var_dump($_POST['f9_canale'] );
@@ -150,6 +132,7 @@ class NewsDelete extends CanaleCommand {
 					$canale->setUltimaModifica(time(), true);
 				}
 			
+			$news->deleteNewsItem();
 			/**
 			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */

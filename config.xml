@@ -115,7 +115,7 @@
 	
 	<mailerInfo>
 		<!-- leave smtp empty if don't want to use a smtp server -->
-	    <smtp>joker.ing.unibo.it</smtp>
+	    <smtp>pippo.joker.ing.unibo.it</smtp>
 	    <fromAddress>universibo@joker.ing.unibo.it</fromAddress>
 	    <replyToAddress>universibo@joker.ing.unibo.it</replyToAddress>
 	    <fromName>UniversiBO</fromName>

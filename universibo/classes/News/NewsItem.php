@@ -3,7 +3,7 @@
 
 
 define('NEWS_ELIMINATA','S');
-
+define('NEWS_VALIDA','N');
 
 /**
  *
@@ -22,12 +22,12 @@ define('NEWS_ELIMINATA','S');
 
 class NewsItem {
 	
-	/**
-	 * ? costante per il valore del flag per le notizie eliminate
-	 *
-	 * @private
-	 */
-	var $ELIMINATA='S';
+//	/**
+//	 * ? costante per il valore del flag per le notizie eliminate
+//	 *
+//	 * @private
+//	 */
+//	var $ELIMINATA='S';
 	
 	/**
 	 * @private
@@ -408,9 +408,7 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8] );
-			$news->getIdCanali();
-			$news_list[] =& $news;
+			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],($row[5] == 'S') ? true : false,$row[6],$row[8] );
 		}
 		
 		$res->free();
@@ -589,19 +587,19 @@ class NewsItem {
         $db->autoCommit(false);
         $return = true;
 		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
-				
+		$deleted = ($this->getEliminata() == true) ? NEWS_ELIMINATA : NEWS_VALIDA; 		
 		$query = 'UPDATE news SET titolo = '.$db->quote($this->getTitolo())
 					.' , data_inserimento = '.$db->quote($this->getDataIns())
 					.' , data_scadenza = '.$scadenza
 					.' , notizia = '.$db->quote($this->getNotizia())
 					.' , id_utente = '.$db->quote($this->getIdUtente())
-					.' , eliminata = '.$db->quote($this->getEliminata())
+					.' , eliminata = '.$db->quote($deleted)
 					.' , flag_urgente = '.$db->quote($this->getUrgente())
 					.' , data_modifica = '.$db->quote($this->getUltimaModifica())
 					.' WHERE id_news = '.$db->quote($this->getIdNotizia());
 										 
 		$res = $db->query($query);
-		
+		//var_dump($query);
 		if (DB::isError($res)){
 			$db->rollback();
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
@@ -611,7 +609,22 @@ class NewsItem {
 		$db->autoCommit(true);
 		ignore_user_abort(0);
 	}
+	
+	/**
+	 * La funzione deleteNewsItem controlla se la notizia é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 */
+	
+	function deleteNewsItem() 
+	{
+		$lista_canali =& $this->getIdCanali();
+		if(count($lista_canali) == 0)
+		{
+			$this->eliminata = true;
+			$this->updateNewsItem();
+		} 
+	}
 
 } 
- 
+
+	
 ?>

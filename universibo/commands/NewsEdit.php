@@ -18,6 +18,9 @@ http://www.opensource.org/licenses/gpl-license.php}
 class NewsEdit extends CanaleCommand
 {
 
+/**
+ * Deve stampare "La notizia é giá presente nei seguenti canali"
+ */
 	function execute()
 	{
 
@@ -83,25 +86,36 @@ class NewsEdit extends CanaleCommand
 			$f8_data_scad_min = $krono->k_date('%i', $data_scadenza);
 		}
 
-		$elenco_canali = array ($id_canale);
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i < $num_ruoli; $i ++)
-		{
-			if ($id_canale != $ruoli_keys[$i])
-				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-		}
+//		$elenco_canali = array ($id_canale);
+//		$ruoli_keys = array_keys($user_ruoli);
+//		$num_ruoli = count($ruoli_keys);
+//		for ($i = 0; $i < $num_ruoli; $i ++)
+//		{
+//			if ($id_canale != $ruoli_keys[$i])
+//				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+//		}
+//
+//		$num_canali = count($elenco_canali);
+//		for ($i = 0; $i < $num_canali; $i ++)
+//		{
+//			$id_current_canale = $elenco_canali[$i];
+//			$current_canale = & Canale :: retrieveCanale($id_current_canale);
+//			$nome_current_canale = $current_canale->getTitolo();
+//			$spunta = (in_array($id_current_canale, $news->getIdCanali())) ? 'true' : 'false';
+//			$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
+//		}
 
-		$num_canali = count($elenco_canali);
+		$lista_canali =& $news->getIdCanali();
+		$num_canali = count($lista_canali);
 		for ($i = 0; $i < $num_canali; $i ++)
 		{
-			$id_current_canale = $elenco_canali[$i];
+			$id_current_canale = $lista_canali[$i];
 			$current_canale = & Canale :: retrieveCanale($id_current_canale);
 			$nome_current_canale = $current_canale->getTitolo();
-			$spunta = (in_array($id_current_canale, $news->getIdCanali())) ? 'true' : 'false';
-			$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
+			$f8_canale[] = array ('nome_canale' => $nome_current_canale);
 		}
-
+		
+		
 		$f8_accept = false;
 
 		if (array_key_exists('f8_submit', $_POST))
@@ -312,37 +326,41 @@ class NewsEdit extends CanaleCommand
 			}
 
 			//diritti_su_tutti_i_canali
-			if (array_key_exists('f8_canale', $_POST))
-			{
-				foreach ($_POST['f8_canale'] as $key => $value)
-				{
-					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore()));
-					if (!$diritti)
-					{
-						//$user_ruoli[$key]->getIdCanale();
-						$canale = & Canale :: retrieveCanale($key);
-						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di modifica nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-						$f8_accept = false;
-					}
-				}				
-			}
-			else 
-			{
-				$f8_accept = false;
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-			}
+//			if (array_key_exists('f8_canale', $_POST))
+//			{
+//				foreach ($_POST['f8_canale'] as $key => $value)
+//				{
+//					$diritti = $user->isAdmin() || (array_key_exists($key, $user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore()));
+//					if (!$diritti)
+//					{
+//						if(!ereg('^([0-9]{1,9})$', $key))
+//						{
+//							Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non é valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
+//						}
+//						//$user_ruoli[$key]->getIdCanale();
+//						$canale = & Canale :: retrieveCanale($key);
+//						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di modifica nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//						$f8_accept = false;
+//					}
+//				}				
+//			}
+//			else 
+//			{
+//				$f8_accept = false;
+//				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//			}
 
 
 			//esecuzione operazioni accettazione del form
 			if ($f8_accept == true)
-			{
+			{	
+				//var_dump($f8_testo);
 				$news->setTitolo($f8_titolo);
 				$news->setDataIns($data_inserimento);
 				$news->setDataScadenza($data_scadenza);
 				$news->setUrgente($f8_urgente);
 				$news->setNotizia($f8_testo);
 				$news->setUltimaModifica(time());
-
 				$news->setIdUtente($user->getIdUser());
 
 				$news->updateNewsItem();
@@ -351,31 +369,31 @@ class NewsEdit extends CanaleCommand
 				//var_dump($f8_canale);
 				//var_dump($_POST['f8_canale']);
 
-				$num_canali = count($elenco_canali);
-				for ($i = 0; $i < $num_canali; $i ++)
-				{
-					$id_current_canale = $elenco_canali[$i];
-					$current_canale = & Canale :: retrieveCanale($id_current_canale);
-					$nome_current_canale = $current_canale->getTitolo();
-					foreach ($_POST['f8_canale'] as $key => $value)
-					{
-						/*$news->addCanale($key);
-						$canale = Canale::retrieveCanale($key);
-						$canale->setUltimaModifica(time(), true);*/
-						$spunta = ($id_current_canale == $key) ? 'true' : 'false';
-						if ($spunta == 'true')
-							break;
-					}
-					$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
-				}
-				foreach ($f8_canale as $key => $value)
-				{
-					if ($value['spunta'] == 'true') $news->addCanale($value['id_canale']);
-					elseif ($value['spunta'] == 'false') $news->removeCanale($value['id_canale']);
-					$canale = Canale::retrieveCanale($value['id_canale']);
-					$canale->setUltimaModifica(time(), true);
-						
-				}
+//				$num_canali = count($elenco_canali);
+//				for ($i = 0; $i < $num_canali; $i ++)
+//				{
+//					$id_current_canale = $elenco_canali[$i];
+//					$current_canale = & Canale :: retrieveCanale($id_current_canale);
+//					$nome_current_canale = $current_canale->getTitolo();
+//					foreach ($_POST['f8_canale'] as $key => $value)
+//					{
+//						/*$news->addCanale($key);
+//						$canale = Canale::retrieveCanale($key);
+//						$canale->setUltimaModifica(time(), true);*/
+//						$spunta = ($id_current_canale == $key) ? 'true' : 'false';
+//						if ($spunta == 'true')
+//							break;
+//					}
+//					$spunta = (array_key_exists($id_current_canale, $_POST['f8_canale'])) ? 'true' : 'false';
+//					$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
+//				}
+//				foreach ($f8_canale as $key => $value)
+//				{
+//					if ($value['spunta'] == 'true') $news->addCanale($value['id_canale']);
+//					$canale = Canale::retrieveCanale($value['id_canale']);
+//					$canale->setUltimaModifica(time(), true);
+//						
+//				}
 				
 				/**
 				 * @TODO elenco con esito per ciascun canale

@@ -18,13 +18,11 @@
 <fieldset>
 <legend><span class="Normal">{$f9_langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
-	<tr class="News"><td >
 	{foreach name=canali item=item from=$f9_canale}
 	<tr class="Normal" valign="top">
 	<td>&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
 	</tr>
 	{/foreach}
-	</td></tr>
 	</table>
 </fieldset>	  
 </tr></td>

@@ -8,11 +8,14 @@
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Modifica la notizia<br />&nbsp;</p></td></tr>
 <tr><td>
 <form method="post">
+
 <table width="95%" cellspacing="0" cellpadding="4" border="0" summary="">
+
 <tr>
 <td class="News" align="right" valign="top"><label for="f8_titolo">Titolo:</label></td>
 <td><input type="text" id="f8_titolo" name="f8_titolo" size="65" maxlength="130" value="{$f8_titolo|escape:"htmlall"}" /></td>
 </tr>
+
 <tr>
 <td>&nbsp;</td>
 <td class="News" align="left">
@@ -43,16 +46,18 @@
 </table>
 </td>
 </tr>
+
 <tr>
-<td class="News" align="right" valign="top"><label for="f8_testo"> Notizia:<br />(max 2500 <br />caratteri)</label></td>
-<td colspan="2"><textarea cols="50" rows="10" id="f8_testo" name="f8_testo">{$f8_testo|escape:"htmlall"}</textarea></td>
+<td class="News" align="right" valign="top"><label for="f8_testo"> Notizia:<br />(max 3000 <br />caratteri)</label></td>
+<td><textarea cols="50" rows="10" id="f8_testo" name="f8_testo">{$f8_testo|escape:"htmlall"}</textarea></td>
 </tr>
+
 <tr>
 <td>&nbsp;</td>
 <td class="News" align="left" valign="top"><label for="f8_scadenza"><input type="checkbox" id="f8_scadenza" name="f8_scadenza" {if $f8_scadenza=='true'}checked="checked"{/if} />&nbsp;Attiva Scadenza</label></td>
 </tr>
-<tr>
 
+<tr>
 <td>&nbsp;</td>
 <td class="News">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
@@ -82,28 +87,31 @@
 </table>	
 </td>
 </tr>
+
 <tr>
 <td>&nbsp;</td>
 <td class="News" align="left" valign="top"><input type="checkbox" id="f8_urgente"  name="f8_urgente" {if $f8_urgente=='true'}checked="checked"{/if}/>&nbsp;Invia il messaggio come urgente</td>
 </tr>
+
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">La notizia verr&agrave; inserita negli argomenti:</span></legend>
-	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
-	<tr class="News"><td >
+<legend><span class="Normal">La notizia &egrave; presente e verr&agrave; modificata nei seguenti canali:</span></legend>
+	<table width="100%" cellspacing="0" cellpadding="2" border="0" summary="">
 	{foreach name=canali item=item from=$f8_canale}
-	<tr class="Normal" valign="top">
+	{*<tr class="Normal" valign="top">
 	<td>&nbsp;&nbsp;<input type="checkbox" id="f8_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f8_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f8_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
-	</tr>
+	</tr> *}
+	<tr class="Normal" align="left"><td>{$item.nome_canale|escape:"htmlall"}</td></tr>
 	{/foreach}
-	</td></tr>
 	</table>
 </fieldset>
-</tr></td>
+</td></tr>
+
 <tr>
 <td colspan="2" align="center">
 <input type="submit" id="" name="f8_submit" size="20" value="Modifica" /></td>
 </tr>
+
 <tr><td colspan="2" align="center" class="Normal"><a href="index.php?do={$back_command|escape:"htmlall"}&amp;id_canale={$back_id_canale|escape:"htmlall"}">Torna indietro.</a></td></tr>
 </table>
 
