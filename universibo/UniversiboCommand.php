@@ -193,14 +193,18 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_addBookmarks', 'Aggiungi ai preferiti');
 
 		$template->assign('common_fac', 'Facoltà');
-		$common_facLinks = array();
-
-
-
-		$common_facLinks[] = array ('label'=>'Ingegneria', 'uri'=>'http://www.example.com'); 
-		$common_facLinks[] = array ('label'=>'Economia', 'uri'=>'http://www.example.com'); 
-		$common_facLinks[] = array ('label'=>'Nome facoltà1', 'uri'=>'http://www.example.com'); 
-		$common_facLinks[] = array ('label'=>'Nome facoltà2', 'uri'=>'http://www.example.com'); 
+		
+		require_once('Facolta'.PHP_EXTENSION);
+		$elenco_facolta =& Facolta::selectFacoltaElenco();
+		
+		$num_facolta = count($elenco_facolta);
+		$i = 0;
+		for ($i=0; $i<$num_facolta; $i++)
+		{
+			$common_facLinks[$i] = array (); 
+			$common_facLinks[$i]['uri']   = 'index.php?do=ShowFacolta&amp;id_canale='.$elenco_facolta[$i]->getIdCanale();  
+			$common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNomeFacolta(); 			
+		}
 		$template->assign('common_facLinks', $common_facLinks);
 
 		$template->assign('common_services', 'Servizi');
