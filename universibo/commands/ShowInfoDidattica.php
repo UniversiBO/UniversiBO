@@ -14,32 +14,29 @@ require_once ('InfoDidattica'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class ShowInsegnamento extends CanaleCommand 
+class ShowInfoDidattica extends UniversiboCommand 
 {
 
-	/**
-	 * Inizializza il comando ShowInsegnamento ridefinisce l'initCommand() di CanaleCommand
-	 */
-	function initCommand(& $frontController) 
-	{
-		parent::initCommand($frontController);
-		
-		$canale = & $this->getRequestCanale();
-		//var_dump($canale);
-		
-		if ($canale->getTipoCanale() != CANALE_INSEGNAMENTO)
-			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
-	}
-	
-	
-	
 	function execute() 
 	{
+		$frontcontroller = & $this->getFrontController();
+		$template = & $frontcontroller->getTemplateEngine();
+
+		$krono = & $frontcontroller->getKrono();
+		$user = & $this->getSessionUser();
+		$user_ruoli = & $user->getRuoli();
+
+			
+		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
 		$session_user =& $this->getSessionUser();
-		$session_user_groups = $session_user->getGroups();
+		$info_didattica = 
+		
 		$id_canale = $this->getRequestIdCanale();
 		$insegnamento =& $this->getRequestCanale();
 		
+		$session_user_groups = $session_user->getGroups();
 		$insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
@@ -75,10 +72,10 @@ class ShowInsegnamento extends CanaleCommand
 testi consigliati';
 		}
 		elseif ($info_didattica->getTestiConsigliatiLink() != '' && $info_didattica->getTestiConsigliati() == '' )
-			$materiale = '[url="'.$info_didattica->getTestiConsigliatiLink().'"]Materiale didattico e 
+			$materiale = '[url='.$info_didattica->getTestiConsigliatiLink().']Materiale didattico e 
 testi consigliati[/url]';
 		else
-			$materiale = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Materiale didattico e 
+			$materiale = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Materiale didattico e 
 testi consigliati[/url]';
 			'';
 
