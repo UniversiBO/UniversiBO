@@ -17,9 +17,9 @@
 <tr>
 <td class="Normal" align="center">
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
+{if $showFileTitoli_langFileAvailableFlag=="true"}
 <tr class="piccolo"><td>&nbsp;</td></tr>
 <tr>
-{if $showFileTitoli_langFileAvailableFlag=="true"}
 {foreach name=listacategorie from=$showFileTitoli_fileList item=temp_categoria}
 <td class="Normal" align="center" bgcolor="#000099"  colspan="7">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
@@ -72,7 +72,9 @@
   </tr>
   </table>
 </td></tr>
+
 {else}
+<tr>
 <td class="Normal" align="center">
 {$showFileTitoli_langFileAvailable}
 {/if}
