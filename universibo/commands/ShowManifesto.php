@@ -50,9 +50,8 @@ In una strana giornata, piovigginava leggermente con il sole che ancora faceva c
 Però dopo un po\' mi si presentò una simpatica rondinella, mi disse: "Erano giorni che avevo una fame terribile... sai, vengo da un lungo viaggio. Per fortuna che è passata da questa parti una farfalla che era tanto felice e faceva tanto chiasso che non ho potuto non notarla... davvero un buon pasto!".
 ');
 		$template->assign('manifesto_Author', 'Brain');
-
+	
 		
-		$template->display('manifesto.tpl');
 		}
 }
 

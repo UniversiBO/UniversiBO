@@ -24,18 +24,18 @@ class ShowRules extends UniversiboCommand {
 		');
 		//ATTENZIONE!! la seguente variabile dipendeva anche dalla facoltà dello studente!!
 		$template->assign('rules_langFacSubtitle', 'Università di Bologna');
-		$template->assign('rules_langPrivacy', 'Informativa sul trattamento dei dati personali
+		$template->assign('rules_langPrivacy', '<p>Informativa sul trattamento dei dati personali </p><p>
  
-I dati personali immessi per l\'utilizzo dei servizi offerti sono trattati nel rispetto e secondo la disciplina della Legge 675/1996 sulla tutela della privacy.
+I dati personali immessi per l\'utilizzo dei servizi offerti sono trattati nel rispetto e secondo la disciplina della Legge 675/1996 sulla tutela della privacy.</p><p>
  
-Titolare del trattamento è l\'Università di Bologna. Responsabile del trattamento è la Facoltà di Ingegneria. L\'utente può in ogni tempo accedere ai dati che lo riguardano, aggiornarli, rettificarli, integrarli e più in generale esercitare i diritti previsti dall\'art. 13 della l. 675/1996, di seguito riportato, contattando mailto:account@example.com.
+Titolare del trattamento è l\'Università di Bologna. Responsabile del trattamento è la Facoltà di Ingegneria. L\'utente può in ogni tempo accedere ai dati che lo riguardano, aggiornarli, rettificarli, integrarli e più in generale esercitare i diritti previsti dall\'art. 13 della l. 675/1996, di seguito riportato, contattando <a href="mailto:account@example.com">account@example.com</a>.</p><p>
  
  
-Il trattamento dei dati personali è finalizzato al pieno godimento dei servizi offerti e a realizzare l\'interazione tra gli utenti iscritti a "UniversiBo", in particolare mediante la partecipazione al forum. I dati raccolti sono trattati con mezzi informatizzati.
+Il trattamento dei dati personali è finalizzato al pieno godimento dei servizi offerti e a realizzare l\'interazione tra gli utenti iscritti a "UniversiBo", in particolare mediante la partecipazione al forum. I dati raccolti sono trattati con mezzi informatizzati.</p><p>
  
-I dati raccolti vengono altresì utilizzati a fini statistici e di sicurezza.
+I dati raccolti vengono altresì utilizzati a fini statistici e di sicurezza.</p><p>
  
-I dati non saranno comunicati a terzi o diffusi.
+I dati non saranno comunicati a terzi o diffusi.</p>
 		');
 		$template->assign('rules_langServicesRules', 'Regolamento per l\'utilizzo dei servizi
  
@@ -63,36 +63,61 @@ I dati non saranno comunicati a terzi o diffusi.
  
 12. La Facoltà di Ingegneria si riserva di impedire l\'accesso a chi ha commesso atti illeciti.
 		');
-		$template->assign('rules_langForumRules', 'Se avete domande da fare o, ancora meglio, se avete qualcosa da comunicare non esitate ad usufruire del forum facendo attenzione a rispettare le seguenti regole e consigli:
-
-se volete porre una domanda, controllate bene che l\'informazione cercata non sia già presente all\'interno del sito o che non sia già stata posta in un vecchio messaggio; 
-i messaggi vengono raggruppati in discussioni(topic): per cui se rispondete ad un messaggio, il vostro verrà visualizzato subito al di sotto del precedente. Per facilitare a tutti la navigazione tra i diversi topic ciò che più conta è che il primo a postare un messaggio utilizzi un titolo opportuno e significativo. 
-quando possibile cercate di rispondere all\'interno di un topic già iniziato; 
-evitate di scrivere messaggi troppo lunghi, altrimenti potreste rischiare che nessuno li legga; 
-se volete fare delle critiche non siate offensivi e fate in modo che siano costruttive; 
-non postate lo stesso messaggio più volte; 
-se possibile non riportare il messaggio a cui rispondi, casomai, quando servisse, riporta solo una frase; 
-non usate esclusivamente lettere maiuscole(usare maiuscole significa gridare). 
-Sul Forum è assolutamente vietato:
-
-postare messaggi offensivi; 
-postare messaggi contenenti volgarità contrari alla morale pubblica, messaggi politici/razziali, messaggi con contenuto osceno, pornografico, ecc.; 
-postare messaggi illeciti o link di siti illegali (pirateria, hacking, pornografia); 
-postare messaggi con qualsiasi forma di spam o pubblicità. 
-Il compito dei moderatori sarà quello di garantire il rispetto assoluto delle regole e di consentire il corretto svolgimento delle discussioni. Per cui potranno:
-
-controllare che discussioni troppo accese non degenerino oltre i limiti di un civile e razionale dibattito. 
-cancellare o modificare, senza alcun preavviso, un messaggio ritenuto offensivo o comunque non consono allo spirito del forum. 
-cancellare messaggi identici ripetuti più volte; 
-intervenire a loro insindacabile giudizio. 
-Contestazioni sull\'operato dei moderatori effettuate sul forum saranno prontamente chiuse o eliminate. Spiegazioni e critiche (non in chiave polemica) rivolte a moderatori e amministratori sono accette ma solo ed esclusivamente in forma privata (via mail).
-
-Siete invitati a segnalare ai moderatori eventuali irregolarità di determinati messaggi.
-
-		');
-		$template->assign('rules_lang', '');
-		
-		$template->display('regolamento.tpl');
+		$template->assign('rules_langForumRules', '<p>Se avete domande da fare o, ancora meglio, se avete qualcosa 
+      da comunicare non esitate ad usufruire del forum facendo attenzione a 
+      rispettare le seguenti regole e consigli:</p>
+    <ul>
+      <li>se volete porre una domanda, controllate bene che l\'informazione cercata 
+        non sia gi&agrave; presente all\'interno del sito o che non sia gi&agrave; 
+        stata posta in un vecchio messaggio;</li>
+      <li>i messaggi vengono raggruppati in discussioni(topic): per cui se rispondete 
+        ad un messaggio, il vostro verr&agrave; visualizzato subito al di sotto 
+        del precedente. Per facilitare a tutti la navigazione tra i diversi 
+        topic ci&ograve; che pi&ugrave; conta &egrave; che il primo a postare 
+        un messaggio utilizzi un titolo opportuno e significativo.</li>
+     <li>quando possibile cercate di rispondere all\'interno di un topic gi&agrave; 
+        iniziato;</li>
+     <li>evitate di scrivere messaggi troppo lunghi, altrimenti potreste rischiare 
+        che nessuno li legga;</li>
+      <li>se volete fare delle critiche non siate offensivi e fate in modo che 
+        siano costruttive;</li>
+        <li>non postate lo stesso messaggio pi&ugrave; volte;</li>
+        <li>se possibile non riportare il messaggio a cui rispondi, casomai, quando 
+          servisse, riporta solo una frase;</li>
+        <li>non usate esclusivamente lettere maiuscole(usare maiuscole significa 
+          gridare).</li>
+      </ul>
+      <p>Sul Forum &egrave; assolutamente vietato:</p>
+      <ul>
+        <li>postare messaggi offensivi;</li>
+        <li>postare messaggi contenenti volgarit&agrave; contrari alla morale 
+          pubblica, messaggi politici/razziali, messaggi con contenuto osceno, 
+          pornografico, ecc.;</li>
+        <li>postare messaggi illeciti o link di siti illegali (pirateria, hacking, 
+          pornografia);</li>
+        <li>postare messaggi con qualsiasi forma di spam o pubblicit&agrave;.</li>
+      </ul>
+      <p>Il compito dei moderatori sar&agrave; quello di garantire il rispetto 
+        assoluto delle regole e di consentire il corretto svolgimento delle discussioni. 
+        Per cui potranno:</p>
+      <ul>
+        <li>controllare che discussioni troppo accese non degenerino oltre i limiti 
+          di un civile e razionale dibattito. </li>
+        <li>cancellare o modificare, senza alcun preavviso, un messaggio ritenuto 
+          offensivo o comunque non consono allo spirito del forum.</li>
+        <li>cancellare messaggi identici ripetuti pi&ugrave; volte;</li>
+        <li>intervenire a loro insindacabile giudizio.</li>
+      </ul>
+      <p>Contestazioni sull\'operato dei moderatori effettuate sul forum saranno 
+        prontamente chiuse o eliminate. Spiegazioni e critiche (non in chiave 
+        polemica) rivolte a moderatori e amministratori sono accette ma solo ed 
+        esclusivamente in forma privata (via mail)<!-- o tramite il messanger 
+        del forum-->.</p>
+      <p> Siete invitati a segnalare ai moderatori eventuali irregolarit&agrave; 
+        di determinati messaggi.<br />&nbsp;
+      </p>');
+		$template->assign('$rules_langTitleAlt', 'Regolamento');
+				
 		}
 }
 
