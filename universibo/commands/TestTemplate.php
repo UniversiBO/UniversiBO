@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
  * Comando per testare i template i fase di sviluppo, in questo file vengono inserite

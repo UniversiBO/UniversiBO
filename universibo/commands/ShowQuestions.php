@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
  * ShowQuestions is an extension of UniversiboCommand class.

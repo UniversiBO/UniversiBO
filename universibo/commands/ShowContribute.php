@@ -1,6 +1,6 @@
 <?php
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
  * ShowContributes is an extension of UniversiboCommand class.

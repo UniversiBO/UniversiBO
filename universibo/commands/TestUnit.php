@@ -17,7 +17,7 @@
 
 
 
-include ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('UniversiboCommand'.PHP_EXTENSION);
 
 class TestUnit extends UniversiboCommand {
 	function execute()
