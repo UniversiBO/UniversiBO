@@ -39,6 +39,14 @@ class Cdl extends Canale{
 	 * @private
 	 */
 	var $cdlCodiceFacoltaPadre = '';
+	/**
+	 * @private
+	 */
+	var $cdlForumCatId = '';
+	/**
+	 * @private
+	 */
+	var $cdlCodDoc = '';
 
 	
 	
@@ -62,20 +70,24 @@ class Cdl extends Canale{
 	 * @param string $nome_cdl		descrizione del nome del cdl
 	 * @param int $categoria_cdl	categoria del tipo do cdl
 	 * @param string $cod_facolta	codice identificativo d'ateneo della facolt? a cui appartiene il corso di laurea
+	 * @param string $cod_doc		codice identificativo del docente
+	 * @param string $forum_cat_id	identificativo categoria del forum
 	 * @return Facolta
 	 */
 	function Cdl($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,
-				 $cod_cdl, $nome_cdl, $categoria_cdl, $cod_facolta_padre)
+				 $cod_cdl, $nome_cdl, $categoria_cdl, $cod_facolta_padre, $cod_doc, $forum_cat_id)
 	{
 
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
-		$this->cdlCodice = $cod_cdl;
-		$this->cdlNome   = $nome_cdl;
-		$this->cdlCategoria  = $categoria_cdl;
-		$this->cdlCodiceFacoltaPadre   = $cod_facolta_padre;
+		$this->cdlCodice	= $cod_cdl;
+		$this->cdlNome		= $nome_cdl;
+		$this->cdlCategoria	= $categoria_cdl;
+		$this->cdlCodiceFacoltaPadre	= $cod_facolta_padre;
+		$this->cdlForumCatId	= $forum_cat_id;
+		$this->cdlCodDoc	= $cod_doc;
 	}
 
 
@@ -133,7 +145,7 @@ class Cdl extends Canale{
 	 */
 	function getCodiceFacoltaPadre()
 	{
-		return $this->cldCodiceFacoltaPadre;
+		return $this->cdlCodiceFacoltaPadre;
 	}
 
 
@@ -177,6 +189,40 @@ class Cdl extends Canale{
 	
 	
 	/**
+	 * Seleziona da database e restituisce l'elenco di tutti gli oggetti Cdl corso di laurea 
+	 * 
+	 * @static
+	 * @param boolean $canaliAttivi se restituire solo i Cdl gi? associati ad un canale o tutti
+	 * @return mixed array di Cdl se eseguita con successo, false in caso di errore
+	 */
+	function selectCdlAll()
+	{
+	
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT cod_corso FROM classi_corso WHERE 1 = 1';
+		
+		$res = $db->query($query);
+		if (DB::isError($res))
+		{
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			return false;
+		}
+		
+		$elencoCdl = array();
+		
+		while($res->fetchInto($row))
+		{
+			//echo $row[0];
+			if ( ($elencoCdl[] =& Cdl::selectCdlCodice($row[0]) ) === false )
+				return false;
+		}
+		
+		return $elencoCdl;
+
+	}
+
+	/**
 	 * Seleziona da database e restituisce l'oggetto corso di laurea 
 	 * corrispondente al codice id_canale 
 	 * 
@@ -190,7 +236,7 @@ class Cdl extends Canale{
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND a.id_canale = '.$db->quote($id_canale);
 
 		$res = $db->query($query);
 		if (DB::isError($res))
@@ -202,7 +248,7 @@ class Cdl extends Canale{
 
 		$res->fetchInto($row);
 		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
 		
 		return $cdl;
 
@@ -223,9 +269,14 @@ class Cdl extends Canale{
 
 		$db =& FrontController::getDbConnection('main');
 	
+		
+		// LA PRIMA QUERY E' QUELLA CHE VA BENE, MA BISOGNA ALTRIMENTI SISTEMARE IL DB 
+			//E VERIFICARE CHE METTENDO DIRITTI = 0 IL CANALE NON VENGA VISUALIZZATO
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
-
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
+					 
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
+                                         a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM  classi_corso b LEFT OUTER JOIN canale a ON a.id_canale = b.id_canale WHERE b.cod_corso = '.$db->quote($cod_cdl);			 
 		$res = $db->query($query);
 		if (DB::isError($res))
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -236,7 +287,7 @@ class Cdl extends Canale{
 
 		$res->fetchInto($row);
 		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
+				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
 		
 		return $cdl;
 
@@ -258,7 +309,7 @@ class Cdl extends Canale{
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo,
-					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 15 ';
+					 a.id_canale, cod_corso, desc_corso, categoria, cod_fac, cod_doc, cat_id FROM canale a , classi_corso b WHERE a.id_canale = b.id_canale AND b.cod_fac = '.$db->quote($cod_facolta).' ORDER BY 14 , 16 ';
 
 		$res = $db->query($query);
 		if (DB::isError($res))
@@ -272,7 +323,7 @@ class Cdl extends Canale{
 		{
 			$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',
-				$row[13], $row[14], $row[15], $row[16]);
+				$row[13], $row[14], $row[15], $row[16], $row[17], $row[18]);
 
 			$elenco[] =& $cdl;
 		}
@@ -290,4 +341,41 @@ class Cdl extends Canale{
 	 	return 'index.php?do=ShowCdl&id_canale='.$this->getIdCanale();
 	 }
 	
+	function getForumCatId()
+	{
+		return $this->cdlForumCatId;
+	}
+	
+	
+	function getCodDocente()
+	{
+		return $this->cdlCodDoc;
+	}
+	
+	
+	function setForumCatId($cat_id)
+	{
+		$this->cdlForumCatId = $cat_id;
+	}
+	
+	
+	function updateCdl()
+	{
+		
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'UPDATE classi_corso SET cat_id = '.$db->quote($this->getForumCatId()).
+					', id_canale = '.$db->quote($this->getIdCanale()).
+					', desc_corso = '.$db->quote($this->getNome()).
+					', cod_fac = '.$db->quote($this->getCodiceFacoltaPadre()).
+					', categoria = '.$db->quote($this->getCategoriaCdl()).
+					', cod_doc =' .$db->quote($this->getCodDocente()).
+				' WHERE cod_corso = '.$db->quote($this->getCodiceCdl());
+		
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>$query,'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$this->updateCanale();
+	}
 }
