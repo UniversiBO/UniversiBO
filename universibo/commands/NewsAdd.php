@@ -66,8 +66,13 @@ class NewsAdd extends CanaleCommand {
 				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
 		}
 		
-	
-	
+		/*
+		//come fo a prendere l'uri dove si trova l'utente?
+		
+		$template->assign('back_command', $id_canale);
+		$template->assign('back_id_canale', $id_canale);
+		*/
+		
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
 		{
