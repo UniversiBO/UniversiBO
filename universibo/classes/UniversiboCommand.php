@@ -309,6 +309,8 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_contactsUri', 'index.php?do=ShowContacts');
 		$template->assign('common_contribute', 'Collabora');
 		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');
+		$template->assign('common_credits', 'Credits');
+		$template->assign('common_creditsUri', 'index.php?do=ShowCredits');
 		
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');

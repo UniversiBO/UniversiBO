@@ -43,6 +43,9 @@
 		<ShowContribute class="ShowContribute">
 			<response type="template" name="default">contribute.tpl</response>
 		</ShowContribute>
+		<ShowCredits class="ShowCredits">
+			<response type="template" name="default">credits.tpl</response>
+		</ShowCredits>
 		<ShowContacts class="ShowContacts">
 			<response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>
