@@ -538,7 +538,6 @@ class NewsItem {
 	/**
 	 * Inserisce una notizia sul DB
 	 *
-	 * @param	 array 	$array_id_canali 	elenco dei canali in cui bisogna inserire la notizia. Se non si passa un canale si recupera quello corrente.
 	 * @return	 boolean true se avvenua con successo, altrimenti Error object
 	 */
 	function insertNewsItem()

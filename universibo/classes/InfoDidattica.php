@@ -19,393 +19,473 @@ require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 
 class InfoDidattica
 {
-	
-	/**
-	 * @private
-	 * per il caching del nome dell'insegnamento
-	 */
-	var $insegnamentoNome = NULL;
-	
-	/**
-	 * @private
-	 * per il caching del nome dell'insegnamento
-	 */
-	var $insegnamentoTitle = NULL;
-	
-	/**
-	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
-	 */
-	var $elencoAttivita = NULL;
-	
-	/**
-	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
-	 */
-	var $elencoAttivitaPadre = NULL;
-	
-	
-	
-	
-	
-	
-	/**
-	 * Crea un oggetto Insegnamento 
-	 *
-	 * @param int $id_canale 		identificativo del canale su database
-	 * @param int $permessi 		privilegi di accesso gruppi {@see User}
-	 * @param int $ultima_modifica 	timestamp 
-	 * @param int $tipo_canale 	 	vedi definizione dei tipi sopra
-	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
-	 * @param string $nome			nome del canale/**
-	 * 
-	 * Ritorna il nome dell'insegnamento
-	 *
-	 * @return string 
-	 */
-	function getInsegnamentoNome()
-	{
-		return $this->insegnamentoNome;	
-	}
-	
-	/**
-	 * 
-	 * Imposta il nome dell'insegnamento
-	 *
-	 * @param string 
-	 */
-	function setInsegnamentoNome($nome)
-	{
-		$this->insegnamentoNome = $nome;
-	}
-	
-	/**
-	 * 
-	 * Ritorna il titolo dell'insegnamento
-	 *
-	 * @return string 
-	 */
-	function getInsegnamentoTitle()
-	{
-		return $this->insegnamentoTitle;	
-	}
-	
-	/**
-	 * 
-	 * Imposta il titolo dell'insegnamento
-	 *
-	 * @param string 
-	 */
-	function setInsegnamentoTitle($Title)
-	{
-		$this->insegnamentoTitle = $Title;
-	}
-	
-	/**
-	 * 
-	 * Ritorna l'elenco delle attività dell'insegnamento
-	 *
-	 * @return array 
-	 */
-	function getElencoAttivita()
-	{
-		return $this->elencoAttivita;	
-	}
-	
-	/**
-	 * 
-	 * Imposta l'elenco delle attività dell'insegnamento
-	 *
-	 * @param array
-	 */
-	function setElencoAttivita($elencoAttivita)
-	{
-		$this->elencoAttivita = $elencoAttivita;
-	}
-	
-	/**
-	 * 
-	 * Ritorna l'elenco delle attività dell'insegnamento
-	 *
-	 * @return array 
-	 */
-	function getElencoAttivitaPadre()
-	{
-		return $this->elencoAttivitaPadre;	
-	}
-	
-	/**
-	 * 
-	 * Imposta l'elenco delle attività dell'insegnamento
-	 *
-	 * @param array
-	 */
-	function setElencoAttivitaPadre($elencoAttivitaPadre)
-	{
-		$this->elencoAttivita = $elencoAttivitaPadre;
-	}
-	 
-	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
-	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
-	 * @param string $nome_facolta	descrizione del nome della facoltà
-	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
-	 * @return Insegnamento
-	 */
-	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $elenco_attivita)
-	{
-	
-		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
-		
-		//inizializza l'elenco delle attività padre/non sdoppiate
-		//var_dump($elenco_attivita);
-		$this->elencoAttivita =& $elenco_attivita;
-		$num = count($elenco_attivita);
-		for ($i = 0; $i < $num; $i++)
-		{
-			if ($elenco_attivita[$i]->isSdoppiato() == false)
-			{
-				$this->elencoAttivitaPadre[] =& $elenco_attivita[$i];
-			}
-		}
-		
-		$num = count($this->elencoAttivitaPadre);
-		$att = $this->elencoAttivitaPadre[0];
-		//inizializza il nome dell'esame
-		if ( $num == 1 )
-		{
-			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n ".$att->getNomeDoc();
-		}
-		else
-		{
-			// CHE CAS-INOOOOO!!!!!
-			$nome     = NULL;
-			$max_anno = 0;
-			$nomi    = array();
-			$e_nomi    = array();
-			$b_nomi    = array();
-			$t_nomi  = array();
-			$anni    = array();
-			$docenti = array();
-			$cod_ril = array();
-			//$app	 = array('nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL);
-			
-			$app_elenco_attivita = array();
-			$num_att = count($this->elencoAttivitaPadre);
-			for ($i = 0; $i < $num_att; $i++)
-			{
-				$app_elenco_attivita =& $this->elencoAttivitaPadre;
-				//var_dump($app_elenco_attivita);
-				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
-				$b_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
-				$e_nomi[$i]  = substr($nomi[$i], -3, 0);    //ultime 3 lettere del nome materia
-				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
-				if ($max_anno < $anni[$i]) $max_anno = $anni[$i];
-				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
-				$cod_ril[$i] = $app_elenco_attivita[$i]->getCodRil();
-			}
-			
-			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
-			$fin = array_values($e_nomi);
-			if ( (count(array_values($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
-			{
-				$nome = $b_nomi[0].$fin[0].' + '.$fin[1];
-				for ($i = 0; $i < $num_att; $i++)
-				{
-					$nomi[$i] = $nome;
-				}
-			}
-			
-			// "NOME ESAME 2002" && "NOME ESAME 2003" -->  "NOME ESAME 2003/2003"
-			if ( (count(array_values(array_values($anni))) == 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
-			{
-				$anniStr = implode('/',array_unique($anni)).'/'.($max_anno+1);
-				for ($i = 0; $i < $num_att; $i++)
-				{
-					$anni[$i] = $anniStr;
-				}
-				
-			}
-			
-			//costruisce la mappa dei nomi
-			for ($i = 0; $i < $num_att; $i++)
-			{
-				$app_nomi[$i] = $nomi[$i].$cod_ril.' aa. '.$anni[$i]." \n ".$att->getNomeDoc();
-			}
-			
-			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
-			
-		}
-		
-	}
-	
-		
-	
-	/**
-	 * Crea un oggetto Insegnamento dato il suo numero identificativo id_canale
-	 * Ridefinisce il factory method della classe padre per restituire un oggetto
-	 * del tipo Insegnamento
-	 *
-	 * @static
-	 * @param int $id_canale numero identificativo del canale
-	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
-	 */
-	function &factoryCanale($id_canale)
-	{
-		return Insegnamento::selectInsegnamentoCanale($id_canale);
-	}
-	
-	
-	/**
-	 * Restituisce l'uri/link che mostra un canale
-	 *
-	 * @return string uri/link che mostra un canale
-	 */
-	function showMe()
-	{
-		return 'index.php?do=ShowInsegnamento&id_canale='.$this->id_canale;
-	}
-	
-	
-	/**
-	 * Restituisce il nome dell'insegnamento:
-	 * Se è impostato un nome del canale nella tabella canale lo restituisce
-	 * Altrimenti se l'Insegnamento è composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
-	 * Altrimenti se è composto da più PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
-	 *   restituisce NOME_MATERIA PRI+SEC RIL AA
-	 * Se è composto da più entità di cui al punto precedente di anni accademici differenti
-	 *   restituisce {NOME} AA1/AA2
-	 *
-	 * @return string
-	 */
-	function getNome()
-	{
-		if ($this->isNomeSet()) return parent::getNome();
-		return $this->insegnamentoNome;
-	}
-	
-	
-	
-	/**
-	 * Restituisce il titolo/nome completo dell'insegnamento
-	 *
-	 * @return string
-	 */
-	function getTitolo()
-	{
-		return "INSEGNAMENTO DI \n".$this->getNome();
-	}
-	
-	
-	/**
-	 * Restituisce un array con chiavi numeriche 
-	 * di oggetti PrgAttivitaDidattica corrispondenti a questo Insegnamento
-	 *
-	 * @return string
-	 */
-	function getElencoAttivita()
-	{
-		return $this->elencoAttivita;
-	}
 
 
 	/**
-	 * Restituisce un array con chiavi numeriche 
-	 * di oggetti PrgAttivitaDidattica NON SDOPPIATE / PADRE 
-	 * corrispondenti a questo Insegnamento
+	 * @private
+	 */
+	var $id_canale = 0;
+	/**
+	 * @private
+	 */
+	var $programma = '';
+	/**
+	 * @private
+	 */
+	var $programma_link = '';
+	/**
+	 * @private
+	 */
+	var $testi_consigliati = '';
+	/**
+	 * @private
+	 */
+	var $testi_consigliati_link = '';
+	/**
+	 * @private
+	 */
+	var $modalita = '';
+	/**
+	 * @private
+	 */
+	var $modalita_link = '';
+	/**
+	 * @private
+	 */
+	var $obiettivi_esame = '';
+	/**
+	 * @private
+	 */
+	var $obiettivi_esame_link = '';
+	/**
+	 * @private
+	 */
+	var $appelli = '';
+	/**
+	 * @private
+	 */
+	var $appelli_link = '';
+	/**
+	 * @private
+	 */
+	var $homepage_alternativa_link = ''; 
+	
+	
+	function InfoDidattica($id_canale, $programma, $programma_link, $testi_consigliati, 
+						$testi_consigliati_link, $modalita, $modalita_link, $obiettivi_esame,
+						$obiettivi_esame_link, $appelli, $appelli_link, $homepage_alternativa_link)
+	{
+		$this->id_canale = $id_canale;
+		$this->programma = $programma;
+		$this->programma_link = $programma_link;
+		$this->testi_consigliati = $testi_consigliati;
+		$this->testi_consigliati_link = $testi_consigliati_link;
+		$this->modalita = $modalita;
+		$this->modalita_link = $modalita_link;
+		$this->obiettivi_esame = $obiettivi_esame;
+		$this->obiettivi_esame_link = $obiettivi_esame_link;
+		$this->appelli = $appelli;
+		$this->appelli_link = $appelli_link;
+		$this->homepage_alternativa_link = $homepage_alternativa_link; 
+	} 
+	
+	/**
+	 * Imposta
+	 *
+	 * @param int
+	 */
+	function setIdCanale($id_canale)
+	{
+		$this->id_canale  = $id_canale;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return int
+	 */
+	function getIdCanale()
+	{
+		return $this->id_canale;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setProgramma($programma)
+	{
+		$this->programma  = $programma ;
+	}
+	
+	/**
+	 * Restituisce
 	 *
 	 * @return string
 	 */
-	function getElencoAttivitaPadre()
+	function getProgramma()
 	{
-		return $this->elencoAttivitaPadre;
+		return $this->programma;
 	}
-
-
-	/**
-	 * Seleziona da database e restituisce l'oggetto Insegnamento
-	 * corrispondente al codice id_canale 
-	 * 
-	 * @static
-	 * @param int $id_canale identificativo su DB del canale corrispondente al corso di laurea
-	 * @return mixed Insegnamento se eseguita con successo, false se il canale non esiste
-	 */
-	function &selectInsegnamentoCanale($id_canale)
-	{
 	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setProgrammaLink($programma_link)
+	{
+		$this->programma_link = $programma_link;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getProgrammaLink()
+	{
+		return $this->programma_link;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setTestiConsigliati($testi_consigliati)
+	{
+		$this->testi_consigliati = $testi_consigliati;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getTestiConsigliati()
+	{
+		return $this->testi_consigliati;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setTestiConsigliatiLink($testi_consigliati_link)
+	{
+		$this->testi_consigliati_link = $testi_consigliati_link ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getTestiConsigliatiLink()
+	{
+		return $this->testi_consigliati_link;
+	}
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setModalita($modalita)
+	{
+		$this->modalita  =  $modalita;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getModalita()
+	{
+		return $this->modalita;
+	}
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setModalitaLink($modalita_link)
+	{
+		$this->modalita_link  = $modalita_link ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getModalitaLink()
+	{
+		return $this->modalita_link  ;
+	}
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setObiettiviEsame($obiettivi_esame)
+	{
+		$this->obiettivi_esame = $obiettivi_esame ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return int
+	 */
+	function getObiettiviEsame()
+	{
+		return $this->obiettivi_esame  ;
+	}
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setObiettiviEsameLink($obiettivi_esame_link)
+	{
+		$this->obiettivi_esame_link = $obiettivi_esame_link ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getObiettiviEsameLink()
+	{
+		return $this->obiettivi_esame_link  ;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setAppelli($appelli)
+	{
+		$this->appelli  = $appelli ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getAppelli()
+	{
+		return $this->appelli;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setAppelliLink($appelli_link)
+	{
+		$this->appelli_link  = $appelli_link ;
+	}
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getAppelliLink()
+	{
+		return $this->appelli_link;
+	}
+	
+	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setHomepageAlternativaLink($homepage_alternativa_link)
+	{
+		$this->homepage_alternativa_link  = $homepage_alternativa_link ;
+	}
+	
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getHomepageAlternativaLink()
+	{
+		return $this->homepage_alternativa_link;
+	}
+	
+	
+	/**
+	 * Inserisce una nuovo InfoDidattica sul DB
+	 *
+	 * @return	 boolean true se avvenua con successo
+	 */
+	function insertInfoDidattica()
+	{				 
 		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
+		
+		$query = 'INSERT INTO info_didattica (id_canale, programma, programma_link, testi_consigliati, 
+						testi_consigliati_link, modalita, modalita_link, obiettivi_esame,
+						obiettivi_esame_link, appelli, appelli_link, homepage_alternativa_link) VALUES '.
+					'( '.$db->quote($this->getIdCanale()).' , '.
+					$db->quote($this->getProgramma()).' , '.
+					$db->quote($this->getProgrammaLink()).' , '.
+					$db->quote($this->getTestiConsigliati()).' , '.
+					$db->quote($this->getTestiConsigliatiLink()).' , '.
+					$db->quote($this->getModalita()).' , '.
+					$db->quote($this->getModalitaLink()).' , '.
+					$db->quote($this->getObiettiviEsame()).' , '.
+					$db->quote($this->getObiettiviEsameLink()).' , '.
+					$db->quote($this->getAppelli()).' , '.
+					$db->quote($this->getAppelliLink()).' , '.
+					$db->quote($this->getHomepageAlternativaLink()).' )'; 
+					
 		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-		$res->fetchInto($row);
-		$res->free();
-		
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
-		if( $rows = 0) return false;
-		
-		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
-		
-		$insegnamento =& new Insegnamento($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $elenco_attivita);
-		
-		return $insegnamento;
-
-	}
-	
-	/** 
-	 * Restituisce l'uri del command che visulizza il canale
-	 *	
-	 * @return string URI del command 
-	 */
-//	 function getShowUri()
-//	 {
-//	 	return 'index.php?do=ShowInsegnamento&id_canale='.$this->getIdCanale();
-//	 }	
-	
-	
-	/*
-	 * Seleziona da database e restituisce l'oggetto Cdl 
-	 * corrispondente al codice $cod_cdl 
-	 * 
-	 * @todo implementare se serve
-	 * @static
-	 * @param string $cod_cdl stringa a 4 cifre del codice d'ateneo del corso di laurea
-	 * @return Facolta
-	 *
-	function &selectInsegnamentoCodice( ...tutta la chiave... )
-	{
-
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT ... WHERE a.id_canale = b.id_canale AND b.cod_corso = '.$db->quote($cod_cdl);
-
-		$res = $db->query($query);
+		//var_dump($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows == 0) return false;
-
-		$res->fetchInto($row);
-		$insegnamento =& new Insegnamento(  ... $row[16] ...  );
+		{
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
 		
-		return $insegnamento;
-
+		return true;
 	}
-	*/
+
+
+	/**
+	 * Modifica una InfoDidattica sul DB
+	 *
+	 * @return	 boolean true se avvenua con successo
+	 */
+	function updateInfoDidattica()
+	{				 
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'UPDATE info_didattica SET '
+					.' programma = '.$db->quote($this->getProgramma())
+					.' programma_link = '.$db->quote($this->getProgrammaLink())
+					.' testi_consigliati = '.$db->quote($this->getTestiConsigliati())
+					.' testi_consigliati_link = '.$db->quote($this->getTestiConsigliatiLink())
+					.' modalita = '.$db->quote($this->getModalita())
+					.' modalita_link = '.$db->quote($this->getModalitaLink())
+					.' obiettivi_esame = '.$db->quote($this->getObiettiviEsame())
+					.' obiettivi_esame_link = '.$db->quote($this->getObiettiviEsameLink())
+					.' appelli = '.$db->quote($this->getAppelli())
+					.' appelli_link = '.$db->quote($this->getAppelliLink())
+					.' homepage_alternativa_link= '.$db->quote($this->getHomepageAlternativaLink()).
+					' WHERE id_canale = '.$db->quote($this->getIdCanale()); 
+					
+		$res = $db->query($query);
+		//var_dump($query);
+		if (DB::isError($res))
+		{
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
+		
+		return true;
+	}
+
+
+	/**
+	 * Elimina una InfoDidattica sul DB
+	 *
+	 * @return	 boolean true se avvenua con successo
+	 */
+	function deleteInfoDidattica()
+	{				 
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'DELETE FORM info_didattica  WHERE id_canale = '.$db->quote($this->getIdCanale()); 
+					
+		$res = $db->query($query);
+		//var_dump($query);
+		if (DB::isError($res))
+		{
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
+		
+		return true;
+	}
+
+
+	
+	/**
+	 * Seleziona una InfoDidattica da DB dato il suo numero identificativo
+	 *
+	 * @return InfoDidattica
+	 */
+	function &retrieveInfoDidattica($id_canale)
+	{
+		return InfoDidattica::factoryInfoDidattica($id_canale);
+	}
+	
+	
+	/**
+	 * Seleziona una InfoDidattica da DB dato il suo numero identificativo
+	 *
+	 * @return InfoDidattica
+	 */
+	function &factoryInfoDidattica($id_canale)
+	{
+		return InfoDidattica::selectInfoDidattica($id_canale);
+	}
+	
+	
+	
+	/**
+	 * Seleziona una InfoDidattica da DB dato il suo numero identificativo
+	 *
+	 * @return InfoDidattica
+	 */
+	function &selectInfoDidattica($id_canale)
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_canale, programma, programma_link, testi_consigliati, testi_consigliati_link,
+						modalita, modalita_link, obiettivi_esame, obiettivi_esame_link, appelli, appelli_link,
+						homepage_alternativa_link
+						FROM info_didattica WHERE 
+						id_canale = '.$db->quote($id_canale); 
+					
+		$res = $db->query($query);
+		//var_dump($query);
+		if (DB::isError($res))
+		{
+			$db->rollback();
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
+		
+		if ($res->fetchInto($row))
+			return new InfoDidattica($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11] );
+		else
+			return false;
+		
+	}
 	
 }
 ?>

@@ -622,5 +622,13 @@ CREATE TABLE "info_didattica" (
     CONSTRAINT "info_didattica_pkey" PRIMARY KEY (id_canale)
 ) WITH OIDS;
 
- 
+INSERT INTO info_didattica (id_canale, programma, programma_link, testi_consigliati, 
+testi_consigliati_link, modalita, modalita_link, obiettivi_esame, obiettivi_esame_link,
+appelli, appelli_link, homepage_alternativa_link) 
+SELECT id_argomento, programma_esame, programma_esame_link, testi_consigliati, 
+testi_consigliati_link, modalita_esame, modalita_esame_link, obiettivi_esame, 
+obiettivi_esame_link, appelli_esame, appelli_esame_link, homepage_esame_link 
+FROM esami_info;
+
+
 

@@ -1,6 +1,7 @@
 <?php 
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('InfoDidattica'.PHP_EXTENSION);
 
 /**
  * ShowCdl: mostra un corso di laurea
@@ -36,13 +37,17 @@ class ShowInsegnamento extends CanaleCommand
 	{
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
-		$insegnamento =& $this -> getRequestCanale();
+		$id_canale = $this->getRequestIdCanale();
+		$insegnamento =& $this->getRequestCanale();
 		
 		$insegnamento->getTitolo();
 		//var_dump($insegnamento);
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
+		
+		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
+		var_dump($info_didattica);
 		
 /*		//@todo fatto sopra
 		
