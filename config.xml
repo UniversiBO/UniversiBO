@@ -32,6 +32,9 @@
 		<ShowContribute class="ShowContribute">
 			 <template type="default">contribute.tpl</template>
 		</ShowContribute>
+		<ShowQuestions class="ShowQuestions">
+			 <template type="default">questionario.tpl</template>
+		</ShowQuestions>
 		<ShowRules class="ShowRules">
 			 <template type="default">regolamento.tpl</template>
 		</ShowRules>

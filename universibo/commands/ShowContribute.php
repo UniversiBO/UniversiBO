@@ -56,7 +56,7 @@ class ShowContribute extends UniversiboCommand {
           crescita), occuparvi del contatto con le aule, con i docenti...</li>
       </ul>
 	  <p>Se quindi vi abbiamo convinto con queste poche e semplici parole e volete 
-        collaborare attivamente al progetto compilate <b><a href="devoFarlo">questo questionario</a></b>
+        collaborare attivamente al progetto compilate <b><a href="index?do=ShowQuestions">questo questionario</a></b>
 		e vi contatteremo al pi&ugrave; presto.</p>');
 		
 		
