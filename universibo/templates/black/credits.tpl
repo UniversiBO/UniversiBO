@@ -57,8 +57,8 @@
 	</tr>
 	<tr>
 	<td class="Normal" valign="top" width="90"><img src="img/credits/valid-xhtml10.png" width="88" height="31" alt="Valid XHTML 1.0 Logo" vspace="2" /><br />
-	<img src="img/credits/valid-wcag1AA.png" width="88" height="31" alt="Valid CSS 2.0 Logo" vspace="2" /><br />
-	<img src="img/credits/valid-css.png" width="88" height="31" alt="Valid WAI-AA Logo" vspace="2" /><br /></td>
+	<img src="img/credits/valid-css.png" width="88" height="31" alt="Valid CSS 2.0 Logo" vspace="2" /><br />
+	<img src="img/credits/valid-wcag1AA.png" width="88" height="31" alt="Valid WAI-AA Logo" vspace="2" /><br /></td>
 	<td class="Normal" valign="top" colspan="2">{$showCredits_langW3c|escape:"htmlall"|bbcode2html|nl2br}</td>
 	</tr>
 	</table>
