@@ -61,6 +61,12 @@ class NewsDelete extends CanaleCommand {
 		/*var_dump($news->getNotizia());
 		die();
 		*/		
+		
+		//controllo coerenza parametri
+		$canali_news	=& 	$news->getIdCanali();
+		if (!in_array($id_canale, $canali_news))
+			 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+		
 		$autore = ($user->getIdUser() == $news->getIdUtente());
 		if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per eliminare la notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));

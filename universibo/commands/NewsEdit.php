@@ -48,6 +48,12 @@ class NewsEdit extends CanaleCommand
 
 		$news = & NewsItem :: selectNewsItem($_GET['id_news']);
 		$autore = ($user->getIdUser() == $news->getIdUtente());
+		
+		//controllo coerenza parametri
+		$canali_news	=& 	$news->getIdCanali();
+		if (!in_array($id_canale, $canali_news))
+			 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+		
 
 		if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
 			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare la notizia\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
