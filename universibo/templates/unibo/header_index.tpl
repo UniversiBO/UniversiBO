@@ -49,8 +49,6 @@
 					{foreach from=$common_servicesLinks item=temp_link}
 						<li>-&nbsp;<a href="{$temp_link.uri}" >{$temp_link.label|lower|capitalize|escape:"htmlall"}</a></li>
 					{/foreach}
-					<li>-&nbsp;<a href="{$common_helpByTopicUri}" >{$common_helpByTopic|lower|capitalize|escape:"htmlall"}</a></li>
-					<li>-&nbsp;<a href="{$common_creditsUri}" >{$common_credits|lower|capitalize|escape:"htmlall"}</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -61,7 +61,8 @@
 		</div>
 	</div>
 	<div class="box"> {*quarto blocchetto *}
-		<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>
+		{*<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>*}
+		<h3>{$common_calendarLink.label|escape:"htmlall"}</h3>
 		<table width="100%" cellspacing="0" cellpadding="1" border="0" summary="Calendario">
 			<tr align="center">
 			{foreach name=weekday from=$common_calendarWeekDays item=temp_weekday}

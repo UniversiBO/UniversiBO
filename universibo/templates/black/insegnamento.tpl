@@ -8,7 +8,7 @@
 <tr><td class="Normal">&nbsp;<br /> 
 <p align="center" class="Titolo">{$ins_title|escape:"htmlall"}</p>
 
-{if $common_canaleMyUniversiBO != "none"}
+{if $common_canaleMyUniversiBO != ''}
 <p align="center">
 {if $common_canaleMyUniversiBO == "remove"}
 	<img src="tpl/black/esame_myuniversibo_del.gif" width="15" height="15" alt="" />&nbsp;

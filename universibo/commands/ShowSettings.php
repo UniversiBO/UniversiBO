@@ -27,7 +27,7 @@ class ShowSettings extends UniversiboCommand
 		
         if ($utente->isOspite() )
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per acedere alla pagina\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per accedere alla pagina\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 		}
 		
 		if ($utente->isAdmin())

@@ -327,7 +327,6 @@ td.evidenzia{
 }
 .news, .chi_siamo { padding: 0 0 4px; }
 .elenco { padding: 0; }
-
 .elenco div
 {
 	border-bottom: dotted 2px #999
@@ -646,7 +645,8 @@ td.evidenzia{
 	text-align: right;
 }
 
-.comandi a
+.comandi a, .comandi p
 {	
 	font-size: 11px;	
+	display: inline !important;
 }
