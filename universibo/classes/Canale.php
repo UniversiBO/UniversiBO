@@ -481,6 +481,7 @@ class Canale {
 	 */
 	function &selectCanale($id_canale)
 	{
+		/*
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo FROM canale WHERE id_canale= '.$db->quote($id_canale);
@@ -495,11 +496,46 @@ class Canale {
 		$res->fetchInto($row);
 		$canale =& new Canale($id_canale, $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
-
-		return $canale;
+		*/
+		$array_canale =& Canale::selectCanali( array( 0 => $id_canale ) );
+		return $array_canale[0];
 		
 	}
 	
+
+	/**
+	 * Crea un elenco (array) di oggetti Canale dato un elenco (array) di loro numeri identificativi id_canale del database
+	 *
+	 * @static
+	 * @param array $elenco_id_canali array contenente i numeri identificativi del canale
+	 * @return mixed array di Canale se eseguita con successo, false se il canale non esiste
+	 */
+	function &selectCanali($elenco_id_canali)
+	{
+		$db =& FrontController::getDbConnection('main');
+	
+		$canali_comma = implode (' , ',$elenco_id_canali);
+		
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale IN ('.$canali_comma.');';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows = 0) return false;
+
+		$elenco_canali = array();
+		while ($res->fetchInto($row))
+		{
+			$elenco_canali[] =& new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
+		}
+		
+		return $elenco_canali;
+		
+	}
+
 
 	/**
 	 * Inserisce su Db le informazioni riguardanti un NUOVO canale

@@ -24,12 +24,10 @@ class NewsItem {
 	 */
 	var $ELIMINATA='S';
 	
-	
 	/**
 	 * @private
 	 */
 	var $titolo='';
-	
 	
 	/**
 	 * @private
@@ -39,46 +37,45 @@ class NewsItem {
 	/**
 	 * @private
 	 */
-	
-	var $id_utente=0; 
+	var $idUtente=0; 
+
 	/**
 	 * data e ora di inserimento
 	 * @private
 	 */
-	
 	var $dataIns=0;
 	
 	
 	/**
 	 * @private
 	 */
-	
 	var $dataScadenza=0;
 	
 		
 	/**
 	 * @private
 	 */
-	 
 	var $urgente=false; 
 	
 	/**
 	 * @private
 	 */
-	
-	var $id_notizia=0; 
+	var $idNotizia=0; 
 	 
 	/**
 	 * @private
 	 */
-	
 	var $eliminata=false; 
 	
 	/**
 	 * @private
 	 */
-	
 	var $elencoCanali=NULL; 
+
+	/**
+	 * @private
+	 */
+	var $elencoIdCanali=NULL; 
 
 	
 	
@@ -107,19 +104,197 @@ class NewsItem {
 	 	$this->urgente=$urgente;
 	 	$this->eliminata=$eliminata;
 	 	$this->id_utente=$id_utente;
-	 	
 	 
 	 }
+
 	 
 	 /**
+	  * 
+	  * Recupera il titolo della notizia
+	  *
+	  * @return String 
+	  */
+	 function getTitolo(){
+	 	return $this->titolo;
+	 }
+
+	 
+	 /**
+	  * Recupera il testo della notizia
+	  *
+	  * @return string 
+	  */
+	 function getNotizia()
+	 {
+	 	return $this->notizia;
+	 }
+
+	 
+	 /**
+	 * Recupera l'id_utente dell'autore della notizia
+	 *
+	 * @return int 
+	 */
+	 function getIdUtente() 
+	 {
+	 	return $this->idUtente;
+	 }
+	 
+
+	/**
+	 * Recupera la data di inserimento della notizia
+	 *
+	 * @return int 
+	 */
+	function getDataIns() 
+	{
+	 	return $this->dataIns;
+	}
+	 
+	 
+		 
+	/**
+	 * Recupera la data di scadenza della notizia
+	 *
+	 * @return int
+	 */
+	function getDataScadenza() 
+	{
+	 	return $this->dataScadenza;
+	}
+	 
+	 
+	/**
+	 * Recupera l'urgenza della notizia
+	 *
+	 * @return boolean
+	 */
+	function getUrgente()
+	{
+	 	return $this->urgente;
+	}
+	 
+	 
+	/**
+	 * Recupera l'id della notizia
+	 *
+	 * @return int
+	 */
+	function getIdNotizia() 
+	{
+	 	return $this->idNotizia;
+	}
+	 
+	/**
+	 * Recupera lo stato della notizia
+	 *
+	 * @return boolean
+	 */
+	function getEliminata() 
+	{
+	 	return $this->eliminata;
+	}
+	 
+
+	/**
+	 * Imposta il titolo della notizia
+	 *
+	 * @param  string $titolo titolo della news max 150 caratteri
+	 */
+	function setTitolo($titolo)
+	{
+	 	$this->titolo=$titolo;
+	}
+	 
+
+	/**
+	 * Imposta il testo della notizia
+	 *
+	 * @param  string $notizia corpo della news 
+	 */
+	function setNotizia($notizia)
+	{
+	 	$this->notizia=$notizia;
+	}
+	 
+	 
+	/**
+	 * Imposta l'id_utente dell'autore della notizia
+	 *
+	 * @param  int $id_utente id dell'autore della news 
+	 */
+	function setIdUtente($id_utente) 
+	{
+	 	$this->idUtente=$id_utente;
+	}
+	 
+	 
+	/**
+	 * Imposta la data di inserimento della notizia
+	 *
+	 * @param  int $dataIns timestamp del giorno di inserimento 
+	 */
+	function setDataIns($dataIns) 
+	{
+	 	$this->dataIns=$dataIns;
+	}
+	
+	
+	/**
 	 * 
-	 * Recupera le informazioni della notizia
+	 * Imposta la data di scadenza della notizia
+	 *
+	 * @param  int $dataScadenza timestamp del giorno di scadenza 
+	 */
+	function setDataScadenza($dataScadenza) {
+	 	$this->dataScadenza=$dataScadenza;
+	}
+	 
+
+	/**
+	 * Imposta l'urgenza della notizia
+	 *
+	 * @param  boolean $urgente flag notizia urgente o meno
+	 */
+	function setUrgente($urgente)
+	{
+		$this->urgente=$urgente;
+	}
+	 
+	 
+	
+	 
+	/**
+	 * 
+	 * Imposta l'id della notizia
+	 *
+	 * @param  int $id_notizia id della news
+	 */
+	function setIdNotizia($id_notizia) 
+	{
+	 	$this->idNotizia=$id_notizia;
+	}
+	 
+	
+	/**
+	 * 
+	 * Imposta lo stato della notizia
+	 *
+	 * @param  boolean $eliminata flag stato della news
+	 */
+	function setEliminata($eliminata) 
+	{
+	 	$this->eliminata=$eliminata;
+	}
+	
+	 
+	/**
+	 * Recupera una notizia dal database
 	 *
 	 * @static
 	 * @param int $id_notizia  id della news
 	 * @return NewsItem 
 	 */
-	 
 	 function &selectNewsItem ($id_notizia){
 	 	
 	 	$db =& FrontController::getDbConnection('main');
@@ -138,217 +313,106 @@ class NewsItem {
 		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
 		return $news;
 	 }
-	 
-	 /**
-	  * 
-	  * Recupera il titolo della notizia
-	  *
-	  * @return String 
-	  */
-	 
-	 function getTitolo(){
-	 	return $this->titolo;
-	 }
-	 
-	 /**
-	  * Recupera il testo della notizia
-	  *
-	  * @return string 
-	  */
-	 
-	 function getNotizia(){
-	 	return $this->notizia;
-	 }
-	 
-	 /**
-	 * 
-	 * Recupera l'id_utente dell'autore della notizia
-	 *
-	 * @return int 
-	 */
-	 
-	 function getId_utente() {
-	 	return $this->id_utente;
-	 }
-	 
-	 /**
-	 * 
-	 * Recupera la data di inserimento della notizia
-	 *
-	 * @return int 
-	 */
-	 
-	 function getDataIns() {
-	 	return $this->dataIns;
-	 }
-	 
-	 
-		 
-	 /**
-	 * 
-	 * Recupera la data di scadenza della notizia
-	 *
-	 * @return int
-	 */
-	 
-	 function getDataScadenza() {
-	 	return $this->dataScadenza;
-	 }
-	 
-	 /**
-	 * 
-	 * Recupera l'urgenza della notizia
+	
+	
+	/**
+	 * Verifica se la notizia è scaduta
 	 *
 	 * @return boolean
 	 */
+	function isScaduta() 
+	{
+	 	return $this->getDataScadenza() < time();
+	}
 	 
-	 function getUrgente(){
-	 	return $this->urgente;
-	 }
 	 
-	 /**
-	 * 
-	 * Recupera l'id della notizia
+	/**
+	 * Seleziona gli id_canale per i quali la notizia è inerente 
 	 *
-	 * @return int
+	 * @static
+	 * @return array	elenco degli id_canale
 	 */
-	 
-	 function getId_notizia() {
-	 	return $this->id_notizia;
-	 }
-	 
-	 /**
-	 * 
-	 * Recupera lo stato della notizia
-	 *
-	 * @return boolean
-	 */
-	 
-	 function getEliminata() {
-	 	return $this->eliminata;
-	 }
-	 
-	 /**
-	 * 
-	 * Recupera l'array dei canali della notizia
-	 *
-	 * @return array
-	 */
-	 
-	 function getElencoCanali() {
-	 	if ($this->elencoCanali == NULL) return $this->elencoCanali; 
-	 }
-	 
-	 
+	function &getIdCanali() 
+	{
+	 	if ($this->elencoIdCanali != NULL) 
+	 		return $this->elencoIdCanali;
+ 		
+ 		$id_notizia = $this->getIdNotizia();
+	 	
+	 	$db =& FrontController::getDbConnection('main');
 	
-	 
-	 	 
-	 /**
-	 * 
-	 * Imposta il titolo della notizia
-	 *
-	 * @param  string $titolo titolo della news max 150 caratteri
-	 */
-	 
-	 function setTitolo($titolo){
-	 	$this->titolo=$titolo;
-	 }
-	 
-	 /**
-	 * 
-	 * Imposta il testo della notizia
-	 *
-	 * @param  string $notizia corpo della news 
-	 */
-	 
-	 function setNotizia($notizia){
-	 	$this->notizia=$notizia;
-	 }
-	 
-	 /**
-	 * 
-	 * Imposta l'id_utente dell'autore della notizia
-	 *
-	 * @param  int $id_utente id dell'autore della news 
-	 */
-	 
-	 function setId_utente($id_utente) {
-	 	$this->id_utente=$id_utente;
-	 }
-	 
-	 /**
-	 * 
-	 * Imposta la data di inserimento della notizia
-	 *
-	 * @param  int $dataIns timestamp del giorno di inserimento 
-	 */
-	 
-	 function setDataIns($dataIns) {
-	 	$this->dataIns=$dataIns;
-	 }
-	 
-	
-	 
-	 /**
-	 * 
-	 * Imposta la data di scadenza della notizia
-	 *
-	 * @param  int $dataScadenza timestamp del giorno di scadenza 
-	 */
-	 
-	 function setDataScadenza($dataScadenza) {
-	 	$this->dataScadenza=$dataScadenza;
-	 }
-	 
-	 /**
-	 * 
-	 * Imposta l'urgenza della notizia
-	 *
-	 * @param  boolean $urgente flag notizia urgente o meno
-	 */
-	 
-	 function setUrgente($urgente){
-	 	$this->urgente=$urgente;
-	 }
-	 
-	 
-	
-	 
-	 /**
-	 * 
-	 * Imposta l'id della notizia
-	 *
-	 * @param  int $id_notizia id della news
-	 */
-	 
-	 function setId_notizia($id_notizia) {
-	 	$this->id_notizia=$id_notizia;
-	 }
-	 
-	 /**
-	 * 
-	 * Imposta lo stato della notizia
-	 *
-	 * @param  boolean $eliminata flag stato della news
-	 */
-	 
-	 function setEliminata($eliminata) {
-	 	$this->eliminata=$eliminata;
-	 }
-	 
-	//
-	// da fare: addCanale, removeCanale  --> modifica db
-	//  
+		$query = 'SELECT id_canale FROM news_canale WHERE id_news='.$db->quote($id_notizia).' ORDER BY id_canale';
+		$res =& $db->query($query);
 		
-	 /**
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$rows = $res->numRows();
+		
+		if( $rows = 0) return false;
+		
+		$elenco_id_canale = array();
+		
+		while($res->fetchInto($row))
+		{
+			$elenco_id_canale[] = $row[0];
+		}
+		
+		$this->elencoIdCanali =& $elenco_id_canale;
+		
+ 		return $this->elencoIdCanali;
+		
+	}
+	 
+
+	/**
+	 * Seleziona i canali per i quali la notizia è inerente 
 	 *
+	 * @static
+	 * @return array	elenco dei canali
+	 */
+	function &getCanali() 
+	{
+	 	if ($this->elencoCanali != NULL) 
+	 		return $this->elencoCanali;
+ 		/*
+ 		$id_notizia = $this->getIdNotizia();
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT id_canale FROM news_canale WHERE id_news='.$db->quote($id_notizia).' ORDER BY id_canale';
+		$res =& $db->query($query);
+		
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$rows = $res->numRows();
+		
+		if( $rows = 0) return false;
+		
+		$elenco_id_canale = array();
+		
+		while($res->fetchInto($row))
+		{
+			$elenco_id_canale[] = $row[0];
+		}
+		
+		$this->elencoIdCanale = $elenco_id_canale;
+		*/
+		$this->elencoCanali =& Canale::selectCanali( $this->getIdCanali() );
+		
+ 		return $this->elencoCanali;
+		
+	}
+	 
+
+	/**
 	 * rimuove la notizia dal canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
-	 *
 	 */
-	 
-	 function removeCanale($id_canale){
+	function removeCanale($id_canale)
+	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	
@@ -357,21 +421,21 @@ class NewsItem {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		//
-		//  qualche controllo del risultato?
-		//
-	 }
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+
+		$this->elencoIdCanali  = NULL;
+		$this->elencoCanali    = NULL;
 	 
-	 /**
-	 *
+	}
+
+	 
+	/**
 	 * aggiunge la notizia al canale specificato
 	 *
 	 * @param int $id_canale   identificativo del canale
-	 *
 	 */
-	 
-	 function addCanale($id_canale){
+	function addCanale($id_canale)
+	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	
@@ -380,59 +444,13 @@ class NewsItem {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		//
-		//  qualche controllo del risultato?
-		//
-	 }	 
-	 
-	 /**
-	 *
-	 * Verifica se la notizia è scaduta
-	 *
-	 * @return boolean
-	 */
-	 
-	 function isScaduta() {
-	 	return $this->eliminata;
-	 }
-	 
-	 
-	 
-	 /**
-	 * Seleziona i canali per i quali la notizia è inerente 
-	 *
-	 * @param int		$id_notizia		identificativo della notizia
-	 * @return array	elencoContatti		elenco dei canali
-	 */
-	 
-	
-	 
-	 function &selectNotiziaCanali($id_notizia) 
-	 {
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT id_canale FROM news_canale WHERE id_news='.$db->quote($id_notizia).' ORDER BY id_canale';
-		 //è da testare il funzionamento di =&
-		$res =& $db->query($query);
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$this->elencoIdCanali  = NULL;
+		$this->elencoCanali    = NULL;
 		
-		$rows = $res->numRows();
-		
-		if( $rows = 0) return false;
-		
-		$this->elencoCanali=array();
-		
-		while($res->fetchInto($row))
-		{
-			$this->elencoCanali[]=$row['id_canale'];
-		}
-		
-	}
-	 
+	}	 
+
 } 
  
 ?>

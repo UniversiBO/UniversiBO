@@ -27,18 +27,24 @@ class ShowNewsLatest extends PluginCommand {
 	 */
 	function execute($param)
 	{
-
+		
 		$bc       =& $this->getBaseCommand();
+		$user     =& $bc->getSessionUser(); 
 		$fc       =& $bc->getFrontController();
 		$template =& $fc->getTemplateEngine();
 		$db       =& $fc->getDbConnection('main');
-		$num_news = $param['num'];
+		$num_news =  $param['num'];
 		
-		$id_canale = $bc->getRequestIdCanale();
 		$canale =& $bc->getRequestCanale();
-		$titolo = $canale->getTitolo();
-		$template->assign('shownewslatest_msg', 'Mostra le ultime '.$num_notizie.' notizie del canale '.$id_canale.' - '.$titolo);
-
+		$id_canale = $canale->getIdCanale();
+		$titolo =  $canale->getTitolo();
+		$template->assign('showNewsLatest_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo);
+		
+		$template->assign('showNewsLatest_langNoNewsAwailable', 'Non ci sono notizie in questo canale');
+		$template->assign('showNewsLatest_langShowAll', 'Mostra tutte le notizie in questo canale');
+		
+		$elenco_news = array();
+		
 	}
 }
 
