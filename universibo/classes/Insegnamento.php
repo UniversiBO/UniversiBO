@@ -125,7 +125,7 @@ class Insegnamento extends Canale
 			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
 			//var_dump($e_nomi);
 			$fin = array_values($e_nomi);
-			if ( (count(array_values($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			if ( (count(array_unique($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
 				$nome = $b_nomi[0].$fin[0].' + '.$fin[1];
 				for ($i = 0; $i < $num_att; $i++)
@@ -135,15 +135,15 @@ class Insegnamento extends Canale
 			}
 			
 			// "NOME ESAME 2002" && "NOME ESAME 2003" -->  "NOME ESAME 2003/2003"
-			if ( (count(array_values(array_values($anni))) == 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
-			{
+			//if ( (count(array_unique($anni)) != 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			//{
 				$anniStr = implode('/',array_unique($anni)).'/'.($max_anno+1);
 				for ($i = 0; $i < $num_att; $i++)
 				{
 					$anni[$i] = $anniStr;
 				}
 				
-			}
+			//}
 			
 			//costruisce la mappa dei nomi
 			for ($i = 0; $i < $num_att; $i++)
