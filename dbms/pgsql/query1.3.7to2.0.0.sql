@@ -461,4 +461,4 @@ INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona,
 INSERT INTO file_tipo (id_file_tipo, descrizione, pattern_riconoscimento, icona, info_aggiuntive) VALUES (
 16, 'bmp', '\.bmp$', 'formato_bmp.gif', 'Bitmap');
 
-
+INSERT INTO file_canale (id_file, id_canale) SELECT id_file, id_argomento FROM file_riguarda_argomento;

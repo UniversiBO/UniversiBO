@@ -644,7 +644,7 @@ class FileItem {
 		if (count($id_files) == 1)
 			$values = $id_files[0];
 		else
-			$values = implode(',', $id_notizie);
+			$values = implode(',', $id_files);
 
 		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
 						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
