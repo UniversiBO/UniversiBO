@@ -3,6 +3,7 @@
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
 require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
+require_once ('Commenti/CommentoItem'.PHP_EXTENSION);
 
 /**
  * FileStudentiComment: si occupa dell'inserimento di un nuovo commento per il File Studente
@@ -46,7 +47,7 @@ class FileStudentiComment extends UniversiboCommand {
 		{   
 			$canali = $file->getIdCanali();
 			$template->assign('FileStudentiComment_ris','Esiste giá un tuo commento');
-			$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$file->getIdCanali());
+			$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali);
 			return 'success';
 		}
 		
@@ -89,15 +90,7 @@ class FileStudentiComment extends UniversiboCommand {
 			if ($f26_accept == true) 
 			{
 				
-				$db = FrontController::getDbConnection('main');
-				ignore_user_abort(1);
-         		$query = 'INSERT INTO file_studente_commenti VALUES ('.$db->quote($id_file).','.$db->quote($user->getIdUser()).','.$db->quote($f26_commento).','.$db->quote($f26_voto).')';
-				$res = $db->query($query);
-				if (DB :: isError($res))
-				{				
-					$db->rollback();
-					Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
-				}
+				CommentoItem::insertCommentoItem($id_file,$user->getIdUser(),$f26_commento,$f26_voto);
 //				
 //				if (array_key_exists('f26_canale', $_POST))
 //					foreach ($_POST['f26_canale'] as $key => $value)
@@ -156,10 +149,10 @@ class FileStudentiComment extends UniversiboCommand {
 //						
 //					}
 				
-				ignore_user_abort(0);
 				
+				$canali = $file->getIdCanali();
 				$template->assign('FileStudentiComment_ris','Il tuo commento é stato inserito con successo.');
-				$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$file->getIdCanali());
+				$template->assign('common_canaleURI','index.php?do=FileShowInfo&id_file='.$id_file.'&id_canale='.$canali);
 				return 'success';
 			}
 

@@ -237,6 +237,15 @@
 			<response type="template" name="success">file_studenti_comment_success.tpl</response>
 			<response type="template" name="default">file_studenti_comment.tpl</response>
 		</FileStudentiComment>
+		<FileStudentiCommentEdit class="FileStudentiCommentEdit">
+			<response type="template" name="success">file_studenti_comment_edit_success.tpl</response>
+			<response type="template" name="default">file_studenti_comment_edit.tpl</response>
+		</FileStudentiCommentEdit>
+		<FileStudentiCommentDelete class="FileStudentiCommentDelete">
+			<response type="template" name="success">file_studenti_comment_delete_success.tpl</response>
+			<response type="template" name="default">file_studenti_comment_delete.tpl</response>
+			<pluginCommand name="ShowFileStudentiCommento" class="Files.ShowFileStudentiCommento" />
+		</FileStudentiCommentDelete>
 		
 		<ProgrammazioneDidatticaFacolta class="ProgrammazioneDidatticaFacolta">
 			<response type="template" name="default">programmazione_didattica_facolta.tpl</response>
