@@ -95,7 +95,7 @@ class ShowNewsLatest extends PluginCommand {
 			if ( $canale_news > $num_news )
 			{
 				$template->assign('showNewsLatest_langNewsShowOthers', 'Mostra tutte le news');
-				$template->assign('showNewsLatest_langNewsShowOthersUri', 'index.php?do=NewsShowCanale&id_canale='.$id_canale);
+				$template->assign('showNewsLatest_langNewsShowOthersUri', 'index.php?do=NewsShowCanale&id_canale='.$id_canale.'&inizio=0&qta=10');
 			}
 			else
 			{
