@@ -33,10 +33,13 @@ class ShowMyPage extends UniversiboCommand
 		if(!$utente->isOspite())
 		{
 			$arrayNewsItems = array();
-			$arrayCanaliFiles = array();
+			$arrayFilesItems = array();
 			$arrayCanali = array();
 			$arrayRuoli =& $utente->getRuoli();
 			$keys = array_keys($arrayRuoli);
+			$canali_senza_servizio_news = 0;
+			$canali_senza_servizio_files = 0;
+			$num_files = 0;
 			foreach ($keys as $key)
 			{
 				$ruolo =& $arrayRuoli[$key];
@@ -44,51 +47,48 @@ class ShowMyPage extends UniversiboCommand
 				{
 								
 					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$arrayCanali[] = $canale;
+					$arrayCanali[] = $key;
+					if ($canale->getServizioNews())
+					{
+						$id_canale = $canale->getIdCanale();
+						$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
+						$arrayNewsItems[$key] = $id_canale;
+//						$num_news = $num_news + $canale_news;
+					}
+					else{$canali_senza_servizio_news++;  }
+					
+					if ($canale->getServizioFiles())
+					{
+						$id_canale = $canale->getIdCanale();
+						$canale_files = $this->getNumFilesCanale($id_canale);
+						$arrayFilesItems[$key] = $id_canale;
+						$num_files = $num_files + $canale_files;
+					}
+					else{$canali_senza_servizio_files++;}
 				}
 			}
-			///ho ottenuto tutti i canali a cui é iscritto l'utente
-			$keys = array_keys($arrayCanali);
-			$num_news = 0;
-			$num_files = 0;
-			
-			//variabili di prova
-			
-			$canali_senza_servizio_news = 0;
-			$canali_senza_servizio_files = 0;
-			
-			foreach ($keys as $key)
+			if($canali_senza_servizio_news==count($arrayRuoli))
 			{
-				$canale =& $arrayCanali[$key];					
-				if ($canale->getServizioNews())
-				{
-					$id_canale = $canale->getIdCanale();
-					$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
-					$arrayNewsItems[] = ShowNewsLatest::getNumNewsCanale($canale_news,$id_canale);
-					$num_news = $num_news + $canale_news;
-				}
-				else{$canali_senza_servizio_news++;  }
-				
-				if ($canale->getServizioFiles())
-				{
-					$id_canale = $canale->getIdCanale();
-					$canale_files = $this->getNumFilesCanale($id_canale);
-					$arrayCanaliFiles[$key] = $id_canale;
-					$num_files = $num_files + $canale_files;
-				}
-				else{$canali_senza_servizio_files++;}
 			
 			}
-			
-			$arrayFilesItems = $this->getLatestFileCanale(2,$arrayCanaliFiles[]);
-			$keys = array_keys($arrayFilesItems);
-			foreach ($keys as $key)
+			else
 			{
-				var_dump($key);
-				echo('---');
-				var_dump($arrayFilesItems[$key]);
-				//todo: mettere in ordine le notizie
+				$arrayNewsItems = $this->getLatestNewsCanale(5,$arrayCanali);
+				$this->executePlugin('ShowNews', array('id_notizie'=>$arrayNewsItems,'chk_diritti'=>false));
 			}
+			if($canali_senza_servizio_files==count($arrayRuoli))
+			{
+			
+			}
+			else
+			{
+				$arrayFilesItems = $this->getLatestFileCanale(5,$arrayCanali);
+			}
+			
+//			var_dump($arrayFilesItems);
+//			die();
+			
+			
 		}
 		else
 		{
@@ -129,16 +129,19 @@ class ShowMyPage extends UniversiboCommand
 	 * @return array elenco FileItem , false se non ci sono notizie
 	 */
 	
-	function &getLatestFileCanale($num, $id_canali = array())
-	{
+	function &getLatestFileCanale($num, $id_canali)
+	{ 
+		if ( count($id_canali) == 1 ) 
+			$values = $id_canali[0];
+		else 
+			$values = implode(',',$id_canali);
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		$query = 'SELECT A.id_file FROM file A, file_canale B 
 					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					'AND B.id_canale IN ('.$db->quote($id_canali[0]).','.$db->quote($id_canali[1]).')
+					'AND B.id_canale IN ('.$values.')
 					ORDER BY A.data_inserimento DESC';
 		$res =& $db->limitQuery($query, 0 , $num);
-		var_dump($res);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
@@ -156,6 +159,51 @@ class ShowMyPage extends UniversiboCommand
 		$res->free();
 		
 		return FileItem::selectFileItems($id_news_list);
+		
+	}
+	
+	/**
+	 * Preleva da database le ultime $num notizie non scadute dai canali $id_canali
+	 *
+	 * @static
+	 * @param int $num numero notize da prelevare 
+	 * @param array $id_canali contenente gli id_canali, identificativi su database del canale
+	 * @return array elenco NewsItem , false se non ci sono notizie
+	 */
+	
+	function &getLatestNewsCanale($num, $id_canali)
+	{
+		if ( count($id_canali) == 1 ) 
+			$values = $id_canali[0];
+		else 
+			$values = implode(',',$id_canali);
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT A.id_news FROM news A, news_canale B 
+					WHERE A.id_news = B.id_news AND eliminata!='.$db->quote( NEWS_ELIMINATA ).
+					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale IN ('.$values.') 
+					ORDER BY A.data_inserimento DESC';
+		$res =& $db->limitQuery($query, 0 , $num);
+//		var_dump($res);
+//		die();
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		
+		$id_news_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$id_news_list[]= $row[0];
+		}
+		
+		$res->free();
+		
+		return $id_news_list;
 		
 	}
 	

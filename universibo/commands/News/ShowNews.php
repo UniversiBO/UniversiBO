@@ -24,7 +24,7 @@ class ShowNews extends PluginCommand {
 	 * Esegue il plugin
 	 *
 	 * @param array $param deve contenere: 
-	 *  un array di id notizeie da visualizzare
+	 *  un array di id notizie da visualizzare
 	 *	  es: array('id_notizia'=>5) 
 	 */
 	function execute($param)
@@ -37,21 +37,23 @@ class ShowNews extends PluginCommand {
 		
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
-		$canale    =& $bc->getRequestCanale();
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
-
-
-		$id_canale = $canale->getIdCanale();
-		$titolo_canale =  $canale->getTitolo();
-		$ultima_modifica_canale =  $canale->getUltimaModifica();
 		$user_ruoli =& $user->getRuoli();
+
+		if($flag_chkDiritti)
+		{
+			$id_canale = $canale->getIdCanale();
+			$titolo_canale =  $canale->getTitolo();
+			$ultima_modifica_canale =  $canale->getUltimaModifica();
+			$canale    =& $bc->getRequestCanale();
+		}
 
 		$personalizza_not_admin = false;
 
 		$template->assign('showNews_addNewsFlag', 'false');
-		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
+		if ($flag_chkDiritti && (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin()))
 		{
 			$personalizza = true;
 			
