@@ -32,7 +32,8 @@ class ShowInsegnamento extends CanaleCommand
 
 
 
-	function execute() {
+	function execute() 
+	{
 		$session_user =& $this->getSessionUser();
 		$session_user_groups = $session_user->getGroups();
 		$insegnamento =& $this -> getRequestCanale();

@@ -34,6 +34,9 @@
 .PiccoloF {
 	FONT-SIZE: 7pt; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
+.CalMese {
+	FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #77BCFC; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
 .Feriali {
 	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
@@ -42,6 +45,12 @@
 }
 .Domeniche {
 	FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.FerialiD {
+	FONT-WEIGHT: bold; FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.DomenicheD {
+	FONT-WEIGHT: bold; FONT-SIZE: 7pt; COLOR: #dd0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 .Oggi {
 	FONT-SIZE: 7pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif

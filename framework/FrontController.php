@@ -332,6 +332,19 @@ class FrontController {
 
 
 	/**
+	* Returns the config path url
+	*
+	* @return string
+	* @access public
+	*/
+	function getRootPath()
+	{
+		return $this->rootUrl;
+	}
+
+
+
+	/**
 	* Gets the current command string request
 	* Returns default command string if not set
 	* and  sets $_GET['do'] with default value

@@ -28,7 +28,7 @@ class Logout extends UniversiboCommand {
 		
 		FrontController::redirectCommand();
 				
-		return ;
+		return;
 
 	}
 }
