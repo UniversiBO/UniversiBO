@@ -459,7 +459,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_ADMIN ) return true;
+		if ( $groups & USER_ADMIN ) return true;
 		return false;
 	}
 
@@ -476,7 +476,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_PERSONALE ) return true;
+		if ( $groups & USER_PERSONALE ) return true;
 		return false;
 	}
 
@@ -493,7 +493,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_DOCENTE ) return true;
+		if ( $groups & USER_DOCENTE ) return true;
 		return false;
 	}
 
@@ -510,7 +510,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_TUTOR ) return true;
+		if ( $groups & USER_TUTOR ) return true;
 		return false;
 	}
 
@@ -527,7 +527,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_MODERATORE ) return true;
+		if ( $groups & USER_MODERATORE ) return true;
 		return false;
 	}
 
@@ -544,7 +544,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_STUDENTE ) return true;
+		if ( $groups & USER_STUDENTE ) return true;
 		return false;
 	}
 
@@ -552,7 +552,8 @@ class User {
 
 	/**
 	 * Se chiamata senza parametri ritorna true se l'utente corrente appartiene al gruppo Ospite.
-	 * Se chiamata in modo statico con il parametro opzionale ritorna true se il gruppo specificato appartiene al gruppo Ospite. 
+	 * Se chiamata in modo statico con il parametro opzionale ritorna true se il gruppo specificato appartiene al gruppo Ospite.
+	 * Un utente non è ospite se appartiene anche ad altri gruppi. 
 	 *
 	 * @static
 	 * @return boolean
@@ -561,7 +562,7 @@ class User {
 	{
 		if ( $groups == NULL ) $groups = $this->getGroups();
 
-		if ( $groups | USER_OSPITE ) return true;
+		if ( $groups == USER_OSPITE ) return true;
 		return false;
 	}
 
