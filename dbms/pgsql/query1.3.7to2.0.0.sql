@@ -562,3 +562,15 @@ INSERT INTO "help_topic" ("riferimento", "titolo", "indice") VALUES ('newscollab
 INSERT INTO "help_topic" ("riferimento", "titolo", "indice") VALUES ('filescollabs', 'Voglio mettere un file on line su UniversiBO: come posso fare?', '70');
 INSERT INTO "help_topic" ("riferimento", "titolo", "indice") VALUES ('filesutenti', 'Come faccio a scaricare i files da UniversiBO?', '60');
 
+-- 13/9/2004
+
+CREATE TABLE "notifica" (
+    "id_notifica" serial NOT NULL,
+    "urgente" char(1) NOT NULL,
+    "messaggio" text NOT NULL,
+    "titolo" varchar(200) NOT NULL,
+    "timestamp" int NOT NULL,
+    "destinatario" varchar(200) NOT NULL,
+    "eliminata" char(1) NOT NULL,
+    CONSTRAINT "notifica_pkey" PRIMARY KEY (id_notifica)
+) WITH OIDS;
