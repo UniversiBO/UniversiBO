@@ -7,7 +7,7 @@
 <table width="90%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td align="center"><p class="Titolo">&nbsp;<br />Utente: {$showUserNickname}<br />&nbsp;</p></td></tr>
 <tr><td>
-<tr><td<span>Email: <a href="mailto:{$showEmailFirstPart}(at){$showEmailSecondPart}">{$showEmailFirstPart}<img src="tpl/black/chiocciola.gif" border="0" width="16" height="16" alt="(at)" />{$showEmailSecondPart}</a>
+<tr><td<span>Email: {$showEmailFirstPart}<img src="tpl/black/chiocciola.gif" border="0" width="16" height="16" alt="(at)" />{$showEmailSecondPart}
 {if $showDiritti == 'true'}
 	&nbsp;<a href="{$showSettings}">Modifica</a>
 {/if}
