@@ -50,7 +50,7 @@
 	<div class="box"> {* blocchetto forum*}
 	<h3>Ultimi messaggi dal forum</h3>
 		<div class="contenuto">
-			{section loop=$common_newPostsList name=temp_currPost max=10}
+			{section loop=$common_newPostsList name=temp_currPost}
 				<p><img src="tpl/unibo/freccia.gif" width="11" height="10" alt="" />&nbsp;<a title="Questo link apre una nuova pagina" target="_blank" href="{$common_newPostsList[temp_currPost].URI|escape:"htmlall"}">{$common_newPostsList[temp_currPost].desc|escape:"htmlall"}</a></p>
 			{/section}
 		</div>
@@ -62,6 +62,7 @@
 <p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank">Universit&agrave; di BO</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank">Facolt&agrave; di Ingegneria</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank">Uniwex</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank">Guida dello Studente</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank">Elenco Dipartimenti</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank">Assoc. Studentesche</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank">Ordine Ingegneri</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank">ATC Bologna</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank">Trenitalia</a></p>
 		</div>
 	</div>
+	{include file=Links/show_links.tpl}
 	<div class="box"> {*quarto blocchetto *}
 		{*<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>*}
 		<h3>{$common_calendarLink.label|escape:"htmlall"}</h3>

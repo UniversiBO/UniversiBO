@@ -51,16 +51,15 @@ class Login extends UniversiboCommand {
 			{
 				session_destroy();
 				session_start();
-				$user->updateUltimoLogin(time());
+				$userLogin->updateUltimoLogin(time());
 				$_POST['f1_password'] = '';  //resettata per sicurezza
-				$this->setSessionIdUtente($user->getIdUser());
-				$fc->setStyle($user->getDefaultStyle());
+				$this->setSessionIdUtente($userLogin->getIdUser());
+				$fc->setStyle($userLogin->getDefaultStyle());
 				
 				$forum = new ForumApi;
-				$forum->login($user);
+				$forum->login($userLogin);
 				
-				
-				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome') )
+				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') )
 					FrontController::redirectCommand('ShowMyUniversiBO');
 				else
 					FrontController::goTo($referer);

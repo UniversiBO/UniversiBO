@@ -43,7 +43,7 @@ class ShowLinks extends PluginCommand {
 		$id_canale = $canale->getIdCanale();
 //		$titolo_canale =  $canale->getTitolo();
 //		$ultima_modifica_canale =  $canale->getUltimaModifica();
-		$user_ruoli =& $user->getRuoli();
+//		$user_ruoli =& $user->getRuoli();
 
 //		$personalizza_not_admin = false;
 
@@ -164,72 +164,7 @@ class ShowLinks extends PluginCommand {
 		$template->assign('showLinks_linksList', $lista_links);
 		
 	}
-	
-	
-	/**
-	 * Preleva da database le ultime $num notizie non scadute del canale $id_canale
-	 *
-	 * @static
-	 * @param int $num numero notize da prelevare 
-	 * @param int $id_canale identificativo su database del canale
-	 * @return array elenco NewsItem , false se non ci sono notizie
-	 */
-	function &getLatestNewsCanale($num, $id_canale)
-	{
-	 	
-	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT A.id_news FROM news A, news_canale B 
-					WHERE A.id_news = B.id_news AND eliminata!='.$db->quote( NEWS_ELIMINATA ).
-					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale = '.$db->quote($id_canale).' 
-					ORDER BY A.data_inserimento DESC';
-		$res =& $db->limitQuery($query, 0 , $num);
-		
-		if (DB::isError($res)) 
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows = 0) return false;
-		
-		$id_news_list = array();
-	
-		while ( $res->fetchInto($row) )
-		{
-			$id_news_list[]= $row[0];
-		}
-		
-		$res->free();
-		
-		return NewsItem::selectNewsItems($id_news_list);
-		
-	}
-	
-	
-	/**
-	 * Preleva da database il numero di notizie non scadute del canale $id_canale
-	 *
-	 * @static
-	 * @param int $id_canale identificativo su database del canale
-	 * @return int numero notizie
-	 */
-	function getNumNewsCanale($id_canale)
-	{
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT count(A.id_news) FROM news A, news_canale B 
-					WHERE A.id_news = B.id_news AND eliminata!='.$db->quote(NEWS_ELIMINATA).
-					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale = '.$db->quote($id_canale).'';
-		$res = $db->getOne($query);
-		if (DB::isError($res)) 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		return $res;
-		
-	}
-	
-	
 }
 
 ?>
