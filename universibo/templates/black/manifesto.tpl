@@ -8,14 +8,14 @@
 <tr><td class="Normal">
 <p align="center">
 &nbsp;<br />
-<img src="{$manifesto_langTitleImg}" width="171" height="39" alt="Manifesto" /><br />
+<img src="tpl/black/manifesto_30.gif" width="171" height="39" alt="Manifesto" /><br />
 </p>
 <p align="center">
-<img src="{$manifesto_langQuoteImg}" width="357" height="185" alt="{$manifesto_langQuoteAlt|escape:html}" />
+<img src="tpl/black/galileo_galilei.gif" width="357" height="185" alt="{$manifesto_langQuoteAlt|escape:html}" />
 </p>
 <p>
 {$manifesto_langWhatIsIt|escape:"html"|nl2br}
-<p align="right" class="NormalC">{$manifesto_langAuthor|capitalize}</p>
+<p align="right" class="NormalC">{$manifesto_Author|capitalize}</p>
 &nbsp;<br /></td></tr></table>
 
 {if $common_pageType == "index"}
