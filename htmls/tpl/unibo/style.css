@@ -60,7 +60,7 @@ form fieldset .casella
 	text-align: left;
 	display: inline;	
 }*/
-form fieldset .label
+form .label
 {
 	float: left;
 	width: 90px;
