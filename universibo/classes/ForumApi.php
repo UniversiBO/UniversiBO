@@ -279,6 +279,26 @@ class ForumApi
 
 
 	/**
+	 * Modifica la email di un utente sul database del forum dato uno User
+	 * 
+	 * @static 
+	 */
+	function updateUserEmail($user)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+		if ($user->isOspite()) return;
+
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_email = '.$db->quote($user->getEmail()).' WHERE user_id = '.$db->quote($user->getIdUser());
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
+
+	/**
 	 * Aggiunge un utente ad un gruppo di moderazione sul database del forum
 	 * 
 	 * @static 

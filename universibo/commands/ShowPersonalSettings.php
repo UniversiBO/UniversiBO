@@ -114,7 +114,8 @@ class ShowPersonalSettings extends UniversiboCommand
 
 			$forum = new ForumApi();
 			$forum->updateUserStyle($user);
-			
+			$forum->updateUserEmail($user);
+						
 			$fc->setStyle($f20_personal_style);
 			$template->assign('showPersonalSettings_thanks',"Le impostazioni personali sono state modificate con successo, si consiglia di testarne il corretto funzionamento.\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');

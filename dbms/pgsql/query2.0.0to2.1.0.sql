@@ -51,3 +51,18 @@ CREATE TABLE file_studente_commenti (
     PRIMARY KEY (id_commento),
     UNIQUE (id_file,id_utente,id_commento)
 );
+
+
+
+
+
+
+
+-- LASCIATE QUESTI COMMENTO IN FONDO - 04/03/2005 - brain
+
+-- SELECT id_utente, user_email, email FROM phpbb_users, utente WHERE id_utente = user_id AND user_email != email
+-- bisogna correggere e far diventare tutte le mail del forum uguali a quelle del sito se sono diverse 
+-- (manualmente?) oppure pensate ad una query che lo faccia: ci ho provato 5 min ma non mi veniva in mente come fare
+
+-- SELECT id_utente, phone FROM utente WHERE phone != '' OR phone IS NULL
+-- bisogna correggere tutti i numeri di telefono manualmente nel formato +xxyyyzzzzzzz
