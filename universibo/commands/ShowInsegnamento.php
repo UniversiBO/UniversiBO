@@ -13,7 +13,8 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class ShowInsegnamento extends CanaleCommand {
+class ShowInsegnamento extends CanaleCommand 
+{
 
 	/**
 	 * Inizializza il comando ShowInsegnamento ridefinisce l'initCommand() di CanaleCommand
@@ -29,9 +30,12 @@ class ShowInsegnamento extends CanaleCommand {
 			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 
+
+
 	function execute() {
-		$insegnamento = & $this -> getRequestCanale();
-		var_dump($insegnamento);
+		$insegnamento =& $this -> getRequestCanale();
+		echo $insegnamento->getTitolo();
+		//var_dump($insegnamento);
 		
 /*		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
@@ -106,7 +110,7 @@ class ShowInsegnamento extends CanaleCommand {
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 		*/
 
-		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
+		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		return 'default';
 	}
 

@@ -83,17 +83,18 @@ class Insegnamento extends Canale
 		}
 		
 		$num = count($this->elencoAttivitaPadre);
+		$att = $this->elencoAttivitaPadre[0];
 		//inizializza il nome dell'esame
 		if ( $num == 1 )
 		{
-			$att = $this->elencoAttivitaPadre[0];
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
 			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' - '.$att->getNomeDoc();
 		}
 		else
 		{
-			// CHE CASINOOOOO!!!!!
-			
+			// CHE CAS-INOOOOO!!!!!
+			$nome     = NULL;
+			$max_anno = 0;
 			$nomi    = array();
 			$t_nomi  = array();
 			$anni    = array();
@@ -104,15 +105,46 @@ class Insegnamento extends Canale
 			$num_att = count($this->elencoAttivitaPadre);
 			for ($i = 0; $i < $num_att; $i++)
 			{
-				$app_elenco_attivita[$i] =& $this->elencoAttivitaPadre;
-				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
-				$t_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
-				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
-				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
-				$cod_ril[$i] = $app_elenco_attivita[$i]->getCodRil();
+				$app_elenco_attivita =& $this->elencoAttivitaPadre;
+				var_dump($app_elenco_attivita);
+				$app['nomi'][$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
+				$app['b_nomi'][$i]  = substr($app['nomi'][$i], 0, -3);    //nome materia meno le ultime 3 lettere
+				$app['e_nomi'][$i]  = substr($app['nomi'][$i], -3, 0);    //ultime 3 lettere del nome materia
+				$app['anni'][$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
+				if ($max_anno < $app['anni'][$i]) $max_anno = $app['anni'][$i];
+				$app['docenti'][$i] = $app_elenco_attivita[$i]->getNomeDoc();
+				$app['cod_ril'][$i] = $app_elenco_attivita[$i]->getCodRil();
 			}
 			
+			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
+			$fin = array_values($app['e_nomi']);
+			if ( (count(array_values($app['b_nomi'])) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			{
+				$nome = $b_nomi.$fin[0].' + '.$fin[1];
+				for ($i = 0; $i < $num_att; $i++)
+				{
+					$app['nomi'][$i] = $nome;
+				}
+			}
 			
+			// "NOME ESAME 2002" && "NOME ESAME 2003" -->  "NOME ESAME 2003/2003"
+			if ( (count(array_values(array_values($app['anni']))) == 1))  //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
+			{
+				$anni = implode('/',array_unique($app['anni'])).'/'.($max_anno+1);
+				for ($i = 0; $i < $num_att; $i++)
+				{
+					$app['anni'][$i] = $anni;
+				}
+				
+			}
+			
+			//costruisce la mappa dei nomi
+			for ($i = 0; $i < $num_att; $i++)
+			{
+				$app_nomi[$i] = $app['nomi'][$i].$app['cod_ril'].' aa. '.$app['anni'][$i].' | '.$att->getNomeDoc();
+			}
+			
+			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
 			
 		}
 		
