@@ -25,92 +25,54 @@ class ShowInfoDidattica extends UniversiboCommand
 		$krono = & $frontcontroller->getKrono();
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
-
 			
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
-
+			Error::throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+		
 		$session_user =& $this->getSessionUser();
-		$info_didattica = 
-		
-		$id_canale = $this->getRequestIdCanale();
-		$insegnamento =& $this->getRequestCanale();
-		
-		$session_user_groups = $session_user->getGroups();
-		$insegnamento->getTitolo();
-		//var_dump($insegnamento);
-		
-		$frontcontroller =& $this->getFrontController();
-		$template =& $frontcontroller->getTemplateEngine();
-		
-		
 		
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
+		$insegnamento = Canale::retrieveCanale($insegnamento);
 		//var_dump($info_didattica);
 		
+		$obiettivi = 'Obiettivi del corso';
+		$obiettiviLink = $info_didattica->getObiettiviEsameLink();
+		$obiettiviInfo = $info_didattica->getObiettiviEsame();
 		
-		$template->assign('ins_langHomepageAlternativa','Homepage alternativa');
+		$programma = 'Programma d\'esame';
+		$programmaLink = $info_didattica->getProgrammaLink();
+		$programmaInfo = $info_didattica->getProgramma();
 		
+		$materiale = 'Materiale didattico e testi consigliati';
+		$materialeLink = $info_didattica->getTestiConsigliatiLink();
+		$materialeInfo = $info_didattica->getTestiConsigliati();
 		
-		if ($info_didattica->getObiettiviEsameLink() == '' && $info_didattica->getObiettiviEsame() == '' )
-			$obiettivi = 'Obiettivi del corso';
-		elseif ($info_didattica->getObiettiviEsameLink() != '' && $info_didattica->getObiettiviEsame() == '' )
-			$obiettivi = '[url="'.$info_didattica->getObiettiviEsameLink().'"]Obiettivi del corso[/url]';
-		else
-			$obiettivi = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#obiettivi"]Obiettivi del corso[/url]';
+		$modalita = 'Modalità d\'esame';
+		$modalitaLink = $info_didattica->getModalitaLink();
+		$modalitaInfo = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Modalità d\'esame[/url]';
 		
-		if ($info_didattica->getProgrammaLink() == '' && $info_didattica->getProgramma() == '' )
-			$programma = 'Programma d\'esame';
-		elseif ($info_didattica->getProgrammaLink() != '' && $info_didattica->getProgramma() == '' )
-			$programma = '[url="'.$info_didattica->getProgrammaLink().'"]Programma d\'esame[/url]';
-		else
-			$programma = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#programma"]Programma d\'esame[/url]';
+		$appelli = 'Appelli d\'esame';
+		$appelliLink = $info_didattica->getAppelliLink();
+		$appelliInfo = $info_didattica->getAppelli();
 		
-		if ($info_didattica->getTestiConsigliatiLink() == '' && $info_didattica->getTestiConsigliati() == '' )
-		{
-			$materiale = 'Materiale didattico e 
-testi consigliati';
-		}
-		elseif ($info_didattica->getTestiConsigliatiLink() != '' && $info_didattica->getTestiConsigliati() == '' )
-			$materiale = '[url='.$info_didattica->getTestiConsigliatiLink().']Materiale didattico e 
-testi consigliati[/url]';
-		else
-			$materiale = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Materiale didattico e 
-testi consigliati[/url]';
-			'';
-
-		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
-			$modalita = 'Modalità d\'esame';
-		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
-			$modalita = '[url="'.$info_didattica->getModalitaLink().'"]Modalità d\'esame[/url]';
-		else
-			$modalita = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita"]Modalità d\'esame[/url]';
+		$template->assign('infoDid_title', $insegnamento->getTitolo() );
 		
+		$template->assign('infoDid_obiettivi', $obiettivi );
+		$template->assign('infoDid_obiettiviLink', $obiettiviLink );
+		$template->assign('infoDid_obiettiviInfo', $obiettiviInfo );
+		$template->assign('infoDid_programma', $programma );
+		$template->assign('infoDid_programmaLink', $programmaLink );
+		$template->assign('infoDid_programmaInfo', $programmaInfo );
+		$template->assign('infoDid_materiale', $materiale );
+		$template->assign('infoDid_materialeLink', $materialeLink );
+		$template->assign('infoDid_materialeInfo', $materialeInfo );
+		$template->assign('infoDid_modalita', $modalita );
+		$template->assign('infoDid_modalitaLink', $modalitaLink );
+		$template->assign('infoDid_modalitaInfo', $modalitaInfo );
+		$template->assign('infoDid_appelli', $appelli );
+		$template->assign('infoDid_appelliLink', $appelliLink );
+		$template->assign('infoDid_appelliInfo', $appelliInfo );
 		
-		if ($info_didattica->getAppelliLink() == '' && $info_didattica->getAppelli() == '' )
-			$appelli = 'Appelli d\'esame';
-		elseif ($info_didattica->getAppelliLink() != '' && $info_didattica->getAppelli() == '' )
-			$appelli = '[url="'.$info_didattica->getAppelliLink().'"]Appelli d\'esame[/url]';
-		else
-			$appelli = '[url="index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#appelli"]Appelli d\'esame[/url]';
-		
-		$orario = '[url=""]Orario delle lezioni[/url]';
-		
-		$forum = '[url=""]Forum[/url]';
-		
-		$tpl_tabella[] = $obiettivi;
-		$tpl_tabella[] = $programma;
-		$tpl_tabella[] = $materiale;
-		$tpl_tabella[] = $modalita;
-		$tpl_tabella[] = $appelli;
-		$tpl_tabella[] = $orario;
-		$tpl_tabella[] = $forum;
-		
-		$template->assign('ins_tabella', $tpl_tabella );
-		
-		$template->assign('ins_title', $insegnamento->getTitolo() );
-		
-
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		$this->executePlugin('ShowFileTitoli', array());
 		return 'default';

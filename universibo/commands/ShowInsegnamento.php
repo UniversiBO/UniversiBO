@@ -99,7 +99,13 @@ testi consigliati[/url]';
 		
 		$orario = '[url=""]Orario delle lezioni[/url]';
 		
-		$forum = '[url=""]Forum[/url]';
+		$forum = 'Forum';
+		if($insegnamento->getServizioForum())
+		{
+			$forumApi = new Forum();
+			$link = $forumApi->getForumUri($insegnamento->getForumForumId());
+			$forum = '[url="'.$link.'"]Forum[/url]';
+		}
 		
 		$tpl_tabella[] = $obiettivi;
 		$tpl_tabella[] = $programma;
