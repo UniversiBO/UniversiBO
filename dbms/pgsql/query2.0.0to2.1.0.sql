@@ -15,7 +15,7 @@ CREATE TABLE file_studente_commenti (
 );
 
 -- 22-10-2004 brain
-UPDATE canale SET forum_attivo = 'N' WHERE forum_attivo = ''
+UPDATE canale SET forum_attivo = 'N' WHERE forum_attivo = '';
 
 
 -- 1-12-2004

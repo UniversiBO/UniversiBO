@@ -5,14 +5,14 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Links/Link'.PHP_EXTENSION);
 
 /**
- * ShowNewsLatest ? un'implementazione di PluginCommand.
+ * ShowLinks è un'implementazione di PluginCommand.
  *
  * Mostra le ultime $num notizie del canale.
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
  * Nel parametro di ingresso del deve essere specificato il numero di notizie da visualizzare.
  *
  * @package universibo
- * @subpackage News
+ * @subpackage Links
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
