@@ -2,7 +2,7 @@
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaDataRetrieverFactory'.PHP_EXTENSION);
-require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaAddDocente'.PHP_EXTENSION);
+//require_once ('ProgrammazioneDidattica/ProgrammazioneDidatticaAddDocente'.PHP_EXTENSION);
 require_once ('Facolta'.PHP_EXTENSION);
 
 
