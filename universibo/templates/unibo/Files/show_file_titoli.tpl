@@ -9,7 +9,7 @@
 {foreach name=listacategorie from=$showFileTitoli_fileList item=temp_categoria}
 	<div class="elencoFile">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-			<tr><th colspan="8">{$temp_categoria.desc|escape:"htmlall"}</th><tr>
+			<tr><th colspan="8">{$temp_categoria.desc|escape:"htmlall"}</th></tr>
 			{foreach name=listafile from=$temp_categoria.file item=temp_file}
 				<tr class="{cycle values="even,odd"}">
 				<td>&nbsp;&nbsp;{$temp_file.data|escape:"htmlall"}&nbsp;&nbsp;</td>

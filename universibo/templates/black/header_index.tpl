@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it">
 <head>
-<title>{$common_title|escape:"html"}</title>
+<title>{$common_title|escape:"htmlall"}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}" />
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
@@ -73,7 +73,7 @@
 {foreach from=$common_servicesLinks item=temp_link}
 <tr>
  <td valign="top" width="14"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
- <td class="Menu"><a href="{$temp_link.uri}" >{$temp_link.label}</a></td>
+ <td class="Menu"><a href="{$temp_link.uri|escape:"htmlall"}" >{$temp_link.label|escape:"htmlall"}</a></td>
 </tr>
 {/foreach}
 </table>

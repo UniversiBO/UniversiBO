@@ -26,7 +26,7 @@
 	</tr>
 	<tr>
 	<td class="Normal" valign="top" colspan="2">{$showCredits_langSO|escape:"htmlall"|bbcode2html|nl2br}</td>
-	<td class="Normal" valign="top" width="90"><img src="img/credits/gnu_linux.gif" width="88" height="31" alt="GNU/Linux Logo" /></br>
+	<td class="Normal" valign="top" width="90"><img src="img/credits/gnu_linux.gif" width="88" height="31" alt="GNU/Linux Logo" /><br />
 	<img src="img/credits/debian.png" width="88" height="31" alt="Debian Logo" /> </td>
 	</tr>
 	<tr>
