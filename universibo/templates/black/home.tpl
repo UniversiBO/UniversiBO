@@ -21,8 +21,8 @@ partecipano all'iniziativa.</p>
 &nbsp;<br />
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr bgcolor="#000099"> 
- <td align="left"><img src="img/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
- <td align="right"><img src="img/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
+ <td align="left"><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td>
+ <td align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td>
  </tr>
  </table>
 &nbsp;<br />
