@@ -15,9 +15,8 @@ require_once('Canale'.PHP_EXTENSION);
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
+ * @todo fare i metodi di accesso attraverso tutta la chiave del DB 
  */
-
-
 class PrgAttivitaDidattica extends Canale
 {
 	
@@ -100,23 +99,23 @@ class PrgAttivitaDidattica extends Canale
 		 * @private
 		 */
 		 var $tipoCiclo;
-			
+		
 		/**
 		 * @private
 		 */
 		 var $codAte;
-
+		
 		/**
 		 * @private
 		 */
 		 var $annoCorsoUniversibo;
-
+		
 		/**
 		 * @private
 		 */
 		 var $sdoppiato;
 		 
-
+		
 	/**
 	 * Crea un oggetto PrgAttivitaDidattica
 	 *
@@ -191,198 +190,222 @@ class PrgAttivitaDidattica extends Canale
 
 
 
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
 	function getAnnoAccademico()
 	{
 		return  $this->annoAccademico;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setAnnoAccademico($value)
+	{
+		$this->annoAccademico = $value;
+	}
+
+
 	function getCodiceCdl()
 	{
 		return  $this->codiceCdl;
 	}
 	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+	function setCodiceCdl($value)
+	{
+		$this->codiceCdl = $value;
+	}
+	
+
 	function getCodInd()
 	{
 		return  $this->codInd;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodInd($value)
+	{
+		$this->codInd = $value;
+	}
+
+
 	function getCodOri()
 	{
 		return  $this->codOri;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodOri($value)
+	{
+		$this->codOri = $value;
+	}
+
+
 	function getCodMateria()
 	{
 		return  $this->codMateria;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodMateria($value)
+	{
+		$this->codMateria = $value;
+	}
+
+
 	function getNomeMateria()
 	{
 		return  $this->nomeMateria;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setNomeMateria($value)
+	{
+		$this->nomeMateria = $value;
+	}
+
+
 	function getAnnoCorso()
 	{
 		return  $this->annoCorso;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setAnnoCorso($value)
+	{
+		$this->annoCorso = $value;
+	}
+
+
 	function getCodMateriaIns()
 	{
 		return  $this->codMateriaIns;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodMateriaIns($value)
+	{
+		$this->codMateriaIns = $value;
+	}
+
+
 	function getNomeMateriaIns()
 	{
 		return  $this->nomeMateriaIns;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setNomeMateriaIns($value)
+	{
+		$this->nomeMateriaIns = $value;
+	}
+
+
 	function getAnnoCorsoIns()
 	{
 		return  $this->annoCorsoIns;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setAnnoCorsoIns($value)
+	{
+		$this->annoCorsoIns = $value;
+	}
+
 	function getCodRil()
 	{
 		return  $this->codRil;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodRil($value)
+	{
+		$this->codRil = $value;
+	}
+
 	function getCodModulo()
 	{
 		return  $this->codModulo;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodModulo($value)
+	{
+		$this->codModulo = $value;
+	}
+
+
 	function getCodDoc()
 	{
 		return  $this->codDoc;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodDoc($value)
+	{
+		$this->codDoc = $value;
+	}
+
+
 	function getNomeDoc()
 	{
 		return  $this->nomeDoc;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return boolean
-	 */
+
+	function setNomeDoc($value)
+	{
+		$this->nomeDoc = $value;
+	}
+
+
 	function isTitolareModulo()
 	{
 		return  $this->flagTitolareModulo == 'S';
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setTitolareModulo($value)
+	{
+		$this->flagTitolareModulo = ($value == true) ? 'S' : 'N';
+	}
+
+
 	function getTipoCiclo()
 	{
 		return  $this->tipoCiclo;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setTipoCiclo($value)
+	{
+		$this->tipoCiclo = $value;
+	}
+
+
 	function getCodAte()
 	{
 		return  $this->codAte;
 	}
-	
-	/**
-	 * Restituisce 
-	 *
-	 * @return string
-	 */
+
+	function setCodAte($value)
+	{
+		$this->codAte = $value;
+	}
+
+
 	function getAnnoCorsoUniversibo()
 	{
 		return  $this->annoCorsoUniversibo;
 	}
-	
 
-	/**
-	 * Restituisce 
-	 *
-	 * @return boolean
-	 */
+	function setAnnoCorsoUniversibo($value)
+	{
+		$this->annoCorsoUniversibo = $value;
+	}
+
+
+//	function getCodiceFacolta()
+//	{
+//		return $this->facoltaCodice;
+//	}
+//
+//	function setCodiceFacolta($value)
+//	{
+//		$this->facoltaCodice = $value;
+//	}
+	
+	
 	function isSdoppiato()
 	{
 		return  $this->sdoppiato;
 	}
 
 
+	
+	
+	
 	/**
 	 * Restituisce 
 	 *
@@ -423,18 +446,6 @@ class PrgAttivitaDidattica extends Canale
 
 
 	/**
-	 * Restituisce il codice di ateneo a 4 cifre della facolt?
-	 * es: ingegneria -> '0021'
-	 *
-	 * @return string
-	 */
-	function getCodiceFacolta()
-	{
-		return $this->facoltaCodice;
-	}
-
-
-	/**
 	 * Crea un oggetto PrgAttivitaDidattica dato il suo numero identificativo id_canale
 	 * Ridefinisce il factory method della classe padre per restituire un oggetto
 	 * del tipo PrgAttivitaDidattica
@@ -455,7 +466,7 @@ class PrgAttivitaDidattica extends Canale
 	 * 
 	 * @static
 	 * @param int $id_canale identificativo su DB del canale corrispondente al corso di laurea
-	 * @return mixed PrgAttivitaDidattica se eseguita con successo, false se il canale non esiste
+	 * @return mixed array di PrgAttivitaDidattica se eseguita con successo, false se il canale non esiste
 	 */
 	function &selectPrgAttivitaDidatticaCanale($id_canale)
 	{
