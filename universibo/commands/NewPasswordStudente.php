@@ -79,7 +79,7 @@ class NewPasswordStudente extends UniversiboCommand
 				$f5_accept = false;
 			}
 			elseif(!User::activeDirectoryUsernameExists($_POST['f5_ad_user'].'@studio.unibo.it')){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'La mail di ateneo '.$_POST['f5_ad_user'].'@studio.unibo.it'.' non appartiene ad alcun un utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Non esiste alcun utente di Universibo registrato con la mail di ateneo '.$_POST['f5_ad_user'].'@studio.unibo.it'.' ','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f5_accept = false;
 			}
 			else{

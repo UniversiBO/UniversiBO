@@ -1065,7 +1065,7 @@ class User {
 		}
 		else
 		{
-		    $xml_request = '<?xml version="1.0" encoding="UTF-8"?><ADLogIn><user username="'. $ad_username .'" domain="'. $ad_domain . '" password="'. $ad_password . '" /></ADLogIn>';
+		    $xml_request = '<?xml version="1.0" encoding="UTF-8"?><ADLogIn><user username="'. mb_convert_encoding($ad_username, "UTF-8", "ISO-8859-1") .'" domain="'. mb_convert_encoding( $ad_domain , "UTF-8", "ISO-8859-1") . '" password="'. mb_convert_encoding( $ad_password , "UTF-8", "ISO-8859-1") . '" /></ADLogIn>';
 			fputs ($javaADLoginSock, $xml_request."\n");
 		
 			$reply = fgets ($javaADLoginSock,4);
