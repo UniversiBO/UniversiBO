@@ -85,18 +85,19 @@ class ShowFileInfo extends PluginCommand {
 		{
 			$autore = ($user->getIdUser() == $file->getIdUtente());
 			$user_ruoli = & $user->getRuoli();
-			if (array_key_exists($param['id_canale'], $user_ruoli)) {
+			if (array_key_exists($param['id_canale'], $user_ruoli)) 
+			{
 				$ruolo = & $user_ruoli[$param['id_canale']];
 	
 				$referente = $ruolo->isReferente();
 				$moderatore = $ruolo->isModeratore();
-			}
-			if($autore||$user->isAdmin||$referente||$moderatore)
-			{
-				$template->assign('showFileInfo_editFlag', 'true');
-				$template->assign('showFileInfo_deleteFlag', 'true');
-				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
-				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
+				if($autore||$user->isAdmin()||$referente||$moderatore)
+				{
+					$template->assign('showFileInfo_editFlag', 'true');
+					$template->assign('showFileInfo_deleteFlag', 'true');
+					$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
+					$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
+				}
 			}
 			$voto = FileItemStudenti::getVoto($param['id_file']);
 //			var_dump($voto);
