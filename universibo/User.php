@@ -12,6 +12,8 @@ define('USER_ALL'        ,127);
 
 /**
  * User class
+ * 
+ * 
  *
  * @package universibo
  * @version 2.0.0
@@ -28,34 +30,6 @@ class User {
 	var $username = '';
 	var $bookmark;
 	var $ADUsername = '';
-	
-	
-	
-	/**
-	 * Restituisce true se un utente (anche ospite) è stato registrato nella sessione corrente
-	 *
-	 * @static
-	 * @return boolean
-	 */
-	function sessionUserExists()
-	{
-		return array_key_exists('id_utente', $_SESSION);
-	}
-
-
-
-	/**
-	 * Restituisce l'id_utente del dello user nella sessione corrente
-	 *
-	 * @static
-	 * @param string $password stringa della password da verificare
-	 * @return boolean
-	 */
-	function sessionIdUser()
-	{
-		return $_SESSION['id_utente'];
-	}
-
 	
 	
 	/**
@@ -86,7 +60,7 @@ class User {
 		//$password_pattern='^([[:alnum:]]{5,30})$';
 		//ereg($password_pattern , $password );
 		$length = strlen( $password );
-		return ( $lenght > 5 && $length < 30 );
+		return ( $length > 5 && $length < 30 );
 	}
 	 
 	
@@ -172,12 +146,15 @@ class User {
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
 	 * @return boolean
 	 */
-	function User($id_utente, $group, $username = '', $ADUsername='', $MD5='', $ultimoLogin='', $bookmark=NULL)
+	function User($id_utente, $group, $username=NULL, $ADUsername=NULL, $MD5=NULL, $ultimoLogin=NULL, $bookmark=NULL)
 	{
-		
-
-		
-		
+		$this->id_utente   = $id_utente;
+		$this->group       = $group;
+		$this->username    = $username;
+		$this->ADUsername  = $ADUsername;
+		$this->ultimoLogin = $ultimoLogin;
+		$this->MD5         = $MD5;
+		$this->bookmark    = $bookmark;
 	}
 
 
@@ -453,16 +430,18 @@ class User {
 	/**
 	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se utente ospite
 	 *
+	 * @static
 	 * @param int $id_utente numero identificativo utente
 	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
 	 * @return boolean
 	 */
-	function selectUser($id_utente)
+	function &selectUser($id_utente)
 	{
 /*
 		SELECT 
-		return new User();
 */		
+		$user = new User(0,USER_OSPITE);
+		return $user;
 	}
 
 
