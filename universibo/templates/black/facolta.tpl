@@ -35,8 +35,8 @@
 <table width="90%" border="0" cellspacing="0" cellpadding="1" summary="" align="center">
 
 
-  {foreach from=$temp_fac.list item=temp_cdl}
-<tr><td class="Menu" bgcolor="{cycle values="#000016,#000032"}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
+  {foreach name=elenco_cdl from=$temp_fac.list item=temp_cdl}
+<tr><td class="Menu" bgcolor="{if $smarty.foreach.elenco_cdl.iteration%2 == 0}#000032{else}#000016{/if}">&nbsp;<img src="tpl/black/elle_begin.gif" width="10" height="12" alt="" />
 <a href="{$temp_cdl.link}">{$temp_cdl.cod|escape:"htmlall"} - {$temp_cdl.name|escape:"htmlall"}</a> </td></tr>
 
   {/foreach} 

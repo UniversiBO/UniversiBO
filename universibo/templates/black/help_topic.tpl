@@ -19,7 +19,7 @@
 	<a href="#{$temp_ref.reference|escape:"htmlall"}"> {$temp_ref.titolo|escape:"htmlall"}</a></td></tr>
 	{/foreach}
 <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0" summary=""><tr><td bgcolor="#000099" align="left">
-    <a id="index" /><img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table></td></tr>
+    <img src="tpl/black/rule_piccoloL.gif" width="200" height="2" alt="" /></td><td bgcolor="#000099" align="right"><img src="tpl/black/rule_piccoloR.gif" width="200" height="2" alt="" /></td></tr></table></td></tr>
 {/if}<tr><td>&nbsp</td></tr>
 <tr><td>
 	{foreach from=$showHelpTopic_topics item=temp_topic}

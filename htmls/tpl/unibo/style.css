@@ -278,18 +278,41 @@ td.evidenzia{
  *
  */
 
-.news
+.news, .elenco
 {
 	font-size: 12px;
 	margin: 2em 0;
 	display: block;
-	padding: 0 0 4px;
 	border-top: solid 1px #999;
 	border-bottom: solid 1px #999;
 	text-align: left;
 }
+.news { padding: 0 0 4px; }
+.elenco { padding: 0; }
 
-.news p, .news a, .news li, .news h3, .news td
+.elenco div
+{
+	border-bottom: dotted 2px #999
+}
+/*
+.elenco		TODO non riesco a centrare sto cacchio di div
+{
+	width: 90%;
+}*/
+
+.odd
+{
+	background-color: #eff3fc;
+	margin: 0 !important;
+	padding: 2px 0 !important;
+}
+.even
+{
+	margin: 0 !important;
+	padding: 2px 0 !important;
+}
+
+.news p, .news a, .news li, .news h3, .news td, .elenco p, .elenco a, .elenco li, .elenco h3, .elenco td
 {
 	font-size: 12px;
 }
@@ -306,8 +329,15 @@ td.evidenzia{
 	margin: 0 0 2px;
 	padding: 2px;
 }
+.elenco h3
+{
+	background-color: #d9e5ff;
+	color: #333;
+	margin: 0;
+	padding: 2px;
+}
 
-.news p, .work p, .box p
+.news p, .work p, .box p, .elenco p
 {
 	float: none !important;
 	margin: 0 2px;
@@ -487,3 +517,4 @@ td.evidenzia{
 {
 	text-align: justify;
 }
+

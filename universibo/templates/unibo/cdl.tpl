@@ -11,17 +11,18 @@
 
 <p>{$cdl_langList|escape:"htmlall"}</p>
 <hr />
-<div class="elenco">
 {foreach from=$cdl_list item=temp_anno}
+<div class="elenco">
 	<h3>{$temp_anno.name|escape:"html"|upper}</h3>
-	{foreach from=$temp_anno.list item=temp_ciclo}
-		<span>
-		{foreach from=$temp_ciclo.list item=temp_ins}
-			<p class="{cycle values="even,odd"}">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}&gt;&nbsp;
+	{foreach name=t_ciclo from=$temp_anno.list item=temp_ciclo}
+		{if $smarty.foreach.t_ciclo.last}<div class="lastElemento">{else}<div>{/if}
+		{foreach name=elenco_ins from=$temp_ciclo.list item=temp_ins}
+			<p class="{if $smarty.foreach.elenco_ins.iteration%2 == 0}odd{else}even{/if}">&nbsp;{$temp_ciclo.ciclo|escape:"htmlall"}&gt;&nbsp;
 			<a href="{$temp_ins.uri|escape:"htmlall"}">{$temp_ins.name|escape:"htmlall"} - {$temp_ins.nomeDoc|lower|ucwords|escape:"htmlall"}</a> &nbsp; <a href="{$temp_ins.forumUri|escape:"htmlall"}" alt="{$cdl_langGoToForum|escape:"htmlall"}"><img src="tpl/unibo/forum_omini_piccoli.gif" width="11" height="12" alt="{$cdl_langGoToForum|escape:"htmlall"}" border="0"/></a>&nbsp;</p>
 		{/foreach}
-		</span> 
+		</div> 
 	{/foreach} 
+</div>
 {/foreach}
 <hr />
 {include file=News/latest_news.tpl}

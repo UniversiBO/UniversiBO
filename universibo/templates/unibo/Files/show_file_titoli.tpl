@@ -4,8 +4,8 @@
 	<a href="{$showFileTitoli_addFileUri|escape:"htmlall"}">{$showFileTitoli_addFile|escape:"htmlall"|bbcode2html|nl2br}</a>
 	&nbsp;&nbsp;&nbsp;
 {/if}<br />
-<div class="elenco">
 	{if $showFileTitoli_langFileAvailableFlag=="true"}
+<div class="elenco">
 		{foreach name=listacategorie from=$showFileTitoli_fileList item=temp_categoria}
 			<p class="{cycle values="even,odd"}">{$temp_categoria.desc|escape:"htmlall"}</p>
 			{foreach name=listafile from=$temp_categoria.file item=temp_file}
@@ -13,7 +13,7 @@
 				{if $temp_file.modifica!=""}&nbsp;<a href="{$temp_file.modifica_link|escape:"htmlall"}"><img src="tpl/unibo/file_edt.gif" border="0" width="15" height="15" alt="modifica" /></a>{/if}{if $temp_file.elimina!=""}&nbsp;<a href="{$temp_file.elimina_link|escape:"htmlall"}"><img src="tpl/unibo/file_del.gif" border="0" width="15" height="15" alt="elimina" /></a>{/if}&nbsp;<a href="{$temp_file.download_uri|escape:"htmlall"}"><img src="tpl/unibo/file_download.gif" border="0" width="15" height="15" alt="scarica il file" /></a>&nbsp;<a href="{$temp_file.autore_link|escape:"htmlall"}">{$temp_file.autore|escape:"htmlall"}</a></p>
 			{/foreach}
 		{/foreach}
-	{else}
-		{$showFileTitoli_langFileAvailable}
-	{/if}
 </div>
+	{else}
+		<p>{$showFileTitoli_langFileAvailable}</p>
+	{/if}

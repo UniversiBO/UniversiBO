@@ -4,9 +4,8 @@
 <p><a href="{$common_canaleMyUniversiBO|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></p>
 <hr />
 {include file=News/latest_news.tpl}
-
+<hr/>
 {include file=Files/show_file_titoli.tpl}
-
 <hr/>
 
 {include file=footer_index.tpl}
