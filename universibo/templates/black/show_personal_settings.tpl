@@ -51,7 +51,9 @@
 &nbsp;<br /><input type="submit" name="f20_submit" id="f20_submit" value="{$f20_submit|escape:"htmlall"}"></td>
 </tr>
 <tr><td colspan="2" class="Normal">
-&nbsp;<br />{$showPersonalSettings_langHelp|escape:"htmlall"|bbcode2html|nl2br}</td>
+<p>{$showPersonalSettings_langHelp|escape:"htmlall"|bbcode2html|nl2br}</p>
+<p>Il servizio SMS viene fornito grazie al contributo dell'Alma Mater Studiorum</p>
+</td>
 </tr></table>
 </form>
 </td></tr></table>
