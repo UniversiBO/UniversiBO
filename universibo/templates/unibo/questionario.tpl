@@ -3,6 +3,7 @@
 <h3>Questionario</h3>
 {include file=avviso_notice.tpl}
 &nbsp;<br />
+<div id="questionario_form">
 <form action="index.php?do=ShowContribute#gotof3" id="f3" method="post">
 	<fieldset>
 	<legend>{$question_PersonalInfo|escape:"htmlall"}</legend>
@@ -49,3 +50,4 @@
 		<p><input id="f3_privacy" type="checkbox" name="f3_privacy" /> <label for="f3_privacy">{$question_Privacy|escape:"htmlall"}</label></p>
  <p>&nbsp;<input type="submit" value="{$question_Send|escape:"htmlall"}" name="f3_submit" /></p>
 </form>
+</div>
