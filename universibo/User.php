@@ -208,7 +208,7 @@ class User {
 	 */
 	function updateEmail($email, $updateDB = false)
 	{
-		return $this->email;
+		$this->email = $email;
 		if ( $updateDB == true )
 		{
 			$db =& FrontController::getDbConnection('main');
@@ -495,11 +495,22 @@ class User {
 	 */
 	function &selectUser($id_utente)
 	{
-/*
-		SELECT 
-*/		
+
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_utente, username, groups, password, ultimo_login, email, AD_username FROM utente WHERE id_utente = '.$db->quote($id_utente);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		//$rows = $res->affectedRows();
+	
+		if( $rows == 1) return true;
+		elseif( $rows == 0) return false;
+		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+
 		$user = new User(0,USER_OSPITE);
 		return $user;
+		
 	}
 
 

@@ -526,7 +526,6 @@ class FrontController {
 				$connectionList[$identifier] = &DB::connect( $dsnList[$identifier] );
 				if (DB::isError($connectionList[$identifier]))
  					Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($connectionList[$identifier]),'file'=>__FILE__,'line'=>__LINE__)); 
- 
 			}
 			return $connectionList[$identifier]; 	
 			
