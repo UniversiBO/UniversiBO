@@ -13,7 +13,7 @@
   </table>
 </td></tr>
 <tr bgcolor="#000050"> 
-<td class="Titolo">&nbsp;::&nbsp;{$titolo|escape:"htmlall"}&nbsp;::{if $nuova=="true"}&nbsp;&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="12" alt="!NEW!" />{/if}</td>
+<td class="Titolo">&nbsp;::&nbsp;{$titolo|escape:"htmlall"|bbcode2html|nl2br}&nbsp;::{if $nuova=="true"}&nbsp;&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="12" alt="!NEW!" />{/if}</td>
 </tr>
 <tr bgcolor="#000099" align="center"> 
 <td><img src="tpl/black/invisible.gif" height="2" width="1" alt="" /></td>
@@ -24,9 +24,9 @@
   <tr> 
   <td class="News">{$notizia|escape:"htmlall"|ereg_replace:"[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</td></tr>
   <tr> 
-  <td class="News" align="right">{$data}<br />
+  <td class="News" align="right">{$data|escape:"htmlall"|bbcode2html|nl2br}<br />
   {* come interpreto la riga sotto???? ovvero come si chiamano i popup?*}
-	<a href="#news" onclick="window.open('popup.php?pg=666&amp;id_utente={$id_autore}','','width=500,height=500,scrollbars=yes,resizable=yes,scrolling=yes,top=50,left=100')">{$autore}</a></td>
+	<a href="#news" onclick="window.open('popup.php?pg=666&amp;id_utente={$id_autore|escape:"htmlall"|bbcode2html|nl2br}','','width=500,height=500,scrollbars=yes,resizable=yes,scrolling=yes,top=50,left=100')">{$autore}</a></td>
   </tr>
   </table>
 </td>
@@ -50,19 +50,19 @@
 {if $modifica!=""}&nbsp;&nbsp;&nbsp;&nbsp;
 <script type="text/javascript" language="JavaScript">
 {*devo usare AddNews o AddNewsForm?*}
-document.write("<a href=\"javascript:universiboPopup('index.php?do={$modifica_link}&amp;pageType=popup');\"><font color=\"#FF0000\">{$modifica}</font></a><br />");
+document.write("<a href=\"javascript:universiboPopup('index.php?do={$modifica_link|escape:"htmlall"|bbcode2html|nl2br}&amp;pageType=popup');\"><font color=\"#FF0000\">{$modifica|escape:"htmlall"|bbcode2html|nl2br}</font></a><br />");
 </script>
-<noscript>{$modifica}<br /></noscript>
+<noscript>{$modifica_link|escape:"htmlall"|bbcode2html|nl2br}<br /></noscript>
 {/if}
 {if $elimina!=""}&nbsp;&nbsp;&nbsp;&nbsp;
 <script type="text/javascript" language="JavaScript">
 {*devo usare DeleteNews o DeleteNewsForm?*}
-document.write("<a href=\"javascript:universiboPopup('index.php?do={$elimina_link}&amp;pageType=popup');\"><font color=\"#FF0000\">{$elimina}</font></a><br />");
+document.write("<a href=\"javascript:universiboPopup('index.php?do={$elimina_link|escape:"htmlall"|bbcode2html|nl2br}&amp;pageType=popup');\"><font color=\"#FF0000\">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</font></a><br />");
 </script>
-<noscript>{$elimina}<br /></noscript>
+<noscript>{$elimina_link|escape:"htmlall"|bbcode2html|nl2br}<br /></noscript>
 {/if}
 {if $scadenza!=""}
-{$scadenza|escape:"htmlall"}
+{$scadenza|escape:"htmlall"|bbcode2html|nl2br}
 {/if}
 	
 	</td>
