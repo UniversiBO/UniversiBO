@@ -87,6 +87,8 @@ class ShowFacolta extends CanaleCommand {
 */
 		$template -> assign('fac_list', $fac_listCdlType);
 
+		
+		return 'default';						
 	}
 
 }

@@ -15,7 +15,8 @@ include ('UniversiboCommand'.PHP_EXTENSION);
  */
  
 class ShowContacts extends UniversiboCommand {
-	function execute(){
+	function execute()
+	{
 
 		$template =& $this->frontController->getTemplateEngine();
 		
@@ -61,8 +62,8 @@ Non ho ancora ben capito che animale sia un Ingegnere dei Processi Gestionali, m
 			));  
 		//fine array
 		
-								
-		}
+		return 'default';						
+	}
 }
 
 ?>

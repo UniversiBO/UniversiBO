@@ -118,7 +118,9 @@ I dati non saranno comunicati a terzi o diffusi.</p>
       </p>');
 		$template->assign('$rules_langTitleAlt', 'Regolamento');
 				
-		}
+		
+		return 'default';						
+	}
 }
 
 ?>

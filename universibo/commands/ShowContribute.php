@@ -60,8 +60,9 @@ class ShowContribute extends UniversiboCommand {
 		e vi contatteremo al pi&ugrave; presto.</p>');
 		
 		
-						
-		}
+		
+		return 'default';						
+	}
 }
 
 ?>

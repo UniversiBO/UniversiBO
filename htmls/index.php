@@ -21,6 +21,21 @@ class Receiver{
 	var $applicationPath = '../universibo';
 
 	var $configFile = '../config.xml';
+	var $receiverIdentifier = 'main';
+	
+	
+	/**
+ 	* Return the receiver name identifier
+ 	*
+ 	* @return string
+	*/
+	function getIdentifier()
+	{
+		return $this->receiverIdentifier;
+	}
+	
+	
+	
 	
 	/**
  	* Set PHP language settings (path, gpc, etc...)
@@ -40,7 +55,6 @@ class Receiver{
 		{
 			$_SESSION['SID'] = SID;
 		}
-		// echo SID,' - ' ,$_SESSION['SID'];
 				
 		$pathDelimiter=( strstr(strtoupper($_ENV['OS']),'WINDOWS') ) ? ';' : ':' ;
 		ini_set('include_path', $this->frameworkPath.$pathDelimiter.$this->applicationPath.$pathDelimiter.ini_get('include_path'));
@@ -67,7 +81,10 @@ class Receiver{
 		$this->_setPhpEnvirorment();
 				
 		include_once('FrontController'.PHP_EXTENSION);
-		$fc= new FrontController($this->configFile);
+		$fc= new FrontController($this);
+		
+		$fc->setConfig( $this->configFile );
+		
 		
 		//$smarty =& $fc->getTemplateEngine();
 		

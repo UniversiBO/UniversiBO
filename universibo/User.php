@@ -632,6 +632,36 @@ class User {
 
 
 	/**
+	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se si vuole creare un utente ospite
+	 *
+	 * @static
+	 * @param string $username nome identificativo utente
+	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
+	 * @return mixed User se eseguita con successo, false se l'utente non esiste
+	 */
+	function &selectUserUsername($username)
+	{
+		
+		$db =& FrontController::getDbConnection('main');
+	
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups  FROM utente WHERE username = '.$db->quote($username);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows = 0) return false;
+
+		$row = $res->fetchRow();
+		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[3], $row[4], NULL);
+		return $user;
+			
+	}
+
+
+
+	/**
 	 * Inserisce su DB le informazioni riguardanti un nuovo utente
 	 *
 	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object

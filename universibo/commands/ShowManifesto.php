@@ -52,7 +52,9 @@ Però dopo un po\' mi si presentò una simpatica rondinella, mi disse: "Erano gior
 		$template->assign('manifesto_Author', 'Brain');
 	
 		
-		}
+		
+		return 'default';						
+	}
 }
 
 ?>

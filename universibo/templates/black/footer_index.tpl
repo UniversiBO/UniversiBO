@@ -10,16 +10,16 @@
 <tr> 
 <td width="12" valign="top"><img src="tpl/black/menuL.gif" width="12" height="67" alt="" /></td>
 <td valign="top">
-<form action="http://localhost/UniversiBO/www_dev/htmls/" name="log_form" method="post">
+<form action="{$common_receiverUrl}?do=Login" name="form1" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
 <td><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
 </tr>
 <tr align="center"> 
-<td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="log_user" size="9" maxlength="50" style="width: 120px" /><br />
-Password:<br /><input type="password" name="log_password" size="9" maxlength="50" style="width: 120px" /><br />
-<input type="hidden" name="log_risoluzione" value="" />
-<input name="login_submit" type="submit" value="Entra" onclick="document.log_form.log_risoluzione.value = screen.width;" /></td>
+<td class="Piccolo">&nbsp;<br />Username:<br /><input type="text" name="f1_username" size="9" maxlength="25" style="width: 120px" /><br />
+Password:<br /><input type="password" name="f1_password" size="9" maxlength="25" style="width: 120px" /><br />
+<input type="hidden" name="f1_resolution" value="" />
+<input name="f1_submit" type="submit" value="Entra" onclick="document.form1.f1_resolution.value = screen.width;" /></td>
 </tr>
 <tr>
 <td class="Menu">&nbsp;<br />

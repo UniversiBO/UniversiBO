@@ -58,7 +58,9 @@ class ShowQuestions extends UniversiboCommand {
 		$template->assign('question_Send', 'Invia');
 		$template->assign('question_TitleAlt', 'Questionario');
 						
-		}
+		
+		return 'default';						
+	}
 }
 
 ?>

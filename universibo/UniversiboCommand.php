@@ -104,14 +104,11 @@ class UniversiboCommand extends BaseCommand {
 		{
 			$this->sessionUser = new User(0, USER_OSPITE);
 			$this->setSessionIdUtente(0);
-//			$this->sessionUser =& User::selectUser(79);
-//			var_dump($this->sessionUser->getRuoli());
-			  
 		}
 		elseif ( $this->getSessionIdUtente() >= 0 )
 		{
 			$this->sessionUser =& User::selectUser( $this->getSessionIdUtente() );
-			
+//			echo $this->sessionUser->getUsername();
 		}
 		else 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
@@ -149,21 +146,32 @@ class UniversiboCommand extends BaseCommand {
 
 		$template->assign('common_templateBaseDir',$templateInfo['web_dir'].$templateInfo['styles'][$templateInfo['template_name']]);
 
-		//da config.xml
-		$template->assign('common_rootUrl',   'https://www.universibo.unibo.it/');
-		$template->assign('common_protocol',   'https'); 
-		$template->assign('common_hostName',   'www.universibo.unibo.it');
-		$template->assign('common_forumDir',   'forum');
+		$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on')? 'https':'http';
 		
-		$template->assign('common_rootEmail',  $appSettings['rootEmail'] );
-		$template->assign('common_staffEmail', $appSettings['staffEmail'] );
-		$template->assign('common_alert',      $appSettings['alertMessage'] );
+		// http | https
+		$template->assign('common_protocol',	$request_protocol);			
+		// www.universibo.unibo.it
+		$template->assign('common_hostName',	$_SERVER['HTTP_HOST']);
+		// https://www.universibo.unibo.it/path_universibo2/
+		// $template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->frontController->rootUrl);
+		// https://www.universibo.unibo.it/path_universibo2/receiver.php
+		$template->assign('common_receiverUrl',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
+		// https://www.universibo.unibo.it/path_universibo2/receiver.php?do=SomeCommand
+		$template->assign('common_requestUri',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+		// /path_universibo2/receiver.php?do=SomeCommand
+		$template->assign('common_shortUri',	$_SERVER['REQUEST_URI']);
+		
+		$template->assign('common_forumDir',	'forum/');
+		
+		$template->assign('common_rootEmail',	$appSettings['rootEmail'] );
+		$template->assign('common_staffEmail',	$appSettings['staffEmail'] );
+		$template->assign('common_alert',		$appSettings['alertMessage'] );
 
 		//generali
-		$template->assign('common_universibo',      'UniversiBO');
-		$template->assign('common_metaKeywords',    'universibo, università, facoltà, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novità, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
-		$template->assign('common_metaDescription', 'Il portale dedicato agli studenti universitari di Bologna');
-		$template->assign('common_title',           'UniversiBO ....il portale dedicato agli studenti universitari di Bologna');
+		$template->assign('common_universibo',		'UniversiBO');
+		$template->assign('common_metaKeywords',	'universibo, università, facoltà, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novità, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
+		$template->assign('common_metaDescription',	'Il portale dedicato agli studenti universitari di Bologna');
+		$template->assign('common_title',			'UniversiBO ...il portale dedicato agli studenti universitari di Bologna');
 		
 		//kronos
 		$krono =& $this->frontController->getKrono();

@@ -12,34 +12,38 @@
 	
 	<receivers>
 		<main>index.php</main>
+		<error>error.php</error>
 	</receivers>
 
-	<defaultCommand>TestTemplate</defaultCommand>
+	<defaultCommand>ShowHome</defaultCommand>
 	<commands>
-		<TestTemplate class="TestTemplate">
-		</TestTemplate>
+		<Login class="Login">
+			 <response type="template" name="default">login.tpl</response>
+			 <response type="template" name="logout">logout.tpl</response>
+		</Login>
 		<ShowManifesto class="ShowManifesto">
-			 <template type="default">manifesto.tpl</template>
+			 <response type="template" name="default">manifesto.tpl</response>
 		</ShowManifesto>
 		<ShowHome class="ShowHome">
-			 <template type="default">home.tpl</template>
+			 <response type="template" name="default">home.tpl</response>
 		</ShowHome>
 		<ShowFacolta class="ShowFacolta">
-			 <template type="default">facolta.tpl</template>
+			 <response type="template" name="default">facolta.tpl</response>
 		</ShowFacolta>
 		<ShowContribute class="ShowContribute">
-			 <template type="default">contribute.tpl</template>
+			 <response type="template" name="default">contribute.tpl</response>
 		</ShowContribute>
 		<ShowContacts class="ShowContacts">
-			 <template type="default">chisiamo.tpl</template>
+			 <response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>
 		<ShowQuestions class="ShowQuestions">
-			 <template type="default">questionario.tpl</template>
+			 <response type="template" name="default">questionario.tpl</response>
 		</ShowQuestions>
 		<ShowRules class="ShowRules">
-			 <template type="default">regolamento.tpl</template>
+			 <response type="template" name="default">regolamento.tpl</response>
 		</ShowRules>
 		<TestUnit class="TestUnit" />
+		<TestTemplate class="TestTemplate" />
 	</commands>
 
 	<dbInfo type="DB">
@@ -81,6 +85,7 @@
 	****-->
 	<appSettings>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
+		<forumLocation>forum/</forumLocation>
 		<files>../html/file-universibo</files>
 		<questionariReceiver>eagleone@libero.it</questionariReceiver>
         <alertMessage>Il sito è momentaneamente accessibile in sola lettura per attività di manutenzione - Ci scusiamo per il disagio</alertMessage>

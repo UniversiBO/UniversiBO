@@ -15,63 +15,111 @@
  */
 
 class FrontController {	
+
+	/**
+	 * @access private
+	 */
 	var $configFile;
+
+	/**
+	 * @access private
+	 */
 	var $config;
+
+	/**
+	 * @access private
+	 */
 	var $rootFolder;		
-	var $rootURL;
+
+	/**
+	 * @access private
+	 */
+	var $rootUrl = '';
+
+	/**
+	 * @access private
+	 */
+	var $receiverId;
+
+	/**
+	 * @access private
+	 */
 	var $defaultCommand;
+
+	/**
+	 * @access private
+	 */
 	var $commandClass;
+
+	/**
+	 * @access private
+	 */
 	var $paths;	
+
+	/**
+	 * @access private
+	 */
 	var $receivers;
+
+	/**
+	 * @access private
+	 */
 	var $commandTemplate;
+
+	/**
+	 * @access private
+	 */
 	var $appSettings;
+
+	/**
+	 * @access private
+	 */
 	var $mailerInfo = array();
+
+	/**
+	 * @access private
+	 */
 	var $languageInfo = array();
+
+	/**
+	 * @access private
+	 */
 	var $plugs;
+
+	/**
+	 * @access private
+	 */
 	var $templateEngine;
+
+
 
 	/**
 	* Constuctor of front controller object based upon $configFile 
 	*
 	* @param string $configFile filename of FrontController configuration file
 	*/
-	function FrontController( $configFile ){
-
+	function FrontController( $receiver ){
 
 		include_once('Error'.PHP_EXTENSION); 
 		include_once('LogHandler'.PHP_EXTENSION);
 		include_once('XmlDoc'.PHP_EXTENSION);
 
+		$this->receiverIdentifier = $receiver->getIdentifier();
 
-		//include bootstrap classes from core library
-		$this->setConfig( $configFile );
-		
-/*		$log_error_definition = array(	0 => 'timestamp',
-										1 => 'date',
-										2 => 'remote_ip',
-										3 => 'request',
-										4 => 'referer_page',
-										5 => 'file',
-										6 => 'line',
-										7 => 'description' );
-		
+/*		$log_error_definition = array(0=>'timestamp', 1=>'date', 2=>'remote_ip', 3=>'request', 4=>'referer_page', 5=>'file', 6=>'line', 7=>'description' );
 		$errorLog = new LogHandler('error',$this->paths['logs'],$log_error_definition); 
 */
 
 //		include_once("MultiLanguage.php");
-
 //		$language = new MultiLanguage('it',$this->defaultLanguage);
-		
 //		var_dump($language);
-		//temp
-
-		
 
 		//Initialize Request and Response objects and set $this->request, $this->response
 //		$this->import("Request");
 //		$this->import("Response");
 //		$this->request=new Request();
 //		$this->response=new Response();		
+
 	}
 	
 
@@ -86,49 +134,121 @@ class FrontController {
 	* @access public
 	*/
 	function executeCommand(){
-		//Need to set the language first because it handles errors.
-		include_once ('BaseCommand.php');	
-		//$cc=&$this->commandClass;
-		$command_class=$this->getCommandClass();
+
+		include_once ('BaseCommand'.PHP_EXTENSION);	
+
 		//$command_request=$this->getCommandRequest();
-		
-		include_once($this->paths['commands'].'/'.$command_class.'.php');
-		//Now load the user language file
-		//$this->language->loadUserMsg();
+		$command_class=$this->getCommandClass();
+		include_once($this->paths['commands'].'/'.$command_class.PHP_EXTENSION);
 		
 		$command = new $command_class;
 		
 		$command->initCommand($this);
+		$response = $command->execute();
 		
-		$template = $command->execute();
 		
-		//ora non do la possibilità ad un comando di avere più viste
-		//ma si può fare leggendolo dal suo valore di ritorno
-		$template = 'default';  
-		if (array_key_exists('default',$this->commandTemplate))
+		if ($response == NULL) $response='default';
+		if (array_key_exists($response, $this->commandTemplate))
 		{
-			$template = $this->commandTemplate['default'];
-			 		
+			$template = $this->commandTemplate[$response];
+			
 			$templateEngine =& $this->getTemplateEngine();
+			if (!$templateEngine->template_exists($template))
+				Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è presente il file relativo al template specificato','file'=>__FILE__,'line'=>__LINE__));
+			
 			$templateEngine->display($template);
 		}
 		
-		
 	}
 	
+
+
+	/**
+	* Redirect an action command to another command.
+	*
+	* Action is in receiver.php?do=redirectAction
+	*
+	* @param string $command command name with params - example: SomeCommand&param1=val1&param2=val2, if not define default command is executed
+	* @param string $receiver receiver identifier (listed in config.xml), default receiver is current receiver
+	* @access public
+	*/
+	function redirectCommand($command=NULL, $receiverId=NULL)
+	{
+		$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on')? 'https':'http';
+		
+		if ($receiverId==NULL)
+		{
+			$receiverId = $this->getReceiverId();
+		}
+		$receiverUrl = $this->getReceiverUrl($receiverId);
+		
+		if ($command == NULL)
+		{
+			$commandUrl = '';  //default
+		}
+		else
+		{
+			$commandUrl = '?do='.$command;
+		}
+		
+		//echo 'Location: '.$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->rootUrl.$receiverUrl.$commandUrl;
+		header ('Location: '.$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->rootUrl.$receiverUrl.$commandUrl);
+		exit();
+	}
+
+
 
 	/**
 	* Returns the command class name only (without .) 
 	*
 	* @access public
 	*/
-	function getCommandClass(){
+	function getCommandClass()
+	{
 		$cc=&$this->commandClass;
 		$explodedCC=explode(".",$cc);
 		$theSize=count($explodedCC);
 		if($theSize==1) return $explodedCC[0];
 		else return $explodedCC[$theSize-1];
 	}
+
+
+
+	/**
+	* Returns the current receiver identifier 
+	*
+	* @access public
+	*/
+	function getReceiverId()
+	{
+		return $this->receiverIdentifier;
+	}
+
+
+
+	/**
+	* Returns the receiver URL of the given receiver identifier
+	* All allowed identifiers must be listed in config file 
+	*
+	* @param string $receiverId receiver identifier
+	* @param boolean $relative if true path is relative to rootUrl
+	* @access public
+	*/
+	function getReceiverUrl($receiverId, $relative=true)
+	{
+		if ( !array_key_exists($receiverId, $this->receivers) )
+			Error::throw(_ERROR_CRITICAL,array('msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__));
+		
+		if ($relative == true )
+		{
+			return $this->receivers[$receiverId];
+		}
+		else
+		{
+			return $this->rootUrl.$this->receivers[$receiverId];
+		}
+	}
+
 
 
 	/**
@@ -146,7 +266,7 @@ class FrontController {
 		}
 
 		if($_GET['do'] == '')
-			$this->writeError(119);
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il comando indicato è vuoto','file'=>__FILE__,'line'=>__LINE__));
 
 		return $_GET['do'];
 	}
@@ -175,7 +295,7 @@ class FrontController {
 		$this->_setRootFolder();
 
 		//Set $this->rootURL
-		$this->_setRootURL();
+		$this->_setRootUrl();
 
 		//set $this->receivers
 		$this->_setReceivers();
@@ -211,8 +331,6 @@ class FrontController {
 
 		//set $this->commandClass must be placed after $this->_setDefaultCommand();
 		$this->_setCommandClass();
-
-
 		
 		unset($this->config);
 		
@@ -259,10 +377,10 @@ class FrontController {
 	*
 	* @access private
 	*/
-	function _setRootURL()
+	function _setRootUrl()
 	{
 		$elementURL = &$this->config->root->getChild('rootURL');
-		$this->rootURL = $elementURL->charData;
+		$this->rootUrl = $elementURL->charData;
 	}
 
 
@@ -280,7 +398,7 @@ class FrontController {
 		{
 			$child=&$node->children[$i];
 			$charData=$child->charData;
-			$this->receivers[$child->name]=$this->rootURL.'/'.$child->charData;
+			$this->receivers[$child->name]=$child->charData;
 		}
 	}
 
@@ -304,7 +422,6 @@ class FrontController {
 	*/
 	function _setDbInfo()
 	{
-		//cancellare?   $this->receivers=array();
 		$dbinfoNode=&$this->config->root->getChild('dbInfo');		
 		$n = $dbinfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -496,8 +613,11 @@ class FrontController {
 		$n=$commandNode->numChildren();
 		for($i=0;$i<$n;$i++)
 		{
-			$child=&$commandNode->children[$i];
-			$this->commandTemplate[$child->attributes['type']] = $child->charData;			
+			$response=&$commandNode->children[$i];
+			if ($response->attributes['type'] == 'template')
+			{
+				$this->commandTemplate[$response->attributes['name']] = $response->charData;	
+			}		
 		}
 		if(!isset($this->commandClass))
 			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è definita l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));

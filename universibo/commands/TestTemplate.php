@@ -178,8 +178,8 @@ class TestTemplate extends UniversiboCommand {
 		$template->display('cdl.tpl');
 		
 */
-
-
+		
+		return 'default';						
 	}
 }
 ?>
