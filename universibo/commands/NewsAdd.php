@@ -30,7 +30,7 @@ class NewsAdd extends CanaleCommand {
 			$referente = $ruolo->isReferente();
 			$moderatore = $ruolo->isModeratore();
 		}
-
+		
 		if ($user->isAdmin() || $referente || $moderatore) {
 
 			$frontcontroller = & $this->getFrontController();
@@ -56,8 +56,28 @@ class NewsAdd extends CanaleCommand {
 			/*
 			 * @todo da gestire
 			 */
-			$f7_canale[] = array ();
+			$f7_canale = array ();
 
+			$elenco_canali = array($id_canale);
+			$ruoli_keys = array_keys($user_ruoli);
+			$num_ruoli = count($ruoli_keys);
+			for ($i = 0; $i<$num_ruoli; $i++)
+			{
+				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+			}
+			
+		
+		
+			$num_canali = count($elenco_canali);
+			for ($i = 0; $i<$num_canali; $i++)
+			{
+				$id_current_canale = $elenco_canali[$i];
+				$current_canale =& Canale::retrieveCanale($id_current_canale);
+				$nome_current_canale = $current_canale->getTitolo();
+				$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
+				$f7_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
+			}
+			
 			$f7_accept = false;
 
 			if (array_key_exists('f7_submit', $_POST)) {
@@ -128,14 +148,17 @@ class NewsAdd extends CanaleCommand {
 					$f7_data_ins_min = $_POST['f7_data_ins_min'];
 
 				if (!checkdate($_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']))
-					errore('La data di inserimento specificata non esiste', __FILE__, __LINE__) $f7_accept = false;
-
+				{
+					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					$f7_accept = false;
+				}
+				
+				$data_inserimento = mktime($_POST['f7_data_ins_ora'], $_POST['f7_data_ins_min'], "0", $_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']);
+				$data_scadenza = NULL;
+								
 				if (array_key_exists('f7_scadenza', $_POST)) {
 
 					$f7_scadenza = true;
-
-					if (!checkdate($_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']))
-						errore('La data di scadenza specificata non esiste', __FILE__, __LINE__) $f7_accept = false;
 
 					//data_scad_gg
 					if (!ereg('^([0-9]{1,2})$', $_POST['f7_data_scad_gg'])) {
@@ -184,9 +207,14 @@ class NewsAdd extends CanaleCommand {
 					} else
 						$f7_data_scad_min = $_POST['f7_data_scad_min'];
 
+					if (!checkdate($_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']))
+					{
+						Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f7_accept = false;
+					}
+
 					//scadenza posteriore a inserimento
 					$data_scadenza = mktime($_POST['f7_data_scad_ora'], $_POST['f7_data_scad_min'], "0", $_POST['f7_data_scad_mm'], $_POST['f7_data_scad_gg'], $_POST['f7_data_scad_aa']);
-					$data_inserimento = mktime($_POST['f7_data_ins_ora'], $_POST['f7_data_ins_min'], "0", $_POST['f7_data_ins_mm'], $_POST['f7_data_ins_gg'], $_POST['f7_data_ins_aa']);
 
 					if ($data_scadenza < $data_inserimento)
 						$f7_accept = false;
@@ -213,7 +241,7 @@ class NewsAdd extends CanaleCommand {
 				if ($f7_accept == true) {
 
 					//id_news = 0 per inserimento, $id_canali array dei canali in cui inserire
-					$id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $ultimaModifica, $urgente, $eliminata, $id_utente, $username $notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, ($f7_urgente) ? 'S' : 'N', 'N', $user->getIdUser(), $user->getUsername());
+					$notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, ($f7_urgente) ? 'S' : 'N', 'N', $user->getIdUser(), $user->getUsername());
 					if ($notizia->insertNewsItem($id_canali)) {
 						return 'success';
 					}

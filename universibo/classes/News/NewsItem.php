@@ -540,12 +540,13 @@ class NewsItem {
         $db->autoCommit(false);
         		
 		$return = true;
+		$scadenza = ($this->getDataScadenza() == NULL) ? ' NULL ' : $db->quote($this->getDataScadenza());
 				
 		$query = 'INSERT INTO news (id_news, titolo, data_inserimento, data_scadenza, notizia, id_utente, eliminata, flag_urgente, data_modifica) VALUES '.
 					'( '.$db->nextID('id_news').' , '.
 					$db->quote($this->getTitolo()).' , '.
 					$db->quote($this->getDataIns()).' , '.
-					$db->quote($this->getDataScadenza()).' , '.
+					$scadenza.' , '.
 					$db->quote($this->getNotizia()).' , '.
 					$db->quote($this->getIdUtente()).' , '.
 					$db->quote($this->getEliminata()).' , '.
