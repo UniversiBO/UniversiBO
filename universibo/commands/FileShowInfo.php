@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
 
 /**
  * FileShowInfo: mostra tutte le informazioni correlate ad un file
@@ -27,7 +28,8 @@ class FileShowInfo extends UniversiboCommand {
 		{
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
-		
+		$id_file = $_GET['id_file'];
+		$tipo_file = FileItemStudenti::isFileStudenti($id_file);
 //		
 //		$file =& FileItem::selectFileItem($_GET['id_file']);
 //		
@@ -79,7 +81,13 @@ class FileShowInfo extends UniversiboCommand {
 			$this->executePlugin('ShowFileInfo', array( 'id_file' => $_GET['id_file'], 'id_canale' => $_GET['id_canale']) );
 		else
 			$this->executePlugin('ShowFileInfo', array( 'id_file' => $_GET['id_file'] ) );
-		
+		if($tipo_file==true) 
+		{
+		    $template->assign('isFileStudente','true');
+			$this->executePlugin('ShowFileStudentiCommenti', array( 'id_file' => $id_file,'id_canale' => $_GET['id_canale'] ));
+		}
+		else
+			$template->assign('isFileStudente','false');	
 		return ;
 		
 	}

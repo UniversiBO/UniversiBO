@@ -102,9 +102,9 @@ class ShowFileInfo extends PluginCommand {
 //			var_dump($voto);
 //			die();
 			if($voto==NULL)
-				$voto='Non esistono ancora commenti per questo file';
+				$voto='Non esistono ancora voti per questo file';
 			else
-				$voto = round($voto);	
+				$voto = round($voto,1);	
 			$template->assign('showFileInfo_voto',$voto);
 			$template->assign('showFileInfo_addComment','index.php?do=FileStudentiComment&id_file='.$file->getIdFile());
 		}

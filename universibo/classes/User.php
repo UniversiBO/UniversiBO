@@ -1041,6 +1041,30 @@ class User {
 		return (boolean) ((int)$this->groups & (int)$groups);
 	}
 	
+	/**
+	 * Restituisce il nick dello user avendo l'id
+	 *
+	 * @param $id_user id dello user
+	 * @return il nickname
+	 */
+	 
+	 function getUsernameFromId($id_user)
+	 {
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT username FROM utente WHERE id_utente= '.$db->quote($id_user);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		if( $rows == 0) 
+			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
+		$res->fetchInto($row);
+		$res->free();
+		return $row[0];
+		
+	 }
+	
 	
 	/**
 	 * Restituisce true se l'utente viene autenticato con successo sull'active directory di ateneo

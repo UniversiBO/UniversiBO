@@ -2,9 +2,10 @@
 
 require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
+require_once ('User'.PHP_EXTENSION);
 
 /**
- * ShowFileCommenti é un'implementazione di PluginCommand.
+ * ShowFileStudentiCommenti é un'implementazione di PluginCommand.
  *
  * Mostra i file del canale
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -24,7 +25,7 @@ class ShowFileStudentiCommenti extends PluginCommand {
 	/**
 	 * Esegue il plugin
 	 *
-	 * @param array $param nessu parametro  
+	 * @param l'id del file di cui si voglio i commenti
 	 */
 	function execute($param)
 	{
@@ -34,17 +35,13 @@ class ShowFileStudentiCommenti extends PluginCommand {
 		
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
-		$canale    =& $bc->getRequestCanale();
+		
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
 
-		$files_studenti_attivo =& $canale->getServizioFilesStudenti();
-        if ( $files_studenti_attivo )
-		{
-		$id_canale = $canale->getIdCanale();
-		$titolo_canale =  $canale->getTitolo();
-		$ultima_modifica_canale =  $canale->getUltimaModifica();
+		
+		$id_canale = $param['id_canale'];
 		$user_ruoli =& $user->getRuoli();
 
 		$personalizza_not_admin = false;
@@ -77,141 +74,99 @@ class ShowFileStudentiCommenti extends PluginCommand {
 		$template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
 */
 
-		$elenco_id_file =& $this->getFileCanale($id_canale);
+		$elenco_commenti =& $this->getCommenti($param['id_file']);
+		$num_commenti =& $this->quantiCommenti($param['id_file']);
+		$elenco_commenti_tpl = array();
+//		var_dump($elenco_commenti);
+//	    die();
 		
 		
-		//var_dump($elenco_id_file); die();
-		$elenco_file =& FileItemStudenti::selectFileItems($elenco_id_file);
-		usort($elenco_file, array('ShowFileStudentiTitoli','_compareFile'));
-		
-		//var_dump($elenco_file); die();
-
-		//$elenco_categorie_file_tpl = array();
-		$categorie_tpl = array();
-		$elenco_file_tpl = array();
-		
-		
-		
-		if ($elenco_file ==! false )
+		if ($elenco_commenti ==! false )
 		{
-			$ret_file = count($elenco_file);
-			
-			for ($i = 0; $i < $ret_file; $i++)
+			for ($i = 0; $i < $num_commenti; $i++)
 			{
 				
-				$file =& $elenco_file[$i];
-				//var_dump($file);
+				$id_utente =& $elenco_commenti[$i][0];
+				$commenti['commento'] =& $elenco_commenti[$i][1];
+				$commenti['voto'] =& $elenco_commenti[$i][2];
+				$commenti['userLink'] = ('index.php?do=ShowUser&id_utente='.$id_utente);
+				$commenti['userNick'] = User::getUsernameFromId($id_utente);
+				
+				$elenco_commenti_tpl[$i] = $commenti;
+//				var_dump($elenco_commenti_tpl);
+//				die();
+				
 				$this_moderatore = ($user->isAdmin() || ($moderatore && $file->getIdUtente()==$user->getIdUser()));
-		
-				$permessi_lettura = $file->getPermessiVisualizza();
-				if ($user->isGroupAllowed($permessi_lettura))
-				{
-					$file_tpl = array();			
-					$file_tpl['titolo']       = $file->getTitolo();
-					//$file_tpl['notizia']      = $file->getNotizia();
-					$file_tpl['data']         = $krono->k_date('%j/%m/%Y', $file->getDataInserimento());
-					//echo $personalizza,"-" ,$ultimo_accesso,"-", $file->getUltimaModifica()," -- ";
-					//$file_tpl['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false'; 
-					$file_tpl['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
-					$file_tpl['autore']       = $file->getUsername();
-					$file_tpl['autore_link']  = 'index.php?do=ShowUser&id_utente='.$file->getIdUtente();
-					$file_tpl['id_autore']    = $file->getIdUtente();
-					$file_tpl['modifica']     = '';
-					$file_tpl['modifica_link']= '';
-					$file_tpl['elimina']      = '';
-					$file_tpl['elimina_link'] = '';
-					//if ( ($user->isAdmin() || $referente || $this_moderatore)  && $flag_chkDiritti)
-					if (($user->isAdmin() || $referente || $this_moderatore || ($user == $file->getIdUtente())))
-					{
-						$file_tpl['modifica']     = 'Modifica';
-						$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-						$file_tpl['elimina']      = 'Elimina';
-						$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-					}
-					$file_tpl['dimensione'] = $file->getDimensione();
-//	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente 
-//					$file_tpl['download_uri'] = '';
-//					$permessi_download = $file->getPermessiDownload();
-//					if ($user->isGroupAllowed($permessi_download))
-					$file_tpl['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-					$file_tpl['categoria'] = $file->getCategoriaDesc();
-					$file_tpl['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
-					
-					if (!array_key_exists($file->getIdCategoria(), $elenco_file_tpl))
-						$elenco_file_tpl[$file->getIdCategoria()]['desc'] = $file->getCategoriaDesc();
-
-					$elenco_file_tpl[$file->getIdCategoria()]['file'][$i] = $file_tpl;
-					
-				}
 			}
-		}
-		
+			
 						
-		
-		$num_file = count($elenco_file_tpl);
-		
-			$template->assign('showFileStudentiTitoli_langFileAvailable', 'Ci sono '.$num_file.' file');
-			$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'true');
-			$template->assign('showFileStudentiTitoli_fileList', $elenco_file_tpl);
-		}
-	
-	else{$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'false');}
-
+			$template->assign('showFileStudentiCommenti_langCommentiAvailableFlag', 'true');
+			$template->assign('showFileStudentiCommenti_commentiList', $elenco_commenti_tpl);
+		}	
+	else {$template->assign('showFileStudentiCommenti_langCommentiAvailableFlag', 'false');
+		 }
+			
 	}
 	
 	
 	/**
-	 * Preleva da database i file del canale $id_canale
+	 * Preleva da database i commenti del file identificato da $id_file
 	 *
 	 * @static 
-	 * @param int $id_canale identificativo su database del canale
-	 * @return array elenco FileItem , array vuoto se non ci sono file
+	 * @param int $id_file identificativo su database del file studente
+	 * @return array elenco dei commenti
 	 */
-	function &getFileCanale($id_canale)
+	function &getCommenti($id_file)
 	{
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 		
-		$query = 'SELECT A.id_file  FROM file A, file_studente_canale B 
-					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					' AND B.id_canale = '.$db->quote($id_canale).' AND A.data_inserimento < '.$db->quote(time()). 
-					'ORDER BY A.id_categoria, A.data_inserimento DESC';
+		$query = 'SELECT id_utente,commento,voto FROM file_studente_commenti WHERE id_file_studente='.$db->quote($id_file).' ORDER BY voto DESC';
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$id_file_list = array();
+		$commenti_list = array();
 	
 		while ( $res->fetchInto($row) )
 		{
-			$id_file_list[]= $row[0];
+			$commenti_list[]= $row;
 		}
 		
 		$res->free();
 		
-		return $id_file_list;
+		return $commenti_list;
 		
 	}
 	
 	
 	/**
-	 * Ordina la struttura dei file
-	 * 
-	 * @static
-	 * @private
+	 * Conta il numero dei commenti presenti per il file
+	 *
+	 * @static 
+	 * @param int $id_file identificativo su database del file studente
+	 * @return numero dei commenti
 	 */
-	function _compareFile($a, $b)
+	function &quantiCommenti($id_file)
 	{
-		if ($a->getIdCategoria() > $b->getIdCategoria()) return +1;
-		if ($a->getIdCategoria() < $b->getIdCategoria()) return -1;
-		if ($a->getDataInserimento() < $b->getDataInserimento()) return +1;
-		if ($a->getDataInserimento() > $b->getDataInserimento()) return -1;
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT count(*) FROM file_studente_commenti WHERE id_file_studente = '.$db->quote($id_file).' GROUP BY id_file_studente';
+		$res =& $db->query($query);
+		
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		$res->fetchInto($row);
+		$res->free();
+		
+		return $row[0];
+		
 	}
 	
 	
-	
 }
-
 
 ?>

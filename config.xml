@@ -197,6 +197,7 @@
 		<FileShowInfo class="FileShowInfo">
 			<response type="template" name="default">file_show_info.tpl</response>
 			<pluginCommand name="ShowFileInfo" class="Files.ShowFileInfo" />
+			<pluginCommand name="ShowFileStudentiCommenti" class="Files.ShowFileStudentiCommenti" />
 		</FileShowInfo>
 		<FileAdd class="FileAdd">
 			<response type="template" name="success">file_add_success.tpl</response>
