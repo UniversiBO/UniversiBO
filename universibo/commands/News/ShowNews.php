@@ -24,14 +24,16 @@ class ShowNews extends PluginCommand {
 	 * Esegue il plugin
 	 *
 	 * @param array $param deve contenere: 
-	 *  - 'id_notizia' l'id della notizia da visualizzare
+	 *  un array di id notizeie da visualizzare
 	 *	  es: array('id_notizia'=>5) 
 	 */
 	function execute($param)
 	{
 		
 		$elenco_id_news		=  $param['id_notizie'];
-
+//		var_dump($param['id_notizie']);
+//		die();
+		
 		$bc        =& $this->getBaseCommand();
 //		$user      =& $bc->getSessionUser();
 //		$canale    =& $bc->getRequestCanale();
@@ -80,9 +82,11 @@ class ShowNews extends PluginCommand {
 
 		$template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
 */
-
+//		var_dump($elenco_id_news);
+//		die();
 		$canale_news = count($elenco_id_news);
-		
+//		var_dump($elenco_id_news);
+//		die();
 		if ( $canale_news == 0 )
 		{
 			$template->assign('showNews_langNewsAvailable', 'Non ci sono notizie da visualizzare');
@@ -94,6 +98,7 @@ class ShowNews extends PluginCommand {
 			$template->assign('showNews_langNewsAvailableFlag', 'true');
 		}
 		
+		//var_dump($elenco_id_news);
 		$elenco_news =& NewsItem::selectNewsItems($elenco_id_news);
 		
 		$elenco_news_tpl = array();
@@ -102,10 +107,11 @@ class ShowNews extends PluginCommand {
 		{
 			
 			$ret_news = count($elenco_news);
-			
+
 			for ($i = 0; $i < $ret_news; $i++)
 			{
 				$news =& $elenco_news[$i];
+				//var_dump($news);
 				//$this_moderatore = ($moderatore && $news->getIdUtente()==$user->getIdUser());
 				
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();

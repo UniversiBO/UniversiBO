@@ -1,0 +1,46 @@
+{if $common_pageType == "index"}
+{include file=header_index.tpl}
+{elseif $common_pageType == "popup"}
+{include file=header_popup.tpl}
+{/if}
+
+<table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
+<tr><td align="center"><p class="Titolo">Cancella la notizia</p></td></tr>
+<tr><td class="Normal">
+{include file=avviso_notice.tpl}
+</td></tr><tr><td> 
+{include file=News/show_news.tpl}
+</td></tr><tr><td> 
+<form method="post">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
+<tr><td>
+<fieldset>
+<legend><span class="Normal">{$f9_langAction|escape:"htmlall"}</span></legend>
+	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+	<tr class="News"><td >
+	{foreach name=canali item=item from=$f9_canale}
+	<tr class="Normal" valign="top">
+	<td>&nbsp;&nbsp;<input type="checkbox" id="f9_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f9_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;</td><td><label for="f9_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></td>
+	</tr>
+	{/foreach}
+	</td></tr>
+	</table>
+</fieldset>	  
+</tr></td>
+<tr>
+<td align="center">
+<input type="submit" id="" name="f9_submit" size="20" value="Elimina" /></td>
+</tr>
+<tr><td align="center" class="Normal"><a href="index.php?do={$back_command|escape:"htmlall"}&amp;id_canale={$back_id_canale|escape:"htmlall"}">Torna indietro.</a></td></tr>
+</table>
+
+</form>
+</td></tr>
+</table>
+
+{if $common_pageType == "index"}
+{include file=footer_index.tpl}
+{elseif $common_pageType == "popup"}
+{include file=footer_popup.tpl}
+{/if}

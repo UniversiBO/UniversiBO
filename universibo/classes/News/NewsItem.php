@@ -113,7 +113,9 @@ class NewsItem {
 	 
 	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $ultimaModifica, $urgente, $eliminata, $id_utente, $username)
 	 {
-	 	
+	 	/**
+	 	 * @TODO verifica parametri ingresso	
+	 	 */
 	 	$this->id_notizia     = $id_notizia;
 	 	$this->titolo         = $titolo;
 	 	$this->notizia        = $notizia;
@@ -375,7 +377,7 @@ class NewsItem {
 	 *
 	 * @static
 	 * @param array $id_notizie array elenco di id della news
-	 * @return NewsItems 
+	 * @return array NewsItems 
 	 */
 	 function &selectNewsItems ($id_notizie)
 	 {
@@ -387,10 +389,15 @@ class NewsItem {
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
-		$values = implode(',',$id_notizie);
+		if ( count($id_notizie) == 1 ) 
+			$values = $id_notizie[0];
+		else 
+			$values = implode(',',$id_notizie);
 		
 		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		//var_dump($query);
 		$res =& $db->query($query);
+		
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
