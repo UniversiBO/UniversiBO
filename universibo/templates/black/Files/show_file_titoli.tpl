@@ -9,7 +9,7 @@
 <tr><td class="piccolo">
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr><td class="piccolo">
-&nbsp;{if $showFileTitoli_addFileFlag == "true"}<img src="tpl/black/file_new.gif" width="15" height="15" alt="" />
+&nbsp;{if $showFileTitoli_addFileFlag == "true"}<img src="tpl/black/file_new.gif" width="15" height="15" alt="Nuovo File" />
 <a href="{$showFileTitoli_addFileUri|escape:"htmlall"}">{$showFileTitoli_addFile|escape:"htmlall"|bbcode2html|nl2br}</a>
 &nbsp;&nbsp;&nbsp;{/if}<br />
 </td>
