@@ -14,7 +14,7 @@
 {* inizio tabella di impaginazione GENERALE  *}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<colgroup>
-		<col width="165px" />
+		<col width="200px" />
 		<col />
 		<col width="168px" />
 	</colgroup>
@@ -22,7 +22,7 @@
 <tr>
  	<td colspan="3">
 		<div id="header">
-			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="165" height="92"/></a>
+			<a href="https://www.universibo.unibo.it/"><img alt="www.universibo.unibo.it" src="tpl/unibo/logo.gif" width="200" height="92"/></a>
 			<img src="tpl/unibo/logo_{$common_logoType}" alt="Logo UniversiBO" />
 			<p class="TimeInfo">2{$common_longDate} &nbsp;-&nbsp;{$common_time}</p>
 			<a href="#content" class="hide">Salta la navigazione</a>
@@ -70,7 +70,7 @@
 				<a href="{$temp_currLink.uri}">{$temp_currLink.label|escape:"htmlall"}</a>
 				{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/unibo/icona_3_r.gif" width="9" height="9" alt="Referente" />{/if}
 				{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/unibo/icona_3_m.gif" width="9" height="9" alt="Moderatore" />{/if}
-				{if $temp_currLink.new=="true"}&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}
+				{if $temp_currLink.new=="true"}&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}<br />
 				{/foreach}
 				<div class="backlink"><a href="http://www.ing.unibo.it/Ingegneria/Eventi/">Tutti gli eventi</a></div>
 		</div>
