@@ -294,13 +294,14 @@ td.evidenzia{
 	padding-top: 10px;*/
 	display: block;
 	font-size: 17px;
-	margin-left: 5%;
+	margin-left: 3%;
 	margin-bottom: 0 !important;
 	clear: left;
 	color: #386dce;
 	text-align: left;
 	font-family: Georgia, "New Century Schoolbook", "Bitstream Vera Serif", Utopia, "Times New Roman", times, serif;
 }
+#content>h2, #content>h2 a {margin-left: 5%;}
 #content th
 {
 	background-color: #ccc;
@@ -348,7 +349,8 @@ td.evidenzia{
 	border: solid 1px #999;
 	text-align: left;
 }
-.news, .file_info { width: 90%; margin: 2em 5% 0; background-color: #eff3fc;}
+.news, .file_info { width: 90%; margin: 2em 0 0; background-color: #eff3fc;}
+#content>.news, #content>.file_info {margin: 2em 5% 0;}
 .news, .chi_siamo, .file_info { padding: 0 0 4px; }
 .elenco, .elencoFile { padding: 0; }
 .elenco p, .elencoFile p { padding: 2px 4px !important; }
@@ -699,4 +701,5 @@ td.evidenzia{
 	display: inline !important;
 }
 .comandi { font-size: 11px; text-align: center;}
-p.comandi {margin-left: 5% !important; }
+#content p.comandi {margin-left: 3%; }
+span>p.comandi {margin-left: 5% !important;}
