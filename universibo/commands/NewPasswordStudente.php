@@ -168,10 +168,10 @@ class NewPasswordStudente extends UniversiboCommand
 			if(!$mail->Send())
 				Error::throw(_ERROR_DEFAULT,array('msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione è stata registrata con successo.\n\nLe informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono state inviate al tuo indirizzo e-mail di ateneo\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$new_user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
+			$template->assign('regStudente_thanks',"La nuova password è stata registrata con successo.\n\nLe informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono state inviate al tuo indirizzo e-mail di ateneo\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
 			'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 
-			$template->assign('newPasswordStudente_thanks',"Una nuova password è stata generata, la tua richiesta è stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo.\n\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$new_user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
+			$template->assign('newPasswordStudente_thanks',"Una nuova password è stata generata, la tua richiesta è stata inoltrata e a breve riceverai le informazioni al tuo indirizzo e-mail di ateneo.\n\nPer controllare la tua posta d'ateneo vai a [url=https://posta.studio.unibo.it/horde/?username=".$user->getADUsername()." type=extern]Posta di ateneo[/url]\n\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
