@@ -1,6 +1,10 @@
 {if $showFileStudentiCommenti_langCommentiAvailableFlag == "true"}
 	<div class="boxCommenti">
 	<h2>Commenti:</h2>
+	{if $isFileStudente == 'true'}
+	 <p>&nbsp;Voto medio:&nbsp;{$showFileInfo_voto|escape:"htmlall"}</p>
+	 <p>&nbsp;<a href="{$showFileInfo_addComment|escape:"htmlall"}">Aggiungi il tuo commento!</a></p>
+	{/if}
 	{foreach from=$showFileStudentiCommenti_commentiList item=temp_commenti}
 	<div class="boxCommento">
 	    <p>Voto proposto: {$temp_commenti.voto}</p>

@@ -365,6 +365,11 @@ td.evidenzia{
 	margin: 30px 5%;
 }
 
+.boxCommenti p,a
+{
+	font-size: 11px !important;
+}
+
 .boxCommento
 {
 	border: dotted 1px #999;
@@ -382,7 +387,7 @@ td.evidenzia{
 .commento
 {
 	text-align: left;
-	margin: -1.8em 7em 0;
+	margin: -1.5em 7em 0;
 	font-size: 11px !important;
 }
 /*
