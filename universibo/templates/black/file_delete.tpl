@@ -5,7 +5,7 @@
 {/if}
 
 <table width="98%" border="0" cellspacing="0" cellpadding="4" summary="">
-<tr><td align="center"><p class="Titolo">Cancella la notizia</p></td></tr>
+<tr><td align="center"><p class="Titolo">Cancella il file</p></td></tr>
 <tr><td class="Normal">
 {include file=avviso_notice.tpl}
 
@@ -18,7 +18,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4" summary="">
 <tr><td>
 <fieldset>
-<legend><span class="Normal">{$$f9langAction|escape:"htmlall"}</span></legend>
+<legend><span class="Normal">{$f9langAction|escape:"htmlall"}</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f12_canale}
 	<tr class="Normal" valign="center">
