@@ -21,17 +21,17 @@ class ShowUser extends UniversiboCommand{
 		
 		if($current_user->isOspite())
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Le schede degli utenti sono visualizzabili solo se si é registrati','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Le schede degli utenti sono visualizzabili solo se si ? registrati','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		if(!$user)
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		if(!$current_user->isAdmin() && !$user->isDocente()  && $current_user->getIdUser() != $user->getIdUser())
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non ti è permesso visualizzare la scheda dell\'utente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non ti ? permesso visualizzare la scheda dell\'utente','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$arrayRuoli				=& $user->getRuoli();
@@ -39,24 +39,24 @@ class ShowUser extends UniversiboCommand{
 		$arrayCanali = array();
 		$keys = array_keys($arrayRuoli);
 		foreach ($keys as $key)
+		{
+			$ruolo =& $arrayRuoli[$key];
+			if ($ruolo->isMyUniversibo())
 			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
+				$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+				if ($canale->isGroupAllowed($current_user->getGroups()))
 				{
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					if ($canale->isGroupAllowed($current_user->getGroups()))
-					{
-						$canali = array();
-						$canali['uri']   = $canale->showMe();
-						$canali['tipo']  = $canale->getTipoCanale();
-						$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
-						$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-						$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
-						$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
-						$arrayCanali[] = $canali;
-					}
+					$canali = array();
+					$canali['uri']   = $canale->showMe();
+					$canali['tipo']  = $canale->getTipoCanale();
+					$canali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNome();
+					$canali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					$canali['modifica']	= 'index.php?do=MyUniversiBOEdit&id_canale='.$ruolo->getIdCanale();
+					$canali['rimuovi']	= 'index.php?do=MyUniversiBORemove&id_canale='.$ruolo->getIdCanale();
+					$arrayCanali[] = $canali;
 				}
 			}
+		}
 		usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
 		$email = $user->getEmail();
 		$template->assign('showUserLivelli', implode(', ',$user->getUserGroupsNames()));

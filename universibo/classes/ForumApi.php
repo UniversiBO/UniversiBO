@@ -365,8 +365,97 @@ class ForumApi
 		return $row[0];
 	
 	}
+	
+	
+	/**
+	 *
+	 * @return  
+	 */
+	function addForumCategory($cat_title, $cat_order)
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$next_id = $db->nextId('phpbb_categories_id');
+		
+		$query = 'INSERT INTO phpbb_categories ( cat_id, cat_title, cat_order) 
+				VALUES ('.$next_id.', '.$db->quote($cat_title).', '.$cat_order.' )';
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		return $next_id;
+	}
+	
+	
+	/**
+	 *
+	 * @return 
+	 */
+	function addForum($title, $desc, $cat_id)
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$next_id = $this->getMaxForumId() + 1;
+		
+		$query = 'INSERT INTO "phpbb_forums" ("forum_id", "cat_id", "forum_name", "forum_desc", "forum_status", "forum_order", 
+				"forum_posts", "forum_topics", "forum_last_post_id", "prune_enable", "prune_next", "auth_view", "auth_read",
+				"auth_post", "auth_reply", "auth_edit", "auth_delete", "auth_announce", "auth_sticky", "auth_pollcreate",
+				"auth_vote", "auth_attachments")
+				VALUES ('.$next_id.','.$cat_id.' ,'.$db->quote($title).','. $db->quote($desc).', 0, 1, 0, 0, 0, 0, NULL, 0, 0,
+				1, 1, 1, 1, 3, 3, 3, 1, 0);';
 
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		return $next_id;
+	}
+	
+	
+	/**
+	 *
+	 * @return int 
+	 */
+	function addGroup($title, $desc, $id_owner)
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$next_id = $db->nextId('phpbb_groups_id');
+		
+		$query = 'INSERT INTO "phpbb_groups" ("group_name", "group_type", "group_description", "group_moderator", "group_single_user")
+					VALUES ('.$db->quote($title).',2 ,'.$db->quote($desc).' ,'.$id_owner.' , 0)';
 
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+		return $next_id;
+	}
+	
+	
+	/**
+	 * @return null
+	 */
+	function addGroupForumPrivilegies($group_id, $forum_id)
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$next_id = $db->nextId('phpbb_groups_id');
+		
+		$query = 'INSERT INTO "phpbb_auth_access" ("group_id", "forum_id", "auth_view", "auth_read", "auth_post", "auth_reply", 
+				"auth_edit", "auth_delete", "auth_announce", "auth_sticky", "auth_pollcreate", "auth_attachments", "auth_vote", "auth_mod")
+				VALUES ('.$group_id.', '.$forum_id.', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)';
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+	
+	
+	
+	
 }
 
 
