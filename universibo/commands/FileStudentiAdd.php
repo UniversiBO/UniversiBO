@@ -398,45 +398,33 @@ class FileStudentiAdd extends UniversiboCommand {
 						//correttezza legale del file
 						
 						//notifiche
-//						require_once('Notifica/NotificaItem'.PHP_EXTENSION);
-//						$notifica_titolo = 'Nuovo file inserito in '.$canale->getNome();
-//						$notifica_titolo = substr($notifica_titolo,0 , 199);
-//						$notifica_dataIns = $f23_data_inserimento;
-//						$notifica_urgente = false;
-//						$notifica_eliminata = false;
-//						$notifica_messaggio = 
-//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Titolo File: '.$f23_titolo.'
-//
-//Descrizione: '.$f23_abstract.'
-//
-//Dimensione: '.$dimensione_file.' kB
-//
-//Autore: '.$user->getUsername().'
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Informazioni per la cancellazione:
-//
-//Per rimuoverti, vai all\'indirizzo:
-//'.$frontcontroller->getAppSetting('rootUrl').' 
-//e modifica il tuo profilo personale nella dopo aver eseguito il login
-//Per altri problemi contattare lo staff di UniversiBO
-//'.$frontcontroller->getAppSetting('infoEmail');
+						require_once('Notifica/NotificaItem'.PHP_EXTENSION);
+						$notifica_titolo = 'Nuovo file studente inserito in '.$canale->getNome();
+						$notifica_titolo = substr($notifica_titolo,0 , 199);
+						$notifica_dataIns = $f23_data_inserimento;
+						$notifica_urgente = true;
+						$notifica_eliminata = false;
+						$notifica_messaggio = 
+'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Titolo File: '.$f23_titolo.'
+
+Descrizione: '.$f23_abstract.'
+
+Dimensione: '.$dimensione_file.' kB
+
+Autore: '.$user->getUsername().'
+
+Link: https://www.universibo.unibo.it/index.php?do=FileShowInfo&id_file='.$newFile->getIdFile().'&id_canale='.$canale->getIdCanale().'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
+
 //						
 //						$ruoli_canale =& $canale->getRuoli();
-//						foreach ($ruoli_canale as $ruolo_canale)
-//						{
-//									//define('NOTIFICA_NONE'   ,0);
-//									//define('NOTIFICA_URGENT' ,1);
-//									//define('NOTIFICA_ALL'    ,2);
-//							if ($ruolo_canale->isMyUniversiBO() && ($ruolo_canale->getTipoNotifica()==NOTIFICA_URGENT || $ruolo_canale->getTipoNotifica()==NOTIFICA_ALL) )
-//							{
-//								$notifica_user = $ruolo_canale->getUser();
-//								$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
-//								
-//								$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
-//								$notifica->insertNotificaItem();
-//							}
-//						}
+						for ($j=0;$j<$i;$j++)
+						{
+						    $notifica_destinatario = 'mail://'.$arrayEmailRef[$j];
+							$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+							$notifica->insertNotificaItem();
+						}
 //						
 //						//ultima notifica all'archivio
 //						$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');;
@@ -445,15 +433,9 @@ class FileStudentiAdd extends UniversiboCommand {
 //						$notifica->insertNotificaItem();
 //						
 //				
-//        		$db->autoCommit(true);
-//				ignore_user_abort(0);
-				
-				
-				
-				
-				
-			
-				
+        		$db->autoCommit(true);
+				ignore_user_abort(0);
+								
 				return 'success';
 			}
 
