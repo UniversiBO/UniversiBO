@@ -16,6 +16,9 @@
 	
 	<defaultCommand>ShowHome</defaultCommand>
 	<commands>
+		<ShowError class="ShowError">
+			 <response type="template" name="default">error.tpl</response>
+		</ShowError>
 		<Login class="Login">
 			 <response type="template" name="default">login.tpl</response>
 		</Login>
