@@ -234,6 +234,13 @@ ALTER TABLE "questionario" DROP COLUMN "gimp";
 
 
 ----09-12-2003
+--aggiunta timestamp ultima modifica della notizia
 ALTER TABLE "news" ADD "data_modifica" int4 ;
 UPDATE news SET data_modifica = data_inserimento;
+--correzione dati tabella
 UPDATE utente_canale SET ruolo=0 WHERE ruolo is NULL;
+
+----11-12-2003
+--aggiunta possibilità di nascondere la visualizzazione di un ruolo/contatto
+ALTER TABLE "utente_canale" ADD "nascosto" char (1) ;
+ALTER TABLE "utente_canale" ALTER "nascosto" SET DEFAULT 'N';
