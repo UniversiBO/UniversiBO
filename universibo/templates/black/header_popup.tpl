@@ -8,6 +8,7 @@
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
 <script type="text/javascript" src="tpl/black/js_common.js"></script>
 {#styleSheet#}
+{#favIcon#}
 </head>
  
 <body text="#FFFFFF" bgcolor="#000000" > <!--leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"-->

@@ -7,6 +7,7 @@
 <meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}">
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}">
 {#styleSheet#}
+{#favIcon#}
 </head>
  
 <body leftmargin="0" topmargin="0">
