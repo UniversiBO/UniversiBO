@@ -245,3 +245,5 @@ UPDATE utente_canale SET ruolo=0 WHERE ruolo is NULL;
 ALTER TABLE "utente_canale" ADD "nascosto" char (1) ;
 ALTER TABLE "utente_canale" ALTER "nascosto" SET DEFAULT 'N';
 UPDATE utente_canale SET nascosto = 'N';
+--aggiunto preside alle tabelle
+ALTER TABLE "facolta" ADD "preside" char (6) ;
