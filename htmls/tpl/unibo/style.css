@@ -374,9 +374,16 @@ td.evidenzia{
 	margin: 15px 8px;
 }
 
+.box div.contenuto
+{
+	margin: 6px;
+}
+
 .box form input, .box form label{
 	margin: 2px;
 	text-align: center;
+	font-size: 10px;
+	vertical-align: text-top;
 }
 
 .box form label{
@@ -395,7 +402,7 @@ td.evidenzia{
 
 .box p, .box a, .box ul, .box span
 {
-	margin: 2px !important;
+	margin: 4px 2px !important;
 }
 
 .box h3
@@ -409,9 +416,7 @@ td.evidenzia{
 .box p, .box a
 {
 	font-weight: bold;
-	margin: 2px 0;
 }
-
 .box a
 {
 	color: #00e !important;
