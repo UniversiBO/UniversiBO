@@ -118,6 +118,8 @@ class CanaleCommand extends UniversiboCommand
 		
 		$template->assign( 'common_isSetVisite', 'true' );
 		$template->assign( 'common_visite', $canale->getVisite() );
+		$template->assign( 'common_langCanaleNome', $canale->getNome());
+		$template->assign( 'common_canaleURI', $canale->showMe());
 			
 	}
 

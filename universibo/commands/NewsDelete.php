@@ -30,9 +30,7 @@ class NewsDelete extends CanaleCommand {
 		
 		$referente = false;
 		$moderatore = false;
-		
-		$template->assign('NewsDelete_back', $canale->showMe());
-				
+			
 		$user_ruoli = $user->getRuoli();
 		$id_canale = $canale->getIdCanale();
 	

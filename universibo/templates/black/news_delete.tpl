@@ -30,7 +30,7 @@
 <td align="center">
 <input type="submit" id="" name="f9_submit" size="20" value="Elimina" /></td>
 </tr>
-<tr><td align="center" class="Normal"><a href="{$NewsDelete_back|escape:"htmlall"}">Torna indietro.</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
 </form>

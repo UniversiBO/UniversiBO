@@ -102,7 +102,7 @@
 <td colspan="2" align="center">
 <input type="submit" id="" name="f7_submit" size="20" value="Invia" /></td>
 </tr>
-<tr><td colspan="2" align="center" class="Normal"><a href="{$NewsAdd_back|escape:"htmlall"}">Torna indietro.</a></td></tr>
+<tr><td colspan="2" align="center" class="Normal"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;a&nbsp;{$common_langCanaleNome}</a></td></tr>
 </table>
 
 

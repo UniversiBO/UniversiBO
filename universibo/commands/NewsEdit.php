@@ -58,8 +58,6 @@ class NewsEdit extends CanaleCommand
 		$frontcontroller = & $this->getFrontController();
 		$template = & $frontcontroller->getTemplateEngine();
 
-		$template->assign('NewsEdit_back', $canale->showMe());
-		
 		$krono = & $frontcontroller->getKrono();
 		$data_inserimento = $news->getDataIns();
 		// valori default form

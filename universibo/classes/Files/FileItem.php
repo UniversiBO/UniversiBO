@@ -573,8 +573,7 @@ class FileItem {
 		$this->titolo = $titolo;
 	}	
 
-	//ilias: da qui in giù sto sistemando dal copia e incolla da NewsItem
-
+	
 	/**
 	 * Recupera un file dal database
 	 *

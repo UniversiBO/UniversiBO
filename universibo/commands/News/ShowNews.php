@@ -65,12 +65,12 @@ class ShowNews extends PluginCommand {
 				$ultimo_accesso = $ruolo->getUltimoAccesso();
 			}
 			
-			if ( $user->isAdmin() || $referente || $moderatore )
-			{
-				$template->assign('showNews_addNewsFlag', 'true');
-				$template->assign('showNews_addNews', 'Scrivi nuova notizia');
-				$template->assign('showNews_addNewsUri', 'index.php?do=NewsAdd&id_canale='.$id_canale);
-			}
+//			if ( $user->isAdmin() || $referente || $moderatore )
+//			{
+//				$template->assign('showNews_addNewsFlag', 'true');
+//				$template->assign('showNews_addNews', 'Scrivi nuova notizia');
+//				$template->assign('showNews_addNewsUri', 'index.php?do=NewsAdd&id_canale='.$id_canale);
+//			}
 		}
 		else
 		{

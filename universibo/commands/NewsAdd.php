@@ -38,8 +38,6 @@ class NewsAdd extends CanaleCommand {
 		$frontcontroller = & $this->getFrontController();
 		$template = & $frontcontroller->getTemplateEngine();
 
-		$template->assign('NewsAdd_back', $canale->showMe());
-		
 		$krono = & $frontcontroller->getKrono();
 
 		// valori default form
