@@ -130,6 +130,8 @@
 		<FileAdd class="FileAdd">
 			<response type="template" name="success">file_add_success.tpl</response>
 			<response type="template" name="default">file_add.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileAdd>
 		<FileAdd class="FileEdit">
 			<response type="template" name="default">file_add.tpl</response>

@@ -1,5 +1,6 @@
 <?php
-
+require_once ('PluginCommand'.PHP_EXTENSION);
+require_once ('News/ShowNewsLatest'.PHP_EXTENSION);
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
@@ -12,6 +13,7 @@ require_once  ('UniversiboCommand'.PHP_EXTENSION);
  * @version 2.0.0
  * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Daniele Tiles 
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
@@ -22,7 +24,7 @@ class ShowSettings extends UniversiboCommand
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		$utente =& $this->getSessionUser();
-
+		
 
 		if ($utente->isAdmin())
 		{
@@ -47,8 +49,45 @@ class ShowSettings extends UniversiboCommand
 Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni personali ed avere un accesso veloce e personalizzato alle informazioni scegliendo i contenuti e il loro formato tramite le tue [b]Preferences[/b].');
 		
 		$template->assign('showSettings_langAdmin',array('[url=https://www.universibo.unibo.it/phppgadmin242/]DB Postgresql locale[/url]', '[url=https://www.universibo.unibo.it/phporacleadmin/]DB Oracle ateneo[/url]', '[url=https://universibo.ing.unibo.it/phpMyAdmin]DB MySql facoltà[/url]', '[url=index.php?do=RegistraStudente]Iscrivi nuovo utente[/url]'));
+		
+		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
+		
+		if(!$utente->isOspite())
+		{
+			$newsItems[] = array();
+			$fileItems[] = array();
+			$arrayCanali = array();
+			$arrayRuoli =& $utente->getRuoli();
+			$keys = array_keys($arrayRuoli);
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
+								
+					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+					$arrayCanali[] = $canale;
+				}
+			}
+			///ho ottenuto tutti i canali a cui é iscritto l'utente
+			
+			$keys = array_keys($arrayCanali);
+			foreach ($keys as $key)
+			{
+				$canale =& $arrayCanali[$key];
+				if ($canale->getServizioNews())
+				{
+					$id_canale = $canale->getIdCanale();
+					$canale_news = ShowNewsLatest::getNumNewsCanale($id_canale);
+					
+				}
+			}
+
+		}
+		
 		return 'default';						
 	}
+	
 }
 
 ?>
