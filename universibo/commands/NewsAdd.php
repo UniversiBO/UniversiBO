@@ -243,15 +243,40 @@ class NewsAdd extends CanaleCommand {
 				if (array_key_exists('f7_urgente', $_POST)) {
 					$f7_urgente = true;
 				}
-
+				
+				//diritti_su_tutti_i_canali
+				foreach ($_POST['f7_canale'] as $key => $value)
+				{
+					$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
+					if (!$diritti)
+					{
+						//$user_ruoli[$key]->getIdCanale();
+						$canale =& Canale::retrieveCanale($key);
+						Error :: throw (_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f7_accept = false;
+					}
+				}
+				
+				
 				//esecuzione operazioni accettazione del form
 				if ($f7_accept == true) {
 
 					//id_news = 0 per inserimento, $id_canali array dei canali in cui inserire
 					$notizia = new NewsItem(0, $f7_titolo, $f7_testo, $data_inserimento, $data_scadenza, $data_inserimento, ($f7_urgente) ? 'S' : 'N', 'N', $user->getIdUser(), $user->getUsername());
-					if ($notizia->insertNewsItem($f7_canale)) {
-						return 'success';
+
+
+					$notizia->insertNewsItem();
+						
+					//$num_canali = count($f7_canale);
+					//var_dump($f7_canale);
+					//var_dump($_POST['f7_canale']);
+					foreach ($_POST['f7_canale'] as $key => $value)
+					{
+						$notizia->addCanale($key);
+						$canale = Canale::retrieveCanale($key);
+						$canale->setUltimaModifica(time(), true);
 					}
+					return 'success';
 				}
 
 			} //end if (array_key_exists('f7_submit', $_POST))

@@ -224,6 +224,36 @@ class Canale {
 	}
 
 
+	/**
+	 * Imposta il timestamp dell'ultima modifica
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_files 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setUltimaModifica($timestamp, $updateDB = false)
+	{
+		$this->ultimaModifica = $timestamp;
+		if ( $updateDB == true )
+		{
+			$db =& FrontController::getDbConnection('main');
+		
+			$query = 'UPDATE canale SET ultima_modifica = '.$db->quote($timestamp).' WHERE id_canale = '.$db->quote($this->getIdCanale());
+			$res = $db->query($query);
+			if (DB::isError($res)) 
+				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			$rows = $db->affectedRows();
+		
+			if( $rows == 1) return true;
+			elseif( $rows == 0) return false;
+			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
+			return false;
+		}
+		return true;
+		
+	}
+
 
 	/**
 	 * Ritorna l'URL relativo alla cartella del template dell'immagine di intestazione del canale
