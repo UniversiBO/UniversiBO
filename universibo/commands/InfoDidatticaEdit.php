@@ -156,31 +156,31 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$template->assign('infoDid_title', $insegnamento->getTitolo() );
 		
 		
-		$template->assign('infoDid_langHomepageAlternativaLink', $f18_homepageLink );
+		$template->assign('infoDid_langHomepageAlternativaLink', 'Link ad una homepage alternativa' );
 		$template->assign('f18_homepageLink', $f18_homepageLink );
 		
 		$template->assign('infoDid_langObiettiviInfo', 'Obiettivi del corso' );
-		$template->assign('infoDid_langObiettiviLink', 'Gli obiettivi del corso posso essere consultati anche a questo link' );
+		$template->assign('infoDid_langObiettiviLink', 'Link a pagina esterna alternativa con gli obiettivi del corso' );
 		$template->assign('f18_obiettiviLink', $f18_obiettiviLink );
 		$template->assign('f18_obiettiviInfo', $f18_obiettiviInfo );
 		
 		$template->assign('infoDid_langProgrammaInfo', 'Programma d\'esame' );
-		$template->assign('infoDid_langProgrammaLink', 'Il programma d\'esame può essere consultato anche a questo link' );
+		$template->assign('infoDid_langProgrammaLink', 'Link a pagina esterna alternativa con il programma d\'esame' );
 		$template->assign('f18_programmaLink', $f18_programmaLink );
 		$template->assign('f18_programmaInfo', $f18_programmaInfo );
 		
 		$template->assign('infoDid_langMaterialeInfo', 'Materiale didattico e testi consigliati' );
-		$template->assign('infoDid_langMaterialeLink', 'Il Materiale didattico e testi consigliati possono essere consultati anche a questo link' );
+		$template->assign('infoDid_langMaterialeLink', 'Link a pagina esterna alternativa con materiale didattico e testi consigliati' );
 		$template->assign('f18_materialeLink', $f18_materialeLink );
 		$template->assign('f18_materialeInfo', $f18_materialeInfo );
 		
 		$template->assign('infoDid_langModalitaInfo', 'Modalità d\'esame' );
-		$template->assign('infoDid_langModalitaLink', 'Le modalità d\'esame possono essere consultati anche a questo link');
+		$template->assign('infoDid_langModalitaLink', 'Link a pagina esterna alternativa con modalità d\'esame');
 		$template->assign('f18_modalitaLink', $f18_modalitaLink );
 		$template->assign('f18_modalitaInfo', $f18_modalitaInfo );
 		
 		$template->assign('infoDid_langAppelliInfo', 'Appelli d\'esame' );
-		$template->assign('infoDid_langAppelliLink', 'Gli appelli d\'esame possono essere consultati anche a questo link');
+		$template->assign('infoDid_langAppelliLink', 'Link a pagina esterna alternativa con appelli d\'esame');
 		$template->assign('f18_appelliLink', $f18_appelliLink );
 		$template->assign('f18_appelliInfo', $f18_appelliInfo );
 		$template->assign('infoDid_langAppelliUniwex', 'Ci scusiamo con gli utenti ma al momento non è più possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
