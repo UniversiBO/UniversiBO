@@ -179,8 +179,9 @@ class Cdl extends Canale{
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 
+		$res->fetchInto($row);
 		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
 		
@@ -212,8 +213,9 @@ class Cdl extends Canale{
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 
+		$res->fetchInto($row);
 		$cdl =& new Cdl($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
 				$row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $row[13], $row[14], $row[15], $row[16]);
 		
@@ -245,7 +247,7 @@ class Cdl extends Canale{
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return array();
+		if( $rows == 0) return array();
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
