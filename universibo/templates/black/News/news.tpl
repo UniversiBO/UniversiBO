@@ -54,15 +54,12 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do={$modifica_li
 <noscript><a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a></noscript>
 {/if}
 {if $elimina!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/black/news_del.gif" width="15" height="15" alt="elimina" />
-
 <script type="text/javascript" language="JavaScript">
 <!--
 document.write("<a href=\"javascript:universiboPopup('index.php?do={$elimina_link|escape:"htmlall"|nl2br}&amp;pageType=popup');\">{$elimina|escape:"htmlall"|bbcode2html|nl2br}<\/a><br />");
 -->
 </script>
 <noscript><a href="index.php?do={$elimina_link|escape:"htmlall"}" target="_popup">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a><br /></noscript>
-
-
 <br />{/if}
 {if $scadenza!=""}
 {$scadenza|escape:"htmlall"|bbcode2html|nl2br}

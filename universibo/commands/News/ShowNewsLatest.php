@@ -90,7 +90,7 @@ class ShowNewsLatest extends PluginCommand {
 			if ( $canale_news > $num_news )
 			{
 				$template->assign('showNewsLatest_langNewsShowOthers', 'Mostra tutte le news');
-				$template->assign('showNewsLatest_langNewsShowOthersUri', 'index.php?do=ShowNewsCanale&id_canale='.$id_canale);
+				$template->assign('showNewsLatest_langNewsShowOthersUri', 'index.php?do=NewsShowCanale&id_canale='.$id_canale);
 			}
 			else
 			{
@@ -134,9 +134,9 @@ class ShowNewsLatest extends PluginCommand {
 				if ( $user->isAdmin() || $referente || $this_moderatore )
 				{
 					$elenco_news_tpl[$i]['modifica']     = 'Modifica';
-					$elenco_news_tpl[$i]['modifica_link']= 'EditNews&id_news='.$news->getIdNotizia();
+					$elenco_news_tpl[$i]['modifica_link']= 'NewsEdit&id_news='.$news->getIdNotizia();
 					$elenco_news_tpl[$i]['elimina']      = 'Elimina';
-					$elenco_news_tpl[$i]['elimina_link'] = 'DeleteNews&id_news='.$news->getIdNotizia().'&id_canale='.$id_canale;
+					$elenco_news_tpl[$i]['elimina_link'] = 'NewsDelete&id_news='.$news->getIdNotizia().'&id_canale='.$id_canale;
 				}
 
 			}
