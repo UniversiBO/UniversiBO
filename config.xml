@@ -16,6 +16,7 @@
 	<defaultCommand>ShowHome</defaultCommand>
 	<commands>
 		<ScriptTest class="ScriptTest" />
+		<!--<ScriptGetLDAPMD5 class="ScriptGetLDAPMD5" />-->
 		
 		<ShowError class="ShowError">
 			<response type="template" name="default">error.tpl</response>

@@ -397,7 +397,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_myUniversiBO', 'ShowMyUniversiBO');
 		$template->assign('common_myUniversiBOUri', 'index.php?do=ShowMyUniversiBO');
 
-		$template->assign('common_fac', 'Facolt?');
+		$template->assign('common_fac', 'Facoltà');
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
 		//var_dump($elenco_facolta);
