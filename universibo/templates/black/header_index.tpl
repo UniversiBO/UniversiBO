@@ -25,7 +25,7 @@
 <tr><td bgcolor="#000050">
  <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
  <tr>
- <td valign="middle" align="left" class="Navbar">&nbsp;&nbsp;<a href="index.php?pg=1">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;Homepage&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="forum/" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;Forum&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="index.php?pg=3">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;MyPage&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td width="100%">
+ <td valign="middle" align="left" class="Navbar">&nbsp;&nbsp;<a href="index.php?do=ShowHome">&nbsp;<img src="tpl/black/torri3.gif" width="27" height="20" border="0" alt="" />&nbsp;Homepage&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="forum/" target="_blank">&nbsp;<img src="tpl/black/forum_omini.gif" width="16" height="20" border="0" alt="" />&nbsp;Forum&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="index.php?pg=3">&nbsp;<img src="tpl/black/puzzle2.gif" width="20" height="20" border="0" alt="" />&nbsp;MyPage&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td width="100%">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
   <tr><td class="Titolo" align="right">{$common_longDate} - {$common_time}&nbsp;&nbsp;</td></tr>
   <tr><td bgcolor="#000099"><img src="tpl/black/rule_darkL.gif" width="100" height="2" alt="" /></td></tr>
