@@ -165,36 +165,50 @@ class FrontController {
 
 
 	/**
-	* Redirect an action command to another command.
-	*
-	* Action is in receiver.php?do=redirectAction
-	*
-	* @param string $command command name with params - example: SomeCommand&param1=val1&param2=val2, if not define default command is executed
-	* @param string $receiver receiver identifier (listed in config.xml), default receiver is current receiver
-	* @access public
-	*/
-	function redirectCommand($command=NULL, $receiverId=NULL)
+	 * Permette di redirigere la richiesa su un nuovo Command del receiver corrente
+	 *
+	 * @param string $command command identifier to redirect to with parameters in uri sintax es: 'do=ShowFacolta&cod_fac=2148' 
+	 * @param string $receiver receiver identifier
+	 * @todo add ability to redirect on another receiver
+	 */ 
+	function redirectCommand($command='', $receiver=NULL)
 	{
-		$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on')? 'https':'http';
-		
-		if ($receiverId==NULL)
+		$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on') ? 'https' : 'http';
+
+		if ( $command != '' )
 		{
-			$receiverId = $this->getReceiverId();
-		}
-		$receiverUrl = $this->getReceiverUrl($receiverId);
-		
-		if ($command == NULL)
-		{
-			$commandUrl = '';  //default
-		}
-		else
-		{
-			$commandUrl = '?do='.$command;
+			$command = 'do='.$command;
 		}
 		
-		//echo 'Location: '.$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->rootUrl.$receiverUrl.$commandUrl;
-		header ('Location: '.$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$this->rootUrl.$receiverUrl.$commandUrl);
+		$url = $request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$command;
+		
+		header('Location: '.$url);
 		exit();
+
+		/*
+		questa era una implementazione con interfaccia diversa...
+		
+		@param array $params associative array of uri GET string parameters es: array('pippo'=>'pluto') -> index.php?do=CommandName&pippo=pluto
+		$append = ''
+		if ( $command != NULL )
+		{
+			$append = '?do='.$command
+		}
+		
+		$first = ($append != '') ? '&' : '?';
+		
+		if ($params != NULL)
+		{
+			foreach($params as $key=>$value)
+			{
+				$pippo =
+			}
+		}
+		...
+		header('Location: '.$url);
+		
+		*/
+
 	}
 
 
