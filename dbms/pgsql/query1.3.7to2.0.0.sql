@@ -259,7 +259,7 @@ ultima_modifica int4 NOT NULL,
 indice int4 NOT NULL);
 
 CREATE TABLE help_riferimento(
-riferimento varchar(15) PRIMARY KEY,
+riferimento varchar(32) PRIMARY KEY,
 id_help int4 NOT NULL
 );
 
