@@ -3,9 +3,9 @@
 /**
  * UnitTest command class
  *
- * E' integrata ed utilizza il framework per avere accesso alle funzionalità
+ * E' integrata ed utilizza il framework per avere accesso alle funzionalit?
  * del framework stesso necessarie al corretto funzionamento della maggiorparte delle
- * entità da testare che sono ad esso accoppiate.
+ * entit? da testare che sono ad esso accoppiate.
  *
  * @package universibo_tests
  * @version 2.0.0
@@ -26,7 +26,7 @@ class TestUnit extends UniversiboCommand {
 		ini_set('include_path', '../tests'.$pathDelimiter.ini_get('include_path'));
 
 		if (!($dir_handle = opendir('../tests')))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Path directory test non valido','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Path directory test non valido','file'=>__FILE__,'line'=>__LINE__)); 
 			
 	    while ( false !== ($file = readdir($dir_handle)) ) 
 	    { 

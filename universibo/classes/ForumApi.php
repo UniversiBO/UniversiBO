@@ -110,10 +110,10 @@ class ForumApi
 					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows != 4) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
 			${$row[0]} = $row[1];
@@ -137,12 +137,12 @@ class ForumApi
 			$db->quote($sid).', '.$user->getIdUser().', '.time().', '.time().', '.$db->quote($this->_encodeIp($_SERVER['REMOTE_ADDR'])).', 0, 1)';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 //		$query = 'UPDATE '.$this->table_prefix.'_users SET user_lastvisit = '.time();
 //		$res = $db->query($query);
 //		if (DB::isError($res)) 
-//			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+//			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		
 		
@@ -168,10 +168,10 @@ class ForumApi
 					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows != 4) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
 			${$row[0]} = $row[1];
@@ -187,7 +187,7 @@ class ForumApi
 		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getSid()).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 
 		$_SESSION['phpbb_sid'] = '';
 		
@@ -231,7 +231,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -252,7 +252,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -273,7 +273,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -291,7 +291,7 @@ class ForumApi
 		$query = 'SELECT * FROM '.$this->table_prefix.'user_group WHERE group_id = '.$db->quote($group).' AND user_id = '.$db->quote($user);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		if ($res->numRows() > 0 ) return;
 		
@@ -299,7 +299,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -318,7 +318,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 

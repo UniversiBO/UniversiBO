@@ -28,11 +28,11 @@ class MyUniversiBOAdd extends UniversiboCommand
 		
 		
 		if($utente->isOspite())
-			Error::throw(_ERROR_DEFAULT, array('msg' => "Non è permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('msg' => "Non ? permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$id_canale = $_GET['id_canale'];
 		$canale = & Canale::retrieveCanale($id_canale);
@@ -61,13 +61,13 @@ class MyUniversiBOAdd extends UniversiboCommand
 			$f15_accept = true;
 			if(!array_key_exists('f15_nome', $_POST) || !array_key_exists('f15_livello_notifica', $_POST) )
 			{
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f15_accept = false;
 			}	
 			
 			if(!array_key_exists($_POST['f15_livello_notifica'], $f15_livelli_notifica) )
 			{
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il livello di notifica scelto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il livello di notifica scelto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f15_accept = false;
 			}
 			else
@@ -75,7 +75,7 @@ class MyUniversiBOAdd extends UniversiboCommand
 			
 			if(strlen($_POST['f15_nome']) > 60 )
 			{
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri', 'file' => __FILE__, 'line' => __LINE__));
 				$f15_accept = false;
 			}	
 			else 
@@ -103,7 +103,7 @@ class MyUniversiBOAdd extends UniversiboCommand
 				
 				if($canale->getTipoCanale() == CANALE_INSEGNAMENTO)
 				{
-					//troveró un modo per ottenere il cdl! lo giuro!!!
+					//trover? un modo per ottenere il cdl! lo giuro!!!
 				}
 				
 				return 'success';

@@ -368,7 +368,7 @@ class InfoDidattica
 		if (DB::isError($res))
 		{
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		return true;
@@ -403,7 +403,7 @@ class InfoDidattica
 		if (DB::isError($res))
 		{
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		return true;
@@ -426,7 +426,7 @@ class InfoDidattica
 		if (DB::isError($res))
 		{
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		return true;
@@ -477,7 +477,7 @@ class InfoDidattica
 		if (DB::isError($res))
 		{
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		if ($res->fetchInto($row))

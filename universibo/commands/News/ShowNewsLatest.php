@@ -5,7 +5,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('News/NewsItem'.PHP_EXTENSION);
 
 /**
- * ShowNewsLatest è un'implementazione di PluginCommand.
+ * ShowNewsLatest ? un'implementazione di PluginCommand.
  *
  * Mostra le ultime $num notizie del canale.
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -173,7 +173,7 @@ class ShowNewsLatest extends PluginCommand {
 		$res =& $db->limitQuery($query, 0 , $num);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -210,7 +210,7 @@ class ShowNewsLatest extends PluginCommand {
 					'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale = '.$db->quote($id_canale).'';
 		$res = $db->getOne($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $res;
 		

@@ -29,7 +29,7 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
 		$query = 'SELECT id_canale FROM canale';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		while ($res->fetchInto($row))
 		{
@@ -54,7 +54,7 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
 			die ("Sorry, this script doesn't run on Windows.\n");
 		}
 		
-		$string = 'we£$%\'rwe2432_we.rw35
+		$string = 'we?$%\'rwe2432_we.rw35
 		234_34++.ZIP';
 		
 		echo ereg_replace('([^a-zA-Z0-9_\.])','_',$string), "\n";

@@ -164,7 +164,7 @@ class FrontController {
 			if (!$templateEngine->template_exists($template))
 			{
 				echo $template;
-				Error::throw(_ERROR_CRITICAL,array('msg'=>'Non è presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			$templateEngine->display($template);
@@ -193,7 +193,7 @@ class FrontController {
 		
 		if (!array_key_exists($name, $this->plugins) )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non ? stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non ? stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__));
 			return;
 		}	
 			
@@ -312,7 +312,7 @@ class FrontController {
 	function getReceiverUrl($receiverId, $relative=true)
 	{
 		if ( !array_key_exists($receiverId, $this->receivers) )
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__));
 		
 		if ($relative == true )
 		{
@@ -355,7 +355,7 @@ class FrontController {
 		}
 
 		if($_GET['do'] == '')
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il comando indicato ? vuoto','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il comando indicato ? vuoto','file'=>__FILE__,'line'=>__LINE__));
 
 		return $_GET['do'];
 	}
@@ -467,11 +467,11 @@ class FrontController {
 	{
 		$elementFolder = &$this->config->root->getChild('rootFolder');
 		if ($elementFolder == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento rootFolder nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento rootFolder nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		$this->rootFolder = $elementFolder->charData;
 		if(is_dir($this->rootFolder)) return;
 		else
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'rootFolder errata nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'rootFolder errata nel file di config','file'=>__FILE__,'line'=>__LINE__));
 	}
 
 	
@@ -546,10 +546,10 @@ class FrontController {
 		
 		$templateInfoNode = &$this->config->root->getChild('templateInfo');
 		if ( $templateInfoNode == NULL )
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento templateInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		if ( $templateInfoNode->attributes['type'] != 'Smarty' ) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Al momento non sono supportati template engines diversi da Smarty','file'=>__FILE__,'line'=>__LINE__));
 		
 		if ( $templateInfoNode->attributes['debugging'] == 'on' )
 		{ 
@@ -564,7 +564,7 @@ class FrontController {
 
 		$templateDirsNode = &$templateInfoNode->getChild('template_dirs');
 		if ( $templateDirsNode == NULL )
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_dirs nel file di config','file'=>__FILE__,'line'=>__LINE__));
 				
 		$n = $templateDirsNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -576,7 +576,7 @@ class FrontController {
 
 		$templateStylesNode = &$templateInfoNode->getChild('template_styles');		
 		if($templateStylesNode == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento template_styles nel file di config','file'=>__FILE__,'line'=>__LINE__));
 
 		$n = $templateStylesNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -588,7 +588,7 @@ class FrontController {
 		$this->templateEngine['default_template'] = $templateStylesNode->attributes['default'];  
 		
 		if (!array_key_exists($this->templateEngine['default_template'],$this->templateEngine['styles']))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste il template di default nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste il template di default nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		//assegno il template in uso	
 		if (array_key_exists('setStyle', $_GET) && $_GET['setStyle']!=''
@@ -618,7 +618,7 @@ class FrontController {
 	{
 		$mailerInfoNode =& $this->config->root->getChild('mailerInfo');
 		if ($mailerInfoNode == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento mailerInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$n = $mailerInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -638,7 +638,7 @@ class FrontController {
 	{
 		$languageInfoNode =& $this->config->root->getChild('langInfo');
 		if ($languageInfoNode == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento langInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento langInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$n = $languageInfoNode->numChildren();
 		for( $i=0; $i<$n; $i++ )
@@ -682,7 +682,7 @@ class FrontController {
 		$this->paths=array();
 		$node=&$this->config->root->getChild('paths');
 		if($node == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento path nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificato l\'elemento path nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
 		$n=$node->numChildren();
 		for($i=0; $i<$n; $i++)
@@ -703,11 +703,11 @@ class FrontController {
 		
 		$cinfonode=&$this->config->root->getChild('commands');
 		if($cinfonode == NULL)
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$commandNode = &$cinfonode->getChild($commandString);
 		if($commandNode == NULL)
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non esiste il comando '.$commandString.' nel file di config','file'=>__FILE__,'line'=>__LINE__));
 		
 		$this->commandClass=$commandNode->attributes['class'];
 		
@@ -733,10 +733,10 @@ class FrontController {
 		}
 
 		if(!isset($this->commandClass))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? definito l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? definito l\'attributo class relativo al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 			
 		if(empty($this->commandClass))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'Non ? specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non ? specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
 	}	
 
 
@@ -783,12 +783,12 @@ class FrontController {
 			{
 				$connectionList[$identifier] = &DB::connect( $dsnList[$identifier] );
 				if (DB::isError($connectionList[$identifier]))
- 					Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($connectionList[$identifier]),'file'=>__FILE__,'line'=>__LINE__)); 
+ 					Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($connectionList[$identifier]),'file'=>__FILE__,'line'=>__LINE__)); 
 			}
 			return $connectionList[$identifier]; 	
 			
 		}
-    	else return Error::throw(_ERROR_CRITICAL,array('msg'=>'Uso errato dell\'interfaccia di accesso al Database','file'=>__FILE__,'line'=>__LINE__)); 
+    	else return Error::throwError(_ERROR_CRITICAL,array('msg'=>'Uso errato dell\'interfaccia di accesso al Database','file'=>__FILE__,'line'=>__LINE__)); 
 
 	}
 

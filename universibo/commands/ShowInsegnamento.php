@@ -29,7 +29,7 @@ class ShowInsegnamento extends CanaleCommand
 		//var_dump($canale);
 		
 		if ($canale->getTipoCanale() != CANALE_INSEGNAMENTO)
-			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 	
 	
@@ -91,11 +91,11 @@ testi consigliati[/url]';
 			'';
 
 		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
-			$modalita = 'Modalità d\'esame';
+			$modalita = 'Modalit? d\'esame';
 		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
-			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalità d\'esame[/url]';
+			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalit? d\'esame[/url]';
 		else
-			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalità d\'esame[/url]';
+			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalit? d\'esame[/url]';
 		
 		
 		if ($info_didattica->getAppelliLink() == '' && $info_didattica->getAppelli() == '' )

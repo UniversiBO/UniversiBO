@@ -7,7 +7,7 @@ require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
  * Insegnamento class.
  *
  * Modella un insegnamento e le informazioni associate.
- * Ad un insegnamento possono essere associate da 1 a n attività didattiche (PrgAttivitaDidattica).
+ * Ad un insegnamento possono essere associate da 1 a n attivit? didattiche (PrgAttivitaDidattica).
  *
  * @package universibo
  * @version 2.0.0
@@ -33,13 +33,13 @@ class Insegnamento extends Canale
 	
 	/**
 	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
+	 * per il caching di tutte le attivit? collegate a questo insegnamento
 	 */
 	var $elencoAttivita = NULL;
 	
 	/**
 	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
+	 * per il caching di tutte le attivit? collegate a questo insegnamento
 	 */
 	var $elencoAttivitaPadre = NULL;
 	
@@ -53,15 +53,15 @@ class Insegnamento extends Canale
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
 	 * @param string $nome			nome del canale
 	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
-	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
-	 * @param string $nome_facolta	descrizione del nome della facoltà
-	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
+	 * @param boolean $news_attivo	se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo	se true il servizio false ? attivo
+	 * @param boolean $forum_attivo	se true il servizio forum ? attivo
+	 * @param int $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links ? attivo
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facolt? a 4 cifre 
+	 * @param string $nome_facolta	descrizione del nome della facolt?
+	 * @param string $uri_facolta	link al sito internet ufficiale della facolt?
 	 * @return Insegnamento
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
@@ -71,7 +71,7 @@ class Insegnamento extends Canale
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
 				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
 		
-		//inizializza l'elenco delle attività padre/non sdoppiate
+		//inizializza l'elenco delle attivit? padre/non sdoppiate
 		//var_dump($elenco_attivita);
 		$this->elencoAttivita =& $elenco_attivita;
 		$num = count($elenco_attivita);
@@ -190,11 +190,11 @@ class Insegnamento extends Canale
 	
 	/**
 	 * Restituisce il nome dell'insegnamento:
-	 * Se è impostato un nome del canale nella tabella canale lo restituisce
-	 * Altrimenti se l'Insegnamento è composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
-	 * Altrimenti se è composto da più PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
+	 * Se ? impostato un nome del canale nella tabella canale lo restituisce
+	 * Altrimenti se l'Insegnamento ? composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
+	 * Altrimenti se ? composto da pi? PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
 	 *   restituisce NOME_MATERIA PRI+SEC RIL AA
-	 * Se è composto da più entità di cui al punto precedente di anni accademici differenti
+	 * Se ? composto da pi? entit? di cui al punto precedente di anni accademici differenti
 	 *   restituisce {NOME} AA1/AA2
 	 *
 	 * @return string
@@ -259,13 +259,13 @@ class Insegnamento extends Canale
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		$res->fetchInto($row);
 		$res->free();
 		
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 		
 		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
@@ -306,7 +306,7 @@ class Insegnamento extends Canale
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

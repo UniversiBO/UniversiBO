@@ -4,7 +4,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
 
 /**
- * ShowFileTitoli è un'implementazione di PluginCommand.
+ * ShowFileTitoli ? un'implementazione di PluginCommand.
  *
  * Mostra i file del canale
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -137,7 +137,7 @@ class ShowFileTitoli extends PluginCommand {
 						$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile().'&id_canale='.$id_canale;
 					}
 					$file_tpl['dimensione'] = $file->getDimensione();
-//	tolto controllo: Il link download va mostrato sempre, il controllo è effettuato successivamente 
+//	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente 
 //					$file_tpl['download_uri'] = '';
 //					$permessi_download = $file->getPermessiDownload();
 //					if ($user->isGroupAllowed($permessi_download))
@@ -191,7 +191,7 @@ class ShowFileTitoli extends PluginCommand {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$id_file_list = array();
 	

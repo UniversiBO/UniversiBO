@@ -28,11 +28,11 @@ class MyUniversiBOEdit extends UniversiboCommand
 		
 		
 		if($utente->isOspite())
-			Error::throw(_ERROR_DEFAULT, array('msg' => "Non è permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('msg' => "Non ? permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$id_canale = $_GET['id_canale'];
 		$canale = & Canale::retrieveCanale($id_canale);
@@ -41,7 +41,7 @@ class MyUniversiBOEdit extends UniversiboCommand
 		
 		$ruoli =& $utente->getRuoli();
 		if( !array_key_exists($id_canale, $ruoli) )
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il ruolo richiesto non è presente', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il ruolo richiesto non ? presente', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$ruolo =& $ruoli[$id_canale];
 		$this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
@@ -59,13 +59,13 @@ class MyUniversiBOEdit extends UniversiboCommand
 				$f19_accept = true;
 				if(!array_key_exists('f19_nome', $_POST) || !array_key_exists('f19_livello_notifica', $_POST) )
 				{
-					Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
+					Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 					$f19_accept = false;
 				}	
 				
 				if(!array_key_exists($_POST['f19_livello_notifica'], $f19_livelli_notifica) )
 				{
-					Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il livello di notifica scelto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+					Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il livello di notifica scelto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 					$f19_accept = false;
 				}
 				else
@@ -73,7 +73,7 @@ class MyUniversiBOEdit extends UniversiboCommand
 				
 				if(strlen($_POST['f19_nome']) > 60 )
 				{
-					Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri', 'file' => __FILE__, 'line' => __LINE__));
+					Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri', 'file' => __FILE__, 'line' => __LINE__));
 					$f19_accept = false;
 				}	
 				else 
@@ -93,7 +93,7 @@ class MyUniversiBOEdit extends UniversiboCommand
 					$template->assign('showUser','index.php?do=ShowUser&id_utente='.$utente->getIdUser());
 					if($canale->getTipoCanale() == CANALE_INSEGNAMENTO)
 					{
-						//troveró un modo per ottenere il cdl! lo giuro!!!
+						//trover? un modo per ottenere il cdl! lo giuro!!!
 					}
 					return 'success';
 				}
@@ -110,7 +110,7 @@ class MyUniversiBOEdit extends UniversiboCommand
 		}
 		else
 		{
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Questa pagina non è inserita nel tuo MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Questa pagina non ? inserita nel tuo MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
 	}

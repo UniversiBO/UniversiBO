@@ -13,7 +13,7 @@ define('NOTIFICA_ALL'    ,2);
 
 
 /**
- * Classe Ruolo, contiene informazioni relative alle proprietà che legano uno User ad un Canale
+ * Classe Ruolo, contiene informazioni relative alle propriet? che legano uno User ad un Canale
  *
  * Contiene le informazioni che legano un utente ad un canale, 
  * i diritti di accesso (moderatore, referente, ecc...)
@@ -98,7 +98,7 @@ class Ruolo {
 	 * @param boolean	$moderatore		true se l'utente possiede diritti di moderatore sul canale
 	 * @param boolean	$referente		true se l'utente possiede diritti di referente sul canale
 	 * @param boolean	$my_universibo	true se l'utente ha inserito il canale tra i suoi preferiti
-	 * @param boolean	$nascosto		se il ruolo è nascosto o visibile da tutti
+	 * @param boolean	$nascosto		se il ruolo ? nascosto o visibile da tutti
 	 * @param User 		$user			riferimento all'oggetto User
 	 * @param Canale 	$canale			riferimento all'oggetto Canale
 	 * @return Ruolo
@@ -211,12 +211,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET nome = '.$db->quote($nome).' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -255,12 +255,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET ultimo_accesso = '.$db->quote($ultimo_accesso).' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 
@@ -321,12 +321,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET tipo_notifica = '.$db->quote($tipo_notifica).' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -336,9 +336,9 @@ class Ruolo {
 
 	
 	/**
-	 * Verifica se nel ruolo corrente l'utente è moderatore del cananle
+	 * Verifica se nel ruolo corrente l'utente ? moderatore del cananle
 	 *
-	 * @return boolean	true se è moderatore, viceversa false
+	 * @return boolean	true se ? moderatore, viceversa false
 	 */
 	function isModeratore()
 	{
@@ -366,12 +366,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET ruolo = '.$campo_ruolo.' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -381,9 +381,9 @@ class Ruolo {
 
 	
 	/**
-	 * Verifica se nel ruolo corrente l'utente è referente del canale
+	 * Verifica se nel ruolo corrente l'utente ? referente del canale
 	 *
-	 * @return boolean	true se è referente, viceversa false
+	 * @return boolean	true se ? referente, viceversa false
 	 */
 	function isReferente()
 	{
@@ -393,9 +393,9 @@ class Ruolo {
 
 	
 	/**
-	 * Verifica se nel ruolo corrente l'utente è referente del canale
+	 * Verifica se nel ruolo corrente l'utente ? referente del canale
 	 *
-	 * @return boolean	true se è referente, viceversa false
+	 * @return boolean	true se ? referente, viceversa false
 	 */
 	function isNascosto()
 	{
@@ -423,12 +423,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET ruolo = '.$campo_ruolo.' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -438,9 +438,9 @@ class Ruolo {
 
 	
 	/**
-	 * Verifica se nel ruolo corrente l'utente è tra i canali scelti dall'utente
+	 * Verifica se nel ruolo corrente l'utente ? tra i canali scelti dall'utente
 	 *
-	 * @return boolean	true se è referente, viceversa false
+	 * @return boolean	true se ? referente, viceversa false
 	 */
 	function isMyUniversibo()
 	{
@@ -483,12 +483,12 @@ class Ruolo {
 			$query = 'UPDATE utente_canale SET my_universibo = '.$db->quote($my_universibo).' WHERE id_utente = '.$db->quote($this->getIdUser()).' AND id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -510,7 +510,7 @@ class Ruolo {
 		$query = 'SELECT id_utente, id_canale FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows >= 1)
 		{
@@ -536,10 +536,10 @@ class Ruolo {
 		$query = 'SELECT ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_utente = '.$db->quote($id_utente).' AND id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: ruolo non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
@@ -563,7 +563,7 @@ class Ruolo {
 		$query = 'SELECT id_canale, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_utente = '.$db->quote($id_utente);
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		if( $rows = 0) return array();
@@ -592,7 +592,7 @@ class Ruolo {
 		$query = 'SELECT id_utente, ultimo_accesso, ruolo, my_universibo, notifica, nome, nascosto FROM utente_canale WHERE id_canale = '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$rows = $res->numRows();
 		if( $rows = 0) return array();
@@ -626,7 +626,7 @@ class Ruolo {
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		return true;
 
@@ -635,7 +635,7 @@ class Ruolo {
 
 
 	/**
-	 * Inserisce un ruolo nel database, se il ruolo esiste già ritorna false
+	 * Inserisce un ruolo nel database, se il ruolo esiste gi? ritorna false
 	 *
 	 * @return boolean true se avvenua con successo, altrimenti false e throws Error object
 	 */
@@ -659,7 +659,7 @@ class Ruolo {
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		return true;
 		
@@ -674,7 +674,7 @@ class Ruolo {
 		$query = 'DELETE FROM utente_canale WHERE id_utente = '.$db->quote($this->getIdUtente()).' AND id_cananle = '.$db->quote($this->getIdCanale());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		return true;
 	}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @todo si può implementare uno stack per gli handlers
+ * @todo si pu? implementare uno stack per gli handlers
  */
 //global $_Error_handlers_stack;
 //$_Error_handlers_stack = array();
@@ -115,7 +115,7 @@ class Error
 	 *             error handlers functions must be able to handle $param type.
 	 * @return mixed the given handler callback function value 
 	 */
-	function throw($error_category=NULL, $param=NULL)
+	function throwError($error_category=NULL, $param=NULL)
 	{
 		global $_Error_handlers;
 		if ( $error_category === NULL ) $error_category = $this->error_category;

@@ -3,8 +3,8 @@
 require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * ShowFacolta: mostra una facoltà
- * Mostra i collegamenti a tutti i corsi di laurea attivi nella facoltà
+ * ShowFacolta: mostra una facolt?
+ * Mostra i collegamenti a tutti i corsi di laurea attivi nella facolt?
  *
  * @package universibo
  * @subpackage commands
@@ -26,7 +26,7 @@ class ShowFacolta extends CanaleCommand {
 		//var_dump($canale);
 
 		if ($canale -> getTipoCanale() != CANALE_FACOLTA)
-			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 
 	}
 

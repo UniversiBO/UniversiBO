@@ -295,12 +295,12 @@ class User {
 			$query = 'UPDATE utente SET email = '.$db->quote($email).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -339,12 +339,12 @@ class User {
 			$query = 'UPDATE utente SET groups = '.$db->quote($groups).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -381,12 +381,12 @@ class User {
 			$query = 'UPDATE utente SET ultimo_login = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -445,12 +445,12 @@ class User {
 			$query = 'UPDATE utente SET ad_username = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -561,12 +561,12 @@ class User {
 			$query = 'UPDATE utente SET password = '.$db->quote($hash).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			
 		}
 		return true;
@@ -802,12 +802,12 @@ class User {
 		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		
 		if( $rows == 0) return false;
 		elseif( $rows == 1) return true;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		return false;
 	}
 	
@@ -836,10 +836,10 @@ class User {
 			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE id_utente = '.$db->quote($id_utente);
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 			$rows = $res->numRows();
-			if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+			if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 			if( $rows == 0) return false;
 
 			$row = $res->fetchRow();
@@ -867,10 +867,10 @@ class User {
 		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE username = '.$db->quote($username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows == 0) return false;
 
 		$row = $res->fetchRow();
@@ -898,7 +898,7 @@ class User {
 		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username, phone, default_style  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$users = array();
 		
@@ -955,7 +955,7 @@ class User {
 			if (DB::isError($res))
 			{
 				$db->rollback();
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			}
 			$db->commit();
 			
@@ -995,12 +995,12 @@ class User {
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 	
@@ -1018,12 +1018,12 @@ class User {
 		$query = 'SELECT id_utente FROM utente WHERE ad_username = '.$db->quote($ad_username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		
 		if( $rows == 0) return false;
 		elseif( $rows == 1) return true;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
 		return false;
 	}
 	
@@ -1061,7 +1061,7 @@ class User {
 		
 		if ( $javaADLoginSock == false )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare pi? tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile connettersi al server di autenticazione Active Directory di Ateneo, provare pi? tardi oppure segnalare l\'inconveniente allo staff','file'=>__FILE__,'line'=>__LINE__)); 
 		}
 		else
 		{
@@ -1075,7 +1075,7 @@ class User {
 			$result = substr($reply,0,2);
 			if ($result == 'NO') return false;		// 'Autenticazione fallita';
 			elseif ($result == 'OK') return true;	// 'Autenticazione corretta';
-			else  die(); Error::throw(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida'.$result,'file'=>__FILE__,'line'=>__LINE__)); 
+			else  die(); Error::throwError(_ERROR_DEFAULT,array('msg'=>'Risposta del server di autenticazione Active Directory di Ateneo non valida'.$result,'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		}				 
 	

@@ -27,7 +27,7 @@ class ShowInfoDidattica extends UniversiboCommand
 		$user_ruoli = & $user->getRuoli();
 			
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-			Error::throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$id_canale = $_GET['id_canale'];
 		$session_user =& $this->getSessionUser();
@@ -64,7 +64,7 @@ class ShowInfoDidattica extends UniversiboCommand
 		$template->assign('infoDid_obiettiviInfo', $obiettiviInfo );
 		
 		$template->assign('infoDid_langProgrammaInfo', 'Programma d\'esame' );
-		$template->assign('infoDid_langProgrammaLink', 'Il programma d\'esame può essere consultato anche a questo link' );
+		$template->assign('infoDid_langProgrammaLink', 'Il programma d\'esame pu? essere consultato anche a questo link' );
 		$template->assign('infoDid_programmaLink', $programmaLink );
 		$template->assign('infoDid_programmaInfo', $programmaInfo );
 		
@@ -73,8 +73,8 @@ class ShowInfoDidattica extends UniversiboCommand
 		$template->assign('infoDid_materialeLink', $materialeLink );
 		$template->assign('infoDid_materialeInfo', $materialeInfo );
 		
-		$template->assign('infoDid_langModalitaInfo', 'Modalità d\'esame' );
-		$template->assign('infoDid_langModalitaLink', 'Le modalità d\'esame possono essere consultati anche a questo link');
+		$template->assign('infoDid_langModalitaInfo', 'Modalit? d\'esame' );
+		$template->assign('infoDid_langModalitaLink', 'Le modalit? d\'esame possono essere consultati anche a questo link');
 		$template->assign('infoDid_modalitaLink', $modalitaLink );
 		$template->assign('infoDid_modalitaInfo', $modalitaInfo );
 		
@@ -82,7 +82,7 @@ class ShowInfoDidattica extends UniversiboCommand
 		$template->assign('infoDid_langAppelliLink', 'Gli appelli d\'esame possono essere consultati anche a questo link');
 		$template->assign('infoDid_appelliLink', $appelliLink );
 		$template->assign('infoDid_appelliInfo', $appelliInfo );
-		$template->assign('infoDid_langAppelliUniwex', 'Ci scusiamo con gli utenti ma al momento non è più possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
+		$template->assign('infoDid_langAppelliUniwex', 'Ci scusiamo con gli utenti ma al momento non ? pi? possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
 		
 		
 		//$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));

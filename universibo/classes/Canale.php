@@ -189,10 +189,10 @@ class Canale {
 		$query = 'SELECT tipo_canale FROM canale WHERE id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
@@ -242,12 +242,12 @@ class Canale {
 			$query = 'UPDATE canale SET ultima_modifica = '.$db->quote($timestamp).' WHERE id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -337,12 +337,12 @@ class Canale {
 		$query = 'UPDATE canale SET visite = visite + '.$db->quote($visite).' WHERE id_canale = '.$db->quote($this->getIdCanale());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 	
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 
 	}
 
@@ -501,7 +501,7 @@ class Canale {
 		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale = $this->getRequestCanale();
 		$canale->addVisite();
@@ -530,7 +530,7 @@ class Canale {
 		
 		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
 		if ($tipo_canale === false )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
 									CANALE_HOME         => 'Canale',
@@ -541,7 +541,7 @@ class Canale {
 		
 		if (!array_key_exists($tipo_canale, $dispatch_array))
 		{
-			Error::throw(_ERROR_CRITICO,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICO,array('msg'=>'Il tipo di canale richiesto su database non ? valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$class_name = $dispatch_array[$tipo_canale];
@@ -596,10 +596,10 @@ class Canale {
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo FROM canale WHERE id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
@@ -629,10 +629,10 @@ class Canale {
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale IN ('.$canali_comma.');';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > count($elenco_id_canali)) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > count($elenco_id_canali)) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows == 0) return false;
 
 		$elenco_canali = array();
@@ -697,7 +697,7 @@ class Canale {
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -749,12 +749,12 @@ class Canale {
 			
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 	
@@ -796,7 +796,7 @@ class Canale {
 		$query = 'SELECT id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		
@@ -820,7 +820,7 @@ class Canale {
 		$query = 'SELECT id_canale FROM canale WHERE tipo_canale = '.$db->quote($tipoCanale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		if( $rows == 0) return false;

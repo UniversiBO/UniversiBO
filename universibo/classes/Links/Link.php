@@ -159,7 +159,7 @@ class Link
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -206,7 +206,7 @@ class Link
 		$query = 'SELECT id_link, id_canale, uri, label, description FROM link WHERE id_link IN ('.$values.')';
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -239,7 +239,7 @@ class Link
 		$query = 'SELECT id_link, id_canale, uri, label, description FROM link WHERE id_canale = ('.$db->quote($id_canale).') ORDER BY id_link DESC';
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -273,12 +273,12 @@ class Link
 		//echo $query;
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 	/**
@@ -293,12 +293,12 @@ class Link
 		$query = 'DELETE FROM link WHERE id_link= '.$db->quote($this->getIdLink());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 }

@@ -10,9 +10,9 @@ define('CDL_VECCHIO_ORDINAMENTO' ,3);
 /**
  * Cdl class.
  *
- * Modella una facoltà.
+ * Modella una facolt?.
  * Fornisce metodi statici che permettono l'accesso 
- * ottimizzato alle istanze di Facoltà
+ * ottimizzato alle istanze di Facolt?
  *
  * @package universibo
  * @version 2.0.0
@@ -52,16 +52,16 @@ class Cdl extends Canale{
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
 	 * @param string $nome			nome del canale
 	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
+	 * @param boolean $news_attivo	se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo	se true il servizio false ? attivo
+	 * @param boolean $forum_attivo	se true il servizio forum ? attivo
+	 * @param int $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links ? attivo
 	 * @param string $cod_cdl		codice identificativo d'ateneo del corso di laurea a 4 cifre 
 	 * @param string $nome_cdl		descrizione del nome del cdl
 	 * @param int $categoria_cdl	categoria del tipo do cdl
-	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a cui appartiene il corso di laurea
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facolt? a cui appartiene il corso di laurea
 	 * @return Facolta
 	 */
 	function Cdl($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
@@ -127,7 +127,7 @@ class Cdl extends Canale{
 	}
 
 	/**
-	 * Restituisce il link alla homepage ufficiale della facoltà
+	 * Restituisce il link alla homepage ufficiale della facolt?
 	 *
 	 * @return string
 	 */
@@ -194,7 +194,7 @@ class Cdl extends Canale{
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -228,7 +228,7 @@ class Cdl extends Canale{
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -246,10 +246,10 @@ class Cdl extends Canale{
 	
 	/**
 	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine alfabetico di tutti i cdl appartenenti alla facoltà data 
+	 * in ordine alfabetico di tutti i cdl appartenenti alla facolt? data 
 	 * 
 	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
 	 * @return array(Cdl)
 	 */
 	function &selectCdlElencoFacolta($cod_facolta)
@@ -262,7 +262,7 @@ class Cdl extends Canale{
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

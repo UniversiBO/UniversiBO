@@ -3,9 +3,9 @@
 require_once ('PluginCommand'.PHP_EXTENSION);
 
 /**
- * ShowHelpId è un'implementazione di PluginCommand.
+ * ShowHelpId ? un'implementazione di PluginCommand.
  *
- * Mostra la spiegazione dell'argomento n° $id_help
+ * Mostra la spiegazione dell'argomento n? $id_help
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
  * Nel parametro di ingresso del plugin deve essere specificato l'id_help da visualizzare.
  * E' associato al template help_id.tpl
@@ -27,7 +27,7 @@ class ShowHelpId extends PluginCommand {
 	 *  - 'id_help' l'id dell'argomento o argomenti da visualizzare
 	 *	  es: array("5","6") 
 	 *	se viene passato 0  come parametro mostra tutti gli argomenti	
-	 *  NB 0 non può essere l'id di una notizia
+	 *  NB 0 non pu? essere l'id di una notizia
 	 */
 	function execute($param)
 	{
@@ -54,7 +54,7 @@ class ShowHelpId extends PluginCommand {
 			$query = 'SELECT id_help, titolo, contenuto FROM help WHERE id_help IN ('.$listid.') ORDER BY indice';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

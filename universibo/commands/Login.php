@@ -29,24 +29,24 @@ class Login extends UniversiboCommand {
 			
 			if (!$this->sessionUser->isOspite())
 			{
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			
 	//		if (! User::isPasswordValid($_POST['f1_password']) )
-	//			Error::throw(_ERROR_DEFAULT,array('msg'=>'Password non valida, lunghezza minima 5 caratteri','file'=>__FILE__,'line'=>__LINE__));
+	//			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Password non valida, lunghezza minima 5 caratteri','file'=>__FILE__,'line'=>__LINE__));
 			
 			$user = User::selectUserUsername($_POST['f1_username']);
 			
 			if ($user === false)
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
 			elseif( $user->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			}
 			else
 			{

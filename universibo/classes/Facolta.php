@@ -14,9 +14,9 @@ $facoltaElencoCanale     = NULL;
 /**
  * Facolta class.
  *
- * Modella una facoltà.
+ * Modella una facolt?.
  * Fornisce metodi statici che permettono l'accesso 
- * ottimizzato alle istanze di Facoltà
+ * ottimizzato alle istanze di Facolt?
  *
  * @package universibo
  * @version 2.0.0
@@ -56,15 +56,15 @@ class Facolta extends Canale{
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
 	 * @param string $nome			nome del canale
 	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
-	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
-	 * @param string $nome_facolta	descrizione del nome della facoltà
-	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
+	 * @param boolean $news_attivo	se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo	se true il servizio false ? attivo
+	 * @param boolean $forum_attivo	se true il servizio forum ? attivo
+	 * @param int $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links ? attivo
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facolt? a 4 cifre 
+	 * @param string $nome_facolta	descrizione del nome della facolt?
+	 * @param string $uri_facolta	link al sito internet ufficiale della facolt?
 	 * @return Facolta
 	 */
 	function Facolta($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
@@ -83,7 +83,7 @@ class Facolta extends Canale{
 
 
 	/**
-	 * Restituisce il nome della facoltà
+	 * Restituisce il nome della facolt?
 	 *
 	 * @return string
 	 */
@@ -95,7 +95,7 @@ class Facolta extends Canale{
 
 
 	/**
-	 * Restituisce il titolo/nome completo della facoltà
+	 * Restituisce il titolo/nome completo della facolt?
 	 *
 	 * @return string
 	 */
@@ -107,7 +107,7 @@ class Facolta extends Canale{
 
 
 	/**
-	 * Restituisce il link alla homepage ufficiale della facoltà
+	 * Restituisce il link alla homepage ufficiale della facolt?
 	 *
 	 * @return string
 	 */
@@ -119,7 +119,7 @@ class Facolta extends Canale{
 
 
 	/**
-	 * Restituisce il codice di ateneo a 4 cifre della facoltà
+	 * Restituisce il codice di ateneo a 4 cifre della facolt?
 	 * es: ingegneria -> '0021'
 	 *
 	 * @return string
@@ -157,11 +157,11 @@ class Facolta extends Canale{
 	
 	
 	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * Seleziona da database e restituisce l'oggetto facolt? 
 	 * corrispondente al codice id_canale 
 	 * 
 	 * @static
-	 * @param int $id_canale id_del canale corrispondente alla facoltà
+	 * @param int $id_canale id_del canale corrispondente alla facolt?
 	 * @return mixed Facolta se eseguita con successo, false se il canale non esiste
 	 */
 	function &selectFacoltaCanale($id_canale)
@@ -181,11 +181,11 @@ class Facolta extends Canale{
 	
 
 	/**
-	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * Seleziona da database e restituisce l'oggetto facolt? 
 	 * corrispondente al codice $cod_facolta 
 	 * 
 	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
 	 * @return Facolta
 	 */
 	function &selectFacoltaCodice($cod_facolta)
@@ -206,10 +206,10 @@ class Facolta extends Canale{
 	
 	/**
 	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine alfabetico di tutte le facoltà 
+	 * in ordine alfabetico di tutte le facolt? 
 	 * 
 	 * @static
-	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
 	 * @return array(Facolta)
 	 */
 	function &selectFacoltaElenco()
@@ -227,8 +227,8 @@ class Facolta extends Canale{
 	
 	/**
 	 * Siccome nella maggiorparte delle chiamate viene eseguito l'accesso a tutte le
-	 * facoltà questa procedura si occupa di eseguire il caching degli oggetti facoltà
-	 * in variabili static (globali per comodità implementativa) e permette di 
+	 * facolt? questa procedura si occupa di eseguire il caching degli oggetti facolt?
+	 * in variabili static (globali per comodit? implementativa) e permette di 
 	 * alleggerire i futuri accessi a DB implementando di fatto insieme ai metodi
 	 * select*() i meccanismi di un metodo singleton factory
 	 * 
@@ -248,7 +248,7 @@ class Facolta extends Canale{
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, a.id_canale, cod_fac, desc_fac, url_facolta FROM canale a , facolta b WHERE a.id_canale = b.id_canale ORDER BY 15';
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

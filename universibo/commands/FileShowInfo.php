@@ -20,7 +20,7 @@ class FileShowInfo extends UniversiboCommand {
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
 		$frontcontroller = & $this->getFrontController();
@@ -36,7 +36,7 @@ class FileShowInfo extends UniversiboCommand {
 //		$nomeFile = $file->getIdFile().'_'.$file->getNomeFile();
 //		
 //		if (!$user->isGroupAllowed( $file->getPermessiVisualizza() ) )
-//			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso visualizzare il file.
+//			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Non ? permesso visualizzare il file.
 //			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 //
 //

@@ -26,7 +26,7 @@ class FileDownload extends UniversiboCommand {
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
 		
@@ -35,7 +35,7 @@ class FileDownload extends UniversiboCommand {
 		
 		$file = & FileItem::selectFileItem($_GET['id_file']);		
 		if ($file === false)
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il file richiesto non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		$template->assign('fileDownload_InfoURI', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 
@@ -48,9 +48,9 @@ class FileDownload extends UniversiboCommand {
 			//echo $nomeFile;die();
 			
 			if (!file_exists($nomeFile)) 
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare il file richiesto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare il file richiesto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
 			if ( md5_file($nomeFile) != $file->getHashFile() ) 
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto risulta corrotto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il file richiesto risulta corrotto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
 			
 			if ( $file->getPassword() != null)
 			{
@@ -61,11 +61,11 @@ class FileDownload extends UniversiboCommand {
 				}
 
 				if  (!array_key_exists('f11_file_password', $_POST))
-					Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+					Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 					
 				if  ($file->getPassword() != FileItem::passwordHashFunction($_POST['f11_file_password']))
 				{
-					Error::throw(_ERROR_NOTICE,array('msg'=>'La password inviata è errata','file'=>__FILE__,'line'=>__LINE__,'log' => false, 'template_engine' => & $template  ));
+					Error::throwError(_ERROR_NOTICE,array('msg'=>'La password inviata ? errata','file'=>__FILE__,'line'=>__LINE__,'log' => false, 'template_engine' => & $template  ));
 					$this->executePlugin('ShowTopic', array('reference' => 'filesutenti'));
 					return 'file_download_password';
 				}
@@ -99,7 +99,7 @@ class FileDownload extends UniversiboCommand {
 			readfile($nomeFile);
 			
 			/**
-			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione a fondo pagina
+			 * @todo ...da togliere die() dopo che si ? messo on-line e tolto il tempo di esecuzione a fondo pagina
 			 */
 						
 			exit();
@@ -115,7 +115,7 @@ class FileDownload extends UniversiboCommand {
 			return 'file_download_iscriviti';
 		}
 
-		Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso eseguire il download del file.
+		Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Non ? permesso eseguire il download del file.
 		Non possiedi i diritti necessari.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 		
 	}

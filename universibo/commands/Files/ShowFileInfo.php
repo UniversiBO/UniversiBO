@@ -25,7 +25,7 @@ class ShowFileInfo extends PluginCommand {
 		
 		if (!array_key_exists('id_file', $param) || !ereg('^([0-9]{1,9})$', $param['id_file'] )  )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 				
 		$bc        =& $this->getBaseCommand();
@@ -48,14 +48,14 @@ class ShowFileInfo extends PluginCommand {
 		$file =& FileItem::selectFileItem($param['id_file']);
 		
 		if ($file === false)
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il file richiesto non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		//var_dump($file);
         $directoryFile = $fc->getAppSetting('filesPath');
 		$nomeFile = $file->getIdFile().'_'.$file->getNomeFile();
 		
 		if (!$user->isGroupAllowed( $file->getPermessiVisualizza() ) )
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso visualizzare il file.
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Non ? permesso visualizzare il file.
 			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 
 		$template->assign('showFileInfo_editFlag', 'false');

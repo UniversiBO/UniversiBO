@@ -28,10 +28,10 @@ class ShowMyUniversiBO extends UniversiboCommand
 		$template =& $frontcontroller->getTemplateEngine();
 		$utente =& $this->getSessionUser();
 		
-		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
+		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si ? iscritto...
 		
 		if($utente->isOspite())
-			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$arrayIdCanaliNews = array();
 		$arrayIdCanaliFiles = array();
@@ -90,7 +90,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 					'AND B.id_canale = '.$db->quote($id_canale).'';
 		$res = $db->getOne($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $res;
 	}
@@ -120,7 +120,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 					ORDER BY A.data_inserimento DESC';
 		$res =& $db->limitQuery($query, 0 , $num);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -167,7 +167,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 //		var_dump($res);
 //		die();
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

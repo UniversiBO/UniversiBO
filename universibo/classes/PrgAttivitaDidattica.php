@@ -5,9 +5,9 @@ require_once('Canale'.PHP_EXTENSION);
 /**
  * PrgAttivitaDidattica class.
  *
- * Modella una attività didattica e le informazioni associate.
- * Ad un insegnamento possono essere associate da 1 a n attività didattiche
- * ma sia l'insegnamento che l'attività didattiche associate corrispondono 
+ * Modella una attivit? didattica e le informazioni associate.
+ * Ad un insegnamento possono essere associate da 1 a n attivit? didattiche
+ * ma sia l'insegnamento che l'attivit? didattiche associate corrispondono 
  * allo stesso canale, enteambe le classi estendono Canale.
  *
  * @package universibo
@@ -127,12 +127,12 @@ class PrgAttivitaDidattica extends Canale
 	 * @param string  $immagine			uri dell'immagine relativo alla cartella del template
 	 * @param string  $nome				nome del canale
 	 * @param int     $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo		se true il servizio notizie è attivo
-	 * @param boolean $files_attivo		se true il servizio false è attivo
-	 * @param boolean $forum_attivo		se true il servizio forum è attivo
-	 * @param int     $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int     $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo 	se true il servizio links è attivo
+	 * @param boolean $news_attivo		se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo		se true il servizio false ? attivo
+	 * @param boolean $forum_attivo		se true il servizio forum ? attivo
+	 * @param int     $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int     $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo 	se true il servizio links ? attivo
 	 *
 	 * @param int	  $annoAccademico
 	 * @param string  $codiceCdl
@@ -147,7 +147,7 @@ class PrgAttivitaDidattica extends Canale
 	 * @param string  $codRil
 	 * @param string  $codModulo
 	 * @param string  $codDoc
-	 * @param string  $nomeDoc  //questo sarà da cambiare in futuro qualora si voglia riferire un oggetto docente
+	 * @param string  $nomeDoc  //questo sar? da cambiare in futuro qualora si voglia riferire un oggetto docente
 	 * @param string  $flagTitolareModulo
 	 * @param string  $tipoCiclo
 	 * @param string  $codAte
@@ -400,7 +400,7 @@ class PrgAttivitaDidattica extends Canale
 
 
 	/**
-	 * Restituisce il nome dell'attività didattica
+	 * Restituisce il nome dell'attivit? didattica
 	 *
 	 * @return string
 	 */
@@ -412,7 +412,7 @@ class PrgAttivitaDidattica extends Canale
 
 
 	/**
-	 * Restituisce il titolo/nome completo dell'attività didattica
+	 * Restituisce il titolo/nome completo dell'attivit? didattica
 	 *
 	 * @return string
 	 */
@@ -423,7 +423,7 @@ class PrgAttivitaDidattica extends Canale
 
 
 	/**
-	 * Restituisce il codice di ateneo a 4 cifre della facoltà
+	 * Restituisce il codice di ateneo a 4 cifre della facolt?
 	 * es: ingegneria -> '0021'
 	 *
 	 * @return string
@@ -463,7 +463,7 @@ class PrgAttivitaDidattica extends Canale
 		$db =& FrontController::getDbConnection('main');
 		
 		$id_canale = $db->quote($id_canale);
-		//attenzione!!! ...c'è il distinct anche su sdoppiato!!
+		//attenzione!!! ...c'? il distinct anche su sdoppiato!!
 		$query = 'SELECT *
 					FROM (
 						SELECT DISTINCT ON (id_canale, anno_accademico, cod_corso, cod_materia, anno_corso, cod_materia_ins, anno_corso_ins, cod_ril, cod_doc, tipo_ciclo, cod_ate, anno_corso_universibo, sdoppiato ) *
@@ -496,13 +496,13 @@ class PrgAttivitaDidattica extends Canale
 					) AS cdl1
 					ORDER BY 31, 29, 22';
 		/**
-		 * @todo ATTENZIONE! ...questa query non è portabile.
+		 * @todo ATTENZIONE! ...questa query non ? portabile.
 		 * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
 		 */ 
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		
 		$rows = $res->numRows();
 		
@@ -542,7 +542,7 @@ class PrgAttivitaDidattica extends Canale
 		
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$rows = $res->numRows();
 		
@@ -558,9 +558,9 @@ class PrgAttivitaDidattica extends Canale
 	
 	/**
 	 * Seleziona da database e restituisce un'array contenente l'elenco 
-	 * in ordine anno/ciclo/alfabetico di tutti le distinte attività didattiche
+	 * in ordine anno/ciclo/alfabetico di tutti le distinte attivit? didattiche
 	 * appartenenti al corso di laurea in un dato anno accademico.
-	 * Ritorna solo una volta le attività mutuate/comuni appartenenti a due 
+	 * Ritorna solo una volta le attivit? mutuate/comuni appartenenti a due 
 	 * indirizzi/orientamenti distinti, o moduli identici in tutto il resto della chiave
 	 * 
 	 * @static
@@ -610,14 +610,14 @@ class PrgAttivitaDidattica extends Canale
 					) AS cdl1
 					ORDER BY 31, 29, 22';
 		/**
-		 * @todo ATTENZIONE! ...questa query non è portabile.
+		 * @todo ATTENZIONE! ...questa query non ? portabile.
 		 * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
 		 */ 
 
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			return false; 
 		}
 		

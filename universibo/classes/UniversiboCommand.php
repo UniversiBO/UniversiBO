@@ -54,7 +54,7 @@ class UniversiboCommand extends BaseCommand {
 	
 
 	/**
-	 * Restituisce true se un utente (anche ospite) è stato registrato nella sessione corrente
+	 * Restituisce true se un utente (anche ospite) ? stato registrato nella sessione corrente
 	 *
 	 * @static
 	 * @return boolean
@@ -69,8 +69,8 @@ class UniversiboCommand extends BaseCommand {
 	/**
 	 * Restituisce l'oggetto utente della sessione corrente.
 	 *
-	 * Può essere chiamata solo dopo che è stata eseguita initCommand altrimenti
-	 * il valore di ritorno è indefinito
+	 * Pu? essere chiamata solo dopo che ? stata eseguita initCommand altrimenti
+	 * il valore di ritorno ? indefinito
 	 *
 	 * @return User
 	 */
@@ -119,17 +119,17 @@ class UniversiboCommand extends BaseCommand {
 		//raccolgo tutti gli errori
 		while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		while ( ($current_error = Error::retrieve(_ERROR_DEFAULT)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		while ( ($current_error = Error::retrieve(_ERROR_CRITICAL)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		$fc =& $this->getFrontController();
@@ -140,7 +140,7 @@ class UniversiboCommand extends BaseCommand {
 	
 	
 	/**
-	 * Restituisce se la pagina chiamata è di tipo indice (con menu) o popup (senza menu)
+	 * Restituisce se la pagina chiamata ? di tipo indice (con menu) o popup (senza menu)
 	 * 
 	 * @return boolean  
 	 */
@@ -171,7 +171,7 @@ class UniversiboCommand extends BaseCommand {
 //			echo $this->sessionUser->getUsername();
 		}
 		else 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
 			
 	}
 
@@ -254,9 +254,9 @@ class UniversiboCommand extends BaseCommand {
 		
 		//generali
 		$template->assign('common_universibo',		'UniversiBO');
-		$template->assign('common_metaKeywords',	'universibo, università, facoltà, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novità, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
+		$template->assign('common_metaKeywords',	'universibo, universit?, facolt?, studenti, bologna, professori, lezioni, materiale didattico, didattica, corsi, studio, studi, novit?, appunti, dispense, lucidi, esercizi, esami, temi d\'esame, orari lezione, ingegneria, economia, ateneo');
 		$template->assign('common_metaDescription',	'Il portale dedicato agli studenti universitari di Bologna');
-		$template->assign('common_title',			'UniversiBO: la community degli studenti dell\'Università di Bologna');
+		$template->assign('common_title',			'UniversiBO: la community degli studenti dell\'Universit? di Bologna');
 		$template->assign('common_langNewWindow',	'apre una nuova finestra');
 		
 		//krono
@@ -313,7 +313,7 @@ class UniversiboCommand extends BaseCommand {
 			$template->assign('common_userLivello', $session_user->getUserGroupsNames());
 
 			$template->assign('common_langWelcomeMsg', 'Benvenuto');
-			$template->assign('common_langUserLivello', 'Il tuo livello di utenza è');
+			$template->assign('common_langUserLivello', 'Il tuo livello di utenza ?');
 			
 		}
 		
@@ -323,7 +323,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_myUniversiBO', 'ShowMyUniversiBO');
 		$template->assign('common_myUniversiBOUri', 'index.php?do=ShowMyUniversiBO');
 
-		$template->assign('common_fac', 'Facoltà');
+		$template->assign('common_fac', 'Facolt?');
 		require_once('Facolta'.PHP_EXTENSION);
 		$elenco_facolta =& Facolta::selectFacoltaElenco();
 		//var_dump($elenco_facolta);
@@ -394,7 +394,7 @@ class UniversiboCommand extends BaseCommand {
 		
 		
 		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
-												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
+												'Con il contenuto delle pagine appartenenti a questo sito non si ? voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinch? le parti in discussione vengano eliminate o chiarite.');
 		
 		$template->assign( 'common_isSetVisite', 'N' );
 		
@@ -547,7 +547,7 @@ class UniversiboCommand extends BaseCommand {
 	
 	
 	/**
-	 * Restituisce se un giorno è festivo o no
+	 * Restituisce se un giorno ? festivo o no
 	 * 
 	 * @static
 	 * @private

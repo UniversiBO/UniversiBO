@@ -28,7 +28,7 @@ class ShowHome extends CanaleCommand
 		//var_dump($canale);
 		
 		if ( $canale->getTipoCanale() != CANALE_HOME )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il tipo canale richiesto non corrisponde al comando selezionato','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il tipo canale richiesto non corrisponde al comando selezionato','file'=>__FILE__,'line'=>__LINE__));
 		
 	}
 
@@ -39,8 +39,8 @@ class ShowHome extends CanaleCommand
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$template->assign('home_langWelcome', 'Benvenuto in UniversiBO!');
-		$template->assign('home_langWhatIs', 'Questa è la nuova versione della community e degli strumenti per la didattica ideato dagli studenti dell\'Università di Bologna.');
-		$template->assign('home_langMission', 'L\'obiettivo verso cui è tracciata la rotta delle iniziative e dei servizi che trovate su questo portale è di "aiutare gli studenti ad aiutarsi tra loro", fornire un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');
+		$template->assign('home_langWhatIs', 'Questa ? la nuova versione della community e degli strumenti per la didattica ideato dagli studenti dell\'Universit? di Bologna.');
+		$template->assign('home_langMission', 'L\'obiettivo verso cui ? tracciata la rotta delle iniziative e dei servizi che trovate su questo portale ? di "aiutare gli studenti ad aiutarsi tra loro", fornire un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');
 		
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4 ) );
 		
