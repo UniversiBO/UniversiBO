@@ -124,7 +124,7 @@ class NewsDelete extends CanaleCommand {
 			elseif(count($f9_canale) > 0)
 			{
 				$f9_accept = false;
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno una pagina:', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 			}
 			
 		}
@@ -146,7 +146,7 @@ class NewsDelete extends CanaleCommand {
 			/**
 			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */
-			$template->assign('NewsDelete_langSuccess', "La notizia è stata cancellata dai canali scelti.");
+			$template->assign('NewsDelete_langSuccess', "La notizia è stata cancellata dalle pagine scelte.");
 			
 			return 'success';
 		}
@@ -155,7 +155,7 @@ class NewsDelete extends CanaleCommand {
 		$param = array('id_notizie'=>array($_GET['id_news']), 'chk_diritti' => false );
 		$this->executePlugin('ShowNews', $param );
 		
-		$template->assign('f9_langAction', "Elimina la notizia dai seguenti canali:");
+		$template->assign('f9_langAction', "Elimina la notizia dalle seguenti pagine:");
 		$template->assign('f9_canale', $f9_canale);
 
 		$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));

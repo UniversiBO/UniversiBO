@@ -88,7 +88,7 @@
 </tr>
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">La notizia verr&agrave; inserita negli argomenti:</span></legend>
+<legend><span class="Normal">La notizia verr&agrave; inserita nelle pagine:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
 	{foreach name=canali item=item from=$f7_canale}
 	<tr class="Normal" valign="center" align="center">

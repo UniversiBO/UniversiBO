@@ -96,7 +96,7 @@
 
 <tr><td colspan="2">
 <fieldset>
-<legend><span class="Normal">La notizia &egrave; presente e verr&agrave; modificata nei seguenti canali:</span></legend>
+<legend><span class="Normal">La notizia &egrave; presente e verr&agrave; modificata nelle seguenti pagine:</span></legend>
 	<table width="100%" cellspacing="0" cellpadding="2" border="0" summary="">
 	{foreach name=canali item=item from=$f8_canale}
 	{*<tr class="Normal" valign="top">
