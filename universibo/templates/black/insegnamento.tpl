@@ -10,7 +10,7 @@
 
 {include file=News/latest_news.tpl}
 </td></tr>
-<tr><td class="Normal">&nbsp;<br />
+<tr><td class="Normal">&nbsp;<br />&nbsp;<br />
 {include file=Files/show_file_titoli.tpl}
 
 </td></tr></table>
