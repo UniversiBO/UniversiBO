@@ -64,6 +64,11 @@ class NewsItem {
 	/**
 	 * @private
 	 */
+	var $ultimaModifica = false; 
+	
+	/**
+	 * @private
+	 */
 	var $urgente=false; 
 	
 	/**
@@ -97,6 +102,7 @@ class NewsItem {
 	 * @param  string $notizia corpo della news
 	 * @param  int $dataIns timestamp del giorno di inserimento
 	 * @param  int $dataScadenza timestamp del giorno di scadenza
+	 * @param  int $ultimaModifica timestamp ultima modifica della notizia
 	 * @param  boolean $urgente flag notizia urgente o meno
 	 * @param  boolean $eliminata flag stato della news
 	 * @param  int $id_utente id dell'autore della news
@@ -104,18 +110,19 @@ class NewsItem {
 	 * @return NewsItem
 	 */
 	 
-	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $urgente, $eliminata, $id_utente, $username)
+	 function NewsItem($id_notizia, $titolo, $notizia, $dataIns, $dataScadenza, $ultimaModifica, $urgente, $eliminata, $id_utente, $username)
 	 {
 	 	
-	 	$this->id_notizia=$id_notizia;
-	 	$this->titolo=$titolo;
-	 	$this->notizia=$notizia;
-	 	$this->dataIns=$dataIns;
-	 	$this->dataScadenza=$dataScadenza;
-	 	$this->urgente=$urgente;
-	 	$this->eliminata=$eliminata;
-	 	$this->id_utente=$id_utente;
-	 	$this->username=$username;
+	 	$this->id_notizia     = $id_notizia;
+	 	$this->titolo         = $titolo;
+	 	$this->notizia        = $notizia;
+	 	$this->dataIns        = $dataIns;
+	 	$this->ultimaModifica = $ultimaModifica;
+	 	$this->dataScadenza   = $dataScadenza;
+	 	$this->urgente        = $urgente;
+	 	$this->eliminata      = $eliminata;
+	 	$this->id_utente      = $id_utente;
+	 	$this->username       = $username;
 	 
 	 }
 
@@ -221,6 +228,17 @@ class NewsItem {
 	 
 
 	/**
+	 * Recupera il timestamp dell'ultima modifica della notizia
+	 *
+	 * @return int timestamp dell'ultima modifica della notizia
+	 */
+	function getUltimaModifica() 
+	{
+	 	return $this->ultimaModifica;
+	}
+	 
+
+	/**
 	 * Imposta il titolo della notizia
 	 *
 	 * @param  string $titolo titolo della news max 150 caratteri
@@ -300,6 +318,17 @@ class NewsItem {
 	
 	 
 	/**
+	 * Imposta il timestamp dell'ultima modifica della notizia
+	 *
+	 * @return int timestamp dell'ultima modifica della notizia
+	 */
+	function setUltimaModifica() 
+	{
+	 	return $this->ultimaModifica;
+	}
+	 
+
+	/**
 	 * 
 	 * Imposta l'id della notizia
 	 *
@@ -335,7 +364,7 @@ class NewsItem {
 	 	
 	 	$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, username FROM news A, utente B WHERE A.id_autore = B.id_utente AND id_news='.$db->quote($id_notizia).'AND eliminata!='.$db->quote($this->ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, id_utente, username, data_modifica FROM news A, utente B WHERE A.id_autore = B.id_utente AND id_news='.$db->quote($id_notizia).'AND eliminata!='.$db->quote($this->ELIMINATA);
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -347,7 +376,7 @@ class NewsItem {
 		$res->fetchInto($row);	
 		$res->free();
 		
-		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[8]);
+		$news=& new NewsItem($id_notizia,$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8], $row[9]);
 		return $news;
 	 }
 	
@@ -372,7 +401,7 @@ class NewsItem {
 		array_walk($id_notizie, array($db, 'quote'));
 		$values = implode(',',$id_notizie);
 		
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
 			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -384,7 +413,7 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[8]);
+			$news_list[]=& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],$row[4],$row[5],$row[6],$row[8] );
 		}
 		
 		$res->free();

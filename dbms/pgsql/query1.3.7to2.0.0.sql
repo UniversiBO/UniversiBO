@@ -231,3 +231,8 @@ ALTER TABLE "questionario" DROP COLUMN "xml";
 ALTER TABLE "questionario" DROP COLUMN "java";
 ALTER TABLE "questionario" DROP COLUMN "photoshop";
 ALTER TABLE "questionario" DROP COLUMN "gimp";
+
+
+----09-12-2003
+ALTER TABLE "news" ADD "data_modifica" int4 ;
+UPDATE news SET data_modifica = data_inserimento;

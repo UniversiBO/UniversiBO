@@ -1,4 +1,4 @@
-{* parametri da passare: titolo, notizia, autore, autore_link, id_autore, data, modifica, modifica_link, elimina, elimina_link *}
+{* parametri da passare: titolo, notizia, autore, autore_link, id_autore, data, modifica, modifica_link, elimina, elimina_link, nuova *}
 
 <table cellspacing="0" cellpadding="0" width="100%" summary="">
 <tr bgcolor="#000099"> 
@@ -11,7 +11,7 @@
   </table>
 </td></tr>
 <tr bgcolor="#000050"> 
-<td class="Titolo">&nbsp;::&nbsp;{$titolo|escape:"htmlall"}&nbsp;::&nbsp;</td>
+<td class="Titolo">&nbsp;::&nbsp;{$titolo|escape:"htmlall"}&nbsp;::{if $nuova=="true"}&nbsp;&nbsp;<img src="tpl/black/icona_new.gif" width="21" height="12" alt="!NEW!" />{/if}</td>
 </tr>
 <tr bgcolor="#000099" align="center"> 
 <td><img src="tpl/black/invisible.gif" height="2" width="1" alt="" /></td>

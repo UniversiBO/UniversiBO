@@ -43,14 +43,9 @@ class ShowNewsLatest extends PluginCommand {
 		$id_canale = $canale->getIdCanale();
 		$titolo_canale =  $canale->getTitolo();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
-
 		$user_ruoli =& $user->getRuoli();
 
 		
-		$personalizza   = false;
-		$referente      = false;
-		$moderatore     = false;
-		$ultimo_accesso = time()+100;
 
 		if (array_key_exists($id_canale, $user_ruoli))
 		{
@@ -73,10 +68,15 @@ class ShowNewsLatest extends PluginCommand {
 				$template->assign('showNewsLatest_addNewsFlag', 'false');
 			}
 		}
+		else
+		{
+			$personalizza   = false;
+			$referente      = false;
+			$moderatore     = false;
+			$ultimo_accesso = time();
+		}
 		
 		$canale_news = $this->getNumNewsCanale($id_canale);
-		
-
 
 		$template->assign('showNewsLatest_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
 
@@ -113,7 +113,8 @@ class ShowNewsLatest extends PluginCommand {
 				$elenco_news_tpl[$i]['titolo']       = $news->getTitolo();
 				$elenco_news_tpl[$i]['notizia']      = $news->getNotizia();
 				$elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $news->getDataIns());
-				$elenco_news_tpl[$i]['nuova']        = ($personalizza==true && $ultimo_accesso<$ultima_modifica_canale) ? 'true' : 'false'; 
+				//echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
+				$elenco_news_tpl[$i]['nuova']        = ($personalizza==true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false'; 
 				$elenco_news_tpl[$i]['autore']       = $news->getUsername();
 				$elenco_news_tpl[$i]['autore_link']  = 'ShowUser&id_utente='.$news->getIdUtente();
 				$elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();
