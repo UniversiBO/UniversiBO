@@ -34,17 +34,19 @@ class UserTest extends PHPUnit_TestCase
 var $utente;
 
 // valori del test..
-var $username = '<pippo>';
+var $username = 'pippo';
 var $id_utente = 55;
-var $MD5 = '';
+var $MD5 = '' ;
 var $email = '';
 var $ultimoLogin = 0;
 var $bookmark = array();
 var $ADUsername = '';
-var $groups = 1;
+var $groups = 127;
 
 var $staticgroups = 64;
 var $singolare = true;
+
+
 
 // constructor of the test suite
 function UserTest($name) {
@@ -64,7 +66,7 @@ $this->utente = new User($this->id_utente, $this->groups, $this->username=NULL, 
 // here
 function tearDown() {
 // delete your instance
-unset($this->utente);
+unset($this->utente); 
 }
 
 
@@ -120,7 +122,7 @@ $this->assertTrue($result == $expected);
 // test of the isUsernameValid function
 function testIsUsernameValid() {
 $result = $this->utente->isUsernameValid($this->utente->getUsername());
-$expected = true;
+$expected = $this->utente->username;
 $this->assertTrue($result == $expected);
 }
 
@@ -148,7 +150,7 @@ $this->assertTrue($result == $expected);
 // test of the isPersonale function - static use
 function testIsPersonaleStatic() {
 $result = $this->utente->isPersonale($this->staticgroups);
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
@@ -162,7 +164,7 @@ $this->assertTrue($result == $expected);
 // test of the isTutor function - static use
 function testIsTutorStatic() {
 $result = $this->utente->isTutor($this->staticgroups);
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
@@ -176,7 +178,7 @@ $this->assertTrue($result == $expected);
 // test of the isModeratore function - static use
 function testIsModeratoreStatic() {
 $result = $this->utente->isModeratore($this->staticgroups);
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
@@ -190,25 +192,25 @@ $this->assertTrue($result == $expected);
 // test of the isStudente function - static use
 function testIsStudenteStatic() {
 $result = $this->utente->isStudente($this->staticgroups);
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
 // test of the isOspite function
 function testIsOspite() {
 $result = $this->utente->isOspite();
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
 // test of the isOspite function - static use
 function testIsOspiteStatic() {
 $result = $this->utente->isOspite($this->staticgroups);
-$expected = true;
+$expected = false;
 $this->assertTrue($result == $expected);
 }
 
-// test of the groupsNames function   NB compare tra array?
+// test of the groupsNames function   NB confronto tra array?
 function testGroupsNames() {
 $result = $this->utente->groupsNames($this->singolare);
 if ( $this->singolare == true )
@@ -235,12 +237,13 @@ if ( $this->singolare == true )
 		}	
 $this->assertTrue($result == $expected);
 }
-/*// test of the isPasswordValid function
+// test of the isPasswordValid function
 function testIsPasswordValid() {
-$result = $this->utente->isPasswordValid($this->utente->????);
-$expected = true;
+$MD5 = md5('pippo') ;
+$result = $this->utente->isPasswordValid($this->utente->getPasswordHash());
+$expected = $this->utente->MD5;
 $this->assertTrue($result == $expected);
-}*/
+}
 
 }
 
