@@ -344,6 +344,8 @@ INSERT INTO "collaboratore" ("id_utente", "intro", "recapito", "obiettivi", "fot
 
 ALTER TABLE "file" RENAME TO "file2";
 
+ALTER TABLE file2 DROP CONSTRAINT file_pkey;
+
 --ATTENZIONE qui bisogna fare a mano il drop della costrain sull'indice della tabella files2!!
 
 CREATE TABLE "file" (
