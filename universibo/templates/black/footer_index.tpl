@@ -32,21 +32,21 @@ function universiboPopup(dest)
 {ldelim}
 	window.open(dest,'','scrollbars=yes,resizable=yes,scrolling=yes,top=20,left=50')
 {rdelim}
-//-->
+-->
 </script>
 
 
 <script type="text/javascript" language="JavaScript">
 <!--
-document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\"><font color=\"#FF0000\">Registrazione Studenti</font></a><br />");
+document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\"><font color=\"#FF0000\">Registrazione Studenti<\/font><\/a><br />");
 -->
 </script>
 <noscript><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup"><font color="#FF0000">Registrazione Studenti</font></a><br /></noscript>
 
 <script type="text/javascript" language="JavaScript">
 <!--
-document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\">Password smarrita...</a><br />");
-//-->
+document.write("<a href=\"javascript:universiboPopup('index.php?do=ShowHome&amp;pageType=popup');\">Password smarrita...<\/a><br \/>");
+-->
 </script>
 <noscript><a href="index.php?do=ShowHome&amp;pageType=popup" target="_popup">Password smarrita...</a><br /></noscript>
 </tr>

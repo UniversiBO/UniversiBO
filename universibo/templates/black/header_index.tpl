@@ -32,7 +32,7 @@
   <tr><td bgcolor="#000099"><img src="tpl/black/rule_darkL.gif" width="100" height="2" alt="" /></td></tr>
   <tr><td class="PiccoloC" align="right">
   <a style="cursor:hand" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('{$common_rootUrl}');" ><img src="tpl/black/add_home.gif" width="13" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_setHomepage|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
-  <a href="javascript:window.external.AddFavorite('{$common_rootUrl}','{$common_universibo}')"><img src="tpl/black/add_preferiti.gif" width="14" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_addBookmarks|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
+  <a href="javascript:window.external.AddFavorite('{$common_hostName}','{$common_universibo}')"><img src="tpl/black/add_preferiti.gif" width="14" height="12" alt="" border="0" />&nbsp;<font style='COLOR: #55A0D0; text-decoration:underline' >{$common_addBookmarks|escape:"htmlall"|replace:" ":"&nbsp;"}</font></a>&nbsp;&nbsp;
   </td></tr>
   </table>
  </td></tr>
