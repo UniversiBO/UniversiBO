@@ -63,6 +63,7 @@ class ScriptCreaForum extends UniversiboCommand
 				$forum_id = $forum->addForum($cdl->getCodiceCdl().' - '.ucwords($cdl->getTitolo()), 
 							'Forum riservato sulla discussione generale sul CdL '.$cdl->getCodiceCdl() , $cdl->getCodiceCdl(), $cat_id);
 				$cdl->setForumForumId($forum_id);
+				$cdl->setServizioForum(true);
 				
 				echo ' > ','creato forum : ',$forum_id,"\n";
 				
