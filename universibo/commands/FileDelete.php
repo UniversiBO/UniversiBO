@@ -22,22 +22,35 @@ class FileDelete extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 
 		
-		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
-		}
-		$canale = & Canale::retrieveCanale($_GET['id_canale']);
-		$template->assign('common_canaleURI', $canale->showMe());
-		$template->assign('common_langCanaleNome', $canale->getTitolo());
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
 		
 		$user =& $this->getSessionUser();
 		
 		$referente = false;
 		$moderatore = false;
-			
+					
 		$user_ruoli = $user->getRuoli();
-		$id_canale = $canale->getIdCanale();
+					
+		if (array_key_exists('id_canale', $_GET))
+		{
+			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			$id_canale = $canale->getIdCanale();
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			if (array_key_exists($id_canale, $user_ruoli)) {
+				$ruolo = & $user_ruoli[$id_canale];
 	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			
+			$elenco_canali = array($id_canale);
+		}
+		
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
@@ -50,13 +63,6 @@ class FileDelete extends UniversiboCommand {
 		 -referenti canale
 		*/
 		
-		if (array_key_exists($id_canale, $user_ruoli))
-		{
-			$ruolo = & $user_ruoli[$id_canale];
-
-			$referente = $ruolo->isReferente();
-			$moderatore = $ruolo->isModeratore();
-		}
 
 		$file = & FileItem::selectFileItem($_GET['id_file']);
 		if ($file === false)
