@@ -31,11 +31,11 @@
   <font class="NormalC">Categoria:</font> {$fileShowInfo_categoria|escape:"htmlall"}<br /><br />
   <font class="NormalC">Dimensione:</font> {$fileShowInfo_dimensione|escape:"htmlall"} kB<br /><br />
   <font class="NormalC">Scaricato:</font> {$fileShowInfo_download|escape:"htmlall"} volte<br /><br />
-  <font class="NormalC">Formato file:</font><p><img src="{$fileShowInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$fileShowInfo_tipo|escape:"htmlall"}" border="0" vspace="0" valign="bottom" /> {$fileShowInfo_info|escape:"htmlall"|nl2br|bbcode2html}<br /></p>
+  <font class="NormalC">Formato file:</font><br /><img src="{$fileShowInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$fileShowInfo_tipo|escape:"htmlall"}" border="0" vspace="0" align="left" /> {$fileShowInfo_info|escape:"htmlall"|nl2br|bbcode2html}<br /><br />
   <font class="NormalC">Hash MD5:</font> {$fileShowInfo_hash|escape:"htmlall"}<br /><br />
   <font class="NormalC">Presente in:</font><br />{foreach from=$fileShowInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}
   <br />
-  <font class="NormalC">&nbsp;Download:</font><br />&nbsp;&nbsp;<a href="{$fileShowInfo_downloadUri|escape:"htmlall"}"><img src="icona_download" width="32" height="32" alt="scarica" border="0" /></a><br /><br />
+  <font class="NormalC">&nbsp;Download:</font>&nbsp;&nbsp;<a href="{$fileShowInfo_downloadUri|escape:"htmlall"}"><img src="tpl/black/file_download_32.gif" width="32" height="32" alt="scarica" border="0" align="top" /></a><br /><br />
  </td>
  </tr></table>
 </td></tr>

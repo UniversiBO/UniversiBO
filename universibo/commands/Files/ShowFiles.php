@@ -23,7 +23,7 @@ class ShowFileTitoli extends PluginCommand {
 	/**
 	 * Esegue il plugin
 	 *
-	 * @param array $param nessu parametro  
+	 * @param array $param array di id_files
 	 */
 	function execute($param)
 	{
@@ -85,13 +85,11 @@ class ShowFileTitoli extends PluginCommand {
 //		var_dump($elenco_id_news);
 //		die();
 
-		$elenco_id_file =& $this->getFileCanale($id_canale);
+		$elenco_id_file =& $param['elenco_id_file'];
 		
 		
 		//var_dump($elenco_id_file); die();
 		$elenco_file =& FileItem::selectFileItems($elenco_id_file);
-		usort($elenco_file, array('ShowFileTitoli','_compareFile'));
-		
 		//var_dump($elenco_file); die();
 
 		//$elenco_categorie_file_tpl = array();
@@ -170,58 +168,6 @@ class ShowFileTitoli extends PluginCommand {
 		
 		
 	}
-	
-	
-	/**
-	 * Preleva da database i file del canale $id_canale
-	 *
-	 * @static 
-	 * @param int $id_canale identificativo su database del canale
-	 * @return array elenco FileItem , array vuoto se non ci sono file
-	 */
-	function &getFileCanale($id_canale)
-	{
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT A.id_file  FROM file A, file_canale B 
-					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					' AND B.id_canale = '.$db->quote($id_canale).' 
-					ORDER BY A.id_categoria, A.data_inserimento DESC';
-		$res =& $db->query($query);
-		
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$id_file_list = array();
-	
-		while ( $res->fetchInto($row) )
-		{
-			$id_file_list[]= $row[0];
-		}
-		
-		$res->free();
-		
-		return $id_file_list;
-		
-	}
-	
-	
-	/**
-	 * Ordina la struttura dei file
-	 * 
-	 * @static
-	 * @private
-	 */
-	function _compareFile($a, $b)
-	{
-		if ($a->getIdCategoria() > $b->getIdCategoria()) return +1;
-		if ($a->getIdCategoria() < $b->getIdCategoria()) return -1;
-		if ($a->getDataInserimento() < $b->getDataInserimento()) return +1;
-		if ($a->getDataInserimento() > $b->getDataInserimento()) return -1;
-	}
-	
-	
 	
 }
 
