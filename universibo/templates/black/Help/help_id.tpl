@@ -1,4 +1,4 @@
-{* showHelpId_langArgomento     array di argomenti (id, titolo, contenuto), 
+{* showHelpId_langArgomento     array di argomenti (id, titolo, contenuto) passato da ShowHelpId, 
    indice 		boolean per mostrare o meno l'indice,
    idsu			stringa contenente l'id dell'ancora a inizio pagina [campo obbligatorio] *}
 <table id="table" width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
