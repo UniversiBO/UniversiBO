@@ -23,7 +23,6 @@ class ShowContacts extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		$template->assign('contacts_langAltTitle', 'Chi Siamo');
-		$template->assign('contacts_langIntro', 'Lo sviluppo di questo sito è principalmente opera di un team di studenti che ha lavorato in stretto contatto con l\'amministratore di sistema: un tecnico informatico che si è lasciato appassionare dal progetto. Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi nel decidere chi contattare, qualora aveste quesiti o consigli da rivolgerci.');
 
 		$contacts_path = $this->frontController->getAppSetting('contactsPath');
 		$template->assign('contacts_path', $contacts_path);
@@ -39,7 +38,7 @@ class ShowContacts extends UniversiboCommand {
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return false;
+		if( $rows == 0) return false;
 		
 		$arrayContatti=array();     //l'array di array da passare al template
 		
@@ -49,6 +48,18 @@ class ShowContacts extends UniversiboCommand {
 			$arrayContatti[] = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
 		}
 		$template->assign('contacts_langPersonal', $arrayContatti);
+		
+		
+		
+		$template->assign('contacts_langIntro', 'UniversiBO è l\'associazione studentesca universitaria dell\'Ateneo di Bologna che dal Settembre 2004 si impegna a supportare la Web Community degli studenti.
+		
+		Attraverso l\'utilizzo di tecnologia OpenSource UniversiBO si propone di estendere i confini fisici delle aule e dei muri delle Facoltà, incentivando i partecipanti a partecipare alla vita universitaria attraverso la diffusione e la condivisione delle informazioni. Desidera inoltre porsi come punto di collegamento tra il corpo decente e il mondo studentesco e promuovere e favorire l\'informatizzazione e la filosofia del Software Libero dell\'Ateneo di Bologna.
+
+		Tutte le richieste di aiuto ed informazioni possono essere rivolte all\'indirizzo '.$frontcontroller->getAppSetting('infoEmail').'
+		
+		Nato nel 2002 dall\'idea di tre amici al momento attuale lo staff è composto da '.$rows.' collaboratori la maggiorparte dei quali sono studenti che danno il loro prezioso contributo anche per piccole attività.
+		Qui di seguito ci presentiamo indicandovi una divisione in ruoli per aiutarvi qualora aveste quesiti o bisogno di contattare qualcuno in particolare.');
+
 		
 		
 		return 'default';
