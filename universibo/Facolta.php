@@ -14,10 +14,9 @@ $facoltaElencoCanale     = NULL;
 /**
  * Facolta class.
  *
- * Un "canale" è una pagina dinamica con a disposizione il collegamento 
- * verso i vari servizi tramite un indentificativo, gestisce i diritti di
- * accesso per i diversi gruppi e diritti particolari 'ruoli' per alcuni utenti,
- * fornisce sistemi di notifica e per assegnare un nome ad un canale
+ * Modella una facoltà.
+ * Fornisce metodi statici che permettono l'accesso 
+ * ottimizzato alle istanze di Facoltà
  *
  * @package universibo
  * @version 2.0.0
@@ -58,24 +57,50 @@ class Facolta extends Canale{
 
 
 
+	/**
+	 * Restituisce il nome della facoltà
+	 *
+	 * @return string
+	 */
 	function getNome()
 	{
 		return $this->facoltaNome;
 	}
 
 
+
+	/**
+	 * Restituisce il titolo/nome completo della facoltà
+	 *
+	 * @return string
+	 */
 	function getTitolo()
 	{
 		return 'FACOLTA\' DI '.$this->getNomeFacolta();
 	}
 
 
+
+	/**
+	 * Restituisce il codice di ateneo a 4 cifre della facoltà
+	 * es: ingegneria -> '0021'
+	 *
+	 * @return string
+	 */
 	function getCodiceFacolta()
 	{
 		return $this->facoltaCodice;
 	}
 
 
+	/**
+	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * corrispondente al codice id_canale 
+	 * 
+	 * @static
+	 * @param int $id_canale id_del canale corrispondente alla facoltà
+	 * @return Facolta
+	 */
 	function &selectFacoltaCanale($id_canale)
 	{
 		global $__facoltaElencoCanale;
@@ -89,6 +114,15 @@ class Facolta extends Canale{
 	}
 	
 	
+
+	/**
+	 * Seleziona da database e restituisce l'oggetto facoltà 
+	 * corrispondente al codice $cod_facolta 
+	 * 
+	 * @static
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @return Facolta
+	 */
 	function &selectFacoltaCodice($cod_facolta)
 	{
 		global $__facoltaElencoCodice;
@@ -101,7 +135,16 @@ class Facolta extends Canale{
 		return $__facoltaElencoCodice[$cod_facolta];
 	}
 	
+
 	
+	/**
+	 * Seleziona da database e restituisce un'array contenente l'elenco 
+	 * in ordine alfabetico di tutte le facoltà 
+	 * 
+	 * @static
+	 * @param string $cod_facolta stringa a 4 cifre del codice d'ateneo della facoltà
+	 * @return array(Facolta)
+	 */
 	function &selectFacoltaElenco()
 	{
 		global $__facoltaElencoAlfabetico;
@@ -116,8 +159,15 @@ class Facolta extends Canale{
 	
 	
 	/**
+	 * Siccome nella maggiorparte delle chiamate viene eseguito l'accesso a tutte le
+	 * facoltà questa procedura si occupa di eseguire il caching degli oggetti facoltà
+	 * in variabili static (globali per comodità implementativa) e permette di 
+	 * alleggerire i futuri accessi a DB implementando di fatto insieme ai metodi
+	 * select*() i meccanismi di un metodo singleton factory
 	 * 
-	 * 
+	 * @static
+	 * @private
+	 * @return none 
 	 */
 	function _selectFacolta()
 	{
@@ -134,12 +184,12 @@ class Facolta extends Canale{
 			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows = 0) return false;
 
 		$__facoltaElencoAlfabetico = array();
 		$__facoltaElencoCanale     = array();
 		$__facoltaElencoCodice     = array();
 
+		if( $rows = 0) return;
 		while (	$res->fetchInto($row) )
 		{
 			$facolta =& new Facolta($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
@@ -149,7 +199,7 @@ class Facolta extends Canale{
 			$__facoltaElencoCodice[$facolta->getCodiceFacolta()] =& $facolta;
 			$__facoltaElencoCanale[$facolta->getIdCanale()] =& $facolta;
 		}
-
+		
 	}
 	
 }

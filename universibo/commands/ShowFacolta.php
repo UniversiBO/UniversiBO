@@ -3,7 +3,8 @@
 require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * ShowHome: mostra la homepage
+ * ShowFacolta: mostra una facoltà
+ * Mostra i collegamenti a tutti i corsi di laurea attivi nella facoltà
  *
  * @package universibo
  * @version 2.0.0
@@ -14,15 +15,15 @@ require_once ('CanaleCommand'.PHP_EXTENSION);
 
 class ShowFacolta extends CanaleCommand 
 {
-	
+
 	/** 
 	 * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
 	 */
 	function initCommand( &$frontController )
 	{
-		
+
 		parent::initCommand( $frontController );
-		
+
 		$canale =& $this->getRequestCanale();
 		//var_dump($canale);
 		
