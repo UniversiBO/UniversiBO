@@ -25,7 +25,7 @@ class FileShowInfo extends UniversiboCommand {
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id del file richiesto non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		
 //		
@@ -39,7 +39,7 @@ class FileShowInfo extends UniversiboCommand {
 //			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 //
 //
-//		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+//		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUser() ))
 //		{
 //			$file_tpl['modifica']     = 'Modifica';
 //			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();

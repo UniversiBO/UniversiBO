@@ -108,39 +108,39 @@ class ShowContribute extends UniversiboCommand
 				 !array_key_exists('f3_cdl', $_POST)||
 				 !array_key_exists('f3_altro', $_POST) ) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
 				var_dump($f3_corsi_di_laurea);die();
 				$f3_accept = false;
 			}	
 
 			//nome	
 			if ( strlen($_POST['f3_nome']) > 50 ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il nome indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il nome indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}	
 			else $q3_nome = $f3_nome = $_POST['f3_nome'];
 
 			//cognome
 			if ( strlen($_POST['f3_cognome']) > 50 ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il cognome indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il cognome indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_cognome = $f3_cognome = $_POST['f3_cognome'];
 			
 			//telefono
 			if ( (strlen($_POST['f3_tel']) > 50)||!ereg('^([0-9]{1,50})$', $_POST['f3_tel'])) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il numero di cellulare indicato pu? essere massimo 20 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il numero di cellulare indicato pu? essere massimo 20 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_tel = $f3_tel = $_POST['f3_tel'];
 			
 			//mail
 			if ( strlen($_POST['f3_mail']) > 50 ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'L\' indirizzo e-mail indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'L\' indirizzo e-mail indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			elseif ( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f3_mail']) ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_mail = $f3_mail = $_POST['f3_mail'];
@@ -150,21 +150,21 @@ class ShowContribute extends UniversiboCommand
 			
 			//tempo
 			if ( !array_key_exists('f3_tempo', $_POST) ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Indica quanto tempo utilizzi una connessione internet','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Indica quanto tempo utilizzi una connessione internet','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_tempo = $f3_tempo = $_POST['f3_tempo'];
 			
 			//internet
 			if ( !array_key_exists('f3_internet', $_POST) ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Indica quanto tempo libero potresti dedicare al progetto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Indica quanto tempo libero potresti dedicare al progetto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_internet = $f3_internet = $_POST['f3_internet'];
 			
 			//privacy
 			if ( !array_key_exists('f3_privacy', $_POST) ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'E\' necessario acconsentire al trattamento dei dati personali','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'E\' necessario acconsentire al trattamento dei dati personali','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			
@@ -213,7 +213,7 @@ class ShowContribute extends UniversiboCommand
 			//corso di laurea
 			
 			if ( strlen($_POST['f3_cdl']) > 50 ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUtente(), 'msg'=>'Il corso di laurea indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il corso di laurea indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_cdl = $f3_cdl = $_POST['f3_cdl'];
@@ -250,7 +250,7 @@ class ShowContribute extends UniversiboCommand
 			$res = $db->query($query);
 			if (DB::isError($res))
 			{ 
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 				return false;
 			}
 			

@@ -21,6 +21,8 @@ class ShowHelpTopic extends UniversiboCommand {
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
+		$bc =& $this->getBaseCommand();
+		$sessionUser =& $bc->getSessionUser();
 		
 		$template -> assign('showHelpTopic_langAltTitle', 'Help');
 
@@ -42,7 +44,7 @@ class ShowHelpTopic extends UniversiboCommand {
 			$query = 'SELECT riferimento FROM help_topic';
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUtente(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			
 			while($res->fetchInto($row))
 			{

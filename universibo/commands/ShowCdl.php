@@ -26,7 +26,7 @@ class ShowCdl extends CanaleCommand {
 		//var_dump($canale);
 		
 		if ($canale->getTipoCanale() != CANALE_CDL)
-			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUtente(), 'msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUser(), 'msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	function execute() {
@@ -41,7 +41,7 @@ class ShowCdl extends CanaleCommand {
 		if ( !array_key_exists('anno_accademico', $_GET) )
 			$anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		elseif( !ereg( '^([0-9]{4})$', $_GET['anno_accademico'] ) )
-			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUtente(), 'msg' => 'L\'anno accademico richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUser(), 'msg' => 'L\'anno accademico richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 		else 
 			$anno_accademico = $_GET['anno_accademico'];
 		

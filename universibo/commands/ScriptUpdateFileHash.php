@@ -38,7 +38,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
 				$query = 'UPDATE file SET hash_file=\''.md5_file($nome_file).'\' WHERE id_file = '.$row[0];
 				$res1 =& $db->query($query);
 				if (DB::isError($res1)) 
-					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
+					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
 			}
 			else  
 			{
@@ -46,7 +46,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
 				$query = 'UPDATE file SET hash_file=\'\' WHERE id_file = '.$row[0];
 				$res1 =& $db->query($query);
 				if (DB::isError($res1)) 
-					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUtente(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
+					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
 			}
 		}
 		
