@@ -44,7 +44,11 @@ class ShowPersonalSettings extends UniversiboCommand
 		$f20_livelli_notifica = Ruolo::getLivelliNotifica();
 		$f20_livello_notifica = $user->getLivelloNotifica();
 		$f20_personal_style	= $user->getDefaultStyle();
-		$f20_stili = array("black","unibo");
+		if($f20_personal_style == "black")
+			{
+			$f20_stili = array("black","unibo");
+			}
+			else{$f20_stili = array("unibo","black");}
 						
 		$f20_accept = false;
 		$flag_tel = true;
