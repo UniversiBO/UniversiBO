@@ -11,7 +11,7 @@
 Per registrarti segui il link &quot;Registrazione Studenti&quot; sulla destra.</p>
 <p>La sessione potrebbe essere scaduta.</p>
 </td></tr>
-<tr><td align="center" class="Normal"><a href="{$fileInfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></td></tr>
+<tr><td align="center" class="Normal"><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></td></tr>
 </table>
 
 {if $common_pageType == "index"}

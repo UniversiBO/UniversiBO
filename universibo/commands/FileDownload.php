@@ -32,10 +32,19 @@ class FileDownload extends UniversiboCommand {
 		
 		if ($user->isGroupAllowed( $file->getPermessiDownload() ))
 		{
-	        $directoryFile = $frontcontroller->getAppSetting('directoryFile');
+	        $directoryFile = $frontcontroller->getAppSetting('filesPath');
 	        //$directoryFileUri = $frontcontroller->getAppSetting('directoryFileUri');
 			
-			$nomeFile = $directoryFile.$file->getNomeFile();
+			$nomeFile = $directoryFile.$file->getIdFile().'_'.$file->getNomeFile();
+			//echo $nomeFile;die();
+			if (!file_exists($nomeFile)) 
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare il file richiesto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
+			if ( md5_file($nomeFile) != $file->getHashFile() ) 
+				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il file richiesto risulta corrotto, contattare l\'amministratore del sito','file'=>__FILE__,'line'=>__LINE__ ));
+			
+			//FARE CONTROLLO PASSWORD  $this->password = $password;
+				
+			
 			if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE 5.5")) 
 			{
 				// had to make it MSIE 5.5 because if 6 has no "attachment;"
@@ -71,7 +80,7 @@ class FileDownload extends UniversiboCommand {
 		
 		
 		
-		$template->assign('fileInfoURI', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
+		$template->assign('fileDownload_InfoURI', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 		
 		if ($user->isOspite() )
 		{
