@@ -38,35 +38,15 @@ class BaseCommand {
 	function BaseCommand( &$frontController )
 	{
 		$this->frontController =& $frontController;
+		$this->initCommand();
 	}
 	
+	
+	function initCommand()
+	{
+	}
 	
 /**
-	function initBase()
-	{
-		global $fc;
-		if(empty($fc->templateEngine))
-		{
-			$this->_initializeEoceneTemplateEngine();
-			return;
-		}
-		
-		$engineType=$fc->templateEngine;
-		$engineType=strtoupper($engineType);
-		switch($engineType)
-		{
-			case "SMARTY":
-				$fc->import('SmartyWrapper');
-				$this->templateEngine=new SmartyWrapper();
-				break;
-			case "EOCENETEMPLATEENGINE":
-				$this->_initializeEoceneTemplateEngine();
-				break;
-			default:
-				$fc->writeError(100);
-		}
-	}
-	
 	function initFormVars(&$formVariables){
 		global $fc;
 		$size=count($formVariables);

@@ -4,7 +4,7 @@ class Example1 extends BaseCommand {
 
 		echo 'Example1 di BaseCommand... funziona...
 		senza template';
-
+	
 	}
 }
 ?>

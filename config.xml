@@ -21,12 +21,12 @@
 		<main>index.php</main>
 	</receivers>
 	<commands>
-		<StartExample1 class="Example1">
+		<StartExample1 class="TestTemplate">
 			 <template type="default">example1.htm</template>
 		</StartExample1>
-		<DisplayLeftFrame class="Example1">
+		<TestTemplate class="TestTemplate">
 			 <template type="default">example1_a.htm</template>
-		</DisplayLeftFrame>
+		</TestTemplate>
 		<DisplayRightFrame class="Example1">
 			 <template type="default">example1_b.htm</template>
 		</DisplayRightFrame>
@@ -46,7 +46,7 @@
 		<StartExample5 class="Example5">
 			 <template type="default">example5.htm</template>
 		</StartExample5>
-		<RunSessionExample class="SessionExample" />
+		<RunSessionExample class="SessionExample" />  -->
 	</commands>
 	<dbInfo type="DB">
 	    <connection identifier="main">pgsql://my_username:my_password@host/my_dbname</connection>
@@ -61,16 +61,16 @@
 	<templateInfo type="Smarty">
 		<template_dirs>
 			<smarty_dir>../framework/smarty</smarty_dir>
-			<smarty_template>../universibo/templates</smarty_template>
-			<smarty_compile>../universibo/templates_compile</smarty_compile>
-			<smarty_config>../universibo/templates_config</smarty_config>
-			<smarty_cache>../universibo/templates_cache</smarty_cache>
+			<smarty_template>../universibo/templates/</smarty_template>
+			<smarty_compile>../universibo/templates_compile/</smarty_compile>
+			<smarty_config>../universibo/templates_config/</smarty_config>
+			<smarty_cache>../universibo/templates_cache/</smarty_cache>
 		</template_dirs>
 		
 		<template_styles default="black">
-			<style name="black" dir="black/" > </style>
-			<style name="unibo" dir="unibo/" > </style>
-			<style name="simple" dir="simple/" > </style>
+			<style name="black" dir="black/" />
+			<style name="unibo" dir="unibo/" />
+			<style name="simple" dir="simple/" />
 		</template_styles>
 	</templateInfo>	
 	

@@ -335,6 +335,12 @@ class FrontController {
 		}	
 		
 		//assegno il template in uso	
+		if (array_key_exists('setTemplate', $_GET) && $_GET['setTemplate']!=''
+			&& array_key_exists($_GET['setTemplate'],$this->templateEngine['styles'])) 
+		{
+			$_SESSION['template_name'] = $_GET['setTemplate'];
+		}
+		
 		if (array_key_exists('template_name', $_SESSION) && $_SESSION['template_name']!='') 
 		{
 			$this->templateEngine['template_name'] = $_SESSION['template_name'];
@@ -500,7 +506,7 @@ class FrontController {
 	* @return Smarty
 	* @access public 
 	*/
-	function &getTemplateEngine( )
+	function &getTemplateEngine()
 	{
 		static $myTemplateObject = NULL;
 		 
