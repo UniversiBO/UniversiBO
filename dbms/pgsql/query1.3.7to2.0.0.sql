@@ -652,4 +652,6 @@ INSERT into phpbb_smilies (code,smile_url,emoticon) values('[:7]','face_whistle.
 
 
 UPDATE phpbb_config set config_value='la community degli studenti dell\'Università di Bologna'
-WHERE  config_name='site_desc'
+WHERE  config_name='site_desc';
+
+
