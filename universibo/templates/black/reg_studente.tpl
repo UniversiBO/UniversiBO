@@ -29,7 +29,7 @@
 <tr><td colspan="2" class="Normal" align="center">&nbsp;<br /><label for="f4_regolamento">{$regStudente_langReg|escape:"htmlall"}</label><br />
 <textarea name="f4_regolamento" id="f4_regolamento" rows="5" cols="60"  wrap="phisical" readonly="readonly">{$f4_regolamento|escape:"htmlall"}</textarea><br />
 &nbsp;<br /><label for="f4_privacy">{$regStudente_langPrivacy|escape:"htmlall"}</label><br />
-<textarea name="f4_privacy" id="f4_privacy" rows="5" cols="60" readonly="readonly" />{$f4_privacy|escape:"htmlall"}</textarea><br />
+<textarea name="f4_privacy" id="f4_privacy" rows="5" cols="60" readonly="readonly" >{$f4_privacy|escape:"htmlall"}</textarea><br />
 <input type="checkbox" name="f4_confirm" id="f4_confirm" />&nbsp;&nbsp;<label for="f4_confirm"><strong>Confermo di aver letto il regolamento</strong></label><br />&nbsp;<br /></td>
 </tr>
 <tr><td colspan="2" class="Normal" align="center">
