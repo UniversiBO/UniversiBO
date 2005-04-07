@@ -261,6 +261,10 @@
 			<response type="template" name="default">link_add.tpl</response>
 			<response type="template" name="success">link_add_success.tpl</response>
 		</LinkAdd>
+		<LinkDelete class="LinkDelete">
+			<response type="template" name="default">link_delete.tpl</response>
+			<response type="template" name="success">link_delete_success.tpl</response>
+		</LinkDelete>
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />

@@ -79,14 +79,15 @@ class FileDelete extends UniversiboCommand {
 				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 			
 
-		//$elenco_canali = array ($id_canale);
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i < $num_ruoli; $i ++)
-		{
-			$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-		}
-		
+		$elenco_canali = array_keys($user_ruoli);
+//		
+//		$ruoli_keys = array_keys($user_ruoli);
+//		$num_ruoli = count($ruoli_keys);
+//		for ($i = 0; $i < $num_ruoli; $i ++)
+//		{
+//			$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+//		}
+//		
 		$file_canali =& $file->getIdCanali();
 		
 		$f14_canale = array();
@@ -147,7 +148,7 @@ class FileDelete extends UniversiboCommand {
 			foreach ($f14_canale_app as $key => $value)
 			{
 				$file->removeCanale($key);
-				$canale = Canale::retrieveCanale($key);					
+				//$canale = Canale::retrieveCanale($key);					
 			}
 			
 			$file->deleteFileItem();
