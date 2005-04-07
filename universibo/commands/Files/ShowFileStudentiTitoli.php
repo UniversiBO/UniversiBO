@@ -31,7 +31,7 @@ class ShowFileStudentiTitoli extends PluginCommand {
 		//$flag_chkDiritti	=  $param['chk_diritti'];
 //		var_dump($param['id_notizie']);
 //		die();
-		
+		$num = $param['num'];
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
 		$canale    =& $bc->getRequestCanale();
