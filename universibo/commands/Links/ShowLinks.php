@@ -79,6 +79,11 @@ class ShowLinks extends PluginCommand {
 			$elenco_links_tpl[$i]['uri']       		= $links->getUri();
 			$elenco_links_tpl[$i]['label']      	= $links->getLabel();
 			$elenco_links_tpl[$i]['description']    = $links->getDescription();
+			if (ereg('^'.$fc->getWebUrl().'.*$', $links->getUri()))
+				{$elenco_links_tpl[$i]['tipo'] = "interno";
+					
+				}
+			else{$elenco_links_tpl[$i]['tipo'] = "esterno";}
 
 		}
 
