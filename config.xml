@@ -264,7 +264,13 @@
 		<LinkDelete class="LinkDelete">
 			<response type="template" name="default">link_delete.tpl</response>
 			<response type="template" name="success">link_delete_success.tpl</response>
+			<pluginCommand name="ShowLink" class="Links.ShowLink" />
 		</LinkDelete>
+		
+		<LinksAdmin class="LinksAdmin">
+			<response type="template" name="default">links_admin.tpl</response>
+		    <pluginCommand name="ShowLinksExtended" class="Links.ShowLinksExtended" />
+		</LinksAdmin>
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />

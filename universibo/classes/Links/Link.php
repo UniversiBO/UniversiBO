@@ -345,6 +345,29 @@ class Link
 		
 		return $link_list;
 	 }
+	 
+	 /**
+	 * Restituisce il nick dello user
+	 *
+	 * @return il nickname
+	 */
+	 
+	 function getUsername()
+	 {
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT username FROM utente WHERE id_utente= '.$db->quote($this->id_utente);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		if( $rows == 0) 
+			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
+		$res->fetchInto($row);
+		$res->free();
+		return $row[0];
+		
+	 }
 }
  
 ?>

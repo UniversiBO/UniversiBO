@@ -18,7 +18,7 @@ require_once ('Links/Link'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowLinks extends PluginCommand {
+class ShowLink extends PluginCommand {
 	
 	
 	/**
@@ -31,11 +31,12 @@ class ShowLinks extends PluginCommand {
 	function execute($param)
 	{
 		
-		$num_news  =  $param['num'];
+		$id_canale  =  $param['id_canale'];
+		$id_link = $param['id_link'];
 
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
-		$canale    =& $bc->getRequestCanale();
+		$canale    =& Canale::retrieveCanale($id_canale);
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$user_ruoli =& $user->getRuoli();
@@ -66,31 +67,18 @@ class ShowLinks extends PluginCommand {
 			$moderatore     = false;
 			$ultimo_accesso = $user->getUltimoLogin();
 		}
+		
+		$link =& Link::selectLink($id_link);
+		
+		$link_tpl['uri']       		= $link->getUri();
+		$link_tpl['label']      	= $link->getLabel();
+		$link_tpl['description']    = $link->getDescription();
+		$link_tpl['userlink']    = 'index.php?do=ShowUser&id_utente='.$link->getIdUtente();
+		$link_tpl['user']    = $link->getUsername();
 	
-		$lista_links =& Link::selectCanaleLinks($id_canale);
-		 
-		$ret_links = count($lista_links);
-		$elenco_links_tpl = array();
-	
-		for ($i = 0; $i < $ret_links; $i++)
-		{
-			$links =& $lista_links[$i];
-			
-			$elenco_links_tpl[$i]['uri']       		= $links->getUri();
-			$elenco_links_tpl[$i]['label']      	= $links->getLabel();
-			if (ereg('^'.$fc->getWebUrl().'.*$', $links->getUri()))
-				{$elenco_links_tpl[$i]['tipo'] = "interno";
-					
-				}
-			else{$elenco_links_tpl[$i]['tipo'] = "esterno";}
 
-		}
-
-		$template->assign('showLinks_linksList', $elenco_links_tpl);	
-		$template->assign('showLinks_linksListAvailable', ((count($elenco_links_tpl) > 0) || $personalizza));
-		$template->assign('showLinks_linksAdminUri', 'index.php?do=LinksAdmin&id_canale='.$id_canale);
-		$template->assign('showLinks_linksAdminLabel', 'Gestione links');
-		$template->assign('showLinks_linksPersonalizza', ($personalizza) ? 'true' : 'false');
+		$template->assign('showSingleLink', $link_tpl);	
+		
 	}
 		
 }

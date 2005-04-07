@@ -89,7 +89,7 @@ class LinkDelete extends UniversiboCommand {
 		}
 		
 		//$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
-		
+		$this->executePlugin('ShowLink', array( 'id_link' => $_GET['id_link'], 'id_canale' => $_GET['id_canale']) );
 		return 'default';
 	}
 

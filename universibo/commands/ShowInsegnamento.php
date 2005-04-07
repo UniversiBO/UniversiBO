@@ -132,7 +132,7 @@ testi consigliati[/url]';
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
 		$this->executePlugin('ShowFileTitoli', array());
-		$this->executePlugin('ShowFileStudentiTitoli', array());
+		$this->executePlugin('ShowFileStudentiTitoli',  array( 'num' => 12 ));
 		return 'default';
 	}
 

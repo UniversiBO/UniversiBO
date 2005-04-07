@@ -18,7 +18,7 @@ require_once ('Links/Link'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowLinks extends PluginCommand {
+class ShowLinksExtended extends PluginCommand {
 	
 	
 	/**
@@ -31,11 +31,11 @@ class ShowLinks extends PluginCommand {
 	function execute($param)
 	{
 		
-		$num_news  =  $param['num'];
+		$id_canale  =  $param['id_canale'];
 
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
-		$canale    =& $bc->getRequestCanale();
+		$canale    =& Canale::retrieveCanale($id_canale);
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$user_ruoli =& $user->getRuoli();
@@ -78,19 +78,21 @@ class ShowLinks extends PluginCommand {
 			
 			$elenco_links_tpl[$i]['uri']       		= $links->getUri();
 			$elenco_links_tpl[$i]['label']      	= $links->getLabel();
-			if (ereg('^'.$fc->getWebUrl().'.*$', $links->getUri()))
-				{$elenco_links_tpl[$i]['tipo'] = "interno";
-					
-				}
-			else{$elenco_links_tpl[$i]['tipo'] = "esterno";}
-
+			$elenco_links_tpl[$i]['description']    = $links->getDescription();
+			$elenco_links_tpl[$i]['userlink']    = 'index.php?do=ShowUser&id_utente='.$links->getIdUtente();
+			$elenco_links_tpl[$i]['user']    = $links->getUsername();
+			if (($user->isAdmin() || $referente || ($moderatore && $links->getIdUtente()==$user->getIdUser())))
+					{
+						$elenco_links_tpl[$i]['modifica']="Modifica";
+						$elenco_links_tpl[$i]['modifica_link_uri'] = 'index.php?do=LinkEdit&id_link='.$links->getIdLink().'&id_canale='.$links->getIdCanale();
+						$elenco_links_tpl[$i]['elimina']="Cancella";
+						$elenco_links_tpl[$i]['elimina_link_uri'] = 'index.php?do=LinkDelete&id_link='.$links->getIdLink().'&id_canale='.$links->getIdCanale();
+					}
 		}
 
-		$template->assign('showLinks_linksList', $elenco_links_tpl);	
-		$template->assign('showLinks_linksListAvailable', ((count($elenco_links_tpl) > 0) || $personalizza));
-		$template->assign('showLinks_linksAdminUri', 'index.php?do=LinksAdmin&id_canale='.$id_canale);
-		$template->assign('showLinks_linksAdminLabel', 'Gestione links');
-		$template->assign('showLinks_linksPersonalizza', ($personalizza) ? 'true' : 'false');
+		$template->assign('showLinksExtended_linksList', $elenco_links_tpl);	
+		$template->assign('showLinksExtended_linksListAvailable', ((count($elenco_links_tpl) > 0) || $personalizza));
+		
 	}
 		
 }
