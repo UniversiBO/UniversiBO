@@ -3,14 +3,9 @@
 <h2>Elimina il link</h2>
 </div>
 {include file=avviso_notice.tpl}
-<table width="98%" border="0" cellspacing="0" cellpadding="2" align="center" summary="">
-	<tr>
-	 <td>Indirizzo</td>
-	 <td>Descrizione</td>
-	 <td>Autore</td>
-	</tr>
+
 {include file=Links/single_link.tpl}
-</table>
+
 <form method="post">
 	<p><input class="submit" type="submit" id="f30_submit" name="f30_submit" size="20" value="Elimina questo link" /></p>
 </form>

@@ -2,14 +2,9 @@
 <div class="titoloPagina">
 <h2>Modifica il link</h2>
 </div>
-<table width="98%" border="0" cellspacing="0" cellpadding="2" align="center" summary="">
-	<tr>
-	 <td>Indirizzo</td>
-	 <td>Descrizione</td>
-	 <td>Autore</td>
-	</tr>
+
 {include file=Links/single_link.tpl}
-</table>
+
 {include file=avviso_notice.tpl}
 <form method="post" enctype="multipart/form-data">
 	<p><label class="label" for="f31_URI">Indirizzo:</label>
