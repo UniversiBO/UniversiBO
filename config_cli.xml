@@ -19,7 +19,9 @@
 		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />
 		
 		<ScriptTest class="ScriptTest" />
-		
+
+		<ScriptGetLDAPMD5 class="ScriptGetLDAPMD5" />		
+
 		<ScriptNotificheSend class="ScriptNotificheSend" />
 
 		<ScriptIscriviDocenti2 class="ScriptIscriviDocenti2" />
