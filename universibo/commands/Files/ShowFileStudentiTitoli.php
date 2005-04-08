@@ -40,8 +40,13 @@ class ShowFileStudentiTitoli extends PluginCommand {
 		$krono     =& $fc->getKrono();
 
 		$files_studenti_attivo =& $canale->getServizioFilesStudenti();
-        if ( $files_studenti_attivo )
-		{
+        
+        if ( !$files_studenti_attivo )
+        {
+			$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'false');
+			return;
+		}
+		
 		$id_canale = $canale->getIdCanale();
 		$titolo_canale =  $canale->getTitolo();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
@@ -50,34 +55,34 @@ class ShowFileStudentiTitoli extends PluginCommand {
 		$personalizza_not_admin = false;
 
 		$template->assign('showFileStudentiTitoli_addFileFlag', 'false');
-		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
-		{
-			$personalizza = true;
-			
-			if (array_key_exists($id_canale, $user_ruoli))
+			if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
 			{
-				$ruolo =& $user_ruoli[$id_canale];
+				$personalizza = true;
 				
-				$personalizza_not_admin = true;
-				$referente      = $ruolo->isReferente();
-				$moderatore     = $ruolo->isModeratore();
-				$ultimo_accesso = $ruolo->getUltimoAccesso();
+				if (array_key_exists($id_canale, $user_ruoli))
+				{
+					$ruolo =& $user_ruoli[$id_canale];
+					
+					$personalizza_not_admin = true;
+					$referente      = $ruolo->isReferente();
+					$moderatore     = $ruolo->isModeratore();
+					$ultimo_accesso = $ruolo->getUltimoAccesso();
+				}
+				
+				if ( !$user->isOspite() )
+				{
+					$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
+					$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
+					$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
+				}
 			}
-			
-			if ( !$user->isOspite() )
+			else
 			{
-				$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
-				$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
-				$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
+				$personalizza   = false;
+				$referente      = false;
+				$moderatore     = false;
+				$ultimo_accesso = $user->getUltimoLogin();
 			}
-		}
-		else
-		{
-			$personalizza   = false;
-			$referente      = false;
-			$moderatore     = false;
-			$ultimo_accesso = $user->getUltimoLogin();
-		}
 /*		
 		$canale_news = $this->getNumNewsCanale($id_canale);
 
@@ -160,10 +165,6 @@ class ShowFileStudentiTitoli extends PluginCommand {
 			$template->assign('showFileStudentiTitoli_langFileAvailable', 'Ci sono '.$num_file.' file');
 			$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'true');
 			$template->assign('showFileStudentiTitoli_fileList', $elenco_file_tpl);
-		}
-	
-	else{$template->assign('showFileStudentiTitoli_langFileAvailableFlag', 'false');}
-
 	}
 	
 	

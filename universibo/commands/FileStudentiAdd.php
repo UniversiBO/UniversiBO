@@ -62,12 +62,12 @@ class FileStudentiAdd extends UniversiboCommand {
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non é valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 
 			$canale = & Canale::retrieveCanale($_GET['id_canale']);
 			
-			if ($canale->getServizioFiles() == false) 
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio files é disattivato", 'file' => __FILE__, 'line' => __LINE__));
+			if ($canale->getServizioFilesStudenti() == false) 
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il servizio files è disattivato', 'file' => __FILE__, 'line' => __LINE__));
 		
 			$id_canale = $canale->getIdCanale();
 			$template->assign('common_canaleURI', $canale->showMe());
