@@ -21,8 +21,9 @@ class ShowHelpTopic extends UniversiboCommand {
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
-		$bc =& $this->getBaseCommand();
-		$sessionUser =& $bc->getSessionUser();
+//		$bc =& $this->getBaseCommand();
+//		$sessionUser =& $bc->getSessionUser();
+		$sessionUser =& $this->getSessionUser();
 		
 		$template -> assign('showHelpTopic_langAltTitle', 'Help');
 

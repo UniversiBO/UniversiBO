@@ -19,8 +19,8 @@ hr
 	border-top: dotted 2px #999;
 	margin: 30px 0 10px;
 }
-a {color: #386dce;}
-a:hover {color: #00e;}
+a {color: #386dce; /*padding: 1px; border: 1px;*/}
+a:hover, a:focus {color: #00e;}
 
 img
 {
@@ -257,6 +257,12 @@ td.evidenzia{
 /**
  * Pagina centrale
  */
+#content a:hover, #content a:focus, .box .contenuto a:hover, .box .contenuto a:focus
+{
+	background-color: #faffa0;
+	/*border: 1px solid #707700;*/
+}
+
 #seiIn
 {
 	display: block;
@@ -549,11 +555,15 @@ td.evidenzia{
 {
 	font-weight: bold;
 }
+/*
 .box a
 {
-	/*color: #00e !important;*/
 	padding: 0;
 	margin: 0;
+}*/
+.box a
+{
+	padding: 1px; border: 1px; margin: 0;
 }
 .box h3 a, .work h3 a,.news h3 a
 {

@@ -25,6 +25,10 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$krono = & $frontcontroller->getKrono();
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
+		
+		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
+		$template->assign('common_langCanaleNome', 'indietro');
+		
 			
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 			Error::throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
@@ -37,10 +41,10 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
 		$insegnamento = Canale::retrieveCanale($id_canale);
 		
-		
-		
-		$template->assign('infoDid_title', $insegnamento->getTitolo() );
-		$template->assign('infoDid_backUri', $insegnamento->showMe() );
+		$template->assign('common_canaleURI', $insegnamento->showMe());
+		$template->assign('common_langCanaleNome', 'a '.$insegnamento->getTitolo());
+		$template->assign('infoDid_title', $insegnamento->getTitolo());
+				
 		
 		//var_dump($info_didattica);
 		$f18_homepageLink = $info_didattica->getHomepageAlternativaLink();

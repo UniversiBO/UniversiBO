@@ -23,7 +23,7 @@ class Login extends UniversiboCommand {
 		$template =& $this->frontController->getTemplateEngine();
 		$user =& $this->getSessionUser();
 		
-		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : $_SERVER['HTTP_REFERER'];
+		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : (array_key_exists('HTTP_REFERER',$_SERVER))? $_SERVER['HTTP_REFERER'] : '';
 		
 
 		if ( array_key_exists('f1_submit',$_POST) )
@@ -58,6 +58,8 @@ class Login extends UniversiboCommand {
 				
 				$forum = new ForumApi;
 				$forum->login($userLogin);
+				
+				//var_dump($referer);
 				
 				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') )
 					FrontController::redirectCommand('ShowMyUniversiBO');

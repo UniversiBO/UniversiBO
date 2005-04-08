@@ -33,4 +33,6 @@
 
 <p><input type="submit" class="submit" name="f18_submit" id="f18_submit" value="Modifica" /></p>
 </form>
+
+<p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 {include file=footer_index.tpl}
