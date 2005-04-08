@@ -40,6 +40,7 @@ class ShowLinksExtended extends PluginCommand {
 		$canale    =& Canale::retrieveCanale($id_canale);
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
+		//BUG strano: se passo per riferimento l'array dei ruoli, si modifica il session user di universibo_command
 		$user_ruoli = $user->getRuoli();
 
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
@@ -93,7 +94,6 @@ class ShowLinksExtended extends PluginCommand {
 		$template->assign('showLinksExtended_linksList', $elenco_links_tpl);	
 		$template->assign('showLinksExtended_linksListAvailable', ((count($elenco_links_tpl) > 0) || $personalizza));
 		//var_dump($user);
-		
 	}
 		
 }

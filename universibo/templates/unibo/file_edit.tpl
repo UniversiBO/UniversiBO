@@ -9,9 +9,9 @@
 	<p><span><label for="f13_abstract"><p>Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f13_abstract" name="f13_abstract">{$f13_abstract|escape:"htmlall"}</textarea></span></p>
 	<p><span><label for="f13_parole_chiave"><p>Parole chiave<br />(una per riga, max 4 parole)</p></label>
-		<textarea cols="50" rows="4" id="f13_parole_chiave" name="f13_parole_chiave">
-		{foreach from=$f13_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
-		{/foreach}</textarea></span></p>
+{* non indentare il foreach nella textarea *}
+		<textarea cols="50" rows="4" id="f13_parole_chiave" name="f13_parole_chiave">{foreach from=$f13_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
+{/foreach}</textarea></span></p>
 	<p><label for="f13_categoria">Categoria:</label>
 		<select id="f13_categoria" name="f13_categoria">
 		{foreach from=$f13_categorie item=temp_categoria key=temp_key}

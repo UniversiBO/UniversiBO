@@ -9,9 +9,9 @@
 	<p><span><label for="f24_abstract"><p>Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f24_abstract" name="f24_abstract">{$f24_abstract|escape:"htmlall"}</textarea></span></p>
 	<p><span><label for="f24_parole_chiave"><p>Parole chiave<br />(una per riga, max 4 parole)</p></label>
-		<textarea cols="50" rows="4" id="f24_parole_chiave" name="f24_parole_chiave">
-		{foreach from=$f24_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
-		{/foreach}</textarea></span></p>
+	{* non indentare il foreach nella textarea *}
+		<textarea cols="50" rows="4" id="f24_parole_chiave" name="f24_parole_chiave">{foreach from=$f24_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
+{/foreach}</textarea></span></p>
 	<p><label for="f24_categoria">Categoria:</label>
 		<select id="f24_categoria" name="f24_categoria">
 		{foreach from=$f24_categorie item=temp_categoria key=temp_key}

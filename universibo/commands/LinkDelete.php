@@ -15,7 +15,7 @@ require_once ('Links/Link'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-class LinkDelete extends UniversiboCommand {
+class LinkDelete extends CanaleCommand {
 
 
 	function execute() {

@@ -12,9 +12,9 @@
 	<p><span><label for="f12_abstract"><p>Abstract/descrizione<br /> del file:<br />(max 3000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f12_abstract" name="f12_abstract">{$f12_abstract|escape:"htmlall"}</textarea></span></p>
 	<p><span><label for="f12_parole_chiave"><p>Parole chiave<br />(una per riga, max 4 parole)</p></label>
-		<textarea cols="50" rows="4" id="f12_parole_chiave" name="f12_parole_chiave">
-		{foreach from=$f12_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
-		{/foreach}</textarea></span></p>
+		{* non indentare il foreach nella textarea *}
+		<textarea cols="50" rows="4" id="f12_parole_chiave" name="f12_parole_chiave">{foreach from=$f12_parole_chiave item=temp_parola}{$temp_parola|escape:"htmlall"}
+{/foreach}</textarea></span></p>
 	<p><label for="f12_categoria">Categoria:</label>
 		<select id="f12_categoria" name="f12_categoria">
 		{foreach from=$f12_categorie item=temp_categoria key=temp_key}
