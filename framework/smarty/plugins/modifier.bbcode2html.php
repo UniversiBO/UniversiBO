@@ -89,12 +89,18 @@ function smarty_modifier_bbcode2html($message) {
           '/(?<!\\\\)\[email(?::\w+)?\](.*?)\[\/email(?::\w+)?\]/si'         => "<a href=\"mailto:\\1\">\\1</a>",
           '/(?<!\\\\)\[email(?::\w+)?=(.*?)\](.*?)\[\/email(?::\w+)?\]/si'   => "<a href=\"mailto:\\1\">\\2</a>",
           // [url]
-          '/(?<!\\\\)\[url(?::\w+)?\]www\.(.*?)\[\/url(?::\w+)?\]/si'        => "<a href=\"http://www.\\1\" target=\"_blank\">\\1</a>",
+          '/(?<!\\\\)\[url(?::\w+)?\]www\.(.*?)\[\/url(?::\w+)?\]/si'        => "<a href=\"http://www.\\1\" target=\"_blank\" title=\"Questo link apre una nuova pagina\">\\1</a>",
 //          '/(?<!\\\\)\[url(?::\w+)?\](.*?)\[\/url(?::\w+)?\]/si'             => "<a href=\"\\1\" target=\"_blank\">\\1</a>",
 //          '/(?<!\\\\)\[url(?::\w+)?=(.*?)?\](.*?)\[\/url(?::\w+)?\]/si'      => "<a href=\"\\1\" target=\"_blank\">\\2</a>",
           '/(?<!\\\\)\[url(?::\w+)?=(.*?)?\stype=extern?\](.*?)\[\/url(?::\w+)?\]/si'      => "<a href=\"\\1\" target=\"_blank\" title=\"Questo link apre una nuova pagina\">\\2</a>",
           '/(?<!\\\\)\[url(?::\w+)?\](.*?)\[\/url(?::\w+)?\]/si'             => "<a href=\"\\1\">\\1</a>",
           '/(?<!\\\\)\[url(?::\w+)?=(.*?)?\](.*?)\[\/url(?::\w+)?\]/si'      => "<a href=\"\\1\">\\2</a>",
+          
+          //[acronym]
+          '/(?<!\\\\)\[acronym(?::\w+)?=(.*?)?\](.*?)\[\/acronym(?::\w+)?\]/si'      => "<acronym title=\"\\1\">\\2</acronym>",
+          
+          //[lang]
+          '/(?<!\\\\)\[lang(?::\w+)?=(.*?)?\](.*?)\[\/lang(?::\w+)?\]/si'      => "<span lang=\"\\1\">\\2</span>",
           
 //          // [img]
 //          '/(?<!\\\\)\[img(?::\w+)?\](.*?)\[\/img(?::\w+)?\]/si'             => "<img src=\"\\1\" alt=\"\\1\" />",
