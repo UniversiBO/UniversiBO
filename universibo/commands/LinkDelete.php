@@ -71,11 +71,11 @@ class LinkDelete extends UniversiboCommand {
 				 Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
 				 
 			if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai i diritti per eliminare il Link\n La sessione potrebbe essere scaduta', 'file' => __FILE__, 'line' => __LINE__));
 			
 		}
 		elseif (!($user->isAdmin() || $autore))
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai i diritti per eliminare il file\n La sessione potrebbe essere scaduta', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non hai i diritti per eliminare il link\n La sessione potrebbe essere scaduta', 'file' => __FILE__, 'line' => __LINE__));
 		
 		//postback
 		
@@ -83,7 +83,7 @@ class LinkDelete extends UniversiboCommand {
 		{
 			if($link->deleteLink())
 			{
-				$template->assign('f30_langAction',"Il file è stato elimato correttamente");
+				$template->assign('f30_langAction',"Il link è stato eliminato correttamente");
 				return 'success';
 			}	
 		}

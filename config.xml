@@ -267,6 +267,12 @@
 			<pluginCommand name="ShowLink" class="Links.ShowLink" />
 		</LinkDelete>
 		
+		<LinkEdit class="LinkEdit">
+			<response type="template" name="default">link_edit.tpl</response>
+			<response type="template" name="success">link_edit_success.tpl</response>
+			<pluginCommand name="ShowLink" class="Links.ShowLink" />
+		</LinkEdit>
+		
 		<LinksAdmin class="LinksAdmin">
 			<response type="template" name="default">links_admin.tpl</response>
 		    <pluginCommand name="ShowLinksExtended" class="Links.ShowLinksExtended" />
