@@ -46,7 +46,7 @@ class LinkAdd extends UniversiboCommand {
 		$moderatore = false;
 
 		// valori default form
-		$f29_URI = '';
+		$f29_URI = 'http://';
 		$f29_Label = '';
 		$f29_Description = '';
 			

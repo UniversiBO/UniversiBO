@@ -4,7 +4,6 @@
 	<!--Root Folder can be absolute or relative to receiver path -->
 	<rootFolder>../framework/</rootFolder>
 	<rootURL>universibo2/htmls/</rootURL>
-	<webURL>https://www.universibo.unibo.it/</webURL>
 	<paths>
 		<application>../universibo/</application>
 		<commands>../universibo/commands/</commands>

@@ -368,6 +368,19 @@ class Link
 		return $row[0];
 		
 	 }
+	 
+	 /**
+	  * La funzione verifica se il link è interno o meno
+	  * @return boolean 
+	  */
+	  function isInternalLink()
+	  {
+	  	$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on')? 'https':'http';
+	  	$uri = $request_protocol.'://'.$_SERVER['HTTP_HOST'];
+//	  	var_dump($uri);
+	  	
+	  	return ereg('^'.$uri.'.*$', $this->getUri());		
+	  }
 }
  
 ?>

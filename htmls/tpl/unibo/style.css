@@ -366,7 +366,7 @@ td.evidenzia{
 	margin: 30px 5%;
 }
 
-.boxCommenti p,a
+.boxCommenti p, .boxCommenti a
 {
 	font-size: 11px !important;
 }
@@ -379,7 +379,7 @@ td.evidenzia{
 	margin: 5px;
 }
 
-.boxCommento p,a
+.boxCommento p, .boxCommento a
 {
 	font-size: 11px !important;
 	margin: 0.4em !important;

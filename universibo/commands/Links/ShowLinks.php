@@ -9,7 +9,7 @@ require_once ('Links/Link'.PHP_EXTENSION);
  *
  * Mostra i link 
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
- * Nel parametro di ingresso del deve essere specificato il numero di notizie da visualizzare.
+ * Nel parametro di ingresso del plugin deve essere specificato il numero dei link da visualizzare e il canale da cui il plugin viene invocato.
  *
  * @package universibo
  * @subpackage Links
@@ -31,7 +31,7 @@ class ShowLinks extends PluginCommand {
 	function execute($param)
 	{
 		
-		$num_news  =  $param['num'];
+		$num_links  =  $param['num'];
 
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
@@ -39,8 +39,7 @@ class ShowLinks extends PluginCommand {
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$user_ruoli =& $user->getRuoli();
-		
-
+	
 		$id_canale = $canale->getIdCanale();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
 
@@ -74,15 +73,15 @@ class ShowLinks extends PluginCommand {
 	
 		for ($i = 0; $i < $ret_links; $i++)
 		{
-			$links =& $lista_links[$i];
+			$link =& $lista_links[$i];
 			
-			$elenco_links_tpl[$i]['uri']       		= $links->getUri();
-			$elenco_links_tpl[$i]['label']      	= $links->getLabel();
-			if (ereg('^'.$fc->getWebUrl().'.*$', $links->getUri()))
-				{$elenco_links_tpl[$i]['tipo'] = "interno";
-					
-				}
-			else{$elenco_links_tpl[$i]['tipo'] = "esterno";}
+			$elenco_links_tpl[$i]['uri']       		= $link->getUri();
+			$elenco_links_tpl[$i]['label']      	= $link->getLabel();
+			if ($link->isInternalLink())
+				$elenco_links_tpl[$i]['tipo'] = "interno";
+
+			else
+				$elenco_links_tpl[$i]['tipo'] = "esterno";
 
 		}
 

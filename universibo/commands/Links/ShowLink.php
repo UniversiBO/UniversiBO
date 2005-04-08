@@ -5,11 +5,11 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Links/Link'.PHP_EXTENSION);
 
 /**
- * ShowLinks è un'implementazione di PluginCommand.
+ * ShowLink è un'implementazione di PluginCommand.
  *
  * Mostra i link 
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
- * Nel parametro di ingresso del deve essere specificato il numero di notizie da visualizzare.
+ * Il parametro di ingresso deve essere l'id del link da visualizzare.
  *
  * @package universibo
  * @subpackage Links
@@ -31,12 +31,13 @@ class ShowLink extends PluginCommand {
 	function execute($param)
 	{
 		
-		$id_canale  =  $param['id_canale'];
+//		$id_canale  =  $param['id_canale'];
 		$id_link = $param['id_link'];
 
 		$bc        =& $this->getBaseCommand();
 		$user      =& $bc->getSessionUser();
-		$canale    =& Canale::retrieveCanale($id_canale);
+		$canale    =& $bc->getRequestCanale();
+//		$canale    =& Canale::retrieveCanale($id_canale);
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$user_ruoli =& $user->getRuoli();

@@ -1,6 +1,6 @@
 <?php 
 
-require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('CanaleCommand'.PHP_EXTENSION);
 
 /**
  * LinksAdminSearch: permette la ricerca di links all'interno di un canale 
@@ -21,6 +21,9 @@ class LinksAdmin extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 
 		$user =& $this->getSessionUser();
+		$template->assign('common_canaleURI', 'index.php?do=ShowMyUniversiBO');
+		$template->assign('common_langCanaleNome', 'indietro');
+		
 		
 		$referente = false;
 		
@@ -30,7 +33,7 @@ class LinksAdmin extends UniversiboCommand {
 		
 							
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 			
 		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 		$id_canale = $canale->getIdCanale();

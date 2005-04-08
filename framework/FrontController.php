@@ -15,6 +15,7 @@ define('MAIL_KEEPALIVE_CLOSE', 2);
  * @version 1.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabrizio Pinto 
+ * @author Roberto Floris
  * @author GNU/Mel <gnu.mel@gmail.com>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
@@ -41,11 +42,6 @@ class FrontController {
 	 */
 	var $rootUrl = '';
 	
-	/**
-	 * @access private
-	 */
-	var $webUrl = '';
-
 	/**
 	 * @access private
 	 */
@@ -349,16 +345,7 @@ class FrontController {
 		return $this->rootUrl;
 	}
 	
-	/**
-	* Returns the config web url
-	*
-	* @return string
-	* @access public
-	*/
-	function getWebUrl()
-	{
-		return $this->webUrl;
-	}
+
 
 
 
@@ -438,7 +425,7 @@ class FrontController {
 		$this->_setPaths();
 		
 		//Set $this->rootURL
-		$this->_setWebUrl();
+		//$this->_setWebUrl();
 
 		//temp
 		//var_dump($this->config);
@@ -533,33 +520,6 @@ class FrontController {
 				}
 			}
 		$this->rootUrl = $elementURL;
-		//var_dump($elementURL);
-	}
-	/**
-	* Sets the WebURL
-	*
-	* @access private
-	*/
-	
-	function _setWebUrl()
-	{
-		$rootNode	=& $this->config->documentElement;
-		//var_dump($rootNode);
-		// @TODO o completare il MyDOMNodeList o trasformare il foreach in for
-		$figli =& $rootNode->childNodes;
-		//var_dump($figli);
-		for ( $i = 0; $i < $figli->length; $i++ )
-			if (($figlio =& $figli->item($i)) != null)
-			{	
-				if ( $figlio->nodeType == XML_ELEMENT_NODE && $figlio->tagName == 'webURL')
-				{	
-					$testo		=& $figlio->firstChild;
-					$elementURL =& $testo->nodeValue;
-//					var_dump($figlio);
-					break;	
-				}
-			}
-		$this->webUrl = $elementURL;
 		//var_dump($elementURL);
 	}
 

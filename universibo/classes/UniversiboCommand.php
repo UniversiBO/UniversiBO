@@ -314,7 +314,8 @@ class UniversiboCommand extends BaseCommand {
 		{
 			$attivaMyUniversibo = true;
 			$arrayCanali = array();
-			$arrayRuoli =& $session_user->getRuoli();
+			$arrayRuoli = $session_user->getRuoli();
+			//var_dump($session_user);
 			$keys = array_keys($arrayRuoli);
 			foreach ($keys as $key)
 			{
