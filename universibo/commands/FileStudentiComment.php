@@ -40,7 +40,7 @@ class FileStudentiComment extends UniversiboCommand {
 			Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il file richiesto non é presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		//Controllo che non esista giá un commento da parte di questo utente
-		
+		$template->assign('esiste_CommentoItem','false');
 		$id_file = $_GET['id_file'];
 		$id_commento = CommentoItem::esisteCommento($id_file,$user->getIdUser());
 		if($id_commento!=NULL)
