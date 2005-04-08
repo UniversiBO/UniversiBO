@@ -14,7 +14,7 @@
 <tr>
  <td><a title="Questo link apre una nuova pagina" target="_blank" href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a></td>
  <td>{$temp_currLink.description|escape:"htmlall"}</td>
- <td><a title="Questo link apre una nuova pagina" target="_blank" href="{$temp_currLink.userlink|escape:"htmlall"}">{$temp_currLink.user|escape:"htmlall"}</a></td>
+ <td><a href="{$temp_currLink.userlink|escape:"htmlall"}">{$temp_currLink.user|escape:"htmlall"}</a></td>
  <td>{if $temp_currLink.modifica!=""}<a href="{$temp_currLink.modifica_link_uri|escape:"htmlall"}"><img src="tpl/unibo/news_edt.gif" border="0" width="15" height="15" alt="modifica" hspace="1"/></a>{/if}
 	 {if $temp_currLink.elimina!=""}<a href="{$temp_currLink.elimina_link_uri|escape:"htmlall"}"><img src="tpl/unibo/file_del.gif" border="0" width="15" height="15" alt="elimina" hspace="1"/></a>{/if}</td>
  </tr>
