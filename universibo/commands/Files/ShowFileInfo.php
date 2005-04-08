@@ -39,12 +39,12 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
 		$template->assign('common_langCanaleNome', 'indietro');
 		
-		if (array_key_exists('id_canale', $param) && ereg('^([0-9]{1,9})$', $param['id_canale']))
-		{
-			$canale = & Canale::retrieveCanale($param['id_canale']);
-			$template->assign('common_canaleURI', $canale->showMe());
-			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
-		}
+//		if (array_key_exists('id_canale', $param) && ereg('^([0-9]{1,9})$', $param['id_canale']))
+//		{
+//			$canale = & Canale::retrieveCanale($param['id_canale']);
+//			$template->assign('common_canaleURI', $canale->showMe());
+//			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+//		}
 				
 		$tipo_file = FileItemStudenti::isFileStudenti($param['id_file']);
 		
@@ -72,7 +72,7 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('showFileInfo_deleteFlag', 'false');
 		$referente = false;
 	    $moderatore = false;
-		
+		$parametro_canale = '';
 
 		if (array_key_exists('id_canale', $_GET))
 		{
@@ -82,8 +82,11 @@ class ShowFileInfo extends PluginCommand {
 			$canale = & Canale::retrieveCanale($_GET['id_canale']);
 			if ($canale->getServizioFiles() == false) 
 				Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il servizio files é disattivato", 'file' => __FILE__, 'line' => __LINE__));
-		
+					
 			$id_canale = $canale->getIdCanale();
+			
+			$parametro_canale = '&id_canale='.$id_canale;
+			
 			$user_ruoli = $canale->getRuoli();
 			$template->assign('common_canaleURI', $canale->showMe());
 			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
@@ -107,13 +110,13 @@ class ShowFileInfo extends PluginCommand {
 			$template->assign('showFileInfo_deleteFlag', 'true');
 			if($tipo_file)
 			{
-				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile());
-				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile());
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile().$parametro_canale);
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile().$parametro_canale);
 			}
 			else
 			{
-				$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
-				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile().$parametro_canale);
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile().$parametro_canale);
 			}
 		}
 		
@@ -142,11 +145,11 @@ class ShowFileInfo extends PluginCommand {
 			$canali_tpl[$id_canale]['uri'] = $canale->showMe();
 		}
 		
-		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile().$parametro_canale);
 		$template->assign('showFileInfo_langDelete', 'Elimina');
 		$template->assign('showFileInfo_langDownload', 'Scarica');
 		$template->assign('showFileInfo_langEdit', 'Modifica');
-		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile().$parametro_canale);
 		$template->assign('showFileInfo_titolo', $file->getTitolo());
 		$template->assign('showFileInfo_descrizione', $file->getDescrizione());
 		$template->assign('showFileInfo_userLink', 'index.php?ShowUser&id_utente='.$file->getIdUtente());
