@@ -44,27 +44,22 @@ class ShowLinks extends PluginCommand {
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
 
 		$template->assign('showLinks_adminLinksFlag', 'false');
-		if (array_key_exists($id_canale, $user_ruoli) || $user->isAdmin())
+
+
+		$referente      = false;
+		$moderatore     = false;
+		$ultimo_accesso = $user->getUltimoLogin();
+
+		if (array_key_exists($id_canale, $user_ruoli))
 		{
-			$personalizza = true;
-			
-			if (array_key_exists($id_canale, $user_ruoli))
-			{
-				$ruolo =& $user_ruoli[$id_canale];
-				
-				$referente      = $ruolo->isReferente();
-				$moderatore     = $ruolo->isModeratore();
-				$ultimo_accesso = $ruolo->getUltimoAccesso();
-			}
+			$ruolo =& $user_ruoli[$id_canale];
+			$referente      = $ruolo->isReferente();
+			$moderatore     = $ruolo->isModeratore();
+			$ultimo_accesso = $ruolo->getUltimoAccesso();
+		}
 		
-		}
-		else
-		{
-			$personalizza   = false;
-			$referente      = false;
-			$moderatore     = false;
-			$ultimo_accesso = $user->getUltimoLogin();
-		}
+		$personalizza = ($referente || $moderatore || $user->isAdmin());
+		
 	
 		$lista_links =& Link::selectCanaleLinks($id_canale);
 		 
