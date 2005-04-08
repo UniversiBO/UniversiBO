@@ -27,8 +27,8 @@ class ShowError extends UniversiboCommand
 		
 		$param = $_SESSION['error_param'];
 		
-		//inserire il log dell'errore tramite il LogHandler		
-		
+		if ( $param == '' ) $param = 'Errore di sistema';
+				
 		$template->assign('error_default', $param['msg']);
 		
 		return 'default';
