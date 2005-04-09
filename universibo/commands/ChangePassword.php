@@ -25,7 +25,7 @@ class ChangePassword extends UniversiboCommand
 		$user =& $this->getSessionUser();
 		if ($user->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica della password non pu? essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica della password non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$template->assign('changePassword_langChangePasswordAlt','Modifica Password');
@@ -33,9 +33,9 @@ class ChangePassword extends UniversiboCommand
 		$template->assign('changePassword_langOldPassword','Vecchia password:');
 		$template->assign('changePassword_langNewPassword','Nuova password:');
 		$template->assign('changePassword_langReNewPassword','Conferma nuova password:');
-		$template->assign('changePassword_langInfoChangePassword','Per modificare la propria password inserire i dati relativi al proprio username e alla vecchia password.'."\n".'Nei campi successivi riscrivere due volte la nuova password che si ? scelto per evitare errori di battitura.');
+		$template->assign('changePassword_langInfoChangePassword','Per modificare la propria password inserire i dati relativi al proprio username e alla vecchia password.'."\n".'Nei campi successivi riscrivere due volte la nuova password che si è scelto per evitare errori di battitura.');
 		$template->assign('changePassword_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
-							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non ? tenuto a conoscerle');
+							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
 
 		// valori default form
 		$f6_username =	'';
@@ -55,7 +55,7 @@ class ChangePassword extends UniversiboCommand
 				 !array_key_exists('f6_new_password1', $_POST) ||
 				 !array_key_exists('f6_new_password2', $_POST) ) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f6_accept = false;
 			}
 			
@@ -70,11 +70,11 @@ class ChangePassword extends UniversiboCommand
 				$f6_accept = false;
 			}
 			elseif ( $this->sessionUser->getUsername() != $_POST['f6_username'] ){ // && !$this->sessionUser->isAdmin()  
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non pu? essere differente dal proprio username, non ? permesso cambiare la password di altri utenti','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non può essere differente dal proprio username, non è permesso cambiare la password di altri utenti','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f6_accept = false;
 			}
 			elseif ( !User::usernameExists( $_POST['f6_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username richiesto non ? registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username richiesto non è registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f6_accept = false;
 			}
 			else $q6_username = $f6_username = $_POST['f6_username'];
@@ -86,7 +86,7 @@ class ChangePassword extends UniversiboCommand
 				$f6_accept = false;
 			}
 			elseif ( strlen($_POST['f6_old_password']) > 50 ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema è di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f6_accept = false;
 			}
 			else $q6_old_password = $f6_old_password = $_POST['f6_old_password'];
@@ -97,7 +97,7 @@ class ChangePassword extends UniversiboCommand
 				$f6_accept = false;
 			}
 			elseif ( strlen($_POST['f6_new_password1']) > 50 ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema è di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f6_accept = false;
 			}
 			else $q6_new_password1 = $f6_new_password1 = $_POST['f6_new_password1'];
@@ -108,7 +108,7 @@ class ChangePassword extends UniversiboCommand
 				$f6_accept = false;
 			}
 			elseif ( strlen($_POST['f6_new_password2']) > 50 ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema ? di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'La lunghezza massima della password accettata dal sistema è di massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f6_accept = false;
 			}
 			else $q6_new_password2 = $f6_new_password2 = $_POST['f6_new_password2'];
@@ -127,11 +127,11 @@ class ChangePassword extends UniversiboCommand
 			$user = User::selectUserUsername($q6_username);
 			
 			if ($user->updatePasswordHash(User::passwordHashFunction($q6_new_password1),true) == false)
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Si ? verificato un errore durante l\'aggiornamento della password relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Si è verificato un errore durante l\'aggiornamento della password relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
 
 			$forum = new ForumApi();
 			$forum->updatePasswordHash($user);
-			//	Error::throwError(_ERROR_DEFAULT,array('msg'=>'Si ? verificato un errore durante la modifica della password sul forum relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
+			//	Error::throwError(_ERROR_DEFAULT,array('msg'=>'Si è verificato un errore durante la modifica della password sul forum relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
 			
 			$template->assign('changePassword_thanks',"La password ? stata cambiata con successo, si consiglia di testarne il corretto funzionamento.\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');

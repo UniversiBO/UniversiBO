@@ -31,7 +31,7 @@ class Login extends UniversiboCommand {
 			
 			if (!$user->isOspite())
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il login può essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
