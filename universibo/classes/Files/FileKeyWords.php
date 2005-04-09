@@ -95,7 +95,7 @@ class FileKeyWords{
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res).$query, 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	/**
