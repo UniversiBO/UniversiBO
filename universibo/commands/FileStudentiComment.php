@@ -71,7 +71,7 @@ class FileStudentiComment extends UniversiboCommand {
 			 !array_key_exists('f26_voto', $_POST)) 
 			{
 				//var_dump($_POST);die();
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f26_accept = false;
 			}
 			

@@ -85,7 +85,7 @@ class FileStudentiAdd extends UniversiboCommand {
 		
 		$f23_canale = $canale->getNome();
 
-//		//prendo tutti i canali tra i ruoli pi? il canale corrente (che per l'admin pu? essere diverso)
+//		//prendo tutti i canali tra i ruoli pi? il canale corrente (che per l'admin può essere diverso)
 //		$ruoli_keys = array_keys($user_ruoli);
 //		$num_ruoli = count($ruoli_keys);
 //		for ($i = 0; $i<$num_ruoli; $i++)
@@ -136,7 +136,7 @@ class FileStudentiAdd extends UniversiboCommand {
 			 !array_key_exists('f23_permessi_visualizza', $_POST) ) 
 			{
 				//var_dump($_POST);die();
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f23_accept = false;
 			}
 			
@@ -243,7 +243,7 @@ class FileStudentiAdd extends UniversiboCommand {
 					{
 						if (strlen($parola > 40))
 						{
-							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La lunghezza massima di una parola chiave ? di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+							Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 							$f23_accept = false;
 						}
 						else
@@ -277,7 +277,7 @@ class FileStudentiAdd extends UniversiboCommand {
 			{
 				if ($_POST['f23_permessi_download'] < 0 || $_POST['f23_permessi_download'] > USER_ALL )
 				{
-					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il valore dei diritti di download non ? ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f23_accept = false;
 				}
 				$f23_permessi_download = $_POST['f23_permessi_download'];

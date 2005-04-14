@@ -45,7 +45,7 @@ class FileStudentiEdit extends UniversiboCommand {
 		
 //		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 //		{
-//			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+//			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 //		}
 //		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 //		$id_canale = $canale->getIdCanale();
@@ -109,7 +109,7 @@ class FileStudentiEdit extends UniversiboCommand {
 		$f24_canale = array();
 		//$f24_password = '';
 
-		//prendo tutti i canali tra i ruoli piú (??) il canale corrente (che per l'admin pu? essere diverso)
+		//prendo tutti i canali tra i ruoli piú (??) il canale corrente (che per l'admin può essere diverso)
 		$elenco_canali = $file->getIdCanali();
 //		$num_canali = count($elenco_canali);
 //		for ($i = 0; $i<$num_canali; $i++)
@@ -140,7 +140,7 @@ class FileStudentiEdit extends UniversiboCommand {
 			 !array_key_exists('f24_permessi_download', $_POST) || 
 			 !array_key_exists('f24_permessi_visualizza', $_POST) ) 
 			{
-				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f24_accept = false;
 			}
 			
@@ -172,7 +172,7 @@ class FileStudentiEdit extends UniversiboCommand {
 
 			//f24_data_ins_mm
 			if (!ereg('^([0-9]{1,2})$', $_POST['f24_data_ins_mm'])) {
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 				$checkdate_ins = false;
 			} else
@@ -180,7 +180,7 @@ class FileStudentiEdit extends UniversiboCommand {
 
 			//f24_data_ins_aa
 			if (!ereg('^([0-9]{4})$', $_POST['f24_data_ins_aa'])) {
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 				$checkdate_ins = false;
 			}
@@ -204,7 +204,7 @@ class FileStudentiEdit extends UniversiboCommand {
 
 			//f24_data_ins_min
 			if (!ereg('^([0-9]{1,2})$', $_POST['f24_data_ins_min'])) {
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 			}
 			elseif ($_POST['f24_data_ins_min'] < 0 || $_POST['f24_data_ins_min'] > 59) {
@@ -242,7 +242,7 @@ class FileStudentiEdit extends UniversiboCommand {
 				{
 					if (strlen($parola > 40))
 					{
-						Error :: throwError(_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave ? di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f24_accept = false;
 					}
 					else
@@ -263,7 +263,7 @@ class FileStudentiEdit extends UniversiboCommand {
 			//categoria	
 			if (!ereg('^([0-9]{1,9})$', $_POST['f24_categoria'])) 
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo categoria non ? ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo categoria non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 			}
 			elseif ( !array_key_exists($_POST['f24_categoria'], $f24_categorie) )
@@ -291,14 +291,14 @@ class FileStudentiEdit extends UniversiboCommand {
 			//permessi_download	
 			if (!ereg('^([0-9]{1,3})$', $_POST['f24_permessi_download'])) 
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 			}
 			elseif ( $user->isAdmin() ) 
 			{
 				if ($_POST['f24_permessi_download'] < 0 || $_POST['f24_permessi_download'] > USER_ALL )
 				{
-					Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non ? ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f24_accept = false;
 				}
 				$f24_permessi_download = $_POST['f24_permessi_download'];
@@ -307,7 +307,7 @@ class FileStudentiEdit extends UniversiboCommand {
 			{
 				if ($_POST['f24_permessi_download'] != USER_ALL && $_POST['f24_permessi_download'] != (USER_STUDENTE | USER_DOCENTE | USER_TUTOR | USER_PERSONALE | USER_COLLABORATORE | USER_ADMIN ) )
 				{
-					Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non ? ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f24_accept = false;
 				}
 				$f24_permessi_download = $_POST['f24_permessi_download'];

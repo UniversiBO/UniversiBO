@@ -307,7 +307,7 @@ class FileAdd extends UniversiboCommand {
 				$f12_permessi_visualizza = $canale->getPermessi();
 			else 
 				$f12_permessi_visualizza = USER_ALL;
-			// eventualmente dare la possibilit? all'admin di metterli diversamente
+			// eventualmente dare la possibilità all'admin di metterli diversamente
 			
 			
 			$f12_canali_inserimento = array();

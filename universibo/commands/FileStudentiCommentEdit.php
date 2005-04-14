@@ -30,7 +30,7 @@ class FileStudentiCommentEdit extends UniversiboCommand {
 		
 		if (!array_key_exists('id_commento', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_commento']))
 		{
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del commento non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del commento non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
 		$id_commento = $_GET['id_commento'];
@@ -49,7 +49,7 @@ class FileStudentiCommentEdit extends UniversiboCommand {
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 
 			$canale = & Canale::retrieveCanale($_GET['id_canale']);
 			$id_canale = $_GET['id_canale'];

@@ -133,7 +133,7 @@ class ChangePassword extends UniversiboCommand
 			$forum->updatePasswordHash($user);
 			//	Error::throwError(_ERROR_DEFAULT,array('msg'=>'Si è verificato un errore durante la modifica della password sul forum relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
 			
-			$template->assign('changePassword_thanks',"La password ? stata cambiata con successo, si consiglia di testarne il corretto funzionamento.\n".
+			$template->assign('changePassword_thanks',"La password è stata cambiata con successo, si consiglia di testarne il corretto funzionamento.\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
