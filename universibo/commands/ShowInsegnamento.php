@@ -91,11 +91,11 @@ testi consigliati[/url]';
 			'';
 
 		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
-			$modalita = 'Modalit? d\'esame';
+			$modalita = 'Modalità d\'esame';
 		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
 			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalit? d\'esame[/url]';
 		else
-			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalit? d\'esame[/url]';
+			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalità d\'esame[/url]';
 		
 		
 		if ($info_didattica->getAppelliLink() == '' && $info_didattica->getAppelli() == '' )

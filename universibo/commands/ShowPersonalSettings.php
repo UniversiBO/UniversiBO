@@ -29,7 +29,7 @@ class ShowPersonalSettings extends UniversiboCommand
 		
 		if ($this->sessionUser->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica delle impostazioni personali non pu? essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica delle impostazioni personali non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$template->assign('showPersonalSettings_langEmail','Modifica Email');
@@ -38,7 +38,7 @@ class ShowPersonalSettings extends UniversiboCommand
 		$template->assign('showPersonalSettings_langStyle','Stile preferito:');
 		$template->assign('showPersonalSettings_langInfoChangeSettings','In questa pagina potete modificare l\'email e il numero di cellulare dove volete ricevere le notifiche, di cui potete specificare il livello'."\n".'Inoltre, potrete scegliere lo stile che preferite.');
 		$template->assign('showPersonalSettings_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
-							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non ? tenuto a conoscerle');
+							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
 
 		// valori default form
 		$f20_email 			=	$user->getEmail();
@@ -64,7 +64,7 @@ class ShowPersonalSettings extends UniversiboCommand
 				 !array_key_exists('f20_cellulare', $_POST)||
 				 !array_key_exists('f20_livello_notifica', $_POST)) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f20_accept = false;
 			}
 			
@@ -77,7 +77,7 @@ class ShowPersonalSettings extends UniversiboCommand
 			
 			//mail
 			if ( strlen($_POST['f20_email']) > 50 ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'L\' indirizzo e-mail indicato pu? essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'L\' indirizzo e-mail indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f20_accept = false;
 			}
 			elseif ( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f20_email']) ) {
@@ -89,7 +89,7 @@ class ShowPersonalSettings extends UniversiboCommand
 			//livello notifiche
 			if(!array_key_exists($_POST['f20_livello_notifica'], $f20_livelli_notifica) )
 				{
-					Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il livello di notifica scelto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+					Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il livello di notifica scelto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 					$f20_accept = false;
 				}
 				else
@@ -97,7 +97,7 @@ class ShowPersonalSettings extends UniversiboCommand
 			//style
 			if(!array_key_exists($_POST['f20_personal_style'], $f20_stili) )
 				{
-					Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Lo stile scelto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+					Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Lo stile scelto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 					$f20_accept = false;
 				}
 				else
