@@ -24,7 +24,7 @@ class ShowCollaboratore extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		$user =& $this->getSessionUser();
 		if (!array_key_exists('id_utente',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['id_utente'] ) ) 
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non ? valido','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__)); 
 					
 
 		$contacts_path = $frontcontroller->getAppSetting('contactsPath');
