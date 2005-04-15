@@ -37,10 +37,10 @@ class NewsDelete extends CanaleCommand {
 		
 		if (!array_key_exists('id_news', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_news'] )  )
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id della notizia richiesta non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id della notizia richiesta non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 		if ($canale->getServizioNews() == false) 
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio news ? disattivato", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio news è disattivato", 'file' => __FILE__, 'line' => __LINE__));
 		
 		
 		/* diritti
@@ -59,7 +59,7 @@ class NewsDelete extends CanaleCommand {
 
 		$news = & NewsItem :: selectNewsItem($_GET['id_news']);
 		if ($news === false)
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "La notizia richiesta non ? presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "La notizia richiesta non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		//$news-> getIdCanali();
 		/*var_dump($news->getNotizia());
 		die();
@@ -147,9 +147,9 @@ class NewsDelete extends CanaleCommand {
 			
 			$news->deleteNewsItem();
 			/**
-			 * @TODO elenco dei canali dai quali ? stata effetivamente cancellata la notizia
+			 * @TODO elenco dei canali dai quali è stata effetivamente cancellata la notizia
 			 */
-			$template->assign('NewsDelete_langSuccess', "La notizia ? stata cancellata dalle pagine scelte.");
+			$template->assign('NewsDelete_langSuccess', "La notizia è stata cancellata dalle pagine scelte.");
 			
 			return 'success';
 		}

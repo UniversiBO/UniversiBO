@@ -34,10 +34,10 @@ class NewsEdit extends CanaleCommand
 
 		if (!array_key_exists('id_news', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_news']))
 		{
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id della notizia richiesta non ?	valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id della notizia richiesta non è	valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		if ($canale->getServizioNews() == false) 
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio news ? disattivato", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio news è disattivato", 'file' => __FILE__, 'line' => __LINE__));
 		
 
 		if (array_key_exists($id_canale, $user_ruoli))
@@ -132,7 +132,7 @@ class NewsEdit extends CanaleCommand
 
 			if (!array_key_exists('f8_titolo', $_POST) || !array_key_exists('f8_data_ins_gg', $_POST) || !array_key_exists('f8_data_ins_mm', $_POST) || !array_key_exists('f8_data_ins_aa', $_POST) || !array_key_exists('f8_data_ins_ora', $_POST) || !array_key_exists('f8_data_ins_min', $_POST) || !array_key_exists('f8_data_scad_gg', $_POST) || !array_key_exists('f8_data_scad_mm', $_POST) || !array_key_exists('f8_data_scad_aa', $_POST) || !array_key_exists('f8_data_scad_ora', $_POST) || !array_key_exists('f8_data_scad_min', $_POST) || !array_key_exists('f8_testo', $_POST))
 			{
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f8_accept = false;
 			}
 
@@ -154,7 +154,7 @@ class NewsEdit extends CanaleCommand
 			//data_ins_gg
 			if (!ereg('^([0-9]{1,2})$', $_POST['f8_data_ins_gg']))
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo giorno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo giorno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
@@ -164,7 +164,7 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_mm
 			if (!ereg('^([0-9]{1,2})$', $_POST['f8_data_ins_mm']))
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo mese di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
@@ -174,7 +174,7 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_aa
 			if (!ereg('^([0-9]{4})$', $_POST['f8_data_ins_aa']))
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo anno di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 				$checkdate_ins = false;
 			}
@@ -204,7 +204,7 @@ class NewsEdit extends CanaleCommand
 			//f8_data_ins_min
 			if (!ereg('^([0-9]{1,2})$', $_POST['f8_data_ins_min']))
 			{
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f8_accept = false;
 			}
 			elseif ($_POST['f8_data_ins_min'] < 0 || $_POST['f8_data_ins_min'] > 59)
@@ -304,7 +304,7 @@ class NewsEdit extends CanaleCommand
 
 				if ($data_scadenza < $data_inserimento)
 				{
-					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La data di scadenza ? minore della data di inserimento', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La data di scadenza è minore della data di inserimento', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f8_accept = false;
 				}
 
@@ -405,7 +405,7 @@ class NewsEdit extends CanaleCommand
 				 */
 				$canale->setUltimaModifica(time(), true);
 				
-				$template->assign('NewsEdit_langSuccess', "La notizia ? stata modificata con successo.");
+				$template->assign('NewsEdit_langSuccess', "La notizia è stata modificata con successo.");
 				return 'success';
 			}
 
