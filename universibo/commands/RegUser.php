@@ -26,7 +26,7 @@ class RegUser extends UniversiboCommand
 		$session_user =& $this->getSessionUser();
 		if (!$session_user->isAdmin())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'L\'iscrizione manuale di nuovi utenti pu? essere effettuata solo da utenti Admin','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'L\'iscrizione manuale di nuovi utenti può essere effettuata solo da utenti Admin','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$template->assign('f34_submit',		'Registra');
@@ -63,7 +63,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 				 !array_key_exists('f34_email', $_POST) ||
 				 !array_key_exists('f34_livello', $_POST) ) 
 			{
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il form inviato non ? valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 				$f34_accept = false;
 			}
 			
@@ -93,14 +93,14 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 				$f34_accept = false;
 			}
 			elseif ( User::usernameExists( $_POST['f34_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Lo username richiesto ? gi? stato registrato da un altro utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Lo username richiesto è già stato registrato da un altro utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
 			else $q34_username = $f34_username = $_POST['f34_username'];
 			
 			//livello
 			if ( $_POST['f34_livello'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il livello inserito ? vuoto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il livello inserito è vuoto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
 			elseif ( $_POST['f34_livello'] != USER_STUDENTE &&
@@ -110,7 +110,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 					 $_POST['f34_livello'] != USER_ADMIN &&
 					 $_POST['f34_livello'] != USER_PERSONALE ) 
 			{
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il livello inserito non ? tra quelli ammissibili','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il livello inserito non è tra quelli ammissibili','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
 			else $q34_livello = $f34_livello = $_POST['f34_livello'];
@@ -126,18 +126,18 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			$new_user = new User(-1, $q34_livello, $q34_username ,User::passwordHashFunction($randomPassword), $q34_email, $notifica, 0, '', '', $fc->getAppSetting('defaultStyle') );
 			
 			if ($new_user->insertUser() == false)
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Si ? verificato un errore durente la registrazione dell\'account username '.$q34_username.' mail '.$q34_email,'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q34_username.' mail '.$q34_email,'file'=>__FILE__,'line'=>__LINE__));
 
 			$forum = new ForumApi();
 			$forum->insertUser($new_user);
-			//	Error::throwError(_ERROR_DEFAULT,'msg'=>'Si ? verificato un errore durente la registrazione dell\'account username '.$q34_username.' mail '.$q34_email,'file'=>__FILE__,'line'=>__LINE__));
+			//	Error::throwError(_ERROR_DEFAULT,'msg'=>'Si è verificato un errore durente la registrazione dell\'account username '.$q34_username.' mail '.$q34_email,'file'=>__FILE__,'line'=>__LINE__));
 			
 			$mail =& $fc->getMail();
 
 			$mail->AddAddress($new_user->getEmail());
 
 			$mail->Subject = "Registrazione UniversiBO";
-			$mail->Body = "Benvenuto \"".$new_user->getUsername()."\"!!\nCi ? stata inoltrata una richiesta di iscrizione al sito UniversiBO\n\n".
+			$mail->Body = "Benvenuto \"".$new_user->getUsername()."\"!!\nCi E' stata inoltrata una richiesta di iscrizione al sito UniversiBO\n\n".
 			     "Per accedere al sito utilizza l'indirizzo ".$fc->getAppSetting('rootUrl')."\n\n".
 				 "Le informazioni per permetterti l'accesso ai servizi offerti sono:\n".
 				 "Username: ".$new_user->getUsername()."\n".
@@ -145,14 +145,14 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 				 "Questa password e' stata generata in modo casuale: sul sito  e' disponibile nella pagina delle tue impostazioni personali la funzionalita' per poterla cambiare a tuo piacimento\n\n".
 				 "Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
 			
-			$msg = "L'iscrizione ? stata registrata con successo ma non ? stato possibile inviarti la password tramite e-mail\n".
+			$msg = "L'iscrizione è stata registrata con successo ma non è stato possibile inviarti la password tramite e-mail\n".
 				 "Le informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono:\n".
 				 "Username: ".$new_user->getUsername()."\n".
 				 "Password: ".$randomPassword."\n\n";
 			
 			if(!$mail->Send()) Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
 			
-			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione ? stata registrata con successo.\nLe informazioni per permetterti l'accesso ai servizi offerti dal portale sono state inviate al tuo indirizzo e-mail di ateneo\n".
+			$template->assign('regStudente_thanks',"Benvenuto \"".$new_user->getUsername()."\"!!\n \nL'iscrizione è stata registrata con successo.\nLe informazioni per permetterti l'accesso ai servizi offerti dal portale sono state inviate al tuo indirizzo e-mail di ateneo\n".
 									'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			//elimino la password
