@@ -463,24 +463,39 @@ class ForumApi
 	 * cercati gli ultimi post su tutto il forum a cui l'utente ha diritto di accesso 
 	 * @return 	mixed array di array( id degli ultimi messaggi del forum, nome topic) , false se nessun messaggio nuovo
 	 */
-	function &getLastPostsForum($user, $id_forum)
+	function &getLastPostsForum($user, $id_forum, $num = 10)
 	{
 		// teoricamente se uno ha accesso al canale ha anche accesso al forum
 		
-		// controllo post pi? recenti dell'ultimo accesso
+		// controllo post più recenti dell'ultimo accesso
+		
+		/**
+		 * @TODO 
+		 * 
+		 * capire perché limitQuery dia errore
+		 * 
+		 * anche se predisposto per funzionare senza il limit dentro l'sql, limitquery non funzia
+		 * 
+		 * il parametro num non è considerato
+		 * 
+		 */
 		
 		$db =& FrontController::getDbConnection($this->database);
-		/**
-		 * @todo rendere portabile la query sostituendo in qualche modo il LIMIT 1
-		 */
-		$query = 'SELECT p.post_id, t.topic_title FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
+		
+		$query = 'SELECT t.topic_title, min(p.post_id) FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
 					WHERE t.topic_id = p.topic_id 
-					AND p.forum_id = '.$db->quote($id_forum).'
-					AND p.post_id IN (SELECT pp.post_id FROM '.$this->table_prefix.'posts pp WHERE t.topic_id = pp.topic_id AND pp.post_time > '.$user->getUltimoLogin().' ORDER BY pp.post_time ASC LIMIT 1)
-					ORDER BY p.post_edit_time DESC LIMIT 10';
+					AND p.forum_id = '.$db->quote($id_forum).'	
+					AND p.post_id IN (SELECT pp.post_id FROM '.$this->table_prefix.'posts pp WHERE t.topic_id = pp.topic_id AND pp.post_time > '.$user->getUltimoLogin().' ORDER BY pp.post_time ASC)
+					GROUP BY t.topic_title
+					ORDER BY max(p.post_id) DESC LIMIT 10;';
 		
 		//var_dump($query);
-		$res = $db->query($query);
+		//
+		// volevo usare limitQuery e non il limit sql ma da errore
+		//$res =& $db->limitQuery($query, 0 , $num);
+		
+		$res =& $db->query($query);
+		
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 				
@@ -492,7 +507,7 @@ class ForumApi
 	
 		while ( $res->fetchInto($row) )
 		{
-			$id_post_list[] =  array('id' => $row[0], 'name' => $row[1]);
+			$id_post_list[] =  array('id' => $row[1], 'name' => $row[0]);
 		}
 		
 		$res->free();
