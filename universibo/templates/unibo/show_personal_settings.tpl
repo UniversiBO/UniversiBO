@@ -1,6 +1,9 @@
 {include file=header_index.tpl}
-{include file=avviso_notice.tpl}
+<div class="titoloPagina">
 <h2>Impostazioni Personali</h2>
+</div>
+
+{include file=avviso_notice.tpl}
 
 <form action="index.php?do=ShowPersonalSettings&amp;{$common_pageTypeExt|escape:"htmlall"}" id="f20" method="post">
 	<p>{$showPersonalSettings_langInfoChangeSettings|escape:"htmlall"|bbcode2html|nl2br}</p>
