@@ -453,7 +453,7 @@ class ForumApi
 	 */
 	function getPostUri($id_post)
 	{
-		return $this->getPath().'viewtopic.php?p='.$id_post.'#'.$id_post.'&'.ForumApi::getSid();
+		return $this->getPath().'viewtopic.php?p='.$id_post.'&'.ForumApi::getSid().'#'.$id_post;
 	}
 	
 	/**
