@@ -47,20 +47,21 @@
 		</div>
 		<hr class="hide" />
 		{* MyUniversiBO *}
-		{if $common_myLinksAvailable=="true"}
-		<div class="box">
+		<div class="box">		
 			<h3><a href="{$common_myUniversiBOUri|escape:"htmlall"}">MyUniversiBO</a></h3>
 			<div class="contenuto">
-				{foreach name=myuniversibo from=$common_myLinks item=temp_currLink}
-				<p><a href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a>
-				{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Referente" />{/if}
-				{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/unibo/icona_m.gif" width="9" height="9" alt="Moderatore" />{/if}
-				{if $temp_currLink.new=="true"}&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}</p>
-				{/foreach}
-				{if $smarty.foreach.myuniversibo.total == 0}<p>Non hai pagine in MyUniversiBO</p>{/if}
+				{if $common_myLinksAvailable=="true"}
+					{foreach name=myuniversibo from=$common_myLinks item=temp_currLink}
+					<p><a href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a>
+					{if $temp_currLink.ruolo=="R"}&nbsp;<img src="tpl/unibo/icona_r.gif" width="9" height="9" alt="Referente" />{/if}
+					{if $temp_currLink.ruolo=="M"}&nbsp;<img src="tpl/unibo/icona_m.gif" width="9" height="9" alt="Moderatore" />{/if}
+					{if $temp_currLink.new=="true"}&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}</p>
+					{/foreach}
+					{if $smarty.foreach.myuniversibo.total == 0}<p>Non hai pagine in MyUniversiBO</p>{/if}
+				{else}<p>I servizi personalizzati sono disponibili solo agli utenti che hanno effettuato il login</p>
+				{/if}
 			</div>
 		</div>
-		{/if}
 	  {* FINE MENù DI SINIStrA*}	
 </td>
 <td>

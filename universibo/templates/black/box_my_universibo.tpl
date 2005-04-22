@@ -1,7 +1,7 @@
-{if $common_myLinksAvailable=="true"}
 {include file=box_begin.tpl}
 <table width="98%" border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr><td colspan="3"><a href="{$common_myUniversiBOUri|escape:"htmlall"}" title="Vai alla pagina MyUniversiBO"><img border="0" src="tpl/black/my_universibo_18s.gif" width="140" height="22" alt="{$common_langMyUniversibo|escape:"htmlall"}" /></a></td></tr>
+{if $common_myLinksAvailable=="true"}
 {foreach name=my_universibo from=$common_myLinks item=temp_currLink}
 <tr>
 <td valign="top"><img src="tpl/black/pallino1.gif" width="12" height="11" alt="" /></td>
@@ -13,6 +13,7 @@
 </tr>
 {/foreach}
 {if $smarty.foreach.my_universibo.total == 0}<tr><td class="Menu" align="center" width="100%">Non hai pagine in MyUniversiBO</td></tr>{/if}
+{else}<tr><td>I servizi personalizzati sono disponibili solo agli utenti che hanno effettuato il login</td></tr>
+{/if}
 </table>
 {include file=box_end.tpl}
-{/if}
