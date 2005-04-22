@@ -22,7 +22,7 @@
 <td>
   <table border="0" width="100%" cellspacing="0" cellpadding="4" summary="">
   <tr> 
-  <td class="News" align="left">{$notizia|escape:"htmlall"|bbcode2html|ereg_replace:"[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</td></tr>
+  <td class="News" align="left">{$notizia|escape:"htmlall"|bbcode2html|ereg_replace:"[[:space:]][[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</td></tr>
   <tr> 
   
   <td class="News" align="right">{$data|escape:"htmlall"|nl2br}<br />
