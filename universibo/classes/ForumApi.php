@@ -68,11 +68,20 @@ class ForumApi
 	/**
 	 * @return string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
 	 */
-	function getSid()
+	function getSidForUri()
 	{
 		//echo $_SESSION['phpbb_sid'];
 		if (array_key_exists('phpbb_sid', $_SESSION) && $_SESSION['phpbb_sid']!='') return 'sid='.$_SESSION['phpbb_sid'];
 		return '';
+	}
+	
+	/**
+	 * @return string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getOnlySid()
+	{
+		$sid = $_SESSION['phpbb_sid'];
+		return $sid;
 	}
 
 
@@ -184,7 +193,7 @@ class ForumApi
 		
 		setcookie ($cookie_name.'_sid', '', time()-3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
-		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getSid()).';';
+		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getOnlySid()).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
@@ -348,7 +357,7 @@ class ForumApi
 	 */
 	function getMainUri()
 	{
-		return $this->getPath().'index.php?'.ForumApi::getSid();
+		return $this->getPath().'index.php?'.ForumApi::getSidForUri();
 	}
 
 
@@ -358,7 +367,7 @@ class ForumApi
 	 */
 	function getForumUri($id_forum)
 	{
-		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSid();
+		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSidForUri();
 	}
 	
 	/**
@@ -453,7 +462,7 @@ class ForumApi
 	 */
 	function getPostUri($id_post)
 	{
-		return $this->getPath().'viewtopic.php?p='.$id_post.'&'.ForumApi::getSid().'#'.$id_post;
+		return $this->getPath().'viewtopic.php?p='.$id_post.'&'.ForumApi::getSidForUri().'#'.$id_post;
 	}
 	
 	/**
