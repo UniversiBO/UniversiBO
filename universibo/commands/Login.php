@@ -61,7 +61,7 @@ class Login extends UniversiboCommand {
 				
 				//var_dump($referer);
 				
-				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') )
+				if ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login'))
 					FrontController::redirectCommand('ShowMyUniversiBO');
 				else
 					FrontController::goTo($referer);
