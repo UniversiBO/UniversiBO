@@ -74,6 +74,9 @@
 		<ShowCredits class="ShowCredits">
 			<response type="template" name="default">credits.tpl</response>
 		</ShowCredits>
+		<ShowAccessibility class="ShowAccessibility">
+			<response type="template" name="default">accessibility.tpl</response>
+		</ShowAccessibility>
 		<ShowContacts class="ShowContacts">
 			<response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>

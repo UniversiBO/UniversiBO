@@ -169,6 +169,42 @@ td>#header		/* questa regola viene ignorata da exploder*/
 }
 
 
+#header ul.hide
+{
+	position: absolute;
+	left: 810px;
+	display: block !important;
+	top: 2px;
+	padding: .7em 0;
+	list-style-type: none !important; 
+	color: #0006c2 !important;
+	background: #0006c2 !important;
+	/*overflow: visible;*/
+}
+
+#header ul.hide a, #header ul.hide li
+{
+	/*overflow: visible;*/
+	font-size: 0px;
+	color: #0006c2 !important;
+	background: #0006c2 !important;
+}
+
+#header ul.hide a:hover
+{
+	/*Con la seguente regola il mouse dovrebbe mostrare sempre lo stesso puntatore
+	anche se però c'è un po' di flickering in firefox*/
+	cursor: default;
+}
+
+#header ul.hide a:focus
+{
+	display: block;
+	font-size: 11px;
+	color: #0006c2 !important;
+	background: #faffa0 !important;
+}
+
 /** 
  *	Menu navigazione
  */
