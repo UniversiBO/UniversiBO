@@ -152,6 +152,13 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	vertical-align: middle;	
 }
 
+#menubar a:hover, #menubar a:focus
+{
+	background-color: #faffa0;
+	color: #386dce;
+	/*border: 1px solid #707700;*/
+}
+
 #Menu
 {
 	position: relative;
@@ -230,7 +237,7 @@ td.evidenzia{
 	width: 100%;	
 }
 
-#leftmenu a:hover
+#leftmenu a:hover, #leftmenu a:focus
 {
 	background-color: #ccc;
 }
@@ -585,6 +592,12 @@ td.evidenzia{
 	padding: 2px;
 	color: white;
 	background-color: #386dce;
+}
+
+.box h3 a:hover, .box h3 a:focus
+{
+	background-color: #faffa0; /* messo tutto*/
+	color: #386dce !important;
 }
 
 .box p, .box a
