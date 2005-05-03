@@ -8,7 +8,15 @@
 	<p><span><label for="f27_commento"><p>Il tuo commento/descrizione<br /> sul file:<br />(max 3000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f27_commento" name="f27_commento">{$f27_commento|escape:"htmlall"}</textarea></span></p>
 	<p><span><label for="f27_voto">Il tuo voto (da 0 a 5):</label>&nbsp;
-			<input type="text" id="f27_voto" name="f27_voto" size="2" maxlength="2" value="{$f27_voto|escape:"htmlall"}" />
+			<select id="f27_voto" name="f27_voto">
+			<option value =""></option>
+			<option value ="0">0</option>
+  			<option value ="1">1</option>
+  			<option value ="2">2</option>
+  			<option value ="3">3</option>
+  			<option value ="4">4</option>
+  			<option value ="5">5</option>
+			</select>
 	</span></p>
 	<p><input class="submit" type="submit" id="" name="f27_submit" size="20" value="Invia" /></p>
 </form>

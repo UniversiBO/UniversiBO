@@ -15,7 +15,15 @@
 </tr>
 <tr>
 <td class="News" align="right" valign="top"><label for="f26_voto">Il tuo voto (da 0 a 5):</label></td>
-<td><input type="text" id="f26_voto" name="f26_voto" size="2" maxlength="2" value="{$f26_voto|escape:"htmlall"}" /></td>
+<td><select id="f26_voto" name="f26_voto">
+			<option value =""></option>
+			<option value ="0">0</option>
+  			<option value ="1">1</option>
+  			<option value ="2">2</option>
+  			<option value ="3">3</option>
+  			<option value ="4">4</option>
+  			<option value ="5">5</option>
+			</select></td>
 </tr>
 <tr>
 <td colspan="2" align="center">
