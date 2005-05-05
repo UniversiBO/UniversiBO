@@ -226,11 +226,15 @@ class FileStudentiEdit extends UniversiboCommand {
 				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f24_accept = false;
 			}
+//			elseif ($_POST['f24_abstract'] == '') {
+//				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//				$f24_accept = false;
+//			}
 			elseif ($_POST['f24_abstract'] == '') {
-				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f24_accept = false;
-			} else
-				$f24_testo = $_POST['f24_abstract'];
+				$f24_abstract = $f24_titolo;
+			} 
+			else
+				$f24_abstract = $_POST['f24_abstract'];
 
 			//parole chiave
 			$f24_parole_chiave = array();

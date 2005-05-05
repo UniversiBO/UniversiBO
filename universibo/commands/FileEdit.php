@@ -222,11 +222,15 @@ class FileEdit extends UniversiboCommand {
 				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
+//			elseif ($_POST['f13_abstract'] == '') {
+//				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//				$f13_accept = false;
+//			}
 			elseif ($_POST['f13_abstract'] == '') {
-				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f13_accept = false;
-			} else
-				$f13_testo = $_POST['f13_abstract'];
+				$f13_abstract = $f13_titolo;
+			} 
+			else
+				$f13_abstract = $_POST['f13_abstract'];
 
 			//parole chiave
 			$f13_parole_chiave = array();
