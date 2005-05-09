@@ -15,7 +15,7 @@
 {if $temp_currLink.tipo == "interno"}
 	<td><img src="tpl/black/pallino1.gif" width="12" height="11" alt="->" />&nbsp;<a href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a></p></td>
 {else}
- <td><img src="tpl/black/freccia.gif" width="11" height="10" alt="" />&nbsp;<a title="Questo link apre una nuova pagina" target="_blank" href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a></p></td>
+ <td><img src="tpl/black/freccia_4.gif" width="11" height="10" alt="" />&nbsp;<a title="Questo link apre una nuova pagina" target="_blank" href="{$temp_currLink.uri|escape:"htmlall"}">{$temp_currLink.label|escape:"htmlall"}</a></p></td>
  {/if}
  <td>{$temp_currLink.description|escape:"htmlall"}</td>
  <td><a href="{$temp_currLink.userlink|escape:"htmlall"}">{$temp_currLink.user|escape:"htmlall"}</a></td>
