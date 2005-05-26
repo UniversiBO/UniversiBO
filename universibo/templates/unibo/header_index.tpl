@@ -11,6 +11,7 @@
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
 {#styleSheet#}
 {#favIcon#}
+{*<!--[if IE]><style type="text/css">#header ul.hide {ldelim}display: none !important;{rdelim}</style><![endif]-->*}
 </head> 
 <body>
 {* inizio tabella di impaginazione GENERALE  *}
