@@ -13,7 +13,7 @@
 <p>Nello sviluppo di UniversiBO, si &egrave; posta particolare attenzione nel
 renderlo il più <strong>accessibile</strong> possibile, poich&eacute;
 convinti che le informazioni debbano essere fruibili da chiunque a
-prescindere dalle proprie capacità.</p>
+prescindere dalle proprie capacità o strumenti a disposizione.</p>
 <p>In tale ottica, per facilitare la navigazione sono stati definiti
 degli <strong><lang="en">accesskey</lang></strong>, ovvero dei tasti di accesso rapido
 che permettono di accedere direttamente a determinate parti delle pagine.

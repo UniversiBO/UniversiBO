@@ -23,7 +23,7 @@
 		</div> {* /menubar *}
 </td></tr>
 <tr valign="top"> {* INIZIO DEL CORPO CENTRALE DELLA PAGINA (MENU DX E SX E PAG CENTRO) *}
-	<td class="evidenzia" rowspan="2" width="200px">
+	<td id="navigazione" class="evidenzia" rowspan="2" width="200px">
 		<div id="leftmenu">
 			<ul>
 				<li><a href="{$common_homepageUri|escape:"htmlall"}">{$common_homepage|lower|capitalize|escape:"htmlall"}</a></li>

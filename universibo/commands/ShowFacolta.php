@@ -33,6 +33,7 @@ class ShowFacolta extends CanaleCommand {
 	function execute() {
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
+		$forum = new ForumApi;
 		
 		//@todo fatto sopra
 		$facolta = & $this -> getRequestCanale();
@@ -67,6 +68,7 @@ class ShowFacolta extends CanaleCommand {
 				}
 				$fac_listCdlType[$cdlType]['list'][] = array('cod' => $elencoCdl[$i]->getCodiceCdl() ,
 															 'name' => $elencoCdl[$i]->getNome(), 
+														     'forumUri' =>($elencoCdl[$i]->getServizioForum() != false) ? $forum->getForumUri($elencoCdl[$i]->getForumForumId()) : '',
 															 'link' => 'index.php?do=ShowCdl&amp;id_canale='.$elencoCdl[$i]->getIdCanale() ); //.'&amp;anno_accademico='.$default_anno_accademico
 			}
 		}
