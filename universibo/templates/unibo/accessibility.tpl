@@ -11,11 +11,11 @@
 </div>
 
 <p>Nello sviluppo di UniversiBO, si &egrave; posta particolare attenzione nel
-renderlo il più accessibile possibile, poich&eacute;
+renderlo il più <strong>accessibile</strong> possibile, poich&eacute;
 convinti che le informazioni debbano essere fruibili da chiunque a
 prescindere dalle proprie capacità.</p>
 <p>In tale ottica, per facilitare la navigazione sono stati definiti
-degli <lang="en">accesskey</lang>, ovvero dei tasti di accesso rapido
+degli <strong><lang="en">accesskey</lang></strong>, ovvero dei tasti di accesso rapido
 che permettono di accedere direttamente a determinate parti delle pagine.
 </p><p>Ecco la lista dei tasti implementati:</p>
 <dl>
@@ -29,7 +29,7 @@ link al forum?)</dd>
 </dl>
 <p>
 L'attivazione di questi tasti di accesso dipende sia dal vostro
-sistema operativo e dal vostro <lang="en">browser</lang>:
+sistema operativo che dal vostro <lang="en">browser</lang>:
 </p>
 <dl>
 <dt>IE Windows, IBM Home Page Reader : </dt><dd><alt + [accesskey] + Invio </dd>
@@ -51,6 +51,7 @@ della versione 7, non supportano i tasti di accesso.</p>
 aggiunti dei link che permettono una veloce navigazione tra le aree di
 interesse della pagina, del tipo "Vai al contenuto".</p>*}
 <p>Si &egrave; cercato inoltre di rispettare il più possibile le linee guide
-specificate dal WCAG (@TODO mettere l'acronimo) del W3C.</p>
+specificate dal <acronym title="Web Content Accessibility Guidelines">WCAG</acronym> del 
+<acronym title="World Wide Web Consortium">W3C</acronym>.</p>
 
 {include file=footer_index.tpl}
