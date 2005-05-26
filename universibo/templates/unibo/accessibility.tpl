@@ -18,20 +18,28 @@ prescindere dalle proprie capacità o strumenti a disposizione.</p>
 degli <strong><lang="en">accesskey</lang></strong>, ovvero dei tasti di accesso rapido
 che permettono di accedere direttamente a determinate parti delle pagine.
 </p><p>Ecco la lista dei tasti implementati:</p>
-<dl>
-<dt>1</dt><dd>vai all'homepage</dd>
-<dt>2</dt><dd>vai al forum (mmm, nella pagina degli insegnamenti quale dei due
-link al forum?)</dd>
-<dt>3</dt><dd>vai al contenuto principale della pagina</dd>
-<dt>4</dt><dd>vai al myuniversibo</dd>
-<dt>5</dt><dd>vai al menù di navigazione tra le sezioni</dd>
-<dt>0</dt><dd>vai a questa pagina sull'accessibilità</dd>
-</dl>
+<table id="accesskeys">
+<tr><th>acceskey</th><th>funzione</th></tr>
+<tr><td>1</td><td>vai all'homepage</td></tr>
+<tr><td>2</td><td>vai al forum</td></tr>
+<tr><td>3</td><td>vai al contenuto principale della pagina</td></tr>
+<tr><td>4</td><td>vai al myuniversibo</td></tr>
+<tr><td>5</td><td>vai al menù di navigazione tra le sezioni</td></tr>
+<tr><td>0</td><td>vai a questa pagina sull'accessibilità</td></tr>
+</table>
 <p>
 L'attivazione di questi tasti di accesso dipende sia dal vostro
-sistema operativo che dal vostro <lang="en">browser</lang>:
+sistema operativo che dal vostro <lang="en">browser</lang>, per esempio:
 </p>
-<dl>
+<table id="browserkeys">
+<tr><th>browser</th><th>attivazione acceskey</th></tr>
+<tr><td>Internet Explorer</td><td>Alt + [accesskey] + Invio </td></tr>
+<tr><td>Mozilla, Netscape 6+, FireFox Windows</td><td>Alt+[accesskey]</td></tr>
+<tr><td>Opera 7</td><td>Esc + Shift e [accesskey]</td></tr>
+<tr><td>Safari 1.2 Macintosh</td><td>Ctrl e [accesskey]</td></tr>
+<tr><td>Galeon/Mozilla/FireFox Linux</td><td>Alt e [accesskey]</td></tr>
+</table>
+{*<dl>
 <dt>IE Windows, IBM Home Page Reader : </dt><dd><alt + [accesskey] + Invio </dd>
 <dt>Mozilla, Netscape 6+, K-Meleon, FireFox Windows: </dt><dd>Alt+[accesskey]</dd>
 <dt>Opera 7 Windows, Macintosh, Linux : </dt><dd>Esc + Shift e [accesskey]</dd>
@@ -41,17 +49,15 @@ sistema operativo che dal vostro <lang="en">browser</lang>:
 <dt>Galeon/Mozilla/FireFox Linux : </dt><dd>Alt e [accesskey]</dd>
 <dt>Konqueror 3.3+ : </dt><dd>Ctrl, e successivamente [accesskey]</dd>
 <dt>Handspring Blazer (Treo 600) : </dt><dd>[accesskey]</dd>
-</dl>
-<p>Netscape 4, Camino, Galeon, Konqueror prima della versione 3.3.0,
-Omniweb, Safari prima della versione 1.2, Opera Windows/Linux prima
-della versione 7, non supportano i tasti di accesso.</p>
+</dl>*}
+
 {*<p>Il testo della pagina &egrave; ridimensionabile tramite browser fino ad un
-150% circa del testo originale (@TODO verificare)</p>
-<p>Per gli utilizzatori di browser testuali o screenreader sono stati
+150% circa del testo originale</p>*}
+<p>Per gli utilizzatori di <lang="en">browser</lang> testuali o <lang="en">screenreader</lang> sono stati
 aggiunti dei link che permettono una veloce navigazione tra le aree di
-interesse della pagina, del tipo "Vai al contenuto".</p>*}
-<p>Si &egrave; cercato inoltre di rispettare il più possibile le linee guide
-specificate dal <acronym title="Web Content Accessibility Guidelines">WCAG</acronym> del 
-<acronym title="World Wide Web Consortium">W3C</acronym>.</p>
+interesse della pagina, del tipo "Vai al contenuto".</p>
+<p>Si &egrave; cercato inoltre di rispettare il più possibile tutti i punti elencati 
+nelle le linee guide specificate dal <acronym title="Web Content Accessibility Guidelines">WCAG</acronym>
+ del <acronym title="World Wide Web Consortium">W3C</acronym>.</p>
 
 {include file=footer_index.tpl}

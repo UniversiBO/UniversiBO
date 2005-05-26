@@ -13,6 +13,7 @@ p, td, ul, ol, ul, li, dl, dt, dd, a
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 }
+
 hr
 {
 	border-style: none;
@@ -30,7 +31,7 @@ img
 }
 
 h4
-{	
+{
 	font-size: 13px;
 }
 
@@ -746,6 +747,28 @@ td.evidenzia{
 	color: #386dce;
 	font-weight: bold;
 }
+
+
+#browserkeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#browserkeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
+#accesskeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#accesskeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
 
 .elencoTopic
 {
