@@ -93,10 +93,15 @@ INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come posso a
 [/list]',1117109715,360);
 
 
+INSERT INTO help_topic (riferimento, titolo, indice) VALUES ('filestudenti','Come possono gli studenti inserire contributi?',65);
 
 
-
-
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-5);
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-4);
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-3);
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-2);
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-1);
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help));
 
 -- LASCIATE QUESTI COMMENTO IN FONDO - 04/03/2005 - brain
 
