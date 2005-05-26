@@ -23,10 +23,6 @@ hr
 a {color: #386dce; /*padding: 1px; border: 1px;*/}
 a:hover, a:focus {color: #00e;}
 
-.dueCol {margin: 20px 0; border: 1px solid #999; border-collapse: collapse; }
-.dueCol td {text-align: left; padding: 4px; border: 1px solid #999;}
-
-
 img
 {
 	margin: 0;
@@ -751,6 +747,28 @@ td.evidenzia{
 	color: #386dce;
 	font-weight: bold;
 }
+
+
+#browserkeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#browserkeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
+#accesskeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#accesskeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
 
 .elencoTopic
 {
