@@ -11,9 +11,9 @@
 </div>
 
 <p>Nello sviluppo di UniversiBO, si &egrave; posta particolare attenzione nel
-renderlo il più <strong>accessibile</strong> possibile, poich&eacute;
+renderlo il pi&ugrave; <strong>accessibile</strong> possibile, poich&eacute;
 convinti che le informazioni debbano essere fruibili da chiunque a
-prescindere dalle proprie capacità o strumenti a disposizione.</p>
+prescindere dalle proprie capacit&agrave; o strumenti a disposizione.</p>
 <p>In tale ottica, per facilitare la navigazione sono stati definiti
 degli <strong><lang="en">accesskey</lang></strong>, ovvero dei tasti di accesso rapido
 che permettono di accedere direttamente a determinate parti delle pagine.
@@ -24,8 +24,8 @@ che permettono di accedere direttamente a determinate parti delle pagine.
 <tr><td>2</td><td>vai al forum</td></tr>
 <tr><td>3</td><td>vai al contenuto principale della pagina</td></tr>
 <tr><td>4</td><td>vai al myuniversibo</td></tr>
-<tr><td>5</td><td>vai al menù di navigazione tra le sezioni</td></tr>
-<tr><td>0</td><td>vai a questa pagina sull'accessibilità</td></tr>
+<tr><td>5</td><td>vai al men&ugrave; di navigazione tra le sezioni</td></tr>
+<tr><td>0</td><td>vai a questa pagina sull'accessibilit&agrave;</td></tr>
 </table>
 <p>
 L'attivazione di questi tasti di accesso dipende sia dal vostro
@@ -56,8 +56,9 @@ sistema operativo che dal vostro <lang="en">browser</lang>, per esempio:
 <p>Per gli utilizzatori di <lang="en">browser</lang> testuali o <lang="en">screenreader</lang> sono stati
 aggiunti dei link che permettono una veloce navigazione tra le aree di
 interesse della pagina, del tipo "Vai al contenuto".</p>
-<p>Si &egrave; cercato inoltre di rispettare il più possibile tutti i punti elencati 
+<p>Si &egrave; cercato inoltre di conformarsi il pi&ugrave; possibile tutti i punti elencati 
 nelle le linee guide specificate dal <acronym title="Web Content Accessibility Guidelines">WCAG</acronym>
- del <acronym title="World Wide Web Consortium">W3C</acronym>.</p>
+ del <acronym title="World Wide Web Consortium">W3C</acronym> e della legge
+ legge italiana sull'accessibilit&agrave; del 4/2004.</p>
 
 {include file=footer_index.tpl}
