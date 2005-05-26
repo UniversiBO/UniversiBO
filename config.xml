@@ -212,6 +212,8 @@
 		<FileStudentiAdd class="FileStudentiAdd">
 			<response type="template" name="success">file_studenti_add_success.tpl</response>
 			<response type="template" name="default">file_studenti_add.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileStudentiAdd>
 		<FileEdit class="FileEdit">
 			<response type="template" name="default">file_edit.tpl</response>
@@ -226,6 +228,8 @@
 		<FileStudentiEdit class="FileStudentiEdit">
 			<response type="template" name="success">file_studenti_edit_success.tpl</response>
 			<response type="template" name="default">file_studenti_edit.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileStudentiEdit>
 		<FileDelete class="FileDelete">
 			<response type="template" name="default">file_delete.tpl</response>
@@ -236,6 +240,8 @@
 		<FileStudentiDelete class="FileStudentiDelete">
 			<response type="template" name="success">file_studenti_delete_success.tpl</response>
 			<response type="template" name="default">file_studenti_delete.tpl</response>
+			<pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</FileStudentiDelete>
 		<FileStudentiComment class="FileStudentiComment">
 			<response type="template" name="success">file_studenti_comment_success.tpl</response>
