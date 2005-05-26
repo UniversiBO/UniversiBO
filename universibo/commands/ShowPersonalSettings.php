@@ -29,7 +29,7 @@ class ShowPersonalSettings extends UniversiboCommand
 		
 		if ($this->sessionUser->isOspite())
 		{
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica delle impostazioni personali non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'La modifica del profilo non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$template->assign('showPersonalSettings_langEmail','Modifica Email');
@@ -117,7 +117,7 @@ class ShowPersonalSettings extends UniversiboCommand
 			$forum->updateUserEmail($user);
 						
 			$fc->setStyle($f20_personal_style);
-			$template->assign('showPersonalSettings_thanks',"Le impostazioni personali sono state modificate con successo, si consiglia di testarne il corretto funzionamento.\n".
+			$template->assign('showPersonalSettings_thanks',"Il profilo personale e\' stato modificato con successo, si consiglia di testarne il corretto funzionamento.\n".
 								'Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			return 'success';

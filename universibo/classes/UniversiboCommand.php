@@ -392,7 +392,7 @@ class UniversiboCommand extends BaseCommand {
 			
 		}
 		
-		$template->assign('common_settings', 'Impostazioni');
+		$template->assign('common_settings', 'Impostazioni personali');
 		$template->assign('common_settingsUri', 'index.php?do=ShowSettings');
 
 		$template->assign('common_myUniversiBO', 'ShowMyUniversiBO');

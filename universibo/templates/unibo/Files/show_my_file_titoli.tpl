@@ -14,7 +14,7 @@
 		</table>
 	</div>
 	{foreach from=$temp_file.canali item=temp_canale}
-		<p><a href={$temp_canale.link|escape:"htmlall"}>{$temp_canale.titolo|escape:"htmlall"} </a><p>
+		<p class="comandi"><a href={$temp_canale.link|escape:"htmlall"}>{$temp_canale.titolo|escape:"htmlall"} </a><p>
 	{/foreach}
 	</span>
 &nbsp;<br />

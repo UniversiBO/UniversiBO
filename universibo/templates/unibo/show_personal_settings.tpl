@@ -1,6 +1,6 @@
 {include file=header_index.tpl}
 <div class="titoloPagina">
-<h2>Impostazioni Personali</h2>
+<h2>Profilo</h2>
 </div>
 
 {include file=avviso_notice.tpl}
