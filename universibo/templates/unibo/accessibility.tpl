@@ -15,7 +15,7 @@ renderlo il pi&ugrave; <strong>accessibile</strong> possibile, poich&eacute;
 convinti che le informazioni debbano essere fruibili da chiunque a
 prescindere dalle proprie capacit&agrave; o strumenti a disposizione.</p>
 <p>In tale ottica, per facilitare la navigazione sono stati definiti
-degli <strong><lang="en">accesskey</lang></strong>, ovvero dei tasti di accesso rapido
+degli <strong><span lang="en">accesskey</span></strong>, ovvero dei tasti di accesso rapido
 che permettono di accedere direttamente a determinate parti delle pagine.
 </p><p>Ecco la lista dei tasti implementati:</p>
 <table id="accesskeys">
@@ -29,7 +29,7 @@ che permettono di accedere direttamente a determinate parti delle pagine.
 </table>
 <p>
 L'attivazione di questi tasti di accesso dipende sia dal vostro
-sistema operativo che dal vostro <lang="en">browser</lang>, per esempio:
+sistema operativo che dal vostro <span lang="en">browser</span>, per esempio:
 </p>
 <table id="browserkeys">
 <tr><th>browser</th><th>attivazione acceskey</th></tr>
