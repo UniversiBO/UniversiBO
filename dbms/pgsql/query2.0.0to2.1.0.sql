@@ -74,22 +74,39 @@ NB: si puó caricare [b]un solo file alla volta[/b], quindi per mettere on line p
 [*]Cliccare su invia.
 [/list]Se la procedura é stata completata con successo, verrà visualizzata una pagina di conferma del  corretto inserimento del file. Cliccando sul link "Torna a..." si ritorna alla pagina dove é stata inserito il file. Il titolo del nuovo file inserito comparirà nel Box \'Contributi degli studenti\'.',1117109715,320);
 
-INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come faccio a modificare un file studenti?','La modifica di un file studenti già presente può essere eseguita esclusivamente dall\'autore o dai referenti dell\'insegnamento.
-Se si è in possesso dei diritti per effettuare questa operazione, bisogna cliccare sul nome del file che si vuole modificare all\'interno del Box \'Contributi degli studenti\'; si passerà a una pagina con le informazioni relative al file, per effettuare le modifiche  é sufficiente cliccare sul pulsante \'Modifica\' [img]https://www.universibo.unibo.it/tpl/unibo/file_edit_32.gif[/img]  
-Verrà visualizzata la pagina di modifica analoga a quella di inserimento del file i cui campi contengono le informazioni del precedente inserimento. Effettuate le modifiche necessarie, é sufficiente cliccare sul pulsante \'Invia\' in basso alla pagina.
-Se la procedura é stata completata con successo, verrà visualizzata una pagina di conferma della corretta modifica del file. Per tornare ai dettagli del file cliccare sul link \'torna ai dettagli del file\'',1117109715,330);
+INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come faccio a modificare un file studenti?','[b]N.B.[/b]La modifica di un file studenti già presente può essere eseguita esclusivamente dall\'autore o dai referenti dell\'insegnamento.
 
-INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come faccio ad eliminare un file studenti?','Come per la modifica, l\'eliminazione di un file studenti può essere eseguita esclusivamente dall\'autore o dai referenti dell\'insegnamento.
-Se si è in possesso dei diritti per effettuare questa operazione, bisogna cliccare sul nome del file che si vuole eliminare all\'interno del Box \'Contributi degli studenti\'; si passerà a una pagina con le informazioni relative al file, per effettuare l\'eliminazione cliccare sul pulsante \'Elimina\'[img]https://www.universibo.unibo.it/tpl/unibo/file_del_32.gif[/img]. Verrà presentata una pagina di conferma, se si é sicuri di volere cancellare il file cliccare ancora su \'Elimina\'.',1117109715,340);
+Se si è in possesso dei diritti, per effettuare questa operazione bisogna seguire i seguenti passi:
+[list=1][*]Cliccare sul nome del file che si vuole modificare all\'interno del Box [u]\'Contributi degli studenti\'[/u]; 
+[*]Si passerà a una pagina con le informazioni relative al file, per effettuare le modifiche  é sufficiente cliccare sul pulsante [u]\'Modifica\'[/u];
+[*]Verrà visualizzata la pagina di modifica analoga a quella di [url=index.php?do=ShowHelp#id37]inserimento del file[/url] i cui campi contengono le informazioni del precedente inserimento. 
+[*]Effettuate le modifiche necessarie, é sufficiente cliccare sul pulsante [u]\'Invia\'[/u] in basso alla pagina.
+[*]Se la procedura é stata completata con successo, verrà visualizzata una pagina di conferma della corretta modifica del file. Per tornare ai dettagli del file cliccare sul link [u]\'torna ai dettagli del file\'[/u][/list]
+',1117109715,330);
+
+INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come faccio ad eliminare un file studenti?
+','[b]N.B.[/b]L\'eliminazione di un file studenti può essere eseguita esclusivamente dall\'autore o dai referenti dell\'insegnamento.
+
+Se si è in possesso dei diritti, per effettuare questa operazione bisogna seguire i seguenti passi:
+[list=1][*]Cliccare sul nome del file che si vuole eliminare all\'interno del Box [u]\'Contributi degli studenti\'[/u];
+[*]Si passerà a una pagina con le informazioni relative al file, per effettuare l\'eliminazione cliccare sul pulsante [u]\'Elimina\'[/u];
+[*]Verrà presentata una pagina di conferma, se si é sicuri di volere cancellare il file cliccare ancora su [u]\'Elimina\'[/u].[/list]
+',1117109715,340);
 
 INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Cosa sono i commenti ai file studenti?','Per ogni file studente inserito è possibile scrivere un proprio commento. Ogni utente può aggiungere un solo commento per ogni file e deve esprimere un giudizio con un voto da zero a cinque.',1117109715,350);
 
+INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Cosa sono i commenti ai file studenti?
+','Per ogni file studente inserito è possibile scrivere un proprio commento. Ogni utente può aggiungere un solo commento per ogni file e deve esprimere un giudizio con un voto da zero a cinque.
+',1117109715,350);
+
 INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Come posso aggiungere un commento ad un file studenti?','Il procedimento per inserire un commento è il seguente:
-[list=1][*]Cliccate sul titolo del file nel box "contributi degli studenti", si passerà ad un\'altra pagina con le informazioni relative al file, in basso a questa pagina nel box Commenti cliccate sulla voce "Aggiungi il tuo commento!"; verrà presentata una nuova pagina nella quale si dovranno completare i seguenti campi:
+[list=1][*]Cliccate sul [u]titolo del file[/u] nel box \'contributi degli studenti\';
+[*]Si passerà ad un\'altra pagina con le informazioni relative al file, in basso a questa pagina nel box Commenti cliccate sulla voce [u]\'Aggiungi il tuo commento!\'[/u];
+[*]Verrà presentata una nuova pagina nella quale si dovranno completare i seguenti campi:
 [list][*][b]Il tuo commento/descrizione sul file[/b]: scrivere una propria opinione sul file.
 [*][b]Il tuo voto[/b]: utilizzando il menù a discesa, assegnate un voto al file da 0 a 5.
-[*]infine cliccare su "INVIA".
 [/list]
+[*]infine cliccare su [u]\'INVIA\'[/u].
 [/list]',1117109715,360);
 
 
