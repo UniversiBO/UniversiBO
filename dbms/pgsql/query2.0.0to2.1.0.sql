@@ -103,6 +103,25 @@ INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SEL
 INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help)-1);
 INSERT INTO help_riferimento (riferimento, id_help) VALUES ('filestudenti', (SELECT MAX(id_help) FROM help));
 
+
+
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.trenitalia.com','Trenitalia','Trenitalia');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.atc.bo.it','Atc Bologna','Atc Bologna');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(303,307,'http://www.df.unibo.it','Dipartimento di Fisica','Dipartimento di Fisica');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'https://uniwex.unibo.it','Uniwex','Servizio di iscrizione agli esami');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(2,307,'http://www.ing.unibo.it/Ingegneria/dipartimenti.htm','Elenco Dipartimenti','');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm','Associazioni Studentesche','');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(2,307,'http://www.ing.unibo.it/Ingegneria/Guida+dello+studente/default.htm','Guida dello Studente','');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(303,307,'http://tori.ing.unibo.it/DICASM/dicasm.htm','Dicasm','Dipartimento di Chimica Applicata e Scienza dei Materiali');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(303,307,'http://dm.unibo.it','Dipartimento di Matematica','Dipartimento di matematica');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(303,307,'http://diem1.ing.unibo.it/diem/welcome.html','Diem','Dipartimento di Ingegneria delle Costruzioni Meccaniche, Nucleari, Aeronautiche e di Metallurgia ');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://it.wikipedia.org','Wikipedia','');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'https://posta.studio.unibo.it/horde/','E-mail studenti di Ateneo','');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.cib.unibo.it/','Biblioteca','Sito del centro interbibliotecario dell\'Ateneo di Bologna');
+INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.unibo.it','Portale d\'Ateneo','Sito internet principale dell\'Ateneo di Bologna');
+
+
+
 -- LASCIATE QUESTI COMMENTO IN FONDO - 04/03/2005 - brain
 
 -- SELECT id_utente, user_email, email FROM phpbb_users, utente WHERE id_utente = user_id AND user_email != email
