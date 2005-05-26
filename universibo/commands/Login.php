@@ -25,6 +25,7 @@ class Login extends UniversiboCommand {
 		
 		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : (array_key_exists('HTTP_REFERER',$_SERVER))? $_SERVER['HTTP_REFERER'] : '';
 		
+		$_POST['f1_username'] = trim($_POST['f1_username']);
 
 		if ( array_key_exists('f1_submit',$_POST) )
 		{

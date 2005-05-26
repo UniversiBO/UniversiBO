@@ -31,21 +31,6 @@ class RegUser extends UniversiboCommand
 		
 		$template->assign('f34_submit',		'Registra');
 		$template->assign('regStudente_langRegAlt','Registrazione');
-/*		$template->assign('regStudente_langMail','e-mail di ateneo:');
-		$template->assign('regStudente_langPassword','Password:');
-		$template->assign('regStudente_langUsername','Username:');
-		$template->assign('regStudente_domain','@studio.unibo.it');
-		$template->assign('regStudente_langInfoUsername','E\' necessario scegliere uno Username che sar? utilizzato per i futuri accessi e che sar? anche il vostro nome identificativo all\'interno di UniversiBO.
-Il sistema generer? una password casuale che sar? inviata alla vostra casella e-mail d\'ateneo.');
-		$template->assign('regStudente_langInfoReg','Per garantire la massima sicurezza, l\'identificazione degli studenti al loro primo accesso avviene tramite la casella e-mail d\'ateneo e la relativa password.
-Se non possedete ancora la e-mail di ateneo andate sul sito [url]http://www.unibo.it[/url] cliccate sul "Login" in alto a destra e seguite le istruzioni.
-Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore successive[/b] e potete accedervi tramite il sito [url]https://posta.studio.unibo.it[/url], vi preghiamo di apettare che la mail di ateneo sia attiva prima di iscrivervi.');
-		$template->assign('regStudente_langReg','Regolamento per l\'utilizzo dei servizi:');
-		$template->assign('regStudente_langPrivacy','Informativa sulla privacy:');
-		$template->assign('regStudente_langConfirm','Confermo di aver letto il regolamento');
-		$template->assign('regStudente_langHelp','Per qualsiasi problema o spiegazioni contattate lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].'."\n".
-							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non ? tenuto a conoscerle');
-*/
 
 		
 		// valori default form
@@ -86,6 +71,10 @@ Per problemi indipendenti da noi [b]la casella e-mail verr? creata nelle 24 ore 
 			//username
 			if ( $_POST['f34_username'] == '' ) {
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Scegliere uno username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f34_accept = false;
+			}
+			elseif($_POST['f34_username']{0}==' ' || $_POST['f34_username']{strlen($_POST['f34_username']) - 1}==' '){
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Non sono accettati spazi all\' inizio o alla fine dello username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
 			elseif ( !User::isUsernameValid( $_POST['f34_username'] ) ){

@@ -98,7 +98,8 @@ class User {
 	 */
 	function isUsernameValid( $username )
 	{
-		$username_pattern='^([[:alnum:]?????? ._]{1,25})$';
+		$username = trim($username);
+		$username_pattern='^([[:alnum:]אטילעש \._]{1,25})$';
 		return ereg($username_pattern , $username );
 	}
 	
@@ -209,7 +210,7 @@ class User {
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
-		$this->username    = $username;
+		$this->username    = trim($username);
 		$this->email       = $email;
 		$this->ADUsername  = $AD_username;
 		$this->ultimoLogin = $ultimo_login;
@@ -298,7 +299,7 @@ class User {
 			if (DB::isError($res)) 
 				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
-		
+			
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
 			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
@@ -798,6 +799,8 @@ class User {
 	 */
 	function usernameExists( $username )
 	{
+		$username = trim($username);
+		
 		$db =& FrontController::getDbConnection('main');
 		
 		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
@@ -862,6 +865,7 @@ class User {
 	 */
 	function &selectUserUsername($username)
 	{
+		$username = trim($username);
 		
 		$db =& FrontController::getDbConnection('main');
 	
@@ -893,6 +897,8 @@ class User {
 	 */
 	function &selectUsersSearch($username = '%', $email = '%')
 	{
+		
+		$username = trim($username);
 		
 		$db =& FrontController::getDbConnection('main');
 	

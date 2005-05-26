@@ -113,6 +113,10 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Scegliere uno username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
+			elseif($_POST['f4_username']{0}==' ' || $_POST['f4_username']{strlen($_POST['f4_username']) - 1}==' '){
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Non sono accettati spazi all\' inizio o alla fine dello username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f4_accept = false;
+			}
 			elseif ( !User::isUsernameValid( $_POST['f4_username'] ) ){
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
