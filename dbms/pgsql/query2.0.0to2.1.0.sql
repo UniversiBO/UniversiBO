@@ -51,7 +51,8 @@ CREATE TABLE file_studente_commenti (
     PRIMARY KEY (id_commento),
     UNIQUE (id_file,id_utente,id_commento)
 );
---query help--
+
+-- 26-05-2005 roby46: query help--
 SELECT setval('help_id_help_seq', (SELECT MAX(id_help) FROM help) +1);
 
 INSERT INTO help (titolo,contenuto,ultima_modifica,indice) VALUES ('Cos\'è il servizio files studenti?
