@@ -305,7 +305,7 @@ Testo: '.$f7_testo.'
 
 Autore: '.$user->getUsername().'
 
-Link: '.$add_canale->showMe().'
+Link: '.$frontcontroller->getAppSetting('rootUrl').'/'.$add_canale->showMe().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Informazioni per la cancellazione:
 
@@ -332,10 +332,9 @@ Per altri problemi contattare lo staff di UniversiBO
 							$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
 							$notifica->insertNotificaItem();
 						}
-						if ($ruolo_canale->isMyUniversiBO() && ($f7_urgente && $ruolo_canale->getTipoNotifica()==NOTIFICA_URGENT)){
+						if ($notifica_user->getPhone() != '' &&  $ruolo_canale->isMyUniversiBO() && ($f7_urgente && ($ruolo_canale->getTipoNotifica()==NOTIFICA_URGENT  || $ruolo_canale->getTipoNotifica()==NOTIFICA_ALL) ) ){
 					
 							$notifica_destinatario = 'sms://'.$notifica_user->getPhone();
-							
 							
 							
 							$notifica = new NotificaItem(0, '', $notifica_messaggio_sms, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );

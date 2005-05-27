@@ -303,7 +303,7 @@
 	    <fromName>UniversiBO</fromName>
 	</mailerInfo>
 	
-	<templateInfo type="Smarty" debugging="on">
+	<templateInfo type="Smarty" debugging="off">
 		<template_dirs>
 			<web_dir>tpl/</web_dir>
 			<smarty_dir>../framework/smarty/</smarty_dir>
@@ -335,7 +335,7 @@
                 and access it from FrontController->getAppSetting()	-->
 	<appSettings>
 		<adLoginHost>127.0.0.1</adLoginHost>
-		<version>2.1.(- epsilon &gt; 0)</version>
+		<version>2.2.0</version>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
 		<notificheLock>../universibo/notifiche.lock</notificheLock>

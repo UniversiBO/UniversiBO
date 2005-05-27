@@ -415,6 +415,8 @@ class FrontController {
 		//set $this->dbinfo
 		$this->_setMailerInfo();
 
+		$this->_setSmsMobyInfo();
+
 		//set $this->languageInfo
 		$this->_setLanguageInfo();
 		
@@ -705,24 +707,29 @@ class FrontController {
 
 
 	/**
-	* Sets the framework mailer settings
-	*
-	* @access private
-	*/
+	 * Sets the framework mailer settings
+	 *
+	 * @access private
+	 */
 	function _setSmsMobyInfo()
 	{
-		$smsMobyInfoNode =& $this->config->root->getChild('smsMobyInfo');
+		$smsMobyInfoNodes =& $this->config->getElementsByTagName('smsMobyInfo');
+		if ($smsMobyInfoNodes == NULL)
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento smsMobyInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
+
+		$smsMobyInfoNode = &$smsMobyInfoNodes->item(0);
 		if ($smsMobyInfoNode == NULL)
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste l\'elemento smsMobyInfo nel file di config','file'=>__FILE__,'line'=>__LINE__));
-		
-		$n = $smsMobyInfoNode->numChildren();
-		for( $i=0; $i<$n; $i++ )
-		{
-			$aSetting=&$smsMobyInfoNode->children[$i];
-			$this->smsMobyInfo[$aSetting->name] = $aSetting->charData;
-		}
 
-	}	
+		$figli = $smsMobyInfoNode->childNodes;
+		for( $i=0; $i<$figli->length; $i++ )
+		{
+			$aSetting = &$figli->item($i);
+			if ($aSetting->nodeType == XML_ELEMENT_NODE)
+				$this->smsMobyInfo[$aSetting->tagName] = $aSetting->firstChild->nodeValue;
+		}
+	}
+
 
 
 	/**

@@ -138,6 +138,8 @@ INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'h
 INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.unibo.it','Portale d\'Ateneo','Sito internet principale dell\'Ateneo di Bologna');
 
 
+--27-05-2005 brain
+UPDATE canale 
 
 -- LASCIATE QUESTI COMMENTO IN FONDO - 04/03/2005 - brain
 
