@@ -357,6 +357,12 @@
 		<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 		<defaultAnnoAccademico>2004</defaultAnnoAccademico>
+		
+		<antiVirusEnable>true</antiVirusEnable>
+		<antiVirusType>clamav</antiVirusType>
+		<antiVirusClamavCmd>/usr/local/bin/clamscan</antiVirusClamavCmd>
+		<antiVirusClamavOpts>--quiet --recursive</antiVirusClamavOpts>
+		
 	</appSettings>
 	
 </config>

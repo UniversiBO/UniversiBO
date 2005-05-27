@@ -2,6 +2,7 @@
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('AntiVirus/AntiVirusFactory'.PHP_EXTENSION);
 
 /**
  * FileAdd: si occupa dell'inserimento di un file in un canale
@@ -341,6 +342,7 @@ class FileAdd extends UniversiboCommand {
 		    }
 
 
+			//controllo estensioni non permesse
 			$estensione = strtolower ( substr($_FILES['f12_file']['name'],-4) );
 			if ( $estensione == PHP_EXTENSION) 
 			{
@@ -386,6 +388,14 @@ class FileAdd extends UniversiboCommand {
 					Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $user->getIdUser(), 'msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
 				}
 				
+				//controllo antivirus
+				if ($antiVirus = AntiVirusFactory::getAntiVirus($frontcontroller)){
+					if ($antiVirus->checkFile($frontcontroller->getAppSetting('filesPath').$nomeFile) === true)
+					{
+						$db->rollback();
+						Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $user->getIdUser(), 'msg' => 'ATTENZIONE: Il file inviato e\' risultato positivo al controllo antivirus!', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					}
+				}
 				
 				//$num_canali = count($f12_canale);
 				//var_dump($f12_canale);

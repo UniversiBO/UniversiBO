@@ -2,6 +2,7 @@
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
+require_once ('AntiVirus/AntiVirusFactory'.PHP_EXTENSION);
 
 /**
  * FileStudentiAdd: si occupa dell'inserimento di un file studente in un canale
@@ -340,7 +341,6 @@ class FileStudentiAdd extends UniversiboCommand {
 			}
 			
 			
-			
 			//esecuzione operazioni accettazione del form
 			if ($f23_accept == true) 
 			{
@@ -370,6 +370,15 @@ class FileStudentiAdd extends UniversiboCommand {
 				{
 					$db->rollback();
 					Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $user->getIdUser(), 'msg' => 'Errore nella copia del file', 'file' => __FILE__, 'line' => __LINE__));
+				}
+				
+				//controllo antivirus
+				if ($antiVirus = AntiVirusFactory::getAntiVirus($frontcontroller)){
+					if ($antiVirus->checkFile($frontcontroller->getAppSetting('filesPath').$nomeFile) === true)
+					{
+						$db->rollback();
+						Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $user->getIdUser(), 'msg' => 'ATTENZIONE: Il file inviato e\' risultato positivo al controllo antivirus!', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					}
 				}
 				
 				
