@@ -53,7 +53,7 @@ sistema operativo che dal vostro <span lang="en">browser</span>, per esempio:
 
 {*<p>Il testo della pagina &egrave; ridimensionabile tramite browser fino ad un
 150% circa del testo originale</p>*}
-<p>Per gli utilizzatori di <lang="en">browser</lang> testuali o <lang="en">screenreader</lang> sono stati
+<p>Per gli utilizzatori di <span lang="en">browser</span> testuali o <span lang="en">screenreader</span> sono stati
 aggiunti dei link che permettono una veloce navigazione tra le aree di
 interesse della pagina, del tipo "Vai al contenuto".</p>
 <p>Si &egrave; cercato inoltre di conformarsi il pi&ugrave; possibile tutti i punti elencati 

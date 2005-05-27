@@ -9,7 +9,7 @@
  {/if}{/foreach}
 
 {if $showLinks_linksPersonalizza == 'true'}
-	<p><a href="{$showLinks_linksAdminUri}">{$showLinks_linksAdminLabel|escape:"htmlall"}</a></p>
+	<p><a href="{$showLinks_linksAdminUri|escape:"htmlall"}">{$showLinks_linksAdminLabel|escape:"htmlall"}</a></p>
 {/if}
 	</div>
 </div>

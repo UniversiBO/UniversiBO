@@ -7,8 +7,8 @@
 		<p><span>Email:</span>&nbsp;<a href="mailto:{$collaboratore.email|escape:"htmlall"}">{$collaboratore.email|escape:"htmlall"}</a></p>
 		<p><span>Recapito:</span>&nbsp;{$collaboratore.recapito|escape:"htmlall"}</p>
 	</div>
-	<p>{$collaboratore.intro|escape:"htmlall"}</p>
-	<p>{$collaboratore.obiettivi|escape:"htmlall"|bbcode2html|nl2br}</p>
+	<p>{$collaboratore.intro|escape:"htmlall"}&nbsp;</p>
+	<p>{$collaboratore.obiettivi|escape:"htmlall"|bbcode2html|nl2br}&nbsp;</p>
 	<p><a href="#inizio">Torna su</a></p>
 </div>
   

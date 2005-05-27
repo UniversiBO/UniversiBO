@@ -3,7 +3,7 @@
 {include file=avviso_notice.tpl}
 <div class="titoloPagina">
 <h2>My UniversiBO</h2>
-<p>Modifica <a href="{$showMyScheda}">MyUniversiBO</a></p>
+<p>Modifica <a href="{$showMyScheda|escape:"htmlall"}">MyUniversiBO</a></p>
 </div>
 <h2>My News</h2>
 <p>Le tue ultime 5 notizie</p>

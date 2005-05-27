@@ -10,7 +10,7 @@
 	<span class="actions">
 		{if $modifica!="" && $elimina!=""}&nbsp;&nbsp;&nbsp;<img src="tpl/unibo/news_edt.gif" width="15" height="15" alt="modifica" />
 		<a href="index.php?do={$modifica_link|escape:"htmlall"}">{$modifica|escape:"htmlall"|nl2br}</a>
-		&nbsp|&nbsp;&nbsp;&nbsp;&nbsp;<img src="tpl/unibo/file_del.gif" width="15" height="15" alt="elimina" />
+		&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<img src="tpl/unibo/file_del.gif" width="15" height="15" alt="elimina" />
 		<a href="index.php?do={$elimina_link|escape:"htmlall"}">{$elimina|escape:"htmlall"|bbcode2html|nl2br}</a>
 		{/if}
 	</span></td><td>

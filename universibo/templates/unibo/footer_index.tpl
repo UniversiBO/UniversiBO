@@ -1,6 +1,6 @@
 	</div>
 </td> {* FINE MENU CENTRALE*}
-<td id="rightmenu" width="170px"> {* COLONNA MENU DI DESTRA*}
+<td id="rightmenu" width="170"> {* COLONNA MENU DI DESTRA*}
 	<div class="box"> {* primo blocchetto *} 
 		{if $common_userLoggedIn=='false'}
 		<h3>Login</h3>
