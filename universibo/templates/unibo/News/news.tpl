@@ -4,7 +4,7 @@
 
 <div class="news">
 	<h3>::&nbsp;{$titolo|escape:"htmlall"|nl2br}&nbsp;::{if $nuova=="true"}&nbsp;&nbsp;<img src="tpl/unibo/icona_new.gif" width="21" height="9" alt="!NEW!" />{/if}{if $scadenza!=""}{$scadenza|escape:"htmlall"|bbcode2html|nl2br}{/if}</h3>
-	<p>{$notizia|escape:"htmlall"|bbcode2html|ereg_replace:"[[:space:]][[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"|nl2br}</p>
+	<p>{$notizia|escape:"htmlall"|bbcode2html|nl2br|ereg_replace:"[[:space:]|<br />][[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]":"<a href=\"\\0\" target=\"_blank\">\\0</a>"|ereg_replace:"[^<>[:space:]]+[[:alnum:]/]@[^<>[:space:]]+[[:alnum:]/]":"<a href=\"mailto:\\0\" target=\"_blank\">\\0</a>"}</p>
 	{* TODO capire come togliere tabella *}
 	<table><tr><td>
 	<span class="actions">
