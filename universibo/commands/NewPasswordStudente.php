@@ -152,7 +152,7 @@ class NewPasswordStudente extends UniversiboCommand
 
 			$mail->Subject = "Registrazione UniversiBO";
 			$mail->Body = "Ciao \"".$user->getUsername()."\"\nE' stata richiesta la generazione di una nuova password per permetterti l'accesso ad UniversiBO\n\n".
-				"Per accedere al sito utilizza l'indirizzo '. $fc->getAppSetting('rootUrl') .'\n\n".
+				"Per accedere al sito utilizza l'indirizzo ". $fc->getAppSetting('rootUrl') ."\n\n".
 				"Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
 				"Username: ".$user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n".
