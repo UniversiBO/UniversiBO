@@ -147,14 +147,19 @@ class ForumApi
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			
+		$query = 'SELECT user_session_time FROM '.$this->table_prefix.'users WHERE user_id = '.$user->getIdUser();
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			
+		$res->fetchInto($row); 
 		
-		$query = 'UPDATE '.$this->table_prefix.'users SET user_lastvisit = '.time().' WHERE user_id = '.$user->getIdUser();
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_lastvisit = '.$row[0].' WHERE user_id = '.$user->getIdUser();
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		
-		
+						
 		$_SESSION['phpbb_sid'] = $sid;
 		
 	}
