@@ -1,0 +1,44 @@
+*** /var/www/universibo2devel/htmls/forum/includes/page_header.php	2005-06-22 02:52:52.000000000 +0200
+--- ./page_header.php	2005-06-22 02:50:56.000000000 +0200
+***************
+*** 73,83 ****
+  if ( $userdata['session_logged_in'] )
+  {
+! $u_login_logout = 'login.'.$phpEx.'?logout=true&amp;sid=' . $userdata['session_id'];
+  	$l_login_logout = $lang['Logout'] . ' [ ' . $userdata['username'] . ' ]';
+  }
+  else
+  {
+  	$u_action		= $u_login_logout;
+! 	$l_login_logout = $lang['Login'];	
+  }
+  
+--- 74,89 ----
+  if ( $userdata['session_logged_in'] )
+  {
+! 	$method			= 'post';
+! 	$u_action		= '../index.php?do=Logout'; 	
+! 	$u_login_logout = 'login.'.$phpEx.'?logout=true&amp;sid=' . $userdata['session_id'];
+  	$l_login_logout = $lang['Logout'] . ' [ ' . $userdata['username'] . ' ]';
+  }
+  else
+  {
++ 	$method			= 'get';
++ 	$u_login_logout = 'login.'.$phpEx;
+  	$u_action		= $u_login_logout;
+! 	$l_login_logout = $lang['Login'];
+! 	
+  }
+  
+***************
+*** 396,399 ****
+--- 402,410 ----
+  	'U_LOGIN_LOGOUT' => append_sid($u_login_logout),
+  	'U_GROUP_CP' => append_sid('groupcp.'.$phpEx),
++ 
++ //	begin edit by evaimitico
++ 	'U_ACTION' => append_sid($u_action),
++ 	'METHOD'   => $method,
++ //	end edit by evaimitico
+  	
+  	'S_CONTENT_DIRECTION' => $lang['DIRECTION'],
