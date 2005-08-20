@@ -26,6 +26,7 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=RegStudente&a
 document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordStudente&amp;pageType=popup');\">Password smarrita...<\/a><br \/>");
 </script>
 <noscript>-->
+<a href="index.php?do=RecuperaUsernameStudente">Username smarrito</a><br />
 <a href="index.php?do=NewPasswordStudente">Password smarrita</a><br />
 <!--</noscript>-->
 </td></tr>

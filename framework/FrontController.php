@@ -991,8 +991,15 @@ class FrontController {
 		{	
 			//define('TEMPLATE_SINGLETON','on');
 			require_once($this->templateEngine['smarty_dir'].'Smarty.class.php');
+			require_once($this->templateEngine['smarty_dir'].'MySmarty.class.php');
 			
-			$templateEngine = new Smarty();
+//			$templateEngine = new Smarty();
+			
+			//mia aggiunta per tentativo di template "differenziali"
+			$templateEngine = new MySmarty();
+			
+			$templateEngine->default_template_dir  = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['default_template']];
+			//fine mia aggiunta
 			
 			$templateEngine->template_dir  = $this->templateEngine['smarty_template'].$this->templateEngine['styles'][$this->templateEngine['template_name']];
 			$templateEngine->compile_dir   = $this->templateEngine['smarty_compile'].$this->templateEngine['styles'][$this->templateEngine['template_name']];

@@ -1018,7 +1018,7 @@ class User {
 	 * @param string $ad_username username da ricercare
 	 * @return boolean
 	 */
-	function activeDirectoryUsernameExists( $ad_username )
+	function activeDirectoryUsernameExists( $ad_username)
 	{
 		$db =& FrontController::getDbConnection('main');
 		
@@ -1034,6 +1034,33 @@ class User {
 		return false;
 	}
 	
+	/**
+	 * Resituisce l'id utente a partire dallo username dell'active directory
+	 * 
+	 * @param string $ad_username username AD dell'utente
+	 * @return mixed l'id utente se lo trova, altrimenti false
+	 */
+	function getIdFromADUsername( $ad_username )
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_utente FROM utente WHERE ad_username = '.$db->quote($ad_username);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		
+		if( $rows == 0) return false;
+		elseif( $rows == 1) 
+		{
+			$row = $res->fetchRow(); 
+			return $row[0]; 
+		}
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
+	
+		return false;
+		
+	}
 	
 	/**
 	 * Restituisce true se il gruppo dell'utente apparteniene ai gruppi specificati in $groups 

@@ -164,6 +164,10 @@
 			<response type="template" name="default">change_password.tpl</response>
 			<response type="template" name="success">change_password_success.tpl</response>
 		</ChangePassword>
+		<RecuperaUsernameStudente class="RecuperaUsernameStudente">
+			<response type="template" name="default">recupera_username_studente.tpl</response>
+			<response type="template" name="success">recupera_username_studente_success.tpl</response>
+		</RecuperaUsernameStudente>
 		
 		<NewsAdd class="NewsAdd">
 			<response type="template" name="default">news_add.tpl</response>

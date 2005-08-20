@@ -14,6 +14,7 @@
 				<input class="submit" name="f1_submit" type="submit" value="Login" tabindex="3" onclick="document.form1_a.f1_resolution.value = screen.width;" /><br />
 			</form>
 			<a href="index.php?do=RegStudente">Registrazione studenti</a><br />
+			<a href="index.php?do=RecuperaUsernameStudente">Username smarrito</a><br />
 			<a href="index.php?do=NewPasswordStudente">Password smarrita</a><br />
 		{else}
 		<h3>Logout</h3>

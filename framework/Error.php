@@ -19,6 +19,7 @@ $_Error_repository = array();
  * @package framework
  * @version 1.0.0
  * @author  Ilias Bartolini
+ * @author  Fabrizio Pinto
  * @license {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
@@ -44,7 +45,7 @@ class Error
 	 *             example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
 	 *             error handlers functions must be able to handle $param type.
 	 */
-	function Error($error_category, $param)
+	function Error($error_category, $param = array())
 	{
 		$this->error_category = $error_category;
 		$this->param = $param;
@@ -58,6 +59,35 @@ class Error
 	function getParam()
 	{
 		return $this->param;
+	}
+	
+	/**
+	 * Set error parameters
+	 *
+	 * @param mixed $param error parameters
+	 */
+	function setParam($param)
+	{
+		$this->param = $param;
+	}
+	
+	/**
+	 * Append error parameters if actual var param is an array
+	 *
+	 * @param array $param error parameters
+	 */
+	function appendParam($param)
+	{
+		if(is_array($this->param))
+			if(is_array($param))
+				foreach ($param as $key => $value)
+				{
+					if (!array_key_exists($key, $this->param))
+						$this->param[$key] = $value; 
+				}
+			else 			
+				if (!array_key_exists($key, $this->param))
+						$this->param[$key] = $value;
 	}
 
 	/**

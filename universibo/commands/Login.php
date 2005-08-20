@@ -57,7 +57,7 @@ class Login extends UniversiboCommand {
 				$this->setSessionIdUtente($userLogin->getIdUser());
 				$fc->setStyle($userLogin->getDefaultStyle());
 				
-				$forum = new ForumApi;
+				$forum = new ForumApi();
 				$forum->login($userLogin);
 				
 				//var_dump($referer);
