@@ -70,10 +70,14 @@ class InfoDidattica
 	 */
 	var $homepage_alternativa_link = ''; 
 	
+	/**
+	 * @private
+	 */
+	var $orario_ics_link = '';
 	
 	function InfoDidattica($id_canale, $programma, $programma_link, $testi_consigliati, 
 						$testi_consigliati_link, $modalita, $modalita_link, $obiettivi_esame,
-						$obiettivi_esame_link, $appelli, $appelli_link, $homepage_alternativa_link)
+						$obiettivi_esame_link, $appelli, $appelli_link, $homepage_alternativa_link, $orario_ics_link)
 	{
 		$this->id_canale = $id_canale;
 		$this->programma = $programma;
@@ -87,6 +91,7 @@ class InfoDidattica
 		$this->appelli = $appelli;
 		$this->appelli_link = $appelli_link;
 		$this->homepage_alternativa_link = $homepage_alternativa_link; 
+		$this->orario_ics_link = $orario_ics_link;
 	} 
 	
 	/**
@@ -337,6 +342,27 @@ class InfoDidattica
 		return $this->homepage_alternativa_link;
 	}
 	
+	/**
+	 * Imposta
+	 *
+	 * @param string
+	 */
+	function setOrarioIcsLink($orario_ics_link)
+	{
+		$this->orario_ics_link  = $orario_ics_link ;
+	}
+	
+	
+	/**
+	 * Restituisce
+	 *
+	 * @return string
+	 */
+	function getOrarioIcsLink()
+	{
+		return $this->orario_ics_link;
+	}
+	
 	
 	/**
 	 * Inserisce una nuovo InfoDidattica sul DB
@@ -349,7 +375,7 @@ class InfoDidattica
 		
 		$query = 'INSERT INTO info_didattica (id_canale, programma, programma_link, testi_consigliati, 
 						testi_consigliati_link, modalita, modalita_link, obiettivi_esame,
-						obiettivi_esame_link, appelli, appelli_link, homepage_alternativa_link) VALUES '.
+						obiettivi_esame_link, appelli, appelli_link, homepage_alternativa_link, orario_ics_link) VALUES '.
 					'( '.$db->quote($this->getIdCanale()).' , '.
 					$db->quote($this->getProgramma()).' , '.
 					$db->quote($this->getProgrammaLink()).' , '.
@@ -361,7 +387,8 @@ class InfoDidattica
 					$db->quote($this->getObiettiviEsameLink()).' , '.
 					$db->quote($this->getAppelli()).' , '.
 					$db->quote($this->getAppelliLink()).' , '.
-					$db->quote($this->getHomepageAlternativaLink()).' )'; 
+					$db->quote($this->getHomepageAlternativaLink()).' , '.
+					$db->quote($this->getOrarioIcsLink()).' )'; 
 					
 		$res = $db->query($query);
 		//var_dump($query);
@@ -395,7 +422,8 @@ class InfoDidattica
 					.', obiettivi_esame_link = '.$db->quote($this->getObiettiviEsameLink())
 					.', appelli = '.$db->quote($this->getAppelli())
 					.', appelli_link = '.$db->quote($this->getAppelliLink())
-					.', homepage_alternativa_link= '.$db->quote($this->getHomepageAlternativaLink()).
+					.', homepage_alternativa_link= '.$db->quote($this->getHomepageAlternativaLink())
+					.', orario_ics_link= '.$db->quote($this->getOrarioIcsLink()).
 					' WHERE id_canale = '.$db->quote($this->getIdCanale()); 
 					
 		$res = $db->query($query);
@@ -468,7 +496,7 @@ class InfoDidattica
 		
 		$query = 'SELECT id_canale, programma, programma_link, testi_consigliati, testi_consigliati_link,
 						modalita, modalita_link, obiettivi_esame, obiettivi_esame_link, appelli, appelli_link,
-						homepage_alternativa_link
+						homepage_alternativa_link,orario_ics_link
 						FROM info_didattica WHERE 
 						id_canale = '.$db->quote($id_canale); 
 					
@@ -481,7 +509,7 @@ class InfoDidattica
 		}
 		
 		if ($res->fetchInto($row))
-			return new InfoDidattica($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11] );
+			return new InfoDidattica($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12] );
 		else
 			return false;
 		
