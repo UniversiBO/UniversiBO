@@ -502,6 +502,8 @@ class InfoDidattica
 					
 		$res = $db->query($query);
 		//var_dump($query);
+		//var_dump($res);
+		
 		if (DB::isError($res))
 		{
 			$db->rollback();

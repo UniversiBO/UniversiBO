@@ -137,15 +137,12 @@ INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'h
 INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.cib.unibo.it/','Biblioteca','Sito del centro interbibliotecario dell\'Ateneo di Bologna');
 INSERT INTO link (id_canale, id_utente, uri, label, description) VALUES(1,307,'http://www.unibo.it','Portale d\'Ateneo','Sito internet principale dell\'Ateneo di Bologna');
 
+--evaimitico: ilias cosa volevi fare qui sotto?
 
---27-05-2005 brain
-UPDATE canale 
+--  --27-05-2005 brain
+--  UPDATE canale 
 
---LastHope 27-08-2005
-
-ALTER TABLE "info_didattica" ADD "orario_ics_link" character varying(256);
-UPDATE "info_didattica" SET orario_ics_link = ' ';
-ALTER TABLE "info_didattica" ALTER COLUMN "orario_ics_link" SET NOT NULL;
+--evaimitico end
 
 -- LASCIATE QUESTI COMMENTO IN FONDO - 04/03/2005 - brain
 

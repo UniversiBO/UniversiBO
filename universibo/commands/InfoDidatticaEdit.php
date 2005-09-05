@@ -202,7 +202,7 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$template->assign('f18_materialeInfo', $f18_materialeInfo );
 		
 		$template->assign('infoDid_langModalitaInfo', 'Modalit? d\'esame' );
-		$template->assign('infoDid_langModalitaLink', 'Link a pagina esterna alternativa con modalit? d\'esame');
+		$template->assign('infoDid_langModalitaLink', 'Link a pagina esterna alternativa con modalità d\'esame');
 		$template->assign('f18_modalitaLink', $f18_modalitaLink );
 		$template->assign('f18_modalitaInfo', $f18_modalitaInfo );
 		
@@ -210,8 +210,9 @@ class InfoDidatticaEdit extends UniversiboCommand
 		$template->assign('infoDid_langAppelliLink', 'Link a pagina esterna alternativa con appelli d\'esame');
 		$template->assign('f18_appelliLink', $f18_appelliLink );
 		$template->assign('f18_appelliInfo', $f18_appelliInfo );
-		$template->assign('infoDid_langAppelliUniwex', 'Ci scusiamo con gli utenti ma al momento non ? pi? possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
+		$template->assign('infoDid_langAppelliUniwex', 'Ci scusiamo con gli utenti ma al momento non è più possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
 		$template->assign('f18_orarioIcsLink', $f18_orarioIcsLink );
+		$template->assign('infoDid_langOrarioLink', 'Link alla versione iCalendar dell\'orario dell\'insegnamento' );
 		
 		//$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
 		//$this->executePlugin('ShowFileTitoli', array());
