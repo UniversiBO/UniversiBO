@@ -114,6 +114,10 @@
 			<pluginCommand name="ShowMyNews" class="News.ShowMyNews" />
 			<pluginCommand name="ShowMyFileTitoli" class="Files.ShowMyFileTitoli" />
 		</ShowMyUniversiBO>
+		<ShowAllFilesStudenti class="ShowAllFilesStudenti">
+			<response type="template" name="default">all_files.tpl</response>
+			<pluginCommand name="ShowAllFilesStudentiTitoli" class="Files.ShowAllFilesStudentiTitoli" />
+		</ShowAllFilesStudenti>
 		<MyUniversiBOAdd class="MyUniversiBOAdd">
 			<response type="template" name="default">my_universibo_add.tpl</response>
 			<response type="template" name="success">my_universibo_add_success.tpl</response>

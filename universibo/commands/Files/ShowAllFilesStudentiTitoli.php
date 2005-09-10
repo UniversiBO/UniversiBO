@@ -4,7 +4,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
 
 /**
- * ShowMyFileTitoli ? un'implementazione di PluginCommand.
+ * ShowAllFilesStudentiTitoli e` un'implementazione di PluginCommand.
  *
  * Mostra i file del canale
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -18,7 +18,7 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowMyFileTitoli extends PluginCommand {
+class ShowAllFilesStudentiTitoli extends PluginCommand {
 	
 	
 	/**
@@ -45,13 +45,13 @@ class ShowMyFileTitoli extends PluginCommand {
 		
 		if ( $canale_files == 0 )
 		{
-			$template->assign('showMyFileTitoli_langFileAvailable', 'Non ci sono files da visualizzare');
-			$template->assign('showMyFileTitoli_langFileAvailableFlag', 'false');
+			$template->assign('showAllFilesStudentiTitoli_langFileAvailable', 'Non ci sono files da visualizzare');
+			$template->assign('showAllFilesStudentiTitoli_langFileAvailableFlag', 'false');
 		}
 		else
 		{
-			$template->assign('showMyFileTitoli_langFileAvailable', 'Ci sono '.$canale_files.' notizie');
-			$template->assign('showMyFileTitoli_langFileAvailableFlag', 'true');
+			$template->assign('showAllFilesStudentiTitoli_langFileAvailable', 'Ci sono '.$canale_files.' notizie');
+			$template->assign('showAllFilesStudentiTitoli_langFileAvailableFlag', 'true');
 		}
 
 //		usort($elenco_file, array('ShowMyFileTitoli','_compareFile'));
@@ -99,8 +99,10 @@ class ShowMyFileTitoli extends PluginCommand {
 						if ($canale->isGroupAllowed($user->getGroups()))
 						{
 							$canale_tpl = array();
-							$canale_tpl['titolo'] = $canale->getNome();
-							$canale_tpl['link'] = $canale->showMe();
+//							$canale_tpl['titolo'] = $canale->getNome();
+//							$canale_tpl['link'] = $canale->showMe();
+							$file_tpl[$i]['canaleTitolo'] = $canale->getNome();
+							$file_tpl[$i]['canaleLink'] = $canale->showMe();
 							$file_tpl[$i]['download_uri'] = 'index.php?do=FileDownload&id_file='.$file->getIdFile().'&id_canale='.$canali[$j];
 							$file_tpl[$i]['show_info_uri'] = 'index.php?do=FileShowInfo&id_file='.$file->getIdFile().'&id_canale='.$canali[$j];
 							$file_tpl[$i]['canali'][] = $canale_tpl;
@@ -118,43 +120,8 @@ class ShowMyFileTitoli extends PluginCommand {
 				}
 			}
 		}
-		$template->assign('showMyFileTitoli_fileList', $file_tpl);
+		$template->assign('showAllFilesStudentiTitoli_fileList', $file_tpl);
 		
-		
-	}
-	
-	
-	/**
-	 * Preleva da database i file del canale $id_canale
-	 *
-	 * @static 
-	 * @param int $id_canale identificativo su database del canale
-	 * @return array elenco FileItem , array vuoto se non ci sono file
-	 */
-	function &getFileCanale($id_canale)
-	{
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT A.id_file  FROM file A, file_canale B 
-					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					' AND B.id_canale = '.$db->quote($id_canale).' AND A.data_inserimento < '.$db->quote(time()). 
-					'ORDER BY A.id_categoria, A.data_inserimento DESC';
-		$res =& $db->query($query);
-		
-		if (DB::isError($res)) 
-			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$id_file_list = array();
-	
-		while ( $res->fetchInto($row) )
-		{
-			$id_file_list[]= $row[0];
-		}
-		
-		$res->free();
-		
-		return $id_file_list;
 		
 	}
 	
@@ -167,10 +134,10 @@ class ShowMyFileTitoli extends PluginCommand {
 	 */
 	function _compareFile($a, $b)
 	{
-		if ($a->getIdCategoria() > $b->getIdCategoria()) return +1;
-		if ($a->getIdCategoria() < $b->getIdCategoria()) return -1;
-		if ($a->getDataInserimento() < $b->getDataInserimento()) return +1;
-		if ($a->getDataInserimento() > $b->getDataInserimento()) return -1;
+//		if ($a->getIdCategoria() > $b->getIdCategoria()) return +1;
+//		if ($a->getIdCategoria() < $b->getIdCategoria()) return -1;
+//		if ($a->getDataInserimento() < $b->getDataInserimento()) return +1;
+//		if ($a->getDataInserimento() > $b->getDataInserimento()) return -1;
 	}
 	
 	
