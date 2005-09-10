@@ -56,7 +56,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 		}
 		else
 		{
-			$quale_query = 'data_inserimento';
+			$quale_query = 'data_inserimento DESC';
 		}
 		
 		
