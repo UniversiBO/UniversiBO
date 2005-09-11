@@ -1,6 +1,6 @@
 {include file=box_begin.tpl}
 {if $common_userLoggedIn=='false'}
-<form action="index.php?do=Login" name="form1_a" id="f1" method="post">
+<form action="index.php?do=Login" name="form1_a" id="form1_a" method="post">
 <table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 <tr> 
 <td><img src="tpl/black/login_18.gif" width="69" height="22" alt="Login" /></td>
@@ -32,15 +32,15 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordSt
 </td></tr>
 </table></form>
 {else}
+<form action="index.php?do=Logout" name="form2" id="form2" method="post">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<form action="index.php?do=Logout" name="form2" id="f2" method="post">
 <tr><td class="Normal" valign="center" align="center">&nbsp;<br />
 {$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{$common_userUsername|escape:"htmlall"}</font><br />
 {$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}</font><br />
 &nbsp;<br />
 <input name="f2_submit" type="submit" value="LogOut" /><br />&nbsp;
 </td></tr>
-</form>
 </table>
+</form>
 {/if}
 {include file=box_end.tpl}
