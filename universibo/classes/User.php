@@ -401,7 +401,7 @@ class User {
 	 *
 	 * @return array 
 	 */
-	function getRuoli()
+	function &getRuoli()
 	{
 		if ($this->bookmark == NULL)
 		{
@@ -876,7 +876,10 @@ class User {
 	
 		$rows = $res->numRows();
 		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database utenti: username non unico','file'=>__FILE__,'line'=>__LINE__));
-		if( $rows == 0) return false;
+		if( $rows == 0) {
+			$false=false; 
+			return $false;
+		}
 
 		$row = $res->fetchRow();
 		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);

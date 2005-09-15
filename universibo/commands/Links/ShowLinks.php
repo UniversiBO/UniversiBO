@@ -38,7 +38,7 @@ class ShowLinks extends PluginCommand {
 		$canale    =& $bc->getRequestCanale();
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
-		$user_ruoli =& $user->getRuoli();
+		$user_ruoli = $user->getRuoli();
 	
 		$id_canale = $canale->getIdCanale();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();

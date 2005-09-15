@@ -607,7 +607,7 @@ class Canale {
 		
 		require_once($class_name.PHP_EXTENSION);
 		
-		$cache_canali[$id_canale] =& call_user_func(array($class_name,'factoryCanale'), $id_canale);
+		$cache_canali[$id_canale] = call_user_func(array($class_name,'factoryCanale'), $id_canale);
 
 		return $cache_canali[$id_canale];
 	}
@@ -624,7 +624,8 @@ class Canale {
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Canale::selectCanale($id_canale);
+		$canale=Canale::selectCanale($id_canale);
+		return $canale;
 	}
 	
 	

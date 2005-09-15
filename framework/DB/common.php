@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: common.php,v 1.1 2003-07-21 10:41:50 brain_79 Exp $
+// $Id: common.php,v 1.1.2.1 2005-09-15 15:37:39 brain_79 Exp $
 //
 // Base class for DB implementations.
 //
@@ -765,7 +765,8 @@ class DB_common extends PEAR
             if (DB::isError($result) || $result === DB_OK) {
                 return $result;
             } else {
-                return new DB_result($this, $result);
+            	$dbresult=new DB_result($this, $result);
+                return $dbresult;
             }
         }
     }

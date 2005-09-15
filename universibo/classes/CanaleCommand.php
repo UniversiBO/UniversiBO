@@ -159,7 +159,7 @@ class CanaleCommand extends UniversiboCommand
 	{
 		$id_canale = $this->getRequestIdCanale();
 		$user =& $this->getSessionUser();
-		$user_ruoli =& $user->getRuoli();
+		$user_ruoli = $user->getRuoli();
 		
 		if (array_key_exists($id_canale, $user_ruoli))
 		{

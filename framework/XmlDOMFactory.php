@@ -12,7 +12,7 @@ class XmlDOMFactory
 	function getXmlDOM()
 	{
 		//riconoscimento versione php
-		$esito =& version_compare(PHP_VERSION,'5.0.0');
+		$esito = version_compare(PHP_VERSION,'5.0.0');
 		if ( $esito < 0)
 		{
 			//php4

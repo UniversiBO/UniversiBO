@@ -44,7 +44,7 @@ class ShowNewsLatest extends PluginCommand {
 		$id_canale = $canale->getIdCanale();
 		$titolo_canale =  $canale->getTitolo();
 		$ultima_modifica_canale =  $canale->getUltimaModifica();
-		$user_ruoli =& $user->getRuoli();
+		$user_ruoli = $user->getRuoli();
 
 		$personalizza_not_admin = false;
 
@@ -188,7 +188,8 @@ class ShowNewsLatest extends PluginCommand {
 		
 		$res->free();
 		
-		return NewsItem::selectNewsItems($id_news_list);
+		$newsitem=NewsItem::selectNewsItems($id_news_list);
+		return $newsitem;
 		
 	}
 	

@@ -59,7 +59,7 @@ class MyXmlDoc
 			Error :: throwError(_ERROR_CRITICAL, array ('id_utente' => '', 'msg' => 'Errore nella lettura del file di configurazione', 'file' => __FILE__, 'line' => __LINE__));
 		
 //		$this->documentElement = new MyDomElement($this->dom->document_element());
-		$this->documentElement =& NodeDispatcher::getMyNode($this->dom->document_element());
+		$this->documentElement = NodeDispatcher::getMyNode($this->dom->document_element());
 	}
 
 	/*
@@ -128,12 +128,12 @@ class MyDomNode
 	
 	function _setNodeType()
 	{
-		$this->nodeType =& $this->realElement->node_type();
+		$this->nodeType = $this->realElement->node_type();
 	}
 	
 	function _setNodeName()
 	{
-		$this->nodeName	=& $this->realElement->node_name();
+		$this->nodeName	= $this->realElement->node_name();
 	}
 	
 	function _setChildNodes()
@@ -144,13 +144,13 @@ class MyDomNode
 	
 	function _setNodeValue() 
 	{
-		$this->nodeValue	=& $this->realElement->node_value();
+		$this->nodeValue	= $this->realElement->node_value();
 	}
 	
 	function _setFirstChild()
 	{
 		if ($this->realElement->has_child_nodes())
-			$this->firstChild	=& NodeDispatcher::getMyNode($this->realElement->first_child());	
+			$this->firstChild	= NodeDispatcher::getMyNode($this->realElement->first_child());	
 	}
 	
 	/// fine metodi privati di inizializzazione
@@ -185,7 +185,7 @@ class MyDomElement extends MyDomNode
 		parent::MyDomNode($domElement);
 		
 		// qual'è la funzione in php4 per il tagName?
-		$this->tagName =& $this->realElement->node_name();
+		$this->tagName = $this->realElement->node_name();
 	}
 	
 	/*
@@ -288,7 +288,7 @@ class MyDOMNodeList
 
 		foreach ( $listaAppoggio as $elemento)
 		{
-			$this->arrayDiElementi[] =& NodeDispatcher::getMyNode($elemento);
+			$this->arrayDiElementi[] = NodeDispatcher::getMyNode($elemento);
 		}
 		
 		$this->length = count($this->arrayDiElementi);
@@ -314,7 +314,7 @@ class NodeDispatcher
 			//Error :: throwError(_ERROR_CRITICAL, array ('id_utente' => '', 'msg' => 'Errore nella creazione del nodo', 'file' => __FILE__, 'line' => __LINE__));
 			return null;
 		
-		$tipo_nodo =& $elemento->node_type();
+		$tipo_nodo = $elemento->node_type();
 
 		$dispatch_array = array (	1 => 'MyDomElement',
 									2 => 'MyDomAttribute',
