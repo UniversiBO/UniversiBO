@@ -77,7 +77,15 @@ class FileStudentiComment extends UniversiboCommand {
 			
 			
 			//commento
-			$f26_commento = $_POST['f26_commento'];
+			if(trim($_POST['f26_commento']) == '')
+			{
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Inserisci un commento', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f26_accept = false;
+			}
+			else
+			{
+				$f26_commento = $_POST['f26_commento'];
+			}
 			
 			//voto
 			if (!ereg('^([0-5]{1})$', $_POST['f26_voto'])) {
