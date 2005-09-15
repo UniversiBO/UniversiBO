@@ -69,12 +69,12 @@ class ShowFileStudentiTitoli extends PluginCommand {
 					$ultimo_accesso = $ruolo->getUltimoAccesso();
 				}
 				
-				if ( !$user->isOspite() )
-				{
-					$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
-					$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
-					$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
-				}
+//				if ( !$user->isOspite() )
+//				{
+//					$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
+//					$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
+//					$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
+//				}
 			}
 			else
 			{
@@ -83,6 +83,15 @@ class ShowFileStudentiTitoli extends PluginCommand {
 				$moderatore     = false;
 				$ultimo_accesso = $user->getUltimoLogin();
 			}
+			
+			//Solo se quello che naviga non e` loggato, non compare il link
+			
+			if ( !$user->isOspite() )
+				{
+					$template->assign('showFileStudentiTitoli_addFileFlag', 'true');
+					$template->assign('showFileStudentiTitoli_addFile', 'Inserisci il tuo contributo');
+					$template->assign('showFileStudentiTitoli_addFileUri', 'index.php?do=FileStudentiAdd&id_canale='.$id_canale);
+				}
 /*		
 		$canale_news = $this->getNumNewsCanale($id_canale);
 
