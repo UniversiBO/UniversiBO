@@ -107,7 +107,9 @@
 <tr>
 	<td colspan="2">
 		<div id="footer"> {* FONDO PAGINA *}
-			<p>{$common_disclaimer|escape:"htmlall"|bbcode2html}</p>
+		{foreach from=$common_disclaimer item=temp_disclaimer} 
+			<p>{$temp_disclaimer|escape:"htmlall"|bbcode2html|nl2br}</p>
+		{/foreach}
 		</div>
 	</td>
 </tr>

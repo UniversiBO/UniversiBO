@@ -470,8 +470,10 @@ class UniversiboCommand extends BaseCommand {
 		//$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
 		
 		
-		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
-												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
+		$template->assign('common_disclaimer', array('Le informazioni contenute nel sito non hanno carattere di ufficialità.', 
+'L\'Alma Mater Studiorum non può essere considerata responsabile di alcun contenuto di questo sito.',
+'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
+				'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.'));
 		
 		$template->assign( 'common_isSetVisite', 'N' );
 		
