@@ -4,7 +4,7 @@
 <p>&nbsp;Inserito il:&nbsp;{$showFileInfo_dataInserimento|escape:"htmlall"}</p>
 <p>&nbsp;Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</p>
 <p>&nbsp;Descrizione/abstract:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
-<p>&nbsp;Parole chiave:&nbsp;{foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}<p>
+<p>&nbsp;Parole chiave:&nbsp;{foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}</p>
 <p>&nbsp;Categoria:&nbsp;{$showFileInfo_categoria|escape:"htmlall"}</p>
 <p>&nbsp;Dimensione:&nbsp;{$showFileInfo_dimensione|escape:"htmlall"} kB</p>
 <p>&nbsp;Scaricato:&nbsp;{$showFileInfo_download|escape:"htmlall"} volte</p>
