@@ -287,7 +287,7 @@ class ShowContribute extends UniversiboCommand
 				'altre_informazioni: '.$f3_altro."\n\n";
 			
 //			var_dump($mail);die();
-			//if(!$mail->Send()) Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
+			if(!$mail->Send()) Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
 			return 'questionario_success';
