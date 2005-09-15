@@ -62,7 +62,7 @@ class Login extends UniversiboCommand {
 				
 				//var_dump($referer);
 				
-				if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login')))
+				if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login') || strstr($referer, 'do=RegStudente')))
 					FrontController::redirectCommand('ShowMyUniversiBO');
 				else if (strstr($referer, 'forum'))
 					FrontController::goTo($forum->getMainUri());
