@@ -12,6 +12,7 @@
 </td>
 </tr>
 {/foreach}
+{if $smarty.foreach.linkpagina.total == 0}<tr><td>Nessun link presente</td></tr>{/if}
 {if $showLinks_linksPersonalizza == 'true'}
 	<tr><td colspan="3" align="center">&nbsp;<br />
 <a href="{$showLinks_linksAdminUri}">{$showLinks_linksAdminLabel|escape:"htmlall"}</a></td></tr>
