@@ -34,7 +34,7 @@ document.write("<a href=\"javascript:universiboPopup('index.php?do=NewPasswordSt
 {else}
 <form action="index.php?do=Logout" name="form2" id="form2" method="post">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<tr><td class="Normal" valign="center" align="center">&nbsp;<br />
+<tr><td class="Normal" valign="middle" align="center">&nbsp;<br />
 {$common_langWelcomeMsg|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{$common_userUsername|escape:"htmlall"}</font><br />
 {$common_langUserLivello|escape:"htmlall"|bbcode2html|nl2br} <font class="NormalC">{foreach from=$common_userLivello item=temp_nomeLivello}{$temp_nomeLivello|escape:"htmlall"} {/foreach}</font><br />
 &nbsp;<br />
