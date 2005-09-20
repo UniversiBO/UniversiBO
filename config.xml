@@ -294,6 +294,10 @@
 		    <pluginCommand name="ShowLinksExtended" class="Links.ShowLinksExtended" />
 		</LinksAdmin>
 		
+		<ShowContattoDocente class="ShowContattoDocente">
+			<response type="template" name="default">show_contatto_docente.tpl</response>
+		</ShowContattoDocente>
+		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>

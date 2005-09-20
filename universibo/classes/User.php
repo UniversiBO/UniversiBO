@@ -1094,7 +1094,7 @@ class User {
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows == 0) 
-			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
+			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user: '.$id_user,'file'=>__FILE__,'line'=>__LINE__));
 		$res->fetchInto($row);
 		$res->free();
 		return $row[0];

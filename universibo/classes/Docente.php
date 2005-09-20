@@ -34,12 +34,18 @@ class Docente extends User {
 	 * @access private
 	 */
 	var $userCache = null;
-
-	function Docente($id_utente, $cod_doc, $nome_doc )
+	
+	/**
+	 * @access private
+	 */
+	var $rubricaCache = null;
+	
+	function Docente($id_utente, $cod_doc, $nome_doc, $rubrica = null )
 	{
 		$this->id_utente	= $id_utente;
 		$this->codDoc		= $cod_doc;
 		$this->nomeDoc		= $nome_doc;
+		$this->rubricaCache = $rubrica;
 	}
 	
 	function getIdUtente()
@@ -83,7 +89,60 @@ class Docente extends User {
 		}
 		return $this->userCache;
 	}
- 
+ 	
+ 	/**
+	 * Ritorna le info del docente prese dalla rubrica
+	 * 
+	 * @return array 
+	 */
+	function &getInfoRubrica()
+	{
+		if ($this->rubricaCache == NULL)
+		{
+			$this->rubricaCache = $this->_getDocenteInfo(); 
+		}
+		return $this->rubricaCache;
+	}
+	
+	/**
+	 * @access private
+	 */
+	function _getDocenteInfo()
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT nome, cognome, prefissonome, sesso, email, descrizionestruttura FROM rub_docente WHERE cod_doc = '.$db->quote($this->getCodDoc());
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows == 0) return false;
+
+		$row = $res->fetchRow();
+		
+//		// in PHP5
+//		$rubrica = array_combine(array(nome, cognome, prefissonome, sesso, email, descrizionestruttura),$row);
+		$rubrica = $this->_unisciArray(array('nome', 'cognome', 'prefissonome', 'sesso', 'email', 'descrizionestruttura'),$row);
+		
+		$res->free();
+		
+		return $rubrica;
+	
+	}
+	
+	function _unisciArray($key, $values)
+	{
+		$tot = count($key);
+		$newArray = array();
+		for ($i=0; $i < $tot; $i++)
+		{
+			$indice 			= $key[$i];
+			$newArray[$indice] 	= $values[$i];
+		}
+//		var_dump($key);
+		return $newArray; 
+	}
 	
 	/**
 	 * Ritorna un collaboratori dato l'id_utente del database
