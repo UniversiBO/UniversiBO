@@ -82,17 +82,19 @@ class ShowContattoDocente extends UniversiboCommand {
 //		var_dump($info_ruoli);
 		
 		// TODO mi sa che questa lista è incompleta: cercare user con groups = 4 o = 64
-		$lista_collabs =& Collaboratore::selectCollaboratoriAll();
+//		$lista_collabs =& Collaboratore::selectCollaboratoriAll();
+		$lista_collabs =& $this->_getCollaboratoriUniversibo();
 		$table_collab = array();
 //		var_dump($lista_collabs); die;
 
 		foreach($lista_collabs as $collab)
 		{
-			$id = $collab->getIdUtente();
-			$username 			= User::getUsernameFromId($id);
+			$id = $collab->getIdUser();
+//			$username 			= User::getUsernameFromId($id);
+			$username 			= $collab->getUsername();
 			$table_collab[$id] 	= $username;
 		}
-		
+//		var_dump($table_collab); die;
 		
 		// valori default form
 		$f35_collab_list	=	$table_collab;
@@ -190,6 +192,25 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		
 		return 'default';
 	}	
+	
+	function _getCollaboratoriUniversibo()
+	{
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style, id_utente  FROM utente WHERE groups IN (4,64)';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows == 0) return false;
+		
+		$lista = array();
+		while ($row = $res->fetchRow())
+			$lista[] = new User($row[9], $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
+		
+		return $lista;
+	}
 	
 }
 ?>
