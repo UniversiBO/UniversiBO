@@ -134,8 +134,8 @@ class ShowMyUniversiBO extends UniversiboCommand
 		}
 		
 		$res->free();
-		
-		return FileItem::selectFileItems($id_news_list);
+		$files = FileItem::selectFileItems($id_news_list);
+		return $files;
 		
 	}
 	

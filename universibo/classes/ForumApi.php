@@ -516,7 +516,7 @@ class ForumApi
 				
 		$rows = $res->numRows();
 
-		if( $rows == 0) return false;
+		if( $rows == 0 ){ $false = false; return $false; }
 		
 		$id_post_list = array();
 	
