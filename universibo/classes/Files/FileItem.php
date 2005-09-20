@@ -425,7 +425,7 @@ class FileItem {
 	 */
 	function getParoleChiave() {
 		if ($this->paroleChiave == NULL)
-			$this->paroleChiave =& FileKeyWords::selectFileKeyWords($this->getIdFile());
+			$this->paroleChiave = FileKeyWords::selectFileKeyWords($this->getIdFile());
 		
 		return $this->paroleChiave;
 	}

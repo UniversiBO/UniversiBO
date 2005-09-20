@@ -737,7 +737,11 @@ class PrgAttivitaDidattica extends Canale
 		
 		$rows = $res->numRows();
 		
-		if( $rows == 0) return array();
+		if( $rows == 0)
+		{
+			$array = array();
+			return $array;
+		}
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{

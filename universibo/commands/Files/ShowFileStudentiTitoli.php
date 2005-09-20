@@ -39,7 +39,7 @@ class ShowFileStudentiTitoli extends PluginCommand {
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
 
-		$files_studenti_attivo =& $canale->getServizioFilesStudenti();
+		$files_studenti_attivo = $canale->getServizioFilesStudenti();
         
         if ( !$files_studenti_attivo )
         {

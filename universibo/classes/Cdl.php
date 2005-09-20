@@ -241,7 +241,8 @@ class Cdl extends Canale{
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Cdl::selectCdlCanale($id_canale);
+		$return = Cdl::selectCdlCanale($id_canale);
+		return $return;
 	}
 	
 

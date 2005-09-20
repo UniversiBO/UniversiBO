@@ -68,7 +68,7 @@ class ShowTopic extends PluginCommand {
 			}
 			$res->free();
 			
-			$lang_argomenti =& $this->executePlugin('ShowHelpId', $argomenti);
+			$lang_argomenti = $this->executePlugin('ShowHelpId', $argomenti);
 	
 			$topic = array('titolo'=>$topic_title ,'reference'=>$reference, 'argomenti'=>$lang_argomenti);
 		}

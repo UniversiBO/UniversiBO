@@ -172,7 +172,8 @@ class FileItemStudenti extends FileItem {
 	
 		$res->fetchInto($row);
 
-		return array($row[0]);
+		$return = array($row[0]);
+		return $return;
 
 	}
 	

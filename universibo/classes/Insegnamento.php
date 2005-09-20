@@ -173,7 +173,8 @@ class Insegnamento extends Canale
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Insegnamento::selectInsegnamentoCanale($id_canale);
+		$return = Insegnamento::selectInsegnamentoCanale($id_canale);
+		return $return;
 	}
 	
 	

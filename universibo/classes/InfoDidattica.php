@@ -469,7 +469,8 @@ class InfoDidattica
 	 */
 	function &retrieveInfoDidattica($id_canale)
 	{
-		return InfoDidattica::factoryInfoDidattica($id_canale);
+		$return = InfoDidattica::factoryInfoDidattica($id_canale); 
+		return $return;
 	}
 	
 	
@@ -480,7 +481,8 @@ class InfoDidattica
 	 */
 	function &factoryInfoDidattica($id_canale)
 	{
-		return InfoDidattica::selectInfoDidattica($id_canale);
+		$return = InfoDidattica::selectInfoDidattica($id_canale); 
+		return $return;
 	}
 	
 	
@@ -511,7 +513,10 @@ class InfoDidattica
 		}
 		
 		if ($res->fetchInto($row))
-			return new InfoDidattica($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12] );
+		{
+			$info_didattica = new InfoDidattica($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12] ); 
+			return $info_didattica;
+		}
 		else
 			return false;
 		
