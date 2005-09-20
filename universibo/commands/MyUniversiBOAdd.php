@@ -4,9 +4,9 @@ require_once  ('UniversiboCommand'.PHP_EXTENSION);
 require_once  ('CanaleCommand'.PHP_EXTENSION);
 
 /**
- * ShowMyPage is an extension of UniversiboCommand class.
+ * ShowMyUniversiBO is an extension of UniversiboCommand class.
  *
- * Mostra la MyPage dell'utente loggato, con le ultime 5 notizie e 
+ * Mostra la MyUniversiBO dell'utente loggato, con le ultime 5 notizie e 
  * gli ultimi 5 files presenti nei canali da lui aggiunti...
  *
  * @package universibo

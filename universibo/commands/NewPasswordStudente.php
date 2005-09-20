@@ -156,7 +156,7 @@ class NewPasswordStudente extends UniversiboCommand
 				"Le informazioni per permetterti l'accesso ai servizi offerti dal portale sono:\n".
 				"Username: ".$user->getUsername()."\n".
 				"Password: ".$randomPassword."\n\n".
-				"Questa password e' stata generata in modo casuale, sul sito  e' disponibile attraverso la MyPage la funzionalita' per poterla cambiare a tuo piacimento\n\n".
+				"Questa password e' stata generata in modo casuale, sul sito  e' disponibile attraverso la pagina di Impostazioni Personali la funzionalita' per poterla cambiare a tuo piacimento\n\n".
 				"Qualora avessi ricevuto questa e-mail per errore, segnalalo rispondendo a questo messaggio";
 			
 			

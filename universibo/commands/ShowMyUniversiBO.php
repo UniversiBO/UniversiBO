@@ -6,9 +6,9 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
- * ShowMyPage is an extension of UniversiboCommand class.
+ * ShowMyUniversiBO is an extension of UniversiboCommand class.
  *
- * Mostra la MyPage dell'utente loggato, con le ultime 5 notizie e 
+ * Mostra la MyUniversiBO dell'utente loggato, con le ultime 5 notizie e 
  * gli ultimi 5 files presenti nei canali da lui aggiunti...
  *
  * @package universibo
@@ -31,7 +31,9 @@ class ShowMyUniversiBO extends UniversiboCommand
 		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si ? iscritto...
 		
 		if($utente->isOspite())
-			Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $utente->getIdUser(), 'msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $utente->getIdUser(), 'msg' => 'Non esiste una pagina MyUniversiBO per utenti ospite.
+																									 Se sei uno studente registrati cliccando su Registrazione Studenti nel menu di destra.
+																									 La sessione potrebbe essere scaduta verifica di aver abilitato i cookie.', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$arrayIdCanaliNews = array();
 		$arrayIdCanaliFiles = array();
