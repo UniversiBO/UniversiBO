@@ -57,8 +57,8 @@ class RegUser extends UniversiboCommand
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Inserire la e-mail','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
-			elseif(!eregi('^([[:alnum:]])+\.[[[:alnum:]]+$',$_POST['f34_email'])){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo inserita '.$_POST['f34_email'].' non ? sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+			elseif(!eregi('^([[:alnum:]_\-])+(\.([[:alnum:]_\-])+)*@([[:alnum:]_\-])+(\.([[:alnum:]_\-])+)*$',$_POST['f34_email'])){
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo inserita '.$_POST['f34_email'].' non è sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
 			else
