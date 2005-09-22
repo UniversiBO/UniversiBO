@@ -65,8 +65,8 @@ define('CRITIC'		,3);
 	 * resituisce il contattoDocente corrispondente al Docente
 	 * 
 	 *	@static
-	 *  @param Docente docente è ildocente di cui si vuole avere informazioni
-	 *  @return mixed resituisce ContattoDocente se docente è effettivamente un Docente, false altrimenti
+	 *  @param int coddoc è il codice del docente di cui si vuole avere informazioni
+	 *  @return mixed resituisce ContattoDocente se esiste il contatto, false altrimenti
 	 */
 	function &getContattoDocente ($coddoc)
 	{
@@ -87,11 +87,40 @@ define('CRITIC'		,3);
 		return $contattoDocente;
 	}
 	
+	/**
+	 * resituisce il contattoDocente corrispondente al Docente
+	 * 
+	 *	@static
+	 *   @return mixed resituisce array di ContattoDocente se esistono, false altrimenti
+	 */
+	function getAllContattoDocente()
+	{
+		$db =& FrontController::getDbConnection('main');
+
+		$query = 'SELECT cod_doc, stato, id_utente_assegnato, ultima_modifica, report FROM docente_contatti';
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+		if( $rows == 0) return false;
+
+		$elenco = array();
+		while ($row = $res->fetchRow())
+			$elenco[] = new ContattoDocente($row[0], $row[1], $row[2], $row[3], $row[4]);
+		
+		return $elenco;
+	}
+	
 	function getStato()
 	{
 		return $this->stato;
 	}
 	
+	function getStatoDesc()
+	{
+		return $this->legend[$this->stato];
+	}
 	function getReport()
 	{
 		return $this->report;
@@ -104,7 +133,7 @@ define('CRITIC'		,3);
 	
 	function appendReport($rep)
 	{
-		$this->report = $this->report.$rep;
+		$this->report = $rep.$this->report;
 	}
 	
 	function getUltimaModifica()
@@ -128,10 +157,10 @@ define('CRITIC'		,3);
 		if ($id != null)
 		{	
 			$data = getdate();
-			$text ="\n\n----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
+			$text ="----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
 					.' '.$data['hours'].':'.$data['minutes'].'-----------'
 					."\n".User::getUsernameFromId($id).': modifica dello stato assegnato in '
-					."\n".$this->stato.': '.$this->legend[$s];
+					."\n".$this->stato.': '.$this->legend[$s]."\n\n";
 			$this->appendReport($text);
 		}
 	}
@@ -154,9 +183,9 @@ define('CRITIC'		,3);
 	function assegna($newIdUtente, $idUtenteMaster)
 	{
 		$data = getdate();
-		$text = "\n\n----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
+		$text = "----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
 			.' '.$data['hours'].':'.$data['minutes'].'-----------'.
-			"\n".User::getUsernameFromId($idUtenteMaster).': assegnato docente a '.User::getUsernameFromId($newIdUtente);	
+			"\n".User::getUsernameFromId($idUtenteMaster).': assegnato docente a '.User::getUsernameFromId($newIdUtente)."\n\n";	
 		$this->appendReport($text);
 		$this->id_utente_assegnato = $newIdUtente;
 		

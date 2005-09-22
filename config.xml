@@ -297,6 +297,9 @@
 		<ShowContattoDocente class="ShowContattoDocente">
 			<response type="template" name="default">show_contatto_docente.tpl</response>
 		</ShowContattoDocente>
+		<ShowContattiDocenti class="ShowContattiDocenti">
+			<response type="template" name="default">show_contatti_docenti.tpl</response>
+		</ShowContattiDocenti>
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />

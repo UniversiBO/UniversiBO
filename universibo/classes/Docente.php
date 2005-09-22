@@ -148,15 +148,18 @@ class Docente extends User {
 	 * Ritorna un collaboratori dato l'id_utente del database
 	 *
 	 * @static
-	 * @param int $id_utente numero identificativo utente
+	 * @param int $id numero identificativo utente
 	 * @return array Collaboratori
 	 */
-	function &selectDocente($id_utente)
+	function &selectDocente($id, $isCodiceDocente = false)
 	{
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente,	cod_doc, nome_doc FROM docente WHERE id_utente = '.$db->quote($id_utente);
+		$cond = ($isCodiceDocente) ? 'cod_doc = ' : 'id_utente = ';
+		
+		$query = 'SELECT id_utente,	cod_doc, nome_doc FROM docente WHERE '.$cond.$db->quote($id);
+//		var_dump($query); die;
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -169,6 +172,11 @@ class Docente extends User {
 		
 		return $docente;
 	
+	}
+	
+	function &selectDocenteFromCod($codDoc)
+	{
+		return Docente::selectDocente($codDoc, true);
 	}
 	
 	
