@@ -471,8 +471,8 @@ class UniversiboCommand extends BaseCommand {
 		
 		
 		$template->assign('common_disclaimer', array('Le informazioni contenute nel sito non hanno carattere di ufficialità.', 
-'I contenuti sono mantenuti in maniera volontaria dai partecipanti alla comunità di studenti e docenti. L\'Università di Bologna - Alma Mater Studiorum non può essere considerata legalmente responsabile di alcun contenuto di questo sito.',
-'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
+'I contenuti sono mantenuti in maniera volontaria dai partecipanti alla comunità di studenti e docenti di UniversiBO. L\'Università di Bologna - Alma Mater Studiorum non può essere considerata legalmente responsabile di alcun contenuto di questo sito.',
+'Ogni marchio citato in queste pagine appartiene al legittimo proprietario.'.
 'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.'));
 		
 		$template->assign( 'common_isSetVisite', 'N' );
