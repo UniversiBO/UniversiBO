@@ -483,17 +483,7 @@ class ForumApi
 		
 		// controllo post più recenti dell'ultimo accesso
 		
-		/**
-		 * @TODO 
-		 * 
-		 * capire perché limitQuery dia errore
-		 * 
-		 * anche se predisposto per funzionare senza il limit dentro l'sql, limitquery non funzia
-		 * 
-		 * il parametro num non è considerato
-		 * 
-		 */
-		
+				
 		$db =& FrontController::getDbConnection($this->database);
 		
 		$ultimo_login = ($user->getUltimoLogin() == null || $user->getUltimoLogin() == '') ? 0 : $user->getUltimoLogin();
@@ -507,7 +497,6 @@ class ForumApi
 		
 		//var_dump($db);
 		//
-		// volevo usare limitQuery e non il limit sql ma da errore
 		$res =& $db->limitQuery($query, 0 , $num);
 		
 		
