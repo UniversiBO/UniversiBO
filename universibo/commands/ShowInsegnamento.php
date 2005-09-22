@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('InfoDidattica'.PHP_EXTENSION);
+require_once ('ContattoDocente'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
 
 /**
@@ -50,11 +51,32 @@ class ShowInsegnamento extends CanaleCommand
 		
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
+//		echo "qua\n";
+		$array_prg 	= $insegnamento->getElencoAttivitaPadre();
+//		var_dump($prg); die;
 		
-		$template->assign('ins_infoDidEdit', '' );
+		$coddoc = $array_prg[0]->getCodDoc();
+//		var_dump($coddoc); die;
+		
+		$contatto =& ContattoDocente::getContattoDocente($coddoc);
+		
+		$template->assign('ins_ContattoDocenteUri', '' );
+		$template->assign('ins_infoDidEditUri', '' );
 		if ( $session_user->isAdmin() || (array_key_exists($id_canale, $user_ruoli) && $user_ruoli[$id_canale]->isReferente()) )
+		{
 			$template->assign('ins_infoDidEdit', 'index.php?do=InfoDidatticaEdit&id_canale='.$id_canale );
-		
+			if ($session_user->isAdmin() || $session_user->isCollaboratore())
+				if(!$contatto)	
+				{
+					$template->assign('ins_ContattoDocenteUri', 'index.php?do=ContattoDocenteAdd&cod_doc='.$coddoc.'&id_canale='.$id_canale );
+					$template->assign('ins_ContattoDocente', 'Crea il contatto di questo docente' );
+				}
+				else
+				{
+					$template->assign('ins_ContattoDocenteUri', 'index.php?do=ShowContattoDocente&cod_doc='.$coddoc.'&id_canale='.$id_canale  );
+					$template->assign('ins_ContattoDocente', 'Visualizza lo stato di questo docente' );
+				}
+		}
 		$info_didattica = InfoDidattica::retrieveInfoDidattica($id_canale);
 		//var_dump($info_didattica);
 		

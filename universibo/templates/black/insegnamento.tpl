@@ -20,6 +20,7 @@
 {/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a>
 </p>
 {/if}
+{if $ins_ContattoDocenteUri != ""}<p class="Normal" align="center"><a href="{$ins_ContattoDocenteUri|escape:"htmlall"}">{$ins_ContattoDocente|escape:"htmlall"}</a></p>{/if}
 
 {include file=tabellina_due_colonne.tpl arrayToShow=$ins_tabella}
 {if $ins_infoDidEdit != ""}<p class="Normal" align="center"><a href="{$ins_infoDidEdit|escape:"htmlall"|nl2br}">Modifica le informazioni dell'esame</a> </p>{/if}

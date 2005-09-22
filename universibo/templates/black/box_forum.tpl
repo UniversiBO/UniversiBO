@@ -7,6 +7,7 @@
 	<tr><td valign="top"><img src="tpl/black/freccia_4.gif" width="12" height="11" alt="" /></td>
 	<td><img src="tpl/black/invisible.gif" width="4" height="2" alt="" /></td>
 	<td><a title="Questo link apre una nuova pagina" href="{$common_newPostsList[temp_currPost].URI|escape:"htmlall"}" target="_blank">{$common_newPostsList[temp_currPost].desc|escape:"htmlall"}</a></td></tr>
+{sectionelse}<tr><td colspan="3">Nessun post nel forum</td></tr>
 {/section}
 </table>
 {include file=box_end.tpl}

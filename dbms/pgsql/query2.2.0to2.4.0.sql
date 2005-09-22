@@ -3,3 +3,7 @@
 ALTER TABLE "info_didattica" ADD "orario_ics_link" character varying(256);
 UPDATE "info_didattica" SET orario_ics_link = ' ';
 ALTER TABLE "info_didattica" ALTER COLUMN "orario_ics_link" SET NOT NULL;
+
+
+--evaimitico 22/09/2005
+UPDATE canale SET links_attivo = 'S' WHERE id_canale = '25'

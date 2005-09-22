@@ -53,6 +53,7 @@
 		<div class="contenuto">
 			{section loop=$common_newPostsList name=temp_currPost}
 				<p><img src="tpl/unibo/freccia.gif" width="11" height="10" alt="" />&nbsp;<a title="Questo link apre una nuova pagina" target="_blank" href="{$common_newPostsList[temp_currPost].URI|escape:"htmlall"}">{$common_newPostsList[temp_currPost].desc|escape:"htmlall"}</a></p>
+			{sectionelse}<p>Non ci sono post nel forum</p>
 			{/section}
 		</div>
 	</div>

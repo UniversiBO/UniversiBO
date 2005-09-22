@@ -237,25 +237,28 @@ class CanaleCommand extends UniversiboCommand
 			//$template->assign('common_contactsCanaleAvailable', 'false');
 		
 			// elenco post nuovi contestuale al canale
-			$newposts = 'false';
-			$list_post		=	array();
-			if (!$user->isOspite())
+			if ($this->requestCanale->getServizioForum())
 			{
-				$fa = new ForumApi();
-				$id_posts_list 	=&  $fa->getLastPostsForum($user, $canale->getForumForumId());
-							
-				if ($id_posts_list != false)
+//				$newposts = 'false';
+				$list_post		=	array();
+				if (!$user->isOspite())
 				{
-					$newposts = 'true';
-					foreach ($id_posts_list as $curr_post)
+					$fa = new ForumApi();
+					$id_posts_list 	=&  $fa->getLastPostsForum($user, $canale->getForumForumId());
+								
+					if ($id_posts_list != false)
 					{
-						$list_post[]= array('URI' => $fa->getPostUri($curr_post['id']), 'desc' => $curr_post['name']);
-					} 
+//						$newposts = 'true';
+						foreach ($id_posts_list as $curr_post)
+						{
+							$list_post[]= array('URI' => $fa->getPostUri($curr_post['id']), 'desc' => $curr_post['name']);
+						} 
+					}
 				}
+//				$template->assign( 'common_newPostsAvailable', $newposts);		
+				$template->assign( 'common_newPostsAvailable', 'true');		
+				$template->assign( 'common_newPostsList', $list_post);
 			}
-			$template->assign( 'common_newPostsAvailable', $newposts);		
-			$template->assign( 'common_newPostsList', $list_post);
-			
 		}
 		
 		

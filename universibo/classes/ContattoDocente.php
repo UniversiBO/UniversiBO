@@ -224,21 +224,33 @@ define('CRITIC'		,3);
 	function insertContattoDocente()
 	{
 		$cod = $this->getCodDoc();
-		if (! getContattoDocente($cod))
-			return false;
-		
+//		echo $cod;		die;
 		$db =& FrontController::getDbConnection('main');
 		
         ignore_user_abort(1);
         $db->autoCommit(false);
-        $query = 'INSERT INTO docente_contatti VALUES ' .
+        
+        $query = 'SELECT * FROM docente_contatti WHERE cod_doc = '.$db->quote($cod);
+//        echo $query;		die;	
+        $res = $db->query($query);
+		//var_dump($query);
+		if (DB::isError($res)){
+			$db->rollback();
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
+        
+        $rows = $res->numRows();
+		if( $rows > 0) return false;
+		$res->free();
+		
+        $query = 'INSERT INTO docente_contatti (cod_doc,stato,id_utente_assegnato,ultima_modifica,report) VALUES ' .
 				'( ' .$db->quote($this->getCodDoc())
 				.' , ' .$db->quote($this->getStato())
 				.' , '.$db->quote($this->getIdUtenteAssegnato())
 				.' , '.$db->quote($this->getUltimaModifica()) 
 				.' , '.$db->quote($this->getReport())
 				.' )';
-		//echo $query;								 
+//		echo $query;		die;						 
 		$res = $db->query($query);
 		//var_dump($query);
 		if (DB::isError($res)){

@@ -28,13 +28,13 @@ class ShowContattoDocente extends UniversiboCommand {
 		$template =& $frontcontroller->getTemplateEngine();
 		$user =& $this->getSessionUser();
 		
-		if (!array_key_exists('id_utente',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['id_utente'] ) ) 
+		if (!array_key_exists('cod_doc',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['cod_doc'] ) ) 
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__)); 
 		
 		if (!$user->isCollaboratore() && !$user->isAdmin())
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non hai i diritti necessari per visualizzare la pagina','file'=>__FILE__,'line'=>__LINE__)); 
 		
-		$docente =& Docente::selectDocente($_GET['id_utente']);
+		$docente =& Docente::selectDocenteFromCod($_GET['cod_doc']);
 		
 		if (!$docente)
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è un docente','file'=>__FILE__,'line'=>__LINE__));
@@ -61,8 +61,9 @@ class ShowContattoDocente extends UniversiboCommand {
 		$info_docente = array();
 		
 		$info_docente['nome']					= $rub_docente['prefissonome'].' '.$rub_docente['nome'].' '.$rub_docente['cognome'];
-		$info_docente['sesso']					= $rub_docente['sesso'];
-		$info_docente['ultimo login al sito']	= $utente_docente->getUltimoLogin();
+		$info_docente['sesso']					= ($rub_docente['sesso'] == 1) ? 'm' : 'f';
+		$date =$utente_docente->getUltimoLogin();
+		$info_docente['ultimo login al sito']	= ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa';
 		$info_docente['email universibo']		= $utente_docente->getEmail();
 		$info_docente['mail']					= $rub_docente['email'];
 		$info_docente['tel']					= $utente_docente->getPhone();
@@ -77,7 +78,8 @@ class ShowContattoDocente extends UniversiboCommand {
 			$id_canale 	= $ruolo->getIdCanale();
 			$canale		= Canale::retrieveCanale($id_canale);
 			$name		= $canale->getNome();
-			$info_ruoli[$name] = $ruolo->getUltimoAccesso();
+			$date 		= $ruolo->getUltimoAccesso();
+			$info_ruoli[$name] = ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa';
 		}
 //		var_dump($info_ruoli);
 		

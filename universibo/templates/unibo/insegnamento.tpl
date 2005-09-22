@@ -7,6 +7,7 @@
 	{else}<img src="tpl/unibo/esame_myuniversibo_add.gif" width="15" height="15" alt="" />&nbsp;
 	{/if}<a href="{$common_canaleMyUniversiBOUri|escape:"htmlall"}">{$common_langCanaleMyUniversiBO|escape:"htmlall"}</a></div>
 {/if}
+{if $ins_ContattoDocenteUri != ""}<div class="comandi"><p><a href="{$ins_ContattoDocenteUri|escape:"htmlall"}">{$ins_ContattoDocente|escape:"htmlall"}</a></p></div>{/if}
 {if $ins_homepageAlternativaLink != ""}
 <p>Le informazioni del corso posso essere consultate anche alla pagina<br /><a href="{$ins_homepageAlternativaLink|escape:"htmlall"}">{$ins_homepageAlternativaLink|escape:"htmlall"}</a></p>
 {/if}</div>
