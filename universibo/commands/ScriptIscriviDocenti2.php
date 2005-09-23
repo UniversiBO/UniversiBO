@@ -64,21 +64,23 @@ class ScriptIscriviDocenti2 extends UniversiboCommand
 
                 $mail->Body = "Gentile docente,\n".
 					"Le abbiamo creato un account su UniversiBO.\n\n".
-					"Il progetto, collaborando con le strutture di Ateneo e le Facolta' di Ingegneria e di Economia, si propone la realizzazione di un sito web in grado di raccogliere ed integrare le informazioni ora disponibili in una moltitudine di siti e permettere lo scambio e la condivisione tra docenti e studenti di informazioni su temi attinenti principalmente la didattica.\n\n".
+					"Il progetto portato avanti dalla comunità degli studenti dell'università di Bologna collaborando con le strutture di Ateneo, si propone la realizzazione di un sito web in grado di raccogliere ed integrare le informazioni ora disponibili in una moltitudine di siti e permettere lo scambio e la condivisione tra docenti e studenti di informazioni su temi attinenti principalmente la didattica.\n\n".
 					"Per accedere al sito utilizzi l'indirizzo ".$fc->getAppSetting('rootUrl')."\n\n".
 					"Le informazioni per permetterle l'accesso ai servizi offerti sono:\n".
 					"Username: ".$username."\n".
 					"Password: ".$randomPassword."\n\n".
-					"Questa password e' stata generata in modo casuale, sul sito e' disponibile la funzionalita' per poterla cambiare\n\n".
+					"Questa password e' stata generata in modo casuale, nella sezione Impostazioni Personali del sito e' disponibile la funzionalita' per poterla cambiare\n\n".
 					"Andando nelle pagine dei suoi corsi in UniversiBO disporra' dei diritti che le permetteranno di usufruire di alcuni servizi:\n".
-					"- Inserire notizie che verranno automaticamente notificate agli studenti interessati\n".
-					"- Inserire files\n".
+					"- Pubblicare notizie che verranno automaticamente notificate agli studenti interessati via e-mail o sms\n".
+					"- Inserire file (slides, dispense, temi d'esame, etc.)\n".
 					"- Pubblicare o inserire link verso altri siti con le informazioni sul corso: Programma, Obiettivi del Corso, Testi Consigliati, ecc..\n".
 					//"- E' attiva l'integrazione automatica con Uniwex o la gestione manuale delle informazioni riguardanti gli appelli d'esame\n".
-					"- Potra' interagire attivamente con gli studenti attraverso il forum\n".
+					"- Inserire una raccolta di link verso siti esterni contenenti informazioni attinenti al suo insegnamento\n".
+					"- Interagire attivamente con gli studenti attraverso il forum\n".
 					"Come usare questi servizi lo trova spiegato nella sezione \"Help\" .\n".
+					"Attraverso il sito è disponibile una funzionalità che le permette inoltre di delegare queste attivita' anche ad altri utenti iscritti al sito di sua scelta.\n".
 					"Se vuole iscrivere dei suoi \"assistenti\" risponda a questa mail con i loro nomi e indirizzi email ed uno username di loro gradimento.\n".
-					"Provvederemo ad iscriverli al piu' presto e a dar loro i diritti opportuni sulle sue pagine.\n\n".
+					"Provvederemo ad iscriverli al piu' presto e a dar loro i diritti opportuni nelle sue pagine.\n\n".
 					"Per qualsiasi problema non esiti a contattarci\n".
 					"Grazie per la disponibilita'\n\n".
 					"Qualora avesse ricevuto questa e-mail per errore lo segnali rispondendo immediatamente a questo messaggio\n\n";
