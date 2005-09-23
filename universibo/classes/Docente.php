@@ -176,7 +176,8 @@ class Docente extends User {
 	
 	function &selectDocenteFromCod($codDoc)
 	{
-		return Docente::selectDocente($codDoc, true);
+		$docente = Docente::selectDocente($codDoc, true);
+		return $docente;
 	}
 	
 	

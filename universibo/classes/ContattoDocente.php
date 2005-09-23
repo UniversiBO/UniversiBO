@@ -79,7 +79,7 @@ define('CRITIC'		,3);
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows == 0) return false;
+		if( $rows == 0) {$return = false; return $return;}
 
 		$row = $res->fetchRow();
 		$contattoDocente = new ContattoDocente($coddoc, $row[0], $row[1], $row[2], $row[3]);

@@ -85,7 +85,7 @@ class ShowContattoDocente extends UniversiboCommand {
 		
 		// TODO mi sa che questa lista è incompleta: cercare user con groups = 4 o = 64
 //		$lista_collabs =& Collaboratore::selectCollaboratoriAll();
-		$lista_collabs =& $this->_getCollaboratoriUniversibo();
+		$lista_collabs = $this->_getCollaboratoriUniversibo();
 		$table_collab = array();
 //		var_dump($lista_collabs); die;
 
@@ -195,7 +195,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		return 'default';
 	}	
 	
-	function _getCollaboratoriUniversibo()
+	function &_getCollaboratoriUniversibo()
 	{
 		$db =& FrontController::getDbConnection('main');
 		
@@ -205,7 +205,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows == 0) return false;
+		if( $rows == 0) {$return = false; return $return;}
 		
 		$lista = array();
 		while ($row = $res->fetchRow())
