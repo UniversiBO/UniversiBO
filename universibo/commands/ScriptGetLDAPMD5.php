@@ -32,7 +32,7 @@ class ScriptGetLDAPMD5 extends UniversiboCommand
 			$query = 'SELECT username, password FROM utente WHERE groups IN (4,64)';
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 			$rows = $res->numRows();
 			if( $rows == 0) die('niente password :-p');
