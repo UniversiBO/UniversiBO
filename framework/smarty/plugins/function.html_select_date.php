@@ -34,6 +34,7 @@
  */
 function smarty_function_html_select_date($params, &$smarty)
 {
+    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
@@ -78,6 +79,7 @@ function smarty_function_html_select_date($params, &$smarty)
     $day_empty       = null;
     $month_empty     = null;
     $year_empty      = null;
+    $extra_attrs     = '';
 
     foreach ($params as $_key=>$_value) {
         switch ($_key) {
@@ -119,8 +121,12 @@ function smarty_function_html_select_date($params, &$smarty)
                 break;
 
             default:
-                $smarty->trigger_error("[html_select_date] unknown parameter $_key", E_USER_WARNING);
-
+                if(!is_array($_value)) {
+                    $extra_attrs .= ' '.$_key.'="'.smarty_function_escape_special_chars($_value).'"';
+                } else {
+                    $smarty->trigger_error("html_select_date: extra attribute '$_key' cannot be an array", E_USER_NOTICE);
+                }
+                break;
         }
     }
 
@@ -152,13 +158,15 @@ function smarty_function_html_select_date($params, &$smarty)
             $start_year = strftime('%Y') - $match[2];
         }
     }
-    if($start_year > $time[0] && !isset($params['start_year'])) {
-        // force start year to include given date if not explicitly set
-        $start_year = $time[0];
-    }
-    if($end_year < $time[0] && !isset($params['end_year'])) {
-        // force end year to include given date if not explicitly set
-        $end_year = $time[0];
+    if (strlen($time[0]) > 0) { 
+        if ($start_year > $time[0] && !isset($params['start_year'])) {
+            // force start year to include given date if not explicitly set
+            $start_year = $time[0];
+        }
+        if($end_year < $time[0] && !isset($params['end_year'])) {
+            // force end year to include given date if not explicitly set
+            $end_year = $time[0];
+        }
     }
 
     $field_order = strtoupper($field_order);
@@ -192,11 +200,11 @@ function smarty_function_html_select_date($params, &$smarty)
         if (null !== $all_extra){
             $month_result .= ' ' . $all_extra;
         }
-        $month_result .= '>'."\n";
+        $month_result .= $extra_attrs . '>'."\n";
 
         $month_result .= smarty_function_html_options(array('output'     => $month_names,
                                                             'values'     => $month_values,
-                                                            'selected'   => $a=$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
+                                                            'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
                                                       $smarty);
         $month_result .= '</select>';
@@ -228,7 +236,7 @@ function smarty_function_html_select_date($params, &$smarty)
         if (null !== $day_extra){
             $day_result .= ' ' . $day_extra;
         }
-        $day_result .= '>'."\n";
+        $day_result .= $extra_attrs . '>'."\n";
         $day_result .= smarty_function_html_options(array('output'     => $days,
                                                           'values'     => $day_values,
                                                           'selected'   => $time[2],
@@ -251,11 +259,13 @@ function smarty_function_html_select_date($params, &$smarty)
             if (null !== $year_extra){
                 $year_result .= ' ' . $year_extra;
             }
-            $year_result .= '>';
+            $year_result .= ' />';
         } else {
             $years = range((int)$start_year, (int)$end_year);
             if ($reverse_years) {
                 rsort($years, SORT_NUMERIC);
+            } else {
+                sort($years, SORT_NUMERIC);
             }
             $yearvals = $years;
             if(isset($year_empty)) {
@@ -272,7 +282,7 @@ function smarty_function_html_select_date($params, &$smarty)
             if (null !== $year_extra){
                 $year_result .= ' ' . $year_extra;
             }
-            $year_result .= '>'."\n";
+            $year_result .= $extra_attrs . '>'."\n";
             $year_result .= smarty_function_html_options(array('output' => $years,
                                                                'values' => $yearvals,
                                                                'selected'   => $time[0],
