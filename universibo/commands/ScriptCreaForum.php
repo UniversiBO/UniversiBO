@@ -98,6 +98,7 @@ class ScriptCreaForum extends UniversiboCommand
 			
 			$elenco_prgAttivitaDidattica = PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($cdl->getCodiceCdl(), $anno_accademico);
 			
+			//creo i forum degli insegnmanti
 			foreach($elenco_prgAttivitaDidattica as $prg_att)
 			{
 				//AAHHH qui la cache di Canale potrebbe restituire dei casini, non la posso usare,
