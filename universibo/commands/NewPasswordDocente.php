@@ -38,8 +38,8 @@ class NewPasswordDocente extends UniversiboCommand
 
 		$docente = User::selectUser($_GET['id_utente']);
 		
-		if ($docente === false || ($docente->isDocente() == false ))
-			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id dell\'utente richiesto non appartiene ad un docente', 'file' => __FILE__, 'line' => __LINE__));
+		if ($docente === false || ($docente->isDocente() == false &&  $docente->isTutor() == false))
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $session_user->getIdUser(), 'msg' => 'L\'id dell\'utente richiesto non appartiene ad un docente o ad un tutor', 'file' => __FILE__, 'line' => __LINE__));
 		
 		
 
@@ -85,17 +85,28 @@ class NewPasswordDocente extends UniversiboCommand
 			
             $mail->Subject = "Registrazione UniversiBO";
 
-			$mail->Body = "Gentile docente,\n".
-				"E' stata inoltrata una richiesta di aggiornamento della sua password per l'accesso ad UniversiBO.\n\n".
-				"Le nuove informazioni per permetterle l'accesso ai servizi offerti sono:\n".
-				"Username: ".$username."\n".
-				"Password: ".$randomPassword."\n".
-				"Questa password e' stata generata in modo casuale, sul sito e' disponibile la funzionalita' per poterla cambiare\n\n".
-				"Se vuole iscrivere dei suoi \"assistenti\" risponda a questa mail con i loro nomi e indirizzi email ed uno username di loro gradimento.\n".
-				"Provvederemo ad iscriverli al piu' presto e a dar loro i diritti opportuni sulle sue pagine.\n\n".
-				"Per qualsiasi problema non esiti a contattarci\n".
-				"Grazie per la disponibilita'\n\n".
-				"Qualora avesse ricevuto questa e-mail per errore lo segnali rispondendo immediatamente a questo messaggio\n\n";
+			$mail->Body = ($docente->isDocente())
+				?
+					"Gentile docente,\n".
+					"E' stata inoltrata una richiesta di aggiornamento della sua password per l'accesso ad UniversiBO.\n\n".
+					"Le nuove informazioni per permetterle l'accesso ai servizi offerti sono:\n".
+					"Username: ".$username."\n".
+					"Password: ".$randomPassword."\n".
+					"Questa password e' stata generata in modo casuale, sul sito e' disponibile la funzionalita' per poterla cambiare\n\n".
+					"Se vuole iscrivere dei suoi \"assistenti\" risponda a questa mail con i loro nomi e indirizzi email ed uno username di loro gradimento.\n".
+					"Provvederemo ad iscriverli al piu' presto e a dar loro i diritti opportuni sulle sue pagine.\n\n".
+					"Per qualsiasi problema non esiti a contattarci\n".
+					"Grazie per la disponibilita'\n\n".
+					"Qualora avesse ricevuto questa e-mail per errore lo segnali rispondendo immediatamente a questo messaggio\n\n"
+				:
+					"Gentile tutor,\n".
+					"E' stata inoltrata una richiesta di aggiornamento della sua password per l'accesso ad UniversiBO.\n\n".
+					"Le nuove informazioni per permetterle l'accesso ai servizi offerti sono:\n".
+					"Username: ".$username."\n".
+					"Password: ".$randomPassword."\n".
+					"Questa password e' stata generata in modo casuale, sul sito e' disponibile la funzionalita' per poterla cambiare\n\n".
+					"Qualora avesse ricevuto questa e-mail per errore lo segnali rispondendo immediatamente a questo messaggio\n\n"
+				;
 
 			if(!$mail->Send()) 
 				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Attenzione!!! La password è stata aggiornata su database ma potrebbe essersi verificato un errore durante la spedizione dell\'email!!'."\nPassword: $randomPassword",'file'=>__FILE__,'line'=>__LINE__));
