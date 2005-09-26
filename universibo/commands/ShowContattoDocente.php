@@ -98,6 +98,9 @@ class ShowContattoDocente extends UniversiboCommand {
 		}
 //		var_dump($table_collab); die;
 		
+		
+		usort($table_collab, array('ShowContattoDocente','_compareUsername'));
+		
 		// valori default form
 		$f35_collab_list	=	$table_collab;
 		//$f35_collab_list['null'] = 'Nessuno';
@@ -212,6 +215,12 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 			$lista[] = new User($row[9], $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
 		
 		return $lista;
+	}
+	
+	function _compareUsername($a, $b)
+	{
+		if (strnatcmp($a['nome'], $b['nome']) > 0) return +1;
+		else return -1;
 	}
 	
 }
