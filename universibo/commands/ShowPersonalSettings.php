@@ -117,7 +117,7 @@ class ShowPersonalSettings extends UniversiboCommand
 			$forum->updateUserEmail($user);
 						
 			$fc->setStyle($f20_personal_style);
-			$template->assign('showPersonalSettings_thanks','Il profilo personale e\' stato modificato con successo, si consiglia di testarne il corretto funzionamento.
+			$template->assign('showPersonalSettings_thanks','Il profilo personale è stato modificato con successo, si consiglia di testarne il corretto funzionamento.
 Per qualsiasi problema o spiegazioni contatta lo staff all\'indirizzo [email]'.$fc->getAppSetting('infoEmail').'[/email].');
 			
 			return 'success';
