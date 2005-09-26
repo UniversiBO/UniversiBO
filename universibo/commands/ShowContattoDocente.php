@@ -185,7 +185,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		$template->assign('ShowContattoDocente_titolo', 'Info su '.$docente->getNomeDoc());
 		$template->assign('ShowContattoDocente_contatto', array(
 														'stato' => $f35_stati[$f35_stato],
-														'assegnato a' => $f35_collab_list[$f35_id_username],
+														'assegnato a' => ($f35_id_username != null)?$f35_collab_list[$f35_id_username]:'',
 														'report' => $contatto->getReport()
 														));
 
