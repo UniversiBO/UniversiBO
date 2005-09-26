@@ -461,6 +461,64 @@ class ForumApi
 		
 	}
 	
+	
+	/**
+	 * Ritorna il massimo id_fourm dal database ...succedaneo dell'utilizzo delle sequenze
+	 *
+	 * @return int massimo id_fourm dal database
+	 */
+	function getMaxForumId()
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$query = 'SELECT MAX(forum_id) as forum_id FROM '.$this->table_prefix.'forums';
+		
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		
+		if ($res->numRows() != 1 )
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'query max fourm_id non valida', 'file'=>__FILE__,'line'=>__LINE__));
+		
+		$res->fetchInto($row);
+		
+		return $row[0];
+		
+	}
+
+
+	/**
+	 * @return string nuovo nome
+	 */
+	function addForumInsegnamentoNewYear($forum_id, $anno_accademico)
+	{
+	    $db =& FrontController::getDbConnection($this->database);
+	
+	    $query = 'SELECT forum_name FROM "'.$this->table_prefix.'forums" WHERE forum_id = '.$forum_id;
+	
+	    $res = $db->query($query);
+	    if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+	
+	    $res->fetchInto($row);
+	
+	    $vecchio_nome = $row[0];
+	    $search = ($anno_accademico-1).'/'.$anno_accademico.' ';
+	    $replace = ($anno_accademico-1).'/'.$anno_accademico.'/'.($anno_accademico+1).' ';
+	    $nuovo_nome = str_replace($search, $replace, $vecchio_nome);
+	
+	    $query = 'UPDATE '.$this->table_prefix.'forums SET forum_name = '.$db->quote($nuovo_nome).'  WHERE forum_id = '.$forum_id;
+	
+	    $res = $db->query($query);
+	    if (DB::isError($res))
+	        Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+	
+	    return $nuovo_nome;
+	
+	}
+	
+	
+	
 	/**
 	 * @param  int   $id_post  
 	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
