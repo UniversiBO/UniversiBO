@@ -45,7 +45,7 @@ class ShowContattoDocente extends UniversiboCommand {
 		$contatto 	=& ContattoDocente::getContattoDocente($cod_doc); 
 		
 		if (!$contatto)
-			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste contatto di tale docente','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste contatto di tale docente','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		
 		$utente_docente =& $docente->getUser();
 		
@@ -55,15 +55,20 @@ class ShowContattoDocente extends UniversiboCommand {
 		
 		$rub_docente =& $docente->getInfoRubrica();
 		
+		$rub_presente = true;
+		
 		if (!$rub_docente)
+		{
+			$rub_presente = false;
 			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Impossibile recuperare le informazioni del docente dalla rubrica','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
+		}
 //		var_dump($contatto);
 		$info_docente = array();
 		
-		$info_docente['nome']					= $rub_docente['prefissonome'].' '.$rub_docente['nome'].' '.$rub_docente['cognome'];
+		$info_docente['nome']					= ($rub_presente) ?$rub_docente['prefissonome'].' '.$rub_docente['nome'].' '.$rub_docente['cognome'] : $docente->getNomedoc();
 		$info_docente['sesso']					= ($rub_docente['sesso'] == 1) ? 'm' : 'f';
 		$date =$utente_docente->getUltimoLogin();
-		$info_docente['ultimo login al sito']	= ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa';
+		$info_docente['ultimo login al sito']	= ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa circa';
 		$info_docente['email universibo']		= $utente_docente->getEmail();
 		$info_docente['mail']					= $rub_docente['email'];
 		$info_docente['tel']					= $utente_docente->getPhone();
@@ -79,7 +84,7 @@ class ShowContattoDocente extends UniversiboCommand {
 			$canale		= Canale::retrieveCanale($id_canale);
 			$name		= $canale->getNome();
 			$date 		= $ruolo->getUltimoAccesso();
-			$info_ruoli[$name] = ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa';
+			$info_ruoli[$name] = ($date == 0) ? 'mai loggato' : round((time()-$date)/86400) .' gg fa circa';
 		}
 //		var_dump($info_ruoli);
 		
@@ -188,7 +193,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		$template->assign('ShowContattoDocente_titolo', 'Info su '.$docente->getNomeDoc());
 		$template->assign('ShowContattoDocente_contatto', array(
 														'stato' => $f35_stati[$f35_stato],
-														'assegnato a' => ($f35_id_username != null)?$f35_collab_list[$f35_id_username]:'',
+														'assegnato a' => ($f35_id_username != null && array_key_exists('f35_id_username' , $f35_collab_list))?$f35_collab_list[$f35_id_username]:'',
 														'report' => $contatto->getReport()
 														));
 
