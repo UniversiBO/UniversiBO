@@ -29,7 +29,7 @@ class ShowContattiDocenti extends UniversiboCommand {
 		$user =& $this->getSessionUser();
 		
 		if (!$user->isCollaboratore() && !$user->isAdmin())
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non hai i diritti necessari per visualizzare la pagina','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non hai i diritti necessari per visualizzare la pagina','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template)); 
 		
 		$lista_contatti = ContattoDocente::getAllContattoDocente();
 

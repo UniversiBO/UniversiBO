@@ -29,15 +29,15 @@ class ShowContattoDocente extends UniversiboCommand {
 		$user =& $this->getSessionUser();
 		
 		if (!array_key_exists('cod_doc',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['cod_doc'] ) ) 
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template)); 
 		
 		if (!$user->isCollaboratore() && !$user->isAdmin())
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non hai i diritti necessari per visualizzare la pagina','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non hai i diritti necessari per visualizzare la pagina','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template)); 
 		
 		$docente =& Docente::selectDocenteFromCod($_GET['cod_doc']);
 		
 		if (!$docente)
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è un docente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è un docente','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		
 		//echo 'qui';
 			
@@ -45,18 +45,18 @@ class ShowContattoDocente extends UniversiboCommand {
 		$contatto 	=& ContattoDocente::getContattoDocente($cod_doc); 
 		
 		if (!$contatto)
-			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste contatto di tale docente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste contatto di tale docente','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		
 		$utente_docente =& $docente->getUser();
 		
 		if (!$utente_docente)
-			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste tale utente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste tale utente','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 //		var_dump($docente);
 		
 		$rub_docente =& $docente->getInfoRubrica();
 		
 		if (!$rub_docente)
-			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Impossibile recuperare le informazioni del docente dalla rubrica','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Impossibile recuperare le informazioni del docente dalla rubrica','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 //		var_dump($contatto);
 		$info_docente = array();
 		
@@ -118,7 +118,7 @@ class ShowContattoDocente extends UniversiboCommand {
 				$contatto->updateContattoDocente();	
 			}
 			else 	
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		}
 		
 		if ( array_key_exists('f35_submit_utente', $_POST)  )
@@ -164,7 +164,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 //				}//end if su username
 			}
 			else
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		}
 		
 		if ( array_key_exists('f35_submit_report', $_POST)  )
@@ -175,7 +175,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 				$contatto->updateContattoDocente();	
 			}
 			else 	
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		}
 		
 		$template->assign('f35_collab_list', $f35_collab_list);
@@ -205,7 +205,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style, id_utente  FROM utente WHERE groups IN (4,64)';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template)); 
 	
 		$rows = $res->numRows();
 		if( $rows == 0) {$return = false; return $return;}
