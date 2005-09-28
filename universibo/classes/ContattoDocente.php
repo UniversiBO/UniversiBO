@@ -133,7 +133,10 @@ define('CRITIC'		,3);
 	
 	function appendReport($rep)
 	{
-		$this->report = $rep.$this->report;
+		$data =  getdate();
+		$this->report = "----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
+			.' '.$data['hours'].':'.$data['minutes'].'-----------'."\n".
+			$rep."\n".$this->report."\n\n";
 	}
 	
 	function getUltimaModifica()
@@ -156,11 +159,7 @@ define('CRITIC'		,3);
 		
 		if ($id != null)
 		{	
-			$data = getdate();
-			$text ="----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
-					.' '.$data['hours'].':'.$data['minutes'].'-----------'
-					."\n".User::getUsernameFromId($id).': modifica dello stato assegnato in '
-					."\n".$this->stato.': '.$this->legend[$s]."\n\n";
+			$text = User::getUsernameFromId($id).': modifica dello stato assegnato in '."\n".$this->stato.': '.$this->legend[$s];
 			$this->appendReport($text);
 		}
 	}
@@ -182,10 +181,7 @@ define('CRITIC'		,3);
 	 */
 	function assegna($newIdUtente, $idUtenteMaster)
 	{
-		$data = getdate();
-		$text = "----------".$data['mday'].'-'.$data['mon'].'-'.$data['year']
-			.' '.$data['hours'].':'.$data['minutes'].'-----------'.
-			"\n".User::getUsernameFromId($idUtenteMaster).': assegnato docente a '.User::getUsernameFromId($newIdUtente)."\n\n";	
+		$text = User::getUsernameFromId($idUtenteMaster).': assegnato docente a '.User::getUsernameFromId($newIdUtente);	
 		$this->appendReport($text);
 		$this->id_utente_assegnato = $newIdUtente;
 		

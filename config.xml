@@ -366,6 +366,7 @@
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>andrea.scavolini@gmail.com;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
 		<passwordDocentiAdmin>sissi;spiff1281;brain;evaimitico</passwordDocentiAdmin>
+		<contattoDocentiAdmin>Fabio84</contattoDocentiAdmin> <!-- un solo nome -->
 		<modFileStudenti>brain</modFileStudenti>
 		<programmazioneDidatticaAdmin>Elisa;brain;eagleone</programmazioneDidatticaAdmin>
 		<alertMessage></alertMessage>

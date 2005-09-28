@@ -6,6 +6,7 @@ require_once ('Canale'.PHP_EXTENSION);
 require_once ('User'.PHP_EXTENSION);
 require_once ('Collaboratore'.PHP_EXTENSION);
 require_once ('ContattoDocente'.PHP_EXTENSION);
+require_once('Notifica/NotificaItem'.PHP_EXTENSION);
 
 
 /**
@@ -104,7 +105,7 @@ class ShowContattoDocente extends UniversiboCommand {
 //		var_dump($table_collab); die;
 		
 		
-		usort($table_collab, array('ShowContattoDocente','_compareUsername'));
+		uasort($table_collab, array('ShowContattoDocente','_compareUsername'));
 		
 		// valori default form
 		$f35_collab_list	=	$table_collab;
@@ -114,37 +115,39 @@ class ShowContattoDocente extends UniversiboCommand {
 		$f35_stato			=	$contatto->getStato();
 		$f35_id_username	=	$contatto->getIdUtenteAssegnato();		
 		
-		if ( array_key_exists('f35_submit_stato', $_POST)  )
-		{	
-			if (array_key_exists('f35_stato', $_POST) && array_key_exists( $_POST['f35_stato'], $f35_stati))
-			{
-				$f35_stato	= $_POST['f35_stato'];
-				$contatto->setStato($f35_stato, $user->getIdUser());
-				$contatto->updateContattoDocente();	
-			}
-			else 	
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
-		}
-		
-		if ( array_key_exists('f35_submit_utente', $_POST)  )
+		if ( array_key_exists('f35_submit_report', $_POST)  )
 		{
-			if (array_key_exists('f35_id_username', $_POST) && array_key_exists( $_POST['f35_id_username'], $f35_collab_list))
-			{
-				$f35_id_username	= $_POST['f35_id_username'];
+			
+			if ( !array_key_exists('f35_stato', $_POST) || ! array_key_exists( $_POST['f35_stato'], $f35_stati))
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
+
+			if (!array_key_exists('f35_id_username', $_POST) || !array_key_exists( $_POST['f35_id_username'], $f35_collab_list))
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
+
+			$f35_stato	= $_POST['f35_stato'];
+			$f35_id_username	= $_POST['f35_id_username'];
+			
+			if ($f35_stato != $contatto->getStato())
+				$contatto->setStato($f35_stato, $user->getIdUser());
+
+			if ($f35_id_username != $contatto->getIdUtenteAssegnato())
 				$contatto->assegna($f35_id_username, $user->getIdUser());
-				$contatto->updateContattoDocente();	
-				
-//				if($f35_id_username != 'null')
-//				{//notifiche
-					require_once('Notifica/NotificaItem'.PHP_EXTENSION);
-					$notifica_titolo = 'Assegnato il contatto del docente '.$docente->getNomeDoc();
-					$notifica_titolo = substr($notifica_titolo,0 , 199);
-					$notifica_dataIns = $contatto->getUltimaModifica();
-					$notifica_urgente = false;
-					$notifica_eliminata = false;
-					$notifica_messaggio = 
+			
+            if(trim($_POST['f35_report']) != '')
+				$contatto->appendReport($_POST['f35_report']);
+			
+			
+			$contatto->updateContattoDocente();	
+	
+
+			$notifica_titolo = 'Modifica contatto del docente '.$docente->getNomeDoc();
+			$notifica_titolo = substr($notifica_titolo,0 , 199);
+			$notifica_dataIns = $contatto->getUltimaModifica();
+			$notifica_urgente = false;
+			$notifica_eliminata = false;
+			$notifica_messaggio = 
 '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Ciao! ti è stato assegnato il contatto del docente '.$docente->getNomeDoc().' da '.$user->getIdUser().'
+Ciao! E\' stata effettuta una modifica dal servizio contatto del docente '.$docente->getNomeDoc().' da '.$user->getUsername().'
 
 Stato attuale: '.$f35_stati[$f35_stato].'
 
@@ -153,34 +156,17 @@ Report attuale:
 
 Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($this).'&id_utente'.$docente->getIdUtente().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
-						
-				
-					$notifica_user =& User::selectUser($f35_id_username);
-					$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
-					
-					$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
-					$notifica->insertNotificaItem();
-								
-					//ultima notifica all'archivio
-					$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');
-					
-					$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
-					$notifica->insertNotificaItem();
-//				}//end if su username
-			}
-			else
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
-		}
-		
-		if ( array_key_exists('f35_submit_report', $_POST)  )
-		{
-			if(array_key_exists('f35_report', $_POST) && trim($_POST['f35_report']) != '')
-			{
-				$contatto->appendReport("\n\n".$_POST['f35_report']);
-				$contatto->updateContattoDocente();	
-			}
-			else 	
-				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
+			
+			$notifica_user =& User::selectUser($f35_id_username);
+			$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
+			$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+			$notifica->insertNotificaItem();
+			
+			//ultima notifica al responsabile contatto docenti
+			$notifica_user =& User::selectUserUsername($frontcontroller->getAppSetting('contattoDocentiAdmin'));
+			$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
+			$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+			$notifica->insertNotificaItem();
 		}
 		
 		$template->assign('f35_collab_list', $f35_collab_list);
@@ -193,7 +179,7 @@ Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($t
 		$template->assign('ShowContattoDocente_titolo', 'Info su '.$docente->getNomeDoc());
 		$template->assign('ShowContattoDocente_contatto', array(
 														'stato' => $f35_stati[$f35_stato],
-														'assegnato a' => ($f35_id_username != null && array_key_exists('f35_id_username' , $f35_collab_list))?$f35_collab_list[$f35_id_username]:'',
+														'assegnato a' => ($f35_id_username != null && array_key_exists( $f35_id_username , $f35_collab_list) ) ? $f35_collab_list[$f35_id_username] :'',
 														'report' => $contatto->getReport()
 														));
 

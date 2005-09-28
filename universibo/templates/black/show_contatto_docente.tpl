@@ -44,13 +44,13 @@
 {foreach from=$f35_collab_list item=temp_user key=temp_key}
 <option value="{$temp_key}" {if $temp_key==$f35_id_username} selected="selected"{/if}>{$temp_user|escape:"htmlall"}</option>
 {/foreach}
-</select><input class="submit" type="submit" id="f35_submit_utente" name="f35_submit_utente" size="20" value="Assegna" /></p>
+</select></p>
 <p><label for="f35_stato">Cambia stato:</label>
 <select id="f35_stato" name="f35_stato">
 {foreach from=$f35_stati item=temp_state key=temp_key}
 <option value="{$temp_key}" {if $temp_key==$f35_stato} selected="selected"{/if}>{$temp_state|escape:"htmlall"}</option>
 {/foreach}
-</select><input class="submit" type="submit" id="f35_submit_stato" name="f35_submit_stato" size="20" value="Cambia stato" /></p>
+</select></p>
 <div><p><label for="f35_report">Inserisci il report (NB eventuali annotazioni sul docente e/o compiti eseguiti o da eseguire):</label></p>
 <p><textarea cols="50" rows="4" id="f35_report" name="f35_report">{$f35_report|escape:"htmlall"}</textarea></p>
 <p><input class="submit" type="submit" id="f35_submit_report" name="f35_submit_report" size="20" value="Aggiorna il report" /></p>
