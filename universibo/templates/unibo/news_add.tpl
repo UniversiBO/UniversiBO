@@ -39,7 +39,7 @@
 		</span>
 	</fieldset></p>
 	
-	<p><input type="checkbox" id="f7_urgente"  name="f7_urgente" {if $f7_urgente=='true'}checked="checked"{/if}/>&nbsp;<label for="f7_uregente">Invia il messaggio come urgente</label></p>
+	<p><input type="checkbox" id="f7_urgente"  name="f7_urgente" {if $f7_urgente=='true'}checked="checked"{/if}/>&nbsp;<label for="f7_uregente">Invia il messaggio come urgente (invia la notifica anche via sms)</label></p>
 	
 	<p><fieldset>
 		<legend><span>La notizia verr&agrave; inserita nelle pagine:</span></legend>
