@@ -422,7 +422,7 @@ Descrizione: '.$f12_abstract.'
 
 Dimensione: '.$dimensione_file.' kB
 
-Autore: '.$frontcontroller->getAppSetting('rootUrl').'/'.$user->getUsername().'
+Autore: '.$user->getUsername().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Informazioni per la cancellazione:
 
