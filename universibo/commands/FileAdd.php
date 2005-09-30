@@ -423,6 +423,8 @@ Descrizione: '.$f12_abstract.'
 Dimensione: '.$dimensione_file.' kB
 
 Autore: '.$user->getUsername().'
+
+Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do=FileShowInfo&id_file='.$newFile->getIdFile().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Informazioni per la cancellazione:
 
