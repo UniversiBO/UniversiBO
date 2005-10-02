@@ -320,7 +320,11 @@ Per altri problemi contattare lo staff di UniversiBO
 					
 					$ruoli_canale =& $add_canale->getRuoli();
 					foreach ($ruoli_canale as $ruolo_canale)
-					{
+					{	
+						//la seguente riga l'ho copiata dal diff del deploy precedente 
+						//in seguito ad una segnalazione di errore da parte di un tutor
+						//alla riga (ex)335 (ora)339
+						$notifica_user = $ruolo_canale->getUser();
 								//define('NOTIFICA_NONE'   ,0);
 								//define('NOTIFICA_URGENT' ,1);
 								//define('NOTIFICA_ALL'    ,2);
