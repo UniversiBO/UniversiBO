@@ -115,7 +115,7 @@ class RecuperaUsernameStudente extends UniversiboCommand
 						
 			$mail =& $fc->getMail();
 
-			$mail->AddAddress($user->getADUsername());
+			$mail->AddAddress($q32_ad_user);
 
 			$mail->Subject = "Registrazione UniversiBO";
 			$mail->Body = "Ciao. \nE' stata richiesto il recupero dell'username per l'accesso ad UniversiBO\n\n".
@@ -129,7 +129,7 @@ class RecuperaUsernameStudente extends UniversiboCommand
 			
 			$msg = "Non è stato possibile inviarti lo username tramite e-mail\n".
 				"Le informazioni per permetterti l'accesso ai servizi offerti da UniversiBO sono:\n".
-				"Username: ".$user->getUsername()."\n";
+				"Username: ".$username."\n";
 			
 			if(!$mail->Send())
 				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>$msg, 'file'=>__FILE__, 'line'=>__LINE__));
