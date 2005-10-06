@@ -110,10 +110,9 @@ class RecuperaUsernameStudente extends UniversiboCommand
 					
 			//azioni
 			$id_utente = User::getIdFromADUsername($q32_ad_user);
-			
 			$username = User::getUsernameFromId($id_utente);
-						
-			$mail =& $fc->getMail();
+			$user = User::selectUser($id_utente);						
+			$mail = $fc->getMail();
 
 			$mail->AddAddress($q32_ad_user);
 
