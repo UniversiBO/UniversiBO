@@ -109,7 +109,9 @@ class ShowContattoDocente extends UniversiboCommand {
 		
 		// valori default form
 		
-		$f35_collab_list	=	array_merge(array('null' => 'Nessuno'), $table_collab);
+		$f35_collab_list['null'] = 'Nessuno';
+		foreach ($table_collab as $key => $value)
+			$f35_collab_list[$key] = $value;
 		$f35_stati			=	$contatto->getLegend();
 		$f35_report 		=	'';
 		$f35_stato			=	$contatto->getStato();
