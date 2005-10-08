@@ -108,12 +108,16 @@ class ShowContattoDocente extends UniversiboCommand {
 		uasort($table_collab, array('ShowContattoDocente','_compareUsername'));
 		
 		// valori default form
-		$f35_collab_list	=	$table_collab;
-		//$f35_collab_list['null'] = 'Nessuno';
+		
+		$f35_collab_list	=	array_merge(array('null' => 'Nessuno'), $table_collab);
 		$f35_stati			=	$contatto->getLegend();
 		$f35_report 		=	'';
 		$f35_stato			=	$contatto->getStato();
-		$f35_id_username	=	$contatto->getIdUtenteAssegnato();		
+		$id_mod				=	$contatto->getIdUtenteAssegnato();
+		$f35_id_username	=	($id_mod != null) ? $id_mod : 'null';		
+		
+		
+		$notifica_mod = false;
 		
 		if ( array_key_exists('f35_submit_report', $_POST)  )
 		{
@@ -129,9 +133,16 @@ class ShowContattoDocente extends UniversiboCommand {
 			
 			if ($f35_stato != $contatto->getStato())
 				$contatto->setStato($f35_stato, $user->getIdUser());
-
+			
+			
 			if ($f35_id_username != $contatto->getIdUtenteAssegnato())
-				$contatto->assegna($f35_id_username, $user->getIdUser());
+			{
+				if ($f35_id_username != 'null') 
+				{
+					$notifica_mod = true;
+					$contatto->assegna($f35_id_username, $user->getIdUser());
+				}
+			}
 			
             if(trim($_POST['f35_report']) != '')
 				$contatto->appendReport($_POST['f35_report']);
@@ -157,10 +168,13 @@ Report attuale:
 Link: '.$frontcontroller->getAppSetting('rootUrl').'/index.php?do='.get_class($this).'&id_utente'.$docente->getIdUtente().'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
 			
-			$notifica_user =& User::selectUser($f35_id_username);
-			$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
-			$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
-			$notifica->insertNotificaItem();
+			if($notifica_mod)
+			{
+				$notifica_user =& User::selectUser($f35_id_username);
+				$notifica_destinatario = 'mail://'.$notifica_user->getEmail();
+				$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+				$notifica->insertNotificaItem();
+			}
 			
 			//ultima notifica al responsabile contatto docenti
 			$notifica_user =& User::selectUserUsername($frontcontroller->getAppSetting('contattoDocentiAdmin'));
