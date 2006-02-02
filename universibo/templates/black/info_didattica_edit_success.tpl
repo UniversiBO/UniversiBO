@@ -8,7 +8,7 @@
 <tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
 <p class="Normal" align="center">Informazioni sono state modificate con successo</p>
 
-<p class="Normal" align="center"><a href="{$infoDid_backUri|escape:"htmlall"|nl2br}">Torna alla pagina dell'esame</a> </p>
+<p class="Normal" align="center"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 </td></tr></table>
 
 {if $common_pageType == "index"}

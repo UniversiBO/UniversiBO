@@ -6,7 +6,7 @@
 
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
-<p class="Normal" align="center"><a href="{$infoDid_backUri|escape:"htmlall"|nl2br}">Torna alla pagina dell'esame</a> </p>
+<p class="Normal" align="center"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a> </p>
 
 {include file="avviso_notice.tpl"}
 <form method="post">

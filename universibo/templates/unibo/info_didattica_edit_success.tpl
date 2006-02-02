@@ -3,6 +3,6 @@
 <h2>{$infoDid_title|escape:"htmlall"|nl2br}</p>
 </div>
 <p>Informazioni sono state modificate con successo</p>
-<p><a href="{$infoDid_backUri|escape:"htmlall"|nl2br}">Torna alla pagina dell'esame</a></p>
+<p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 
 {include file=footer_index.tpl}
