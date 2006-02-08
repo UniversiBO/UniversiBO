@@ -82,7 +82,8 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 		
 		$res->free();
 		
-		return FileItemStudenti::selectFileItems($id_files_studenti_list);
+		$files_studenti_list = FileItemStudenti::selectFileItems($id_files_studenti_list);
+		return $files_studenti_list;
 		
 	}
  }
