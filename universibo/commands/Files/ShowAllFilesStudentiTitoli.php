@@ -1,7 +1,7 @@
 <?php
 
 require_once ('PluginCommand'.PHP_EXTENSION);
-require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
 
 /**
  * ShowAllFilesStudentiTitoli e` un'implementazione di PluginCommand.
@@ -86,6 +86,7 @@ class ShowAllFilesStudentiTitoli extends PluginCommand {
 					$file_tpl[$i]['autore_link']  = 'index.php?do=ShowUser&id_utente='.$file->getIdUtente();
 					$file_tpl[$i]['id_autore']    = $file->getIdUtente();
 					$file_tpl[$i]['dimensione'] = $file->getDimensione();
+					$file_tpl[$i]['voto_medio'] = round($file->getVoto($file->getIdFile()),1);
 //	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente 
 //					$file_tpl['download_uri'] = '';
 //					$permessi_download = $file->getPermessiDownload();

@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
+require_once ('Commenti/CommentoItem'.PHP_EXTENSION);
 require_once ('PluginCommand'.PHP_EXTENSION);
 
 /**
@@ -25,7 +26,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 		$user =& $this->getSessionUser();	
 		$arrayFilesStudenti = array();
 		
-		if (!array_key_exists('order', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['order'] ) || ($_GET['order'] > 1) )
+		if (!array_key_exists('order', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['order'] ) || ($_GET['order'] > 2) )
 		{
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'ordine richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
@@ -33,38 +34,59 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 		
 		$arrayFilesStudenti = $this->getAllFiles($order);
 		$this->executePlugin('ShowAllFilesStudentiTitoli', array('files'=>$arrayFilesStudenti,'chk_diritti'=>false));
-		if($order == 0)
+		switch($order)
 		{
-			$template->assign('showAllFilesStudenti_url','index.php?do=ShowAllFilesStudenti&order=1');
-		    $template->assign('showAllFilesStudenti_lang','Mostra i Files Studenti ordinati per data di inserimento');
-		}
-		else
-		{
-			$template->assign('showAllFilesStudenti_url','index.php?do=ShowAllFilesStudenti&order=0');
-			$template->assign('showAllFilesStudenti_lang','Mostra i Files Studenti ordinati per nome');
+			case 0:
+				$template->assign('showAllFilesStudenti_titoloPagina','ordinati per nome');
+				$template->assign('showAllFilesStudenti_url1','index.php?do=ShowAllFilesStudenti&order=1');
+		    	$template->assign('showAllFilesStudenti_lang1','Mostra i Files Studenti ordinati per data di inserimento');
+		    	$template->assign('showAllFilesStudenti_url2','index.php?do=ShowAllFilesStudenti&order=2');
+		    	$template->assign('showAllFilesStudenti_lang2','Mostra i Files Studenti ordinati per voto medio');
+		    	break;
+		
+			case 1:
+				$template->assign('showAllFilesStudenti_titoloPagina','ordinati per data di inserimento');
+				$template->assign('showAllFilesStudenti_url1','index.php?do=ShowAllFilesStudenti&order=0');
+				$template->assign('showAllFilesStudenti_lang1','Mostra i Files Studenti ordinati per nome');
+				$template->assign('showAllFilesStudenti_url2','index.php?do=ShowAllFilesStudenti&order=2');
+		    	$template->assign('showAllFilesStudenti_lang2','Mostra i Files Studenti ordinati per voto medio');
+				break;
+			
+			case 2:
+				$template->assign('showAllFilesStudenti_titoloPagina','ordinati per voto medio');
+				$template->assign('showAllFilesStudenti_url1','index.php?do=ShowAllFilesStudenti&order=0');
+				$template->assign('showAllFilesStudenti_lang1','Mostra i Files Studenti ordinati per nome');
+				$template->assign('showAllFilesStudenti_url2','index.php?do=ShowAllFilesStudenti&order=1');
+		    	$template->assign('showAllFilesStudenti_lang2','Mostra i Files Studenti ordinati per data di inserimento');
+				break;
 		}
 		
  	}
  	
  	function & getAllFiles($order)//c\`era $num
 	{ 
-		$quale_query = '';
+		$quale_ordine = '';
+		$group = '';
 		
-		if($order == 0)
+		switch($order)
 		{
-			$quale_query = 'titolo';
+			case 0:
+			    $quale_ordine = 'A.titolo';
+				break;
+		    case 1:
+		    	$quale_ordine = 'A.data_inserimento DESC';
+		    	break;
+		    case 2:
+		        $quale_ordine = 'avg(B.voto) DESC';
+		        $group = 'GROUP BY A.id_file';
+		        break;
 		}
-		else
-		{
-			$quale_query = 'data_inserimento DESC';
-		}
-		
-		
 		$db =& FrontController::getDbConnection('main');
-		$query = 'SELECT A.id_file FROM file A, file_studente_canale B 
-					WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
-					'ORDER BY A.'.$quale_query;
-//		$res =& $db->limitQuery($query, 0 , $num);
+		$query = 'SELECT A.id_file FROM file A, file_studente_commenti B' .
+				 ' WHERE A.id_file = B.id_file and A.eliminato != '.$db->quote(FILE_ELIMINATO).
+				 ' AND B.eliminato != '.$db->quote(COMMENTO_ELIMINATO).
+				 ''.$group.' ORDER BY '.$quale_ordine;
+				 
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 

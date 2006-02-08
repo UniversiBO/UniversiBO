@@ -54,9 +54,9 @@ class ShowFileStudentiCommento extends PluginCommand {
 //	    die();
 		
 		
-				$id_utente =& $commento->getIdUtente();
-				$commento_tpl['commento'] =& $commento->getCommento();
-				$commento_tpl['voto'] =& $commento->getVoto();
+				$id_utente = $commento->getIdUtente();
+				$commento_tpl['commento'] = $commento->getCommento();
+				$commento_tpl['voto'] = $commento->getVoto();
 				$commento_tpl['userLink'] = ('index.php?do=ShowUser&id_utente='.$id_utente);
 				$commento_tpl['userNick'] = $commento->getUsername();
 				
