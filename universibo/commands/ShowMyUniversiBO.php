@@ -111,7 +111,10 @@ class ShowMyUniversiBO extends UniversiboCommand
 		if ( count($id_canali) == 1 ) 
 			$values = $id_canali[0];
 		elseif ( count($id_canali) == 0 )
-			return array();
+		{
+			$ret = array();
+			return $ret;			
+		}
 		else 
 			$values = implode(',',$id_canali);
 	 	
@@ -155,7 +158,10 @@ class ShowMyUniversiBO extends UniversiboCommand
 		if ( count($id_canali) == 1 ) 
 			$values = $id_canali[0];
 		elseif ( count($id_canali) == 0 )
-			return array();
+		{
+			$ret = array();
+			return $ret;			
+		}
 		else 
 			$values = implode(',',$id_canali);
 	 	
