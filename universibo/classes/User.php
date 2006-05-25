@@ -12,6 +12,13 @@ define('USER_PERSONALE'  	,32);
 define('USER_ADMIN'      	,64);
 define('USER_ALL'        	,127);
 
+define('USER_ELIMINATO','S');
+define('USER_NOT_ELIMINATO','N');
+
+// TODO: se si cambia il nick da dare agli utenti cancellati bisogna o aggiornare tutto il db, o mantenere uno storico di tali nick
+// e nel metodo isUsernameValid() bisogna controllare che lo username sia diverso da tali nick
+define('NICK_USER_ELIMINATO','ex-utente'); // VERIFY o meglio: "utente non piש registrato" o "un tempo era utente"?
+
 
 /**
  * User class
@@ -85,6 +92,10 @@ class User {
 	 */
 	var $defaultStyle = '';
 	
+	/**
+	 * @access private
+	 */
+	var $eliminato = '';
 	
 	
 	
@@ -100,7 +111,7 @@ class User {
 	{
 		$username = trim($username);
 		$username_pattern='^([[:alnum:]אטילעש \._]{1,25})$';
-		return ereg($username_pattern , $username );
+		return ereg($username_pattern , $username ) && strcasecmp($username, NICK_USER_ELIMINATO) != 0;
 	}
 	
 	
@@ -206,7 +217,7 @@ class User {
 	 * @param array() $bookmark array con elenco dei id_canale dell'utente associati ai rispettivi ruoli 
 	 * @return User
 	 */
-	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $notifica=NULL, $ultimo_login=NULL, $AD_username=NULL, $phone='', $defaultStyle='', $bookmark=NULL)
+	function User($id_utente, $groups, $username=NULL, $MD5=NULL, $email=NULL, $notifica=NULL, $ultimo_login=NULL, $AD_username=NULL, $phone='', $defaultStyle='', $bookmark=NULL, $eliminato = USER_NOT_ELIMINATO)
 	{
 		$this->id_utente   = $id_utente;
 		$this->groups      = $groups;
@@ -219,6 +230,7 @@ class User {
 		$this->phone	   = $phone;
 		$this->defaultStyle	= $defaultStyle;
 		$this->bookmark    = $bookmark;
+		$this->eliminato	= $eliminato;
 	}
 	
 	
@@ -444,7 +456,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'UPDATE utente SET ad_username = '.$db->quote($ultimoLogin).' WHERE id_utente = '.$db->quote($this->getIdUser());
+			$query = 'UPDATE utente SET ad_username = '.$db->quote($this->ADUsername).' WHERE id_utente = '.$db->quote($this->getIdUser());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -622,7 +634,17 @@ class User {
 	{
 		return $this->ban;
 	}
-
+	
+	/**
+	 * Ritorna true se l'utente ha voluto la cancellazione 
+	 *
+	 * @return boolean
+	 */
+	function isEliminato()
+	{
+		return $this->eliminato == USER_ELIMINATO;
+	}
+	
 
 	/**
 	 * Se chiamata senza parametri ritorna true se l'utente corrente appartiene al gruppo Admin.
@@ -816,6 +838,39 @@ class User {
 	}
 	
 	
+	/**
+	 * Crea un oggetto utente collaboratore
+	 *
+	 * @static
+	 * to do
+	 * @return mixed User se eseguita con successo, false se l'utente non esiste
+	 */
+	function &selectAllCollaboratori()
+	{
+		
+		$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_utente, groups FROM utente WHERE groups > 2 AND groups!= 8 AND groups != 16 AND groups!= 32 AND sospeso == '.$db->quote(USER_NOT_ELIMINATO);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		
+		$rows = $res->numRows();
+		
+		$collaboratori = array();
+		
+	    while($row = $res->fetchRow())
+		{
+			$collaboratori[] =& new User($row[0], $row[1]);
+		}	
+		
+		return $collaboratori;
+
+	
+	}
+	
+	
 	
 	/**
 	 * Crea un oggetto utente dato il suo numero identificativo id_utente del database, 0 se si vuole creare un utente ospite
@@ -837,7 +892,7 @@ class User {
 		{
 			$db =& FrontController::getDbConnection('main');
 		
-			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE id_utente = '.$db->quote($id_utente);
+			$query = 'SELECT username, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style, sospeso  FROM utente WHERE id_utente = '.$db->quote($id_utente);
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -847,7 +902,7 @@ class User {
 			if( $rows == 0) {$false = false; return $false;};
 
 			$row = $res->fetchRow();
-			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
+			$user =& new User($id_utente, $row[5], $row[0], $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL, $row[9]);
 			return $user;
 			
 		}
@@ -869,7 +924,7 @@ class User {
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style  FROM utente WHERE username = '.$db->quote($username);
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, phone, default_style, sospeso  FROM utente WHERE username = '.$db->quote($username);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -882,7 +937,7 @@ class User {
 		}
 
 		$row = $res->fetchRow();
-		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL);
+		$user =& new User($row[0], $row[5], $username, $row[1], $row[2], $row[6], $row[3], $row[4], $row[7], $row[8], NULL, $row[9]);
 		return $user;
 		
 	}
@@ -905,7 +960,7 @@ class User {
 		
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username, phone, default_style  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
+		$query = 'SELECT id_utente, password, email, ultimo_login, ad_username, groups, notifica, username, phone, default_style, sospeso  FROM utente WHERE username LIKE '.$db->quote($username) .' AND email LIKE '.$db->quote($email);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -914,7 +969,7 @@ class User {
 		
 		while($row = $res->fetchRow())
 		{
-			$users[] =& new User($row[0], $row[5], $row[7], $row[1], $row[2], $row[6], $row[3], $row[4], $row[8], $row[9], NULL);
+			$users[] =& new User($row[0], $row[5], $row[7], $row[1], $row[2], $row[6], $row[3], $row[4], $row[8], $row[9], NULL, $row[10]);
 		}
 		
 		return $users;
@@ -947,8 +1002,9 @@ class User {
 		{
 			$this->id_utente = $db->nextID('utente_id_utente');
 			$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
+			$utente_eliminato = ( $this->isEliminato() ) ? USER_ELIMINATO : USER_NOT_ELIMINATO;
 			
-			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban, phone, default_style) VALUES '.
+			$query = 'INSERT INTO utente (id_utente, username, password, email, notifica, ultimo_login, ad_username, groups, ban, phone, sospeso, default_style) VALUES '.
 						'( '.$db->quote($this->getIdUser()).' , '.
 						$db->quote($this->getUsername()).' , '.
 						$db->quote($this->getPasswordHash()).' , '.
@@ -959,6 +1015,7 @@ class User {
 						$db->quote($this->getGroups()).' , '.
 						$db->quote($utente_ban).' , '.
 						$db->quote($this->getPhone()).' , '.
+						$db->quote($utente_eliminato).' , '.
 						$db->quote($this->getDefaultStyle()).' )'; 
 			$res = $db->query($query);
 			
@@ -989,7 +1046,7 @@ class User {
 	{
 		$db =& FrontController::getDbConnection('main');
 		$utente_ban = ( $this->isBanned() ) ? 'S' : 'N';
-		
+		$utente_eliminato = ( $this->isEliminato() ) ? USER_ELIMINATO : USER_NOT_ELIMINATO;
 		
 		$query = 'UPDATE utente SET username = '.$db->quote($this->getUsername()).
 					', password = '.$db->quote($this->getPasswordHash()).
@@ -1000,6 +1057,7 @@ class User {
 					', groups = '.$db->quote($this->getGroups()).
 					', phone = '.$db->quote($this->getPhone()).
 					', default_style = '.$db->quote($this->getDefaultStyle()).
+					', sospeso = '.$db->quote($utente_eliminato).
 					', ban = '.$db->quote($utente_ban).
 					' WHERE id_utente = '.$db->quote($this->getIdUser()); 
 		

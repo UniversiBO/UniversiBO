@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: SetupDecorator.php,v 1.2.2.1 2004-10-21 13:10:43 brain_79 Exp $
+// $Id: SetupDecorator.php,v 1.2.2.2 2006-05-25 11:21:56 evaimitico Exp $
 //
 
 /**
@@ -83,14 +83,14 @@ class PHPUnit_GUI_SetupDecorator
     *   @param  array   an array of file names that shall be excluded
     *
     */
-    function getSuitesFromDir($dir,$filenamePattern='',$exclude=array())
+    function getSuitesFromDir($dir,$filenamePattern='',$exclude=array(), $recurse = false)
     {
         // remove trailing DIRECTORY_SEPERATOR if missing
         if ($dir{strlen($dir)-1} == DIRECTORY_SEPARATOR) {
             $dir = substr($dir,0,-1);
         }
 
-        $files = $this->_getFiles($dir,$filenamePattern,$exclude,realpath($dir.'/..'));
+        $files = $this->_getFiles($dir,$filenamePattern,$exclude,realpath($dir.'/..'), $recurse);
         asort($files);
         foreach ($files as $className=>$aFile) {
             include_once($aFile);
@@ -114,7 +114,7 @@ class PHPUnit_GUI_SetupDecorator
     *   @param  string  the file names to be excluded
     *   @param  string  the root directory, which serves as the prefix to the fully qualified filename
     */
-    function _getFiles($dir,$filenamePattern,$exclude,$rootDir)
+    function _getFiles($dir,$filenamePattern,$exclude,$rootDir, $recurse = false)
     {
         $files = array();
         if ($dp=opendir($dir)) {
@@ -133,11 +133,12 @@ class PHPUnit_GUI_SetupDecorator
                     }
                 }
                 if (is_file($filename) && $match) {
-                    $className = str_replace(DIRECTORY_SEPARATOR, '_', substr(str_replace($rootDir, '', $filename), 1));
-                    $className = basename($className,'.php');   // remove php-extension
+//                    $className = str_replace(DIRECTORY_SEPARATOR, '_', substr(str_replace($rootDir, '', $filename), 1));
+//					$className = basename($className,'.php');   // remove php-extension
+					$className = basename($file,'.php');   // remove php-extension
                     $files[$className] = $filename;
                 }
-                if ($file!='.' && $file!='..' && is_dir($filename)) {
+                if ($file!='.' && $file!='..' && is_dir($filename) && $recurse) {
                     $files = array_merge($files,$this->_getFiles($filename,$filenamePattern,$exclude,$rootDir));
                 }
             }

@@ -580,6 +580,13 @@ class ForumApi
 	//getLastNPostsForum ?
 	//getLastPosts ?
 	//getLastNPosts ?
+	
+	/**
+	 *  
+	 * @author Pinto
+	 *
+	 */
+	
 }
 
 

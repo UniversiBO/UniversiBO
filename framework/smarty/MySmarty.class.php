@@ -80,7 +80,7 @@ class MySmarty extends Smarty{
                     
                     // didn't find the file, try include_path
                     $_params = array('file_path' => $_fullpath);
-                    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.get_include_path.php');
+                    require_once(SMARTY_CORE_DIR . 'core.get_include_path.php');
                     if(smarty_core_get_include_path($_params, $this)) {
                         $params['resource_name'] = $_params['new_file_path'];
                         return true;
@@ -93,7 +93,7 @@ class MySmarty extends Smarty{
             }
         } elseif (empty($this->_plugins['resource'][$params['resource_type']])) {
             $_params = array('type' => $params['resource_type']);
-            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.load_resource_plugin.php');
+            require_once(SMARTY_CORE_DIR . 'core.load_resource_plugin.php');
             smarty_core_load_resource_plugin($_params, $this);
         }
 

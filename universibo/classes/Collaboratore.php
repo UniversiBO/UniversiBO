@@ -201,6 +201,43 @@ class Collaboratore extends User {
 	
 	}
 	
+    /**
+	 * Inserisce il profilo di un nuovo collaboratore sul DB
+	 *
+	 * @return	 boolean true se avvenua con successo, altrimenti Error object
+	 */
+	function insertCollaboratoreItem()
+	{				 
+		$db =& FrontController::getDbConnection('main');
+		
+        ignore_user_abort(1);
+        $db->autoCommit(false);
+		$return = true;
+		
+		
+		//todo fare inserimento solo se non già presente
+		$query = 'INSERT INTO collaboratore (id_utente, intro, recapito, obiettivi, foto, ruolo) VALUES '.
+					'( '.
+					$db->quote($this->getIdUtente()).' , '.
+					$db->quote($this->getIntro()).' , '.
+					$db->quote($this->getRecapito()).' , '.
+					$db->quote($this->getObiettivi()).' , '.
+					$db->quote($this->getFotoFilename()).' , '.
+					$db->quote($this->getRuolo()).' )';
+					 
+		$res = $db->query($query);
+		//var_dump($query);
+		if (DB::isError($res)){
+			$db->rollback();
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		}
+		
+		$db->commit();
+		$db->autoCommit(true);
+		ignore_user_abort(0);
+	}
+
+	
 }
 
 

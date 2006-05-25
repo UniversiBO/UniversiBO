@@ -36,7 +36,8 @@
         </STYLE>
     </head>
     <body>
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" name="optionsForm">
+<!--        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" name="optionsForm"> -->
+        <form action="index.php?do=TestUnit" method="post" name="optionsForm">
             <table align="center" class="outline" width="70%">
                 <tr>
                     <th colspan="10">

@@ -3,7 +3,7 @@
 	
 	<!--Root Folder can be absolute or relative to receiver path -->
 	<rootFolder>../framework/</rootFolder>
-	<rootURL>universibo2/htmls/</rootURL>
+	<rootURL>universibo2devel/htmls/</rootURL>
 	<paths>
 		<application>../universibo/</application>
 		<commands>../universibo/commands/</commands>
@@ -82,7 +82,7 @@
 			<response type="template" name="default">chisiamo.tpl</response>
 		</ShowContacts>
 		<ShowCollaboratore class="ShowCollaboratore">
-			<response type="template" name="default">collaboratore.tpl</response>
+			<response type="template" name="default">tabellina_contatto.tpl</response>
 		</ShowCollaboratore>
 		<ShowQuestions class="ShowQuestions">
 			<response type="template" name="default">questionario.tpl</response>
@@ -305,12 +305,22 @@
 			<response type="template" name="default">contatto_docente_add.tpl</response>
 		</ContattoDocenteAdd>
 		
+		<CollaboratoreProfiloAdd class="CollaboratoreProfiloAdd">
+			<response type="template" name="default">collaboratore_profilo_add.tpl</response>
+		</CollaboratoreProfiloAdd>
+		
+		<StepCommandHandler class="StepCommandHandler">
+			<response type="template" name="default">step_command_handler.tpl</response>
+<!--			<pluginCommand name="ProvaStepCommand" class="StepCommand.ProvaStepCommand" /> -->
+			<pluginCommand name="InformativaPrivacyStepCommand" class="StepCommand.InformativaPrivacyStepCommand" />
+		</StepCommandHandler>
+		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
 	</commands>
 	
 	<dbInfo type="DB">
-	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo2_1</connection>
+	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo2_2</connection>
 	    <connection identifier="mysql">mysql://my_username:my_password@host/my_dbname</connection>
 	</dbInfo>
 	
@@ -372,13 +382,15 @@
 		<alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>
 		<rootEmail>universibo@mail.ing.unibo.it</rootEmail>
+		<develEmail>dev_universibo@mail.ing.unibo.it</develEmail>
 		<infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
 		<regolamento>../universibo/files/regolamento.txt</regolamento>
 		<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 		<defaultAnnoAccademico>2004</defaultAnnoAccademico>
 		
-		<antiVirusEnable>true</antiVirusEnable>
+		<!--<antiVirusEnable>true</antiVirusEnable>-->
+		<antiVirusEnable>false</antiVirusEnable>
 		<antiVirusType>clamav</antiVirusType>
 		<antiVirusClamavCmd>/usr/local/bin/clamscan</antiVirusClamavCmd>
 		<antiVirusClamavOpts>--quiet --recursive</antiVirusClamavOpts>

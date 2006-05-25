@@ -135,6 +135,7 @@ class FrontController {
 	}
 	
 
+
 	/**
 	* Executes an action.
 	*
@@ -218,6 +219,22 @@ class FrontController {
 		 
 	}
 	
+	/**
+	 * @author Pinto
+	 * @access public
+	 * @return array list of available plugin for current requested command
+	 */
+	 function getAvailablePlugins () 
+	 {
+		$list = array();
+		foreach ($this->plugins as $pc)
+		{
+			$explodedPc = explode(".",$pc);
+			$class_name = $explodedPc[count($explodedPc)-1];
+			$list[]		= $class_name;
+		}
+		return $list;
+	}
 
 
 	/**
