@@ -3,7 +3,6 @@
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
 
-
 /**
  * Login is an extension of UniversiboCommand class.
  *
@@ -43,7 +42,7 @@ class Login extends UniversiboCommand {
 			
 			$userLogin = User::selectUserUsername($_POST['f1_username']);
 			
-			if ($userLogin === false)
+			if ($userLogin === false || $userLogin->isEliminato() )
 			{
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => '0', 'msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
@@ -55,22 +54,28 @@ class Login extends UniversiboCommand {
 			{
 				session_destroy();
 				session_start();
-				$userLogin->updateUltimoLogin(time());
 				$_POST['f1_password'] = '';  //resettata per sicurezza
-				$this->setSessionIdUtente($userLogin->getIdUser());
-				$fc->setStyle($userLogin->getDefaultStyle());
+				$_SESSION['user'] = array();
+				$_SESSION['user'] = serialize($userLogin);
+				$_SESSION['referer'] = $referer;
+				FrontController::redirectCommand('StepCommandHandler');
 				
-				$forum = new ForumApi();
-				$forum->login($userLogin);
-				
+//				// questa parte è in StepCommandHandler
+//				$userLogin->updateUltimoLogin(time());
+//				$this->setSessionIdUtente($userLogin->getIdUser());
+//				$fc->setStyle($userLogin->getDefaultStyle());
+//				
+//				$forum = new ForumApi();
+//				$forum->login($userLogin);
+//				
 				//var_dump($referer);
 				
-				if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login') || strstr($referer, 'do=RegStudente')))
-					FrontController::redirectCommand('ShowMyUniversiBO');
-				else if (strstr($referer, 'forum'))
-					FrontController::goTo($forum->getMainUri());
-				else
-					FrontController::goTo($referer);
+//				if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login') || strstr($referer, 'do=RegStudente')))
+//					FrontController::redirectCommand('ShowMyUniversiBO');
+//				else if (strstr($referer, 'forum'))
+//					FrontController::goTo($forum->getMainUri());
+//				else
+//					FrontController::goTo($referer);
 				
 			}
 			$_POST['f1_password'] = '';  //resettata per sicurezza
