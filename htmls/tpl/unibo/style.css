@@ -301,11 +301,6 @@ td.evidenzia{
 /**
  * Pagina centrale
  */
-#content a:hover, #content a:focus, .box .contenuto a:hover, .box .contenuto a:focus
-{
-	background-color: #faffa0;
-	/*border: 1px solid #707700;*/
-}
 
 #seiIn
 {
@@ -379,6 +374,48 @@ td.evidenzia{
 	display: block;
 	text-align: left;
 }
+
+#content a:hover, #content a:focus, .box .contenuto a:hover, .box .contenuto a:focus, #content .navbar input:hover, #content .navbar input:focus 
+{
+	background-color: #faffa0 !important;
+	/*border: 1px solid #707700;*/
+}
+
+/**
+ * navbar dello stepCommand
+ *
+ */
+#content .navbar {
+	overflow: hidden;   /* queste due regole servono per contenere i float all'interno del navbar*/
+	width: 100%;
+	font-size: 13px; 
+}
+#content .navbar a, #content .navbar input{
+	display: block;
+	float: left;
+}
+
+#content .navbar a, #content .navbar input{
+	font-size: 13px;
+	color: #386dce; 
+	text-decoration: underline !important;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+	height: 1.35em !important;
+	line-height: normal !important;
+	white-space: normal ;
+	cursor: pointer;
+	cursor: hand; /* questo è aggiunto per visualizzare la manina in explorer*/
+	padding: 0;
+	margin: 0;
+	margin-right: 1ex !important; 
+	border: 0 none; 
+-moz-appearance: none !important;
+-moz-user-select: auto !important;
+-moz-box-sizing: content-box !important;
+}
+
+/* end navbar */
 
 #content ul, #content li { list-style-type: square !important; }
 .evidenzia
