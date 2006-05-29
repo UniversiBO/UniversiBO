@@ -239,7 +239,7 @@ class Link
 	 	$db =& FrontController::getDbConnection('main');
 		
 		if ( count($id_links) == 0 )
-			return array();
+			{ $ret = array(); return $ret;}
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));

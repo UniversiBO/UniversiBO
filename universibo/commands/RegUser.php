@@ -61,6 +61,10 @@ class RegUser extends UniversiboCommand
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo inserita '.$_POST['f34_email'].' non è sintatticamente valida','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
+			elseif(User::activeDirectoryUsernameExists($_POST['f34_email'])){
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo '.$_POST['f34_email'].' appartiene ad un utente già registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				$f4_accept = false;
+			}
 			else
 			{
 				$f34_email = strtolower($_POST['f34_email']);

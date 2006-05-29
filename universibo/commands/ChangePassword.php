@@ -29,7 +29,7 @@ class ChangePassword extends UniversiboCommand
 		}
 		
 		$template->assign('changePassword_langChangePasswordAlt','Modifica Password');
-		$template->assign('changePassword_langUsername','Username:');
+//		$template->assign('changePassword_langUsername','Username:');
 		$template->assign('changePassword_langOldPassword','Vecchia password:');
 		$template->assign('changePassword_langNewPassword','Nuova password:');
 		$template->assign('changePassword_langReNewPassword','Conferma nuova password:');
@@ -38,7 +38,7 @@ class ChangePassword extends UniversiboCommand
 							'In ogni caso non comunicate mai le vostre password di ateneo, lo staff non è tenuto a conoscerle');
 
 		// valori default form
-		$f6_username =	'';
+//		$f6_username =	'';
 		$f6_old_password =	'';
 		$f6_new_password1 =	'';
 		$f6_new_password2 =	'';
@@ -49,9 +49,12 @@ class ChangePassword extends UniversiboCommand
 		{
 			$f6_accept = true;
 			
-			//var_dump($_POST);
-			if ( !array_key_exists('f6_username', $_POST) ||
-				 !array_key_exists('f6_old_password', $_POST) ||
+//			//var_dump($_POST);
+//			if ( !array_key_exists('f6_username', $_POST) ||
+//				 !array_key_exists('f6_old_password', $_POST) ||
+//				 !array_key_exists('f6_new_password1', $_POST) ||
+//				 !array_key_exists('f6_new_password2', $_POST) ) 
+			if ( !array_key_exists('f6_old_password', $_POST) ||
 				 !array_key_exists('f6_new_password1', $_POST) ||
 				 !array_key_exists('f6_new_password2', $_POST) ) 
 			{
@@ -60,24 +63,24 @@ class ChangePassword extends UniversiboCommand
 			}
 			
 			
-			//username
-			if ( $_POST['f6_username'] == '' ) {
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Inserire il proprio username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-				$f6_accept = false;
-			}
-			elseif ( !User::isUsernameValid( $_POST['f6_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-				$f6_accept = false;
-			}
-			elseif ( $this->sessionUser->getUsername() != $_POST['f6_username'] ){ // && !$this->sessionUser->isAdmin()  
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non può essere differente dal proprio username, non è permesso cambiare la password di altri utenti','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-				$f6_accept = false;
-			}
-			elseif ( !User::usernameExists( $_POST['f6_username'] ) ){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username richiesto non è registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
-				$f6_accept = false;
-			}
-			else $q6_username = $f6_username = $_POST['f6_username'];
+//			//username
+//			if ( $_POST['f6_username'] == '' ) {
+//				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Inserire il proprio username','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+//				$f6_accept = false;
+//			}
+//			elseif ( !User::isUsernameValid( $_POST['f6_username'] ) ){
+//				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Nello username sono permessi fino a 25 caratteri alfanumerici con lettere accentate, spazi, punti, underscore','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+//				$f6_accept = false;
+//			}
+//			elseif ( $this->sessionUser->getUsername() != $_POST['f6_username'] ){ // && !$this->sessionUser->isAdmin()  
+//				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non può essere differente dal proprio username, non è permesso cambiare la password di altri utenti','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+//				$f6_accept = false;
+//			}
+//			elseif ( !User::usernameExists( $_POST['f6_username'] ) ){
+//				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username richiesto non è registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+//				$f6_accept = false;
+//			}
+//			else $q6_username = $f6_username = $_POST['f6_username'];
 
 
 			//old password
@@ -124,7 +127,7 @@ class ChangePassword extends UniversiboCommand
 
 		if ( $f6_accept == true )
 		{
-			$user = User::selectUserUsername($q6_username);
+			$user = User::selectUserUsername($user->getUSername());
 			
 			if ($user->updatePasswordHash(User::passwordHashFunction($q6_new_password1),true) == false)
 				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Si è verificato un errore durante l\'aggiornamento della password relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));
@@ -147,7 +150,7 @@ class ChangePassword extends UniversiboCommand
 		}
 		
 		// riassegna valori form
-		$template->assign('f6_username',	$f6_username);
+//		$template->assign('f6_username',	$f6_username);
 		$template->assign('f6_old_password',	'');
 		$template->assign('f6_new_password1',	$f6_new_password1);
 		$template->assign('f6_new_password2',	$f6_new_password2);

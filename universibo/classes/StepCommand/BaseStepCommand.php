@@ -14,6 +14,7 @@ define('NEXT_ACTION',	'next');
 define('BACK_ACTION',	'back');
 define('CANC_ACTION',	'canc');
 
+define('VALUES_SEPARATOR', '|');
 /**
  * Classe di base per l'interazione a step.
  * 
@@ -305,7 +306,7 @@ class BaseStepCommand extends PluginCommand
 					$db->quote(time()).' , '.
 					$db->quote(get_class($this)).' , '.
 					$db->quote($esito).' )'; 
-		$res = $db->query($query);
+		$res =& $db->query($query);
 		if (DB::isError($res)){
 			$db->rollback();
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
@@ -316,13 +317,13 @@ class BaseStepCommand extends PluginCommand
 				foreach ($params as $key => $val)
 				{
 					// VERIFY ha senso come tratto gli eventuali array? o è meglio fare più inserimenti?
-					$value = (is_array($val)) ? implode('|', $val): $val ;
+					$value = (is_array($val)) ? implode(VALUES_SEPARATOR, $val): $val ;
 					$query = 'INSERT INTO step_parametri (id_step, callback_name, param_name, param_value) VALUES '.
 							'( '.$next_id.' , '.
 							$db->quote($callback).' , '.
 							$db->quote($key).' , '.
 							$db->quote($val).' )'; 
-					$res = $db->query($query);
+					$res =& $db->query($query);
 					//var_dump($query);
 					if (DB::isError($res)){
 						$db->rollback();

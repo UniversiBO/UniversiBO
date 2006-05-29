@@ -577,6 +577,8 @@ class NewsItem {
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		
+		return $return;
 	}
 	
 	/**
@@ -614,6 +616,8 @@ class NewsItem {
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		
+		return $return;
 	}
 	
 	/**

@@ -17,7 +17,7 @@ class InformativaPrivacyStepCommand extends BaseStepCommand
 	function InformativaPrivacyStepCommand (&$baseCommand) {
 		parent::BaseStepCommand($baseCommand);
 		
-		// Da qui si può personalizzare il contenuto che comparirà. Meglio o direttamente nel tpl? ah, se avessimo risolto il problema dei testi ..
+		// Da qui si può personalizzare il contenuto che comparirà. Meglio qui o direttamente nel tpl? ah, se avessimo risolto il problema dei testi ..
 		$this->priority = HIGH_INTERACTION;
 		$this->title = 'Informativa sulla privacy';
 		$this->navigationLang['next'] = 'accetta';
