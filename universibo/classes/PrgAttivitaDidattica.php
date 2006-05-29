@@ -544,7 +544,7 @@ class PrgAttivitaDidattica extends Canale
 		
 		$rows = $res->numRows();
 		
-		if( $rows == 0) return array();
+		if( $rows == 0) { $ret = array(); return $ret;}
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{
@@ -620,7 +620,7 @@ class PrgAttivitaDidattica extends Canale
 		
 		$rows = $res->numRows();
 		
-		if( $rows == 0) return array();
+		if( $rows == 0) { $ret = array(); return $ret;}
 		$elenco = array();
 		while (	$res->fetchInto($row) )
 		{

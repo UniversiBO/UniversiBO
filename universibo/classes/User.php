@@ -647,6 +647,17 @@ class User {
 	
 
 	/**
+	 * Imposta l'utente come eliminato. NB questa modifica non viene salvata 
+	 * automaticamente nel db. Bisogna invocare updateUser 
+	 *
+	 * @return boolean
+	 */
+	function setEliminato($elimina = true)
+	{
+		return ($this->eliminato = ($elimina) ? USER_ELIMINATO : USER_NOT_ELIMINATO);
+	}
+	
+	/**
 	 * Se chiamata senza parametri ritorna true se l'utente corrente appartiene al gruppo Admin.
 	 * Se chiamata in modo statico con il parametro opzionale ritorna true se il gruppo specificato appartiene al gruppo Admin. 
 	 *
@@ -826,6 +837,7 @@ class User {
 		$db =& FrontController::getDbConnection('main');
 		
 		$query = 'SELECT id_utente FROM utente WHERE username = '.$db->quote($username);
+//		var_dump($query); die;
 		$res = $db->query($query);
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -865,9 +877,32 @@ class User {
 			$collaboratori[] =& new User($row[0], $row[1]);
 		}	
 		
-		return $collaboratori;
-
+		return $collaboratori;	
+	}
 	
+	
+	/**
+	 * @static
+	 * @param array	lista dei ruoli di cui si vogliono sapere gli appartenenti  
+	 * @return array array di lista di IdUser per ogni gruppo specificato 
+	 */
+	function & getIdUsersFromDesiredGroups($arrayWithCostantNameOfDesiredGroups)
+	{
+		$ret = array();
+		if (count($arrayWithCostantNameOfDesiredGroups) == 0) 
+			return $ret;
+			
+		$db =& FrontController::getDbConnection('main');
+		$groups = implode(', ', $arrayWithCostantNameOfDesiredGroups);
+		$query = 'SELECT id_utente, groups FROM utente WHERE groups IN '.$db->quote($groups);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			
+		while ($row = $res->fetchRow())
+			$ret[$row[1]][] = $row[0];
+		
+		return $ret;		
 	}
 	
 	

@@ -566,7 +566,7 @@ class Ruolo {
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows = 0) return array();
+		if( $rows = 0) { $ret = array(); return $ret;}
 		
 		$ruoli = array();
 		while (	$res->fetchInto($row) )
@@ -595,7 +595,7 @@ class Ruolo {
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$rows = $res->numRows();
-		if( $rows = 0) return array();
+		if( $rows = 0) { $ret = array(); return $ret;}
 		
 		$ruoli = array();
 		while (	$res->fetchInto($row) )

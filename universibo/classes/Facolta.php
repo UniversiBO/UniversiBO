@@ -300,7 +300,7 @@ class Facolta extends Canale{
 		$__facoltaElencoCanale     = array();
 		$__facoltaElencoCodice     = array();
 
-		if( $rows = 0) return array();
+		if( $rows = 0) { $ret = array(); return $ret;}
 		while (	$res->fetchInto($row) )
 		{
 			$facolta =& new Facolta($row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
