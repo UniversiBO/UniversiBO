@@ -198,22 +198,22 @@ class FrontController {
 
 		include_once ('PluginCommand'.PHP_EXTENSION);	
 
-		//$plugin_class=$this->getPluginClass($name);
+		$classValues = $this->getPluginClass($name);
 		
-		if (!array_key_exists($name, $this->plugins) )
+		if ($classValues == null )
 		{
 			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non è stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__));
 			return;
 		}	
 			
-		$pc = $this->plugins[$name];
-		$explodedPc = explode(".",$pc);
-		$file_namepath = implode("/",$explodedPc);
-		$class_name = $explodedPc[count($explodedPc)-1];
-		
-		require_once($this->paths['commands'].$file_namepath.PHP_EXTENSION);
-		
-		$plugin = new $class_name($base_command);
+//		$pc = $this->plugins[$name];
+//		$explodedPc = explode(".",$pc);
+//		$file_namepath = implode("/",$explodedPc);
+//		$class_name = $explodedPc[count($explodedPc)-1];
+//		
+//		require_once($this->paths['commands'].$file_namepath.PHP_EXTENSION);
+		require_once($this->paths['commands'].$classValues['nameWithPath'].PHP_EXTENSION);
+		$plugin = new $classValues['className']($base_command);
 		
 		return $plugin->execute($param);
 		 
@@ -229,9 +229,10 @@ class FrontController {
 		$list = array();
 		foreach ($this->plugins as $pc)
 		{
-			$explodedPc = explode(".",$pc);
-			$class_name = $explodedPc[count($explodedPc)-1];
-			$list[]		= $class_name;
+//			$explodedPc = explode(".",$pc);
+//			$class_name = $explodedPc[count($explodedPc)-1];
+//			$list[]		= $class_name;
+			$list[] = $this->_parsePluginInfo($pc);
 		}
 		return $list;
 	}
@@ -296,21 +297,39 @@ class FrontController {
 	* Returns the plugin command class associated in config file 
 	*
 	* @param string $name PluginCommand name associated in config file
-	* @return string PluginCommand class path/file
+	* @return mixed  array with PluginCommand class path/file if $name exists for the current command, null otherwise
 	* @access public
 	*/
 	function getPluginClass($name)
 	{
-		$pc = $this->plugins[$plugin->attributes[$name]];	
-		$explodedCC=explode(".",$cc);
-		//$theSize=count($explodedCC);
-		//if($theSize==1) return $explodedCC[0];
-		//else return $explodedCC[$theSize-1];
-		return implode("/",$explodedCC);
+		if (!array_key_exists($name, $this->plugins) )
+		{			
+			return null;
+		}
+		$ret = $this->_parsePluginInfo($this->plugins[$name]);
+		return $ret;
 	}
 
-
-
+	/**
+	 * @author Pinto
+	 * @access private
+	 * @return array plugin values
+	 */
+	function _parsePluginInfo ($plugin) 
+	{
+		$pc = $plugin['class'];
+		$explodedPc = explode(".",$pc);
+		$file_namepath = implode("/",$explodedPc);
+		$class_name = $explodedPc[count($explodedPc)-1];
+		
+		$ret = array('nameWithPath' => $file_namepath,'className' => $class_name);			
+		$ret['restrictedTo'] = (isset($plugin['restrictedTo']))? $plugin['restrictedTo'] : '';
+		$ret['restrictedTo'] = str_replace(' ', '', $ret['restrictedTo']);
+		
+		$ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : array();
+		
+		return $ret;
+	}
 	/**
 	* Returns the current receiver identifier 
 	*
@@ -925,7 +944,8 @@ class FrontController {
 		for($i=0; $i < $plugins->length; $i++)
 		{
 			$plugin = $plugins->item($i);
-			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');	
+//			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
+			$this->plugins[$plugin->getAttribute('name')] = array ('class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'));	
 		}
 
 		if(!isset($this->commandClass))

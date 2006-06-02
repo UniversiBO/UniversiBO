@@ -7,8 +7,8 @@
 
 
 require_once 'PHPUnit'.PHP_EXTENSION;
-require_once 'StepCommand/StoredInteractionInformationRetriever'.PHP_EXTENSION;
-require_once 'StepCommand/BaseStepCommand'.PHP_EXTENSION;
+require_once 'InteractiveCommand/StoredInteractionInformationRetriever'.PHP_EXTENSION;
+require_once 'InteractiveCommand/BaseInteractiveCommand'.PHP_EXTENSION;
 
 
 /**

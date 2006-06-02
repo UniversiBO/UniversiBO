@@ -131,7 +131,7 @@ Ai sensi e per gli effetti dell\'art.13 L.675/96 informiamo di quanto segue:
 ');
 
 
---tabelle necessarie per capire lo stato delle interazione dell'utente con i vari stepcommand
+--tabelle necessarie per capire lo stato delle interazione dell'utente con i vari InteractiveCommand
 
 CREATE TABLE "step_log" (
 "id_step" integer DEFAULT nextval('"step_id_step_seq"'::text) NOT NULL,
