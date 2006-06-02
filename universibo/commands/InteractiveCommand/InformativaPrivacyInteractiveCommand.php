@@ -1,9 +1,9 @@
 <?php
 
-require_once ('StepCommand/BaseStepCommand'.PHP_EXTENSION);
+require_once ('InteractiveCommand/BaseInteractiveCommand'.PHP_EXTENSION);
 
 /**
- * InformativaPrivacyStepCommand is an extension of BaseStepCommand class.
+ * InformativaPrivacyInteractiveCommand is an extension of BaseInteractiveCommand class.
  *
  * @package universibo
  * @subpackage commands
@@ -12,10 +12,10 @@ require_once ('StepCommand/BaseStepCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class InformativaPrivacyStepCommand extends BaseStepCommand
+class InformativaPrivacyInteractiveCommand extends BaseInteractiveCommand
 {
-	function InformativaPrivacyStepCommand (&$baseCommand) {
-		parent::BaseStepCommand($baseCommand);
+	function InformativaPrivacyInteractiveCommand (&$baseCommand) {
+		parent::BaseInteractiveCommand($baseCommand);
 		
 		// Da qui si può personalizzare il contenuto che comparirà. Meglio qui o direttamente nel tpl? ah, se avessimo risolto il problema dei testi ..
 		$this->priority = HIGH_INTERACTION;
@@ -66,7 +66,7 @@ class InformativaPrivacyStepCommand extends BaseStepCommand
 		$query = 'SELECT id_informativa, testo FROM  informativa 
 					WHERE data_pubblicazione <= '.$db->quote( time() ).
 					' AND  (data_fine IS NULL OR data_fine > '.$db->quote( time() ).')' .
-							'ORDER BY id_informativa';  // VERIFY così possiamo già pianificare quando una certa informativa scadrà
+							'ORDER BY id_informativa DESC';  // VERIFY così possiamo già pianificare quando una certa informativa scadrà
 										
 		$res =& $db->query($query);
 		if (DB::isError($res)) 

@@ -1,11 +1,11 @@
 <?php
 require_once ('PluginCommand'.PHP_EXTENSION);
-require_once('StepCommand/StepList'.PHP_EXTENSION);
+require_once('InteractiveCommand/StepList'.PHP_EXTENSION);
 
 define('CALLBACK', 'call_');
 
 // livelli di priorità
-define('HIGH_INTERACTION', 		1); //è obbligatorio un esito positivo, ovvero non si completa il login
+define('HIGH_INTERACTION', 		1); //è obbligatorio un esito positivo, altrimenti non si completa il login
 define('NORMAL_INTERACTION',	2); //in caso di cancel, viene richiesto ad ogni login
 define('LOW_INTERACTION', 		3); //in caso di cancel, non viene più richiesto. [interazione una-tantum]
 
@@ -23,7 +23,7 @@ define('VALUES_SEPARATOR', '|');
  * NB i metodi callback devono cominciare con il prefisso definito nella costante CALLBACK [ alla junit ^_^ ] 
  *
  * @package universibo
- * @subpackage StepCommand
+ * @subpackage InteractiveCommand
  * @version 2.0.0
  * @author Fabrizio Pinto <evaimitico@gmail.com>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
@@ -32,7 +32,7 @@ define('VALUES_SEPARATOR', '|');
 
 // TODO definizione degli eventi di innesco e di fine?
  
-class BaseStepCommand extends PluginCommand
+class BaseInteractiveCommand extends PluginCommand
 {
 	/**
 	 * è uno StepList
@@ -90,7 +90,7 @@ class BaseStepCommand extends PluginCommand
 	 * 
 	 * @return void
 	 */
-	function BaseStepCommand(&$baseCommand)
+	function BaseInteractiveCommand(&$baseCommand)
 	{
 		// VERIFY andrà bene questo costruttore?
 		parent::PluginCommand($baseCommand);
@@ -172,8 +172,10 @@ class BaseStepCommand extends PluginCommand
 //		var_dump($action);
 		// check if method exists
 		if (!in_array($action, get_class_methods(get_class($this))))
+		{
+//			var_dump(debug_backtrace()); die;
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->systemValues['user']->getIdUser(),'msg'=>'Si è verificato un errore nell\'interazione, la preghiamo di avvisare gli amministratori di sistema','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $this->systemValues['template']) );
-		
+		}
 		// se NEXT_ACTION stiamo effettuando il postback, altrimenti stiamo visualizzando semplicemente lo step richiesto 
 		$this->$action($item);
 //		var_dump(debug_backtrace());
@@ -196,7 +198,7 @@ class BaseStepCommand extends PluginCommand
 	 * @access private
 	 * @param string $name
 	 * @param boolean $complete
-	 * @return array	 array with useful values for StepCommandHandler
+	 * @return array	 array with useful values for InteractiveCommandHandler
 	 */
 	function returnState($complete = false, $canc = false ) 
 	{
@@ -214,7 +216,7 @@ class BaseStepCommand extends PluginCommand
 	 * @access private
 	 * @param string $name
 	 * @param boolean $complete
-	 * @return array	 array with useful values for StepCommandHandler
+	 * @return array	 array with useful values for InteractiveCommandHandler
 	 */
 	function returnErrorState($error) 
 	{
@@ -227,11 +229,12 @@ class BaseStepCommand extends PluginCommand
 	 *
 	 * @access public
 	 * @param array $param 
-	 * @return mixed true if all stepcommand callbacks are ok, false if cancelled by user, null otherwise
+	 * @return mixed true if all InteractiveCommand callbacks are ok, false if cancelled by user, null otherwise
 	 */
 	function execute($param)
 	{		
-		// check if current session user is the one who started the StepCommand
+//		var_dump($this); die;
+		// check if current session user is the one who started the InteractiveCommand
 		if ($this->id_utente != $this->systemValues['user']->getIdUser())
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->systemValues['user']->getIdUser(),'msg'=>'L\'utente della sessione corrente non è autorizzato a completare l\'interazione','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $this->systemValues['template']) );
 		
@@ -252,13 +255,13 @@ class BaseStepCommand extends PluginCommand
 				unset($_SESSION['idUtenteStep']);
 				unset($_SESSION['lista']);
 				if ($this->getPriority()  == LOW_INTERACTION) 
-					$this->storeStepCommandLog(false);
+					$this->storeInteractiveCommandLog(false);
 				return $this->returnState(false, true);
 			}			
 		}		
 		
 		if ($this->listaStep->getLength() == 0)
-			return $this->returnErrorState(get_class($this) . ' è uno StepCommand attivo senza callback (o step) implementati; provvedere quanto prima');
+			return $this->returnErrorState(get_class($this) . ' è uno InteractiveCommand attivo senza callback (o step) implementati; provvedere quanto prima');
 
 		
 		$item =& $this->listaStep->getCurrentStep();
@@ -269,7 +272,9 @@ class BaseStepCommand extends PluginCommand
 		
 		if($this->listaStep->isComplete())
 		{
-			$this->storeStepCommandLog(true);
+			$this->storeInteractiveCommandLog(true);
+			unset($_SESSION['idUtenteStep']);
+			unset($_SESSION['lista']);
 			return $this->returnState(true);
 		} 		
 		
@@ -291,7 +296,7 @@ class BaseStepCommand extends PluginCommand
 	 * @param boolean esito esito dell'interazione
 	 * @access private
 	 */
-	function storeStepCommandLog ($complete = false) 
+	function storeInteractiveCommandLog ($complete = false) 
 	{
 //		echo 'inizio il log'; die;
 		$db =& FrontController::getDbConnection('main');

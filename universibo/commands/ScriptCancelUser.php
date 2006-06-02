@@ -1,7 +1,7 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
-require_once ('StepCommand/StoredInteractionInformationRetriever'.PHP_EXTENSION);
+require_once ('InteractiveCommand/StoredInteractionInformationRetriever'.PHP_EXTENSION);
 
 
 /**
@@ -27,7 +27,7 @@ class ScriptCancelUser extends UniversiboCommand
 		if (!User::usernameExists($nick)) {echo 'username inesistente'; die; }
 		$user =& User::selectUserUsername($nick);
 		$idUtente = $user->getIdUser();
-		$values = StoredInteractionInformationRetriever::getInfoFromIdUtente($idUtente, 'InformativaPrivacyStepCommand', false);
+		$values = StoredInteractionInformationRetriever::getInfoFromIdUtente($idUtente, 'InformativaPrivacyInteractiveCommand', false);
 		
 //		// TODO verificare quale informativa ha approvato
 //		if (!isset($values['id_info']))
@@ -187,7 +187,7 @@ class CancellazioneUtente
 	 */
 	function _getFirstAdminInGroup ($groupId) 
 	{
-		$list =& User::getIdUsersFromDesiredGroups(USER_ADMIN);
+		$list =& User::getIdUsersFromDesiredGroups(array(USER_ADMIN));
 		$sql = 'SELECT user_id' .
 				' FROM phpbb_user_group' .
 				' WHERE user_id IN '.$this->db->quote(implode(', ', $list[USER_ADMIN])) . 

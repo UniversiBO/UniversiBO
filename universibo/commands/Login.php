@@ -58,9 +58,9 @@ class Login extends UniversiboCommand {
 				$_SESSION['user'] = array();
 				$_SESSION['user'] = serialize($userLogin);
 				$_SESSION['referer'] = $referer;
-				FrontController::redirectCommand('StepCommandHandler');
+				FrontController::redirectCommand('InteractiveCommandHandler');
 				
-//				// questa parte è in StepCommandHandler
+//				// questa parte è in InteractiveCommandHandler
 //				$userLogin->updateUltimoLogin(time());
 //				$this->setSessionIdUtente($userLogin->getIdUser());
 //				$fc->setStyle($userLogin->getDefaultStyle());

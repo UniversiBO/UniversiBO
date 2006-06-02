@@ -1,10 +1,10 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
-require_once('StepCommand/BaseStepCommand'.PHP_EXTENSION);
+require_once('InteractiveCommand/BaseInteractiveCommand'.PHP_EXTENSION);
 
 /**
- * StepCommandHandler is an extension of UniversiboCommand class.
+ * InteractiveCommandHandler is an extension of UniversiboCommand class.
  *
  * Manages Step interactions after login request by user
  *
@@ -15,7 +15,7 @@ require_once('StepCommand/BaseStepCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class StepCommandHandler extends UniversiboCommand {
+class InteractiveCommandHandler extends UniversiboCommand {
 	function execute()
 	{
 		$fc =& $this->getFrontController();
@@ -30,8 +30,8 @@ class StepCommandHandler extends UniversiboCommand {
 		$referer = (array_key_exists('referer',$_SESSION)) ? $_SESSION['referer'] :	((array_key_exists('HTTP_REFERER',$_SERVER))? $_SERVER['HTTP_REFERER'] : '');
 		$_SESSION['referer'] = ($referer != '') ? $referer : $fc->getReceiverUrl($fc->getReceiverId()); // VERIFY meglio in homepage o in myuniversibo se loggato?
 
-		$activeSteps = (array_key_exists('activeSteps', $_SESSION)) ? $_SESSION['activeSteps'] : $this->getActiveStepCommand();
-				
+		$activeSteps = (array_key_exists('activeSteps', $_SESSION)) ? $_SESSION['activeSteps'] : $this->getActiveInteractiveCommand();
+//		var_dump($activeSteps);		
 		if (count($activeSteps) == 0) 
 		{	
 			// completo il login dell'utente
@@ -60,17 +60,20 @@ class StepCommandHandler extends UniversiboCommand {
 		if (isset($_POST['action'])) $action = NEXT_ACTION; 
 		
 		$currentStep = current($activeSteps);		
-		$esito = $this->executePlugin($currentStep, $action);
+		if (! $this->isAllowedInteractionForActualUser($userLogin, $currentStep))
+			$this->updateActiveSteps($activeSteps);	
+			
+		$esito = $this->executePlugin($currentStep['className'], $action);
 		
 		//TODO verificare se esito è array?
 		if (isset($esito['error'])) 
 		{			
 			/** 
 			 * @todo mail agli sviluppatori per correggere subito l'errore, altrimenti la gente non si logga più!!
-			 * per il futuro, pensare a come disabilitare in automatico gli stepcommand con errore
+			 * per il futuro, pensare a come disabilitare in automatico gli InteractiveCommand con errore
 			 */			
 			require_once('Notifica/NotificaItem'.PHP_EXTENSION);
-			$notifica_titolo_long = 'WARNING: lo stepCommand '.$currentStep.' e\' errato';
+			$notifica_titolo_long = 'WARNING: l\'InteractiveCommand '.$currentStep['className'].' e\' errato';
 			$notifica_titolo = substr($notifica_titolo_long, 0 , 199);
 			$notifica_dataIns = time();
 			$notifica_urgente = false; // TODO settare come urgente
@@ -79,7 +82,7 @@ class StepCommandHandler extends UniversiboCommand {
 '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 '.$notifica_titolo_long.'
 
-Probabilmente lo stepCommand '.$currentStep.' non ha metodi implementati.
+Probabilmente l\'InteractiveCommand '.$currentStep['className'].' non ha metodi implementati.
 Risolvere subito il problema o disabilitarlo quanto prima,
 perché impedisce il login agli utenti		
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
@@ -107,13 +110,13 @@ perché impedisce il login agli utenti
 			
 		$callbackName = $esito['stepName'];
 		
-		$template->assign('StepCommandHandler_stepPath', 'StepCommand/' . $activeSteps[0] .'/'. $callbackName .'.tpl' );  //stepPath. estensione  e path hardcoded
-		$template->assign('StepCommandHandler_title_lang', $esito['title'] );  // TODO dare un title ad ogni StepCommand?
-		$template->assign('StepCommandHandler_back_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.BACK_ACTION );
-		$template->assign('StepCommandHandler_back_lang', $esito['navigation']['back']);
-		$template->assign('StepCommandHandler_canc_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.CANC_ACTION);
-		$template->assign('StepCommandHandler_canc_lang', $esito['navigation']['canc']);
-		$template->assign('StepCommandHandler_next_lang', $esito['navigation']['next'] );
+		$template->assign('InteractiveCommandHandler_stepPath', 'InteractiveCommand/' . $currentStep['className'] .'/'. $callbackName .'.tpl' );  //stepPath. estensione  e path hardcoded
+		$template->assign('InteractiveCommandHandler_title_lang', $esito['title'] );  // TODO dare un title ad ogni InteractiveCommand?
+		$template->assign('InteractiveCommandHandler_back_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.BACK_ACTION );
+		$template->assign('InteractiveCommandHandler_back_lang', $esito['navigation']['back']);
+		$template->assign('InteractiveCommandHandler_canc_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.CANC_ACTION);
+		$template->assign('InteractiveCommandHandler_canc_lang', $esito['navigation']['canc']);
+		$template->assign('InteractiveCommandHandler_next_lang', $esito['navigation']['next'] );
 	}
 	
 	/**
@@ -124,23 +127,42 @@ perché impedisce il login agli utenti
 	{
 		unset($activeSteps[key($activeSteps)]);
 		$_SESSION['activeSteps'] = $activeSteps;
-		FrontController::redirectCommand('StepCommandHandler');
+		FrontController::redirectCommand('InteractiveCommandHandler');
 	}
 	
 	/**
 	 * @author Pinto
 	 * @access private
-	 * @return array list of available stepCommand
+	 * @return boolean 
 	 */
-	function getAllStepCommand () 
+	function isAllowedInteractionForActualUser ( & $user, & $activeStep) 
+	{
+//		var_dump($activeStep); die;
+		if (empty($activeStep['restrictedTo'])) return true;  // nessun gruppo particolare specificato
+		
+		$allowedGroups = array();
+		foreach ($activeStep['restrictedTo'] as $i)
+			if (defined($i))
+				$allowedGroups[] = constant($i);
+		// verifico che il gruppo dell'utente sia tra quelli specificati 
+//		var_dump($allowedGroups); die;
+		return (in_array($user->getGroups(), $allowedGroups));
+	}
+	
+	/**
+	 * @author Pinto
+	 * @access private
+	 * @return array list of available InteractiveCommand
+	 */
+	function getAllInteractiveCommand () 
 	{
 		$list = $this->frontController->getAvailablePlugins();
 //		var_dump($list);
 		$steps = array();
 		foreach ($list as $item)
 		{
-			include_once('StepCommand/' . $item . PHP_EXTENSION);
-			if (in_array('BaseStepCommand', $this->get_all_ancerstors_of_class($item))) $steps[] = $item;
+			include_once('InteractiveCommand/' . $item['className'] . PHP_EXTENSION);
+			if (in_array('BaseInteractiveCommand', $this->get_all_ancerstors_of_class($item['className']))) $steps[] = $item;
 //			var_dump($item);
 //			var_dump(get_parent_class($item)); die;
 		}
@@ -177,24 +199,29 @@ perché impedisce il login agli utenti
 	/**
 	 * @author Pinto
 	 * @access private
-	 * @return array list of active stepCommand
+	 * @return array list of active InteractiveCommand
 	 */
-	function getActiveStepCommand () 
+	function getActiveInteractiveCommand () 
 	{
 		// TODO: migliorare il confronto
-		$allSteps 	= $this->getAllStepCommand();
-		$stepsDone 	= $this->getCompletedStepCommandByUser();
+		$allSteps 	= $this->getAllInteractiveCommand();
+		$stepsDone 	= $this->getCompletedInteractiveCommandByUser();
 //		var_dump($allSteps);
-//		var_dump($stepsDone);
-		return array_diff($allSteps, $stepsDone);
+//		var_dump($stepsDone); die;
+		$ret = array();
+		foreach ($allSteps as $i)
+			if (!in_array($i['className'], $stepsDone))
+				$ret[] = $i;
+				
+		return $ret;
 	}
 	
 	/**
 	 * @author Pinto
 	 * @access private
-	 * @return mixed array with the list of stepCommand already completed by current user, false if empty
+	 * @return mixed array with the list of InteractiveCommand already completed by current user, false if empty
 	 */
-	function getCompletedStepCommandByUser() 
+	function getCompletedInteractiveCommandByUser() 
 	{
 		$db =& FrontController::getDbConnection('main');
 		$user =&  unserialize($_SESSION['user']);

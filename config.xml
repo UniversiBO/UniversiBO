@@ -309,11 +309,12 @@
 			<response type="template" name="default">collaboratore_profilo_add.tpl</response>
 		</CollaboratoreProfiloAdd>
 		
-		<StepCommandHandler class="StepCommandHandler">
-			<response type="template" name="default">step_command_handler.tpl</response>
-<!--			<pluginCommand name="ProvaStepCommand" class="StepCommand.ProvaStepCommand" /> -->
-			<pluginCommand name="InformativaPrivacyStepCommand" class="StepCommand.InformativaPrivacyStepCommand" />
-		</StepCommandHandler>
+		<InteractiveCommandHandler class="InteractiveCommandHandler">
+			<response type="template" name="default">interactive_command_handler.tpl</response>
+			<!-- restrictedTo="" serve per applicare l'interactiveCommand a gruppi selezionati di utenti. Mettere le costanti (vedi User) dei gruppi voluti separati da virgola  -->
+			<pluginCommand name="ProvaInteractiveCommand" class="InteractiveCommand.ProvaInteractiveCommand" restrictedTo="USER_COLLABORATORE,USER_ADMIN" /> 
+			<pluginCommand name="InformativaPrivacyInteractiveCommand" class="InteractiveCommand.InformativaPrivacyInteractiveCommand" />
+		</InteractiveCommandHandler>
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
@@ -374,18 +375,18 @@
 		<filesTipoIconePath>img/icone_file/</filesTipoIconePath>
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
-		<questionariReceiver>andrea.scavolini@gmail.com;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
+		<questionariReceiver>evaimitico@gmail.com;silvia.cereda@studio.unibo.it</questionariReceiver>
 		<passwordDocentiAdmin>sissi;spiff1281;brain;evaimitico</passwordDocentiAdmin>
 		<contattoDocentiAdmin>Fabio84</contattoDocentiAdmin> <!-- un solo nome -->
 		<modFileStudenti>brain</modFileStudenti>
-		<programmazioneDidatticaAdmin>Elisa;brain;eagleone</programmazioneDidatticaAdmin>
+		<programmazioneDidatticaAdmin>Elisa;brain;evaimitico;eagleone</programmazioneDidatticaAdmin>
 		<alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>
 		<rootEmail>universibo@mail.ing.unibo.it</rootEmail>
 		<develEmail>dev_universibo@mail.ing.unibo.it</develEmail>
 		<infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
 		<regolamento>../universibo/files/regolamento.txt</regolamento>
-		<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
+	<!--	<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy> -->
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 		<defaultAnnoAccademico>2004</defaultAnnoAccademico>
 		

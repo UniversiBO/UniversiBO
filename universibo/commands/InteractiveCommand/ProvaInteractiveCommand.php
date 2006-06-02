@@ -1,9 +1,9 @@
 <?php
 
-require_once ('StepCommand/BaseStepCommand'.PHP_EXTENSION);
+require_once ('InteractiveCommand/BaseInteractiveCommand'.PHP_EXTENSION);
 
 /**
- * ProvaStepCommand is an extension of BaseStepCommand class.
+ * ProvaInteractiveCommand is an extension of BaseInteractiveCommand class.
  *
  * @package universibo
  * @subpackage commands
@@ -12,11 +12,11 @@ require_once ('StepCommand/BaseStepCommand'.PHP_EXTENSION);
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ProvaStepCommand extends BaseStepCommand
+class ProvaInteractiveCommand extends BaseInteractiveCommand
 {
-	function ProvaStepCommand (&$baseCommand) {
-		parent::BaseStepCommand($baseCommand);
-		$this->priority = HIGH_INTERACTION;
+	function ProvaInteractiveCommand (&$baseCommand) {
+		parent::BaseInteractiveCommand($baseCommand);
+//		$this->priority = HIGH_INTERACTION;
 		$this->title = 'ecco il titolo personalizzato';
 		// modificate la seguente variabile se non va bene il mess di default
 		//$this->msgOnCancelByUser = 'ecco il messaggio personalizzato in caso di cancel, quando la priorità è alta. Fate buon uso di questo strumento';

@@ -1,6 +1,8 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('InteractiveCommand/InformativaPrivacyInteractiveCommand'.PHP_EXTENSION);
+
 
 /**
  * ShowRules is an extension of UniversiboCommand class.
@@ -23,7 +25,9 @@ class ShowRules extends UniversiboCommand {
 		$template->assign('rules_langTitleAlt', 'Regolamento');
 		$template->assign('rules_langServicesRules', file_get_contents($this->frontController->getAppSetting('regolamento')));
 		$template->assign('rules_langPrivacySubTitle', 'INFORMATIVA SULLA PRIVACY');
-		$template->assign('rules_langPrivacy', file_get_contents($this->frontController->getAppSetting('informativaPrivacy')));
+		// TODO bisogna trovare un buon posto da cui recuperare l'informativa
+		$testoInformativa = InformativaPrivacyInteractiveCommand::getAttualeInformativaPrivacy ();										
+		$template->assign('rules_langPrivacy', $testoInformativa['testo']);
 		$template->assign('rules_langTitle', 'REGOLAMENTO PER L\'UTILIZZO DEI SERVIZI');
 		$template->assign('rules_langFacSubtitle', 'Università di Bologna');
 
@@ -93,6 +97,7 @@ class ShowRules extends UniversiboCommand {
 
 		return 'default';
 	}
+
 }
 
 ?>

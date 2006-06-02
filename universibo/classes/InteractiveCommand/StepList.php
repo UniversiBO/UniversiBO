@@ -128,7 +128,7 @@ define('EMPTY_VALUE', -1);
  * Rappresenta una lista di step. Contiene le informazioni relative necessarie 
  * 
  * @package universibo
- * @subpackage StepCommand
+ * @subpackage InteractiveCommand
  * @version 2.0.0
  * @author Fabrizio Pinto <evaimitico@gmail.com>
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
