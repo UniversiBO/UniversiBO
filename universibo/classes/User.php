@@ -886,14 +886,14 @@ class User {
 	 * @param array	lista dei ruoli di cui si vogliono sapere gli appartenenti  
 	 * @return array array di lista di IdUser per ogni gruppo specificato 
 	 */
-	function & getIdUsersFromDesiredGroups($arrayWithCostantNameOfDesiredGroups)
+	function & getIdUsersFromDesiredGroups($arrayWithDesiredGroupsConstant)
 	{
 		$ret = array();
-		if (count($arrayWithCostantNameOfDesiredGroups) == 0) 
+		if (count($arrayWithDesiredGroupsConstant) == 0) 
 			return $ret;
 			
 		$db =& FrontController::getDbConnection('main');
-		$groups = implode(', ', $arrayWithCostantNameOfDesiredGroups);
+		$groups = implode(', ', $arrayWithDesiredGroupsConstant);
 		$query = 'SELECT id_utente, groups FROM utente WHERE groups IN '.$db->quote($groups);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
