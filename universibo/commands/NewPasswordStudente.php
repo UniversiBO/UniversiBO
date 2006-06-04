@@ -128,7 +128,15 @@ class NewPasswordStudente extends UniversiboCommand
 			}
 			
 			//controllo corrispondenza usarname-usernamen di ateneo
-			$user = User::selectUserUsername($q5_username);
+			$user =& User::selectUserUsername($q5_username);
+			
+			if ( $user->isEliminato() )
+			{
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non è registrato da nessun utente','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				return 'default';
+			}
+			
+			
 			if ( $user->getADUsername() != $q5_ad_user )
 			{
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Lo username inserito non corrisponde con la mail di ateneo precedentemente registrata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));

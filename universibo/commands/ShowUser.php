@@ -16,8 +16,13 @@ class ShowUser extends UniversiboCommand{
 	{
 		$frontcontroller 	=& $this->getFrontController();
 		$template			=& $frontcontroller->getTemplateEngine();
-		$id_user			=  $_GET['id_utente'];
 		$current_user		=& $this->getSessionUser();
+		
+		if (!array_key_exists('id_utente', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_utente'] )  )
+		{
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id dell\'utente richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
+		$id_user			=  $_GET['id_utente'];
 		$user				=& User::selectUser($id_user);
 		
 		if($current_user->isOspite())
@@ -25,10 +30,11 @@ class ShowUser extends UniversiboCommand{
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $current_user->getIdUser(), 'msg'=>'Le schede degli utenti sono visualizzabili solo se si è registrati','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
-		if(!$user)
+		if(!$user || $user->isEliminato())
 		{
 			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $current_user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__));
 		}
+		
 		
 		if(!$current_user->isAdmin() && !$user->isDocente() && !$user->isTutor()  && $current_user->getIdUser() != $user->getIdUser())
 		{

@@ -98,7 +98,6 @@ class RecuperaUsernameStudente extends UniversiboCommand
 
 		if ( $f32_accept == true )
 		{
-		
 			//controllo active directory
 			$adl_host = $fc->getAppSetting('adLoginHost');
 			$adl_port = $fc->getAppSetting('adLoginPort'); 
@@ -111,7 +110,12 @@ class RecuperaUsernameStudente extends UniversiboCommand
 			//azioni
 			$id_utente = User::getIdFromADUsername($q32_ad_user);
 			$username = User::getUsernameFromId($id_utente);
-			$user = User::selectUser($id_utente);						
+			$user =& User::selectUser($id_utente);						
+			if ( $user->isEliminato())
+			{
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Non esiste alcun utente di Universibo registrato con la mail di ateneo fornita','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				return 'default';
+			}
 			$mail = $fc->getMail();
 
 			$mail->AddAddress($q32_ad_user);
