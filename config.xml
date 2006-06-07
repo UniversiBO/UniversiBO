@@ -100,7 +100,9 @@
 		<ShowUser class="ShowUser">
 			<response type="template" name="default">show_user.tpl</response>
 		</ShowUser>
-		
+		<ShowStatistiche class="ShowStatistiche">
+			<response type="template" name="default">show_statistiche.tpl</response>
+		</ShowStatistiche>
 		<ShowInfoDidattica class="ShowInfoDidattica">
 			<response type="template" name="default">show_info_didattica.tpl</response>
 		</ShowInfoDidattica>
