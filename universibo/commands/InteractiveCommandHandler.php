@@ -224,7 +224,7 @@ perché impedisce il login agli utenti
 	function getCompletedInteractiveCommandByUser() 
 	{
 		$db =& FrontController::getDbConnection('main');
-		$user =&  unserialize($_SESSION['user']);
+		$user =  unserialize($_SESSION['user']);
 		
 		$query = 'SELECT id_step, nome_classe FROM  	step_log 
 					WHERE id_utente = '.$db->quote( $user->getIdUser() ).
