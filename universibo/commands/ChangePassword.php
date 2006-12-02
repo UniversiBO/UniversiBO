@@ -127,7 +127,7 @@ class ChangePassword extends UniversiboCommand
 
 		if ( $f6_accept == true )
 		{
-			$user = User::selectUserUsername($user->getUSername());
+			$user = User::selectUserUsername($user->getUsername());
 			
 			if ($user->updatePasswordHash(User::passwordHashFunction($q6_new_password1),true) == false)
 				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Si è verificato un errore durante l\'aggiornamento della password relativa allo username '.$q6_username,'file'=>__FILE__,'line'=>__LINE__));

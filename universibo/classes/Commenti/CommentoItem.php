@@ -11,6 +11,7 @@
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>
  * @author Daniele Tiles
+ * @author Fabrizio Pinto
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
  * @copyright CopyLeft UniversiBO 2001-2003
  */
@@ -233,18 +234,20 @@ class CommentoItem
 	 
 	 function getUsername()
 	 {
-	 	$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT username FROM utente WHERE id_utente= '.$db->quote($this->id_utente);
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		$rows = $res->numRows();
-		if( $rows == 0) 
-			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
-		$res->fetchInto($row);
-		$res->free();
-		return $row[0];
+		return User::getUsernameFromId($this->id_utente);
+
+//	 	$db =& FrontController::getDbConnection('main');
+//		
+//		$query = 'SELECT username FROM utente WHERE id_utente= '.$db->quote($this->id_utente);
+//		$res = $db->query($query);
+//		if (DB::isError($res)) 
+//			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+//		$rows = $res->numRows();
+//		if( $rows == 0) 
+//			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
+//		$res->fetchInto($row);
+//		$res->free();
+//		return $row[0];
 		
 	 }
 	 
@@ -267,7 +270,7 @@ class CommentoItem
 				Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 				$return = false;
 			}
-			ignore_user_abort(0);
+		ignore_user_abort(0);
 		return $return;
 	 }
 	 
@@ -288,7 +291,7 @@ class CommentoItem
 				Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 				$return = false;
 			}
-			ignore_user_abort(0);
+		ignore_user_abort(0);
 		return $return;
 	 }
 	 
@@ -309,7 +312,7 @@ class CommentoItem
 				Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 				$return = false;
 			}
-			ignore_user_abort(0);
+		ignore_user_abort(0);
 		return $return;
 	  }
 	  /**

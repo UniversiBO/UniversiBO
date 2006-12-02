@@ -399,7 +399,8 @@ class NewsItem {
 		else 
 			$values = implode(',',$id_notizie);
 		
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+//		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A, utente B WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
 		//var_dump($query);
 		$res =& $db->query($query);
 		
@@ -413,7 +414,8 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],($row[4] == NEWS_URGENTE),($row[5] == NEWS_ELIMINATA),$row[6],$row[8] );
+			$username = User::getUsernameFromId($row[6]);
+			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[8],($row[4] == NEWS_URGENTE),($row[5] == NEWS_ELIMINATA),$row[6], $username );
 		}
 		
 		$res->free();
