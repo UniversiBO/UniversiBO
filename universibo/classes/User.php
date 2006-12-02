@@ -950,7 +950,6 @@ class User {
 	 *
 	 * @static
 	 * @param string $username nome identificativo utente
-	 * @param boolean $dbcache se true esegue il pre-caching del bookmark in modo da migliorare le prestazioni  
 	 * @return mixed User se eseguita con successo, false se l'utente non esiste
 	 */
 	function &selectUserUsername($username)
