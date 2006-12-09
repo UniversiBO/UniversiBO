@@ -400,7 +400,7 @@ class NewsItem {
 			$values = implode(',',$id_notizie);
 		
 //		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A, utente B WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
 		//var_dump($query);
 		$res =& $db->query($query);
 		
