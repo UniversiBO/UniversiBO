@@ -14,6 +14,13 @@ p, td, ul, ol, ul, li, dl, dt, dd, a
 	font-size: 13px;
 }
 
+/* usato anche nelle liste javascript */
+li .selectedItem
+{
+	background: url("freccia.gif") no-repeat;
+	background-position: -.3em .3em 
+}
+
 hr
 {
 	border-style: none;
@@ -856,3 +863,66 @@ td.evidenzia{
 .comandi { font-size: 11px; text-align: center;}
 #content p.comandi {margin-left: 3%; }
 span>p.comandi {margin-left: 5% !important;}
+
+
+/*
+ * liste espandibili:
+ */
+.domenabled .explodableList
+{
+        position:relative;
+}
+
+.domenabled ul.explodableList,
+.domenabled ul.explodableList li,
+.domenabled ul.explodableList ul
+{
+        list-style-type:none;
+        margin:0;
+        padding:0;
+}
+
+.domenabled ul.explodableList ul.hidden
+{
+  top:0px;
+  left:-2000px;
+  position:absolute;
+}
+
+.domenabled ul.explodableList ul.shown
+{
+display:block;
+position:static;
+}
+
+.domenabled .explodableList a.open
+{
+        background:url(minus.png) no-repeat 0 50% #eee;
+        padding-right:0px;
+        padding-left:20px;
+}
+
+
+.domenabled .explodableList .shown li
+{
+        padding-left:10px;
+}
+
+.domenabled .explodableList a.parent
+{
+        background:url(plus.png) no-repeat #fff 0 50%;
+        padding-right:0px;
+        padding-left:20px;
+}
+
+.domenabled ul.explodableList li a
+{
+        color:#000;
+        /*display:block;*/
+        text-decoration:none;
+}
+
+/*
+ * fine liste espandibili
+ */
+

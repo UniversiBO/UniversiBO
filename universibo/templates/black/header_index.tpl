@@ -11,6 +11,7 @@
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
 <script type="text/javascript" src="tpl/black/js_common.js"></script>
 {#styleSheet#}
+{#script#}
 {#favIcon#}
 </head>
  

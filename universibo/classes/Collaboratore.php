@@ -153,7 +153,7 @@ class Collaboratore extends User {
 	 */
 	function &selectCollaboratore($id_utente)
 	{
-		
+		$ret = false;
 		$db =& FrontController::getDbConnection('main');
 	
 		$query = 'SELECT id_utente,	intro, recapito, obiettivi, foto, ruolo FROM collaboratore WHERE id_utente = '.$db->quote($id_utente);
@@ -162,7 +162,7 @@ class Collaboratore extends User {
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows == 0) return false;
+		if( $rows == 0) return $ret;
 
 		$row = $res->fetchRow();
 		$collaboratore = new Collaboratore($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);

@@ -10,6 +10,7 @@
 <meta lang="it" name="keywords" content="{$common_metaKeywords|escape:"htmlall"}" />
 <meta lang="it" name="description" content="{$common_metaDescription|escape:"htmlall"}" />
 {#styleSheet#}
+{#script#}
 {#favIcon#}
 {*<!--[if IE]><style type="text/css">#header ul.hide {ldelim}display: none !important;{rdelim}</style><![endif]-->*}
 </head> 
