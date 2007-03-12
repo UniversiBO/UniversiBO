@@ -33,7 +33,7 @@ class ShowContacts extends UniversiboCommand {
 		$infoCollaboratori=& User::selectAllCollaboratori();
 		foreach($infoCollaboratori as $collaboratore)
 		{
-			$username =& User::getUsernameFromId($collaboratore->getIdUser());
+			$username = User::getUsernameFromId($collaboratore->getIdUser());
 			$coll =& Collaboratore::selectCollaboratore($collaboratore->getIdUser());
 			if(!$coll)
 			{
