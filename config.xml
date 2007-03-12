@@ -203,6 +203,12 @@
 			<pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
 		</NewsShowCanale>
 		
+		<FileDocenteAdmin class="FileDocenteAdmin">
+            <response type="template" name="success">file_docente_admin_success.tpl</response>
+            <response type="template" name="default">file_docente_admin.tpl</response>
+            <pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+            <pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
+        </FileDocenteAdmin>
 		<FileDownload class="FileDownload">
 			<response type="template" name="file_download_iscriviti">file_download_iscriviti.tpl</response>
 			<response type="template" name="file_download_password">file_download_password.tpl</response>
@@ -268,6 +274,14 @@
 			<response type="template" name="default">file_studenti_comment_delete.tpl</response>
 			<pluginCommand name="ShowFileStudentiCommento" class="Files.ShowFileStudentiCommento" />
 		</FileStudentiCommentDelete>
+		
+		
+		<DidatticaGestione class="DidatticaGestione">
+            <response type="template" name="success">didattica_gestione_success.tpl</response>
+            <response type="template" name="default">didattica_gestione.tpl</response>
+            <pluginCommand name="ShowTopic" class="Help.ShowTopic" />
+            <pluginCommand name="ShowHelpId" class="Help.ShowHelpId" />
+        </DidatticaGestione>
 		
 		<ProgrammazioneDidatticaFacolta class="ProgrammazioneDidatticaFacolta">
 			<response type="template" name="default">programmazione_didattica_facolta.tpl</response>
