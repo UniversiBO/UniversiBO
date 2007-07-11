@@ -31,6 +31,8 @@
 		
 		<ScriptCreaForum class="ScriptCreaForum" />
 		<ScriptOrdinaForum class="ScriptOrdinaForum" />
+
+		<ScriptCreaCatalogoFile class="ScriptCreaCatalogoFile" />
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
@@ -100,6 +102,7 @@
 		<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 		<defaultAnnoAccademico>2003</defaultAnnoAccademico>
+		<catalogoFileName>../universibo/files/catalog.xml</catalogoFileName>
 	</appSettings>
 	
 </config>
