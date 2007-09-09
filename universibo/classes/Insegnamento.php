@@ -44,6 +44,12 @@ class Insegnamento extends Canale
 	var $elencoAttivitaPadre = NULL;
 	
 	/**
+	 * @private
+	 * per il caching di tutti i codici dei cdl cui afferisce l'insegnamento
+	 */
+	var $elencoCodiciCDL = NULL;
+	
+	/**
 	 * Crea un oggetto Insegnamento 
 	 *
 	 * @param int $id_canale 		identificativo del canale su database
@@ -75,12 +81,14 @@ class Insegnamento extends Canale
 		//var_dump($elenco_attivita);
 		$this->elencoAttivita =& $elenco_attivita;
 		$num = count($elenco_attivita);
+		$this->elencoCodiciCDL = array();
 		for ($i = 0; $i < $num; $i++)
 		{
 			if ($elenco_attivita[$i]->isSdoppiato() == false)
 			{
 				$this->elencoAttivitaPadre[] =& $elenco_attivita[$i];
 			}
+			$this->elencoCodiciCDL[] = $elenco_attivita[$i]->getCodiceCdl();
 		}
 		
 		//var_dump($this->elencoAttivitaPadre);
@@ -243,6 +251,15 @@ class Insegnamento extends Canale
 		return $this->elencoAttivitaPadre;
 	}
 
+	/**
+	 * Restituisce un array con i codici dei cdl di questo insegnamento
+	 *
+	 * @return array
+	 */
+	function getElencoCodiciCdl()
+	{
+		return $this->elencoCodiciCDL;
+	}
 
 	/**
 	 * Seleziona da database e restituisce l'oggetto Insegnamento

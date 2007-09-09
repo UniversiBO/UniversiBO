@@ -4,7 +4,7 @@ require_once ('Facolta'.PHP_EXTENSION);
 require_once ('Cdl'.PHP_EXTENSION);
 require_once ('Insegnamento'.PHP_EXTENSION);
 require_once ('Docente'.PHP_EXTENSION);
-
+require_once ('User'.PHP_EXTENSION);
 
 require_once ('PrgAttivitaDidattica'.PHP_EXTENSION);
 require_once ('UniversiboCommand'.PHP_EXTENSION);
@@ -30,7 +30,7 @@ class DidatticaGestione extends UniversiboCommand{
 		$user = & $this->getSessionUser();
 		$user_ruoli = & $user->getRuoli();
 
-		if (!$user->isAdmin())
+		if (!$user->isAdmin())		// TODO far sì che specifici utenti siano autorizzati (da file di conf)
 		{
 			Error :: throwError (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti necessari per accedere a questa pagina\n la sessione potrebbe essere terminata", 'file' => __FILE__, 'line' => __LINE__));
 		}		
@@ -42,173 +42,182 @@ class DidatticaGestione extends UniversiboCommand{
 		$id_canale = '';	
 		$id_facolta = '';
 		$id_cdl = '';
+		$id_sdop = '';
 		
 		$f41_cur_sel = ''; 
 		$edit = 'false';
-		// controllo facoltà scelta
-		if (array_key_exists('id_fac', $_GET))
-		{
-			if (!ereg('^([0-9]{1,9})$', $_GET['id_fac']))
-				Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id della facoltà richiesta non è valido', 'file' => __FILE__, 'line' => __LINE__));
+		$docenteEdit = false;
+		
+		$esamiAlternativi = '';
 
-			
+		// controllo se è stato scelta un'attività sdoppiata
+		if (array_key_exists('id_sdop', $_GET) && ereg('^([0-9]{1,9})$', $_GET['id_sdop']))
+		{
+			$prg_sdop =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaSdoppiata((int) $_GET['id_sdop']);
+			if ($prg_sdop !== false)
+			{
+				$id_sdop = $_GET['id_sdop'];
+				$edit = 'true';
+				$cdl = & Cdl::selectCdlCodice($prg_sdop->getCodiceCdl());
+				$fac = & Facolta::selectFacoltaCodice($cdl->getCodiceFacoltaPadre());
+				$f41_cur_sel['insegnamento'] = $prg_sdop->getNome();
+				$f41_cur_sel['docente'] = $prg_sdop->getNomeDoc();
+				$f41_cur_sel['codice docente'] = $prg_sdop->getCodDoc();
+				$f41_cur_sel['ciclo'] = $prg_sdop->getTipoCiclo();
+				$f41_cur_sel['anno'] = $prg_sdop->getAnnoCorsoUniversibo();
+				$f41_cur_sel['cdl'] = $cdl->getTitolo();
+				$f41_cur_sel['facoltà'] = $fac->getTitolo();
+				$f41_cur_sel['status'] = 'sdoppiato';
+					
+				$f41_edit_sel['ciclo'] = $prg_sdop->getTipoCiclo();
+				$f41_edit_sel['anno'] = $prg_sdop->getAnnoCorsoUniversibo();
+				$f41_edit_sel['codice docente'] = $prg_sdop->getCodDoc();
+				
+				unset($cdl);
+				unset($fac);
+			}
+		}
+		
+		// controllo canale scelto
+//		if (array_key_exists('id_canale', $_GET))
+		if (array_key_exists('id_canale', $_GET) && ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+		{
+//			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+//				Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			if ( Canale::getTipoCanaleFromId($_GET['id_canale']) == CANALE_INSEGNAMENTO)
+			{
+				$canale = & Canale::retrieveCanale(intval($_GET['id_canale']));
+				$id_canale = $canale->getIdCanale();
+				if ($edit == 'false')
+				{
+					$f41_cur_sel['insegnamento'] = $canale->getTitolo();
+					$listaPrgs =  $canale->getElencoAttivitaPadre();
+					$prg =  $listaPrgs[0];
+					$cdl = & Cdl::selectCdlCodice($prg->getCodiceCdl());
+					$fac = & Facolta::selectFacoltaCodice($cdl->getCodiceFacoltaPadre());
+					$f41_cur_sel['docente'] = $prg->getNomeDoc();
+					$f41_cur_sel['codice docente'] = $prg->getCodDoc();
+					$f41_cur_sel['ciclo'] = $prg->getTipoCiclo();
+					$f41_cur_sel['anno'] = $prg->getAnnoCorsoUniversibo();
+					$f41_cur_sel['cdl'] = $cdl->getTitolo();
+					$f41_cur_sel['facoltà'] = $fac->getTitolo();
+					
+					$f41_edit_sel['ciclo'] = $prg->getTipoCiclo();
+					$f41_edit_sel['anno'] = $prg->getAnnoCorsoUniversibo();
+					$f41_edit_sel['codice docente'] = $prg->getCodDoc();
+					$edit = 'true';
+					
+					$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale,$prg);
+				}
+				else
+					$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale,$prg_sdop);
+//				$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale);
+				if (count($esamiAlternativi) == 0) $esamiAlternativi = '';
+				// la modifica del docente è permessa solo quando l'insegnamento non è ancora stato aperto pubblicamente
+				if(intval($canale->getPermessi()) == (USER_COLLABORATORE|USER_ADMIN) ||
+					intval($canale->getPermessi()) == USER_ADMIN )
+					$docenteEdit = true;	
+				else
+					unset($f41_edit_sel['codice docente']);
+				
+			}
+		}
+		
+
+		// controllo facoltà scelta
+//		if (array_key_exists('id_fac', $_GET))
+		if (array_key_exists('id_fac', $_GET) && ereg('^([0-9]{1,9})$', $_GET['id_fac']))
+		{
+//			if (!ereg('^([0-9]{1,9})$', $_GET['id_fac']))
+//				Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id della facoltà richiesta non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
+				
 			if ( Canale::getTipoCanaleFromId($_GET['id_fac']) == CANALE_FACOLTA)
 			{
 				$fac = & Canale::retrieveCanale(intval($_GET['id_fac']));
 				$id_facolta = $fac->getIdCanale();
-				$f41_cur_sel['facoltà'] = $fac->getTitolo();		
-				// 	controllo cdl scelto				
-				if (array_key_exists('id_cdl', $_GET))
-				{
-					if (!ereg('^([0-9]{1,9})$', $_GET['id_cdl']))
-						Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
-		
-					
-					if ( Canale::getTipoCanaleFromId($_GET['id_cdl']) == CANALE_CDL)
-					{
-						$cdl = & Canale::retrieveCanale(intval($_GET['id_cdl']));
+				$f41_cur_sel['facoltà'] = $fac->getTitolo();
+			}
+		}
 						
-						if ($cdl->getCodiceFacoltaPadre() == $fac->getCodiceFacolta())					
+		// controllo cdl						
+//		if (array_key_exists('id_cdl', $_GET))
+		if (array_key_exists('id_cdl', $_GET) && ereg('^([0-9]{1,9})$', $_GET['id_cdl']))
+		{
+//			if (!ereg('^([0-9]{1,9})$', $_GET['id_cdl']))
+//				Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			
+			if ( Canale::getTipoCanaleFromId($_GET['id_cdl']) == CANALE_CDL)
+			{
+				$cdl = & Canale::retrieveCanale(intval($_GET['id_cdl']));
+				// controllo coerenza tra facoltà, cdl e insegnamento
+				if($id_facolta != '')
+					if($cdl->getCodiceFacoltaPadre() == $fac->getCodiceFacolta())
+						if($id_canale == '' || in_array($cdl->getCodiceCdl(),$canale->getElencoCodiciCdl()))
 						{
 							$id_cdl = $cdl->getIdCanale();
 							$f41_cur_sel['cdl'] = $cdl->getTitolo();
-													
-							// controllo canale scelto
-							if (array_key_exists('id_canale', $_GET))
-							{
-								if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-									Error :: throwError (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
-					
-								
-								if ( Canale::getTipoCanaleFromId($_GET['id_canale']) == CANALE_INSEGNAMENTO)
-								{
-									$canale = & Canale::retrieveCanale(intval($_GET['id_canale']));
-									if(in_array($cdl->getCodiceCdl(),$canale->getElencoCodiciCdl()))
-									{
-										$id_canale = $canale->getIdCanale();
-										$f41_cur_sel['insegnamento'] = $canale->getTitolo();
-										$prgs =  $canale->getElencoAttivitaPadre();
-										$prg =  $prgs[0];
-										$f41_cur_sel['ciclo'] = $prg->getTipoCiclo();
-										$f41_cur_sel['docente'] = $prg->getNomeDoc();
-										$f41_cur_sel['codice docente'] = $prg->getCodDoc();
-										
-										$f41_edit_sel['codice docente'] = $prg->getCodDoc();
-										$f41_edit_sel['ciclo'] = $prg->getTipoCiclo();
-										$f41_edit_sel['anno'] = $prg->getAnnoAccademico();
-										$edit = 'true';
-										/*foreach ($canale->getElencoAttivitaPadre() as $prg)
-											if ($prg->getCodiceCdl() == $cdl->getCodiceCdl())
-											{
-												$f41_cur_sel['ciclo'] = $prg->getTipoCiclo();
-												$f41_cur_sel['docente'] = $prg->getNomeDoc();
-												$f41_cur_sel['codice docente'] = $prg->getCodDoc();
-												$edit = 'true';
-											}
-											*/
-									}
-									/*$template->assign('common_canaleURI', $canale->showMe());
-									$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());*/
-								}
-							}
 						}
+					else
+					{
+						$id_facolta = '';
+						unset($f41_cur_sel['facoltà']);
 					}
-				}
 			}
-		}
-
-		
-		$f41_canale = array();
-		$f41_cdl = array();
-		$f41_fac = array();
-	
-		$elenco_canali = array();
-		$listaFacolta = array();
-		$listaCDL = array();
-		$listaCanali = array();
-		
-		$annoDefault = $frontcontroller->getAppSetting("defaultAnnoAccademico");
+		}	
 			
-		//recupero elenco facoltà, cdl, e gli insegnamenti degli ultimi due anni
-		$listaFacolta =& Facolta::selectFacoltaElenco();
-		
-		if ($id_facolta != '')
-		{
-			$tmpFac = & Canale::retrieveCanale(intval($id_facolta));
-//			var_dump($tmpFac); die;
-			$firstFaculty = $tmpFac->getCodiceFacolta(); 
-		}
-		else 
-		{
-			$firstFaculty =  $listaFacolta[0]->getCodiceFacolta();
-			$id_facolta = $listaFacolta[0]->getIdCanale();
-		}
-		
-		$listaCDL =& Cdl::selectCdlElencoFacolta($firstFaculty);
-		
-		if ($id_cdl != '')
-		{
-			$tmpCdl = & Canale::retrieveCanale(intval($id_cdl));
-			$firstCDL = $tmpCdl->getCodiceCdl(); 
-		}
-		else 
-		{
-			$firstCDL =  $listaCDL[0]->getCodiceCdl();
-			$id_cdl = $listaCDL[0]->getIdCanale();
-		}
-		
-		$listaCanali[$annoDefault] =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($firstCDL,$annoDefault);
-		$anno = $annoDefault -1;
-		$listaCanali[$anno] =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($firstCDL,$anno);
-		
-		
-		foreach ($listaCanali as $year => $lista)
-		{
-//			var_dump($listaCanali);
-			foreach ( $lista as $didatticaCanale)
-			{
-//				var_dump($didatticaCanale);
-				$id_current_canale = $didatticaCanale->getIdCanale();			
-				$year = $didatticaCanale->getAnnoAccademico();
-				$nome_current_canale = $didatticaCanale->getTitolo();
-				$f41_canale[$year][$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_current_canale == $id_canale)? 'true' : 'false');
-			}
-		}
-		
-		foreach ( $listaCDL as $didatticaCanale)
-		{
-			$id_current_canale = $didatticaCanale->getIdCanale();
-			$nome_current_canale = $didatticaCanale->getTitolo();
-			$f41_cdl[$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_cdl == $id_current_canale)? 'true' : 'false');
-		}
-		
-		foreach ( $listaFacolta as $didatticaCanale)
-		{
-			$id_current_canale = $didatticaCanale->getIdCanale();
-			$nome_current_canale = $didatticaCanale->getTitolo();
-			$f41_fac[$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_facolta == $id_current_canale)? 'true' : 'false');
-		}
-		
-//		var_dump($f41_fac); echo "fac finished";
-//		var_dump($f41_cdl); echo "cdl finished";
-//		var_dump($f41_canale); die;
-		krsort($f41_canale);
-		$tot = count($f41_canale);
-		$list_keys = array_keys($f41_canale);
-		for($i=0; $i<$tot; $i++) 
-//			var_dump($f41_canale[$i]);
-			uasort($f41_canale[$list_keys[$i]], array('DidatticaGestione','_compareCanale'));
-		
-//		var_dump($f41_files); die;
 		$f41_accept = false;
+		$listaDocenti = '';
 		
+		//submit della ricerca docente
+		if (array_key_exists('f41_search', $_POST)  )
+		{
+			
+			if (!array_key_exists('f41_username', $_POST) || !array_key_exists('f41_email', $_POST) )
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'La ricerca docente effettuata non è valida', 'file' => __FILE__, 'line' => __LINE__));
+			
+			$f41_accept = true;
+				 
+			if ($_POST['f41_username'] == '' && $_POST['f41_email'] == '')
+			{
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Specificare almeno uno dei due criteri di ricerca docente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f41_accept = false;
+			}	
+			
+			if ($_POST['f41_username'] == '')
+				$f41_username = '%';
+			else	
+				$f41_username = $_POST['f41_username'];
+				
+			if ($_POST['f41_email'] == '')
+				$f41_email = '%';
+			else
+				$f41_email = $_POST['f41_email'];
+			
+			if ($f41_accept)
+			{
+				$users_search =& User::selectUsersSearch($f41_username, $f41_email);
+				$listaDocenti = array();
+				
+				foreach($users_search as $v)
+					if ($v->isDocente())
+					{
+						$doc =& Docente::selectDocente($v->getIdUser());
+						$listaDocenti[]=array('nome' => $doc->getNomeDoc(), 'codice' => $doc->getCodDoc());
+					}
+				
+			}
+			
+		}
 		
-		// TODO sistemare da qui in poi
-		
-		if (array_key_exists('f41_submit', $_POST) && $id_canale != '' && $id_cdl != '' && $id_facolta != '') 
+		$f41_accept = false;
+		// submit della modifica delle attività
+		if (array_key_exists('f41_submit', $_POST) && $id_canale != '' ) 
 		{
 			$f41_accept = true;
-//			var_dump($_POST);
+//			var_dump($_POST); die;
 			if (!array_key_exists('f41_edit_sel', $_POST) || !is_array($_POST['f41_edit_sel']) ||count($_POST['f41_edit_sel']) == 0)
 			{
 				Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Nessun parametro specificato, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
@@ -216,43 +225,98 @@ class DidatticaGestione extends UniversiboCommand{
 			}
 			else 
 			{
+				$prgs = array();
 				$tmpEdit = $_POST['f41_edit_sel'];
+				
+				if($id_sdop != '') $prgs[] = & PrgAttivitaDidattica::selectPrgAttivitaDidatticaSdoppiata((int) $id_sdop);
+				else 
+					$prgs[] = & $prg;
+//				var_dump($prgs); die;	
+				if(array_key_exists('f41_alts',$_POST))
+					foreach ($_POST['f41_alts'] as $key => $value)
+					{
+						if(strstr($key,'#') != false)
+						{
+							list($id_channel,$id_sdoppiamento) = explode('#', $key);
+//							var_dump($key); var_dump($id_sdoppiamento); die;
+							$prgs[] = & PrgAttivitaDidattica::selectPrgAttivitaDidatticaSdoppiata((int) $id_sdoppiamento);
+						}
+						else
+						{
+							$channel =& Canale::retrieveCanale($key);
+							$atts = $channel->getElencoAttivitaPadre();
+							$prgs[] = & $atts[0];
+ 						}
+						
+					}
+				$tot = count($prgs);
 				if (array_key_exists('codice docente', $tmpEdit))
 				{
 					if (!ereg('^([0-9]{1,9})$', $tmpEdit['codice docente']) || Docente::selectDocenteFromCod(intval($tmpEdit['codice docente'])))
-					Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Codice docente invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f41_accept = false;
+					{
+						Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Codice docente invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f41_accept = false;
+					}
+					else
+						for($i = 0; $i < $tot; $i++)
+							$prgs[$i]->setCodDoc($tmpEdit['codice docente']);
 				}			
 				if (array_key_exists('ciclo', $tmpEdit))
 				{
-					if (!ereg('^([1-3]{1})$', $tmpEdit['ciclo']))
-					Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Ciclo invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f41_accept = false;
+					if (!ereg('^([1-3,E]{1})$', $tmpEdit['ciclo']))
+					{
+						Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Ciclo invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f41_accept = false;
+					}
+					else
+						for($i = 0; $i < $tot; $i++)
+							$prgs[$i]->setTipoCiclo($tmpEdit['ciclo']);
 				}
 				if (array_key_exists('anno', $tmpEdit))
 				{
-					if (!ereg('^([0-9]{4})$', $tmpEdit['anno']) || Docente::selectDocenteFromCod($tmpEdit['anno']))
-					Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Anno accademico invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f41_accept = false;
+					if (!ereg('^([1-5]{1})$', $tmpEdit['anno']) || Docente::selectDocenteFromCod($tmpEdit['anno']))
+					{
+						Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Anno invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f41_accept = false;
+					}
+					else
+						for($i = 0; $i < $tot; $i++)
+							$prgs[$i]->setAnnoCorsoUniversibo($tmpEdit['anno']);
 				}
 				
 			}
-			
-
+					
 			//esecuzione operazioni accettazione del form
 			if ($f41_accept == true) 
 			{
-				
+				$failure = false;
 				$db = FrontController::getDbConnection('main');
 				ignore_user_abort(1);
         		$db->autoCommit(false);
-								
 				
-				// TODO sistemare il codice di successo
+				
+				// TODO manca log delle modifiche
+				
+				foreach($prgs as $p)
+				{
+					$esito = $p->updatePrgAttivitaDidattica();
+					if ($esito == false) 
+					{
+						$failure = true;
+						$db->rollback();
+						break;
+					}
+				}
 				
         		$db->autoCommit(true);
 				ignore_user_abort(0);
-	
+				
+				if ($failure)
+				{
+					Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Errore DB, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					return 'default';
+				}
+				
 				return 'success';
 			}
 
@@ -260,15 +324,18 @@ class DidatticaGestione extends UniversiboCommand{
 		//end if (array_key_exists('f41_submit', $_POST))
 
 		
-		$template->assign('f41_canale', $f41_canale);
+/*		$template->assign('f41_canale', $f41_canale);
 		$template->assign('f41_cdl', $f41_cdl);
 		$template->assign('f41_fac', $f41_fac);
-		$template->assign('f41_cur_sel', $f41_cur_sel);
+*/		$template->assign('f41_cur_sel', $f41_cur_sel);
 		$template->assign('f41_edit_sel', $f41_edit_sel);
+		$template->assign('f41_alts', $esamiAlternativi);
 		$template->assign('DidatticaGestione_edit', $edit);
+		$template->assign('DidatticaGestione_docenteEdit', $docenteEdit);
+		$template->assign('DidatticaGestone_docs', $listaDocenti);
 		
 		// TODO aggiungere l'help
-		// $this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+		$this->executePlugin('ShowTopic', array('reference' => 'didatticagestione'));
 		 
 		return 'default';
 
@@ -287,6 +354,73 @@ class DidatticaGestione extends UniversiboCommand{
 		$nomeb = strtolower($b['nome']);
 		return strnatcasecmp($nomea, $nomeb);
 	}
+	
+	
+	/**
+	 * Recupera le attività associate ad un insegnamento, escludendo un eventuale attività
+	 */
+	 function  & _getAttivitaFromCanale($id_canale, $prg_exclude = null)
+	 {
+	 	$prgs =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
+	 	$ret = array();
+	 	foreach ($prgs as $prg)
+	 		if ($prg_exclude == null || $prg != $prg_exclude)
+	 		{
+//	 			var_dump($prg);
+	 			$cdl = & Cdl::selectCdlCodice($prg->getCodiceCdl());
+	 			$id = $id_canale;
+	 			$uri = 'index.php?do=DidatticaGestione&id_canale='.$id_canale.'&id_cdl='.$_GET['id_cdl'].'&id_fac='.$_GET['id_fac'];
+	 			$status = '';
+	 			if($prg->isSdoppiato())
+	 			{
+	 				$id .= '#' . $prg->getIdSdop();
+	 				$uri .= '&id_sdop='.$prg->getIdSdop();
+	 				$status = 'sdoppiato';
+	 			}
+	 			$ret[] = array(
+	 						'id'		=> $id,
+	 						'spunta'	=> 'false',
+	 						'nome'		=> $prg->getNome(),
+	 						'doc'		=> $prg->getNomeDoc(),
+	 						'cdl'		=> $cdl->getNome(),
+	 						'ciclo'		=> $prg->getTipoCiclo(),
+	 						'anno'		=> $prg->getAnnoCorsoUniversibo(),
+	 						'status'	=> $status,
+	 						'uri'		=> $uri
+	 					);
+	 		}
+	 	return $ret;	
+	 }
+	 
+	 function _log($id_utente, $desc)
+	 {
+	 	$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'id_utente', 4 => 'ip_utente', 5 =>  'messaggio' );
+		
+		$log = new LogHandler('modificaDidattica','../universibo/log-universibo/',$log_definition); 
+		
+		$log_array = array( 'timestamp'  => time(),
+							'date'  => date("Y-m-d",time()),
+							'time'  => date("H:i",time()),
+							'id_utente' => 'id_utente',
+							'ip_utente' => (isset($_SERVER) && array_key_exists('REMOTE_ADDR',$_SERVER))? $_SERVER['REMOTE_ADDR']: '0.0.0.0',
+							'messaggio'  => $desc);
+		$log->addLogEntry($log_array);
+	 }
+
+	 
+	/**
+	 * @static
+	 * @return string
+	 */
+	function getEditUrl($id_canale, $id_cdl = null, $id_facolta = null, $id_sdop = null)
+	{
+		$ret = 'index.php?do=DidatticaGestione&id_canale='.$id_canale;
+		if ($id_cdl != null) $ret .= '&id_cdl='.$id_cdl;
+		if ($id_facolta != null) $ret .= '&id_fac='.$id_facolta;
+		if ($id_sdop != null) $ret .= '&id_sdop='.$id_sdop;
+		return $ret;
+	}
+	
 	
 }
 

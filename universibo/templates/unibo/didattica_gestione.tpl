@@ -4,12 +4,12 @@
 </div>
 {include file=avviso_notice.tpl}
 <form name="nav" method="post" >
-	<fieldset>
+	{*<fieldset>
 		<legend>Navigazione:</legend>
 		{foreach name=facAnno item=item1 from=$f41_fac key=id}
 		{if $smarty.foreach.facAnno.first}<ul class="explodableList">{/if}
-		{* NB senza il &nbsp; la lista javascript non funzia bene *}
-		<li {if $itemq.spunta=="true"} class="selectedItem"{/if}>&nbsp;<a href="{$DidatticaGestione_baseUrl}&amp;id_fac={$id}" >{$item1.nome|escape:"htmlall"}</a>
+	*}	{* NB senza il &nbsp; la lista javascript non funzia bene *}
+	{*	<li {if $item1.spunta=="true"} class="selectedItem"{/if}>&nbsp;<a href="{$DidatticaGestione_baseUrl}&amp;id_fac={$id}" >{$item1.nome|escape:"htmlall"}</a>
 		{if $item1.spunta=="true"}
 			{foreach name=cdlAnno item=item2 from=$f41_cdl key=id2}
 			{if $smarty.foreach.cdlAnno.first}<ul>{/if}
@@ -33,10 +33,10 @@
 		{foreachelse}
 		<p>Nessuna facoltà visualizzabile</p>
 		{/foreach}
-	</fieldset>
-	{if $f41_cur_sel != ''}
+	</fieldset> 
+*}	{if $f41_cur_sel != ''}
 		<div class="elenco">
-		<h3>Selezione corrente:</h3>
+		<h3>Insegnamento selezionato:</h3>
 		{foreach name=sel item=item from=$f41_cur_sel key=key}
 		{cycle name=t_class values="even,odd" print=false advance=false}
 		<p class="{cycle name=t_class}"><span class="label">{$key|escape:"htmlall"}:</span>  {$item|escape:"htmlall"}</p>
@@ -49,6 +49,7 @@
 		{foreach name=edit item=val key=key from=$f41_edit_sel}
 			<p><label class="label" for="{$key}">{$key|escape:"htmlall"}:</label>
 		<input class="casella" type="text" name="f41_edit_sel[{$key}]" id="{$key}" size="65" value="{$val|escape:"htmlall"}" /></p>
+
 {*			<p><label class="label" for="f41_codDoc">Codice docente:</label>
 		<input class="casella" type="text" name="f41_codDoc" id="f41_codDoc" size="65" value="{$f41_codDoc|escape:"htmlall"}" /></p>
 	<p><label class="label" for="f41_ciclo">Ciclo:</label>
@@ -56,14 +57,42 @@
 	<p><span><label for="f41_Description"><p>Descrizione<br /> del link:<br />(max 1000 caratteri)</p></label>
 		<textarea cols="50" rows="10" id="f41_Description" name="f41_Description">{$f41_Description|escape:"htmlall"}</textarea></span></p>*}
 		{/foreach}
-	<p><input class="submit" type="submit" id="" name="f41_submit" size="20" value="Esegui" /></p>
+		
+		<p>NB: <br/>ciclo -> 1,2,3,E<br/>anno -> 1,2,3,4,5</p>
+
 	</fieldset>
+	{if $DidatticaGestione_docenteEdit}
+	<fieldset>
+	<legend>Ricerca docente</legend>
+		<p><label class="label" for="f41_username">per&nbsp;username: </label>
+		<input name="f41_username" id="f41_username" type="text" value="" /></p>
+	<p><label class="label" for="f41_email">per e-mail: </label>
+		<input name="f41_email" id="f41_email" type="text" value="" /></p>
+	<p><input class="submit" name="f41_search" id="f41_search" type="submit" value="Cerca" /></p>
+	{if $DidatticaGestone_docs != ''}
+	<p><strong>Docenti trovati</strong></p>
+	{foreach item=d from=$DidatticaGestone_docs}
+	<p>{$d.nome}&nbsp;&nbsp;&nbsp;&nbsp;{$d.codice}</p>
+	{/foreach}
+	{/if}
+	</fieldset>
+		{/if}
+	
+	{if $f41_alts != ''}
+	<fieldset>
+		<legend><span>Applica la modifica anche ai seguenti insegnamenti:</span></legend>
+			{foreach name=canali item=item from=$f41_alts}
+				<p><input type="checkbox" id="f41_alts{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f41_alts[{$item.id}]" />&nbsp;&nbsp;&nbsp;<label for="f41_alts{$smarty.foreach.canali.iteration}"><a href="{$item.uri}">{$item.nome}, {$item.doc}, cdl {$item.cdl}, ciclo {$item.ciclo}, anno {$item.anno}{if $item.status != ''}, {$item.status}{/if} </a></label></p>
+			{/foreach}
+		</fieldset>
+			<p><input class="submit" type="submit" id="" name="f41_submit" size="20" value="Esegui" /></p>
+		{/if}	
 	{/if}
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 
-{*
+
 <hr />
 <p>{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}</p>
-*}
+
 {include file=footer_index.tpl}

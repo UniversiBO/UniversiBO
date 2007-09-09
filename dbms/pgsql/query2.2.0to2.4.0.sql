@@ -157,3 +157,15 @@ ALTER TABLE utente ADD sospeso char(1);
 UPDATE utente SET sospeso = 'N' WHERE 1=1;
 ALTER TABLE utente ALTER COLUMN sospeso SET NOT NULL;
 ALTER TABLE utente ALTER COLUMN sospeso SET DEFAULT 'N';
+
+-- 6-9-07 evaimitico
+CREATE SEQUENCE prg_sdop_id_sdop_seq;
+ALTER TABLE prg_sdoppiamento ADD COLUMN id_sdop INTEGER;
+UPDATE prg_sdoppiamento SET id_sdop = nextval('prg_sdop_id_sdop_seq');
+ALTER TABLE prg_sdoppiamento ALTER COLUMN id_sdop SET DEFAULT nextval('prg_sdop_id_sdop_seq');
+ALTER TABLE prg_sdoppiamento ALTER COLUMN id_sdop SET NOT NULL;
+
+-- in didatticagestione si può riusare l'help che riguarda la ricerca di username
+INSERT INTO help_riferimento (riferimento, id_help) VALUES ('didatticagestione', 2); 
+
+INSERT INTO help_topic (riferimento, titolo, indice) VALUES ('didatticagestione','Modificare un insegnamento e cercare un codice docente (solo admin e collaboratori)',100);

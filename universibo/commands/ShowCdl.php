@@ -1,6 +1,7 @@
 <?php 
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('DidatticaGestione'.PHP_EXTENSION);
 
 /**
  * ShowCdl: mostra un corso di laurea
@@ -77,11 +78,16 @@ class ShowCdl extends CanaleCommand {
 					
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
-				
+				$allowEdit = ($session_user->isAdmin() || $session_user->isCollaboratore() );
+				$fac = Facolta::selectFacoltaCodice($cdl->getCodiceFacoltaPadre());
+				$editUri = (!$tempPrgAttDid->isSdoppiato())? 
+					DidatticaGestione::getEditUrl($tempPrgAttDid->getIdCanale(),$cdl->getIdCanale(), $fac->getIdCanale()) :
+					DidatticaGestione::getEditUrl($tempPrgAttDid->getIdCanale(),$cdl->getIdCanale(), $fac->getIdCanale(),$tempPrgAttDid->getIdSdop()); 
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
 					array( 'name' => $tempPrgAttDid->getNome(),
 						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 
 						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$tempPrgAttDid->getIdCanale(),
+						   'editUri' => $editUri,
 						   'forumUri' =>($tempPrgAttDid->getServizioForum() != false) ? $forum->getForumUri($tempPrgAttDid->getForumForumId()) : '' );
 			}
 		}
@@ -103,7 +109,7 @@ class ShowCdl extends CanaleCommand {
 		
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 		$template -> assign('cdl_langGoToForum', 'Link al forum');
-
+		
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
 		$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
 		
