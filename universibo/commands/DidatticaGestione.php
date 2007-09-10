@@ -114,9 +114,8 @@ class DidatticaGestione extends UniversiboCommand{
 					$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale,$prg_sdop);
 //				$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale);
 				if (count($esamiAlternativi) == 0) $esamiAlternativi = '';
-				// la modifica del docente è permessa solo quando l'insegnamento non è ancora stato aperto pubblicamente
-				if(intval($canale->getPermessi()) == (USER_COLLABORATORE|USER_ADMIN) ||
-					intval($canale->getPermessi()) == USER_ADMIN )
+				// la modifica del docente è permessa solo quando non è attivo il forum dell'insegnamento
+				if($canale->getForumForumId() != null && $canale->getForumForumId() != 0)
 					$docenteEdit = true;	
 				else
 					unset($f41_edit_sel['codice docente']);
@@ -207,7 +206,7 @@ class DidatticaGestione extends UniversiboCommand{
 						$doc =& Docente::selectDocente($v->getIdUser());
 						$listaDocenti[]=array('nome' => $doc->getNomeDoc(), 'codice' => $doc->getCodDoc());
 					}
-				
+				if(count($listaDocenti) == 0) $listaDocenti = '';
 			}
 			
 		}
@@ -250,6 +249,7 @@ class DidatticaGestione extends UniversiboCommand{
 						
 					}
 				$tot = count($prgs);
+				$mods = array();
 				if (array_key_exists('codice docente', $tmpEdit))
 				{
 					if (!ereg('^([0-9]{1,9})$', $tmpEdit['codice docente']) || Docente::selectDocenteFromCod(intval($tmpEdit['codice docente'])))
@@ -259,7 +259,9 @@ class DidatticaGestione extends UniversiboCommand{
 					}
 					else
 						for($i = 0; $i < $tot; $i++)
-							$prgs[$i]->setCodDoc($tmpEdit['codice docente']);
+							//$prgs[$i]->setCodDoc($tmpEdit['codice docente']);
+							$this->_updateVal($prgs[$i],$i, $mods, $tmpEdit['codice docente'], 'doc', $template);
+							
 				}			
 				if (array_key_exists('ciclo', $tmpEdit))
 				{
@@ -270,7 +272,8 @@ class DidatticaGestione extends UniversiboCommand{
 					}
 					else
 						for($i = 0; $i < $tot; $i++)
-							$prgs[$i]->setTipoCiclo($tmpEdit['ciclo']);
+							//$prgs[$i]->setTipoCiclo($tmpEdit['ciclo']);
+							$this->_updateVal($prgs[$i],$i, $mods, $tmpEdit['ciclo'], 'ciclo', $template);
 				}
 				if (array_key_exists('anno', $tmpEdit))
 				{
@@ -281,7 +284,8 @@ class DidatticaGestione extends UniversiboCommand{
 					}
 					else
 						for($i = 0; $i < $tot; $i++)
-							$prgs[$i]->setAnnoCorsoUniversibo($tmpEdit['anno']);
+							//$prgs[$i]->setAnnoCorsoUniversibo($tmpEdit['anno']);
+							$this->_updateVal($prgs[$i],$i, $mods, $tmpEdit['anno'], 'anno', $template);
 				}
 				
 			}
@@ -296,16 +300,18 @@ class DidatticaGestione extends UniversiboCommand{
 				
 				
 				// TODO manca log delle modifiche
-				
-				foreach($prgs as $p)
+				$keys = array_keys($mods);
+				foreach($keys as $i)
 				{
-					$esito = $p->updatePrgAttivitaDidattica();
+					$esito = $prgs[$i]->updatePrgAttivitaDidattica();
 					if ($esito == false) 
 					{
 						$failure = true;
 						$db->rollback();
 						break;
 					}
+					else
+						$this->_log($user->getIdUser(),$id_canale, $id_cdl, $id_facolta, $id_sdop,$mods[$i]);
 				}
 				
         		$db->autoCommit(true);
@@ -392,16 +398,18 @@ class DidatticaGestione extends UniversiboCommand{
 	 	return $ret;	
 	 }
 	 
-	 function _log($id_utente, $desc)
+	 function _log($id_utente,$id_canale, $id_cdl, $id_facolta, $id_sdop, $modified)
 	 {
 	 	$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'id_utente', 4 => 'ip_utente', 5 =>  'messaggio' );
-		
+	 	$desc = '';
+	 	foreach(array('doc','ciclo','anno') as $k)
+			$desc .= (array_key_exists($k,$modified))? $k.' '.$modified[$k]['old'].' -> '.$modified[$k]['new'].'; ' :'; ';
 		$log = new LogHandler('modificaDidattica','../universibo/log-universibo/',$log_definition); 
 		
 		$log_array = array( 'timestamp'  => time(),
 							'date'  => date("Y-m-d",time()),
 							'time'  => date("H:i",time()),
-							'id_utente' => 'id_utente',
+							'id_utente' => $id_utente,
 							'ip_utente' => (isset($_SERVER) && array_key_exists('REMOTE_ADDR',$_SERVER))? $_SERVER['REMOTE_ADDR']: '0.0.0.0',
 							'messaggio'  => $desc);
 		$log->addLogEntry($log_array);
@@ -421,6 +429,43 @@ class DidatticaGestione extends UniversiboCommand{
 		return $ret;
 	}
 	
+	/**
+	 * modifica prg e tiene traccia delle modifiche in $mods
+	 * @param type string  può essere doc, ciclo, anno
+	 */
+	function _updateVal(& $prg,$index, & $mods, $val, $type, & $template)
+	{
+		switch ($type) {
+			
+			case 'doc':
+				$get = 'getCodDoc';
+				$set = 'setCodDoc';
+				break;
+			case 'ciclo':
+				$get = 'getTipoCiclo';
+				$set = 'setTipoCiclo';
+				break;
+			case 'anno':
+				$get = 'getAnnoCorsoUniversibo';
+				$set = 'setAnnoCorsoUniversibo';
+				break;
+		
+			default:
+				Error :: throwError (_ERROR_CRITICAL, array ('msg' => 'Errore dei programmatori', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>  $template));
+				break;
+			
+			}
+				
+			$old = $prg->$get();
+//			var_dump($old);
+			if ($old != $val)
+			{
+				$prg->$set($val);
+				$m = (array_key_exists($index,$mods)) ? $mods[$index] : array();
+				$m[$type] = array('old' => $old, 'new' => $val);
+				$mods[$index] = $m;
+		}
+	}
 	
 }
 
