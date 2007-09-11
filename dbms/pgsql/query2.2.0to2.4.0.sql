@@ -6,7 +6,7 @@ ALTER TABLE "info_didattica" ALTER COLUMN "orario_ics_link" SET NOT NULL;
 
 
 --evaimitico 22/09/2005
-UPDATE canale SET links_attivo = 'S' WHERE id_canale = '25'
+UPDATE canale SET links_attivo = 'S' WHERE id_canale = '25';
 
 --03-02-2006 LastHope
 --Questa query non esiste sul CVS, ma puo' essere che il vostro db sia gia' sistemato...vedete voi
