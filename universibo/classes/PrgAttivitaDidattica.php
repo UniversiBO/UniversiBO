@@ -856,12 +856,12 @@ class PrgAttivitaDidattica extends Canale
 					' , tipo_ciclo = '.$db->quote($this->getTipoCiclo()).
 					' , cod_doc = '.$db->quote($this->getCodDoc()).
 					' WHERE  id_canale='.$db->quote($this->getIdCanale());
-//		var_dump($query);	die;
+		
 		$res = $db->query($query);
+//		var_dump($res); die;
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
-		
 		if( $rows >= 1) return true;
 		elseif( $rows == 0) return false;
 		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database','file'=>__FILE__,'line'=>__LINE__));

@@ -115,7 +115,7 @@ class DidatticaGestione extends UniversiboCommand{
 //				$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale);
 				if (count($esamiAlternativi) == 0) $esamiAlternativi = '';
 				// la modifica del docente è permessa solo quando non è attivo il forum dell'insegnamento
-				if($canale->getForumForumId() != null && $canale->getForumForumId() != 0)
+				if($canale->getForumForumId() == null || $canale->getForumForumId() == 0)
 					$docenteEdit = true;	
 				else
 					unset($f41_edit_sel['codice docente']);
@@ -261,7 +261,7 @@ class DidatticaGestione extends UniversiboCommand{
 						for($i = 0; $i < $tot; $i++)
 							//$prgs[$i]->setCodDoc($tmpEdit['codice docente']);
 							$this->_updateVal($prgs[$i],$i, $mods, $tmpEdit['codice docente'], 'doc', $template);
-							
+					
 				}			
 				if (array_key_exists('ciclo', $tmpEdit))
 				{
@@ -274,6 +274,7 @@ class DidatticaGestione extends UniversiboCommand{
 						for($i = 0; $i < $tot; $i++)
 							//$prgs[$i]->setTipoCiclo($tmpEdit['ciclo']);
 							$this->_updateVal($prgs[$i],$i, $mods, $tmpEdit['ciclo'], 'ciclo', $template);
+								
 				}
 				if (array_key_exists('anno', $tmpEdit))
 				{
@@ -294,7 +295,7 @@ class DidatticaGestione extends UniversiboCommand{
 			if ($f41_accept == true) 
 			{
 				$failure = false;
-				$db = FrontController::getDbConnection('main');
+				$db =& FrontController::getDbConnection('main');
 				ignore_user_abort(1);
         		$db->autoCommit(false);
 				
@@ -305,7 +306,8 @@ class DidatticaGestione extends UniversiboCommand{
 				{
 					$esito = $prgs[$i]->updatePrgAttivitaDidattica();
 					if ($esito == false) 
-					{
+					{	
+						echo 'qui'; die;
 						$failure = true;
 						$db->rollback();
 						break;
@@ -456,14 +458,14 @@ class DidatticaGestione extends UniversiboCommand{
 			
 			}
 				
-			$old = $prg->$get();
-//			var_dump($old);
-			if ($old != $val)
-			{
-				$prg->$set($val);
-				$m = (array_key_exists($index,$mods)) ? $mods[$index] : array();
-				$m[$type] = array('old' => $old, 'new' => $val);
-				$mods[$index] = $m;
+		$old = $prg->$get();
+//		var_dump($old); die;
+		if ($old != $val)
+		{
+			$prg->$set($val);
+			$m = (array_key_exists($index,$mods)) ? $mods[$index] : array();
+			$m[$type] = array('old' => $old, 'new' => $val);
+			$mods[$index] = $m;
 		}
 	}
 	
