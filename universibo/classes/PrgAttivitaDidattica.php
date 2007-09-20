@@ -857,8 +857,9 @@ class PrgAttivitaDidattica extends Canale
 					' , cod_doc = '.$db->quote($this->getCodDoc()).
 					' WHERE  id_canale='.$db->quote($this->getIdCanale());
 		
-		$res = $db->query($query);
-//		var_dump($res); die;
+		$res =& $db->query($query);
+//		var_dump($query);
+	
 		if (DB::isError($res)) 
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();

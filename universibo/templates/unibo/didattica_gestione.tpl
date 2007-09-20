@@ -82,12 +82,13 @@
 	<fieldset>
 		<legend><span>Applica la modifica anche ai seguenti insegnamenti:</span></legend>
 			{foreach name=canali item=item from=$f41_alts}
-				<p><input type="checkbox" id="f41_alts{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f41_alts[{$item.id}]" />&nbsp;&nbsp;&nbsp;<label for="f41_alts{$smarty.foreach.canali.iteration}"><a href="{$item.uri}">{$item.nome}, {$item.doc}, cdl {$item.cdl}, ciclo {$item.ciclo}, anno {$item.anno}{if $item.status != ''}, {$item.status}{/if} </a></label></p>
+				<p><input type="checkbox" id="f41_alts{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f41_alts[{$item.id}]" />&nbsp;&nbsp;&nbsp;<label for="f41_alts{$smarty.foreach.canali.iteration}"><a {if $item.status == ''}class="evidenzia" {/if} href="{$item.uri}">{$item.nome}, {$item.doc}, cdl {$item.cdl}, ciclo {$item.ciclo}, anno {$item.anno}{if $item.status != ''}, {$item.status}{/if} </a></label></p>
 			{/foreach}
 		</fieldset>
-			<p><input class="submit" type="submit" id="" name="f41_submit" size="20" value="Esegui" /></p>
-		{/if}	
+			
+		{/if}
 	{/if}
+	<p><input class="submit" type="submit" id="" name="f41_submit" size="20" value="Esegui" /></p>
 </form>
 <p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 

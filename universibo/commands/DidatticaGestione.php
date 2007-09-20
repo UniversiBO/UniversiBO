@@ -65,7 +65,7 @@ class DidatticaGestione extends UniversiboCommand{
 				$f41_cur_sel['codice docente'] = $prg_sdop->getCodDoc();
 				$f41_cur_sel['ciclo'] = $prg_sdop->getTipoCiclo();
 				$f41_cur_sel['anno'] = $prg_sdop->getAnnoCorsoUniversibo();
-				$f41_cur_sel['cdl'] = $cdl->getTitolo();
+				$f41_cur_sel['cdl'] = $cdl->getTitolo() . ' - ' .$prg_sdop->getCodiceCdl();
 				$f41_cur_sel['facoltà'] = $fac->getTitolo();
 				$f41_cur_sel['status'] = 'sdoppiato';
 					
@@ -100,7 +100,7 @@ class DidatticaGestione extends UniversiboCommand{
 					$f41_cur_sel['codice docente'] = $prg->getCodDoc();
 					$f41_cur_sel['ciclo'] = $prg->getTipoCiclo();
 					$f41_cur_sel['anno'] = $prg->getAnnoCorsoUniversibo();
-					$f41_cur_sel['cdl'] = $cdl->getTitolo();
+					$f41_cur_sel['cdl'] = $cdl->getTitolo() . ' - ' . $prg->getCodiceCdl();
 					$f41_cur_sel['facoltà'] = $fac->getTitolo();
 					
 					$f41_edit_sel['ciclo'] = $prg->getTipoCiclo();
@@ -114,8 +114,10 @@ class DidatticaGestione extends UniversiboCommand{
 					$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale,$prg_sdop);
 //				$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($id_canale);
 				if (count($esamiAlternativi) == 0) $esamiAlternativi = '';
-				// la modifica del docente è permessa solo quando non è attivo il forum dell'insegnamento
-				if($canale->getForumForumId() == null || $canale->getForumForumId() == 0)
+				// la modifica del docente è permessa solo quando è insegnamento padre e  non è attivo il forum dell'insegnamento
+				if(!array_key_exists('id_sdop', $_GET) && 
+						($canale->getForumForumId() == null ||$canale->getForumForumId() == 0)
+					)
 					$docenteEdit = true;	
 				else
 					unset($f41_edit_sel['codice docente']);
@@ -157,7 +159,7 @@ class DidatticaGestione extends UniversiboCommand{
 						if($id_canale == '' || in_array($cdl->getCodiceCdl(),$canale->getElencoCodiciCdl()))
 						{
 							$id_cdl = $cdl->getIdCanale();
-							$f41_cur_sel['cdl'] = $cdl->getTitolo();
+							$f41_cur_sel['cdl'] = $cdl->getTitolo() . ' - ' .$cdl->getCodiceCdl();
 						}
 					else
 					{
@@ -294,6 +296,7 @@ class DidatticaGestione extends UniversiboCommand{
 			//esecuzione operazioni accettazione del form
 			if ($f41_accept == true) 
 			{
+//				var_dump($mods);
 				$failure = false;
 				$db =& FrontController::getDbConnection('main');
 				ignore_user_abort(1);
@@ -305,9 +308,10 @@ class DidatticaGestione extends UniversiboCommand{
 				foreach($keys as $i)
 				{
 					$esito = $prgs[$i]->updatePrgAttivitaDidattica();
+//					var_dump($prgs); die;
 					if ($esito == false) 
 					{	
-						echo 'qui'; die;
+//						echo 'qui'; die;
 						$failure = true;
 						$db->rollback();
 						break;
@@ -315,6 +319,7 @@ class DidatticaGestione extends UniversiboCommand{
 					else
 						$this->_log($user->getIdUser(),$id_canale, $id_cdl, $id_facolta, $id_sdop,$mods[$i]);
 				}
+				$db->commit();
 				
         		$db->autoCommit(true);
 				ignore_user_abort(0);
@@ -342,7 +347,6 @@ class DidatticaGestione extends UniversiboCommand{
 		$template->assign('DidatticaGestione_docenteEdit', $docenteEdit);
 		$template->assign('DidatticaGestone_docs', $listaDocenti);
 		
-		// TODO aggiungere l'help
 		$this->executePlugin('ShowTopic', array('reference' => 'didatticagestione'));
 		 
 		return 'default';
@@ -377,7 +381,7 @@ class DidatticaGestione extends UniversiboCommand{
 //	 			var_dump($prg);
 	 			$cdl = & Cdl::selectCdlCodice($prg->getCodiceCdl());
 	 			$id = $id_canale;
-	 			$uri = 'index.php?do=DidatticaGestione&id_canale='.$id_canale.'&id_cdl='.$_GET['id_cdl'].'&id_fac='.$_GET['id_fac'];
+	 			$uri = 'index.php?do=DidatticaGestione&id_canale='.$id_canale.'&id_cdl='.$cdl->getIdCanale().'&id_fac='.$_GET['id_fac'];
 	 			$status = '';
 	 			if($prg->isSdoppiato())
 	 			{
@@ -390,7 +394,7 @@ class DidatticaGestione extends UniversiboCommand{
 	 						'spunta'	=> 'false',
 	 						'nome'		=> $prg->getNome(),
 	 						'doc'		=> $prg->getNomeDoc(),
-	 						'cdl'		=> $cdl->getNome(),
+	 						'cdl'		=> $cdl->getNome() .' - '. $prg->getCodiceCdl(),
 	 						'ciclo'		=> $prg->getTipoCiclo(),
 	 						'anno'		=> $prg->getAnnoCorsoUniversibo(),
 	 						'status'	=> $status,
@@ -405,7 +409,7 @@ class DidatticaGestione extends UniversiboCommand{
 	 	$log_definition = array(0 => 'timestamp', 1 => 'date', 2 => 'time', 3 => 'id_utente', 4 => 'ip_utente', 5 =>  'messaggio' );
 	 	$desc = '';
 	 	foreach(array('doc','ciclo','anno') as $k)
-			$desc .= (array_key_exists($k,$modified))? $k.' '.$modified[$k]['old'].' -> '.$modified[$k]['new'].'; ' :'; ';
+			$desc .= (array_key_exists($k,$modified))? $k.' '.$modified[$k]['old'].' -> '.$modified[$k]['new'].'; ' :'';
 		$log = new LogHandler('modificaDidattica','../universibo/log-universibo/',$log_definition); 
 		
 		$log_array = array( 'timestamp'  => time(),
