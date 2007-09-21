@@ -318,6 +318,59 @@ class DidatticaGestione extends UniversiboCommand{
 					}
 					else
 						$this->_log($user->getIdUser(),$id_canale, $id_cdl, $id_facolta, $id_sdop,$mods[$i]);
+					//aggiorno il referente della materia in caso di modifica docente
+					if(array_key_exists('doc', $mods[$i]))
+					{
+						$doc =& Docente::selectDocenteFromCod($mods[$i]['doc']['old']);
+						$ruoli =& $doc->getRuoli();
+						if (array_key_exists($prgs[$i]->getIdCanale(),$ruoli))
+						{
+							//eliminiamo il vecchio referente
+							$r = $ruoli[$prgs[$i]->getIdCanale()];
+							$r->updateSetModeratore(false);
+							$r->updateSetReferente(false);
+							$r->setMyUniversiBO(false);
+							$esito = $r->updateRuolo();
+							if ($esito == false) 
+							{	
+		//						echo 'qui'; die;
+								$failure = true;
+								$db->rollback();
+								break;
+							}
+							
+							unset($doc);
+							unset($r);
+							unset($ruoli);
+							
+							// aggiungiamo il nuovo referente
+							$doc =& Docente::selectDocenteFromCod($mods[$i]['doc']['new']);
+							$ruoli =& $doc->getRuoli();
+							if (array_key_exists($prgs[$i]->getIdCanale(),$ruoli))
+							{
+								$r = $ruoli[$prgs[$i]->getIdCanale()];
+								$r->updateSetModeratore(false);
+								$r->updateSetReferente(true);
+								$r->setMyUniversiBO(true);
+								$esito = $r->updateRuolo();
+								if ($esito == false) 
+								{	
+			//						echo 'qui'; die;
+									$failure = true;
+									$db->rollback();
+									break;
+								}
+								
+							}
+							else
+							{
+								$ruolo = new Ruolo($doc->getIdUser(), $prgs[$i]->getIdCanale(), '' , time(), false, true, true, NOTIFICA_ALL, false);
+								$ruolo->insertRuolo();				
+							}
+						}
+							
+						
+					}
 				}
 				$db->commit();
 				
