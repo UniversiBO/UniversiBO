@@ -162,7 +162,8 @@ perché impedisce il login agli utenti
 		foreach ($list as $item)
 		{
 			include_once('InteractiveCommand/' . $item['className'] . PHP_EXTENSION);
-			if (in_array('BaseInteractiveCommand', $this->get_all_ancerstors_of_class($item['className']))) $steps[] = $item;
+			if (in_array('BaseInteractiveCommand', $this->get_all_ancerstors_of_class($item['className'])) ||
+				in_array('baseinteractivecommand', $this->get_all_ancerstors_of_class($item['className']))) $steps[] = $item;
 //			var_dump($item);
 //			var_dump(get_parent_class($item)); die;
 		}
@@ -185,9 +186,10 @@ perché impedisce il login agli utenti
 //		}
 		// versione alternativa migliore. PS servira' il controllo != da stdClass?
 		$parentClass = $class;
-		while(is_string($parentClass = get_parent_class($parentClass)) && $parentClass != 'stdClass') {
+		while(is_string($parentClass = get_parent_class($parentClass)) && strcasecmp($parentClass, 'stdClass') != 0) {
             $list[] = $parentClass;
         }
+//        var_dump($list);
 		// TODO se il while si interrompe per il null, vuol dire che la lista è parziale. Gestirlo in modo diverso?
 		return $list;
 		
@@ -224,7 +226,7 @@ perché impedisce il login agli utenti
 	function getCompletedInteractiveCommandByUser() 
 	{
 		$db =& FrontController::getDbConnection('main');
-		$user =&  unserialize($_SESSION['user']);
+		$user =  unserialize($_SESSION['user']);
 		
 		$query = 'SELECT id_step, nome_classe FROM  	step_log 
 					WHERE id_utente = '.$db->quote( $user->getIdUser() ).
