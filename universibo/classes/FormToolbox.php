@@ -58,7 +58,7 @@ class FormToolbox
 //					case FORM_YY:			$this->_checkYears($paramInfo['param']); break;
 					case FORM_HH:			$esito = $this->_checkHour($paramInfo['param']); break;
 					case FORM_MIN:			$esito = $this->_checkMinute($paramInfo['param']); break;
-					case default:			$esito = new Error(_ERROR_CRITIC, 
+					default:				$esito = new Error(_ERROR_CRITIC, 
 															array (	'msg' => 'Tipo di parametro inesistente', 
 																	'file' => __FILE__, 
 																	'line' => __LINE__, 
