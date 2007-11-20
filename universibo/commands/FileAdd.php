@@ -57,8 +57,7 @@ class FileAdd extends UniversiboCommand {
 		$f12_permessi_download = '';
 		$f12_permessi_visualizza = '';
 		$f12_password = null;
-		$f12_canale = array ();
-
+		
 		$elenco_canali = array();
 			
 		if (array_key_exists('id_canale', $_GET))
@@ -82,37 +81,10 @@ class FileAdd extends UniversiboCommand {
 			}
 			
 			$elenco_canali = array($id_canale);
-				
+			$f12_canale = & $user->getRuoliInfoGroupedByYear($id_canale);	
 		}
-
-		//prendo tutti i canali tra i ruoli più il canale corrente (che per l'admin pu? essere diverso)
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i<$num_ruoli; $i++)
-		{
-			// qui c'è errore TODO
-			if (array_key_exists('id_canale', $_GET))
-				if ($id_canale != $ruoli_keys[$i] && ($user->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isModeratore() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) )
-					$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();				
-		}
-		
-		$elenco_canali_retrieve = array();
-		$num_canali = count($elenco_canali);
-		for ($i = 0; $i<$num_canali; $i++)
-		{
-			$id_current_canale = $elenco_canali[$i];
-			$current_canale =& Canale::retrieveCanale($id_current_canale);
-			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
-			$nome_current_canale = $current_canale->getTitolo();
-			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-			$f12_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
-		}
-		
-		if (array_key_exists('id_canale', $_GET))
-			if (!($user->isAdmin() || $referente || $moderatore)) 
-				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per inserire un file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
-		
-
+		else
+			$f12_canale = & $user->getRuoliInfoGroupedByYear();
 		
 		$f12_accept = false;
 		
@@ -324,7 +296,7 @@ class FileAdd extends UniversiboCommand {
 					if (!$diritti)
 					{
 						//$user_ruoli[$key]->getIdCanale();
-						$canale =& $elenco_canali_retrieve[$key];
+						$canale =& Canale::retrieveCanale($key);
 						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f12_accept = false;
 					}
@@ -403,7 +375,7 @@ class FileAdd extends UniversiboCommand {
 					foreach ($_POST['f12_canale'] as $key => $value)
 					{
 						$newFile->addCanale($key);
-						$canale =& $elenco_canali_retrieve[$key];
+						$canale =& Canale::retrieveCanale($key);
 						$canale->setUltimaModifica(time(), true);
 						
 						

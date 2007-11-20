@@ -22,7 +22,7 @@ class NewsAdd extends CanaleCommand {
 		$canale = & $this->getRequestCanale();
 		$user_ruoli = & $user->getRuoli();
 		$id_canale = $canale->getIdCanale();
-
+//		var_dump($user_ruoli);die;
 		$referente = false;
 		$moderatore = false;
 
@@ -59,33 +59,8 @@ class NewsAdd extends CanaleCommand {
 		$f7_testo = '';
 		$f7_urgente = false;
 		$f7_scadenza = false;
-		$f7_canale = array ();
+		$f7_canale =& $user->getRuoliInfoGroupedByYear($id_canale);
 
-		$elenco_canali = array($id_canale);
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i<$num_ruoli; $i++)
-		{
-			if ($id_canale != $ruoli_keys[$i] && ($user->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isModeratore() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) )
-				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-		}
-		
-		/*
-		//come fo a prendere l'uri dove si trova l'utente?
-		
-		$template->assign('back_command', $id_canale);
-		$template->assign('back_id_canale', $id_canale);
-		*/
-		
-		$num_canali = count($elenco_canali);
-		for ($i = 0; $i<$num_canali; $i++)
-		{
-			$id_current_canale = $elenco_canali[$i];
-			$current_canale =& Canale::retrieveCanale($id_current_canale);
-			$nome_current_canale = $current_canale->getTitolo();
-			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-			$f7_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
-		}
 		
 		$f7_accept = false;
 		

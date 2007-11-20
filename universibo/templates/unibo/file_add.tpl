@@ -50,9 +50,10 @@
 	{if $fileAdd_flagCanali == 'true'}
 	<fieldset>
 		<legend>Il file verr&agrave; inserito nelle pagine:</legend>
-		{foreach name=canali item=item from=$f12_canale}
+{*		{foreach name=canali item=item from=$f12_canale}
 			<p><input type="checkbox" id="f12_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f12_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;<label for="f12_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></p>
-		{/foreach}
+		{/foreach}  *}
+		{include file=include/explodableList.tpl lista=$f12_canale msg="Non si è referente di alcuna pagina attiva" name="f12_canale"}
 	</fieldset>
 	{/if}
 	<p><input class="submit" type="submit" id="" name="f12_submit" size="20" value="Invia" /></p>

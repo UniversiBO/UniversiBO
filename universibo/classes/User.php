@@ -428,7 +428,55 @@ class User {
 		return $this->bookmark;
 	}
 
+	/**
+	 * Ritorna un array contenente i nomi dei ruoli categorizzati per anno, selezionando l'eventuale canale passato 
+	 */
+	 function &getRuoliInfoGroupedByYear($id_canale = null)
+	 {
+		$user_ruoli = & $this->getRuoli();
+		$elenco_canali = array();
+		$ruoli_keys = array_keys($user_ruoli);
+		$num_ruoli = count($ruoli_keys);
+		for ($i = 0; $i<$num_ruoli; $i++)
+		{
+			if ($this->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) 
+				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+		}	
+		
+		$elenco_canali_retrieve = array();
+		$num_canali = count($elenco_canali);
+		for ($i = 0; $i<$num_canali; $i++)
+		{
+			$id_current_canale = $elenco_canali[$i];
+			$current_canale =& Canale::retrieveCanale($id_current_canale);
+			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
+			$didatticaCanale =& PrgAttivitaDidattica::factoryCanale($id_current_canale);
+//			var_dump($didatticaCanale);
+			$annoCorso = (count($didatticaCanale) > 0)? $didatticaCanale[0]->getAnnoAccademico() : 'misto';
+			$nome_current_canale = $current_canale->getTitolo();
+			$f7_canale[$annoCorso][$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_canale != null && $id_current_canale == $id_canale)? 'true' : 'false');
+		}
+		krsort($f7_canale);
+		$tot = count($f7_canale);
+		$list_keys = array_keys($f7_canale);
+		for($i=0; $i<$tot; $i++) 
+//			var_dump($f7_canale[$i]);
+			uasort($f7_canale[$list_keys[$i]], array('User','_compareCanale'));
+		return $f7_canale;	 	
+	 }
 
+	/**
+	 * Ordina la struttura dei canali
+	 * 
+	 * @static
+	 * @private
+	 */
+	function _compareCanale($a, $b)
+	{
+		$nomea = strtolower($a['nome']);
+		$nomeb = strtolower($b['nome']);
+		return strnatcasecmp($nomea, $nomeb);
+	}
 
 	/**
 	 * Ritorna lo username dell'ActiveDirectory di ateneo associato all'utente corrente

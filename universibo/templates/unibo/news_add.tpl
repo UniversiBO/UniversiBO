@@ -43,9 +43,7 @@
 	
 	<p><fieldset>
 		<legend><span>La notizia verr&agrave; inserita nelle pagine:</span></legend>
-			{foreach name=canali item=item from=$f7_canale}
-				<p><input type="checkbox" id="f7_canale{$smarty.foreach.canali.iteration}" {if $item.spunta=="true"}checked="checked" {/if} name="f7_canale[{$item.id_canale}]" />&nbsp;&nbsp;&nbsp;<label for="f7_canale{$smarty.foreach.canali.iteration}">{$item.nome_canale}</label></p>
-			{/foreach}
+{include file=include/explodableList.tpl lista=$f7_canale msg="Non si è referente di alcuna pagina attiva" name="f7_canale"}
 		</fieldset></p>
 	<p><input class="submit" type="submit" id="f7_submit" name="f7_submit" size="20" value="Invia" /></p>
 </form>
