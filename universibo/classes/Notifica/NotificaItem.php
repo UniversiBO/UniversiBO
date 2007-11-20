@@ -461,8 +461,8 @@ class NotificaItem {
 		
 		require_once($className.PHP_EXTENSION);
 		echo $className;
-		return call_user_func(array($className,'factoryNotifica'), $id);
-		
+		$ret = call_user_func(array($className,'factoryNotifica'), $id);
+		return $ret;
 	
 	}
 

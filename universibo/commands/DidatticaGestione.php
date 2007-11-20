@@ -280,7 +280,8 @@ class DidatticaGestione extends UniversiboCommand{
 				}
 				if (array_key_exists('anno', $tmpEdit))
 				{
-					if (!ereg('^([1-5]{1})$', $tmpEdit['anno']) || Docente::selectDocenteFromCod($tmpEdit['anno']))
+					// l'anno può essere 0 per gli esami opzionali di economia
+					if (!ereg('^([0-5]{1})$', $tmpEdit['anno']) || Docente::selectDocenteFromCod($tmpEdit['anno']))
 					{
 						Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Anno invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f41_accept = false;
@@ -398,7 +399,7 @@ class DidatticaGestione extends UniversiboCommand{
 		$template->assign('f41_alts', $esamiAlternativi);
 		$template->assign('DidatticaGestione_edit', $edit);
 		$template->assign('DidatticaGestione_docenteEdit', $docenteEdit);
-		$template->assign('DidatticaGestone_docs', $listaDocenti);
+		$template->assign('DidatticaGestione_docs', $listaDocenti);
 		
 		$this->executePlugin('ShowTopic', array('reference' => 'didatticagestione'));
 		 

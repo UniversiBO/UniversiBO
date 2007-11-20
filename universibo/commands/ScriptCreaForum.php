@@ -154,7 +154,7 @@ class ScriptCreaForum extends UniversiboCommand
 						$insegnamento->setServizioForum(true);
 						
 						$insegnamento->updateCanale();
-						echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_forum_id,"\n";
+						echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_simile->getForumForumId(),"\n";
 						
 					}
 					

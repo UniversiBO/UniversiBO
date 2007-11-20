@@ -58,7 +58,7 @@
 		<textarea cols="50" rows="10" id="f41_Description" name="f41_Description">{$f41_Description|escape:"htmlall"}</textarea></span></p>*}
 		{/foreach}
 		
-		<p>NB: <br/>ciclo -> 1,2,3,E<br/>anno -> 1,2,3,4,5</p>
+		<p>NB: <br/>ciclo -> 1,2,3,E<br/>anno -> 0,1,2,3,4,5</p>
 
 	</fieldset>
 	{if $DidatticaGestione_docenteEdit}
@@ -69,9 +69,9 @@
 	<p><label class="label" for="f41_email">per e-mail: </label>
 		<input name="f41_email" id="f41_email" type="text" value="" /></p>
 	<p><input class="submit" name="f41_search" id="f41_search" type="submit" value="Cerca" /></p>
-	{if $DidatticaGestone_docs != ''}
+	{if $DidatticaGestione_docs != ''}
 	<p><strong>Docenti trovati</strong></p>
-	{foreach item=d from=$DidatticaGestone_docs}
+	{foreach item=d from=$DidatticaGestione_docs}
 	<p>{$d.nome}&nbsp;&nbsp;&nbsp;&nbsp;{$d.codice}</p>
 	{/foreach}
 	{/if}

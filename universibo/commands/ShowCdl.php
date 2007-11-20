@@ -87,7 +87,7 @@ class ShowCdl extends CanaleCommand {
 					array( 'name' => $tempPrgAttDid->getNome(),
 						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 
 						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$tempPrgAttDid->getIdCanale(),
-						   'editUri' => $editUri,
+						   'editUri' => ($allowEdit)?$editUri:'',
 						   'forumUri' =>($tempPrgAttDid->getServizioForum() != false) ? $forum->getForumUri($tempPrgAttDid->getForumForumId()) : '' );
 			}
 		}
