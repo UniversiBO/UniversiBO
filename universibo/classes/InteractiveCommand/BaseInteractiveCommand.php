@@ -30,7 +30,6 @@ define('VALUES_SEPARATOR', '|');
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-// TODO definizione degli eventi di innesco e di fine?
  
 class BaseInteractiveCommand extends PluginCommand
 {
@@ -95,7 +94,6 @@ class BaseInteractiveCommand extends PluginCommand
 		// VERIFY andrà bene questo costruttore?
 		parent::PluginCommand($baseCommand);
 		
-		// TODO mettere questi come proprietà in plugin command (così si può ripulire un po' il codice)
 		$this->systemValues['bc'] 	=& $baseCommand;
 		$this->systemValues['fc'] 	=& $baseCommand->getFrontController();
 //		$this->systemValues['user'] =& $baseCommand->getSessionUser();  // con la modifica delle 19.00 del 14-05-06 a login.php, l'identità dell'utente non è qui

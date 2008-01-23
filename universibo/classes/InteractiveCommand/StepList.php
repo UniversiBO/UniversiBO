@@ -197,12 +197,9 @@ class StepList
 		{
 //			var_dump($i); echo "\n";
 			$step =& $this->getStep($i);
-//			if ($step == null) // WARNING errore inconcepibile!
-//				return false;
-			$state = $step->getState();
 			// VERIFY è ammissibile che uno stato sia refused?
 //			var_dump($step); die;
-			if ($state != STEP_COMPLETATO)
+			if ($step->getState() != STEP_COMPLETATO)
 			{
 				$this->lastGoodStep = max(EMPTY_VALUE, $i - 1);
 				return false;

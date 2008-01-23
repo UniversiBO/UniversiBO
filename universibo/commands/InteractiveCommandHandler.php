@@ -34,7 +34,7 @@ class InteractiveCommandHandler extends UniversiboCommand {
 			$referer : $fc->getReceiverUrl($fc->getReceiverId()); // VERIFY meglio in homepage o in myuniversibo se loggato?
 
 		$activeSteps = (array_key_exists('activeSteps', $_SESSION)) ? $_SESSION['activeSteps'] : $this->getActiveInteractiveCommand();
-//		var_dump($activeSteps);		
+//		var_dump($activeSteps); die;		
 		if (count($activeSteps) == 0) 
 		{	
 			// completo il login dell'utente

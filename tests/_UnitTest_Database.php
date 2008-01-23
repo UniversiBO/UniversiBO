@@ -1149,7 +1149,22 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 		else
 			$this->assertEquals(0, $result->numRows());
 	}
+	
+	/**
+	 * controllo consistenza log degli interactivecommand
+	 */
+	function testConsistenzaLogInteractiveCommand(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select * from step_parametri where id_step not in (select id_step from step_log )
+		';
 
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
 }
 
 ?>
