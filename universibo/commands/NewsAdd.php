@@ -233,18 +233,23 @@ class NewsAdd extends CanaleCommand {
 			}
 			
 			//diritti_su_tutti_i_canali
-			foreach ($_POST['f7_canale'] as $key => $value)
-			{
-				$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
-				if (!$diritti)
+			if (array_key_exists('f7_canale',$_POST))
+				foreach ($_POST['f7_canale'] as $key => $value)
 				{
-					//$user_ruoli[$key]->getIdCanale();
-					$canale =& Canale::retrieveCanale($key);
-					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-					$f7_accept = false;
+					$diritti = $user->isAdmin() || (array_key_exists($key,$user_ruoli) && ($user_ruoli[$key]->isReferente() || $user_ruoli[$key]->isModeratore() ));
+					if (!$diritti)
+					{
+						//$user_ruoli[$key]->getIdCanale();
+						$canale =& Canale::retrieveCanale($key);
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non possiedi i diritti di inserimento nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						$f7_accept = false;
+					}
 				}
+			else
+			{
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Devi selezionare almeno una pagina in cui inserire la notizia.', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				$f7_accept = false;
 			}
-			
 			
 			//esecuzione operazioni accettazione del form
 			if ($f7_accept == true) {

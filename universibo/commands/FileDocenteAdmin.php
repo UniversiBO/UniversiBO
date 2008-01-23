@@ -83,7 +83,7 @@ class FileDocenteAdmin extends UniversiboCommand {
 			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
 			$didatticaCanale =& PrgAttivitaDidattica::factoryCanale($id_current_canale);
 //			var_dump($didatticaCanale);
-			$annoCorso = (count($didatticaCanale) > 0)? $didatticaCanale[0]->getAnnoAccademico() : 'misto';
+			$annoCorso = (count($didatticaCanale) > 0)? $didatticaCanale[0]->getAnnoAccademico() : 'altro';
 			$nome_current_canale = $current_canale->getTitolo();
 			$f40_canale[$annoCorso][$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_current_canale == $id_canale)? 'true' : 'false');
 			$listaFile = array();

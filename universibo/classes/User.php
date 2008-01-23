@@ -457,7 +457,7 @@ class User {
 			$didatticaCanale =& PrgAttivitaDidattica::factoryCanale($id_current_canale);
 //			var_dump($didatticaCanale);
 			$annoCorso = (count($didatticaCanale) > 0)? 
-				$didatticaCanale[0]->getAnnoAccademico() : 'misto';
+				$didatticaCanale[0]->getAnnoAccademico() : 'altro';
 			$nome_current_canale = $current_canale->getTitolo();
 			$f7_canale[$annoCorso][$id_current_canale] = 
 				array(	'nome' => $nome_current_canale, 

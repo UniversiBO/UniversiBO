@@ -301,7 +301,11 @@ class BaseInteractiveCommand extends PluginCommand
 		
         ignore_user_abort(1);
         $db->autoCommit(false);
-        $next_id = $db->nextID('step_id_step_seq');
+        $next_id = $db->nextID('step_id_step');
+        if (DB::isError($next_id)){
+			$db->rollback();
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>$next_id->getUserInfo(),'file'=>__FILE__,'line'=>__LINE__));
+		}
 		$esito = ($complete) ? 'S' : 'N';
 		$query = 'INSERT INTO step_log (id_step, id_utente, data_ultima_interazione, nome_classe, esito_positivo) VALUES '.
 					'( '.$next_id.' , '.
