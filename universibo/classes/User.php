@@ -1,6 +1,7 @@
 <?php
 
 require_once('Ruolo'.PHP_EXTENSION);
+require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
 
 define('USER_NONE'	     	,0);
 define('USER_OSPITE'     	,1);
@@ -433,28 +434,34 @@ class User {
 	 */
 	 function &getRuoliInfoGroupedByYear($id_canale = null)
 	 {
-		$user_ruoli = & $this->getRuoli();
+	 	$user_ruoli = & $this->getRuoli();
 		$elenco_canali = array();
-		$ruoli_keys = array_keys($user_ruoli);
-		$num_ruoli = count($ruoli_keys);
-		for ($i = 0; $i<$num_ruoli; $i++)
+		$found = ($id_canale == null);
+		foreach ($user_ruoli as $r)
 		{
-			if ($this->isAdmin() || $user_ruoli[$ruoli_keys[$i]]->isReferente()) 
-				$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+			if ($this->isAdmin() || $r->isReferente()) 
+			{
+				$elenco_canali[] = $r->getIdCanale();
+				if (!$found && $r->getIdCanale() == $id_canale) $found = true;
+			}	
 		}	
 		
+		if(!$found && $this->isAdmin()) $elenco_canali[] = $id_canale;
+		
 		$elenco_canali_retrieve = array();
-		$num_canali = count($elenco_canali);
-		for ($i = 0; $i<$num_canali; $i++)
+		
+		foreach ($elenco_canali as $id_current_canale)
 		{
-			$id_current_canale = $elenco_canali[$i];
 			$current_canale =& Canale::retrieveCanale($id_current_canale);
 			$elenco_canali_retrieve[$id_current_canale] = $current_canale;
 			$didatticaCanale =& PrgAttivitaDidattica::factoryCanale($id_current_canale);
 //			var_dump($didatticaCanale);
-			$annoCorso = (count($didatticaCanale) > 0)? $didatticaCanale[0]->getAnnoAccademico() : 'misto';
+			$annoCorso = (count($didatticaCanale) > 0)? 
+				$didatticaCanale[0]->getAnnoAccademico() : 'misto';
 			$nome_current_canale = $current_canale->getTitolo();
-			$f7_canale[$annoCorso][$id_current_canale] = array('nome' => $nome_current_canale, 'spunta' => ($id_canale != null && $id_current_canale == $id_canale)? 'true' : 'false');
+			$f7_canale[$annoCorso][$id_current_canale] = 
+				array(	'nome' => $nome_current_canale, 
+						'spunta' => ($id_canale != null && $id_current_canale == $id_canale)? 'true' : 'false');
 		}
 		krsort($f7_canale);
 		$tot = count($f7_canale);
@@ -463,6 +470,8 @@ class User {
 //			var_dump($f7_canale[$i]);
 			uasort($f7_canale[$list_keys[$i]], array('User','_compareCanale'));
 		return $f7_canale;	 	
+
+
 	 }
 
 	/**

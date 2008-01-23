@@ -22,7 +22,7 @@ require_once ('ForumApi'.PHP_EXTENSION);
  
 class ScriptCreaForum extends UniversiboCommand 
 {
-	var $anno_accademico = 2004;
+	var $anno_accademico = 2007;
 	
 	function execute()
 	{

@@ -27,8 +27,11 @@ class InteractiveCommandHandler extends UniversiboCommand {
 		if(!isset($_SESSION['user'])) FrontController::redirectCommand();
 		$userLogin = unserialize($_SESSION['user']);
 
-		$referer = (array_key_exists('referer',$_SESSION)) ? $_SESSION['referer'] :	((array_key_exists('HTTP_REFERER',$_SERVER))? $_SERVER['HTTP_REFERER'] : '');
-		$_SESSION['referer'] = ($referer != '') ? $referer : $fc->getReceiverUrl($fc->getReceiverId()); // VERIFY meglio in homepage o in myuniversibo se loggato?
+		$referer = (array_key_exists('referer',$_SESSION)) ? 
+			$_SESSION['referer'] :	((array_key_exists('HTTP_REFERER',$_SERVER))? 
+						$_SERVER['HTTP_REFERER'] : '');
+		$_SESSION['referer'] = ($referer != '') ? 
+			$referer : $fc->getReceiverUrl($fc->getReceiverId()); // VERIFY meglio in homepage o in myuniversibo se loggato?
 
 		$activeSteps = (array_key_exists('activeSteps', $_SESSION)) ? $_SESSION['activeSteps'] : $this->getActiveInteractiveCommand();
 //		var_dump($activeSteps);		

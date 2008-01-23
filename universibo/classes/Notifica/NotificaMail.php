@@ -19,6 +19,7 @@ require_once ('Notifica/NotificaItem'.PHP_EXTENSION);
 
 class NotificaMail extends NotificaItem 
 {
+
 	
 	function NotificaMail ($id_notifica, $titolo, $messaggio, $dataIns, $urgente, $eliminata, $destinatario) 
 	{
@@ -48,7 +49,10 @@ class NotificaMail extends NotificaItem
 		 * @todo fare la mail urgente se $this->isUrgente()
 		 */
 		if (!$mail->send())
+		{
+			$this->error = $mail->ErrorInfo;
 			return false;
+		}
 	}
 	
 	

@@ -62,6 +62,12 @@ class NotificaItem {
 	var $destinatario = '';
 
 	/**
+	 * @private
+	 */
+	var $error = '';
+
+
+	/**
 	 * Crea un oggetto NotificaItem con i parametri passati
 	 * 
 	 *
@@ -124,6 +130,16 @@ class NotificaItem {
 		return $this->timestamp;
 	}
 
+	/**
+	 * Recupera eventuali errori della notifica
+	 *
+	 * @return string 
+	 */
+	function getError()
+	{
+	 return $this->error;
+	}
+	
 	/**
 	 * Recupera l'urgenza della notifica
 	 *

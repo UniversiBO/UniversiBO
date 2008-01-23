@@ -165,7 +165,7 @@ class Docente extends User {
 			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows == 0) {$ret=false; return $ret;}
+		if( $rows == 0) {$ret = false; return $ret;}
 
 		$row = $res->fetchRow();
 		$docente = new Docente($row[0], $row[1], $row[2]);

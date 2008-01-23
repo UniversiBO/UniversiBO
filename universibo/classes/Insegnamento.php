@@ -7,7 +7,7 @@ require_once('PrgAttivitaDidattica'.PHP_EXTENSION);
  * Insegnamento class.
  *
  * Modella un insegnamento e le informazioni associate.
- * Ad un insegnamento possono essere associate da 1 a n attivit? didattiche (PrgAttivitaDidattica).
+ * Ad un insegnamento possono essere associate da 1 a n attività didattiche (PrgAttivitaDidattica).
  *
  * @package universibo
  * @version 2.0.0
