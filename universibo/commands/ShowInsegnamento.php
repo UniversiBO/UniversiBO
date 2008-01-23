@@ -115,7 +115,7 @@ testi consigliati[/url]';
 		if ($info_didattica->getModalitaLink() == '' && $info_didattica->getModalita() == '' )
 			$modalita = 'Modalità d\'esame';
 		elseif ($info_didattica->getModalitaLink() != '' && $info_didattica->getModalita() == '' )
-			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalit? d\'esame[/url]';
+			$modalita = '[url='.$info_didattica->getModalitaLink().']Modalità d\'esame[/url]';
 		else
 			$modalita = '[url=index.php?do=ShowInfoDidattica&id_canale='.$id_canale.'#modalita]Modalità d\'esame[/url]';
 		

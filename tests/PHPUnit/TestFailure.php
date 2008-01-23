@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestFailure.php,v 1.1.2.1 2004-10-21 13:10:43 brain_79 Exp $
+// $Id: TestFailure.php,v 1.1.2.2 2008-01-23 09:37:33 evaimitico Exp $
 //
 
 /**

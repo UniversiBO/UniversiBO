@@ -393,8 +393,9 @@ class FileStudentiEdit extends UniversiboCommand {
 		$template->assign('f24_data_ins_ora', $krono->k_date('%H',$f24_data_inserimento));
 		$template->assign('f24_data_ins_min', $krono->k_date('%i',$f24_data_inserimento));
 
-		$this->executePlugin('ShowTopic', array('reference' => 'filestudenti'));
-		return 'default';
+		//$this->executePlugin('ShowTopic', array('reference' => 'filestudenti'));
+		$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+                return 'default';
 
 	}
 

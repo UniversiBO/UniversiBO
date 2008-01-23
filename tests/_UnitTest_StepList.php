@@ -7,7 +7,7 @@
 
 
 require_once 'PHPUnit'.PHP_EXTENSION;
-require_once 'StepCommand/StepList'.PHP_EXTENSION;
+require_once 'InteractiveCommand/StepList'.PHP_EXTENSION;
 
 
 /**

@@ -66,6 +66,9 @@ class ShowFileTitoli extends PluginCommand {
 				$template->assign('showFileTitoli_addFileFlag', 'true');
 				$template->assign('showFileTitoli_addFile', 'Invia un nuovo file');
 				$template->assign('showFileTitoli_addFileUri', 'index.php?do=FileAdd&id_canale='.$id_canale);
+				$template->assign('showFileTitoli_adminFileFlag', 'true');
+            	$template->assign('showFileTitoli_adminFile', 'Gestione file');
+                $template->assign('showFileTitoli_adminFileUri', 'index.php?do=FileDocenteAdmin&id_canale='. $id_canale);
 			}
 		}
 		else

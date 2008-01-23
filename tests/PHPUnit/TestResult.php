@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestResult.php,v 1.4.2.1 2004-10-21 13:10:43 brain_79 Exp $
+// $Id: TestResult.php,v 1.4.2.2 2008-01-23 09:37:33 evaimitico Exp $
 //
 
 require_once 'PHPUnit/TestFailure.php';

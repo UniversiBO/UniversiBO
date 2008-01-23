@@ -220,7 +220,7 @@ class Link
 	 {
 	 	$id_links = array($id_link);
 		$links =& Link::selectLinks($id_links);
-		if ($links === false) return false;
+		if ($links === false) {$ret = false; return $ret;}
 		return $links[0];
 	 }
 	
@@ -251,7 +251,7 @@ class Link
 	
 		$rows = $res->numRows();
 
-		if($rows == 0) return false;
+		if($rows == 0) {$ret = false; return $ret;}
 		$link_list = array();
 	
 		while ( $res->fetchInto($row) )

@@ -51,7 +51,7 @@ class ScriptNotificheSend extends UniversiboCommand
 									'id_notifica'  => $notifiche[$i]->getIdNotifica(),
 									'titolo'       => $notifiche[$i]->getTitolo(),
 									'destinatario' => $notifiche[$i]->getDestinatario(),
-						   			'risultato'    => 'failed');
+						   			'risultato'    => 'failed: '.$notifiche[$i]->getError());
 				$notifLog->addLogEntry($log_array);
 				
 				//$notifiche[$i]->setFallita(true);

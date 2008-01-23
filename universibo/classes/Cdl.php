@@ -264,7 +264,7 @@ class Cdl extends Canale{
 	 * @param boolean $canaliAttivi se restituire solo i Cdl gi? associati ad un canale o tutti
 	 * @return mixed array di Cdl se eseguita con successo, false in caso di errore
 	 */
-	function selectCdlAll()
+	function & selectCdlAll()
 	{
 	
 		$db =& FrontController::getDbConnection('main');

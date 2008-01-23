@@ -497,7 +497,8 @@ Link: https://www.universibo.unibo.it/index.php?do=FileShowInfo&id_file='.$newFi
 		$template->assign('f23_data_ins_ora', $krono->k_date('%H',$f23_data_inserimento));
 		$template->assign('f23_data_ins_min', $krono->k_date('%i',$f23_data_inserimento));
 
-		$this->executePlugin('ShowTopic', array('reference' => 'filestudenti'));
+ 		//$this->executePlugin('ShowTopic', array('reference' => 'filestudenti'));
+               	$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
 		return 'default';
 
 	}
