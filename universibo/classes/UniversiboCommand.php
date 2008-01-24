@@ -442,7 +442,10 @@ class UniversiboCommand extends BaseCommand {
 
 		}
 		if ($session_user->isAdmin() || $session_user->isCollaboratore())
+		{
 			$common_servicesLinks[] = array('uri' => 'index.php?do=ShowContattiDocenti' , 'tipo' => '' , 'label' => 'Contatto dei docenti');
+			$common_servicesLinks[] = array('uri' => 'index.php?do=ShowStatistiche' , 'tipo' => '' , 'label' => 'Statistiche');
+		}
 		
 		usort($common_servicesLinks, array('UniversiboCommand','_compareServices'));
 		$template->assign('common_servicesLinks', $common_servicesLinks);
