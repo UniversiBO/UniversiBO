@@ -1,7 +1,7 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
-
+require_once ('User'.PHP_EXTENSION);
 
 /**
  * ChangePassword is an extension of UniversiboCommand class.
@@ -25,11 +25,14 @@ class ScriptGetLDAPMD5 extends UniversiboCommand
 		$user =& $this->getSessionUser();
 		$filePath = $fc->getAppSetting('filesPath');
 		
-		if($user->isAdmin())
-		{
 			$db =& FrontController::getDbConnection('main');
 		
 			$query = 'SELECT username, password FROM utente WHERE groups IN (4,64)';
+			if ( array_key_exists('user',$_GET))
+				if( User::usernameExists($_GET['user']))
+					$query .= ' AND username = ' . $db->quote($_GET['user']);
+				else {echo 'Username non esistente'; die;} 
+			echo $query . "\n";
 			$res = $db->query($query);
 			if (DB::isError($res)) 
 				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
@@ -43,7 +46,6 @@ class ScriptGetLDAPMD5 extends UniversiboCommand
 				echo '<br />';
 			}
 			$res->free();
-		}
 	}
 }
 
