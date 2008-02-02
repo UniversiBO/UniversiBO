@@ -17,8 +17,6 @@
 + padding: 0;
 + margin: 0;
 + border: 0 none;
-+ cursor: pointer;
-+ cursor: hand;
 + }
 + 
 + #f2 input:hover{ text-decoration: underline; color: rgb(56, 109, 206); 
