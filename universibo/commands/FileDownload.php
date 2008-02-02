@@ -97,11 +97,7 @@ class FileDownload extends UniversiboCommand {
 			
 			//echo $nomeFile; 
 			readfile($nomeFile);
-			
-			/**
-			 * @todo ...da togliere die() dopo che si è messo on-line e tolto il tempo di esecuzione a fondo pagina
-			 */
-						
+		
 			exit();
 			
 			return;
