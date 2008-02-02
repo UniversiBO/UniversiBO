@@ -934,7 +934,27 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 		else
 			$this->assertEquals(0, $result->numRows());
 	}
+	
+	/**
+	--PHPBB_FORUM 
+	--Controllo che il forum non sia scrivibile dagli ospiti
+	*/
+	function testPhpbbForumGuestReadOnly() {
+		$db = & FrontController :: getDbConnection('main');
 
+		$query = '
+		SELECT *
+		FROM phpbb_forums
+		WHERE auth_post=0 OR auth_reply=0;
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());
+	}
+	
 	/**
 	--PHPBB_FORUMS
 	--Controllo che la categoria esista
