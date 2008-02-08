@@ -1185,6 +1185,121 @@ class _UnitTest_Database extends PHPUnit_TestCase {
 		else
 			$this->assertEquals(0, $result->numRows());	
 	}
+
+	/**
+	 * controllo consistenza utente tra sito e forum
+	 */
+	function testConsistenzaUtenteSitoForum(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select u.id_utente, u.username as utente_sito, pu.username as utente_forum
+from phpbb_users pu, utente u
+where u.id_utente=pu.user_id
+and u.username!=pu.username
+	';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
+
+	/**
+	 * controllo esistenza diutenti appartenenti solo al sito
+	 */
+	function testEsistenzaIdUtenteSoloSito(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select * from  utente where id_utente not in (select user_id from phpbb_users)
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
+
+	/**
+	 * controllo esistenza diutenti appartenenti solo al sito
+	 */
+	function testEsistenzaIdUtenteSoloForum(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select * from phpbb_users where user_id not in (select id_utente from utente)
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
+	
+	
+	/**
+	 * controllo esistenza di utenti appartenenti solo al sito
+	 */
+	function testEsistenzaUsernameUtenteSoloSito(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select * from utente where username not in (select username from phpbb_users)
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
+	
+	/**
+	 * controllo esistenza di utenti appartenenti solo al forum
+	 */
+	function testEsistenzaUsernameUtenteSoloForum(){
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select * from phpbb_users where username not in (select username from utente)
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		else
+			$this->assertEquals(0, $result->numRows());	
+	}
+	
+	/**
+	 * verifico che i max id coincidano
+	 *
+	 */
+	function testConsistenzaMaxIdUtenteSitoForum()
+	{
+		$db = & FrontController :: getDbConnection('main');
+		$query = '
+		select max(id_utente) from utente 
+		';
+
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		
+		$result->fetchInto($row1);
+
+		$query = '
+		select max(id_utente) from utente 
+		';
+		
+		$result = & $db->query($query);
+		if (DB :: isError($result))
+			$this->fail();
+		
+		$res->fetchInto($row2);
+		
+		$this->assertEquals($row1[0], $row2[0]);	
+		
+	}
 }
 
 ?>
