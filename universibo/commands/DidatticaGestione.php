@@ -267,7 +267,7 @@ class DidatticaGestione extends UniversiboCommand{
 				}			
 				if (array_key_exists('ciclo', $tmpEdit))
 				{
-					if (!ereg('^([1-3,E]{1})$', $tmpEdit['ciclo']))
+					if (!ereg('^([0-4,E]{1})$', $tmpEdit['ciclo']))
 					{
 						Error :: throwError (_ERROR_NOTICE, array ('msg' => 'Ciclo invalido, nessuna modifica effettuata', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f41_accept = false;

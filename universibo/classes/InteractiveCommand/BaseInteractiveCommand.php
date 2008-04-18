@@ -83,6 +83,7 @@ class BaseInteractiveCommand extends PluginCommand
 							'canc' => 'annulla'
 							);
 	
+	var $navigationLastNextLang = 'accetta';							
 	
 	/**
 	 * Costruttore
@@ -200,11 +201,18 @@ class BaseInteractiveCommand extends PluginCommand
 	 */
 	function returnState($complete = false, $canc = false ) 
 	{
+		$i = & $this->listaStep->getCurrentStep();
+		$nav = $this->navigationLang;
+		if ($this->listaStep->isFirstStep($i))
+			unset($nav['back']);
+		if ($this->listaStep->isLastStep($i))
+			$nav['next'] = $this->navigationLastNextLang;
+			
 		return array('stepName' => $this->getCurrentCallbackName(), 
 					 'complete' => $complete, 
 					 'priority' => $this->priority, 
 					 'title' => $this->title,
-					 'navigation' => $this->navigationLang,
+					 'navigation' =>  $nav,
 					 'cancelled' => $canc
 					 );					 
 	}

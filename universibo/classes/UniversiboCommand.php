@@ -471,7 +471,7 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
 		
 		$template->assign('common_docSf', 'Documentazione');
-		$template->assign('common_docSfUri', 'https://uni141.ing.unibo.it/tiki/');
+		$template->assign('common_docSfUri', 'https://wiki.universibo.unibo.it/');
 		//$template->assign('common_project', 'UniversiBO Open Source Project');
 		//$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
 		

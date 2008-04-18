@@ -16,6 +16,8 @@ require_once('InteractiveCommand/BaseInteractiveCommand'.PHP_EXTENSION);
  */
  
 class InteractiveCommandHandler extends UniversiboCommand {
+	private $userLogin = null;
+	
 	function execute()
 	{
 		$fc =& $this->getFrontController();
@@ -25,7 +27,7 @@ class InteractiveCommandHandler extends UniversiboCommand {
 		//se esiste user in $_SESSION o siamo giunti dal login, o siamo nel bel mezzo di una interazione a step. 
 		// VERIFY decidere se lanciare un errore o meno
 		if(!isset($_SESSION['user'])) FrontController::redirectCommand();
-		$userLogin = unserialize($_SESSION['user']);
+		$this->userLogin = unserialize($_SESSION['user']);
 
 		$referer = (array_key_exists('referer',$_SESSION)) ? 
 			$_SESSION['referer'] :	((array_key_exists('HTTP_REFERER',$_SERVER))? 
@@ -41,13 +43,13 @@ class InteractiveCommandHandler extends UniversiboCommand {
 			$_SESSION = array();
 			session_destroy();
 			session_start();
-			$userLogin->updateUltimoLogin(time());
-			$this->setSessionIdUtente($userLogin->getIdUser());
-			$fc->setStyle($userLogin->getDefaultStyle());
+			$this->userLogin->updateUltimoLogin(time());
+			$this->setSessionIdUtente($this->userLogin->getIdUser());
+			$fc->setStyle($this->userLogin->getDefaultStyle());
 			
 			require_once ('ForumApi'.PHP_EXTENSION);
 			$forum = new ForumApi();
-			$forum->login($userLogin);
+			$forum->login($this->userLogin);
 			
 			if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login') || strstr($referer, 'do=RegStudente')))
 				FrontController::redirectCommand('ShowMyUniversiBO');
@@ -63,7 +65,7 @@ class InteractiveCommandHandler extends UniversiboCommand {
 		if (isset($_POST['action'])) $action = NEXT_ACTION; 
 		
 		$currentStep = current($activeSteps);		
-		if (! $this->isAllowedInteractionForActualUser($userLogin, $currentStep))
+		if (! $this->isAllowedInteractionForActualUser($this->userLogin, $currentStep))
 			$this->updateActiveSteps($activeSteps);	
 			
 		$esito = $this->executePlugin($currentStep['className'], $action);
@@ -115,8 +117,11 @@ perché impedisce il login agli utenti
 		
 		$template->assign('InteractiveCommandHandler_stepPath', 'InteractiveCommand/' . $currentStep['className'] .'/'. $callbackName .'.tpl' );  //stepPath. estensione  e path hardcoded
 		$template->assign('InteractiveCommandHandler_title_lang', $esito['title'] );  // TODO dare un title ad ogni InteractiveCommand?
-		$template->assign('InteractiveCommandHandler_back_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.BACK_ACTION );
-		$template->assign('InteractiveCommandHandler_back_lang', $esito['navigation']['back']);
+		if(array_key_exists('back',$esito['navigation']))
+		{
+			$template->assign('InteractiveCommandHandler_back_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.BACK_ACTION );
+			$template->assign('InteractiveCommandHandler_back_lang', $esito['navigation']['back']);
+		}
 		$template->assign('InteractiveCommandHandler_canc_uri', 'index.php?do='.$fc->getCommandRequest().'&action='.CANC_ACTION);
 		$template->assign('InteractiveCommandHandler_canc_lang', $esito['navigation']['canc']);
 		$template->assign('InteractiveCommandHandler_next_lang', $esito['navigation']['next'] );
@@ -166,7 +171,9 @@ perché impedisce il login agli utenti
 		{
 			include_once('InteractiveCommand/' . $item['className'] . PHP_EXTENSION);
 			if (in_array('BaseInteractiveCommand', $this->get_all_ancerstors_of_class($item['className'])) ||
-				in_array('baseinteractivecommand', $this->get_all_ancerstors_of_class($item['className']))) $steps[] = $item;
+				in_array('baseinteractivecommand', $this->get_all_ancerstors_of_class($item['className']))) 
+					if(empty($item['condition']) || $this->evaluateCondition($item['condition']))
+						$steps[] = $item;
 //			var_dump($item);
 //			var_dump(get_parent_class($item)); die;
 		}
@@ -252,6 +259,21 @@ perché impedisce il login agli utenti
 				
 		return $list;
 	}	
+
+	/**
+	 * valuta se la condizione espressa in linguaggio ConditionLanguage è verificata
+	 *
+	 * @param string $CL_code
+	 * @return boolean
+	 */
+	function evaluateCondition($CL_code)
+	{
+		require_once('CL/CLInterpreter'.PHP_EXTENSION);
+		CLInterpreter::init($this->getFrontController(), $this->userLogin);
+		return CLInterpreter::execMe($CL_code);
+	}
+	
 }
+
 
 ?>

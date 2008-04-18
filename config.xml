@@ -328,8 +328,9 @@
 		<InteractiveCommandHandler class="InteractiveCommandHandler">
 			<response type="template" name="default">interactive_command_handler.tpl</response>
 			<!-- restrictedTo="" serve per applicare l'interactiveCommand a gruppi selezionati di utenti. Mettere le costanti (vedi User) dei gruppi voluti separati da virgola  -->
-			<pluginCommand name="ProvaInteractiveCommand" class="InteractiveCommand.ProvaInteractiveCommand" restrictedTo="USER_COLLABORATORE,USER_ADMIN" /> 
-			<pluginCommand name="InformativaPrivacyInteractiveCommand" class="InteractiveCommand.InformativaPrivacyInteractiveCommand" />
+			<!-- condition=""	serve per imporre dei vincoli sia sull'attivazione che sulla disattivazione del plugin. La condizione deve essere espressa in ConditionLanguage  -->
+			<pluginCommand name="ProvaInteractiveCommand" class="InteractiveCommand.ProvaInteractiveCommand" restrictedTo="USER_COLLABORATORE,USER_ADMIN"  condition="STARTS WHEN 5 + 4 + 3 + 2 + 1 = 15;" /> 
+			<pluginCommand name="InformativaPrivacyInteractiveCommand" class="InteractiveCommand.InformativaPrivacyInteractiveCommand"/>
 		</InteractiveCommandHandler>
 		
 		<TestUnit class="TestUnit" />

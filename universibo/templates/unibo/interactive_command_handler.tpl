@@ -8,7 +8,7 @@
 
 <form method="post">
 {include file=$InteractiveCommandHandler_stepPath}
-	<div class="navbar"><a href="{$InteractiveCommandHandler_back_uri|escape:"htmlall"}">{$InteractiveCommandHandler_back_lang|escape:"htmlall"}</a><input class="post_link" name="action" type="submit" value="{$InteractiveCommandHandler_next_lang|escape:"htmlall"}" /><a href="{$InteractiveCommandHandler_canc_uri|escape:"htmlall"}">{$InteractiveCommandHandler_canc_lang|escape:"htmlall"}</a></div>
+	<div class="navbar"><input class="post_link" name="action" type="submit" value="{$InteractiveCommandHandler_next_lang|escape:"htmlall"}" /><a href="{$InteractiveCommandHandler_canc_uri|escape:"htmlall"}">{$InteractiveCommandHandler_canc_lang|escape:"htmlall"}</a>{if $InteractiveCommandHandler_back_lang|default:"" != ""}<a href="{$InteractiveCommandHandler_back_uri|escape:"htmlall"}">{$InteractiveCommandHandler_back_lang|escape:"htmlall"}</a>{/if}</div>
 </form>
 
 {include file=footer_index.tpl}
