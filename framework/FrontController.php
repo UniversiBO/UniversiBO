@@ -324,6 +324,7 @@ class FrontController {
 		
 		$ret = array('nameWithPath' => $file_namepath,'className' => $class_name);			
 		$ret['restrictedTo'] = (isset($plugin['restrictedTo']))? $plugin['restrictedTo'] : '';
+		$ret['condition'] = (isset($plugin['condition']))? $plugin['condition'] : '';
 		$ret['restrictedTo'] = str_replace(' ', '', $ret['restrictedTo']);
 		
 		$ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : array();
@@ -381,7 +382,6 @@ class FrontController {
 		return $this->rootUrl;
 	}
 	
-
 
 
 
@@ -945,7 +945,7 @@ class FrontController {
 		{
 			$plugin = $plugins->item($i);
 //			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
-			$this->plugins[$plugin->getAttribute('name')] = array ('class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'));	
+			$this->plugins[$plugin->getAttribute('name')] = array ('class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition'));	
 		}
 
 		if(!isset($this->commandClass))
