@@ -274,6 +274,9 @@
 			<response type="template" name="default">file_studenti_comment_delete.tpl</response>
 			<pluginCommand name="ShowFileStudentiCommento" class="Files.ShowFileStudentiCommento" />
 		</FileStudentiCommentDelete>
+		<ShowPersonalFiles class="ShowPersonalFiles">
+			<response type="template" name="default">personal_files.tpl</response>
+		</ShowPersonalFiles>
 		
 		
 		<DidatticaGestione class="DidatticaGestione">
