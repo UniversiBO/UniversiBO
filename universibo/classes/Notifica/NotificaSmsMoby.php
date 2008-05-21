@@ -35,6 +35,10 @@ class NotificaSmsMoby extends NotificaItem
 	* @return boolean true "success" or false "failed"
 	*/
 	function send($fc) {
+		// impediamo l'invio di sms più vecchi di 7 gg
+		$time = time();
+		$setteGiorni = 7 * 24 * 3600;
+		if(($time -$setteGiorni) > $this->getTimestamp()) return true;
 		
 		//per usare l'SMTPkeepAlive usa il singleton
 		$sms = $fc->getSmsMoby();
