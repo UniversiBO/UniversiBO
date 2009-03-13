@@ -926,3 +926,44 @@ position:static;
  * fine liste espandibili
  */
 
+/** 
+ *    STATISTICHE
+ *************************/
+ 
+#statistiche li {
+	text-align: center;
+	text-decoration: inherit;
+	width: 50%;
+}
+
+
+#statistiche  ul{
+	
+	
+        border-bottom: thick; 	    	
+	}
+#statistiche li span {
+	border: 1px groove blue;
+	text-shadow: aqua;
+	
+	background: white;
+	padding: 2px 4px;
+	width: 80px;
+	display: block; 
+	float: left; 
+	text-align: center;
+}
+
+#statistiche li.header 
+{
+	font-weight: bold;
+	font-family:  verdana;
+	text-transform: uppercase;
+	color: black;
+	
+}
+
+#statistiche .header span 
+{
+	background: white;
+}

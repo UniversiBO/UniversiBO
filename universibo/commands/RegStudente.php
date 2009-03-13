@@ -33,7 +33,7 @@ class RegStudente extends UniversiboCommand
 		$template->assign('f4_submit',		'Registra');
 		$template->assign('regStudente_langRegAlt','Registrazione');
 		$template->assign('regStudente_langMail','e-mail di ateneo:');
-		$template->assign('regStudente_langPassword','Password dell\' email:');
+		$template->assign('regStudente_langPassword','Password dell\' email d\' ateneo:');
 		$template->assign('regStudente_langUsername','Username scelto per UniversiBO:');
 		$template->assign('regStudente_domain','@studio.unibo.it');
 		$template->assign('regStudente_langInfoUsername','E\' necessario scegliere uno Username che sarà utilizzato per i futuri accessi e che sarà anche il vostro nome identificativo all\'interno di UniversiBO.[b]Non sará possibile cambiare username in seguito[/b].
@@ -88,7 +88,7 @@ Per problemi indipendenti da noi [b]la casella e-mail verrà creata nelle 24 ore 
 				$f4_accept = false;
 			}
 			elseif(User::activeDirectoryUsernameExists($_POST['f4_ad_user'].'@studio.unibo.it')){
-				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente già registrato','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'La mail di ateneo '.$_POST['f4_ad_user'].'@studio.unibo.it'.' appartiene ad un utente già registrato o non è più autorizzata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f4_accept = false;
 			}
 			else

@@ -1,5 +1,5 @@
 <?php
-
+require_once('User'.PHP_EXTENSION);
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
 
@@ -96,10 +96,16 @@ class RegUser extends UniversiboCommand
 				Error::throwError(_ERROR_NOTICE,array('id_utente' => $session_user->getIdUser(), 'msg'=>'Il livello inserito è vuoto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f34_accept = false;
 			}
+//			elseif ( $_POST['f34_livello'] != USER_STUDENTE &&
+//					 $_POST['f34_livello'] != USER_COLLABORATORE &&
+//					 $_POST['f34_livello'] != USER_TUTOR &&
+//					 $_POST['f34_livello'] != USER_DOCENTE &&
+//					 $_POST['f34_livello'] != USER_ADMIN &&
+//					 $_POST['f34_livello'] != USER_PERSONALE ) 
+//			{
 			elseif ( $_POST['f34_livello'] != USER_STUDENTE &&
 					 $_POST['f34_livello'] != USER_COLLABORATORE &&
 					 $_POST['f34_livello'] != USER_TUTOR &&
-					 $_POST['f34_livello'] != USER_DOCENTE &&
 					 $_POST['f34_livello'] != USER_ADMIN &&
 					 $_POST['f34_livello'] != USER_PERSONALE ) 
 			{
@@ -161,7 +167,7 @@ class RegUser extends UniversiboCommand
 		$array_nomi = User::groupsNames();
 		foreach($array_nomi as $key => $value)
 		{
-			if ($key != USER_OSPITE)
+			if ($key != USER_OSPITE && $key != USER_DOCENTE)
 				$array_livelli[$key] = $value; 
 		}
 		// riassegna valori form

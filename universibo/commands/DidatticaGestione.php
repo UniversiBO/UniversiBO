@@ -206,7 +206,8 @@ class DidatticaGestione extends UniversiboCommand{
 					if ($v->isDocente())
 					{
 						$doc =& Docente::selectDocente($v->getIdUser());
-						$listaDocenti[]=array('nome' => $doc->getNomeDoc(), 'codice' => $doc->getCodDoc());
+						if($doc != false)
+							$listaDocenti[]=array('nome' => $doc->getNomeDoc(), 'codice' => $doc->getCodDoc());
 					}
 				if(count($listaDocenti) == 0) $listaDocenti = '';
 			}

@@ -62,6 +62,10 @@ class ShowFacolta extends CanaleCommand {
 						case 1: $name = 'CORSI DI LAUREA TRIENNALI'; break;
 						case 2: $name = 'CORSI DI LAUREA SPECIALISTICA'; break;
 						case 3: $name = 'CORSI DI LAUREA VECCHIO ORDINAMENTO'; break;
+						case 4: $name = 'CORSI DI LAUREA (DM 270/04)'; break;
+						case 5: $name = 'CORSI DI LAUREA MAGISTRALE'; break;
+						case 6: $name = 'CORSI DI LAUREA MAGISTRALE A CICLO UNICO'; break;
+						case 7: $name = 'CORSI DI LAUREA SPECIALISTICA A CICLO UNICO'; break;
 					}
 					if (!array_key_exists($cdlType,$fac_listCdlType) )
 					$fac_listCdlType[$cdlType] = array('cod' => $cdlType, 'name' => $name, 'list' => array() );
@@ -86,8 +90,12 @@ class ShowFacolta extends CanaleCommand {
 		$fac_listCdlType[] = array('cod' => '2', 'name' => 'Lauree Specialistiche', 'list' => $fac_listCdl);
 		$fac_listCdlType[] = array('cod' => '3', 'name' => 'Lauree Vecchio Ordinamento', 'list' => $fac_listCdl);
 */
-
-		$template -> assign('fac_list', $fac_listCdlType);
+		// ordinamento delle categorie
+		$sortedFacList = array();
+		foreach (array(4,1,2,5,7,6,3) as $n)
+			if (isset($fac_listCdlType[$n])) $sortedFacList[] = $fac_listCdlType[$n];
+		
+		$template -> assign('fac_list', $sortedFacList);
 		$template -> assign('fac_langFac', 'FACOLTA\'');
 		$template -> assign('fac_facTitle', $facolta->getTitolo());
 		$template -> assign('fac_langTitleAlt', 'corsi_di_laurea');

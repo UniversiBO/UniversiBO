@@ -32,10 +32,34 @@ class ScriptCancelUser extends UniversiboCommand
 //		// TODO verificare quale informativa ha approvato
 //		if (!isset($values['id_info']))
 //			Error::throwError(_ERROR_CRITICAL,array('msg'=>'impossibile dedurre quale informativa per la privacy ha approvato l\'utente','file'=>__FILE__,'line'=>__LINE__));
-		$idInfo = (isset($values['id_info'])) ? $values['id_info'] : 1;
+		//$idInfo = (isset($values['id_info'])) ? $values['id_info'] : 1;
+		
+		 echo "al momento cancello bene solo secondo la nuova informativa, per la vecchia son da testare!! commentami per eseguire!\n"; die;
+		$idInfo = (isset($values['id_info'])) ? $values['id_info'] : 2; // di default la nuova informativa
 				
-		$cancelObj  = new CancellazioneUtente($idInfo); 
-		$cancelObj->cancellaUtente($idUtente);		
+		$cancelObj  = new CancellazioneUtente($idInfo);
+		$esito = false; 
+		$esito = $cancelObj->cancellaUtente($idUtente);		
+		
+		if($esito)
+		{
+			$mail =& $fc->getMail();
+	
+			$mail->AddAddress($user->getEmail());
+	
+			$mail->Subject = "Cancellazione iscrizione UniversiBO";
+			$mail->Body = "Ciao \"".$user->getUsername()."\"!!\n".
+			     "Il tuo account su UniversiBO e' stato cancellato.\n".
+				 "Nel caso volessi effettuare nuovamente l'iscrizione, non sara' possibile\n".
+			     "farlo attraverso la normale procedura sul sito, ma puoi contattarci all'indirizzo\n". 
+				 $fc->getAppSetting('infoEmail')."\n".
+				 "Grazie per aver usato UniversiBO!\n\n";
+			if(!$mail->Send()){echo 'Errore Mail'; Error::throwError(_ERROR_DEFAULT,array('msg'=>'Mail non inviata!', 'file'=>__FILE__, 'line'=>__LINE__));}
+			echo 'Successo';
+		}
+		else
+			echo 'Errore';
+		
 	}
 }
 
@@ -64,7 +88,7 @@ class CancellazioneUtente
 		$db =& FrontController::getDbConnection('main');
 		ignore_user_abort(1);
         $db->autoCommit(false);
-		
+        
 		foreach ($this->valuesDispatch[$this->idInformativa] as $method)
 		{
 			$ret = $this->$method($idUtente);
@@ -72,11 +96,13 @@ class CancellazioneUtente
 			{
 				$db->rollback();				
 				Error::throwError(_ERROR_CRITICAL,array('msg'=>'Si è verificato un errore: ' . $ret['msg'] ."\n".'Ripristino della situazione iniziale','file'=>__FILE__,'line'=>__LINE__));
+				return false;
 			}
 		}
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		return true;
 	}
 	
 	
@@ -96,6 +122,11 @@ class CancellazioneUtente
 		}
        	$user->setEliminato();
        	$user->updateUser();
+       	 
+		$query = 'UPDATE utente_canale SET notifica=0 WHERE id_utente='.$this->db->quote($idUtente);
+		$res =& $this->db->query($query);
+		if( DB::isError($res) )
+			return array( 'esito' => false, 'msg' => DB::errorMessage($res)); 
        	return array( 'esito' => true);
 	}
 	

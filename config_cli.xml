@@ -87,14 +87,18 @@
 		<version>2.2.2</version>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
-		<contactsPath>img/contacts/</contactsPath>
+		<notificheLock>../universibo/notifiche.lock</notificheLock>
+        <contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<filesPath>../universibo/file-universibo/</filesPath>
 		<filesTipoIconePath>img/icone_file/</filesTipoIconePath>
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
-		<alertMessage></alertMessage>
+		<passwordDocentiAdmin>spiff1281;brain;sissi</passwordDocentiAdmin>
+        <modFileStudenti>brain;sissi;LastHope</modFileStudenti>
+        <programmazioneDidatticaAdmin>Elisa;brain;eagleone</programmazioneDidatticaAdmin>
+        <alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>
 		<rootEmail>universibo@mail.ing.unibo.it</rootEmail>
 		<infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
@@ -103,6 +107,14 @@
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
 		<defaultAnnoAccademico>2007</defaultAnnoAccademico>
 		<catalogoFileName>../universibo/files/catalog.xml</catalogoFileName>
+		
+		<antiVirusEnable>true</antiVirusEnable>
+        <antiVirusType>clamav</antiVirusType>
+        <antiVirusClamavCmd>/usr/bin/clamscan</antiVirusClamavCmd>
+        <antiVirusClamavOpts>--quiet --recursive --log=/var/log/clamscan.report --recursive --unzip=/usr/bin/unzip --unrar=/usr/local
+/bin/unrar --tar=/bin/tar --tgz=/bin/
+gunzip</antiVirusClamavOpts>
+		
 	</appSettings>
 	
 </config>
