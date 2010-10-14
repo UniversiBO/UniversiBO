@@ -28,18 +28,18 @@ class FileEdit extends UniversiboCommand {
 		
 		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file']))
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del file richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del file richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$file = & FileItem::selectFileItem($_GET['id_file']);
 		if ($file === false)
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		$template->assign('fileEdit_fileUri', 'index.php?do=FileShowInfo&id_file='.$file->getIdFile());
 		
 		
 //		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 //		{
-//			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+//			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
 //		}
 //		$canale = & Canale::retrieveCanale($_GET['id_canale']);
 //		$id_canale = $canale->getIdCanale();
@@ -56,11 +56,11 @@ class FileEdit extends UniversiboCommand {
 		if (array_key_exists('id_canale', $_GET))
 		{
 			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 
 			$canale = & Canale::retrieveCanale($_GET['id_canale']);
 			if ($canale->getServizioFiles() == false) 
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il servizio files è disattivato", 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il servizio files è disattivato", 'file' => __FILE__, 'line' => __LINE__));
 		
 			$id_canale = $canale->getIdCanale();
 			$template->assign('common_canaleURI', $canale->showMe());
@@ -74,18 +74,17 @@ class FileEdit extends UniversiboCommand {
 			//controllo coerenza parametri
 			$canali_file	=& 	$file->getIdCanali();
 			if (!in_array($id_canale, $canali_file))
-				 Error :: throw (_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+				 Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
 			
 			$elenco_canali = array($id_canale);
 			
 			//controllo diritti sul canale
 			if (!($user->isAdmin() || $referente || ($moderatore && $autore)))
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 				
 		}
-
-		if (!($user->isAdmin() || $autore)) 
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
+		elseif (!($user->isAdmin() || $autore)) 
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Non hai i diritti per modificare il file\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));		
 		
 		
 		// valori default form
@@ -104,7 +103,7 @@ class FileEdit extends UniversiboCommand {
 		$f13_canale = array();
 		$f13_password = '';
 
-		//prendo tutti i canali tra i ruoli più (??) il canale corrente (che per l'admin può essere diverso)
+		//prendo tutti i canali tra i ruoli più (??) il canale corrente (che per l'admin puù essere diverso)
 		$elenco_canali = $file->getIdCanali();
 		$num_canali = count($elenco_canali);
 		for ($i = 0; $i<$num_canali; $i++)
@@ -137,18 +136,18 @@ class FileEdit extends UniversiboCommand {
 			 !array_key_exists('f13_password', $_POST) || 
 			 !array_key_exists('f13_password_confirm', $_POST) ) 
 			{
-				Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il form inviato non è valido', 'file' => __FILE__, 'line' => __LINE__));
 				$f13_accept = false;
 			}
 			
 			
 			//titolo	
 			if (strlen($_POST['f13_titolo']) > 150) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ($_POST['f13_titolo'] == '') {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il titolo deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il titolo deve essere inserito obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			} else
 				$f13_titolo = $_POST['f13_titolo'];
@@ -161,7 +160,7 @@ class FileEdit extends UniversiboCommand {
 			$checkdate_ins = true;
 			//data_ins_gg
 			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_gg'])) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
@@ -169,7 +168,7 @@ class FileEdit extends UniversiboCommand {
 
 			//f13_data_ins_mm
 			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_mm'])) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo mese di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
@@ -177,12 +176,12 @@ class FileEdit extends UniversiboCommand {
 
 			//f13_data_ins_aa
 			if (!ereg('^([0-9]{4})$', $_POST['f13_data_ins_aa'])) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo anno di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 				$checkdate_ins = false;
 			}
 			elseif ($_POST['f13_data_ins_aa'] < 1970 || $_POST['f13_data_ins_aa'] > 2032) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 				$checkdate_ins = false;
 			} else
@@ -190,29 +189,29 @@ class FileEdit extends UniversiboCommand {
 
 			//f13_data_ins_ora
 			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_ora'])) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo ora di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ($_POST['f13_data_ins_ora'] < 0 || $_POST['f13_data_ins_ora'] > 23) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			} else
 				$f13_data_ins_ora = $_POST['f13_data_ins_ora'];
 
 			//f13_data_ins_min
 			if (!ereg('^([0-9]{1,2})$', $_POST['f13_data_ins_min'])) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ($_POST['f13_data_ins_min'] < 0 || $_POST['f13_data_ins_min'] > 59) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			} else
 				$f13_data_ins_min = $_POST['f13_data_ins_min'];
 
 			if ( $checkdate_ins == true && !checkdate($_POST['f13_data_ins_mm'], $_POST['f13_data_ins_gg'], $_POST['f13_data_ins_aa']))
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La data di inserimento specificata non esiste', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			
@@ -220,14 +219,18 @@ class FileEdit extends UniversiboCommand {
 			
 			//abstract	
 			if (strlen($_POST['f13_abstract']) > 3000) {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
+//			elseif ($_POST['f13_abstract'] == '') {
+//				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+//				$f13_accept = false;
+//			}
 			elseif ($_POST['f13_abstract'] == '') {
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La descrizione/abstract del file deve essere inserita obbligatoriamente', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
-				$f13_accept = false;
-			} else
-				$f13_testo = $_POST['f13_abstract'];
+				$f13_abstract = $f13_titolo;
+			} 
+			else
+				$f13_abstract = $_POST['f13_abstract'];
 
 			//parole chiave
 			$f13_parole_chiave = array();
@@ -239,7 +242,7 @@ class FileEdit extends UniversiboCommand {
 				{
 					if (strlen($parola > 40))
 					{
-						Error :: throw (_ERROR_NOTICE, array ('msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+						Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La lunghezza massima di una parola chiave è di 40 caratteri', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 						$f13_accept = false;
 					}
 					else
@@ -252,7 +255,7 @@ class FileEdit extends UniversiboCommand {
 				if (count($f13_parole_chiave) > 4) 
 				{
 					var_dump($f13_parole_chiave);
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Si possono inserire al massimo 4 parole chiave', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 					$f13_accept = false;
 				}
 			}
@@ -260,12 +263,12 @@ class FileEdit extends UniversiboCommand {
 			//categoria	
 			if (!ereg('^([0-9]{1,9})$', $_POST['f13_categoria'])) 
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo categoria non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo categoria non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ( !array_key_exists($_POST['f13_categoria'], $f13_categorie) )
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'La categoria inviata contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La categoria inviata contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			else $f13_categoria = $_POST['f13_categoria'];
@@ -274,12 +277,12 @@ class FileEdit extends UniversiboCommand {
 			//tipi	
 			if (!ereg('^([0-9]{1,9})$', $_POST['f13_tipo'])) 
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo tipo non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo tipo non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ( !array_key_exists($_POST['f13_tipo'], $f13_tipi) )
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il tipo inviato contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il tipo inviato contiene un valore non ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			else $f13_tipo = $_POST['f13_tipo'];
@@ -288,14 +291,14 @@ class FileEdit extends UniversiboCommand {
 			//permessi_download	
 			if (!ereg('^([0-9]{1,3})$', $_POST['f13_permessi_download'])) 
 			{
-				Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+				Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il formato del campo minuto di inserimento non è valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
 				$f13_accept = false;
 			}
 			elseif ( $user->isAdmin() ) 
 			{
 				if ($_POST['f13_permessi_download'] < 0 || $_POST['f13_permessi_download'] > USER_ALL )
 				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il valore dei diritti di download non è ammessibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
 				}
 				$f13_permessi_download = $_POST['f13_permessi_download'];
@@ -304,7 +307,7 @@ class FileEdit extends UniversiboCommand {
 			{
 				if ($_POST['f13_permessi_download'] != USER_ALL && $_POST['f13_permessi_download'] != (USER_STUDENTE | USER_DOCENTE | USER_TUTOR | USER_PERSONALE | USER_COLLABORATORE | USER_ADMIN ) )
 				{
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'Il valore dei diritti di download non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'Il valore dei diritti di download non è ammissibile', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
 				}
 				$f13_permessi_download = $_POST['f13_permessi_download'];
@@ -317,12 +320,12 @@ class FileEdit extends UniversiboCommand {
 			{
 				if ($_POST['f13_password'] != $_POST['f13_password_confirm'])
 				{ 
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
 				}
 				elseif( $file->getPassword() == null && $_POST['f13_password'] == '')
 				{ 
-					Error :: throw (_ERROR_NOTICE, array ('msg' => 'La password inserita è vuota', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
+					Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getIdUser(), 'msg' => 'La password inserita è vuota', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template));
 					$f13_accept = false;
 				}
 				elseif( $file->getPassword() != null && $_POST['f13_password'] == '')

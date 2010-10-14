@@ -28,7 +28,7 @@ require_once 'StringEsempioUsoPhpUnit.php';
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class StringTest extends PHPUnit_TestCase
+class _UnitTest_StringEsempioUsoPhpUnit extends PHPUnit_TestCase
 {
 // contains the object handle of the string class
 var $abc;

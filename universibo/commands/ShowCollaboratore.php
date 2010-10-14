@@ -1,6 +1,7 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('Collaboratore'.PHP_EXTENSION);
 
 /**
  * ShowContacts is an extension of UniversiboCommand class.
@@ -12,41 +13,56 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
  * @version 2.0.0
  * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>
+ * @author Cristina Valent
  * @license GPL, {@link http://www.opensource.org/licenses/gpl-license.php}
  */
  
-class ShowCollaboratore extends UniversiboCommand {
+class ShowCollaboratore extends UniversiboCommand  {
 	function execute()
 	{
 
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
-		
-		if (!array_key_exists('id_utente',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['id_utente'] ) ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__)); 
+		$user =& $this->getSessionUser();
+		if (!array_key_exists('id_coll',$_GET) && !ereg( '^([0-9]{1,10})$' , $_GET['id_coll'] ) ) 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'utente cercato non è valido','file'=>__FILE__,'line'=>__LINE__)); 
 					
 
-		$contacts_path = $this->frontController->getAppSetting('contactsPath');
+		$contacts_path = $frontcontroller->getAppSetting('contactsPath');
 
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi, c.foto, u.id_utente FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente AND u.id_utente='.$db->quote($_GET['id_utente']);
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if($rows = 0) Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'utente cercato non esiste','file'=>__FILE__,'line'=>__LINE__)); 
+		$collaboratore =& Collaboratore::selectCollaboratore($_GET['id_coll']);
 		
-		$res->fetchInto($row);
-		$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');
-		$arrayContatti = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
-
-		$template->assign('collaboratore_collaboratore', $arrayContatti);
+		if (!$collaboratore)
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Non ci sono informazioni sul collaboratore scelto','file'=>__FILE__,'line'=>__LINE__, 'template_engine' => & $template));
 		
-		$template->assign('collaboratore_langAltTitle', 'Chi Siamo');
-		$template->assign('collaboratore_langIntro', 'Scheda informativa di');
+		$curr_user =& $collaboratore->getUser();
+		if(($user->getIdUser())==($collaboratore->getIdUtente()))
+	       { 
+	       	 $modifica_link = '';
+	       	 $modifica = "modifica";
+	       }
+	    else
+	       {
+	       	 $modifica_link = '';
+	       	 $modifica = "";
+	       }    
+	       	 
+		$arrayContatti = array('username'=>$curr_user->getUsername(),
+								 'intro'=>$collaboratore->getIntro(),
+								 'ruolo'=>$collaboratore->getRuolo(),
+								 'email'=>$curr_user->getEmail(),
+								 'recapito'=>$collaboratore->getRecapito(),
+								 'obiettivi'=>$collaboratore->getObiettivi(),
+								 'foto'=>$collaboratore->getFotoFilename(),
+								 'id_utente'=>$collaboratore->getIdUtente(),
+								 'modifica_link'=>$modifica_link,
+								 'modifica'=>$modifica
+								);
+
+		$template->assign('collaboratore', $arrayContatti);
+		
+		$template->assign('collaboratore_langAltTitle', 'Scheda Informativa di');
+		//$template->assign('collaboratore_langIntro', 'Scheda informativa di');
 		$template->assign('contacts_path', $contacts_path);
 		
 		return 'default';

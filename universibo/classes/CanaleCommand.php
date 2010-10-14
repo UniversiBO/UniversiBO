@@ -38,12 +38,12 @@ class CanaleCommand extends UniversiboCommand
 		if (!array_key_exists('id_canale', $_GET ) )
 		{
 			if ($this->frontController->getCommandRequest() == 'ShowHome') return 1;
-			else Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale non ? specificato nella richiesta','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'il parametro id_canale non è specificato nella richiesta','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		if (!ereg('^([0-9]+)$', $_GET['id_canale'] ) )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'il parametro id_canale ? sintatticamente non valido','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'il parametro id_canale è sintatticamente non valido','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		return intval($_GET['id_canale']);
@@ -91,16 +91,16 @@ class CanaleCommand extends UniversiboCommand
 		//$this->requestCanale =& $class_name::factoryCanale( $this->getRequestIdCanale() );
 		
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale =& $this->getRequestCanale();
 		$user =& $this->getSessionUser();
 		
 		if ( ! $canale->isGroupAllowed( $user->getGroups() ) )
-			Error::throw(_ERROR_DEFAULT, array('msg'=>'Non ti ? permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'Non ti è permesso l\'accesso al canale selezionato, la sessione potrebbe essere scaduta','file'=>__FILE__,'line'=>__LINE__ ) );
 		
 		$canale->addVisite();
-			
+		
 	}
 	
 	
@@ -159,7 +159,7 @@ class CanaleCommand extends UniversiboCommand
 	{
 		$id_canale = $this->getRequestIdCanale();
 		$user =& $this->getSessionUser();
-		$user_ruoli =& $user->getRuoli();
+		$user_ruoli = $user->getRuoli();
 		
 		if (array_key_exists($id_canale, $user_ruoli))
 		{
@@ -229,12 +229,36 @@ class CanaleCommand extends UniversiboCommand
 				$template->assign('common_contactsCanale', $arrayPublicUsers);
 				$template->assign('common_contactsEdit', array('label' => 'Modifica diritti', 'uri' => 'index.php?do=RuoliAdminSearch&id_canale='.$canale->getIdCanale() ) ) ;
 				$template->assign('common_contactsEditAvailable', ($attivaModificaDiritti) ? 'true' : 'false');
+				
+				$template->assign('common_langLinksCanale', 'Links');
 			}
 			
 			
 			//$template->assign('common_contactsCanaleAvailable', 'false');
-			
-			
+		
+			// elenco post nuovi contestuale al canale
+			if ($this->requestCanale->getServizioForum())
+			{
+//				$newposts = 'false';
+				$list_post		=	array();
+				if (!$user->isOspite())
+				{
+					$fa = new ForumApi();
+					$id_posts_list 	=&  $fa->getLastPostsForum($user, $canale->getForumForumId());
+								
+					if ($id_posts_list != false)
+					{
+//						$newposts = 'true';
+						foreach ($id_posts_list as $curr_post)
+						{
+							$list_post[]= array('URI' => $fa->getPostUri($curr_post['id']), 'desc' => $curr_post['name']);
+						} 
+					}
+				}
+//				$template->assign( 'common_newPostsAvailable', $newposts);		
+				$template->assign( 'common_newPostsAvailable', 'true');		
+				$template->assign( 'common_newPostsList', $list_post);
+			}
 		}
 		
 		
@@ -245,6 +269,7 @@ class CanaleCommand extends UniversiboCommand
 
 
 
+	
 	function _compareContattiKeys($b, $a)
 	{
 //		$theArrayOrder = array ('Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>'');		  

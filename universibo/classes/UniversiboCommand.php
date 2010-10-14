@@ -54,7 +54,7 @@ class UniversiboCommand extends BaseCommand {
 	
 
 	/**
-	 * Restituisce true se un utente (anche ospite) è stato registrato nella sessione corrente
+	 * Restituisce true se un utente (anche ospite) ? stato registrato nella sessione corrente
 	 *
 	 * @static
 	 * @return boolean
@@ -69,8 +69,8 @@ class UniversiboCommand extends BaseCommand {
 	/**
 	 * Restituisce l'oggetto utente della sessione corrente.
 	 *
-	 * Può essere chiamata solo dopo che è stata eseguita initCommand altrimenti
-	 * il valore di ritorno è indefinito
+	 * Pu? essere chiamata solo dopo che ? stata eseguita initCommand altrimenti
+	 * il valore di ritorno ? indefinito
 	 *
 	 * @return User
 	 */
@@ -119,17 +119,17 @@ class UniversiboCommand extends BaseCommand {
 		//raccolgo tutti gli errori
 		while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		while ( ($current_error = Error::retrieve(_ERROR_DEFAULT)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		while ( ($current_error = Error::retrieve(_ERROR_CRITICAL)) !== false )
 		{
-			echo $current_error->throw();
+			echo $current_error->throwError();
 		}
 		
 		$fc =& $this->getFrontController();
@@ -140,7 +140,7 @@ class UniversiboCommand extends BaseCommand {
 	
 	
 	/**
-	 * Restituisce se la pagina chiamata è di tipo indice (con menu) o popup (senza menu)
+	 * Restituisce se la pagina chiamata ? di tipo indice (con menu) o popup (senza menu)
 	 * 
 	 * @return boolean  
 	 */
@@ -171,8 +171,8 @@ class UniversiboCommand extends BaseCommand {
 //			echo $this->sessionUser->getUsername();
 		}
 		else 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
-			
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>'id_utente registrato nella sessione non valido','file'=>__FILE__,'line'=>__LINE__));
+//		var_dump($this->sessionUser);	
 	}
 
 
@@ -227,13 +227,13 @@ class UniversiboCommand extends BaseCommand {
 		// www.universibo.unibo.it
 		$template->assign('common_hostName',	( array_key_exists('HTTP_HOST', $_SERVER) ) ? $_SERVER['HTTP_HOST'] : '');
 		// https://www.universibo.unibo.it/path_universibo2/
-		$template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$fc->getRootPath());
+@		$template->assign('common_rootUrl',		$request_protocol.'://'.$_SERVER['HTTP_HOST'].'/'.$fc->getRootPath());
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php
-		$template->assign('common_receiverUrl',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
+@		$template->assign('common_receiverUrl',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
 		// https://www.universibo.unibo.it/path_universibo2/receiver.php?do=SomeCommand
-		$template->assign('common_requestUri',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+@		$template->assign('common_requestUri',	$request_protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 		// /path_universibo2/receiver.php?do=SomeCommand
-		$template->assign('common_shortUri',	$_SERVER['REQUEST_URI']);
+@		$template->assign('common_shortUri',	$_SERVER['REQUEST_URI']);
 		
 		$template->assign('common_homepage',	'Homepage');
 		$template->assign('common_homepageUri',	'index.php?do=ShowHome');
@@ -276,9 +276,84 @@ class UniversiboCommand extends BaseCommand {
 	function _initTemplateIndexUniversibo()
 	{
 		
+		
+	}
+	
+
+
+	/**
+	 * Inizializza le variabili del template per le pagine popup
+	 * 
+	 * @private
+	 * @todo implementare  
+	 */
+	function _initTemplatePopupUniversibo()
+	{
+		
+	}
+		
+	
+	/**
+	 * Inizializza le variabili del template per le pagine con indice completo
+	 *
+	 * @private
+	 */
+	function _shutdownTemplateIndexUniversibo()
+	{
+		
 		$template =& $this->frontController->getTemplateEngine();
 		$krono =& $this->frontController->getKrono();
-			
+		
+		$session_user =& $this->getSessionUser();
+		
+		//informazioni del MyUniversiBO
+		$attivaMyUniversibo = false;
+//		var_dump($session_user);
+		
+		if(!$session_user->isOspite())
+		{
+			$attivaMyUniversibo = true;
+			$arrayCanali = array();
+			$arrayRuoli = $session_user->getRuoli();
+			//var_dump($session_user);
+			$keys = array_keys($arrayRuoli);
+			foreach ($keys as $key)
+			{
+				$ruolo =& $arrayRuoli[$key];
+				if ($ruolo->isMyUniversibo())
+				{
+					//$attivaMyUniversibo = true;
+					
+					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
+					$myCanali = array();
+					$myCanali['uri']   = $canale->showMe();
+					$myCanali['tipo']  = $canale->getTipoCanale();
+					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
+					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
+					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
+					//var_dump($ruolo);
+					$arrayCanali[] = $myCanali;
+				}
+			}
+			//ordina $arrayCanali
+			usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
+		}
+		
+		
+		//assegna al template
+		if ($attivaMyUniversibo)
+		{
+			$template->assign('common_myLinksAvailable', 'true');
+			$template->assign('common_langMyUniversibo', 'My UniversiBO');
+			$template->assign('common_myLinks', $arrayCanali);
+		}
+		else
+		{
+			$template->assign('common_myLinksAvailable', 'false');
+		}
+		
+		
+
 		//solo nella pagine index
 		$curr_mday=date("j");  //inizializzo giorno corrente
 		$curr_mese=date("n");  //inizializzo mese corrente
@@ -317,7 +392,7 @@ class UniversiboCommand extends BaseCommand {
 			
 		}
 		
-		$template->assign('common_settings', 'Impostazioni');
+		$template->assign('common_settings', 'Impostazioni personali');
 		$template->assign('common_settingsUri', 'index.php?do=ShowSettings');
 
 		$template->assign('common_myUniversiBO', 'ShowMyUniversiBO');
@@ -366,6 +441,12 @@ class UniversiboCommand extends BaseCommand {
 			}
 
 		}
+		if ($session_user->isAdmin() || $session_user->isCollaboratore())
+		{
+			$common_servicesLinks[] = array('uri' => 'index.php?do=ShowContattiDocenti' , 'tipo' => '' , 'label' => 'Contatto dei docenti');
+			$common_servicesLinks[] = array('uri' => 'index.php?do=ShowStatistiche' , 'tipo' => '' , 'label' => 'Statistiche');
+		}
+		
 		usort($common_servicesLinks, array('UniversiboCommand','_compareServices'));
 		$template->assign('common_servicesLinks', $common_servicesLinks);
 		
@@ -383,18 +464,22 @@ class UniversiboCommand extends BaseCommand {
 		$template->assign('common_contributeUri', 'index.php?do=ShowContribute');
 		$template->assign('common_credits', 'Credits');
 		$template->assign('common_creditsUri', 'index.php?do=ShowCredits');
+		$template->assign('common_accessibility', 'Accessibilità');
+		$template->assign('common_accessibilityUri', 'index.php?do=ShowAccessibility');
 		
 		$template->assign('common_manifesto', 'Manifesto');
 		$template->assign('common_manifestoUri', 'index.php?do=ShowManifesto');
 		
 		$template->assign('common_docSf', 'Documentazione');
-		$template->assign('common_docSfUri', 'https://uni141.ing.unibo.it/tiki/');
+		$template->assign('common_docSfUri', 'https://wiki.universibo.unibo.it/');
 		//$template->assign('common_project', 'UniversiBO Open Source Project');
 		//$template->assign('common_projectUri', 'http://universibo.sourceforge.net/');
 		
 		
-		$template->assign('common_disclaimer', 'Ogni marchio citato in questa pagina appartiene al legittimo proprietario.'.
-												'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.');
+		$template->assign('common_disclaimer', array('Le informazioni contenute nel sito non hanno carattere di ufficialità.', 
+'I contenuti sono mantenuti in maniera volontaria dai partecipanti alla comunità di studenti e docenti di UniversiBO. L\'Università di Bologna - Alma Mater Studiorum non può essere considerata legalmente responsabile di alcun contenuto di questo sito.',
+'Ogni marchio citato in queste pagine appartiene al legittimo proprietario.'.
+'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinchè le parti in discussione vengano eliminate o chiarite.'));
 		
 		$template->assign( 'common_isSetVisite', 'N' );
 		
@@ -467,78 +552,6 @@ class UniversiboCommand extends BaseCommand {
 	 * @private
 	 * @todo implementare  
 	 */
-	function _initTemplatePopupUniversibo()
-	{
-		
-	}
-		
-	
-	/**
-	 * Inizializza le variabili del template per le pagine con indice completo
-	 *
-	 * @private
-	 */
-	function _shutdownTemplateIndexUniversibo()
-	{
-		
-		$template =& $this->frontController->getTemplateEngine();
-		
-		$session_user = $this->getSessionUser();
-		
-		//informazioni del MyUniversiBO
-		$attivaMyUniversibo = false;
-		
-		if(!$session_user->isOspite())
-		{
-			$attivaMyUniversibo = true;
-			$arrayCanali = array();
-			$arrayRuoli =& $session_user->getRuoli();
-			$keys = array_keys($arrayRuoli);
-			foreach ($keys as $key)
-			{
-				$ruolo =& $arrayRuoli[$key];
-				if ($ruolo->isMyUniversibo())
-				{
-					//$attivaMyUniversibo = true;
-					
-					$canale =& Canale::retrieveCanale($ruolo->getIdCanale());
-					$myCanali = array();
-					$myCanali['uri']   = $canale->showMe();
-					$myCanali['tipo']  = $canale->getTipoCanale();
-					$myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
-					$myCanali['new']   = ($canale->getUltimaModifica() > $ruolo->getUltimoAccesso()) ? 'true' : 'false';
-					$myCanali['ruolo'] = ($ruolo->isReferente()) ? 'R' :  (($ruolo->isModeratore()) ? 'M' : 'none');
-					//var_dump($ruolo);
-					$arrayCanali[] = $myCanali;
-				}
-			}
-			//ordina $arrayCanali
-			usort($arrayCanali, array('UniversiboCommand','_compareMyUniversiBO'));
-		}
-		
-		
-		//assegna al template
-		if ($attivaMyUniversibo)
-		{
-			$template->assign('common_myLinksAvailable', 'true');
-			$template->assign('common_langMyUniversibo', 'My UniversiBO');
-			$template->assign('common_myLinks', $arrayCanali);
-		}
-		else
-		{
-			$template->assign('common_myLinksAvailable', 'false');
-		}
-		
-	}
-	
-
-
-	/**
-	 * Inizializza le variabili del template per le pagine popup
-	 * 
-	 * @private
-	 * @todo implementare  
-	 */
 	function _shutdownTemplatePopupUniversibo()
 	{
 		
@@ -547,7 +560,7 @@ class UniversiboCommand extends BaseCommand {
 	
 	
 	/**
-	 * Restituisce se un giorno è festivo o no
+	 * Restituisce se un giorno ? festivo o no
 	 * 
 	 * @static
 	 * @private

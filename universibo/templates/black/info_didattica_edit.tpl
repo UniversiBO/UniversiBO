@@ -6,7 +6,7 @@
 
 <table width="95%" border="0" cellspacing="0" cellpadding="0" summary="" align="center">
 <tr><td class="Normal"><p align="center" class="Titolo">{$infoDid_title|escape:"htmlall"|nl2br}</p>
-<p class="Normal" align="center"><a href="{$infoDid_backUri|escape:"htmlall"|nl2br}">Torna alla pagina dell'esame</a> </p>
+<p class="Normal" align="center"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a> </p>
 
 {include file="avviso_notice.tpl"}
 <form method="post">
@@ -38,7 +38,13 @@
 <textarea cols="50" rows="5" name="f18_appelliInfo" id="f18_appelliInfo">{$f18_appelliInfo|escape:"htmlall"}</textarea><br />
 <label for="f18_appelliLink">{$infoDid_langAppelliLink|escape:"htmlall"}:&nbsp;</label><br />
 <input size="60" type="text" name="f18_appelliLink" id="f18_appelliLink" value="{$f18_appelliLink|escape:"htmlall"}" /><br /><br />
+
+
+<label for="f18_orarioIcsLink">{$infoDid_langOrarioLink|escape:"htmlall"}:&nbsp;<label><br />
+<input type="text" size="65" name="f18_orarioIcsLink" id="f18_orarioIcsLink" value="{$f18_orarioIcsLink|escape:"htmlall"}" /><br /><br />
+
 <input type="submit" name="f18_submit" id="f18_submit" value="Modifica" /><br />
+
 </form>
 </td></tr></table>
 

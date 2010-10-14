@@ -2,9 +2,9 @@
 <h3>Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</h3>
 <p>&nbsp;Inserito da:&nbsp;<a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></p>
 <p>&nbsp;Inserito il:&nbsp;{$showFileInfo_dataInserimento|escape:"htmlall"}</p>
-<p>&nbsp;Titolo:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
+<p>&nbsp;Titolo:&nbsp;{$showFileInfo_titolo|escape:"htmlall"}</p>
 <p>&nbsp;Descrizione/abstract:&nbsp;{$showFileInfo_descrizione|escape:"htmlall"}</p>
-<p>&nbsp;Parole chiave:&nbsp;{foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}<p>
+<p>&nbsp;Parole chiave:&nbsp;{foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}</p>
 <p>&nbsp;Categoria:&nbsp;{$showFileInfo_categoria|escape:"htmlall"}</p>
 <p>&nbsp;Dimensione:&nbsp;{$showFileInfo_dimensione|escape:"htmlall"} kB</p>
 <p>&nbsp;Scaricato:&nbsp;{$showFileInfo_download|escape:"htmlall"} volte</p>
@@ -20,5 +20,5 @@
  <p>&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/unibo/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></p>
  {/if}
 </div>
-<p class="comandi"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</p>
+<p class="comandi"><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome|escape:"htmlall"}</a></p>
 

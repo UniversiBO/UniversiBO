@@ -1,6 +1,6 @@
 	</div>
 </td> {* FINE MENU CENTRALE*}
-<td id="rightmenu" width="170px"> {* COLONNA MENU DI DESTRA*}
+<td id="rightmenu" width="170"> {* COLONNA MENU DI DESTRA*}
 	<div class="box"> {* primo blocchetto *} 
 		{if $common_userLoggedIn=='false'}
 		<h3>Login</h3>
@@ -14,6 +14,7 @@
 				<input class="submit" name="f1_submit" type="submit" value="Login" tabindex="3" onclick="document.form1_a.f1_resolution.value = screen.width;" /><br />
 			</form>
 			<a href="index.php?do=RegStudente">Registrazione studenti</a><br />
+			<a href="index.php?do=RecuperaUsernameStudente">Username smarrito</a><br />
 			<a href="index.php?do=NewPasswordStudente">Password smarrita</a><br />
 		{else}
 		<h3>Logout</h3>
@@ -46,12 +47,33 @@
 		</div>
 	</div>
 	{/if}
-	<div class="box"> {* terzo blocchetto *}
+	{if $common_newPostsAvailable|default:"false" =="true"}
+	<div class="box"> {* blocchetto forum*}
+	<h3>Ultimi messaggi dal forum</h3>
+		<div class="contenuto">
+			{section loop=$common_newPostsList name=temp_currPost}
+				<p><img src="tpl/unibo/freccia.gif" width="11" height="10" alt="" />&nbsp;<a title="Questo link apre una nuova pagina" target="_blank" href="{$common_newPostsList[temp_currPost].URI|escape:"htmlall"}">{$common_newPostsList[temp_currPost].desc|escape:"htmlall"}</a></p>
+			{sectionelse}<p>Non ci sono post nel forum</p>
+			{/section}
+		</div>
+	</div>
+	{/if}
+{*	<div class="box"> 
 		<h3>Links</h3>
 		<div class="contenuto">
 <p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.unibo.it" target="_blank">Universit&agrave; di BO</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it" target="_blank">Facolt&agrave; di Ingegneria</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="https://uniwex.unibo.it" target="_blank">Uniwex</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://guida.ing.unibo.it" target="_blank">Guida dello Studente</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.ing.unibo.it/Ingegneria/dipartimenti.htm" target="_blank">Elenco Dipartimenti</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www2.unibo.it/avl/org/constud/tutteass/tutteass.htm" target="_blank">Assoc. Studentesche</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.nettuno.it/bo/ordineingegneri/" target="_blank">Ordine Ingegneri</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.atc.bo.it/" target="_blank">ATC Bologna</a></p><p><img src="tpl/unibo/freccia.gif" width="12" height="11" alt="->" />&nbsp;<a title="Questo link apre una nuova pagina" href="http://www.trenitalia.com/" target="_blank">Trenitalia</a></p>
 		</div>
 	</div>
+*}
+	{* blocchetto links *}
+{if $showLinks_linksListAvailable|default:"false" =="true"}
+	{include file=Links/show_links.tpl}
+{/if}	
+{if $showFileStudentiTitoli_langFileAvailableFlag|default:"false" =="true"}
+	{include file=Files/box_show_files_studenti.tpl}
+{/if}	
+
+
 	<div class="box"> {*quarto blocchetto *}
 		{*<h3><a href="{$common_calendarLink.uri|escape:"htmlall"}">{$common_calendarLink.label|escape:"htmlall"}</a></h3>*}
 		<h3>{$common_calendarLink.label|escape:"htmlall"}</h3>
@@ -86,7 +108,9 @@
 <tr>
 	<td colspan="2">
 		<div id="footer"> {* FONDO PAGINA *}
-			<p>{$common_disclaimer|escape:"htmlall"|bbcode2html}</p>
+		{foreach from=$common_disclaimer item=temp_disclaimer} 
+			<p>{$temp_disclaimer|escape:"htmlall"|bbcode2html|nl2br}</p>
+		{/foreach}
 		</div>
 	</td>
 </tr>

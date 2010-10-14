@@ -1,12 +1,6 @@
 <?php
 
 /**
- * @todo BISOGNA AGGIUNGERE L'id_autore !!!!!!!!!
- * bisogna fare la query per creare la tabella
- */
-
-
-/**
  * Link class
  *
  * @package universibo
@@ -26,6 +20,10 @@ class Link
 	 * @private
 	 */
 	var $id_canale = 0;
+	/**
+	 * @private
+	 */
+	var $id_utente = 0;
 	/**
 	 * @private
 	 */
@@ -51,10 +49,11 @@ class Link
 	 * @param string $description 	testo descrittivo della risorsa puntata dal link
 	 * @return Link
 	 */
-	function Link($id_link, $id_canale, $uri, $label, $description)
+	function Link($id_link, $id_canale, $id_utente, $uri, $label, $description)
 	{
 		$this->id_link = $id_link;
 		$this->id_canale = $id_canale;
+		$this->id_utente = $id_utente;
 		$this->uri = $uri;
 		$this->label = $label;
 		$this->description = $description;  
@@ -85,6 +84,17 @@ class Link
 
 
 	/**
+	 * Ritorna l'id_canale 
+	 *
+	 * @return int
+	 */
+	function setIdCanale($id_canale)
+	{
+		$this->id_canale = $id_canale;
+	}
+
+
+	/**
 	 * Ritorna l'uniform resurce identifier (link)
 	 *
 	 * @return string
@@ -103,6 +113,24 @@ class Link
 	function setUri($uri)
 	{
 		$this->uri = $uri;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	function getIdUtente()
+	{
+		return $this->id_utente;
+	}
+
+
+	/**
+	 * @param $id_utente int
+	 */
+	function setIdUtente($id_utente)
+	{
+		$this->id_utente = $id_utente;
 	}
 
 
@@ -138,6 +166,17 @@ class Link
 		return $this->description;
 	}
 
+	/**
+	 * Ritorna il testo del link (di solito quello tra <a>...</a>)
+	 *
+	 * @return string
+	 */
+	function setDescription($description)
+	{
+		$this->description = $description;
+	}
+
+
 
 	/**
 	 * Inserisce su Db le informazioni riguardanti un NUOVO link
@@ -150,16 +189,19 @@ class Link
 	
 		$this->id_link = $db->nextID('link_id_link');
 		
-		$query = 'INSERT INTO link (id_link, id_canale, uri, label, description) VALUES ('.
+		$query = 'INSERT INTO link (id_link, id_canale, id_utente, uri, label, description) VALUES ('.
 					$this->getIdLink().' , '.
 					$this->getIdCanale().' , '.
+					$this->getIdUtente().' , '.
 					$db->quote($this->getUri()).' , '.
 					$db->quote($this->getLabel()).' , '.
 					$db->quote($this->getDescription()).' )';
+				
+		//echo $query;
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -178,7 +220,7 @@ class Link
 	 {
 	 	$id_links = array($id_link);
 		$links =& Link::selectLinks($id_links);
-		if ($links === false) return false;
+		if ($links === false) {$ret = false; return $ret;}
 		return $links[0];
 	 }
 	
@@ -197,58 +239,24 @@ class Link
 	 	$db =& FrontController::getDbConnection('main');
 		
 		if ( count($id_links) == 0 )
-			return array();
+			{ $ret = array(); return $ret;}
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
 		$values = implode(',',$id_links);
-		
-		$query = 'SELECT id_link, id_canale, uri, label, description FROM link WHERE id_link IN ('.$values.')';
+		$query = 'SELECT id_link, id_canale, uri, label, description, id_utente FROM link WHERE id_link IN ('.$values.')';
 		$res =& $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
-		if( $rows = 0) return false;
+		if($rows == 0) {$ret = false; return $ret;}
 		$link_list = array();
 	
 		while ( $res->fetchInto($row) )
 		{
-			$link_list[]=& new Link($row[0],$row[1],$row[2],$row[3],$row[4]);
-		}
-		
-		$res->free();
-		
-		return $link_list;
-	 }
-	
-	
-	/**
-	 * Recupera un elenco di link riferiti ad un canale dal database
-	 *
-	 * @static
-	 * @param array $id_canale id del canale
-	 * @return Link array di Link 
-	 */
-	 function &selectCanaleLinks ($id_canale)
-	 {
-	 	
-	 	$db =& FrontController::getDbConnection('main');
-		
-		$query = 'SELECT id_link, id_canale, uri, label, description FROM link WHERE id_canale = ('.$db->quote($id_canale).') ORDER BY id_link DESC';
-		$res =& $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows = 0) return false;
-		$link_list = array();
-	
-		while ( $res->fetchInto($row) )
-		{
-			$link_list[]=& new Link($row[0],$row[1],$row[2],$row[3],$row[4]);
+			$link_list[]=& new Link($row[0],$row[1], $row[5],$row[2],$row[3],$row[4]);
 		}
 		
 		$res->free();
@@ -268,17 +276,20 @@ class Link
 		
 		$query = 'UPDATE link SET uri = '.$db->quote($this->getUri()).
 					' , label = '.$db->quote($this->getLabel()).
-					' WHERE id_link = '.$db->quote($this->getIdLink());
+					' , id_canale = '.$this->getIdCanale().
+					' , id_utente = '.$this->getIdUtente().
+					' , description = '.$db->quote($this->getDescription()).
+					' WHERE id_link = '.$this->getIdLink();
 		
 		//echo $query;
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 	/**
@@ -293,14 +304,83 @@ class Link
 		$query = 'DELETE FROM link WHERE id_link= '.$db->quote($this->getIdLink());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
+	
+	
+	/**
+	 * Recupera un elenco di link riferiti ad un canale dal database
+	 *
+	 * @static
+	 * @param array $id_canale id del canale
+	 * @return Link array di Link 
+	 */
+	 function &selectCanaleLinks ($id_canale)
+	 {
+	 	
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT id_link, id_canale, id_utente, uri, label, description FROM link WHERE id_canale = ('.$db->quote($id_canale).') ORDER BY id_link DESC';
+		$res =& $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+	
+		$rows = $res->numRows();
+
+		if( $rows = 0) return false;
+		$link_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$link_list[]=& new Link($row[0],$row[1],$row[2],$row[3],$row[4], $row[5]);
+		}
+		
+		$res->free();
+		
+		return $link_list;
+	 }
+	 
+	 /**
+	 * Restituisce il nick dello user
+	 *
+	 * @return il nickname
+	 */
+	 
+	 function getUsername()
+	 {
+	 	$db =& FrontController::getDbConnection('main');
+		
+		$query = 'SELECT username FROM utente WHERE id_utente= '.$db->quote($this->id_utente);
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		$rows = $res->numRows();
+		if( $rows == 0) 
+			 Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non esiste un utente con questo id_user','file'=>__FILE__,'line'=>__LINE__));
+		$res->fetchInto($row);
+		$res->free();
+		return $row[0];
+		
+	 }
+	 
+	 /**
+	  * La funzione verifica se il link è interno o meno
+	  * @return boolean 
+	  */
+	  function isInternalLink()
+	  {
+	  	$request_protocol = (array_key_exists('HTTPS',$_SERVER) && $_SERVER['HTTPS']=='on')? 'https':'http';
+	  	$uri = $request_protocol.'://'.$_SERVER['HTTP_HOST'];
+//	  	var_dump($uri);
+	  	
+	  	return ereg('^'.$uri.'.*$', $this->getUri());		
+	  }
 }
  
 ?>

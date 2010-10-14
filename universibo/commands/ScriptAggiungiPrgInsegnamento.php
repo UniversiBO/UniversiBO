@@ -7,7 +7,6 @@ require_once ('UniversiboCommand'.PHP_EXTENSION);
  * ChangePassword is an extension of UniversiboCommand class.
  *
  * Si occupa della modifica della password di un utente
- * NON ASTRAE DAL LIVELLO DATABASE!!!
  *
  * @package universibo
  * @subpackage commands
@@ -29,7 +28,7 @@ class ScriptAggiungiPrgInsegnamento extends UniversiboCommand
 		if (DB::isError($res)) die($query); 
 
 
-		$anno_accademico = 2004;
+		$anno_accademico = 2007;
 
 
 		$query = 'SELECT anno_accademico, cod_corso, cod_ind, cod_ori, cod_materia, 
@@ -59,18 +58,15 @@ class ScriptAggiungiPrgInsegnamento extends UniversiboCommand
 			$res3= $db->query($query3);
 	        if (DB::isError($res3)) die($query3); 
 	        
-			$num_rows3 = $res3->numRows();
-	        if ($num_rows3 > 0)
-				echo $num_rows3 .' - insegnamento gia\' presenti'."\n"; 
-			
+			echo $num_rows3 = $res3->numRows();
 	        if ($num_rows3 == 0)
 	        {
 				
 				$id_canale = $db->nextId('canale_id_canale');
-				echo "$id_canale - nuovo canale \n";
+				echo "$id_canale \n";
 				
 				$query4 = 'INSERT INTO canale(id_canale,tipo_canale,nome_canale,immagine,visite,ultima_modifica,permessi_groups,files_attivo,news_attivo
-				,forum_attivo,id_forum,group_id,links_attivo) VALUES ( '.$id_canale.',5,\'\',\'\',0,'.time().',126,\'S\',\'S\',\'N\',NULL,NULL,\'N\');';
+				,forum_attivo,id_forum,group_id,links_attivo,files_studenti_attivo) VALUES ( '.$id_canale.',5,\'\',\'\',0,'.time().',68,\'S\',\'S\',\'N\',0,0,\'S\',\'S\');';
 				
 				$res4= $db->query($query4);
 				if (DB::isError($res4)) die($query4);

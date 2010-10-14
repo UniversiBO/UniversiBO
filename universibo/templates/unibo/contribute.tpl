@@ -5,12 +5,9 @@
    <p>{$temp_intro|escape:"htmlall"|bbcode2html}
     <br /><br /></p>
 {/foreach}
-<p>{$contribute_langTitle|escape:"htmlall"|bbcode2html}
-    <br /><br />
-</p>
+<h4>{$contribute_langTitle|escape:"htmlall"|bbcode2html}</h4>
 {foreach from=$contribute_langHowToContribute item=temp_HowToContribute}
-    <p>{$temp_HowToContribute|escape:"htmlall"|bbcode2html}
-    <br /></p>
+    <p>{$temp_HowToContribute|escape:"htmlall"|bbcode2html}</p>
 {/foreach}
 <hr />
 

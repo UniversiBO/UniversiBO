@@ -20,11 +20,11 @@
 <form method="post">
 	<p><label class="label" for="f16_username">Cerca per username: </label>
 		<input name="f16_username" id="f16_username" type="text" value="" /></p>
-	<p><label class="label" dfor="f16_email">Cerca per e-mail: </label>
+	<p><label class="label" for="f16_email">Cerca per e-mail: </label>
 		<input name="f16_email" id="f16_email" type="text" value="" /></p>
 	<p><input class="submit" name="f16_submit" id="f16_submit" type="submit" value="Cerca" /></p>
 </form>
-<p><a href=" Torna {$common_langCanaleUri|escape:"htmlall"|nl2br}">Torna {$common_langCanaleNome|escape:"htmlall"|nl2br}</a></p>
+<p><a href=" Torna {$common_canaleURI|escape:"htmlall"|nl2br}">Torna {$common_langCanaleNome|escape:"htmlall"|nl2br}</a></p>
 <hr />
 <p>{include file=Help/topic.tpl showTopic_topic=$showTopic_topic idsu=$showTopic_topic.reference}</p>
 {include file=footer_index.tpl}

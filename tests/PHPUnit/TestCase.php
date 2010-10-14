@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: TestCase.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: TestCase.php,v 1.1.2.2 2008-01-23 09:37:33 evaimitico Exp $
 //
 
 require_once 'PHPUnit/Assert.php';
@@ -31,40 +31,50 @@ require_once 'PHPUnit/TestResult.php';
  * Each test runs in its own fixture so there can be no side effects
  * among test runs.
  *
- * Here is an example: 
+ * Here is an example:
  *
- *   class MathTest extends PHPUnit_TestCase {
+ * <code>
+ * <?php
+ * class MathTest extends PHPUnit_TestCase {
  *     var $fValue1;
  *     var $fValue2;
  *
  *     function MathTest($name) {
- *       $this->PHPUnit_TestCase($name);
+ *         $this->PHPUnit_TestCase($name);
  *     }
- *    
+ *
  *     function setUp() {
- *       $this->fValue1 = 2;
- *       $this->fValue2 = 3;
+ *         $this->fValue1 = 2;
+ *         $this->fValue2 = 3;
  *     }
- *   }
+ * }
+ * ?>
+ * </code>
  *
  * For each test implement a method which interacts with the fixture.
  * Verify the expected results with assertions specified by calling
- * assert with a boolean. 
+ * assert with a boolean.
  *
- *   function testPass() {
+ * <code>
+ * <?php
+ * function testPass() {
  *     $this->assertTrue($this->fValue1 + $this->fValue2 == 5);
- *   }
+ * }
+ * ?>
+ * </code>
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_TestCase extends PHPUnit_Assert {
     /**
     * @var    boolean
     * @access private
     */
-    var $_failed = false;
+    var $_failed = FALSE;
 
     /**
     * The name of the test case.
@@ -85,11 +95,11 @@ class PHPUnit_TestCase extends PHPUnit_Assert {
     /**
     * Constructs a test case with the given name.
     *
-    * @param  string  
+    * @param  string
     * @access public
     */
-    function PHPUnit_TestCase($name = false) {
-        if ($name != false) {
+    function PHPUnit_TestCase($name = FALSE) {
+        if ($name !== FALSE) {
             $this->setName($name);
         }
     }
@@ -192,7 +202,7 @@ class PHPUnit_TestCase extends PHPUnit_Assert {
     */
     function fail($message = '') {
         $this->_result->addFailure($this, $message);
-        $this->_failed = true;
+        $this->_failed = TRUE;
     }
 
     /**

@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: PHPUnit.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: PHPUnit.php,v 1.1.2.2 2008-01-23 09:37:32 evaimitico Exp $
 //
 
 require_once 'PHPUnit/TestCase.php';
@@ -24,10 +24,11 @@ require_once 'PHPUnit/TestSuite.php';
  *
  * Here is an example:
  *
- *   <?php
- *   require_once 'PHPUnit.php';
+ * <code>
+ * <?php
+ * require_once 'PHPUnit.php';
  *
- *   class MathTest extends PHPUnit_TestCase {
+ * class MathTest extends PHPUnit_TestCase {
  *     var $fValue1;
  *     var $fValue2;
  *
@@ -43,26 +44,33 @@ require_once 'PHPUnit/TestSuite.php';
  *     function testAdd() {
  *       $this->assertTrue($this->fValue1 + $this->fValue2 == 5);
  *     }
- *   }
+ * }
  *
- *   $suite = new PHPUnit_TestSuite();
- *   $suite->addTest(new MathTest('testAdd'));
+ * $suite = new PHPUnit_TestSuite();
+ * $suite->addTest(new MathTest('testAdd'));
  *
- *   $result = PHPUnit::run($suite);
- *   echo $result->toHTML();
- *   ?>
+ * $result = PHPUnit::run($suite);
+ * print $result->toHTML();
+ * ?>
+ * </code>
  *
- * Alternatively, you can pass a class name to the
- * PHPUnit_TestSuite() constructor and let it automatically add all
- * methods of that class that start with 'test' to the suite:
+ * Alternatively, you can pass a class name to the PHPUnit_TestSuite()
+ * constructor and let it automatically add all methods of that class
+ * that start with 'test' to the suite:
  *
- *   $suite  = new PHPUnit_TestSuite('MathTest');
- *   $result = PHPUnit::run($suite);
- *   echo $result->toHTML();
+ * <code>
+ * <?php
+ * $suite  = new PHPUnit_TestSuite('MathTest');
+ * $result = PHPUnit::run($suite);
+ * print $result->toHTML();
+ * ?>
+ * </code>
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit {
     function &run(&$suite) {

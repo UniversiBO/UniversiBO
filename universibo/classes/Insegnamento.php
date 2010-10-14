@@ -33,15 +33,21 @@ class Insegnamento extends Canale
 	
 	/**
 	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
+	 * per il caching di tutte le attivit? collegate a questo insegnamento
 	 */
 	var $elencoAttivita = NULL;
 	
 	/**
 	 * @private
-	 * per il caching di tutte le attività collegate a questo insegnamento
+	 * per il caching di tutte le attivit? collegate a questo insegnamento
 	 */
 	var $elencoAttivitaPadre = NULL;
+	
+	/**
+	 * @private
+	 * per il caching di tutti i codici dei cdl cui afferisce l'insegnamento
+	 */
+	var $elencoCodiciCDL = NULL;
 	
 	/**
 	 * Crea un oggetto Insegnamento 
@@ -53,35 +59,36 @@ class Insegnamento extends Canale
 	 * @param string  $immagine		uri dell'immagine relativo alla cartella del template
 	 * @param string $nome			nome del canale
 	 * @param int $visite			numero visite effettuate sul canale
-	 * @param boolean $news_attivo	se true il servizio notizie è attivo
-	 * @param boolean $files_attivo	se true il servizio false è attivo
-	 * @param boolean $forum_attivo	se true il servizio forum è attivo
-	 * @param int $forum_forum_id	se forum_attivo è true indica l'identificativo del forum su database
-	 * @param int $forum_group_id	se forum_attivo è true indica l'identificativo del grupop moderatori del forum su database
-	 * @param boolean $links_attivo se true il servizio links è attivo
-	 * @param string $cod_facolta	codice identificativo d'ateneo della facoltà a 4 cifre 
-	 * @param string $nome_facolta	descrizione del nome della facoltà
-	 * @param string $uri_facolta	link al sito internet ufficiale della facoltà
+	 * @param boolean $news_attivo	se true il servizio notizie ? attivo
+	 * @param boolean $files_attivo	se true il servizio false ? attivo
+	 * @param boolean $forum_attivo	se true il servizio forum ? attivo
+	 * @param int $forum_forum_id	se forum_attivo ? true indica l'identificativo del forum su database
+	 * @param int $forum_group_id	se forum_attivo ? true indica l'identificativo del grupop moderatori del forum su database
+	 * @param boolean $links_attivo se true il servizio links ? attivo
+	 * @param string $cod_facolta	codice identificativo d'ateneo della facolt? a 4 cifre 
+	 * @param string $nome_facolta	descrizione del nome della facolt?
+	 * @param string $uri_facolta	link al sito internet ufficiale della facolt?
 	 * @return Insegnamento
 	 */
 	function Insegnamento($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $elenco_attivita)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $files_studenti_attivo, $elenco_attivita)
 	{
 	
 		$this->Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo);
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo, $files_studenti_attivo);
 		
-		//echo $id_canale,'-';
-		//inizializza l'elenco delle attività padre/non sdoppiate
+		//inizializza l'elenco delle attivit? padre/non sdoppiate
 		//var_dump($elenco_attivita);
 		$this->elencoAttivita =& $elenco_attivita;
 		$num = count($elenco_attivita);
+		$this->elencoCodiciCDL = array();
 		for ($i = 0; $i < $num; $i++)
 		{
 			if ($elenco_attivita[$i]->isSdoppiato() == false)
 			{
 				$this->elencoAttivitaPadre[] =& $elenco_attivita[$i];
 			}
+			$this->elencoCodiciCDL[] = $elenco_attivita[$i]->getCodiceCdl();
 		}
 		
 		//var_dump($this->elencoAttivitaPadre);
@@ -92,11 +99,7 @@ class Insegnamento extends Canale
 		{
 			$cod_ril = ($att->getTranslatedCodRil() == '') ? '' : ' '.$att->getTranslatedCodRil();
 			//var_dump($cod_ril);
-			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' - aa.'.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." - prof. ".ucwords(strtolower($att->getNomeDoc()));
-		}
-		elseif($nome != '' )
-		{
-			$this->insegnamentoNome = $nome;
+			$this->insegnamentoNome = $att->getNomeMateriaIns().$cod_ril.' aa. '.$att->getAnnoAccademico().'/'.($att->getAnnoAccademico()+1)." \n ".$att->getNomeDoc();
 		}
 		else
 		{
@@ -120,7 +123,7 @@ class Insegnamento extends Canale
 				//var_dump($app_elenco_attivita);
 				$nomi[$i]    = $app_elenco_attivita[$i]->getNomeMateriaIns();
 				$b_nomi[$i]  = substr($nomi[$i], 0, -3);    //nome materia meno le ultime 3 lettere
-				$e_nomi[$i]  = substr($nomi[$i], -3, 3);    //ultime 3 lettere del nome materia
+				$e_nomi[$i]  = substr($nomi[$i], -3, 0);    //ultime 3 lettere del nome materia
 				$anni[$i]    = $app_elenco_attivita[$i]->getAnnoAccademico();
 				if ($max_anno < $anni[$i]) $max_anno = $anni[$i];
 				$docenti[$i] = $app_elenco_attivita[$i]->getNomeDoc();
@@ -129,7 +132,7 @@ class Insegnamento extends Canale
 			
 			// "NOME ESAME L-A" && "NOME ESAME L-B" -->  "NOME ESAME L-A + L-B"
 			//var_dump($e_nomi);
-			$fin = array_unique($e_nomi);
+			$fin = array_values($e_nomi);
 			if ( (count(array_unique($b_nomi)) == 1) && (count($fin) == 2) ) //bisognerebbe verificare che tutti gli altri campi sono invarianti al raggruppamento
 			{
 				$nome = $b_nomi[0].$fin[0].' + '.$fin[1];
@@ -156,7 +159,7 @@ class Insegnamento extends Canale
 				//se A-Z non lo metto nel nome
 				if ($cod_ril[$i] == "A-Z") $codice_ril = " ";
 				else $codice_ril = " (".$cod_ril[$i].")";
-				$app_nomi[$i] = $nomi[$i].$codice_ril.' - aa.'.$anni[$i]." - prof. ". ucwords(strtolower($att->getNomeDoc()));
+				$app_nomi[$i] = $nomi[$i].$codice_ril.' aa. '.$anni[$i]." \nprof. ". ucwords(strtolower($att->getNomeDoc()));
 			}
 			//var_dump($cod_ril);
 			$this->insegnamentoNome = implode(' & ',array_unique($app_nomi));
@@ -178,7 +181,8 @@ class Insegnamento extends Canale
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Insegnamento::selectInsegnamentoCanale($id_canale);
+		$return = Insegnamento::selectInsegnamentoCanale($id_canale);
+		return $return;
 	}
 	
 	
@@ -195,11 +199,11 @@ class Insegnamento extends Canale
 	
 	/**
 	 * Restituisce il nome dell'insegnamento:
-	 * Se è impostato un nome del canale nella tabella canale lo restituisce
-	 * Altrimenti se l'Insegnamento è composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
-	 * Altrimenti se è composto da più PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
+	 * Se ? impostato un nome del canale nella tabella canale lo restituisce
+	 * Altrimenti se l'Insegnamento ? composta da una sola PrgAttivitaDidattica padre ne restituisce il nome
+	 * Altrimenti se ? composto da pi? PrgAttivitaDidattica che differiscono per le ultime 3 lettere 
 	 *   restituisce NOME_MATERIA PRI+SEC RIL AA
-	 * Se è composto da più entità di cui al punto precedente di anni accademici differenti
+	 * Se ? composto da pi? entit? di cui al punto precedente di anni accademici differenti
 	 *   restituisce {NOME} AA1/AA2
 	 *
 	 * @return string
@@ -247,6 +251,15 @@ class Insegnamento extends Canale
 		return $this->elencoAttivitaPadre;
 	}
 
+	/**
+	 * Restituisce un array con i codici dei cdl di questo insegnamento
+	 *
+	 * @return array
+	 */
+	function getElencoCodiciCdl()
+	{
+		return $this->elencoCodiciCDL;
+	}
 
 	/**
 	 * Seleziona da database e restituisce l'oggetto Insegnamento
@@ -261,22 +274,22 @@ class Insegnamento extends Canale
 	
 		$db =& FrontController::getDbConnection('main');
 	
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, files_studenti_attivo FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		$res->fetchInto($row);
 		$res->free();
 		
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale insegnamento non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 		
 		$elenco_attivita =& PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale($id_canale);
 		//var_dump($row);
 		$insegnamento =& new Insegnamento($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S', $elenco_attivita);
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[13]=='S',$elenco_attivita);
 		
 		return $insegnamento;
 
@@ -311,7 +324,7 @@ class Insegnamento extends Canale
 
 		$res = $db->query($query);
 		if (DB::isError($res))
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

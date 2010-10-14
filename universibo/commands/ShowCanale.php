@@ -43,6 +43,12 @@ class ShowCanale extends CanaleCommand
 			$this->executePlugin('ShowFileTitoli', array());
 		}
 		
+		if ($canale->getServizioLinks())
+		{
+			$template->assign('showCanale_linksFlag', 'true');
+			$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
+		}
+		
 		return 'default';
 	}
 

@@ -11,6 +11,7 @@ define('FILE_NOT_ELIMINATO', 'N');
  * Rappresenta un singolo file.
  *
  * @package universibo
+ * @subpackage Files
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>
@@ -165,7 +166,7 @@ class FileItem {
 	 * @param  string $titolo titolo del file
 	 * @param  string $descrizione descrizione completa del file
 	 * @param  int $dimensione dimensione in kb del file
-	 * @param  int $permessi_download categoria utenti ai quali è permesso il download
+	 * @param  int $permessi_download categoria utenti ai quali ? permesso il download
 	 * @param  boolean $eliminato flag stato del file
 	 * @return FileItem
 	 */
@@ -389,7 +390,7 @@ class FileItem {
 	
 	
 	/**
-	 * Recupera il nome originale del file come è registrato su database
+	 * Recupera il nome originale del file come ? registrato su database
 	 *
 	 * @return string 
 	 */
@@ -424,7 +425,7 @@ class FileItem {
 	 */
 	function getParoleChiave() {
 		if ($this->paroleChiave == NULL)
-			$this->paroleChiave =& FileKeyWords::selectFileKeyWords($this->getIdFile());
+			$this->paroleChiave = FileKeyWords::selectFileKeyWords($this->getIdFile());
 		
 		return $this->paroleChiave;
 	}
@@ -491,9 +492,9 @@ class FileItem {
 	}
 
 	/**
-	 * Imposta l'id della categoria di utenti ai quali é permesso il download
+	 * Imposta l'id della categoria di utenti ai quali ? permesso il download
 	 *
-	 * @param int $permessi_download categoria utenti ai quali è permesso il download
+	 * @param int $permessi_download categoria utenti ai quali ? permesso il download
 	 */
 
 	function setPermessiDownload($permessi_download) {
@@ -501,9 +502,9 @@ class FileItem {
 	}
 	
 	/**
-	 * Imposta l'id della categoria di utenti ai quali é permesso visualizzare il file
+	 * Imposta l'id della categoria di utenti ai quali ? permesso visualizzare il file
 	 *
-	 * @param int $permessi_visualizza categoria utenti ai quali è visualizzare il file
+	 * @param int $permessi_visualizza categoria utenti ai quali ? visualizzare il file
 	 */
 
 	function setPermessiVisualizza($permessi_visualizza) {
@@ -668,12 +669,12 @@ class FileItem {
 			$query = 'UPDATE file SET download = '.$db->quote($download).' WHERE id_file = '.$db->quote($this->getIdFile());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database file non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database file non unico','file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 	}	
@@ -717,7 +718,7 @@ class FileItem {
 			$res = & $db->query($query);
 			
 			if (DB :: isError($res))
-				Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+				Error::throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 			
 			$tipi_regex = array ();
 				
@@ -760,7 +761,7 @@ class FileItem {
 		$res = & $db->query($query);
 		
 		if (DB :: isError($res))
-			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		
 		$tipi = array ();
 		
@@ -794,7 +795,7 @@ class FileItem {
 		$res = & $db->query($query);
 		
 		if (DB :: isError($res))
-			Error::throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		
 		$categorie = array ();
 		
@@ -807,7 +808,40 @@ class FileItem {
 		return $categorie;
 	}
 	
-	
+    /**
+     * Preleva da database i file del canale $id_canale
+     *
+     * @static
+     * @param int $id_canale identificativo su database del canale
+     * @return array elenco FileItem , array vuoto se non ci sono file
+     */
+    function &selectFileCanale($id_canale)
+    {
+
+            $db =& FrontController::getDbConnection('main');
+
+            $query = 'SELECT A.id_file  FROM file A, file_canale B
+                                    WHERE A.id_file = B.id_file AND eliminato!='.$db->quote( FILE_ELIMINATO ).
+                                    ' AND B.id_canale = '.$db->quote($id_canale).' AND A.data_inserimento < '.$db->quote(time()).
+                                    'ORDER BY A.id_categoria, A.data_inserimento DESC';
+            $res =& $db->query($query);
+
+            if (DB::isError($res))
+                    Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+
+            $id_file_list = array();
+
+            while ( $res->fetchInto($row) )
+            {
+                    $id_file_list[]= $row[0];
+            }
+
+            $res->free();
+
+            return $id_file_list;
+
+    }
+				
 	
 	/**
 	 * Recupera un file dal database
@@ -836,8 +870,7 @@ class FileItem {
 
 		$db = & FrontController :: getDbConnection('main');
 
-		if (count($id_files) == 0)
-			return array ();
+		if (count($id_files) == 0)	{$return = array(); return $return; }
 
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
@@ -846,18 +879,24 @@ class FileItem {
 		else
 			$values = implode(',', $id_files);
 
+//		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+//						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
+//						 nome_file, A.id_categoria, id_tipo_file, hash_file, A.password,
+//						 username, C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
+//						 FROM file A, utente B, file_categoria C, file_tipo D 
+//						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
 		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
 						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
 						 nome_file, A.id_categoria, id_tipo_file, hash_file, A.password,
-						 username, C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
-						 FROM file A, utente B, file_categoria C, file_tipo D 
-						 WHERE A.id_utente = B.id_utente AND A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
+						 C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
+						 FROM file A, file_categoria C, file_tipo D 
+						 WHERE A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND A.id_file  IN ('.$values.') AND eliminato!='.$db->quote(FILE_ELIMINATO);
 		$res = & $db->query($query);
 
 		//echo $query;
 		
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		$rows = $res->numRows();
 
@@ -866,7 +905,8 @@ class FileItem {
 		$files_list = array ();
 
 		while ($res->fetchInto($row)) {
-			$files_list[] = & new FileItem($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $row[15], $row[16], $row[17], $row[18], $row[19]);
+			$username = User::getUsernameFromId($row[3]);
+			$files_list[] = & new FileItem($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $username, $row[15], $row[16], $row[17], $row[18]);
 		}
 
 		$res->free();
@@ -875,7 +915,49 @@ class FileItem {
 	}
 
 	/**
-	 * Seleziona gli id_canale per i quali il file è inerente 
+	 * restituisce tutti i file caricati da un determinato utente
+	 *
+	 * @param int $id_utente NB deve essere un id valido, fate il check prima di invocare il metodo
+	 * @param boolean $order	ordina i file in ordine decrescente di data
+	 * @return mixed false se non trova file, array di fileItem altrimenti
+	 */
+	function & selectFileItemsByIdUtente($id_utente, $order=false) {
+
+		$db = & FrontController :: getDbConnection('main');
+		
+		$query = 'SELECT id_file, permessi_download, permessi_visualizza, A.id_utente, titolo,
+						 A.descrizione, data_inserimento, data_modifica, dimensione, download,
+						 nome_file, A.id_categoria, id_tipo_file, hash_file, A.password,
+						 C.descrizione, D.descrizione, D.icona, D.info_aggiuntive
+						 FROM file A, file_categoria C, file_tipo D 
+						 WHERE A.id_categoria = C.id_file_categoria AND id_tipo_file = D.id_file_tipo AND  eliminato!='.$db->quote(FILE_ELIMINATO) .
+						' AND id_utente = '. $db->quote($id_utente) . ($order ? ' ORDER BY data_inserimento DESC' : '');
+		$res = & $db->query($query);
+
+		//echo $query;
+		
+		if (DB :: isError($res))
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+
+		$rows = $res->numRows();
+
+		if ($rows == 0)
+			return false;
+		$files_list = array ();
+
+		while ($res->fetchInto($row)) {
+			$username = User::getUsernameFromId($row[3]);
+			$files_list[] = & new FileItem($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11], $row[12], $row[13], $row[14], $username, $row[15], $row[16], $row[17], $row[18]);
+		}
+
+		$res->free();
+
+		return $files_list;
+	}
+	
+	
+	/**
+	 * Seleziona gli id_canale per i quali il file ? inerente 
 	 * non si possono fare garanzie sull'ordine dei canali
 	 *
 	 * @return array	elenco degli id_canale
@@ -892,7 +974,7 @@ class FileItem {
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		$elenco_id_canale = array ();
 
@@ -922,7 +1004,7 @@ class FileItem {
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		// rimuove l'id del canale dall'elenco completo
 		$this->elencoIdCanali = array_diff($this->elencoIdCanali, array ($id_canale));
@@ -943,7 +1025,7 @@ class FileItem {
 
 		if (!Canale :: canaleExists($id_canale)) {
 			return false;
-			//Error::throw(_ERROR_CRITICAL,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
+			//Error::throwError(_ERROR_CRITICAL,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		$db = & FrontController :: getDbConnection('main');
@@ -954,7 +1036,7 @@ class FileItem {
 		if (DB :: isError($res)) {
 			return false;
 			//	$db->rollback();
-			//	Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			//	Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		$this->elencoIdCanale[] = $id_canale;
@@ -1003,7 +1085,7 @@ class FileItem {
 
 		if (DB :: isError($res)) {
 			$db->rollback();
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB::errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB::errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
 
@@ -1033,7 +1115,7 @@ class FileItem {
 		//var_dump($query);
 		if (DB :: isError($res)) {
 			$db->rollback();
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 			$return = false;
 		}
 		
@@ -1045,7 +1127,7 @@ class FileItem {
 
 	
 	/**
-	 * controlla se il file é stato eliminato da tutti i canali in cui era presente, e aggiorna il db
+	 * controlla se il file ? stato eliminato da tutti i canali in cui era presente, e aggiorna il db
 	 *
 	 * @return	 boolean true se avvenua con successo, altrimenti false
 	 */
@@ -1060,7 +1142,7 @@ class FileItem {
 			//var_dump($query);
 			if (DB :: isError($res)) {
 				$db->rollback();
-				Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+				Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 			}
 			return true;
 		}

@@ -14,8 +14,9 @@ define('NOTIFICA_NOT_URGENTE', 'N');
  *
  * Rappresenta una singola Notifica.
  *
- * @package Notifica
- * @version 0.0.9
+ * @package universibo
+ * @subpackage Notifica
+ * @version 2.0.0
  * @author GNU/Mel <gnu.mel@gmail.com>
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @license GPL, @link http://www.opensource.org/licenses/gpl-license.php
@@ -59,6 +60,12 @@ class NotificaItem {
 	 * @private
 	 */
 	var $destinatario = '';
+
+	/**
+	 * @private
+	 */
+	var $error = '';
+
 
 	/**
 	 * Crea un oggetto NotificaItem con i parametri passati
@@ -124,6 +131,16 @@ class NotificaItem {
 	}
 
 	/**
+	 * Recupera eventuali errori della notifica
+	 *
+	 * @return string 
+	 */
+	function getError()
+	{
+	 return $this->error;
+	}
+	
+	/**
 	 * Recupera l'urgenza della notifica
 	 *
 	 * @return boolean
@@ -141,7 +158,7 @@ class NotificaItem {
 	 */ 
 	function send($fc)
 	{
-		Error::throw(_ERROR_CRITICAL,array('msg'=>'Il metodo send della notifica deve essere implementato','file'=>__FILE__,'line'=>__LINE__) );
+		Error::throwError(_ERROR_CRITICAL,array('msg'=>'Il metodo send della notifica deve essere implementato','file'=>__FILE__,'line'=>__LINE__) );
 	}
 
 
@@ -305,7 +322,7 @@ class NotificaItem {
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		$rows = $res->numRows();
 
@@ -341,7 +358,7 @@ class NotificaItem {
 		//echo $query;
 		
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		
 		$notifiche_list = array ();
 		
@@ -380,7 +397,7 @@ class NotificaItem {
 		//var_dump($query);
 		if (DB :: isError($res)) {
 			$db->rollback();
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
 		$this->setIdNotifica($next_id);
@@ -412,7 +429,7 @@ class NotificaItem {
 		if (DB :: isError($res)) 
 		{
 			$db->rollback();
-			Error :: throw (_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_CRITICAL, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 		}
 
 		$db->commit();
@@ -421,7 +438,7 @@ class NotificaItem {
 	}
 
 	/**
-	 * La funzione deleteNotificaItem controlla se la notifica é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 * La funzione deleteNotificaItem controlla se la notifica ? stata eliminata da tutti i canali in cui era presente, e aggiorna il db
 	 */
 	function deleteNotificaItem() {
 		$this->eliminata = true;
@@ -429,7 +446,7 @@ class NotificaItem {
 	}
 
 	/**
-	 * La funzione deleteNotificaItem controlla se la notifica é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 * La funzione deleteNotificaItem controlla se la notifica ? stata eliminata da tutti i canali in cui era presente, e aggiorna il db
 	 *
 	 * @return NotificaItem costruttore stile factory.
 	 */
@@ -448,10 +465,11 @@ class NotificaItem {
 		//es: sms://3351359443
 		//es: mail://ilias.bartolini@studio.unibo.it
 		
-		//ocio che non sia un destinatario di piu' parole. il destinatario non può contenere "://"		
+		//ocio che non sia un destinatario di piu' parole. il destinatario non pu? contenere "://"		
 		$p = strtolower($not->getProtocollo() );
 		
-		$arrayClassi = array('mail' => 'NotificaMail');
+		$arrayClassi = array(	'mail' => 'NotificaMail', 
+								'sms' => 'NotificaSmsMoby');
 		
 		$className = $arrayClassi[$p];
 		//es: NotificaMail
@@ -459,8 +477,8 @@ class NotificaItem {
 		
 		require_once($className.PHP_EXTENSION);
 		echo $className;
-		return call_user_func(array($className,'factoryNotifica'), $id);
-		
+		$ret = call_user_func(array($className,'factoryNotifica'), $id);
+		return $ret;
 	
 	}
 

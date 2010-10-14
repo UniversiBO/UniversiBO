@@ -6,9 +6,9 @@ require_once ('Files/FileItem'.PHP_EXTENSION);
 require_once  ('UniversiboCommand'.PHP_EXTENSION);
 
 /**
- * ShowMyPage is an extension of UniversiboCommand class.
+ * ShowMyUniversiBO is an extension of UniversiboCommand class.
  *
- * Mostra la MyPage dell'utente loggato, con le ultime 5 notizie e 
+ * Mostra la MyUniversiBO dell'utente loggato, con le ultime 5 notizie e 
  * gli ultimi 5 files presenti nei canali da lui aggiunti...
  *
  * @package universibo
@@ -28,10 +28,12 @@ class ShowMyUniversiBO extends UniversiboCommand
 		$template =& $frontcontroller->getTemplateEngine();
 		$utente =& $this->getSessionUser();
 		
-		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si é iscritto...
+		//procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si ? iscritto...
 		
 		if($utente->isOspite())
-			Error :: throw(_ERROR_DEFAULT, array('msg' => 'Non esiste una MyPage per utenti ospite. Puo\' essere che sia scaduta la tua sessione.', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array('id_utente' => $utente->getIdUser(), 'msg' => 'Non esiste una pagina MyUniversiBO per utenti ospite.
+																									 Se sei uno studente registrati cliccando su Registrazione Studenti nel menu di destra.
+																									 La sessione potrebbe essere scaduta verifica di aver abilitato i cookie.', 'file' => __FILE__, 'line' => __LINE__));
 		
 		$arrayIdCanaliNews = array();
 		$arrayIdCanaliFiles = array();
@@ -90,7 +92,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 					'AND B.id_canale = '.$db->quote($id_canale).'';
 		$res = $db->getOne($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $res;
 	}
@@ -109,7 +111,10 @@ class ShowMyUniversiBO extends UniversiboCommand
 		if ( count($id_canali) == 1 ) 
 			$values = $id_canali[0];
 		elseif ( count($id_canali) == 0 )
-			return array();
+		{
+			$ret = array();
+			return $ret;			
+		}
 		else 
 			$values = implode(',',$id_canali);
 	 	
@@ -120,7 +125,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 					ORDER BY A.data_inserimento DESC';
 		$res =& $db->limitQuery($query, 0 , $num);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -134,8 +139,8 @@ class ShowMyUniversiBO extends UniversiboCommand
 		}
 		
 		$res->free();
-		
-		return FileItem::selectFileItems($id_news_list);
+		$files = FileItem::selectFileItems($id_news_list);
+		return $files;
 		
 	}
 	
@@ -153,7 +158,10 @@ class ShowMyUniversiBO extends UniversiboCommand
 		if ( count($id_canali) == 1 ) 
 			$values = $id_canali[0];
 		elseif ( count($id_canali) == 0 )
-			return array();
+		{
+			$ret = array();
+			return $ret;			
+		}
 		else 
 			$values = implode(',',$id_canali);
 	 	
@@ -167,7 +175,7 @@ class ShowMyUniversiBO extends UniversiboCommand
 //		var_dump($res);
 //		die();
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $this->sessionUser->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 

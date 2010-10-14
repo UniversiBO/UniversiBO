@@ -19,13 +19,20 @@
 		<ScriptUpdateFileHash class="ScriptUpdateFileHash" />
 		
 		<ScriptTest class="ScriptTest" />
+
+		<ScriptCancelUser class="ScriptCancelUser" />
 		
+		<ScriptGetLDAPMD5 class="ScriptGetLDAPMD5" />		
+
 		<ScriptNotificheSend class="ScriptNotificheSend" />
 
 		<ScriptIscriviDocenti2 class="ScriptIscriviDocenti2" />
 		<ScriptAggiungiPrgInsegnamento class="ScriptAggiungiPrgInsegnamento" />
 		
 		<ScriptCreaForum class="ScriptCreaForum" />
+		<ScriptOrdinaForum class="ScriptOrdinaForum" />
+
+		<ScriptCreaCatalogoFile class="ScriptCreaCatalogoFile" />
 		
 		<TestUnit class="TestUnit" />
 		<TestTemplate class="TestTemplate" />
@@ -33,7 +40,7 @@
 	</commands>
 	
 	<dbInfo type="DB">
-	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo2</connection>
+	    <connection identifier="main">pgsql://my_username:my_password@127.0.0.1/universibo2_4</connection>
 	    <connection identifier="mysql">mysql://my_username:my_password@host/my_dbname</connection>
 	</dbInfo>
 	
@@ -67,28 +74,47 @@
 	 	<date_separator>/</date_separator> 
 	</langInfo>	
 	
+	<smsMobyInfo>
+	    <username>your_username</username>
+	    <password>your_password</password>
+	    <fromName>UniversiBO</fromName>
+	</smsMobyInfo>
+
 	<!-- appSettings is an optional node. You can place any thing here 
                 and access it from FrontController->getAppSetting()	-->
 	<appSettings>
 		<adLoginHost>127.0.0.1</adLoginHost>
-		<version>2.0.1</version>
+		<version>2.2.2</version>
 		<adLoginPort>1525</adLoginPort>
 		<logs>../universibo/log-universibo/</logs>
-		<contactsPath>img/contacts/</contactsPath>
+		<notificheLock>../universibo/notifiche.lock</notificheLock>
+        <contactsPath>img/contacts/</contactsPath>
 		<langFile>/location/of/userLanguageFile.txt</langFile>
 		<filesPath>../universibo/file-universibo/</filesPath>
 		<filesTipoIconePath>img/icone_file/</filesTipoIconePath>
 		<rootUrl>https://www.univesibo.unibo.it</rootUrl>
 		<fotoDefault>no_foto.png</fotoDefault>
 		<questionariReceiver>eagleone@libero.it;silvia.cereda@studio.unibo.it;spiff1281@email.it</questionariReceiver>
-		<alertMessage></alertMessage>
+		<passwordDocentiAdmin>spiff1281;brain;sissi</passwordDocentiAdmin>
+        <modFileStudenti>brain;sissi;LastHope</modFileStudenti>
+        <programmazioneDidatticaAdmin>Elisa;brain;eagleone</programmazioneDidatticaAdmin>
+        <alertMessage></alertMessage>
 		<defaultStyle>unibo</defaultStyle>
 		<rootEmail>universibo@mail.ing.unibo.it</rootEmail>
 		<infoEmail>info_universibo@calvin.ing.unibo.it</infoEmail>
 		<regolamento>../universibo/files/regolamento.txt</regolamento>
 		<informativaPrivacy>../universibo/files/informativa_privacy.txt</informativaPrivacy>
 		<staffEmail>staff_universibo@calvin.ing.unibo.it</staffEmail>
-		<defaultAnnoAccademico>2003</defaultAnnoAccademico>
+		<defaultAnnoAccademico>2007</defaultAnnoAccademico>
+		<catalogoFileName>../universibo/files/catalog.xml</catalogoFileName>
+		
+		<antiVirusEnable>true</antiVirusEnable>
+        <antiVirusType>clamav</antiVirusType>
+        <antiVirusClamavCmd>/usr/bin/clamscan</antiVirusClamavCmd>
+        <antiVirusClamavOpts>--quiet --recursive --log=/var/log/clamscan.report --recursive --unzip=/usr/bin/unzip --unrar=/usr/local
+/bin/unrar --tar=/bin/tar --tgz=/bin/
+gunzip</antiVirusClamavOpts>
+		
 	</appSettings>
 	
 </config>

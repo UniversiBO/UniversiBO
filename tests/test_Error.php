@@ -1,5 +1,7 @@
 <?php
 
+require_once('Error'.PHP_EXTENSION);
+
 /**
  * Examples for Error Class
  *
@@ -9,7 +11,6 @@
  * @license GPL {@link http://www.opensource.org/licenses/gpl-license.php}
  */
 
-require_once('Error'.PHP_EXTENSION);
 
  
 //some example callback handler functions... 
@@ -51,14 +52,14 @@ Error::setHandler(_ERROR_DEFAULT,array('Handlers','my_method'));
 
 
 //generation and on-the-fly throwing of an _ERROR_CRITICAL
-Error::throw(_ERROR_CRITICAL,array('msg'=>'non puoi fare così!!!','file'=>__FILE__,'line'=>__LINE__));
+Error::throwError(_ERROR_CRITICAL,array('msg'=>'non puoi fare cos?!!!','file'=>__FILE__,'line'=>__LINE__));
 
 //generation and on-the-fly throwing of an _ERROR_DEFAULT
-Error::throw(_ERROR_DEFAULT,array('msg'=>'questo è un errore normale','file'=>__FILE__,'line'=>__LINE__));
+Error::throwError(_ERROR_DEFAULT,array('msg'=>'questo ? un errore normale','file'=>__FILE__,'line'=>__LINE__));
 
 //generation and deferred throwing of an _ERROR_DEFAULT
-$mio_errore = new Error(_ERROR_DEFAULT, array('msg'=>'questo è un altro messaggio di errore','file'=>__FILE__,'line'=>__LINE__));
-$mio_errore->throw();
+$mio_errore = new Error(_ERROR_DEFAULT, array('msg'=>'questo ? un altro messaggio di errore','file'=>__FILE__,'line'=>__LINE__));
+$mio_errore->throwError();
 
 
 //on-the-fly collecting of an _ERROR_NOTICE
@@ -71,7 +72,7 @@ $mio_errore->collect();
 //retrieving of all previously collected _ERROR_NOTICE and throwing them
 while ( ($current_error = Error::retrieve(_ERROR_NOTICE)) !== false )
 {
-	echo $current_error->throw();
+	echo $current_error->throwError();
 }
 
 ?>

@@ -1,6 +1,9 @@
 {include file=header_index.tpl}
+<div class="titoloPagina">
+<h2>Profilo</h2>
+</div>
+
 {include file=avviso_notice.tpl}
-<h2>Impostazioni Personali</h2>
 
 <form action="index.php?do=ShowPersonalSettings&amp;{$common_pageTypeExt|escape:"htmlall"}" id="f20" method="post">
 	<p>{$showPersonalSettings_langInfoChangeSettings|escape:"htmlall"|bbcode2html|nl2br}</p>
@@ -22,6 +25,7 @@
 		</select></p>
 	<p><input class="submit" type="submit" name="f20_submit" id="f20_submit" value="{$f20_submit|escape:"htmlall"}"></p>
 	<p>{$showPersonalSettings_langHelp|escape:"htmlall"|bbcode2html|nl2br}</p>
+	<p>Il servizio SMS viene fornito grazie al contributo dell'Alma Mater Studiorum</p>
 </form>
 
 {include file=footer_index.tpl}

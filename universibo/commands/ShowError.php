@@ -23,12 +23,10 @@ class ShowError extends UniversiboCommand
 		$template =& $frontcontroller->getTemplateEngine();
 		
 		//if (!array_key_exists('error_param', $_SESSION))
-		//	Error::throw(_ERROR_CRITICAL,array('msg'=>'Chiamata illegale del comando di errore','log'=>true,'file'=>__FILE__,'line'=>__LINE__));
-		
-		$param = $_SESSION['error_param'];
-		
-		//inserire il log dell'errore tramite il LogHandler		
-		
+		//	Error::throwError(_ERROR_CRITICAL,array('msg'=>'Chiamata illegale del comando di errore','log'=>true,'file'=>__FILE__,'line'=>__LINE__));
+				
+		(array_key_exists('error_param', $_SESSION)) ? $param = $_SESSION['error_param'] : $param = 'Errore di sistema';
+				
 		$template->assign('error_default', $param['msg']);
 		
 		return 'default';

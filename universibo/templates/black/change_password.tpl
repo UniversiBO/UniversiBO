@@ -15,10 +15,10 @@
 <td colspan="2" class="Normal" align="center">
 {include file=avviso_notice.tpl}
 </td></tr>
-<tr>
+{*<tr>
 <td class="Normal" align="right" valign="middle">&nbsp;<br /><label for="f6_username">{$changePassword_langUsername|escape:"htmlall"}</label>&nbsp;</td>
 <td class="Normal">&nbsp;<br /><input type="text" name="f6_username" id="f6_username" size="20" maxlength="25" value="{$f6_username|escape:"html"}" />
-</td></tr>
+</td></tr>*}
 <tr>
 <td class="Normal" align="right" valign="middle">&nbsp;<br /><label for="f6_old_password">{$changePassword_langOldPassword|escape:"htmlall"}</label>&nbsp;</td>
 <td class="Normal">&nbsp;<br /><input type="password" name="f6_old_password" id="f6_old_password" size="20" maxlength="50" value="{$f6_old_password|escape:"html"}" /></td>

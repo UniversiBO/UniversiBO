@@ -5,7 +5,7 @@
 </div>
 {if $infoDid_obiettiviInfo!=""}
 	<h4>{$infoDid_langObiettiviInfo|escape:"htmlall"|nl2br}</h4>
-	<p>{$infoDid_obiettiviInfo|escape:"htmlall"|nl2br}</p>
+	<p>{$infoDid_obiettiviInfo|escape:"htmlall"}</p>
 {/if}
 {if $infoDid_obiettiviLink!=""}
 	<h4>{$infoDid_langObiettiviLink|escape:"htmlall"|nl2br}</h4>

@@ -25,6 +25,8 @@ class ShowContribute extends UniversiboCommand
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
 		
+		$user = & $this->getSessionUser();
+		
 		$template->assign('contribute_langTitleAlt','Collabora');
 		$template->assign('contribute_langIntro',array('UniversiBo è un sito che nasce dalla collaborazione tra studenti, docenti e strutture universitarie. I docenti sono stati disponibili a dare il loro contributo e li ringraziamo per questo. Ma per permettere che questo portale continui la sua vita occorre che anche gli studenti collaborino.',
       'Se pensate che il servizio che offriamo sia utile e desiderate che continui a essere disponibile per tutti allora aiutateci a rendere questo portale ancora migliore.'));
@@ -51,7 +53,7 @@ class ShowContribute extends UniversiboCommand
           del database, creando immagini grafiche...
         [*]e se non avete la possibilità di utilizzare il computer potreste 
           comunque aiutarci attraverso le [b]attività offline[/b]: 
-          spargere la voce ai tuoi amici dell\'esistenza del sito(più persone 
+          spargere la voce ai tuoi amici dell\'esistenza del sito(pi? persone 
           lo frequenteranno, più persone potranno contribuirne alla sua 
           crescita), occuparvi del contatto con le aule, con i docenti...
       [/list]',
@@ -108,39 +110,39 @@ class ShowContribute extends UniversiboCommand
 				 !array_key_exists('f3_cdl', $_POST)||
 				 !array_key_exists('f3_altro', $_POST) ) 
 			{
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il form inviato non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 				var_dump($f3_corsi_di_laurea);die();
 				$f3_accept = false;
 			}	
 
 			//nome	
 			if ( strlen($_POST['f3_nome']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il nome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il nome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}	
 			else $q3_nome = $f3_nome = $_POST['f3_nome'];
 
 			//cognome
 			if ( strlen($_POST['f3_cognome']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il cognome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il cognome indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_cognome = $f3_cognome = $_POST['f3_cognome'];
 			
 			//telefono
 			if ( (strlen($_POST['f3_tel']) > 50)||!ereg('^([0-9]{1,50})$', $_POST['f3_tel'])) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il numero di cellulare indicato può essere massimo 20 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il numero di cellulare indicato può essere massimo 20 cifre','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_tel = $f3_tel = $_POST['f3_tel'];
 			
 			//mail
 			if ( strlen($_POST['f3_mail']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'L\' indirizzo e-mail indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'L\' indirizzo e-mail indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			elseif ( !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $_POST['f3_mail']) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Inserire un indirizzo e-mail valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_mail = $f3_mail = $_POST['f3_mail'];
@@ -150,25 +152,25 @@ class ShowContribute extends UniversiboCommand
 			
 			//tempo
 			if ( !array_key_exists('f3_tempo', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Indica quanto tempo utilizzi una connessione internet','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Indica quanto tempo utilizzi una connessione internet','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_tempo = $f3_tempo = $_POST['f3_tempo'];
 			
 			//internet
 			if ( !array_key_exists('f3_internet', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Indica quanto tempo libero potresti dedicare al progetto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Indica quanto tempo libero potresti dedicare al progetto','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_internet = $f3_internet = $_POST['f3_internet'];
 			
 			//privacy
 			if ( !array_key_exists('f3_privacy', $_POST) ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'E\' necessario acconsentire al trattamento dei dati personali','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'E\' necessario acconsentire al trattamento dei dati personali','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			
-			//attività offline check
+			//attivit? offline check
 			if ( array_key_exists('f3_offline', $_POST) ) {
 				$q3_offline = 'S';
 				$f3_offline = true;
@@ -213,7 +215,7 @@ class ShowContribute extends UniversiboCommand
 			//corso di laurea
 			
 			if ( strlen($_POST['f3_cdl']) > 50 ) {
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Il corso di laurea indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Il corso di laurea indicato può essere massimo 50 caratteri','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 				$f3_accept = false;
 			}
 			else $q3_cdl = $f3_cdl = $_POST['f3_cdl'];
@@ -250,7 +252,7 @@ class ShowContribute extends UniversiboCommand
 			$res = $db->query($query);
 			if (DB::isError($res))
 			{ 
-				Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 				return false;
 			}
 			
@@ -285,7 +287,7 @@ class ShowContribute extends UniversiboCommand
 				'altre_informazioni: '.$f3_altro."\n\n";
 			
 //			var_dump($mail);die();
-			//if(!$mail->Send()) Error::throw(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
+			if(!$mail->Send()) Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il questionario è stato salvato ma è stato impossibile inviare la notifica ai coordinatori', 'file'=>__FILE__, 'line'=>__LINE__));
 			
 			$template->assign('question_thanks',"Grazie per aver compilato il questionario, la tua richiesta è stata inoltrata ai ragazzi che si occupano del contatto dei nuovi collaboratori.\n Verrai ricontattatato da loro non appena possibile");
 			return 'questionario_success';

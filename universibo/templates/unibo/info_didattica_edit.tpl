@@ -31,6 +31,11 @@
 <p><label for="f18_appelliLink">{$infoDid_langAppelliLink|escape:"htmlall"}&nbsp;</label><br />
 <input type="text" size="65" name="f18_appelliLink" id="f18_appelliLink" value="{$f18_appelliLink|escape:"htmlall"}" /></p>
 
+<p><label for="f18_orarioIcsLink">{$infoDid_langOrarioLink|escape:"htmlall"}&nbsp;<label><br />
+<input type="text" size="65" name="f18_orarioIcsLink" id="f18_orarioIcsLink" value="{$f18_orarioIcsLink|escape:"htmlall"}" /></p>
+
 <p><input type="submit" class="submit" name="f18_submit" id="f18_submit" value="Modifica" /></p>
 </form>
+
+<p><a href="{$common_canaleURI|escape:"htmlall"}">Torna&nbsp;{$common_langCanaleNome}</a></p>
 {include file=footer_index.tpl}

@@ -119,7 +119,7 @@ class Receiver{
 	{
 		$this->_setPhpEnvirorment();
 				
-		include_once('FrontController'.PHP_EXTENSION);
+		require_once('FrontController'.PHP_EXTENSION);
 		$fc= new FrontController($this);
 		
 		$fc->setConfig( $this->configFile );

@@ -5,9 +5,9 @@ require_once  ('ForumApi'.PHP_EXTENSION);
 
 
 /**
- * ShowMyPage is an extension of UniversiboCommand class.
+ * ShowMyUniversiBO is an extension of UniversiboCommand class.
  *
- * Mostra la MyPage dell'utente loggato, con le ultime 5 notizie e 
+ * Mostra la MyUniversiBO dell'utente loggato, con le ultime 5 notizie e 
  * gli ultimi 5 files presenti nei canali da lui aggiunti...
  *
  * @package universibo
@@ -29,11 +29,11 @@ class MyUniversiBORemove extends UniversiboCommand
 		
 		
 		if($utente->isOspite())
-			Error::throw(_ERROR_DEFAULT, array('msg' => "Non è permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $utente->getIdUser(), 'msg' => "Non è permesso ad utenti non registrati eseguire questa operazione.\n La sessione potrebbe essere scaduta", 'file' => __FILE__, 'line' => __LINE__));
 
 		if (!array_key_exists('id_canale', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_canale']))
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $utente->getIdUser(), 'msg' => 'L\'id del canale richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		$id_canale = $_GET['id_canale'];
 		$canale = & Canale::retrieveCanale($id_canale);
@@ -55,7 +55,7 @@ class MyUniversiBORemove extends UniversiboCommand
 		}
 		else
 		{
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'E\' impossibile trovare la pagina nel tuo elenco di MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $utente->getIdUser(), 'msg' => 'E\' impossibile trovare la pagina nel tuo elenco di MyUniversiBO', 'file' => __FILE__, 'line' => __LINE__));
 		}
 		
 	}

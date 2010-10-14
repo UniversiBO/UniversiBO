@@ -7,6 +7,7 @@
  * Rappresenta un singolo file.
  *
  * @package universibo
+ * @subpackage Files
  * @version 2.0.0
  * @author Ilias Bartolini <brain79@virgilio.it>
  * @author Fabio Crisci <fabioc83@yahoo.it>
@@ -37,7 +38,7 @@ class FileKeyWords{
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 
 		$elenco_keywords = array ();
 
@@ -94,7 +95,7 @@ class FileKeyWords{
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res).$query, 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	/**
@@ -110,7 +111,7 @@ class FileKeyWords{
 		$res = & $db->query($query);
 
 		if (DB :: isError($res))
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 }

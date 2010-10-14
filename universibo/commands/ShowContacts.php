@@ -1,6 +1,7 @@
 <?php
 
 require_once ('UniversiboCommand'.PHP_EXTENSION);
+require_once ('Collaboratore'.PHP_EXTENSION);
 
 /**
  * ShowContacts is an extension of UniversiboCommand class.
@@ -21,35 +22,88 @@ class ShowContacts extends UniversiboCommand {
 
 		$frontcontroller =& $this->getFrontController();
 		$template =& $frontcontroller->getTemplateEngine();
-		
+		$user =& $this->getSessionUser();
+				
 		$template->assign('contacts_langAltTitle', 'Chi Siamo');
-
+        
 		$contacts_path = $this->frontController->getAppSetting('contactsPath');
 		$template->assign('contacts_path', $contacts_path);
-		
-	
 
-		$db =& FrontController::getDbConnection('main');
-	
-		$query = 'SELECT u.username, c.intro, c.ruolo, u.email, c.recapito, c.obiettivi, c.foto, u.id_utente FROM collaboratore c, utente u WHERE c.id_utente=u.id_utente';
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-	
-		$rows = $res->numRows();
-
-		if( $rows == 0) return false;
-		
-		$arrayContatti=array();     //l'array di array da passare al template
-		
-		while($res->fetchInto($row))
+        
+		$infoCollaboratori=& User::selectAllCollaboratori();
+		foreach($infoCollaboratori as $collaboratore)
 		{
-			$link_foto = ($row[6]!==NULL) ? $row[7].'_'.$row[6] : $this->frontController->getAppSetting('fotoDefault');
-			$arrayContatti[] = array('username'=>$row[0], 'intro'=>$row[1], 'ruolo'=>$row[2], 'email'=>$row[3], 'recapito'=>$row[4], 'obiettivi'=>$row[5], 'foto'=>$link_foto, 'id_utente'=>$row[7]);
+			$username = User::getUsernameFromId($collaboratore->getIdUser());
+			$coll =& Collaboratore::selectCollaboratore($collaboratore->getIdUser());
+			if(!$coll)
+			{
+				$name = $user->getUsername();
+				if($name==$username)
+			      $collaboratori[] = array('username' => $username,
+			                               'URI'      => 'false',
+			                               'inserisci'=> 'index.php?do=CollaboratoreProfiloAdd&id_coll='.$user->getIdUser()
+			                               );
+			    else
+			      $collaboratori[] = array('username' => $username,
+			                               'URI'      => 'false',
+			                               'inserisci'=> 'false'
+			                               ); 
+			}                               
+		    else
+			  $collaboratori[] = array('username' => $username,
+			                           'URI'      => 'index.php?do=ShowCollaboratore&id_coll='.$collaboratore->getIdUser(),
+			                           'inserisci'=> 'false'
+			                           );
+		     
 		}
-		$template->assign('contacts_langPersonal', $arrayContatti);
+	   
+		$num_collaboratori = count($collaboratori);
+				
+	
+
+		//$db =& FrontController::getDbConnection('main');
+	
+//		$arrayContatti=array();     //l'array di array da passare al template
+//		$collaboratori =& Collaboratore::selectCollaboratoriAll();
+//		$num_collaboratori = count($collaboratori);
+
+        //$arrayContatti=array();     //l'array di array da passare al template
 		
 		
+		
+		
+	
+	//		$coll =& $collaboratori[1];
+//		$utente =& $coll->getUser();
+//		$username =& $utente->getUsername();
+//		$template->assign('primo', $username);
+//		$template->assign('num', $num_collaboratori);
+//		
+        
+		
+//		
+//		for($i = 0 ; $i < $num_collaboratori; $i++ )
+//		{
+//			$collaboratore =& $collaboratori[$i];
+//			$curr_user =& $collaboratore->getUser();
+//			$arrayContatti[] = array('username'=>$curr_user->getUsername(),
+//									 'intro'=>$collaboratore->getIntro(),
+//									 'ruolo'=>$collaboratore->getRuolo(),
+//									 'email'=>$curr_user->getEmail(),
+//									 'recapito'=>$collaboratore->getRecapito(),
+//									 'obiettivi'=>$collaboratore->getObiettivi(),
+//									 'foto'=>$collaboratore->getFotoFilename(),
+//									 'id_utente'=>$collaboratore->getIdUtente()
+//									);
+//
+//		}
+//		asort($arrayContatti); //dovrebbere essere non case sensitive
+//		$template->assign('contacts_langPersonal', $arrayContatti);
+//	
+
+		//natcasesort($collaboratori);
+		asort($collaboratori);
+		$template->assign('contacts_langPersonal', $collaboratori);	
 		
 		$template->assign('contacts_langIntro', 'UniversiBO è l\'associazione studentesca universitaria dell\'Ateneo di Bologna che dal settembre 2004 supporta la Web Community degli studenti.
 
@@ -57,11 +111,11 @@ Attraverso l\'utilizzo di tecnologie OpenSource, UniversiBO si impegna a estende
  
 Tutte le richieste di aiuto ed informazioni possono essere rivolte all\'indirizzo info_universibo@calvin.ing.unibo.it
 
-UniversiBO nasce nel 2002 dall\'idea di tre studenti. Al momento attuale lo Staff è composto invece da circa '.$rows.' collaboratori, quasi tutti studenti dell\' Ateneo bolognese.
+UniversiBO nasce nel 2002 dall\'idea di tre studenti. Al momento attuale lo Staff è composto invece da circa '.$num_collaboratori.' collaboratori, quasi tutti studenti dell\' Ateneo bolognese.
 
 Qui di seguito si presentano divisi per ruoli nel caso vogliate contattarli nello specifico per ogni vostra esigenza.');
 
-		
+	
 		
 		return 'default';
 	}

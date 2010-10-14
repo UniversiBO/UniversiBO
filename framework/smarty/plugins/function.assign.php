@@ -1,4 +1,10 @@
 <?php
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ */
+
 
 /**
  * Smarty plugin
@@ -8,7 +14,6 @@
  * Purpose:  assign a value to a template variable
  * -------------------------------------------------------------
  *
- * @package Smarty
  */
 function smarty_function_assign($params, &$smarty)
 {

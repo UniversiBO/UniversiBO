@@ -97,11 +97,12 @@ class Krono
 	
 	/**
 	*	Set to desidered date format 
-	* 	@access public
 	* + possible values: 
 	* + it -> italian (dd-mm-yyyy)
 	* + en,std -> international (mm-dd-yyyy)
 	* + ansi -> used in dbase and other source (yyyy-mm-dd)
+	*
+	* 	@access public
 	*/
 	var $date_format;
 	

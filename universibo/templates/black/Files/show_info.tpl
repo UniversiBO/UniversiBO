@@ -23,7 +23,7 @@
  <table width="100%" border="0" cellspacing="0" cellpadding="5" summary="">
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito da:</span> <a href="{$showFileInfo_userLink|escape:"htmlall"}">{$showFileInfo_username|escape:"htmlall"}</a></td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Inserito il:</span> {$showFileInfo_dataInserimento|escape:"htmlall"}</td></tr>
- <tr><td class="Normal" colspan="2"><span class="NormalC">Titolo:</span> {$showFileInfo_descrizione|escape:"htmlall"}</td></tr>
+ <tr><td class="Normal" colspan="2"><span class="NormalC">Titolo:</span> {$showFileInfo_titolo|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Descrizione/abstract:</span> {$showFileInfo_descrizione|escape:"htmlall"}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Parole chiave:</span> {foreach from=$showFileInfo_paroleChiave item=temp_parola}{$temp_parola|escape:"htmlall"} {/foreach}</td></tr>
  <tr><td class="Normal" colspan="2"><span class="NormalC">Categoria:</span> {$showFileInfo_categoria|escape:"htmlall"}</td></tr>
@@ -40,6 +40,7 @@
  {if $showFileInfo_deleteFlag == 'true'}
  <tr><td class="Normal"><span class="NormalC">&nbsp;{$showFileInfo_langDelete|escape:"htmlall"}:</span></td><td class="Normal" valign="middle" width="100%"><a href="{$showFileInfo_deleteUri|escape:"htmlall"}"><img src="tpl/black/file_del_32.gif" width="32" height="32" alt="{$showFileInfo_langDelete|escape:"htmlall"}" border="0" align="top" /></a></td></tr>
  {/if}
+ 
  </table>
 </td></tr>
 <tr bgcolor="#000099">

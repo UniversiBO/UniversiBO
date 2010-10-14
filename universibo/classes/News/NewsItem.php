@@ -15,7 +15,8 @@ define('NEWS_NOT_URGENTE','N');
  *
  * Rappresenta una singola news.
  *
- * @package News
+ * @package universibo
+ * @subpackage News
  * @version 2.0.0
  * @author Fabrizio Pinto
  * @author Ilias Bartolini <brain79@virgilio.it>
@@ -385,7 +386,10 @@ class NewsItem {
 	 	$db =& FrontController::getDbConnection('main');
 		
 		if ( count($id_notizie) == 0 )
-			return array();
+		{
+			$array = array();
+			return $array;
+		}
 		
 		//esegue $db->quote() su ogni elemento dell'array
 		//array_walk($id_notizie, array($db, 'quote'));
@@ -395,12 +399,13 @@ class NewsItem {
 		else 
 			$values = implode(',',$id_notizie);
 		
-		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+//		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA);
+		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A WHERE id_news IN ('.$values.') AND eliminata!='.$db->quote(NEWS_ELIMINATA) . ' ORDER BY data_inserimento DESC';
 		//var_dump($query);
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 
@@ -409,7 +414,8 @@ class NewsItem {
 	
 		while ( $res->fetchInto($row) )
 		{
-			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[9],($row[4] == NEWS_URGENTE),($row[5] == NEWS_ELIMINATA),$row[6],$row[8] );
+			$username = User::getUsernameFromId($row[6]);
+			$news_list[] =& new NewsItem($row[7],$row[0],$row[1],$row[2],$row[3],$row[8],($row[4] == NEWS_URGENTE),($row[5] == NEWS_ELIMINATA),$row[6], $username );
 		}
 		
 		$res->free();
@@ -449,7 +455,7 @@ class NewsItem {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$elenco_id_canale = array();
 		
@@ -482,7 +488,7 @@ class NewsItem {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		// rimuove l'id del canale dall'elenco completo
 		$this->elencoIdCanali = array_diff ($this->elencoIdCanali, array($id_canale));
@@ -505,7 +511,7 @@ class NewsItem {
 		
 	 	if ( !Canale::canaleExists($id_canale) ){
 	 		return false;
-	 		//Error::throw(_ERROR_CRITICAL,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
+	 		//Error::throwError(_ERROR_CRITICAL,array('msg'=>'Il canale selezionato non esiste','file'=>__FILE__,'line'=>__LINE__));
 	 	}
 	 	
 	 	$db =& FrontController::getDbConnection('main');
@@ -515,7 +521,7 @@ class NewsItem {
 		
 		if (DB::isError($res)){
 		 	$return = false;
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		} 
 		
 		if ($res->numRows());
@@ -526,7 +532,7 @@ class NewsItem {
 		if (DB::isError($res)) {
 			return false;
 			//	$db->rollback();
-			//	Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			//	Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		} 
 		
 		$this->elencoIdCanale[] = $id_canale;
@@ -565,7 +571,7 @@ class NewsItem {
 		//var_dump($query);
 		if (DB::isError($res)){
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$this->setIdNotizia($next_id);
@@ -573,6 +579,8 @@ class NewsItem {
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		
+		return $return;
 	}
 	
 	/**
@@ -604,16 +612,18 @@ class NewsItem {
 		//var_dump($query);
 		if (DB::isError($res)){
 			$db->rollback();
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$db->commit();
 		$db->autoCommit(true);
 		ignore_user_abort(0);
+		
+		return $return;
 	}
 	
 	/**
-	 * La funzione deleteNewsItem controlla se la notizia é stata eliminata da tutti i canali in cui era presente, e aggiorna il db
+	 * La funzione deleteNewsItem controlla se la notizia ? stata eliminata da tutti i canali in cui era presente, e aggiorna il db
 	 */
 	
 	function deleteNewsItem() 

@@ -6,15 +6,7 @@
 */ 
 
 
-/*
-* classe PHPUnit 
-*/
 require_once 'PHPUnit'.PHP_EXTENSION;
-
-
-/*
-* classe da testare 
-*/
 require_once 'User'.PHP_EXTENSION;
 
 
@@ -28,7 +20,7 @@ require_once 'User'.PHP_EXTENSION;
  * @copyright CopyLeft UniversiBO 2001-2003
  */
 
-class UserTest extends PHPUnit_TestCase
+class _UnitTest_User extends PHPUnit_TestCase
 {
 // contains the object handle of the string class
 var $utente;
@@ -169,15 +161,15 @@ $this->assertTrue($result == $expected);
 }
 
 // test of the isModeratore function
-function testIsModeratore() {
-$result = $this->utente->isModeratore();
+function testIsCollaboratore() {
+$result = $this->utente->isCollaboratore();
 $expected = true;
 $this->assertTrue($result == $expected);
 }
 
 // test of the isModeratore function - static use
-function testIsModeratoreStatic() {
-$result = $this->utente->isModeratore($this->staticgroups);
+function testIsCollaboratoreStatic() {
+$result = $this->utente->isCollaboratore($this->staticgroups);
 $expected = false;
 $this->assertTrue($result == $expected);
 }
@@ -210,33 +202,6 @@ $expected = false;
 $this->assertTrue($result == $expected);
 }
 
-// test of the groupsNames function   NB confronto tra array?
-function testGroupsNames() {
-$result = $this->utente->groupsNames($this->singolare);
-if ( $this->singolare == true )
-		{
-			$expected = array(
-			 USER_OSPITE     => "Ospite",
-			 USER_STUDENTE   => "Studente",
-			 USER_MODERATORE => "Moderatore",
-			 USER_TUTOR      => "Tutor",
-			 USER_DOCENTE    => "Docente",
-			 USER_PERSONALE  => "Personale non docente",
-			 USER_ADMIN      => "Admin");
-		} 
-		else
-		{
-			$expected = array(
-			 USER_OSPITE     => "Ospiti",
-			 USER_STUDENTE   => "Studenti",
-			 USER_MODERATORE => "Moderatori",
-			 USER_TUTOR      => "Tutor",
-			 USER_DOCENTE    => "Docenti",
-			 USER_PERSONALE  => "Personale non docente",
-			 USER_ADMIN      => "Admin");
-		}	
-$this->assertTrue($result == $expected);
-}
 // test of the isPasswordValid function
 function testIsPasswordValid() {
 $MD5 = md5('pippo') ;
@@ -246,11 +211,5 @@ $this->assertTrue($result == $expected);
 }
 
 }
-
-
-$suite  = new PHPUnit_TestSuite('UserTest');
-$result = PHPUnit::run($suite);
-//echo $result -> toHTML();
-echo $result -> toHtmlTable();
 
 ?>

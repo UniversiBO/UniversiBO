@@ -41,6 +41,8 @@ class ErrorHandlers{
 							'date'  => date("Y-m-d",time()),
 							'time'  => date("H:i",time()),
 							'error_level'  => 'CRITICAL',
+							'id_utente' => (array_key_exists('id_utente',$param)) ? $param['id_utente'] : -1,
+							'ip_utente' => (isset($_SERVER) && array_key_exists('REMOTE_ADDR',$_SERVER))? $_SERVER['REMOTE_ADDR']: '0.0.0.0',
 							'file'  => $param['file'],
 							'line'  => $param['line'],
 							'messaggio'  => $param['msg']);
@@ -86,6 +88,8 @@ class ErrorHandlers{
 							'date'  => date("Y-m-d",time()),
 							'time'  => date("H:i",time()),
 							'error_level'  => 'DEFAULT',
+							'id_utente' => (array_key_exists('id_utente',$param)) ? $param['id_utente'] : -1,
+							'ip_utente' => (isset($_SERVER) && array_key_exists('REMOTE_ADDR',$_SERVER))? $_SERVER['REMOTE_ADDR']: '0.0.0.0',
 							'file'  => $param['file'],
 							'line'  => $param['line'],
 							'messaggio'  => $param['msg']);
@@ -127,6 +131,8 @@ class ErrorHandlers{
 								'date'  => date("Y-m-d",time()),
 								'time'  => date("H:i",time()),
 								'error_level'  => 'DEFAULT',
+								'id_utente' => (array_key_exists('id_utente',$param)) ? $param['id_utente'] : -1,
+								'ip_utente' => (isset($_SERVER) && array_key_exists('REMOTE_ADDR',$_SERVER))? $_SERVER['REMOTE_ADDR']: '0.0.0.0',
 								'file'  => $param['file'],
 								'line'  => $param['line'],
 								'messaggio'  => $param['msg']);

@@ -1,6 +1,7 @@
 <?php 
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
+require_once ('DidatticaGestione'.PHP_EXTENSION);
 
 /**
  * ShowCdl: mostra un corso di laurea
@@ -26,7 +27,7 @@ class ShowCdl extends CanaleCommand {
 		//var_dump($canale);
 		
 		if ($canale->getTipoCanale() != CANALE_CDL)
-			Error::throw(_ERROR_DEFAULT, array('msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUser(), 'msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato', 'file' => __FILE__, 'line' => __LINE__));
 	}
 
 	function execute() {
@@ -41,7 +42,7 @@ class ShowCdl extends CanaleCommand {
 		if ( !array_key_exists('anno_accademico', $_GET) )
 			$anno_accademico = $this->frontController->getAppSetting('defaultAnnoAccademico');
 		elseif( !ereg( '^([0-9]{4})$', $_GET['anno_accademico'] ) )
-			Error::throw(_ERROR_DEFAULT, array('msg' => 'L\'anno accademico richiesto non ? valido', 'file' => __FILE__, 'line' => __LINE__));
+			Error::throwError(_ERROR_DEFAULT, array('id_utente' => $this->sessionUser->getIdUser(), 'msg' => 'L\'anno accademico richiesto non è valido', 'file' => __FILE__, 'line' => __LINE__));
 		else 
 			$anno_accademico = $_GET['anno_accademico'];
 		
@@ -77,11 +78,16 @@ class ShowCdl extends CanaleCommand {
 					
 					$cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
 				}
-				
+				$allowEdit = ($session_user->isAdmin() || $session_user->isCollaboratore() );
+				$fac = Facolta::selectFacoltaCodice($cdl->getCodiceFacoltaPadre());
+				$editUri = (!$tempPrgAttDid->isSdoppiato())? 
+					DidatticaGestione::getEditUrl($tempPrgAttDid->getIdCanale(),$cdl->getIdCanale(), $fac->getIdCanale()) :
+					DidatticaGestione::getEditUrl($tempPrgAttDid->getIdCanale(),$cdl->getIdCanale(), $fac->getIdCanale(),$tempPrgAttDid->getIdSdop()); 
 				$cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] = 
 					array( 'name' => $tempPrgAttDid->getNome(),
 						   'nomeDoc' => $tempPrgAttDid->getNomeDoc(), 
 						   'uri' => 'index.php?do=ShowInsegnamento&id_canale='.$tempPrgAttDid->getIdCanale(),
+						   'editUri' => ($allowEdit)?$editUri:'',
 						   'forumUri' =>($tempPrgAttDid->getServizioForum() != false) ? $forum->getForumUri($tempPrgAttDid->getForumForumId()) : '' );
 			}
 		}
@@ -103,8 +109,9 @@ class ShowCdl extends CanaleCommand {
 		
 		$template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
 		$template -> assign('cdl_langGoToForum', 'Link al forum');
-
+		
 		$this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
+		$this->executePlugin('ShowLinks', array( 'num' => 12 ) );
 		
 		return 'default';
 	}

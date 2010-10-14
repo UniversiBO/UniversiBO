@@ -79,6 +79,10 @@ class Canale {
 	 * @private
 	 */
 	var $ruoli = NULL;
+	/**
+	 * @private
+	 */
+	var $servizioFilesStudenti = false;
 	
 	
 	
@@ -110,10 +114,10 @@ class Canale {
 	 * @return Canale
 	 */
 	function Canale($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
-				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo)
+				 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo)
 	{
 		$this->id_canale = $id_canale;
-		$this->permessi = $permessi;  
+		$this->permessi = $permessi;
 		$this->ultimaModifica = $ultima_modifica;
 		$this->tipoCanale = $tipo_canale;
 		$this->immagine = $immagine;
@@ -125,6 +129,7 @@ class Canale {
 		$this->forum['forum_id'] = $forum_forum_id;
 		$this->forum['group_id'] = $forum_group_id;
 		$this->servizioLinks = $links_attivo;
+		$this->servizioFilesStudenti = $files_studenti_attivo;
 		$this->bookmark = NULL;
 	}
 
@@ -153,6 +158,11 @@ class Canale {
 	}
 	
 	
+	function setPermessi($permessi)
+	{
+		return $this->permessi = $permessi;
+	}
+
 	
 	/**
 	 * Restituisce true se il gruppo o uno dei gruppi appartenenti a $groups 
@@ -189,10 +199,10 @@ class Canale {
 		$query = 'SELECT tipo_canale FROM canale WHERE id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
@@ -242,12 +252,12 @@ class Canale {
 			$query = 'UPDATE canale SET ultima_modifica = '.$db->quote($timestamp).' WHERE id_canale = '.$db->quote($this->getIdCanale());
 			$res = $db->query($query);
 			if (DB::isError($res)) 
-				Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 			$rows = $db->affectedRows();
 		
 			if( $rows == 1) return true;
 			elseif( $rows == 0) return false;
-			else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
+			else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		return true;
@@ -273,6 +283,11 @@ class Canale {
 	 * @return string
 	 */
 	function getNome()
+	{
+		return $this->nome;
+	}
+
+	function getNomeCanale()
 	{
 		return $this->nome;
 	}
@@ -337,12 +352,12 @@ class Canale {
 		$query = 'UPDATE canale SET visite = visite + '.$db->quote($visite).' WHERE id_canale = '.$db->quote($this->getIdCanale());
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 	
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 
 	}
 
@@ -429,6 +444,32 @@ class Canale {
 	{
 		$this->servizioLinks = $attiva_links;
 	}
+	
+	/**
+	 * Ritorna true , false se il servizio non ? attivo
+	 *
+	 * @todo implementare Files
+	 * @return boolean
+	 */
+	function getServizioFilesStudenti()
+	{
+		return $this->servizioFilesStudenti;
+	}
+
+
+
+	/**
+	 * Imposta il servizio Files Studenti, true: attivo - false: non attivo
+	 *
+	 * @todo implementare propagazione DB
+	 * @param boolean $attiva_files 
+	 * @param boolean $updateDB se true la modifica viene propagata al DB 
+	 * @return boolean
+	 */
+	function setServizioFilesStudenti($attiva_files_studenti, $updateDB = false)
+	{
+		$this->servizioFilesStudenti = $attiva_files_studenti;
+	}
 
 
 
@@ -505,11 +546,10 @@ class Canale {
 
 
 	/**
-	 * Dato Inizializza le informazioni del canale di CanaleCommand 
+	 * Inizializza le informazioni del canale di CanaleCommand 
 	 * Esegue il dispatch inizializzndo il corretto sottotipo di 'canale' 
 	 *
 	 * @private
-	 * @param 
 	 * @return string
 	 */
 	function _dispatchCanale()
@@ -520,7 +560,7 @@ class Canale {
 		$this->requestCanale =& Canale::selectCanale( $this->getRequestIdCanale() );
 			  
 		if ( $this->requestCanale === false ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$canale = $this->getRequestCanale();
 		$canale->addVisite();
@@ -538,18 +578,18 @@ class Canale {
 	 * @param int $id_canale numero identificativo del canale
 	 * @return mixed Canale se eseguita con successo, false se il canale non esiste
 	 */
-	function &retrieveCanale($id_canale)
+	function &retrieveCanale($id_canale, $cache = true)
 	{
 		//spalata la cache!!! 
 		//dimezza i tempi di esecuzione!!
 		static $cache_canali = array();
 		
-		if (array_key_exists($id_canale, $cache_canali))
+		if ($cache == true && array_key_exists($id_canale, $cache_canali))
 			return $cache_canali[$id_canale];
 		
 		$tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
 		if ($tipo_canale === false )
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non ? presente','file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non è presente','file'=>__FILE__,'line'=>__LINE__));
 		
 		$dispatch_array = array (	CANALE_DEFAULT      => 'Canale',
 									CANALE_HOME         => 'Canale',
@@ -560,14 +600,14 @@ class Canale {
 		
 		if (!array_key_exists($tipo_canale, $dispatch_array))
 		{
-			Error::throw(_ERROR_CRITICO,array('msg'=>'Il tipo di canale richiesto su database non ? valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Il tipo di canale richiesto su database non è valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
 		}
 		
 		$class_name = $dispatch_array[$tipo_canale];
 		
 		require_once($class_name.PHP_EXTENSION);
 		
-		$cache_canali[$id_canale] =& call_user_func(array($class_name,'factoryCanale'), $id_canale);
+		$cache_canali[$id_canale] = call_user_func(array($class_name,'factoryCanale'), $id_canale);
 
 		return $cache_canali[$id_canale];
 	}
@@ -584,7 +624,8 @@ class Canale {
 	 */
 	function &factoryCanale($id_canale)
 	{
-		return Canale::selectCanale($id_canale);
+		$canale=Canale::selectCanale($id_canale);
+		return $canale;
 	}
 	
 	
@@ -615,10 +656,10 @@ class Canale {
 		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo FROM canale WHERE id_canale= '.$db->quote($id_canale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > 1) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > 1) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows = 0) return false;
 
 		$res->fetchInto($row);
@@ -645,13 +686,13 @@ class Canale {
 		array_walk($elenco_id_canali, array($db, 'quote'));
 		$canali_comma = implode (' , ',$elenco_id_canali);
 		
-		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale FROM canale WHERE id_canale IN ('.$canali_comma.');';
+		$query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, files_studenti_attivo FROM canale WHERE id_canale IN ('.$canali_comma.');';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
-		if( $rows > count($elenco_id_canali)) Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		if( $rows > count($elenco_id_canali)) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 		if( $rows == 0) return false;
 
 		$elenco_canali = array();
@@ -659,7 +700,7 @@ class Canale {
 		{
 			//var_dump($row);
 			$elenco_canali[] =& new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
-						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S' );
+						 $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[13]=='S' );
 		}
 		$res->free();
 		
@@ -679,10 +720,11 @@ class Canale {
 		$db =& FrontController::getDbConnection('main');
 	
 		$this->id_canale = $db->nextID('canale_id_canale');
-		$files_attivo = ( $this->getFilesAttivo() ) ? 'S' : 'N';
-		$news_attivo  = ( $this->getNewsAttivo()  ) ? 'S' : 'N';
-		$links_attivo = ( $this->getLinksAttivo() ) ? 'S' : 'N';
-		if ( $this->getForumAttivo() )
+		$files_attivo = ( $this->getServizioFiles() ) ? 'S' : 'N';
+		$news_attivo  = ( $this->getServizioNews()  ) ? 'S' : 'N';
+		$links_attivo = ( $this->getServizioLinks() ) ? 'S' : 'N';
+		$files_studenti_attivo = ( $this->getServizioFilesStudenti() ) ? 'S' : 'N';
+		if ( $this->getServizioForum() )
 		{
 			$forum_attivo = 'S';
 			$forum_forum_id = $this->getForumForumId();
@@ -699,7 +741,7 @@ class Canale {
 		}	
 			
 		
-		$query = 'INSERT INTO canale (id_canale, tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo) VALUES ('.
+		$query = 'INSERT INTO canale (id_canale, tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, files_studenti_attivo) VALUES ('.
 					$db->quote($this->getIdCanale()).' , '.
 					$db->quote($this->getTipoCanale()).' , '.
 					$db->quote($this->getNomeCanale()).' , '.
@@ -712,11 +754,12 @@ class Canale {
 					$db->quote($forum_attivo).' , '.
 					$db->quote($forum_forum_id).' , '.
 					$db->quote($forum_group_id).' , '.
-					$db->quote($links_attivo).' )';
+					$db->quote($links_attivo).' ,'.
+					$db->quote($files_studenti_attivo).' )';
 		$res = $db->query($query);
 		if (DB::isError($res))
 		{ 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 			return false;
 		}
 		
@@ -737,6 +780,7 @@ class Canale {
 		$files_attivo = ( $this->getServizioFiles() ) ? 'S' : 'N';
 		$news_attivo  = ( $this->getServizioNews()  ) ? 'S' : 'N';
 		$links_attivo = ( $this->getServizioLinks() ) ? 'S' : 'N';
+		$files_studenti_attivo = ( $this->getServizioFilesStudenti() ) ? 'S' : 'N';
 		if ( $this->getServizioForum() )
 		{
 			$forum_attivo = 'S';
@@ -762,16 +806,17 @@ class Canale {
 					' , forum_attivo = '.$db->quote($forum_attivo).
 					' , id_forum = '.$db->quote($forum_forum_id).
 					' , group_id = '.$db->quote($forum_group_id).
-					' , links_attivo = '.$db->quote($links_attivo).' WHERE id_canale ='.$db->quote($this->getIdCanale());
+					' , links_attivo = '.$db->quote($links_attivo).
+					' , files_studenti_attivo = '.$db->quote($files_studenti_attivo).' WHERE id_canale ='.$db->quote($this->getIdCanale());
 			
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $db->affectedRows();
 		
 		if( $rows == 1) return true;
 		elseif( $rows == 0) return false;
-		else Error::throw(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+		else Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
 	}
 	
 	
@@ -813,7 +858,7 @@ class Canale {
 		$query = 'SELECT id_canale FROM canale WHERE id_canale = '.$db->quote($id_canale).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		
@@ -837,7 +882,7 @@ class Canale {
 		$query = 'SELECT id_canale FROM canale WHERE tipo_canale = '.$db->quote($tipoCanale);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 	
 		$rows = $res->numRows();
 		if( $rows == 0) return false;
@@ -854,7 +899,18 @@ class Canale {
 		
 	}
 	
-	
+
+	/**
+	 * compara per nome due canali
+	 * 
+	 * @static
+	 */
+	function compareByName($a, $b)
+	{
+		$nomea = strtolower($a['nome']);
+		$nomeb = strtolower($b['nome']);
+		return strnatcasecmp($nomea, $nomeb);
+	}	
 }
 
 

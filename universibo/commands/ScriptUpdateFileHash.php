@@ -26,7 +26,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
 		$filePath = $fc->getAppSetting('filesPath');
 		
 		//if(!$user->isAdmin())
-		//	Error::throw(_ERROR_DEFAULT,array('msg'=>'La modifica della password non può essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
+		//	Error::throwError(_ERROR_DEFAULT,array('msg'=>'La modifica della password non pu? essere eseguita da utenti con livello ospite.'."\n".'La sessione potrebbe essere scaduta, eseguire il login','file'=>__FILE__,'line'=>__LINE__));
 		
 		$res =& $db->query('SELECT id_file, nome_file FROM file ORDER BY 1');
 		
@@ -38,7 +38,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
 				$query = 'UPDATE file SET hash_file=\''.md5_file($nome_file).'\' WHERE id_file = '.$row[0];
 				$res1 =& $db->query($query);
 				if (DB::isError($res1)) 
-					Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
+					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
 			}
 			else  
 			{
@@ -46,7 +46,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
 				$query = 'UPDATE file SET hash_file=\'\' WHERE id_file = '.$row[0];
 				$res1 =& $db->query($query);
 				if (DB::isError($res1)) 
-					Error::throw(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
+					Error::throwError(_ERROR_CRITICAL,array('id_utente' => $user->getIdUser(), 'msg'=>DB::errorMessage($res1),'file'=>__FILE__,'line'=>__LINE__)); 
 			}
 		}
 		

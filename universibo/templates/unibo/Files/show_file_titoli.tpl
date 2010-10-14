@@ -3,6 +3,7 @@
 <div class="comandi">
 	<img src="tpl/unibo/file_new.gif" width="15" height="15" alt="" />
 	<a href="{$showFileTitoli_addFileUri|escape:"htmlall"}">{$showFileTitoli_addFile|escape:"htmlall"|bbcode2html|nl2br}</a>
+	 <a href="{$showFileTitoli_adminFileUri|escape:"htmlall"}">{$showFileTitoli_adminFile|escape:"htmlall"|bbcode2html|nl2br}</a>
 </div>
 {/if}
 {if $showFileTitoli_langFileAvailableFlag=="true"}

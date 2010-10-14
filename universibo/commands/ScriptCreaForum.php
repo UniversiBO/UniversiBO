@@ -22,7 +22,7 @@ require_once ('ForumApi'.PHP_EXTENSION);
  
 class ScriptCreaForum extends UniversiboCommand 
 {
-	var $anno_accademico = 2004;
+	var $anno_accademico = 2007;
 	
 	function execute()
 	{
@@ -98,6 +98,7 @@ class ScriptCreaForum extends UniversiboCommand
 			
 			$elenco_prgAttivitaDidattica = PrgAttivitaDidattica::selectPrgAttivitaDidatticaElencoCdl($cdl->getCodiceCdl(), $anno_accademico);
 			
+			//creo i forum degli insegnmanti
 			foreach($elenco_prgAttivitaDidattica as $prg_att)
 			{
 				//AAHHH qui la cache di Canale potrebbe restituire dei casini, non la posso usare,
@@ -153,7 +154,7 @@ class ScriptCreaForum extends UniversiboCommand
 						$insegnamento->setServizioForum(true);
 						
 						$insegnamento->updateCanale();
-						echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_forum_id,"\n";
+						echo '   - aggiornato il canale con il nuovo forum e categoria: ',$ins_simile->getForumForumId(),"\n";
 						
 					}
 					
@@ -167,6 +168,8 @@ class ScriptCreaForum extends UniversiboCommand
 			
 				
 		}
+
+		//manca chiamare una funzione per ordinare tutti i forum
 		
 		$query = 'commit';
 		$res =& $db->query($query);
@@ -188,7 +191,7 @@ class ScriptCreaForum extends UniversiboCommand
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		if ($res->numRows() == 0 ) 
 			return null;
@@ -230,7 +233,7 @@ class ScriptCreaForum extends UniversiboCommand
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		if ($res->numRows() == 0 ) 
 			return null;

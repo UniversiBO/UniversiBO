@@ -1,4 +1,10 @@
 <?php
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ */
+
 
 /**
  * Smarty plugin
@@ -8,7 +14,6 @@
  * Purpose:  regular epxression search/replace
  * -------------------------------------------------------------
  *
- * @package Smarty
  */
 function smarty_modifier_ereg_replace($string, $search, $replace)
 {

@@ -3,7 +3,6 @@
 require_once ('UniversiboCommand'.PHP_EXTENSION);
 require_once ('ForumApi'.PHP_EXTENSION);
 
-
 /**
  * Login is an extension of UniversiboCommand class.
  *
@@ -21,54 +20,69 @@ class Login extends UniversiboCommand {
 	{
 		$fc =& $this->getFrontController();
 		$template =& $this->frontController->getTemplateEngine();
+		$user =& $this->getSessionUser();
 		
-		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : $_SERVER['HTTP_REFERER'];
+		$referer = (array_key_exists('f1_referer',$_POST)) ? $_POST['f1_referer'] : (array_key_exists('HTTP_REFERER',$_SERVER))? $_SERVER['HTTP_REFERER'] : '';
+		
+		if ( array_key_exists('f1_username',$_POST) )
+			$_POST['f1_username'] = trim($_POST['f1_username']);
+		else
+			Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Username non inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));			
 		
 		if ( array_key_exists('f1_submit',$_POST) )
 		{
 			
-			if (!$this->sessionUser->isOspite())
+			if (!$user->isOspite())
 			{
-				Error::throw(_ERROR_DEFAULT,array('msg'=>'Il login pu? essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
+				Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'Il login può essere eseguito solo da utenti che non hanno ancora eseguito l\'accesso','file'=>__FILE__,'line'=>__LINE__));
 			}
 			
 			if (! User::isUsernameValid($_POST['f1_username']) )
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $user->getIdUser(), 'msg'=>'Username non valido','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
 			
-	//		if (! User::isPasswordValid($_POST['f1_password']) )
-	//			Error::throw(_ERROR_DEFAULT,array('msg'=>'Password non valida, lunghezza minima 5 caratteri','file'=>__FILE__,'line'=>__LINE__));
+			$userLogin = User::selectUserUsername($_POST['f1_username']);
 			
-			$user = User::selectUserUsername($_POST['f1_username']);
-			
-			if ($user === false)
+			if ($userLogin === false || $userLogin->isEliminato() )
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => '0', 'msg'=>'Non esistono utenti con lo username inserito','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
-			elseif( $user->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
+			elseif( $userLogin->getPasswordHash() != User::passwordHashFunction($_POST['f1_password']) )
 			{
-				Error::throw(_ERROR_NOTICE,array('msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>false ,'template_engine'=>&$template ));
+				Error::throwError(_ERROR_NOTICE,array('id_utente' => $userLogin->getIdUser(), 'msg'=>'Password errata','file'=>__FILE__,'line'=>__LINE__,'log'=>true ,'template_engine'=>&$template ));
 			}
 			else
 			{
-				$user->updateUltimoLogin(time());
+				session_destroy();
+				session_start();
 				$_POST['f1_password'] = '';  //resettata per sicurezza
-				$this->setSessionIdUtente($user->getIdUser());
-				$fc->setStyle($user->getDefaultStyle());
+				$_SESSION['user'] = array();
+				$_SESSION['user'] = serialize($userLogin);
+				$_SESSION['referer'] = $referer;
+				FrontController::redirectCommand('InteractiveCommandHandler');
 				
-				$forum = new ForumApi;
-				$forum->login($user);
+//				// questa parte è in InteractiveCommandHandler
+//				$userLogin->updateUltimoLogin(time());
+//				$this->setSessionIdUtente($userLogin->getIdUser());
+//				$fc->setStyle($userLogin->getDefaultStyle());
+//				
+//				$forum = new ForumApi();
+//				$forum->login($userLogin);
+//				
+				//var_dump($referer);
 				
-				if ( !strstr('do',$referer) || strstr('do=ShowHome', $referer) )
-					FrontController::redirectCommand('ShowMyUniversiBO');
-				else
-					FrontController::goTo($referer);
-				
+//				if ( !strstr($referer, 'forum') && ( !strstr($referer, 'do') || strstr($referer, 'do=ShowHome')  || strstr($referer, 'do=ShowError') || strstr($referer, 'do=Login') || strstr($referer, 'do=RegStudente')))
+//					FrontController::redirectCommand('ShowMyUniversiBO');
+//				else if (strstr($referer, 'forum'))
+//					FrontController::goTo($forum->getMainUri());
+//				else
+//					FrontController::goTo($referer);
 				
 			}
 			$_POST['f1_password'] = '';  //resettata per sicurezza
 		
 		}
 		
+			
 		$f1_username = (array_key_exists('f1_username', $_POST)) ? '' : $_POST['f1_username'] = '';
 		$f1_password = '';
 		
@@ -76,7 +90,6 @@ class Login extends UniversiboCommand {
 		$template->assign('f1_referer_value',$referer);
 		$template->assign('f1_username_value',$_POST['f1_username']);
 		$template->assign('f1_password_value','');
-
 		return ;
 
 	}

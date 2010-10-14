@@ -68,11 +68,20 @@ class ForumApi
 	/**
 	 * @return string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
 	 */
-	function getSid()
+	function getSidForUri()
 	{
 		//echo $_SESSION['phpbb_sid'];
 		if (array_key_exists('phpbb_sid', $_SESSION) && $_SESSION['phpbb_sid']!='') return 'sid='.$_SESSION['phpbb_sid'];
 		return '';
+	}
+	
+	/**
+	 * @return string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getOnlySid()
+	{
+		$sid = $_SESSION['phpbb_sid'];
+		return $sid;
 	}
 
 
@@ -110,10 +119,10 @@ class ForumApi
 					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows != 4) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
 			${$row[0]} = $row[1];
@@ -137,15 +146,20 @@ class ForumApi
 			$db->quote($sid).', '.$user->getIdUser().', '.time().', '.time().', '.$db->quote($this->_encodeIp($_SERVER['REMOTE_ADDR'])).', 0, 1)';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$query = 'UPDATE '.$this->table_prefix.'_users SET user_lastvisit = '.time();
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			
+		$query = 'SELECT user_session_time FROM '.$this->table_prefix.'users WHERE user_id = '.$user->getIdUser();
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			
+		$res->fetchInto($row); 
 		
-		
-		
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_lastvisit = '.$row[0].' WHERE user_id = '.$user->getIdUser();
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+						
 		$_SESSION['phpbb_sid'] = $sid;
 		
 	}
@@ -168,10 +182,10 @@ class ForumApi
 					$db->quote('cookie_name').')';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		$rows = $res->numRows();
 		if( $rows != 4) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'Impossibile trovare le informazioni di configurazione del forum','file'=>__FILE__,'line'=>__LINE__)); 
 		while (	$res->fetchInto($row) )
 		{
 			${$row[0]} = $row[1];
@@ -184,10 +198,10 @@ class ForumApi
 		
 		setcookie ($cookie_name.'_sid', '', time()-3600, $cookie_path, $cookie_domain , $cookie_secure);
 		
-		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getSid()).';';
+		$query = 'DELETE FROM '.$this->table_prefix.'sessions WHERE session_id = '.$db->quote(ForumApi::getOnlySid()).';';
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
 
 		$_SESSION['phpbb_sid'] = '';
 		
@@ -231,7 +245,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -252,7 +266,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -273,7 +287,27 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+		
+	}
+
+
+	/**
+	 * Modifica la email di un utente sul database del forum dato uno User
+	 * 
+	 * @static 
+	 */
+	function updateUserEmail($user)
+	{
+		
+		$db =& FrontController::getDbConnection($this->database);
+		if ($user->isOspite()) return;
+
+		$query = 'UPDATE '.$this->table_prefix.'users SET user_email = '.$db->quote($user->getEmail()).' WHERE user_id = '.$db->quote($user->getIdUser());
+		
+		$res = $db->query($query);
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -291,7 +325,7 @@ class ForumApi
 		$query = 'SELECT * FROM '.$this->table_prefix.'user_group WHERE group_id = '.$db->quote($group).' AND user_id = '.$db->quote($user);
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		if ($res->numRows() > 0 ) return;
 		
@@ -299,7 +333,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -318,7 +352,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 
@@ -328,7 +362,7 @@ class ForumApi
 	 */
 	function getMainUri()
 	{
-		return $this->getPath().'index.php?'.ForumApi::getSid();
+		return $this->getPath().'index.php?'.ForumApi::getSidForUri();
 	}
 
 
@@ -338,34 +372,8 @@ class ForumApi
 	 */
 	function getForumUri($id_forum)
 	{
-		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSid();
+		return $this->getPath().'viewforum.php?f='.$id_forum.'&'.ForumApi::getSidForUri();
 	}
-	
-	
-	/**
-	 * Ritorna il massimo id_fourm dal database ...succedaneo dell'utilizzo delle sequenze
-	 *
-	 * @return int massimo id_fourm dal database 
-	 */
-	function getMaxForumId()
-	{
-		$db =& FrontController::getDbConnection($this->database);
-
-		$query = 'SELECT MAX(forum_id) as forum_id FROM '.$this->table_prefix.'forums';
-		
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		if ($res->numRows() != 1 ) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'query max fourm_id non valida', 'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$res->fetchInto($row);
-			
-		return $row[0];
-	
-	}
-	
 	
 	/**
 	 *
@@ -382,7 +390,7 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $next_id;
 	}
@@ -407,7 +415,7 @@ class ForumApi
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $next_id;
 	}
@@ -428,7 +436,7 @@ class ForumApi
 
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		return $next_id;
 	}
@@ -437,10 +445,11 @@ class ForumApi
 	/**
 	 * @return null
 	 */
-	function addGroupForumPrivilegies($forum_id, $group_id )
+	function addGroupForumPrivilegies($forum_id, $group_id)
 	{
 		$db =& FrontController::getDbConnection($this->database);
 		
+		$next_id = $db->nextId($this->table_prefix.'groups_id');
 		
 		$query = 'INSERT INTO "'.$this->table_prefix.'auth_access" ("group_id", "forum_id", "auth_view", "auth_read", "auth_post", "auth_reply", 
 				"auth_edit", "auth_delete", "auth_announce", "auth_sticky", "auth_pollcreate", "auth_attachments", "auth_vote", "auth_mod")
@@ -448,40 +457,135 @@ class ForumApi
 		
 		$res = $db->query($query);
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 	}
 	
 	
 	/**
+	 * Ritorna il massimo id_fourm dal database ...succedaneo dell'utilizzo delle sequenze
+	 *
+	 * @return int massimo id_fourm dal database
+	 */
+	function getMaxForumId()
+	{
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$query = 'SELECT MAX(forum_id) as forum_id FROM '.$this->table_prefix.'forums';
+		
+		$res = $db->query($query);
+		if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+		
+		if ($res->numRows() != 1 )
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>'query max fourm_id non valida', 'file'=>__FILE__,'line'=>__LINE__));
+		
+		$res->fetchInto($row);
+		
+		return $row[0];
+		
+	}
+
+
+	/**
 	 * @return string nuovo nome
 	 */
 	function addForumInsegnamentoNewYear($forum_id, $anno_accademico)
 	{
-		$db =& FrontController::getDbConnection($this->database);
-		
-		$query = 'SELECT forum_name FROM "'.$this->table_prefix.'forums" WHERE forum_id = '.$forum_id;
-
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		$res->fetchInto($row);
-		
-		$vecchio_nome = $row[0];
-		$search = ($anno_accademico-1).'/'.$anno_accademico.' ';
-		$replace = ($anno_accademico-1).'/'.$anno_accademico.'/'.($anno_accademico+1).' ';
-		$nuovo_nome = str_replace($search, $replace, $vecchio_nome);
-			
-		$query = 'UPDATE '.$this->table_prefix.'forums SET forum_name = '.$db->quote($nuovo_nome).'  WHERE forum_id = '.$forum_id;
-
-		$res = $db->query($query);
-		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
-		
-		return $nuovo_nome;
+	    $db =& FrontController::getDbConnection($this->database);
+	
+	    $query = 'SELECT forum_name FROM "'.$this->table_prefix.'forums" WHERE forum_id = '.$forum_id;
+	
+	    $res = $db->query($query);
+	    if (DB::isError($res))
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+	
+	    $res->fetchInto($row);
+	
+	    $vecchio_nome = $row[0];
+	    $search = ($anno_accademico-1).'/'.$anno_accademico.' ';
+	    $replace = ($anno_accademico-1).'/'.$anno_accademico.'/'.($anno_accademico+1).' ';
+	    $nuovo_nome = str_replace($search, $replace, $vecchio_nome);
+	
+	    $query = 'UPDATE '.$this->table_prefix.'forums SET forum_name = '.$db->quote($nuovo_nome).'  WHERE forum_id = '.$forum_id;
+	
+	    $res = $db->query($query);
+	    if (DB::isError($res))
+	        Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+	
+	    return $nuovo_nome;
 	
 	}
+	
+	
+	
+	/**
+	 * @param  int   $id_post  
+	 * @return mixed string: id di sessione del forum 'sid=f454e54ea75ae45aef75920b02751ac' altrimenti false
+	 */
+	function getPostUri($id_post)
+	{
+		return $this->getPath().'viewtopic.php?p='.$id_post.'&'.ForumApi::getSidForUri().'#'.$id_post;
+	}
+	
+	/**
+	 *
+	 * @param	user	$user 
+	 * @param	int   id del forum di cui controllare i messaggi nuovi. se passato 0 vengono
+	 * cercati gli ultimi post su tutto il forum a cui l'utente ha diritto di accesso 
+	 * @return 	mixed array di array( id degli ultimi messaggi del forum, nome topic) , false se nessun messaggio nuovo
+	 */
+	function &getLastPostsForum($user, $id_forum, $num = 10)
+	{
+		// teoricamente se uno ha accesso al canale ha anche accesso al forum
+		
+		// controllo post più recenti dell'ultimo accesso
+		
+				
+		$db =& FrontController::getDbConnection($this->database);
+		
+		$ultimo_login = ($user->getUltimoLogin() == null || $user->getUltimoLogin() == '') ? 0 : $user->getUltimoLogin();
+		// @NB se si usa limitQuery() la query non deve avere ';' alla fine
+		$query = 'SELECT t.topic_title, min(p.post_id) FROM '.$this->table_prefix.'posts p, '.$this->table_prefix.'topics t 
+					WHERE t.topic_id = p.topic_id 
+					AND p.forum_id = '.$db->quote($id_forum).'	
+					AND p.post_id IN (SELECT pp.post_id FROM '.$this->table_prefix.'posts pp WHERE t.topic_id = pp.topic_id AND pp.post_time > '.$ultimo_login.' ORDER BY pp.post_time ASC)
+					GROUP BY t.topic_title
+					ORDER BY max(p.post_id) DESC';
+		
+		//var_dump($db);
+		//
+		$res =& $db->limitQuery($query, 0 , $num);
+		
+		
+		if (DB::isError($res)) 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+				
+		$rows = $res->numRows();
+
+		if( $rows == 0 ){ $false = false; return $false; }
+		
+		$id_post_list = array();
+	
+		while ( $res->fetchInto($row) )
+		{
+			$id_post_list[] =  array('id' => $row[1], 'name' => $row[0]);
+		}
+		
+		$res->free();
+		
+		return $id_post_list;		
+	}
+
+	//getLastNPostsForum ?
+	//getLastPosts ?
+	//getLastNPosts ?
+	
+	/**
+	 *  
+	 * @author Pinto
+	 *
+	 */
 	
 }
 

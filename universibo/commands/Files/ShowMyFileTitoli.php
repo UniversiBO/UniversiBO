@@ -4,7 +4,7 @@ require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
 
 /**
- * ShowMyFileTitoli è un'implementazione di PluginCommand.
+ * ShowMyFileTitoli ? un'implementazione di PluginCommand.
  *
  * Mostra i file del canale
  * Il BaseCommand che chiama questo plugin deve essere un'implementazione di CanaleCommand.
@@ -45,7 +45,7 @@ class ShowMyFileTitoli extends PluginCommand {
 		
 		if ( $canale_files == 0 )
 		{
-			$template->assign('showMyFileTitoli_langFileAvailable', 'Non ci sono notizie da visualizzare');
+			$template->assign('showMyFileTitoli_langFileAvailable', 'Non ci sono files da visualizzare');
 			$template->assign('showMyFileTitoli_langFileAvailableFlag', 'false');
 		}
 		else
@@ -86,7 +86,7 @@ class ShowMyFileTitoli extends PluginCommand {
 					$file_tpl[$i]['autore_link']  = 'index.php?do=ShowUser&id_utente='.$file->getIdUtente();
 					$file_tpl[$i]['id_autore']    = $file->getIdUtente();
 					$file_tpl[$i]['dimensione'] = $file->getDimensione();
-//	tolto controllo: Il link download va mostrato sempre, il controllo è effettuato successivamente 
+//	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente 
 //					$file_tpl['download_uri'] = '';
 //					$permessi_download = $file->getPermessiDownload();
 //					if ($user->isGroupAllowed($permessi_download))
@@ -143,7 +143,7 @@ class ShowMyFileTitoli extends PluginCommand {
 		$res =& $db->query($query);
 		
 		if (DB::isError($res)) 
-			Error::throw(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
+			Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__)); 
 		
 		$id_file_list = array();
 	

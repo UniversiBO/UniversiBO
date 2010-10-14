@@ -12,53 +12,58 @@
 // | license@php.net so we can mail you a copy immediately.                 |
 // +------------------------------------------------------------------------+
 //
-// $Id: RepeatedTest.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// $Id: RepeatedTest.php,v 1.1.2.2 2008-01-23 09:37:33 evaimitico Exp $
 //
 
 require_once 'PHPUnit/TestDecorator.php';
 
 /**
- * A Decorator that runs a test repeatedly. 
+ * A Decorator that runs a test repeatedly.
  *
  * Here is an example:
  *
- *   <?php
- *   require_once 'PHPUnit.php';
- *   require_once 'PHPUnit/RepeatedTest.php';
+ * <code>
+ * <?php
+ * require_once 'PHPUnit.php';
+ * require_once 'PHPUnit/RepeatedTest.php';
  *
- *   class MathTest extends PHPUnit_TestCase {
+ * class MathTest extends PHPUnit_TestCase {
  *     var $fValue1;
  *     var $fValue2;
  *
  *     function MathTest($name) {
- *       $this->PHPUnit_TestCase($name);
+ *         $this->PHPUnit_TestCase($name);
  *     }
  *
  *     function setUp() {
- *       $this->fValue1 = 2;
- *       $this->fValue2 = 3;
+ *         $this->fValue1 = 2;
+ *         $this->fValue2 = 3;
  *     }
  *
  *     function testAdd() {
- *       $this->assertTrue($this->fValue1 + $this->fValue2 == 5);
+ *         $this->assertTrue($this->fValue1 + $this->fValue2 == 5);
  *     }
- *   }
+ * }
  *
- *   $suite = new PHPUnit_TestSuite;
- *   $suite->addTest(
- *     new PHPUnit_RepeatedTest(
- *       new MathTest('testAdd'),
- *       10
- *     )
- *   );
+ * $suite = new PHPUnit_TestSuite;
  *
- *   $result = PHPUnit::run($suite);
- *   echo $result->toString();
- *   ?>
+ * $suite->addTest(
+ *   new PHPUnit_RepeatedTest(
+ *     new MathTest('testAdd'),
+ *     10
+ *   )
+ * );
  *
- * @package PHPUnit
- * @author  Sebastian Bergmann <sb@sebastian-bergmann.de>
- *          Based upon JUnit, see http://www.junit.org/ for details.
+ * $result = PHPUnit::run($suite);
+ * print $result->toString();
+ * ?>
+ * </code>
+ *
+ * @author      Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright   Copyright &copy; 2002-2004 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
  */
 class PHPUnit_RepeatedTest extends PHPUnit_TestDecorator {
     /**

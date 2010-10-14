@@ -13,14 +13,22 @@ p, td, ul, ol, ul, li, dl, dt, dd, a
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 }
+
+/* usato anche nelle liste javascript */
+li .selectedItem
+{
+	background: url("freccia.gif") no-repeat;
+	background-position: -.3em .3em 
+}
+
 hr
 {
 	border-style: none;
 	border-top: dotted 2px #999;
 	margin: 30px 0 10px;
 }
-a {color: #386dce;}
-a:hover {color: #00e;}
+a {color: #386dce; /*padding: 1px; border: 1px;*/}
+a:hover, a:focus {color: #00e;}
 
 img
 {
@@ -30,7 +38,7 @@ img
 }
 
 h4
-{	
+{
 	font-size: 13px;
 }
 
@@ -132,7 +140,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	font-size: 10px ;
 }
 
-#Info
+/*#Info
 {
 	clear: none;
 	position: absolute;
@@ -140,6 +148,7 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	top: 74px;
 	font-weight: bold;
 }
+*/
 
 #menubar
 {
@@ -149,6 +158,13 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	padding: 2px 0 4px;
 	width: 100%;
 	vertical-align: middle;	
+}
+
+#menubar a:hover, #menubar a:focus
+{
+	background-color: #faffa0;
+	color: #386dce;
+	/*border: 1px solid #707700;*/
 }
 
 #Menu
@@ -167,6 +183,42 @@ td>#header		/* questa regola viene ignorata da exploder*/
 	padding: 3px 2px 0 0;
 }
 
+
+#header ul.hide
+{
+	position: absolute;
+	left: 810px;
+	display: block !important;
+	top: 2px;
+	padding: .7em 0;
+	list-style-type: none !important; 
+	color: #0006c2 !important;
+	background: #0006c2 !important;
+	/*overflow: visible;*/
+}
+
+#header ul.hide a, #header ul.hide li
+{
+	/*overflow: visible;*/
+	font-size: 0px;
+	color: #0006c2 !important;
+	background: #0006c2 !important;
+}
+
+#header ul.hide a:hover
+{
+	/*Con la seguente regola il mouse dovrebbe mostrare sempre lo stesso puntatore
+	anche se però c'è un po' di flickering in firefox*/
+	cursor: default;
+}
+
+#header ul.hide a:focus
+{
+	display: block;
+	font-size: 11px;
+	color: #0006c2 !important;
+	background: #faffa0 !important;
+}
 
 /** 
  *	Menu navigazione
@@ -193,7 +245,7 @@ td.evidenzia{
 	width: 100%;	
 }
 
-#leftmenu a:hover
+#leftmenu a:hover, #leftmenu a:focus
 {
 	background-color: #ccc;
 }
@@ -256,6 +308,7 @@ td.evidenzia{
 /**
  * Pagina centrale
  */
+
 #seiIn
 {
 	display: block;
@@ -329,6 +382,48 @@ td.evidenzia{
 	text-align: left;
 }
 
+#content a:hover, #content a:focus, .box .contenuto a:hover, .box .contenuto a:focus, #content .navbar input:hover, #content .navbar input:focus 
+{
+	background-color: #faffa0 !important;
+	/*border: 1px solid #707700;*/
+}
+
+/**
+ * navbar dello InteractiveCommand
+ *
+ */
+#content .navbar {
+	overflow: hidden;   /* queste due regole servono per contenere i float all'interno del navbar*/
+	width: 100%;
+	font-size: 13px; 
+}
+#content .navbar a, #content .navbar input{
+	display: block;
+	float: left;
+}
+
+#content .navbar a, #content .navbar input{
+	font-size: 13px;
+	color: #386dce; 
+	text-decoration: underline !important;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+	height: 1.35em !important;
+	line-height: normal !important;
+	white-space: normal ;
+	cursor: pointer;
+	cursor: hand; /* questo è aggiunto per visualizzare la manina in explorer*/
+	padding: 0;
+	margin: 0;
+	margin-right: 1ex !important; 
+	border: 0 none; 
+-moz-appearance: none !important;
+-moz-user-select: auto !important;
+-moz-box-sizing: content-box !important;
+}
+
+/* end navbar */
+
 #content ul, #content li { list-style-type: square !important; }
 .evidenzia
 {
@@ -340,7 +435,7 @@ td.evidenzia{
  *
  */
 
-.news, .elenco, .chi_siamo, .file_info, .elencoFile
+.news, .elenco, .chi_siamo, .file_info, .elencoFile, .boxCommento
 {
 	font-size: 11px !important;
 	margin: 2em 0 0;
@@ -357,6 +452,38 @@ td.evidenzia{
 .elenco div, .elencoFile div
 {
 	border-bottom: dotted 2px #999;
+}
+
+.boxCommenti
+{
+	border: solid 1px #999;
+	margin: 30px 5%;
+}
+
+.boxCommenti p, .boxCommenti a
+{
+	font-size: 11px !important;
+}
+
+.boxCommento
+{
+	border: dotted 1px #999;
+	background-color: #f3f7fd;
+	padding: 0px 4px !important;
+	margin: 5px;
+}
+
+.boxCommento p, .boxCommento a
+{
+	font-size: 11px !important;
+	margin: 0.4em !important;
+}
+
+.commento
+{
+	text-align: left;
+	margin: -1.6em 8em 0;
+	font-size: 11px !important;
 }
 /*
 .elenco		TODO non riesco a centrare sto cacchio di div
@@ -512,15 +639,25 @@ td.evidenzia{
 	background-color: #386dce;
 }
 
+.box h3 a:hover, .box h3 a:focus
+{
+	background-color: #faffa0; /* messo tutto*/
+	color: #386dce !important;
+}
+
 .box p, .box a
 {
 	font-weight: bold;
 }
+/*
 .box a
 {
-	/*color: #00e !important;*/
 	padding: 0;
 	margin: 0;
+}*/
+.box a
+{
+	padding: 1px; border: 1px; margin: 0;
 }
 .box h3 a, .work h3 a,.news h3 a
 {
@@ -566,6 +703,7 @@ td.evidenzia{
 {
 	font-size: 10px;
 	margin: 0;
+	margin-bottom: 7px;
 	padding: 0;
 }
 
@@ -655,6 +793,28 @@ td.evidenzia{
 	font-weight: bold;
 }
 
+
+#browserkeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#browserkeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
+#accesskeys th{
+	font-size: 11px;
+	background-color: #d9e5ff;
+}
+
+#accesskeys td{
+	font-size: 11px;
+	background-color: #eff3fc;
+}
+
+
 .elencoTopic
 {
 	font-size: 11px;
@@ -703,3 +863,107 @@ td.evidenzia{
 .comandi { font-size: 11px; text-align: center;}
 #content p.comandi {margin-left: 3%; }
 span>p.comandi {margin-left: 5% !important;}
+
+
+/*
+ * liste espandibili:
+ */
+.domenabled .explodableList
+{
+        position:relative;
+}
+
+.domenabled ul.explodableList,
+.domenabled ul.explodableList li,
+.domenabled ul.explodableList ul
+{
+        list-style-type:none;
+        margin:0;
+        padding:0;
+}
+
+.domenabled ul.explodableList ul.hidden
+{
+  top:0px;
+  left:-2000px;
+  position:absolute;
+}
+
+.domenabled ul.explodableList ul.shown
+{
+display:block;
+position:static;
+}
+
+.domenabled .explodableList a.open
+{
+        background:url(minus.png) no-repeat 0 50% #eee;
+        padding-right:0px;
+        padding-left:20px;
+}
+
+
+.domenabled .explodableList .shown li
+{
+        padding-left:10px;
+}
+
+.domenabled .explodableList a.parent
+{
+        background:url(plus.png) no-repeat #fff 0 50%;
+        padding-right:0px;
+        padding-left:20px;
+}
+
+.domenabled ul.explodableList li a
+{
+        color:#000;
+        /*display:block;*/
+        text-decoration:none;
+}
+
+/*
+ * fine liste espandibili
+ */
+
+/** 
+ *    STATISTICHE
+ *************************/
+ 
+#statistiche li {
+	text-align: center;
+	text-decoration: inherit;
+	width: 50%;
+}
+
+
+#statistiche  ul{
+	
+	
+        border-bottom: thick; 	    	
+	}
+#statistiche li span {
+	border: 1px groove blue;
+	text-shadow: aqua;
+	
+	background: white;
+	padding: 2px 4px;
+	width: 80px;
+	display: block; 
+	float: left; 
+	text-align: center;
+}
+
+#statistiche li.header 
+{
+	font-weight: bold;
+	font-family:  verdana;
+	text-transform: uppercase;
+	color: black;
+	
+}
+
+#statistiche .header span 
+{
+	background: white;
+}

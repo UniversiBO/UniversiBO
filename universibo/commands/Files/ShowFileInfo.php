@@ -2,6 +2,7 @@
 
 require_once ('PluginCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
 
 /**
  * ShowFileInfo: mostra tutte le informazioni correlate ad un file
@@ -22,14 +23,14 @@ class ShowFileInfo extends PluginCommand {
 	 */
 	function execute($param) 
 	{
+		$bc        =& $this->getBaseCommand();
+		$user      =& $bc->getSessionUser();
 		
 		if (!array_key_exists('id_file', $param) || !ereg('^([0-9]{1,9})$', $param['id_file'] )  )
 		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
 		}
 				
-		$bc        =& $this->getBaseCommand();
-		$user      =& $bc->getSessionUser();
 		$fc        =& $bc->getFrontController();
 		$template  =& $fc->getTemplateEngine();
 		$krono     =& $fc->getKrono();
@@ -38,40 +39,99 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('common_canaleURI', array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : '' );
 		$template->assign('common_langCanaleNome', 'indietro');
 		
-		if (array_key_exists('id_canale', $param) && ereg('^([0-9]{1,9})$', $param['id_canale']))
-		{
-			$canale = & Canale::retrieveCanale($param['id_canale']);
-			$template->assign('common_canaleURI', $canale->showMe());
-			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
-		}
+//		if (array_key_exists('id_canale', $param) && ereg('^([0-9]{1,9})$', $param['id_canale']))
+//		{
+//			$canale = & Canale::retrieveCanale($param['id_canale']);
+//			$template->assign('common_canaleURI', $canale->showMe());
+//			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+//		}
 				
-		$file =& FileItem::selectFileItem($param['id_file']);
+		$tipo_file = FileItemStudenti::isFileStudenti($param['id_file']);
+		
+		if ($tipo_file)
+			$file =& FileItemStudenti::selectFileItem($param['id_file']);
+		else	
+			$file =& FileItem::selectFileItem($param['id_file']);
+		//Con questo passaggio dovrei riuscire a verificare se il file che si vuole modificare é un file studente o no
+		//true -> é un file studente
+//		var_dump($tipo_file);
+//		die();
 		
 		if ($file === false)
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => "Il file richiesto non è presente su database", 'file' => __FILE__, 'line' => __LINE__));
 		
 		//var_dump($file);
         $directoryFile = $fc->getAppSetting('filesPath');
 		$nomeFile = $file->getIdFile().'_'.$file->getNomeFile();
 		
 		if (!$user->isGroupAllowed( $file->getPermessiVisualizza() ) )
-			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso visualizzare il file.
+			Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getIdUser(), 'msg' => 'Non è permesso visualizzare il file.
 			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 
 		$template->assign('showFileInfo_editFlag', 'false');
 		$template->assign('showFileInfo_deleteFlag', 'false');
-		
-		//mancano dei diritti
-		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+		$referente = false;
+	    $moderatore = false;
+		$parametro_canale = '';
+
+		if (array_key_exists('id_canale', $_GET))
 		{
-//			$file_tpl['modifica']     = 'Modifica';
-//			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
-//			$file_tpl['elimina']      = 'Elimina';
-//			$file_tpl['elimina_link'] = 'index.php?do=FileDelete&id_file='.$file->getIdFile();
+			if (!ereg('^([0-9]{1,9})$', $_GET['id_canale']))
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'L\'id del canale richiesto non é valido', 'file' => __FILE__, 'line' => __LINE__));
+
+			$canale = & Canale::retrieveCanale($_GET['id_canale']);
+			if ($canale->getServizioFiles() == false) 
+				Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Il servizio files é disattivato", 'file' => __FILE__, 'line' => __LINE__));
+					
+			$id_canale = $canale->getIdCanale();
+			
+			$parametro_canale = '&id_canale='.$id_canale;
+			
+			$user_ruoli = $canale->getRuoli();
+			$template->assign('common_canaleURI', $canale->showMe());
+			$template->assign('common_langCanaleNome', 'a '.$canale->getTitolo());
+			if (array_key_exists($id_canale, $user_ruoli)) {
+				$ruolo = & $user_ruoli[$id_canale];
+	
+				$referente = $ruolo->isReferente();
+				$moderatore = $ruolo->isModeratore();
+			}
+			//controllo coerenza parametri
+			$canali_file	=& 	$file->getIdCanali();
+			if (!in_array($id_canale, $canali_file))
+				 Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+		}
+		
+		
+		$autore = ($user->getIdUser() == $file->getIdUtente());
+		if($autore||$user->isAdmin()||$referente||$moderatore)
+		{
 			$template->assign('showFileInfo_editFlag', 'true');
 			$template->assign('showFileInfo_deleteFlag', 'true');
-			$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile());
-			$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile());
+			if($tipo_file)
+			{
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileStudentiEdit&id_file='.$file->getIdFile().$parametro_canale);
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileStudentiDelete&id_file='.$file->getIdFile().$parametro_canale);
+			}
+			else
+			{
+				$template->assign('showFileInfo_editUri', 'index.php?do=FileEdit&id_file='.$file->getIdFile().$parametro_canale);
+				$template->assign('showFileInfo_deleteUri', 'index.php?do=FileDelete&id_file='.$file->getIdFile().$parametro_canale);
+			}
+		}
+		
+
+		if($tipo_file)
+		{
+    		$voto = FileItemStudenti::getVoto($param['id_file']);
+//			var_dump($voto);
+//			die();
+			if($voto==NULL)
+				$voto='Non esistono ancora voti per questo file';
+			else
+				$voto = round($voto,1);	
+			$template->assign('showFileInfo_voto',$voto);
+			$template->assign('showFileInfo_addComment','index.php?do=FileStudentiComment&id_file='.$file->getIdFile());
 		}
 		
 		
@@ -85,14 +145,14 @@ class ShowFileInfo extends PluginCommand {
 			$canali_tpl[$id_canale]['uri'] = $canale->showMe();
 		}
 		
-		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_downloadUri', 'index.php?do=FileDownload&id_file='.$file->getIdFile().$parametro_canale);
 		$template->assign('showFileInfo_langDelete', 'Elimina');
 		$template->assign('showFileInfo_langDownload', 'Scarica');
 		$template->assign('showFileInfo_langEdit', 'Modifica');
-		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile());
+		$template->assign('showFileInfo_uri', 'index.php?do=showFileInfo&id_file='.$file->getIdFile().$parametro_canale);
 		$template->assign('showFileInfo_titolo', $file->getTitolo());
 		$template->assign('showFileInfo_descrizione', $file->getDescrizione());
-		$template->assign('showFileInfo_userLink', 'index.php?ShowUser&id_utente='.$file->getIdUtente());
+		$template->assign('showFileInfo_userLink', 'index.php?do=ShowUser&id_utente='.$file->getIdUtente());
 		$template->assign('showFileInfo_username', $file->getUsername());
 		$template->assign('showFileInfo_dataInserimento', $krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
 		$template->assign('showFileInfo_new', ($file->getDataModifica() < $user->getUltimoLogin() ) ? 'true' : 'false' );
@@ -106,6 +166,7 @@ class ShowFileInfo extends PluginCommand {
 		$template->assign('showFileInfo_info', $file->getTipoInfo());
 		$template->assign('showFileInfo_canali', $canali_tpl);
 		$template->assign('showFileInfo_paroleChiave', $file->getParoleChiave());
+		$template->assign('isFileStudente',(($tipo_file==true) ? 'true' : 'false'));
 		
 		return ;
 		

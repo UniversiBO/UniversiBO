@@ -1,8 +1,29 @@
 <?php
 //
-//  $Id: HTML.php,v 1.1 2003-09-09 12:57:23 brain_79 Exp $
+// +------------------------------------------------------------------------+
+// | PEAR :: PHPUnit                                                        |
+// +------------------------------------------------------------------------+
+// | Copyright (c) 2002-2003 Sebastian Bergmann <sb@sebastian-bergmann.de>. |
+// +------------------------------------------------------------------------+
+// | This source file is subject to version 3.00 of the PHP License,        |
+// | that is available at http://www.php.net/license/3_0.txt.               |
+// | If you did not receive a copy of the PHP license and are unable to     |
+// | obtain it through the world-wide-web, please send a note to            |
+// | license@php.net so we can mail you a copy immediately.                 |
+// +------------------------------------------------------------------------+
+//
+// $Id: HTML.php,v 1.1.2.1 2004-10-21 13:10:43 brain_79 Exp $
 //
 
+/**
+ * This class provides a HTML GUI.
+ *
+ * @author      Wolfram Kriesing <wolfram@kriesing.de>
+ * @license     http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ * @category    PHP
+ * @package     PHPUnit
+ * @subpackage  GUI
+ */
 class PHPUnit_GUI_HTML
 {
 
@@ -28,7 +49,7 @@ class PHPUnit_GUI_HTML
             $this->_suites = $suites;
         }
     }
-    
+
     /**
     *   Add suites to the GUI
     *
@@ -45,16 +66,19 @@ class PHPUnit_GUI_HTML
     */
     function show()
     {
-        $showPassed=false;
+        $showPassed=FALSE;
         $submitted = @$_REQUEST['submitted'];
         if ($submitted) {
-            $showPassed = @$_REQUEST['showOK']?true:false;
+            $showPassed = @$_REQUEST['showOK'] ? TRUE : FALSE;
         }
-        
+
         $suiteResults = array();
         foreach ($this->_suites as $aSuite) {
             $aSuiteResult = array();
-            $aSuiteResult['name'] = $aSuite->getName();
+            // remove the first directory's name from the test-suite name, since it
+            // mostly is something like 'tests' or alike
+            $removablePrefix = explode('_',$aSuite->getName());
+            $aSuiteResult['name'] = str_replace($removablePrefix[0].'_', '', $aSuite->getName());
             if ($submitted && isset($_REQUEST[$aSuiteResult['name']])) {
                 $result = PHPUnit::run($aSuite);
 
@@ -70,7 +94,7 @@ class PHPUnit_GUI_HTML
             } else {
                 $aSuiteResult['addInfo'] = 'NOT EXECUTED';
             }
-            
+
             $suiteResults[] = $aSuiteResult;
         }
 
@@ -96,7 +120,7 @@ class PHPUnit_GUI_HTML
             $final['percent'] = 0;
         }
         array_unshift($suiteResults,$final);
-          
+
         include 'PHPUnit/GUI/HTML.tpl';
     }
 
@@ -107,64 +131,75 @@ class PHPUnit_GUI_HTML
         foreach($failures as $aFailure) {
             $ret['failures'][] = $this->_prepareFailure($aFailure);
         }
-        
+
         $errors = $result->errors();
         foreach($errors as $aError) {
             $ret['errors'][] = $this->_prepareErrors($aError);
         }
-        
+
         if ($showPassed) {
             $passed = $result->passedTests();
             foreach($passed as $aPassed) {
                 $ret['passed'][] = $this->_preparePassedTests($aPassed);
             }
         }
-        
+
         return $ret;
     }
-    
+
     function _prepareFailure($failure)
     {
-        $test = $failure->failedTest();            
+        $test = $failure->failedTest();
         $ret['testName'] = $test->getName();
 
         $exception = $failure->thrownException();
-        // if there are () around it then we seem to have a serialized data
-        if (preg_match('/expected\s.*\), actual.*/',$exception)) {
-// this might be unnecessary since it only works for arrays...        
+        // a serialized string starts with a 'character:decimal:{'
+		// if so we try to unserialize it
+		// this piece of the regular expression is for detecting a serialized
+		// type like 'a:3:' for an array with three element or an object i.e. 'O:12:"class":3'
+        $serialized = '(\w:\d+:(?:"[^"]+":\d+:)?\{.*\})';
+        // Spaces might make a diff, so we shall show them properly (since a
+        // user agent ignores them).
+        if (preg_match('/^(.*)expected ' . $serialized . ', actual ' .
+            $serialized . '$/sU', $exception, $matches)) {
             ob_start();
-            print_r(unserialize(preg_replace('/expected\s(.*), actual.*/','$1',$exception)));
-            $ret['expected'] = ob_get_contents();
-            ob_clean();
-            print_r(unserialize(preg_replace('/expected\s.*, actual (.*)/','$1',$exception)));
-            $ret['actual'] = ob_get_contents();
+            print_r(unserialize($matches[2]));
+            $ret['expected'] = htmlspecialchars($matches[1]) . "<pre>" .
+                htmlspecialchars(rtrim(ob_get_contents())) . "</pre>";
+            // Improved compatibility, ob_clean() would be PHP >= 4.2.0 only.
             ob_end_clean();
+            ob_start();
+            print_r(unserialize($matches[3]));
+            $ret['actual'] = htmlspecialchars($matches[1]) . "<pre>" .
+                htmlspecialchars(rtrim(ob_get_contents())) . "</pre>";
+            ob_end_clean();
+        } elseif (preg_match('/^(.*)expected (.*), actual (.*)$/sU', $exception,
+            $matches)) {
+            $ret['expected'] = nl2br(str_replace(" ", "&nbsp;",
+                htmlspecialchars($matches[1] . $matches[2])));
+            $ret['actual'] = nl2br(str_replace(" ", "&nbsp;",
+                htmlspecialchars($matches[1] . $matches[3])));
         } else {
-            // spaces might make a diff, so we shall show them properly (since a user agent ignores them)
-            if (preg_match('/expected\s.*, actual.*/',$exception)) {
-                $ret['expected'] = preg_replace('/expected\s(.*), actual.*/','$1',$exception);
-                $ret['actual'] = preg_replace('/expected\s.*, actual (.*)/','$1',$exception);
-            } else {
-                $ret['message'] = str_replace(' ','&nbsp;',$exception);
-            }
+            $ret['message'] = nl2br(str_replace(" ", "&nbsp;",
+                htmlspecialchars($exception)));
         }
-        
+
         return $ret;
     }
-    
+
     function _preparePassedTests($passed)
     {
         $ret['testName'] = $passed->getName();
         return $ret;
     }
-    
+
     function _prepareError($error)
     {
         $ret['testName'] = $error->getName();
         $ret['message'] = $error->toString();
         return $ret;
     }
-    
+
 }
 
 ?>

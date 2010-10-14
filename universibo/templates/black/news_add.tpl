@@ -84,7 +84,7 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td class="News" align="left" valign="top"><input type="checkbox" id="f7_urgente"  name="f7_urgente" {if $f7_urgente=='true'}checked="checked"{/if}/>&nbsp;Invia il messaggio come urgente</td>
+<td class="News" align="left" valign="top"><input type="checkbox" id="f7_urgente"  name="f7_urgente" {if $f7_urgente=='true'}checked="checked"{/if}/>&nbsp;Invia il messaggio come urgente (invia la notifica anche via sms)</td>
 </tr>
 <tr><td colspan="2">
 <fieldset>

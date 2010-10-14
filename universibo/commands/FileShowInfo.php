@@ -2,6 +2,7 @@
 
 require_once ('CanaleCommand'.PHP_EXTENSION);
 require_once ('Files/FileItem'.PHP_EXTENSION);
+require_once ('Files/FileItemStudenti'.PHP_EXTENSION);
 
 /**
  * FileShowInfo: mostra tutte le informazioni correlate ad un file
@@ -17,18 +18,18 @@ class FileShowInfo extends UniversiboCommand {
 
 	function execute() 
 	{
-		
-		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
-		{
-			Error::throw(_ERROR_DEFAULT,array('msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
-		}
-		
 		$frontcontroller = & $this->getFrontController();
 		
 		$template = & $frontcontroller->getTemplateEngine();
 		$krono = & $frontcontroller->getKrono();
 		$user =& $this->getSessionUser();		
 		
+		if (!array_key_exists('id_file', $_GET) || !ereg('^([0-9]{1,9})$', $_GET['id_file'] )  )
+		{
+			Error::throwError(_ERROR_DEFAULT,array('id_utente' => $user->getIdUser(), 'msg'=>'L\'id del file richiesto non è valido','file'=>__FILE__,'line'=>__LINE__ ));
+		}
+		$id_file = $_GET['id_file'];
+		$tipo_file = FileItemStudenti::isFileStudenti($id_file);
 //		
 //		$file =& FileItem::selectFileItem($_GET['id_file']);
 //		
@@ -36,11 +37,11 @@ class FileShowInfo extends UniversiboCommand {
 //		$nomeFile = $file->getIdFile().'_'.$file->getNomeFile();
 //		
 //		if (!$user->isGroupAllowed( $file->getPermessiVisualizza() ) )
-//			Error :: throw (_ERROR_DEFAULT, array ('msg' => 'Non è permesso visualizzare il file.
+//			Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Non ? permesso visualizzare il file.
 //			Non possiedi i diritti necessari, la sessione potrebbe essere scaduta.', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
 //
 //
-//		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUtente() ))
+//		if (($user->isAdmin() || $user->getIdUser() == $file->getIdUser() ))
 //		{
 //			$file_tpl['modifica']     = 'Modifica';
 //			$file_tpl['modifica_link']= 'index.php?do=FileEdit&id_file='.$file->getIdFile();
@@ -80,7 +81,13 @@ class FileShowInfo extends UniversiboCommand {
 			$this->executePlugin('ShowFileInfo', array( 'id_file' => $_GET['id_file'], 'id_canale' => $_GET['id_canale']) );
 		else
 			$this->executePlugin('ShowFileInfo', array( 'id_file' => $_GET['id_file'] ) );
-		
+		if($tipo_file==true) 
+		{
+		    $template->assign('isFileStudente','true');
+			$this->executePlugin('ShowFileStudentiCommenti', array( 'id_file' => $id_file));
+		}
+		else
+			$template->assign('isFileStudente','false');	
 		return ;
 		
 	}
