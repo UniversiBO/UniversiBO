@@ -1,6 +1,6 @@
 include postgresql::server
 
-class {'apache': 
+class {'apache':
     default_vhost => false,
     mpm_module => 'prefork'
 }
@@ -36,7 +36,7 @@ class lapp_config
         ensure => present,
         source => '/vagrant/vagrant/resources/app/etc/varnish/default.vcl',
     }
-    
+
     file { 'varnish-default':
         path   => '/etc/default/varnish',
         ensure => present,
@@ -48,7 +48,7 @@ class lapp_config
         command => 'service varnish restart',
         require => File['varnish-conf', 'varnish-default']
     }
-    
+
 #    file { 'apache-ports':
 #        path   => '/etc/apache2/ports.conf',
 #        ensure => present,
