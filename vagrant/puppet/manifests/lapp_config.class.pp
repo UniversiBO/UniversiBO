@@ -69,7 +69,7 @@ class lapp_config
         require => Exec['ports.conf']
     }
 
-    apache::vhost { 'default':
+    apache::vhost { 'default-universibo':
         priority        => '10',
         vhost_name      => '*',
         port            => '8000',
