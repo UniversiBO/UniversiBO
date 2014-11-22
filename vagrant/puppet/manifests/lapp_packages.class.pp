@@ -4,7 +4,7 @@ class lapp_packages
     package { $phppkg :
         ensure => 'latest'
     }
-    
+
     $pgpkg = ['postgresql', 'phppgadmin']
     package { $pgpkg :
         ensure => 'latest'
@@ -28,7 +28,7 @@ class lapp_packages
 
     exec { 'install-composer':
         command => 'curl -s https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer',
-	creates => '/usr/local/bin/composer',
-	require => Package['curl', $phppkg]
+        creates => '/usr/local/bin/composer',
+        require => Package['curl', $phppkg]
     }
 }
