@@ -26,9 +26,6 @@ class lapp_packages
     $javapkg = [ "openjdk-7-jre-headless" ]
     package { $javapkg: ensure => "latest" }
 
-    exec { 'install-composer':
-        command => 'curl -s https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer',
-        creates => '/usr/local/bin/composer',
-        require => Package['curl', $phppkg]
-    }
+    include php::composer
+    include php::composer::auto_update
 }
