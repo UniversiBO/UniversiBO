@@ -1,16 +1,15 @@
 include postgresql::server
 
-class {'apache':
-    default_vhost => false,
-    mpm_module => 'prefork'
-}
-
-class { 'apache::mod::php': }
-apache::mod { 'rpaf': }
-apache::mod { 'rewrite': }
-
-class lapp_config
+class lapp::config
 {
+    class {'apache':
+        default_vhost => false,
+        mpm_module => 'prefork'
+    }
+
+    apache::mod { 'rpaf': }
+    apache::mod { 'rewrite': }
+
     postgresql::server::db { 'universibo':
         user     => 'universibo',
         password => 'universibo'

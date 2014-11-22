@@ -1,4 +1,4 @@
-class universibo_init
+class universibo
 {
     exec {'composer install':
         cwd => '/vagrant',

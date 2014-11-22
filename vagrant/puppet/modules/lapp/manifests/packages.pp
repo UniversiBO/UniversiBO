@@ -1,6 +1,10 @@
-class lapp_packages
+class lapp::packages
 {
-    $pgpkg = ['postgresql', 'phppgadmin']
+    $pgpkg = [
+        'postgresql',
+        'phppgadmin'
+    ]
+
     package { $pgpkg :
         ensure => 'latest'
     }
@@ -10,17 +14,10 @@ class lapp_packages
         ensure => 'latest'
     }
 
-    package { 'rabbitmq-server' :
-        ensure => 'latest'
-    }
-
     package { 'curl' :
         ensure => 'latest'
     }
 
     $javapkg = [ "openjdk-7-jre-headless" ]
     package { $javapkg: ensure => "latest" }
-
-    include php::composer
-    include php::composer::auto_update
 }
