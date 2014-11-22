@@ -1,26 +1,20 @@
 #!/bin/bash
-
-PUPPET_MODULES=/etc/puppet/modules
-
 sed 's/us\.archive/it\.archive/' -i /etc/apt/sources.list
 
 aptitude update
+aptitude install git ruby-dev libaugeas-ruby --assume-yes
 
-if [ `which git | wc -l` -eq 0 ]; then
-    aptitude install git --assume-yes
+PUPPET_DIR=/etc/puppet
+
+if [ ! -d "$PUPPET_DIR" ]; then
+    mkdir -p "$PUPPET_DIR"
 fi
 
-if [ ! -d $PUPPET_MODULES ]; then
-    mkdir -p $PUPPET_MODULES
+cp /vagrant/vagrant/puppet/Puppetfile $PUPPET_DIR
+
+if [ `gem list | grep librarian | wc -l` -eq 0 ]; then
+  gem install librarian-puppet
+  cd $PUPPET_DIR && librarian-puppet install --clean
+else
+  cd $PUPPET_DIR && librarian-puppet update
 fi
-
-function puppet_install {
-    clean=`echo "$1" | sed 's/\\//-/'`
-    if [ `puppet module list | grep "$clean" | wc -l` -eq 0 ]; then
-        puppet module install $1
-    fi
-}
-
-puppet_install 'puppetlabs/postgresql'
-puppet_install 'puppetlabs/apache'
-puppet_install 'attachmentgenie/locales'
