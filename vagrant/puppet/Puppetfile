@@ -1,6 +1,7 @@
 forge "https://forgeapi.puppetlabs.com"
 
-mod "puppetlabs/apache"
-mod "puppetlabs/postgresql"
 mod "attachmentgenie/locales"
 mod "nodes/php", :git => "git://github.com/dbellettini/puppet-php.git"
+mod "puppetlabs/apache"
+mod "puppetlabs/postgresql"
+mod "saz/timezone"

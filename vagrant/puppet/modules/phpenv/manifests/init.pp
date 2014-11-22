@@ -9,7 +9,7 @@ class phpenv
     class {'php::extension::mysql': }
     class {'php::extension::pgsql': }
 
-    package {'php5-apcu': }
+    package {'php-apc': }
     package{'php5-dev': } ->
     class {'php::pear': } ->
     php::cli::config {'CLI TimeZone':
