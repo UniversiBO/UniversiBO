@@ -1,6 +1,9 @@
 class universibo
 {
     exec {'composer install':
+        environment => [
+            "COMPOSER_HOME=/home/vagrant"
+        ],
         cwd => '/vagrant',
         command => 'composer install -o --dev',
         timeout => 1800,
