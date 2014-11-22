@@ -10,16 +10,15 @@ file { '/etc/motd':
 }
 
 class { 'phpenv': }
-class { 'l10n': }
+#class { 'l10n': }
 class { 'lapp::packages': }
 class { 'lapp::config': }
 class { 'universibo': }
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/sbin", "/usr/local/bin", "/opt/vagrant_ruby/bin" ] }
 
-Class['locales']->
+#Class['locales']->
 Class['phpenv']->
 Class['lapp::packages']->
 Class['lapp::config']->
 Class['universibo']
-

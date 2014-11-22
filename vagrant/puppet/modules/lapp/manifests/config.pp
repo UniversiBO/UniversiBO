@@ -1,7 +1,7 @@
-include postgresql::server
-
 class lapp::config
 {
+    include postgresql::server
+
     class {'apache':
         default_vhost => false,
         mpm_module => 'prefork'

@@ -1,5 +1,7 @@
 class phpenv
 {
+    include php
+
     class {'php::apache': }->package{'php5-json': }
     class {'php::cli': }
 
