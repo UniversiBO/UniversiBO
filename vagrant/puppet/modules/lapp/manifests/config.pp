@@ -9,7 +9,8 @@ class lapp::config
 
     apache::mod { 'rpaf': }
     apache::mod { 'rewrite': }
-    apache::mod { 'php5': }
+    class {'::apache::mod::php':
+    }
 
     postgresql::server::db { 'universibo':
         user     => 'universibo',
