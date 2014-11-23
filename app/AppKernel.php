@@ -7,33 +7,32 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-                new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-                new Symfony\Bundle\TwigBundle\TwigBundle(),
-                new Symfony\Bundle\MonologBundle\MonologBundle(),
-                new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-                new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-                new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-                new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-                new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-                new JMS\AopBundle\JMSAopBundle(),
-                new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-                new Universibo\Bundle\WebsiteBundle\UniversiboWebsiteBundle(),
-                new Universibo\Bundle\LegacyBundle\UniversiboLegacyBundle(),
-                new Universibo\Bundle\ForumBundle\UniversiboForumBundle(),
-                new Universibo\Bundle\SSOBundle\UniversiboSSOBundle(),
-                new Universibo\Bundle\CoreBundle\UniversiboCoreBundle(),
-                new Universibo\Bundle\ShibbolethBundle\UniversiboShibbolethBundle(),
-                new FOS\UserBundle\FOSUserBundle(),
-                new FOS\AdvancedEncoderBundle\FOSAdvancedEncoderBundle(),
-                new Ornicar\ApcBundle\OrnicarApcBundle(),
+        $bundles = array(
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+            new Universibo\Bundle\WebsiteBundle\UniversiboWebsiteBundle(),
+            new Universibo\Bundle\LegacyBundle\UniversiboLegacyBundle(),
+            new Universibo\Bundle\ForumBundle\UniversiboForumBundle(),
+            new Universibo\Bundle\SSOBundle\UniversiboSSOBundle(),
+            new Universibo\Bundle\CoreBundle\UniversiboCoreBundle(),
+            new Universibo\Bundle\ShibbolethBundle\UniversiboShibbolethBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new FOS\AdvancedEncoderBundle\FOSAdvancedEncoderBundle(),
+            new Ornicar\ApcBundle\OrnicarApcBundle(),
             new Universibo\Bundle\ImportBundle\UniversiboImportBundle(),
             new Universibo\Bundle\DidacticsBundle\UniversiboDidacticsBundle(),
-            new Universibo\Bundle\CampusBundle\UniversiboCampusBundle(),
             new Universibo\Bundle\DashboardBundle\UniversiboDashboardBundle(),
-                );
-       
+        );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
@@ -46,8 +45,9 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader
-                ->load(
-                        __DIR__ . '/config/config_' . $this->getEnvironment()
-                                . '.yml');
+            ->load(
+                __DIR__ . '/config/config_' . $this->getEnvironment() . '.yml'
+            )
+        ;
     }
 }
