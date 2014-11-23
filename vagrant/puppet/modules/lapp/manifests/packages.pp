@@ -9,11 +9,6 @@ class lapp::packages
         ensure => 'latest'
     }
 
-    $proxypkg = ['varnish']
-    package { $proxypkg :
-        ensure => 'latest'
-    }
-
     package { 'curl' :
         ensure => 'latest'
     }
