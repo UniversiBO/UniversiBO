@@ -30,6 +30,4 @@ parameters:
     academical_year: 2012
     apc_host: 'http://www.universibo.dev/'
     analytics_id: ''
-
-    web_toolbar:
-        intercept_redirects: true
+    intercept_redirects: true

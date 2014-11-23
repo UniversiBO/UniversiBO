@@ -24,6 +24,7 @@
         "friendsofsymfony/advanced-encoder-bundle": "~1.0",
         "jms/security-extra-bundle": "1.5.*",
         "twig/extensions": "1.0.*",
+        "incenteev/composer-parameter-handler": "~2.0",
         "universibo/shibboleth-bundle": "0.1.*",
         "jwage/easy-csv": "@dev",
         "zendframework/zend-feed": "~2.0",
@@ -61,12 +62,14 @@
     },
     "scripts": {
         "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -76,7 +79,10 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "copy"
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        }
     },
     "minimum-stability": "stable",
     "authors": [
