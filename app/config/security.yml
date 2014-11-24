@@ -4,7 +4,7 @@ fos_advanced_encoder:
       id: universibo_website.encoder.md5
     sha1:
       id: universibo_website.encoder.sha1
-      
+
 security:
     encoders:
         Universibo\Bundle\CoreBundle\Entity\User: sha512
@@ -17,7 +17,7 @@ security:
           - ROLE_STAFF
         ROLE_PROFESSOR: [ROLE_TUTOR]
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-        
+
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
