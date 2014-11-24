@@ -41,8 +41,8 @@ class Error
      *
      * @param int   $error_category defines the error category, see the predefined constants
      * @param mixed $param          error parameters, can be an arbitral value.
-     *             example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
-     *             error handlers functions must be able to handle $param type.
+     *                              example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                              error handlers functions must be able to handle $param type.
      */
     public function __construct($error_category, $param = array())
     {
@@ -102,9 +102,9 @@ class Error
      *
      * @param int   $error_category   see the predefined error category constants
      * @param mixed $handler_function can be a string
-     *               example: 'my_function_name'
-     *				or an array to use class methods
-     *               example: array('MyClassName','myMethodName')
+     *                                example: 'my_function_name'
+     *                                or an array to use class methods
+     *                                example: array('MyClassName','myMethodName')
      */
     public static function setHandler($error_category, $handler_function)
     {
@@ -133,10 +133,10 @@ class Error
      * without parameters on a given error object istance
      *
      * @static optional
-     * @param int   $error_category defines the error category, see the predefined constants
-     * @param mixed $param          error parameters, can be an arbitral value.
-     *             example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
-     *             error handlers functions must be able to handle $param type.
+     * @param  int   $error_category defines the error category, see the predefined constants
+     * @param  mixed $param          error parameters, can be an arbitral value.
+     *                               example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                               error handlers functions must be able to handle $param type.
      * @return mixed the given handler callback function value
      */
     public static function throwError($error_category=NULL, $param=NULL)
@@ -160,8 +160,8 @@ class Error
      * @static optional
      * @param int   $error_category defines the error category, see the predefined constants
      * @param mixed $param          error parameters, can be an arbitral value.
-     *             example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
-     *             error handlers functions must be able to handle $param type.
+     *                              example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                              error handlers functions must be able to handle $param type.
      */
     public function collect($error_category=NULL, $param=NULL)
     {
