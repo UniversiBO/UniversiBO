@@ -8,7 +8,6 @@
 namespace Universibo\Bundle\LegacyBundle\PearDB;
 
 use Doctrine\DBAL\Connection;
-use Universibo\Bundle\LegacyBundle\PearDB\ResultWrapper;
 
 /**
  * Pear::DB connection wrapper

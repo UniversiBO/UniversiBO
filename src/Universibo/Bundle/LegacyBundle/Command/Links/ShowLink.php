@@ -25,8 +25,8 @@ class ShowLink extends PluginCommand
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  - 'num' il numero di link da visualizzare
-     *	  es: array('num'=>5)
+     *                     - 'num' il numero di link da visualizzare
+     *                     es: array('num'=>5)
      */
     public function execute($param = array())
     {

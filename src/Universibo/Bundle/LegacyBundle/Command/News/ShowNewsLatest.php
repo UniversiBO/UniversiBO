@@ -24,8 +24,8 @@ class ShowNewsLatest extends PluginCommand
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  - 'num' il numero di notizie da visualizzare
-     *	  es: array('num'=>5)
+     *                     - 'num' il numero di notizie da visualizzare
+     *                     es: array('num'=>5)
      */
     public function execute($param=array())
     {

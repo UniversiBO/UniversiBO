@@ -5,15 +5,15 @@ universibo_dashboard:
 UniversiboCoreBundle:
     resource: "@UniversiboCoreBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 UniversiboForumBundle:
     resource: "@UniversiboForumBundle/Resources/config/routing.yml"
-    prefix:   /   
+    prefix:   /
 
 UniversiboWebsiteBundle:
     resource: "@UniversiboWebsiteBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 UniversiboLegacyBundle:
     resource: "@UniversiboLegacyBundle/Resources/config/routing.yml"
     prefix:   /
@@ -27,7 +27,7 @@ fos_user_security:
 
 login:
     pattern: /login
-    
+
 logout:
     pattern: /logout
 

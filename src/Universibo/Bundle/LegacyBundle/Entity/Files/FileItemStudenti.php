@@ -79,7 +79,7 @@ class FileItemStudenti extends FileItem
      * id_file se e` un file di tipo studente
      *
      * @param $id_file  id del file da verificare
-     * @return $flag	true o false
+     * @return $flag true o false
      */
 
     public static function isFileStudenti($id_file)

@@ -25,8 +25,8 @@ class ShowTopic extends PluginCommand
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  - 'reference' il riferimento degli argomenti da visualizzare
-     *	  es: array('reference'=>'pippo')
+     *                     - 'reference' il riferimento degli argomenti da visualizzare
+     *                     es: array('reference'=>'pippo')
      */
     public function execute($param = array())
     {

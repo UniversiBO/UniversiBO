@@ -25,8 +25,8 @@ class ShowMyNews extends PluginCommand
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  un array di id notizie da visualizzare
-     *	  es: array('id_notizia'=>5)
+     *                     un array di id notizie da visualizzare
+     *                     es: array('id_notizia'=>5)
      */
     public function execute($param = array())
     {

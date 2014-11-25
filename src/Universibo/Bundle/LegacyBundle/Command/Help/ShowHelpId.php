@@ -24,10 +24,10 @@ class ShowHelpId extends PluginCommand
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  - 'id_help' l'id dell'argomento o argomenti da visualizzare
-     *	  es: array("5","6")
-     *	se viene passato 0  come parametro mostra tutti gli argomenti
-     *  NB 0 non pu? essere l'id di una notizia
+     *                     - 'id_help' l'id dell'argomento o argomenti da visualizzare
+     *                     es: array("5","6")
+     *                     se viene passato 0  come parametro mostra tutti gli argomenti
+     *                     NB 0 non pu? essere l'id di una notizia
      */
     public function execute($param = array())
     {

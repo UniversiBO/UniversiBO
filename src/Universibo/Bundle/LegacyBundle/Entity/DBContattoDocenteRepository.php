@@ -3,7 +3,6 @@ namespace Universibo\Bundle\LegacyBundle\Entity;
 
 use Universibo\Bundle\LegacyBundle\PearDB\DB;
 use Universibo\Bundle\LegacyBundle\Framework\Error;
-use Universibo\Bundle\LegacyBundle\Entity\ContattoDocente;
 
 /**
  * Canale repository

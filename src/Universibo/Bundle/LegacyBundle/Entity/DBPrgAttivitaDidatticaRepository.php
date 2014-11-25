@@ -3,7 +3,6 @@
 namespace Universibo\Bundle\LegacyBundle\Entity;
 
 use Doctrine\DBAL\DBALException;
-use Universibo\Bundle\LegacyBundle\Entity\PrgAttivitaDidattica;
 use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Universibo\Bundle\LegacyBundle\PearDB\DB;
 

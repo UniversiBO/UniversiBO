@@ -5,7 +5,7 @@ class universibo
             "COMPOSER_HOME=/home/vagrant"
         ],
         cwd => '/vagrant',
-        command => 'composer install -o --dev',
+        command => 'composer install -o --dev --no-interaction',
         timeout => 1800,
         logoutput => true
     }

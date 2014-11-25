@@ -28,8 +28,8 @@ class ShowLinksExtended extends ShowLinksCommon
      * Esegue il plugin
      *
      * @param array $param deve contenere:
-     *  - 'id_canale' l'id del canale
-     *	  es: array('num'=>5)
+     *                     - 'id_canale' l'id del canale
+     *                     es: array('num'=>5)
      */
     public function execute($param = array())
     {
