@@ -146,7 +146,7 @@ class ContattoDocente
         $this->stato = $s;
 
         if ($username != null) {
-            $text = $username.': modifica dello stato assegnato in '."\n".$this->stato.': '.$this->legend[$s];
+            $text = $username.': modifica dello stato assegnato in '."\n".$this->stato.': '.self::$legend[$s];
             $this->appendReport($text);
         }
     }
