@@ -7,14 +7,15 @@ UniversiBO is a Web Community joined by Students, Professors and Staff in Alma M
 * We're working on version 3 which is a porting to Symfony 2.3 framework (http://symfony.com/), we still have a lot of legacy code :(
 
 ## Running UniversiBO
-You can get a working copy of UniversiBO in 6 easy steps:
+You can get a working copy of UniversiBO in 7 easy steps:
 
 1. Install virtualbox https://www.virtualbox.org/
 2. Install Vagrant http://vagrantup.com/
 3. Run ```vagrant plugin install vagrant-vbguest```
 4. Fork this repository and clone it
 5. Run ```cd vagrant && vagrant up``` and wait for Vagrant doing all the magic
-6. Open your browser at http://localhost:8888/app_dev.php 
+6. Open your browser at http://localhost:8888/app_dev.php
+7. username is `admin` or `student` or `professor` or `tutor` or `staff`, `password` is always `padrino`
 
 ## Contributing
 Feel free to [fork this repository](https://help.github.com/articles/fork-a-repo) and send us pull request, 
@@ -46,7 +47,7 @@ UniversiBO uses Travis and Scrutinizer
 [![Code Coverage](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/badges/coverage.png?s=6ce13ce595f42cfb5a92f70b070e9c19689e03f3)](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/)
 
 ## License
-Copyright (C) \<2002-2013\>  Associazione UniversiBO
+Copyright (C) \<2002-2014\>  Associazione UniversiBO
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
