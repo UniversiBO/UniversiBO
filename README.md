@@ -33,7 +33,7 @@ You can automate that task just copying hooks/pre-commit file to your .git/hooks
 This project is currently licensed under GPLv2, since we're considering a license switch, by contributing you accept that code might be licensed under GPLv3 or Affero GPL later.
 
 ## Past contributors
-Unfortunately we couldn't migrate the whole history from our [Subversion Repository](https://sourceforge.net/p/universibo/svn/)
+We did our best to preserve the whole history from our [Subversion Repository](https://sourceforge.net/p/universibo/svn/) but something has been lost.
 A special thank to [iliasbartolini](https://github.com/iliasbartolini) who founded and led the project in its first years of development (560 commits) together with
 Andrea and Matteo who worked hard on management side and to the other (around) 200 people involved in this project over the years.
 
