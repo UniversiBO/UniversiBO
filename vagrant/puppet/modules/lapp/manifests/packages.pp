@@ -13,6 +13,10 @@ class lapp::packages
         ensure => 'latest'
     }
 
+    package { 'xvfb' :
+        ensure => 'present'
+    }
+
     $javapkg = [ "openjdk-7-jre-headless" ]
     package { $javapkg: ensure => "latest" }
 }
