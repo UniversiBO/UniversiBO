@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be4506e63d7bd2c2cb81c911e1002f61",
+    "hash": "a5bba6ea14f7157a34152d247205aca5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2510,60 +2510,6 @@
             "time": "2014-10-17 12:53:44"
         },
         {
-            "name": "universibo/core-bundle",
-            "version": "dev-master",
-            "target-dir": "Universibo/Bundle/CoreBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/UniversiBO/UniversiboCoreBundle.git",
-                "reference": "8ea30c59d3a0bac83f405af5eaf57f70022edfb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/UniversiBO/UniversiboCoreBundle/zipball/8ea30c59d3a0bac83f405af5eaf57f70022edfb7",
-                "reference": "8ea30c59d3a0bac83f405af5eaf57f70022edfb7",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "*",
-                "friendsofsymfony/advanced-encoder-bundle": "~1.0",
-                "friendsofsymfony/user-bundle": "~1.3",
-                "symfony/framework-bundle": "~2.1"
-            },
-            "require-dev": {
-                "symfony/yaml": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Universibo\\Bundle\\CoreBundle": ""
-                }
-            },
-            "license": [
-                "GPL"
-            ],
-            "authors": [
-                {
-                    "name": "Davide Bellettini",
-                    "email": "davide.bellettini@gmail.com"
-                },
-                {
-                    "name": "UniversiboCoreBundle Contributors",
-                    "homepage": "https://github.com/UniversiBO/UniversiboCoreBundle/graphs/contributors"
-                }
-            ],
-            "description": "UniversiBO CoreBundle",
-            "homepage": "http://github.com/UniversiBO",
-            "keywords": [
-                "university"
-            ],
-            "support": {
-                "source": "https://github.com/UniversiBO/UniversiboCoreBundle/tree/master",
-                "issues": "https://github.com/UniversiBO/UniversiboCoreBundle/issues"
-            },
-            "time": "2013-11-11 11:57:27"
-        },
-        {
             "name": "universibo/forum-bundle",
             "version": "v0.1.2",
             "target-dir": "Universibo/Bundle/ForumBundle",
@@ -4157,7 +4103,6 @@
         "doctrine/doctrine-migrations-bundle": 20,
         "doctrine/migrations": 20,
         "jwage/easy-csv": 20,
-        "universibo/core-bundle": 20,
         "universibo/smarty": 20
     },
     "prefer-stable": false,
