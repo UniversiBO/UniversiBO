@@ -54,7 +54,7 @@ UniversiBO uses Travis and Scrutinizer
 [![Code Coverage](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/badges/coverage.png?s=6ce13ce595f42cfb5a92f70b070e9c19689e03f3)](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/)
 
 ## License
-Copyright (C) \<2002-2014\>  Associazione UniversiBO
+Copyright (C) \<2001-2014\>  Associazione UniversiBO
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
