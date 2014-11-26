@@ -6,5 +6,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class UniversiboWebsiteBundle extends Bundle
 {
-    const VERSION = '2.6.10';
+    const VERSION = '2.6.12';
 }
