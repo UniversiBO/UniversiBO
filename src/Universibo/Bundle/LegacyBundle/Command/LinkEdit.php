@@ -29,7 +29,7 @@ class LinkEdit extends CanaleCommand
     {
 
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $userId = $user instanceof User ? $user->getId() : 0;
 
         //diritti
@@ -44,9 +44,9 @@ class LinkEdit extends CanaleCommand
 
         if ($canale->getServizioLinks() == false) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => "Il servizio link e` disattivato",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         if (array_key_exists($id_canale, $user_ruoli)) {
@@ -63,22 +63,22 @@ class LinkEdit extends CanaleCommand
         //		//controllo coerenza parametri
         //		$canali_news	= 	$news->getIdCanali();
         //		if (!in_array($id_canale, $canali_news))
-        //			 Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+        //			 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
         //
         $canale_link = $link->getIdCanale();
         if ($id_canale != $canale_link)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $userId,
+                    ['id_utente' => $userId,
                             'msg' => 'I parametri passati non sono coerenti',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $autore)))
             throw new AccessDeniedHttpException('Not allowed to edit link');
 
         $this
                 ->executePlugin('ShowLink',
-                        array('id_link' => $id_link,
-                                'id_canale' => $id_canale));
+                        ['id_link' => $id_link,
+                                'id_canale' => $id_canale]);
 
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -98,9 +98,9 @@ class LinkEdit extends CanaleCommand
                     || !array_key_exists('f31_Label', $_POST)
                     || !array_key_exists('f31_Description', $_POST))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $f31_URI = $_POST['f31_URI'];
             $f31_Description = $_POST['f31_Description'];
@@ -110,50 +110,50 @@ class LinkEdit extends CanaleCommand
                 $f31_accept = false;
                 $f31_URI = 'http://';
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if ($f31_Label === '') {
                 $f31_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Non hai assegnato un\'etichetta al link',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if ($f31_Description === '') {
                 $f31_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Non hai dato una descrizione del link',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if (strlen($f31_Description) > 1000) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La descrizione del link deve essere inferiore ai 1000 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f31_accept = false;
             }
 
             if (strlen($f31_Label) > 127) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'etichetta del link deve essere inferiore ai 127 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f31_accept = false;
             }
 
@@ -172,7 +172,7 @@ class LinkEdit extends CanaleCommand
         $template->assign('f31_Label', $f31_Label);
         $template->assign('f31_Description', $f31_Description);
 
-        //		$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+        //		$this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
         return 'default';
 
     }

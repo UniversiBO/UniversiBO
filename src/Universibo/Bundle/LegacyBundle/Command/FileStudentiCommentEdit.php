@@ -33,7 +33,7 @@ class FileStudentiCommentEdit extends UniversiboCommand
 
         $router = $this->get('router');
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $request = $this->getRequest();
         $commentId = $request->attributes->get('id_commento');
@@ -62,16 +62,16 @@ class FileStudentiCommentEdit extends UniversiboCommand
         if ($id_canale !== null) {
             if (!preg_match('/^([0-9]{1,9})$/', $id_canale))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'id del canale richiesto non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $canale = Canale::retrieveCanale($id_canale);
             if ($canale->getServizioFilesStudenti() == false)
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => "Il servizio files studenti e` disattivato",
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             if (array_key_exists($id_canale, $user_ruoli)) {
                 $ruolo = $user_ruoli[$id_canale];
@@ -88,9 +88,9 @@ class FileStudentiCommentEdit extends UniversiboCommand
             //			var_dump($canali_file);
             //			die();
             //			if (!in_array($id_canale, $canali_file))
-            //				 Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__));
+            //				 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
 
-            $elenco_canali = array($id_canale);
+            $elenco_canali = [$id_canale];
 
             //controllo diritti sul canale
             if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $moderatore || $autore))
@@ -106,7 +106,7 @@ class FileStudentiCommentEdit extends UniversiboCommand
 
         $this
                 ->executePlugin('ShowFileStudentiCommento',
-                        array('id_commento' => $commentId));
+                        ['id_commento' => $commentId]);
 
         $f27_accept = false;
 
@@ -116,11 +116,11 @@ class FileStudentiCommentEdit extends UniversiboCommand
             //commento
             if (trim($_POST['f27_commento']) == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Inserisci un commento',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f27_accept = false;
             } else {
                 $f27_commento = $_POST['f27_commento'];
@@ -129,10 +129,10 @@ class FileStudentiCommentEdit extends UniversiboCommand
             //voto
             if (!preg_match('/^([0-5]{1})$/', $_POST['f27_voto'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Voto non valido', 'file' => __FILE__,
                                 'line' => __LINE__, 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f27_accept = false;
             } else
                 $f27_voto = $_POST['f27_voto'];
@@ -141,7 +141,7 @@ class FileStudentiCommentEdit extends UniversiboCommand
             if ($f27_accept == true) {
 
                 CommentoItem::updateCommentoItem($commentId, $f27_commento, $f27_voto);
-                $template->assign('common_canaleURI',$router->generate('universibo_legacy_file', array('id_file' => $id_file_studente, 'id_canale' => $id_canale)));
+                $template->assign('common_canaleURI',$router->generate('universibo_legacy_file', ['id_file' => $id_file_studente, 'id_canale' => $id_canale]));
 
                 return 'success';
             }

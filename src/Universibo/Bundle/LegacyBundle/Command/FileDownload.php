@@ -46,7 +46,7 @@ class FileDownload extends UniversiboCommand
             throw new NotFoundHttpException('File not found!');
         }
 
-        $template->assign('fileDownload_InfoURI', $router->generate('universibo_legacy_file', array('id_file' => $file->getIdFile())));
+        $template->assign('fileDownload_InfoURI', $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile()]));
 
         $groups = $user instanceof User ? $user->getLegacyGroups() : 1;
         if ($file->getPermessiDownload() & $groups) {
@@ -58,41 +58,41 @@ class FileDownload extends UniversiboCommand
 
             if (!file_exists($nomeFile))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $userId,
+                        ['id_utente' => $userId,
                                 'msg' => 'Impossibile trovare il file richiesto, contattare l\'amministratore del sito',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
             if (md5_file($nomeFile) != $file->getHashFile())
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $userId,
+                        ['id_utente' => $userId,
                                 'msg' => 'Il file richiesto risulta corrotto, contattare l\'amministratore del sito',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             if ($file->getPassword() != null) {
                 if (!array_key_exists('f11_submit', $_POST)) {
                     $this
                             ->executePlugin('ShowTopic',
-                                    array('reference' => 'filesutenti'));
+                                    ['reference' => 'filesutenti']);
 
                     return 'file_download_password';
                 }
 
                 if (!array_key_exists('f11_file_password', $_POST))
                     Error::throwError(_ERROR_DEFAULT,
-                            array('id_utente' => $userId,
+                            ['id_utente' => $userId,
                                     'msg' => 'Il form inviato non e` valido',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
                 if ($file->getPassword()
                         != FileItem::passwordHashFunction(
                                 $_POST['f11_file_password'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('msg' => 'La password inviata ? errata',
+                            ['msg' => 'La password inviata ? errata',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $this
                             ->executePlugin('ShowTopic',
-                                    array('reference' => 'filesutenti'));
+                                    ['reference' => 'filesutenti']);
 
                     return 'file_download_password';
                 }
@@ -111,16 +111,16 @@ class FileDownload extends UniversiboCommand
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $this
                     ->executePlugin('ShowTopic',
-                            array('reference' => 'filesutenti'));
+                            ['reference' => 'filesutenti']);
 
             return 'file_download_iscriviti';
         }
 
         Error::throwError(_ERROR_DEFAULT,
-                array('id_utente' => $userId,
+                ['id_utente' => $userId,
                         'msg' => 'Non e` permesso eseguire il download del file.
                 Non possiedi i diritti necessari.', 'file' => __FILE__,
-                        'line' => __LINE__, 'log' => true));
+                        'line' => __LINE__, 'log' => true]);
 
     }
 }

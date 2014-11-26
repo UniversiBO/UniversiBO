@@ -36,9 +36,9 @@ class ContattoDocenteAdd extends UniversiboCommand
         if(!$context->isGranted('ROLE_MODERATOR') &&
                 !$context->isGranted('ROLE_ADMIN')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $userId,
+                    ['id_utente' => $userId,
                             'msg' => 'Non hai i diritti necessari per visualizzare la pagina',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $request = $this->getRequest();

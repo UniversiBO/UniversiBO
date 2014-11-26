@@ -26,9 +26,9 @@ class ShowTopic extends PluginCommand
      *
      * @param array $param deve contenere:
      *                     - 'reference' il riferimento degli argomenti da visualizzare
-     *                     es: array('reference'=>'pippo')
+     *                     es: ['reference'=>'pippo']
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $reference  =  $param['reference'];
 
@@ -41,19 +41,19 @@ class ShowTopic extends PluginCommand
         $topic = $topicRepo->find($reference);
 
         if (is_null($topic)) {
-            Error::throwError(_ERROR_DEFAULT,array('msg'=>'E\'stato richiesto un argomento dell\'help non presente','file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_DEFAULT,['msg'=>'E\'stato richiesto un argomento dell\'help non presente','file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $itemRepo = $this->getContainer()->get('universibo_legacy.repository.help.item');
 
-        $argomenti = array();
+        $argomenti = [];
         foreach ($itemRepo->findByReference($reference) as $item) {
             $argomenti[] = $item->getId();
         }
 
         if (count($argomenti) > 0) {
             $lang_argomenti = $this->executePlugin('ShowHelpId', $argomenti);
-            $topic = array('titolo'=>$topic->getTitle() ,'reference'=>$reference, 'argomenti'=>$lang_argomenti);
+            $topic = ['titolo'=>$topic->getTitle() ,'reference'=>$reference, 'argomenti'=>$lang_argomenti];
         }
 
         $template->assign('showTopic_topic', $topic);

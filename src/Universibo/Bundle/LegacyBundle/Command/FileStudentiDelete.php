@@ -92,7 +92,7 @@ class FileStudentiDelete extends UniversiboCommand
         $template->assign('f25_canale', $f25_canale);
         $template->assign('fileDelete_flagCanali', (count($f25_canale)) ? 'true' : 'false');
 
-        $this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'filescollabs']);
 
         return 'default';
     }

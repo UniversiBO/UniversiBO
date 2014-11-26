@@ -30,10 +30,10 @@ class ShowSettings extends UniversiboCommand
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => 0,
+                    ['id_utente' => 0,
                             'msg' => "Non hai i diritti per accedere alla pagina\n la sessione potrebbe essere terminata",
                             'file' => __FILE__, 'line' => __LINE__,
-                            'log' => false, 'template_engine' => &$template));
+                            'log' => false, 'template_engine' => &$template]);
         }
 
         if ($utente->hasRole('ROLE_ADMIN')) {
@@ -42,12 +42,12 @@ class ShowSettings extends UniversiboCommand
             $template->assign('showSettings_showAdminPanel', 'false');
         }
 
-        $preferences = array (
+        $preferences = [
                 '[url='.$router->generate('universibo_legacy_personal_files').']I miei file[/url]',
                 '[url='.$router->generate('universibo_website_profile_edit').']Profilo[/url]',
-                '[url='.$router->generate('universibo_legacy_user', array('id_utente' => $utente->getId())).']Modifica MyUniversiBO[/url]',
+                '[url='.$router->generate('universibo_legacy_user', ['id_utente' => $utente->getId()]).']Modifica MyUniversiBO[/url]',
                 '[url=https://outlook.com/studio.unibo.it type=extern]Mail di ateneo[/url]',
-        );
+        ];
 
         if ($utente->hasRole('ROLE_MODERATOR') || $utente->hasRole('ROLE_ADMIN')) {
             $preferences[] = '[url='.$router->generate('universibo_legacy_contact_professors').']Docenti da contattare[/url]';
@@ -63,8 +63,8 @@ Tramite questa pagina potrai modificare il tuo profilo, le tue impostazioni pers
 
         $template
                 ->assign('showSettings_langAdmin',
-                        array(
-                                '[url=https://www.universibo.unibo.it/phppgadmin/]DB Postgresql locale[/url]'));
+                        [
+                                '[url=https://www.universibo.unibo.it/phppgadmin/]DB Postgresql locale[/url]']);
 
         return 'default';
     }

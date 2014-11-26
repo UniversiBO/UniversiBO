@@ -192,7 +192,7 @@ abstract class UniversiboCommand extends BaseCommand
 
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $attivaMyUniversibo = true;
-            $arrayCanali = array();
+            $arrayCanali = [];
             $arrayRuoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($session_user->getId());
             //var_dump($session_user);
             $keys = array_keys($arrayRuoli);
@@ -202,7 +202,7 @@ abstract class UniversiboCommand extends BaseCommand
                     //$attivaMyUniversibo = true;
 
                     $canale = $channelRepo->find($ruolo->getIdCanale());
-                    $myCanali = array();
+                    $myCanali = [];
                     $myCanali['uri'] = $channelRouter->generate($canale);
                     $myCanali['tipo'] = $canale->getTipoCanale();
                     $myCanali['label'] = ($ruolo->getNome() != '') ? $ruolo->getNome() : $canale->getNomeMyUniversiBO();
@@ -213,7 +213,7 @@ abstract class UniversiboCommand extends BaseCommand
                 }
             }
             //ordina $arrayCanali
-            usort($arrayCanali, array($this, '_compareMyUniversiBO'));
+            usort($arrayCanali, [$this, '_compareMyUniversiBO']);
         }
 
         //assegna al template
@@ -255,10 +255,10 @@ abstract class UniversiboCommand extends BaseCommand
         $num_facolta = count($elenco_facolta);
         $i = 0;
         $session_user_groups = $session_user instanceof User ? $session_user->getLegacyGroups() : 1;
-        $common_facLinks = array();
+        $common_facLinks = [];
         for ($i = 0; $i < $num_facolta; $i++) {
             if ($elenco_facolta[$i]->isGroupAllowed($session_user_groups)) {
-                $common_facLinks[$i] = array();
+                $common_facLinks[$i] = [];
                 $common_facLinks[$i]['uri'] = $channelRouter->generate($elenco_facolta[$i]);
                 $common_facLinks[$i]['label'] = $elenco_facolta[$i]->getNome();
             }
@@ -266,7 +266,7 @@ abstract class UniversiboCommand extends BaseCommand
         $template->assign('common_facLinks', $common_facLinks);
 
         $template->assign('common_services', 'Servizi');
-        $common_servicesLinks = array();
+        $common_servicesLinks = [];
 
         // servizi per i quali l'utente ha i diritti di accesso
         $list_canali = $channelRepo->findManyByType(Canale::CDEFAULT);
@@ -291,11 +291,11 @@ abstract class UniversiboCommand extends BaseCommand
             $contactUri = $router->generate('universibo_legacy_contact_professors');
             $statUri = $router->generate('universibo_legacy_stats');
 
-            $common_servicesLinks[] = array('uri' => $contactUri, 'tipo' => '', 'label' => 'Contatto dei docenti');
-            $common_servicesLinks[] = array('uri' => $statUri, 'tipo' => '', 'label' => 'Statistiche');
+            $common_servicesLinks[] = ['uri' => $contactUri, 'tipo' => '', 'label' => 'Contatto dei docenti'];
+            $common_servicesLinks[] = ['uri' => $statUri, 'tipo' => '', 'label' => 'Statistiche'];
         }
 
-        usort($common_servicesLinks, array($this, '_compareServices'));
+        usort($common_servicesLinks, [$this, '_compareServices']);
         $template->assign('common_servicesLinks', $common_servicesLinks);
 
 

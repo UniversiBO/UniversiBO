@@ -26,9 +26,9 @@ class ShowMyNews extends PluginCommand
      *
      * @param array $param deve contenere:
      *                     un array di id notizie da visualizzare
-     *                     es: array('id_notizia'=>5)
+     *                     es: ['id_notizia'=>5]
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $elenco_id_news		=  $param['id_notizie'];
         $bc        = $this->getBaseCommand();
@@ -55,7 +55,7 @@ class ShowMyNews extends PluginCommand
         //var_dump($elenco_id_news);
         $elenco_news = NewsItem::selectNewsItems($elenco_id_news);
 
-        $elenco_news_tpl = array();
+        $elenco_news_tpl = [];
 
         if ($elenco_news) {
 
@@ -69,7 +69,7 @@ class ShowMyNews extends PluginCommand
                 $elenco_news_tpl[$i]['data']         = $krono->k_date('%j/%m/%Y', $news->getDataIns());
                 //echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
                 $elenco_news_tpl[$i]['autore']       = $news->getUsername();
-                $elenco_news_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', array('id_utente' => $news->getIdUtente()));
+                $elenco_news_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $news->getIdUtente()]);
                 $elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();
 
                 $elenco_news_tpl[$i]['scadenza']     = '';
@@ -84,13 +84,13 @@ class ShowMyNews extends PluginCommand
                 for ($j = 0; $j < $num_canali; $j++) {
                     $canale = Canale::retrieveCanale($canali[$j]);
                     if ($canale->isGroupAllowed($user->getLegacyGroups())) {
-                        $canale_tpl = array();
+                        $canale_tpl = [];
                         $canale_tpl['titolo'] = $canale->getNome();
                         $canale_tpl['link'] = $channelRouter->generate($canale);
                         $elenco_news_tpl[$i]['canali'][] = $canale_tpl;
                     }
                 }
-                $elenco_news_tpl[$i]['permalink']     = $router->generate('universibo_legacy_permalink', array('id_notizia' => $news->getIdNotizia()));
+                $elenco_news_tpl[$i]['permalink']     = $router->generate('universibo_legacy_permalink', ['id_notizia' => $news->getIdNotizia()]);
                 $elenco_news_tpl[$i]['nuova']	   	 = ($news->getUltimaModifica() > $ultimo_accesso) ? 'true' : 'false';
                 $elenco_news_tpl[$i]['modifica']     = '';
                 $elenco_news_tpl[$i]['modifica_link']= '';

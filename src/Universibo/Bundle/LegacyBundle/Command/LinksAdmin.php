@@ -36,9 +36,9 @@ class LinksAdmin extends UniversiboCommand
 
         $referente = false;
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
-        $ruoli = array();
-        $arrayPublicUsers = array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
+        $ruoli = [];
+        $arrayPublicUsers = [];
 
         $canale = Canale::retrieveCanale($idCanale);
         $id_canale = $canale->getIdCanale();
@@ -55,9 +55,9 @@ class LinksAdmin extends UniversiboCommand
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN') && !$referente)
             throw new AccessDeniedHttpException('Not allowed to manage links');
 
-        $this->executePlugin('ShowLinksExtended', array('id_canale' => $idCanale));
-        $template->assign('add_link_uri', $router->generate('universibo_legacy_link_add', array('id_canale' => $idCanale)));
-        //		$this->executePlugin('ShowTopic', array('reference' => 'ruoliadmin'));
+        $this->executePlugin('ShowLinksExtended', ['id_canale' => $idCanale]);
+        $template->assign('add_link_uri', $router->generate('universibo_legacy_link_add', ['id_canale' => $idCanale]));
+        //		$this->executePlugin('ShowTopic', ['reference' => 'ruoliadmin']);
         return 'default';
     }
 }

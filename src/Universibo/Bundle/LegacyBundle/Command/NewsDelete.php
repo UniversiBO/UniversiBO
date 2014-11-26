@@ -37,14 +37,14 @@ class NewsDelete extends CanaleCommand
         $referente = false;
         $moderatore = false;
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $id_canale = $canale->getIdCanale();
 
         if ($canale->getServizioNews() == false)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $userId,
+                    ['id_utente' => $userId,
                             'msg' => "Il servizio news e` disattivato",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         /* diritti
          -admin
@@ -71,16 +71,16 @@ class NewsDelete extends CanaleCommand
         $canali_news = $news->getIdCanali();
         if (!in_array($id_canale, $canali_news)) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => 'I parametri passati non sono coerenti',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $autore = ($user->getId() == $news->getIdUtente());
         if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $autore)))
             throw new AccessDeniedHttpException('Not allowed to delete news');
 
-        //$elenco_canali = array ($id_canale);
+        //$elenco_canali = [$id_canale];
         $ruoli_keys = array_keys($user_ruoli);
         $num_ruoli = count($ruoli_keys);
         for ($i = 0; $i < $num_ruoli; $i++) {
@@ -98,16 +98,16 @@ class NewsDelete extends CanaleCommand
             $current_canale = Canale::retrieveCanale($id_current_canale);
             $nome_current_canale = $current_canale->getTitolo();
             if (in_array($id_current_canale, $news->getIdCanali())) {
-                $f9_canale[] = array('id_canale' => $id_current_canale,
+                $f9_canale[] = ['id_canale' => $id_current_canale,
                         'nome_canale' => $nome_current_canale,
-                        'spunta' => 'true');
+                        'spunta' => 'true'];
             }
         }
 
         $f9_accept = false;
 
         //postback
-        $f9_canale_app = array();
+        $f9_canale_app = [];
         if (array_key_exists('f9_submit', $_POST)) {
             $f9_accept = true;
 
@@ -123,12 +123,12 @@ class NewsDelete extends CanaleCommand
                         //$user_ruoli[$key]->getIdCanale();
                         $canale = &Canale::retrieveCanale($key);
                         Error::throwError(_ERROR_NOTICE,
-                                array('id_utente' => $user->getId(),
+                                ['id_utente' => $user->getId(),
                                         'msg' => 'Non possiedi i diritti di eliminazione nel canale: '
                                                 . $canale->getTitolo(),
                                         'file' => __FILE__, 'line' => __LINE__,
                                         'log' => false,
-                                        'template_engine' => &$template));
+                                        'template_engine' => &$template]);
                         $f9_accept = false;
                     } else
                         $f9_canale_app[$key] = $value;
@@ -136,11 +136,11 @@ class NewsDelete extends CanaleCommand
             } elseif (count($f9_canale) > 0) {
                 $f9_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Devi selezionare almeno una pagina:',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
         }
@@ -167,8 +167,8 @@ class NewsDelete extends CanaleCommand
         }
 
         //visualizza notizia
-        $param = array('id_notizie' => array($idNews),
-                'chk_diritti' => false);
+        $param = ['id_notizie' => [$idNews],
+                'chk_diritti' => false];
         $this->executePlugin('ShowNews', $param);
 
         $template
@@ -176,7 +176,7 @@ class NewsDelete extends CanaleCommand
                         "Elimina la notizia dalle seguenti pagine:");
         $template->assign('f9_canale', $f9_canale);
 
-        $this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
 
         return 'default';
     }

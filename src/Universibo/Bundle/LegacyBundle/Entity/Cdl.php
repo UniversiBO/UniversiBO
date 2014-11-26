@@ -161,9 +161,9 @@ class Cdl extends Canale
     public function translateCategoriaCdl($categoria)
     {
         $translationTable =
-        array(	'LT' => CDL_NUOVO_ORDINAMENTO,
+        [	'LT' => CDL_NUOVO_ORDINAMENTO,
                 'LS' => CDL_SPECIALISTICA,
-                'L'  => CDL_VECCHIO_ORDINAMENTO);
+                'L'  => CDL_VECCHIO_ORDINAMENTO];
 
         if (array_key_exists($categoria, $translationTable))
             $result = $translationTable[$categoria];
@@ -283,7 +283,7 @@ class Cdl extends Canale
      *
      * @deprecated
      * @param  string     $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
-     * @return array(Cdl)
+     * @return [Cdl]
      */
     public static function selectCdlElencoFacolta($codiceFacolta)
     {
@@ -340,7 +340,7 @@ class Cdl extends Canale
     public function insertCdl()
     {
         if ($this->insertCanale() != true) {
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore inserimento Canale','file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Errore inserimento Canale','file'=>__FILE__,'line'=>__LINE__]);
 
             return false;
         }

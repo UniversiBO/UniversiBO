@@ -25,7 +25,7 @@ class NewsShowCanale extends CanaleCommand
         $context = $this->get('security.context');
         $user = $context->getToken()->getUser();
         $canale = $this->getRequestCanale();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $id_canale = $canale->getIdCanale();
         $router = $this->get('router');
 
@@ -48,7 +48,7 @@ class NewsShowCanale extends CanaleCommand
             if ($context->isGranted('ROLE_ADMIN') || $referente || $moderatore ) {
                 $template->assign('NewsShowCanale_addNewsFlag', 'true');
                 $template->assign('NewsShowCanale_addNews', 'Scrivi nuova notizia');
-                $template->assign('NewsShowCanale_addNewsUri', $router->generate('universibo_legacy_news_add', array('id_canale' => $id_canale)));
+                $template->assign('NewsShowCanale_addNewsUri', $router->generate('universibo_legacy_news_add', ['id_canale' => $id_canale]));
             }
         }
 
@@ -58,10 +58,10 @@ class NewsShowCanale extends CanaleCommand
         if ($num_news_canale > $quantita) {
             $pages_flag = 'true';
             $num_pagine = ceil($num_news_canale / $quantita);
-            $n_pag_list =  array();
+            $n_pag_list =  [];
             $start = 0;
             for ($i = 1; $i <= $num_pagine; $i++) {
-                $n_pag_list[$i] = array('URI' => $router->generate('universibo_legacy_news_show_canale', array('id_canale' => $id_canale, 'inizio' => $start, 'qta' => $quantita)), 'current' => ($inizio != $start));
+                $n_pag_list[$i] = ['URI' => $router->generate('universibo_legacy_news_show_canale', ['id_canale' => $id_canale, 'inizio' => $start, 'qta' => $quantita]), 'current' => ($inizio != $start)];
                 $start 	= $start + $quantita;
             }
             $template->assign('NewsShowCanale_numPagine', $n_pag_list);
@@ -69,10 +69,10 @@ class NewsShowCanale extends CanaleCommand
         }
 
         $lista_notizie = $this->getLatestNewsCanale($inizio,$quantita,$id_canale);
-        $param = array('id_notizie'=> $lista_notizie, 'chk_diritti' => true);
+        $param = ['id_notizie'=> $lista_notizie, 'chk_diritti' => true];
         $this->executePlugin('ShowNews', $param );
 
-        $this->executePlugin('ShowTopic', array('reference' => 'newsutenti'));
+        $this->executePlugin('ShowTopic', ['reference' => 'newsutenti']);
 
         return 'default';
     }

@@ -216,7 +216,7 @@ class Facolta extends Canale
      * in ordine alfabetico di tutte le facolt?
      *
      * @param  string         $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
-     * @return array(Facolta)
+     * @return Facolta[]
      */
     public static function selectFacoltaElenco()
     {
@@ -254,9 +254,9 @@ class Facolta extends Canale
         global $__facoltaElencoAlfabetico;
         global $__facoltaElencoCanale;
 
-        $__facoltaElencoAlfabetico = array();
-        $__facoltaElencoCanale = array();
-        $__facoltaElencoCodice = array();
+        $__facoltaElencoAlfabetico = [];
+        $__facoltaElencoCanale = [];
+        $__facoltaElencoCodice = [];
 
         foreach (self::getRepository()->findAll() as $facolta) {
             $__facoltaElencoAlfabetico[] = $facolta;

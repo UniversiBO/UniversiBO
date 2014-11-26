@@ -24,8 +24,8 @@ class ShowHelpTopic extends UniversiboCommand
         $template = $frontcontroller->getTemplateEngine();
         $template->assign('showHelpTopic_langAltTitle', 'Help');
 
-        $references = array();
-        $topics = array();
+        $references = [];
+        $topics = [];
 
         $ref = $this->getRequest()->get('ref', '');
         if (!preg_match('/^[[:alnum:]]{1,32}$/', $ref)) {
@@ -33,12 +33,12 @@ class ShowHelpTopic extends UniversiboCommand
 
             foreach ($topicRepo->findAll() as $topic) {
                 $references[] = $topic->getReference();
-                $topics[] = $this->executePlugin('ShowTopic', array('reference' => $topic->getReference()));
+                $topics[] = $this->executePlugin('ShowTopic', ['reference' => $topic->getReference()]);
             }
 
             $template->assign('showHelpTopic_index', 'true');
         } else {
-            $topics[] = $this->executePlugin('ShowTopic', array('reference' => $ref));
+            $topics[] = $this->executePlugin('ShowTopic', ['reference' => $ref]);
 
             $template->assign('showHelpTopic_index', 'false');
         }

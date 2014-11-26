@@ -26,9 +26,9 @@ class ShowNews extends PluginCommand
      *
      * @param array $param deve contenere:
      *                     un array di id notizie da visualizzare
-     *                     es: array('id_notizia'=>5)
+     *                     es: ['id_notizia'=>5]
      */
-    public function execute($param=array())
+    public function execute($param=[])
     {
         $elenco_id_news		=  $param['id_notizie'];
         $flag_chkDiritti	=  $param['chk_diritti'];
@@ -42,7 +42,7 @@ class ShowNews extends PluginCommand
         $fc        = $bc->getFrontController();
         $template  = $fc->getTemplateEngine();
         $krono     = $fc->getKrono();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $id_canale = $canale->getIdCanale();
         if ($flag_chkDiritti) {
@@ -53,7 +53,7 @@ class ShowNews extends PluginCommand
 
         $personalizza_not_admin = false;
 
-        $template->assign('showNews_rss', $router->generate('rss', array('idCanale' => $id_canale)));
+        $template->assign('showNews_rss', $router->generate('rss', ['idCanale' => $id_canale]));
         $template->assign('showNews_addNewsFlag', 'false');
         if ($flag_chkDiritti && (array_key_exists($id_canale, $user_ruoli) || $this->get('security.context')->isGranted('ROLE_ADMIN'))) {
             $personalizza = true;
@@ -85,7 +85,7 @@ class ShowNews extends PluginCommand
 
         $elenco_news = NewsItem::selectNewsItems($elenco_id_news);
 
-        $elenco_news_tpl = array();
+        $elenco_news_tpl = [];
 
         if ($elenco_news ==! false) {
 
@@ -102,7 +102,7 @@ class ShowNews extends PluginCommand
                 //echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
                 $elenco_news_tpl[$i]['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false';
                 $elenco_news_tpl[$i]['autore']       = $news->getUsername();
-                $elenco_news_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', array('id_utente' => $news->getIdUtente()));
+                $elenco_news_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $news->getIdUtente()]);
                 $elenco_news_tpl[$i]['id_autore']    = $news->getIdUtente();
                 $elenco_news_tpl[$i]['id_notizia']   = $news->getIdNotizia();
 
@@ -111,16 +111,16 @@ class ShowNews extends PluginCommand
                     $elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
                 }
 
-                $elenco_news_tpl[$i]['permalink']     = $router->generate('universibo_legacy_permalink', array('id_notizia' => $news->getIdNotizia()));
+                $elenco_news_tpl[$i]['permalink']     = $router->generate('universibo_legacy_permalink', ['id_notizia' => $news->getIdNotizia()]);
                 $elenco_news_tpl[$i]['modifica']     = '';
                 $elenco_news_tpl[$i]['modifica_link']= '';
                 $elenco_news_tpl[$i]['elimina']      = '';
                 $elenco_news_tpl[$i]['elimina_link'] = '';
                 if ( ($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $this_moderatore)  && $flag_chkDiritti) {
                     $elenco_news_tpl[$i]['modifica']     = 'Modifica';
-                    $elenco_news_tpl[$i]['modifica_link']= $router->generate('universibo_legacy_news_edit', array('id_news' => $news->getIdNotizia(), 'id_canale' => $id_canale));
+                    $elenco_news_tpl[$i]['modifica_link']= $router->generate('universibo_legacy_news_edit', ['id_news' => $news->getIdNotizia(), 'id_canale' => $id_canale]);
                     $elenco_news_tpl[$i]['elimina']      = 'Elimina';
-                    $elenco_news_tpl[$i]['elimina_link'] = $router->generate('universibo_legacy_news_delete', array('id_news' => $news->getIdNotizia(), 'id_canale' => $id_canale));
+                    $elenco_news_tpl[$i]['elimina_link'] = $router->generate('universibo_legacy_news_delete', ['id_news' => $news->getIdNotizia(), 'id_canale' => $id_canale]);
                 }
 
             }

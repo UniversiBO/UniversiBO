@@ -76,7 +76,7 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
         //			$current_canale = Canale::retrieveCanale($id_current_canale);
         //			$nome_current_canale = $current_canale->getTitolo();
         //			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-        //			$f7_canale[] = array ('id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta);
+        //			$f7_canale[] = ['id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta];
         //		}
 
         $f36_accept = false;
@@ -88,28 +88,28 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
                     || !array_key_exists('f36_intro', $_POST)
                     || !array_key_exists('f36_obiettivi', $_POST)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f36_accept = false;
             }
 
             //ruolo
             if (strlen($_POST['f36_ruolo']) > 150) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il ruolo deve essere inferiore ai 150 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f36_accept = false;
             } elseif ($_POST['f36_ruolo'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il ruolo deve essere inserito obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f36_accept = false;
             } else
                 $f36_ruolo = $_POST['f36_ruolo'];
@@ -117,11 +117,11 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
             //intro
             if ($_POST['f36_intro'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'intro del profilo deve essere inserito obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f36_accept = false;
             } else
                 $f36_intro = $_POST['f36_intro'];
@@ -129,11 +129,11 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
             //obiettivi
             if ($_POST['f36_obiettivi'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Gli obiettivi del profilo devono essere inseriti obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f36_accept = false;
             } else
                 $f36_obiettivi = $_POST['f36_obiettivi'];
@@ -189,14 +189,14 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
         //$template->assign('f36_canale', $f36_canale);
 
         //$topics[] =
-        //$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+        //$this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
         return 'default';
     }
 
     private function redirectProfile(User $user)
     {
        $url = $this->generateUrl('universibo_legacy_collaborator',
-                        array('username' => $user->getUsername()));
+                        ['username' => $user->getUsername()]);
 
        return $this->redirect($url);
     }

@@ -32,7 +32,7 @@ class ScriptUpdateFileHash extends UniversiboCommand
             $nome_file = $filePath.$row[0].'_'.$row[1];
 
             $hash = file_exists($nome_file) ? md5_file($nome_file) : '';
-            $db->executeUpdate($query, array($hash, $row[0]));
+            $db->executeUpdate($query, [$hash, $row[0]]);
 
             echo $row[0], '_', $row[1], ': ', strlen($hash) > 0 ? $hash : 'not found', PHP_EOL;
         }

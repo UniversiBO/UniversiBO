@@ -42,10 +42,10 @@ class ShowFacolta extends CanaleCommand
             $template->assign('fac_langYear', 'Tutti gli anni accademici');
             $template->assign('fac_yearBox', null);
         } else {
-            $template->assign('fac_yearAll', $router->generate('universibo_legacy_facolta', array(
+            $template->assign('fac_yearAll', $router->generate('universibo_legacy_facolta', [
                 'id_canale' => $facolta->getIdCanale(),
                 'anno_accademico' => 'all'
-            )));
+            ]));
 
             $prgRepo = $this->get('universibo_legacy.repository.programma');
 
@@ -63,13 +63,13 @@ class ShowFacolta extends CanaleCommand
                 throw new NotFoundHttpException('Academic Year Not found');
             }
 
-            $response = $this->forward('UniversiboWebsiteBundle:Didactics:academicYear', array(
+            $response = $this->forward('UniversiboWebsiteBundle:Didactics:academicYear', [
                 'min' => $minYear,
                 'max' => $maxYear,
                 'current' => $currentYear,
                 'route' => 'universibo_legacy_facolta',
-                'params' => array('id_canale' => $facolta->getIdCanale())
-            ));
+                'params' => ['id_canale' => $facolta->getIdCanale()]
+            ]);
 
             $template->assign('fac_langYear', 'Anno Accademico');
             $template->assign('fac_yearBox', $response->getContent());
@@ -80,7 +80,7 @@ class ShowFacolta extends CanaleCommand
 
         $num_cdl = count($elencoCdl);
         $cdlType = NULL;
-        $fac_listCdlType = array();
+        $fac_listCdlType = [];
         $session_user = $this->get('security.context')->getToken()->getUser();
         $session_user_groups = $session_user instanceof User ? $session_user->getLegacyGroups() : 1;
 
@@ -113,10 +113,10 @@ class ShowFacolta extends CanaleCommand
                         break;
                     }
                     if (!array_key_exists($cdlType, $fac_listCdlType))
-                        $fac_listCdlType[$cdlType] = array('cod' => $cdlType,
-                                'name' => $name, 'list' => array());
+                        $fac_listCdlType[$cdlType] = ['cod' => $cdlType,
+                                'name' => $name, 'list' => []];
                 }
-                $fac_listCdlType[$cdlType]['list'][] = array(
+                $fac_listCdlType[$cdlType]['list'][] = [
                         'cod' => $elencoCdl[$i]->getCodiceCdl(),
                         'name' => $elencoCdl[$i]->getNome(),
                         'forumUri' => ($elencoCdl[$i]->getServizioForum()
@@ -125,13 +125,13 @@ class ShowFacolta extends CanaleCommand
                                                 $elencoCdl[$i]
                                                         ->getForumForumId())
                                 : '',
-                        'link' => $router->generate('universibo_legacy_cdl', array('anno_accademico' => $currentYear, 'id_canale' => $elencoCdl[$i]->getIdCanale())));
+                        'link' => $router->generate('universibo_legacy_cdl', ['anno_accademico' => $currentYear, 'id_canale' => $elencoCdl[$i]->getIdCanale()])];
             }
         }
 
         // ordinamento delle categorie
-        $sortedFacList = array();
-        foreach (array(4, 1, 2, 5, 7, 6, 3) as $n)
+        $sortedFacList = [];
+        foreach ([4, 1, 2, 5, 7, 6, 3] as $n)
             if (isset($fac_listCdlType[$n]))
                 $sortedFacList[] = $fac_listCdlType[$n];
 
@@ -146,9 +146,9 @@ class ShowFacolta extends CanaleCommand
                 ->assign('fac_langList',
                         'Elenco corsi di laurea attivati su UniversiBO');
 
-        $param = array('num' => 4);
+        $param = ['num' => 4];
         $this->executePlugin('ShowNewsLatest', $param);
-        $this->executePlugin('ShowLinks', array('num' => 12));
+        $this->executePlugin('ShowLinks', ['num' => 12]);
 
         return 'default';
     }

@@ -11,7 +11,7 @@ class UniversiBOAcl
 {
     const BASE = 'UniversiBO\\Bundle\\LegacyBundle\\Entity\\';
 
-    private $handlers = array();
+    private $handlers = [];
 
     /**
      * @var DBRuoloRepository
@@ -22,10 +22,10 @@ class UniversiBOAcl
     {
         $this->ruoloRepository = $ruoloRepository;
 
-        $this->handlers[self::BASE . 'Canale']['read'] = array($this,
-                'canaleReadHandler');
-        $this->handlers[self::BASE . 'Files\\FileItem']['read'] = array($this,
-                'fileReadHandler');
+        $this->handlers[self::BASE . 'Canale']['read'] = [$this,
+                'canaleReadHandler'];
+        $this->handlers[self::BASE . 'Files\\FileItem']['read'] = [$this,
+                'fileReadHandler'];
 
         $this->handlers[self::BASE . 'Canale']['links.edit'] = function (User $user = null, Canale $channel) {
             if ($user === null) {

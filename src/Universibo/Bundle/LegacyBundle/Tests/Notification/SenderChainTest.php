@@ -34,7 +34,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
         $sender->expects($this->exactly(2))
           ->method('supports')
-          ->will($this->onConsecutiveCalls(array(true,false)));
+          ->will($this->onConsecutiveCalls([true,false]));
 
         $this->assertTrue($this->chain->supports($notification1), 'Sender should support mail');
         $this->assertFalse($this->chain->supports($notification2), 'Sender should not support sms');

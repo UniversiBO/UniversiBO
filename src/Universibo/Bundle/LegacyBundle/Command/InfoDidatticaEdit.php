@@ -29,7 +29,7 @@ class InfoDidatticaEdit extends UniversiboCommand
         $template = $frontcontroller->getTemplateEngine();
 
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $template
                 ->assign('common_canaleURI',
@@ -80,7 +80,7 @@ class InfoDidatticaEdit extends UniversiboCommand
 
         $f18_orarioIcsLink = $info_didattica->getOrarioIcsLink();
 
-        $zendUri = new Uri(array('allowRelative' => false));
+        $zendUri = new Uri(['allowRelative' => false]);
 
         $valid = function ($uri) use ($zendUri) {
             return $uri === '' || $zendUri->isValid($uri);
@@ -102,11 +102,11 @@ class InfoDidatticaEdit extends UniversiboCommand
                     || !array_key_exists('f18_appelliInfo', $_POST)
                     || !array_key_exists('f18_orarioIcsLink', $_POST)) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non ? valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_accept = false;
             }
 
@@ -119,11 +119,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid($_POST['f18_obiettiviLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_obiettiviLink = 'http://';
                 $f18_accept = false;
             } else
@@ -131,11 +131,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid($_POST['f18_programmaLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina del programma deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_programmaLink = 'http://';
                 $f18_accept = false;
             } else
@@ -144,11 +144,11 @@ class InfoDidatticaEdit extends UniversiboCommand
             if (!$valid(
                     $_POST['f18_materialeLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina del materiale deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_materialeLink = 'http://';
                 $f18_accept = false;
             } else
@@ -156,11 +156,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid( $_POST['f18_modalitaLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina delle modalit? d\'esame deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_modalitaLink = 'http://';
                 $f18_accept = false;
             }
@@ -168,11 +168,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid( $_POST['f18_appelliLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_appelliLink = 'http://';
                 $f18_accept = false;
             } else
@@ -180,11 +180,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid($_POST['f18_homepageLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina degli appelli deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_homepageLink = 'http://';
                 $f18_accept = false;
             } else
@@ -192,11 +192,11 @@ class InfoDidatticaEdit extends UniversiboCommand
 
             if (!$valid($_POST['f18_orarioIcsLink'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina dell\'orario in formato ics deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f18_orarioIcsLink = 'http://';
                 $f18_accept = false;
             } else
@@ -278,8 +278,8 @@ class InfoDidatticaEdit extends UniversiboCommand
                 ->assign('infoDid_langOrarioLink',
                         'Link alla versione iCalendar dell\'orario dell\'insegnamento');
 
-        //$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
-        //$this->executePlugin('ShowFileTitoli', array());
+        //$this->executePlugin('ShowNewsLatest', [ 'num' => 5  ]);
+        //$this->executePlugin('ShowFileTitoli', []);
         return 'default';
     }
 

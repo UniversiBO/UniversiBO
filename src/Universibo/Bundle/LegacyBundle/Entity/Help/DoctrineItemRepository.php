@@ -25,7 +25,7 @@ class DoctrineItemRepository extends DoctrineRepository
         $conn = $this->getConnection();
         $stmt = $conn->executeQuery(
                         'SELECT id_help, titolo, contenuto, ultima_modifica, indice FROM help WHERE id_help IN (?) ORDER BY indice',
-                        array($ids), array(Connection::PARAM_INT_ARRAY));
+                        [$ids], [Connection::PARAM_INT_ARRAY]);
 
         return $this->fetchAll($stmt);
     }
@@ -46,7 +46,7 @@ class DoctrineItemRepository extends DoctrineRepository
 
     private function fetchAll($stmt)
     {
-        $items = array();
+        $items = [];
 
         while (false !== ($row = $stmt->fetch(PDO::FETCH_ASSOC))) {
             $items[] = $this->rowToItem($row);

@@ -52,7 +52,7 @@ class Clamav
 
         $fullCommand =  $this->cmd.' '.$this->opts.' '.$filename;
 
-        $output = array();
+        $output = [];
         $returnval = null;
 
         exec ( $fullCommand, $output, $returnval );

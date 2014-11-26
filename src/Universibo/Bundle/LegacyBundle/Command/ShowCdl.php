@@ -56,7 +56,7 @@ class ShowCdl extends CanaleCommand
         } else {
             $academicYear = $frontcontroller->getAppSetting('defaultAnnoAccademico');
             $minYear = $maxYear = $academicYear;
-            $elencoPrgAttDid = array();
+            $elencoPrgAttDid = [];
         }
 
         if (!preg_match('/^([0-9]{4})$/', $academicYear) ||
@@ -69,7 +69,7 @@ class ShowCdl extends CanaleCommand
         $insCiclo = NULL;   //ultimo ciclo dell'insegnamento precedente
         $session_user = $this->get('security.context')->getToken()->getUser();
         $session_user_groups =  $session_user instanceof User ? $session_user->getLegacyGroups() : 1;
-        $cdl_listIns = array();
+        $cdl_listIns = [];
 
         $forum = $this->getContainer()->get('universibo_forum.router');
         //3 livelli di innestamento cdl/anno_corso/ciclo/insegnamento
@@ -80,13 +80,13 @@ class ShowCdl extends CanaleCommand
                     $insAnnoCorso = $tempPrgAttDid->getAnnoCorsoUniversibo();
                     $insCiclo = NULL; //$elencoPrgAttDid[$i]->getTipoCiclo();
 
-                    $cdl_listIns[$insAnnoCorso] = array('anno' => $insAnnoCorso, 'name' => 'anno '.$insAnnoCorso, 'list' => array() );
+                    $cdl_listIns[$insAnnoCorso] = ['anno' => $insAnnoCorso, 'name' => 'anno '.$insAnnoCorso, 'list' => [] ];
                 }
 
                 if ( $insCiclo != $tempPrgAttDid->getTipoCiclo() ) {
                     $insCiclo = $tempPrgAttDid->getTipoCiclo();
 
-                    $cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = array('ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => array() );
+                    $cdl_listIns[$insAnnoCorso]['list'][$insCiclo] = ['ciclo' => $insCiclo, 'name' => 'Ciclo '.$insCiclo, 'list' => [] ];
                 }
                 $allowEdit = ($context->isGranted('ROLE_ADMIN') || $context->isGranted('ROLE_MODERATOR') );
                 $fac = Facolta::selectFacoltaCodice($cdl->getCodiceFacoltaPadre());
@@ -95,11 +95,11 @@ class ShowCdl extends CanaleCommand
                 DidatticaGestione::getEditUrl($tempPrgAttDid->getIdCanale(),$cdl->getIdCanale(), $fac->getIdCanale(),$tempPrgAttDid->getIdSdop());
 
                 $cdl_listIns[$insAnnoCorso]['list'][$insCiclo]['list'][] =
-                array( 'name' => $tempPrgAttDid->getNome(),
+                [ 'name' => $tempPrgAttDid->getNome(),
                         'nomeDoc' => $tempPrgAttDid->getNomeDoc(),
-                        'uri' => $router->generate('universibo_legacy_insegnamento', array('id_canale' => $tempPrgAttDid->getIdCanale())),
+                        'uri' => $router->generate('universibo_legacy_insegnamento', ['id_canale' => $tempPrgAttDid->getIdCanale()]),
                         'editUri' => ($allowEdit)?$editUri:'',
-                        'forumUri' =>($tempPrgAttDid->getServizioForum() != false) ? $forum->getForumUri($tempPrgAttDid->getForumForumId()) : '' );
+                        'forumUri' =>($tempPrgAttDid->getServizioForum() != false) ? $forum->getForumUri($tempPrgAttDid->getForumForumId()) : '' ];
             }
         }
         //var_dump($fac_listCdlType);
@@ -113,21 +113,21 @@ class ShowCdl extends CanaleCommand
 
         $template -> assign('cdl_langYear', 'anno accademico' );
 
-        $response = $this->forward('UniversiboWebsiteBundle:Didactics:academicYear', array(
+        $response = $this->forward('UniversiboWebsiteBundle:Didactics:academicYear', [
                 'min' => $minYear,
                 'max' => $maxYear,
                 'current' => $academicYear,
                 'route' => 'universibo_legacy_cdl',
-                'params' => array('id_canale' => $cdl->getIdCanale())
-        ));
+                'params' => ['id_canale' => $cdl->getIdCanale()]
+        ]);
 
         $template->assign('cdl_yearBox', $response->getContent());
 
         $template -> assign('cdl_langList', 'Elenco insegnamenti attivati su UniversiBO');
         $template -> assign('cdl_langGoToForum', 'Link al forum');
 
-        $this->executePlugin('ShowNewsLatest', array( 'num' => 4  ));
-        $this->executePlugin('ShowLinks', array( 'num' => 12 ) );
+        $this->executePlugin('ShowNewsLatest', [ 'num' => 4  ]);
+        $this->executePlugin('ShowLinks', [ 'num' => 12 ] );
 
         return 'default';
     }

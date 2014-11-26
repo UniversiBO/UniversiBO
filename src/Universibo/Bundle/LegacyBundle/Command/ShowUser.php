@@ -30,9 +30,9 @@ class ShowUser extends UniversiboCommand
 
         if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => 0,
+                    ['id_utente' => 0,
                             'msg' => 'Le schede degli utenti sono visualizzabili solo se si e` registrati',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $currentUserId = $current_user->getId();
@@ -45,24 +45,24 @@ class ShowUser extends UniversiboCommand
                 && !$user->hasRole('ROLE_TUTOR')
                 && $userId != $current_user->getId()) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $userId,
+                    ['id_utente' => $userId,
                             'msg' => 'Non ti e` permesso visualizzare la scheda dell\'utente',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $router = $this->get('router');
         $channelRouter = $this->get('universibo_legacy.routing.channel');
 
         $arrayRuoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId());
-        $canali = array();
-        $arrayCanali = array();
+        $canali = [];
+        $arrayCanali = [];
         $keys = array_keys($arrayRuoli);
         foreach ($keys as $key) {
             $ruolo = $arrayRuoli[$key];
             if ($ruolo->isMyUniversibo()) {
                 $canale = Canale::retrieveCanale($ruolo->getIdCanale());
                 if ($canale->isGroupAllowed($current_user->getLegacyGroups())) {
-                    $canali = array();
+                    $canali = [];
                     $canali['uri'] = $channelRouter->generate($canale);
                     $canali['tipo'] = $canale->getTipoCanale();
                     $canali['label'] = ($canale->getNome() != '') ? $canale
@@ -70,13 +70,13 @@ class ShowUser extends UniversiboCommand
                                     ->getNomeMyUniversibo();
                     $canali['ruolo'] = ($ruolo->isReferente()) ? 'R'
                             : (($ruolo->isModeratore()) ? 'M' : 'none');
-                    $canali['modifica'] = $router->generate('universibo_legacy_myuniversibo_edit', array('id_canale' => $ruolo->getIdCanale()));
-                    $canali['rimuovi'] = $router->generate('universibo_legacy_myuniversibo_remove', array('id_canale' => $ruolo->getIdCanale()));
+                    $canali['modifica'] = $router->generate('universibo_legacy_myuniversibo_edit', ['id_canale' => $ruolo->getIdCanale()]);
+                    $canali['rimuovi'] = $router->generate('universibo_legacy_myuniversibo_remove', ['id_canale' => $ruolo->getIdCanale()]);
                     $arrayCanali[] = $canali;
                 }
             }
         }
-        usort($arrayCanali, array($this, '_compareMyUniversiBO'));
+        usort($arrayCanali, [$this, '_compareMyUniversiBO']);
         $email = $user->getEmail();
         $template->assign('showUserLivelli',$this->get('universibo_legacy.translator.role_name')->translate($user->getRoles()));
 

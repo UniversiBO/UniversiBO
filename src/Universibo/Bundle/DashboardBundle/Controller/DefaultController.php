@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $fileRepo    = $this->get('universibo_legacy.repository.files.file_item');
         $contactRepo = $this->get('universibo_legacy.repository.contatto_docente');
 
-        return array(
+        return [
             'activeUsers'     => $userRepo->countActive(),
             'logged24h'       => $statService->getLoggedUsers24h(),
             'loggedWeek'      => $statService->getLoggedUsersWeek(),
@@ -37,6 +37,6 @@ class DefaultController extends Controller
             'filesCount'      => $fileRepo->count(),
             'filesLatest'     => $fileRepo->findLatest(10),
             'professorStatus' => $contactRepo->getStatusSummary(),
-        );
+        ];
     }
 }

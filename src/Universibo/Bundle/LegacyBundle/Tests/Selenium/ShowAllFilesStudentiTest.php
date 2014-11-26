@@ -17,18 +17,18 @@ class ShowAllFilesStudentiTest extends UniversiBOSeleniumTestCase
     {
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/file/studenti/?order='.$order);
-        $this->assertSentences(array(
+        $this->assertSentences([
                 'Tutti i Files Studenti presenti su UniversiBO',
                 'ordinati per '.$orderSentence
-        ));
+        ]);
     }
 
     public function provider()
     {
-        return array (
-                array(0, 'nome'),
-                array(1, 'data di inserimento'),
-                array(2, 'voto medio'),
-        );
+        return [
+                [0, 'nome'],
+                [1, 'data di inserimento'],
+                [2, 'voto medio'],
+        ];
     }
 }

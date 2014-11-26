@@ -29,7 +29,7 @@ class ShowFileStudentiCommenti extends PluginCommand
      *
      * @param array l'id del file di cui si voglio i commenti
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $bc        = $this->getBaseCommand();
         $user      = $bc->get('security.context')->getToken()->getUser();
@@ -42,7 +42,7 @@ class ShowFileStudentiCommenti extends PluginCommand
         $file = FileItemStudenti::selectFileItem($param['id_file']);
         $id_canali = $file->getIdCanali();
         $id_canale = $id_canali[0];
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
 
         $personalizza_not_admin = false;
@@ -75,7 +75,7 @@ class ShowFileStudentiCommenti extends PluginCommand
 
         $elenco_commenti = CommentoItem::selectCommentiItem($param['id_file']);
         $num_commenti = CommentoItem::quantiCommenti($param['id_file']);
-        $elenco_commenti_tpl = array();
+        $elenco_commenti_tpl = [];
 //		var_dump($elenco_commenti);
 //	    die();
 
@@ -87,7 +87,7 @@ class ShowFileStudentiCommenti extends PluginCommand
                 $id_utente = $elenco_commenti[$i]->getIdUtente();
                 $commenti['commento'] = $elenco_commenti[$i]->getCommento();
                 $commenti['voto'] = $elenco_commenti[$i]->getVoto();
-                $commenti['userLink'] = $router->generate('universibo_legacy_user', array('id_utente' => $id_utente));
+                $commenti['userLink'] = $router->generate('universibo_legacy_user', ['id_utente' => $id_utente]);
                 $commenti['userNick'] = $userRepo->getUsernameFromId($id_utente);
 
 
@@ -96,8 +96,8 @@ class ShowFileStudentiCommenti extends PluginCommand
                 if ($this_diritti) {
                         $id_commento = $elenco_commenti[$i]->getIdCommento();
                         $commenti['dirittiCommento'] = 'true';
-                        $commenti['editCommentoLink'] = $router->generate('universibo_legacy_file_studenti_comment_edit', array('id_commento' => $id_commento));
-                        $commenti['deleteCommentoLink'] = $router->generate('universibo_legacy_file_studenti_comment_delete', array('id_commento' => $id_commento));
+                        $commenti['editCommentoLink'] = $router->generate('universibo_legacy_file_studenti_comment_edit', ['id_commento' => $id_commento]);
+                        $commenti['deleteCommentoLink'] = $router->generate('universibo_legacy_file_studenti_comment_delete', ['id_commento' => $id_commento]);
                     } else {$commenti['dirittiCommento']='false';}
                 $elenco_commenti_tpl[$i] = $commenti;
             }

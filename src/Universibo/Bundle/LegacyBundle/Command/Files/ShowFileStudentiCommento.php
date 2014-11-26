@@ -25,7 +25,7 @@ class ShowFileStudentiCommento extends PluginCommand
      *
      * @param l'id del file di cui si voglio i commenti
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $bc = $this->getBaseCommand();
 
@@ -36,12 +36,12 @@ class ShowFileStudentiCommento extends PluginCommand
         $userRepo = $this->get('universibo_core.repository.user');
         $comment = $commentRepo->find($param['id_commento']);
 
-        $comment_tpl = array();
+        $comment_tpl = [];
 
         $id_utente = $comment->getIdUtente();
         $comment_tpl['commento'] = $comment->getCommento();
         $comment_tpl['voto'] = $comment->getVoto();
-        $comment_tpl['userLink'] = $this->get('router')->generate('universibo_legacy_user', array('id_utente' => $id_utente));
+        $comment_tpl['userLink'] = $this->get('router')->generate('universibo_legacy_user', ['id_utente' => $id_utente]);
         $comment_tpl['userNick'] = $userRepo->getUsernameFromId($id_utente);
 
         $template->assign('showFileStudentiCommenti_commento', $comment_tpl);

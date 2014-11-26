@@ -70,10 +70,10 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = $this->getMock('Doctrine\\Common\\Persistence\\ObjectManager');
-        $this->personRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\PersonRepository', array('findOneByUniboId'), array(), '', false);
-        $this->userRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UserRepository', array('findOneByEmail', 'findOneAllowedToLogin'), array(), '', false);
+        $this->personRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\PersonRepository', ['findOneByUniboId'], [], '', false);
+        $this->userRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UserRepository', ['findOneByEmail', 'findOneAllowedToLogin'], [], '', false);
         $this->userManager = $this->getMock('FOS\\UserBundle\\Model\\UserManagerInterface');
-        $this->uniboGroupRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UniboGroupRepository', array('findOrCreate'), array(), '', false);
+        $this->uniboGroupRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UniboGroupRepository', ['findOrCreate'], [], '', false);
         $this->logger = $this->getMock('Symfony\\Component\\HttpKernel\\Log\\LoggerInterface');
 
         $this->provider = new UniversiboUserProvider($this->objectManager,
@@ -99,13 +99,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
             ->method('warn')
         ;
 
-        $claims = array (
+        $claims = [
             'eppn' => 'docente.fittizio@unibo.it',
             'idAnagraficaUnica' => null,
             'isMemberOf' => 'Docente',
             'givenName' => 'Given Name',
             'sn' => 'Surname'
-        );
+        ];
 
         $this->provider->loadUserByClaims($claims);
     }
@@ -121,13 +121,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
             ->method('warn')
         ;
 
-        $claims = array (
+        $claims = [
             'eppn' => null,
             'idAnagraficaUnica' => 42,
             'isMemberOf' => 'Docente',
             'givenName' => 'Given Name',
             'sn' => 'Surname'
-        );
+        ];
 
         $this->provider->loadUserByClaims($claims);
     }
@@ -144,13 +144,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
         $mockedUser->setEmail('nome.cognome@unibo.it');
         $mockedUser->setEnabled(true);
 
-        $claims = array (
+        $claims = [
             'eppn' => $mockedUser->getEmail(),
             'idAnagraficaUnica' => $person->getUniboId(),
             'isMemberOf' => 'Docente',
             'givenName' => $person->getGivenName(),
             'sn' => $person->getSurname()
-        );
+        ];
 
         $group = new UniboGroup();
         $group->setName($claims['isMemberOf']);
@@ -197,13 +197,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
         $mockedUser->setEmail('nome.cognome@unibo.it');
         $mockedUser->setEnabled(true);
 
-        $claims = array (
+        $claims = [
             'eppn' => $mockedUser->getEmail(),
             'idAnagraficaUnica' => $person->getUniboId(),
             'isMemberOf' => 'Docente;AssegnistaDiRicerca',
             'givenName' => $person->getGivenName(),
             'sn' => $person->getSurname()
-        );
+        ];
 
         $docenteGroup = new UniboGroup();
         $docenteGroup->setName('Docente');
@@ -256,13 +256,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoPersonNoUser($memberOf, $legacyGroups, $usernameLocked, $eppn = 'nome.cognome@unibo.it')
     {
-        $claims = array (
+        $claims = [
             'eppn' => $eppn,
             'idAnagraficaUnica' => 42,
             'isMemberOf' => $memberOf,
             'givenName' => 'Nome',
             'sn' => 'Cognome'
-        );
+        ];
 
         if (empty($memberOf)) {
             $memberOf = 'Nessuno';
@@ -331,13 +331,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testNoPersonExistingEmailSimple()
     {
-        $claims = array (
+        $claims = [
             'eppn' => 'nome.cognome@unibo.it',
             'idAnagraficaUnica' => 42,
             'isMemberOf' => 'Docente',
             'givenName' => 'Nome',
             'sn' => 'Cognome'
-        );
+        ];
 
         $mockedUser = new User();
         $mockedUser->setEmail($claims['eppn']);
@@ -390,13 +390,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoPersonExistingEmailLocked()
     {
-        $claims = array (
+        $claims = [
             'eppn' => 'nome.cognome@unibo.it',
             'idAnagraficaUnica' => 42,
             'isMemberOf' => 'Docente',
             'givenName' => 'Nome',
             'sn' => 'Cognome'
-        );
+        ];
 
         $mockedUser = new User();
         $mockedUser->setEmail($claims['eppn']);
@@ -443,13 +443,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoPersonExistingEmailDisabled()
     {
-        $claims = array (
+        $claims = [
             'eppn' => 'nome.cognome@unibo.it',
             'idAnagraficaUnica' => 42,
             'isMemberOf' => 'Docente',
             'givenName' => 'Nome',
             'sn' => 'Cognome'
-        );
+        ];
 
         $mockedUser = new User();
         $mockedUser->setEmail($claims['eppn']);
@@ -502,13 +502,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
         $mockedUser->setEmail('nome.cognome@unibo.it');
         $mockedUser->setEnabled(true);
 
-        $claims = array (
+        $claims = [
             'eppn' => 'x'.$mockedUser->getEmail(),
             'idAnagraficaUnica' => $person->getUniboId(),
             'isMemberOf' => 'Docente',
             'givenName' => $person->getGivenName(),
             'sn' => $person->getSurname()
-        );
+        ];
 
         $this->personRepository
              ->expects($this->atLeastOnce())
@@ -556,13 +556,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
         $mockedUser->setPerson($person);
         $mockedUser->setEmail('nome.cognome@unibo.it');
 
-        $claims = array (
+        $claims = [
             'eppn' => $mockedUser->getEmail(),
             'idAnagraficaUnica' => $person->getUniboId(),
             'isMemberOf' => 'Docente',
             'givenName' => $person->getGivenName(),
             'sn' => $person->getSurname()
-        );
+        ];
 
         $this->personRepository
              ->expects($this->atLeastOnce())
@@ -601,13 +601,13 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
         $mockedUser->setPerson($person);
         $mockedUser->setEmail('nome.cognome@unibo.it');
 
-        $claims = array (
+        $claims = [
             'eppn' => 'x'.$mockedUser->getEmail(),
             'idAnagraficaUnica' => $person->getUniboId(),
             'isMemberOf' => 'Docente',
             'givenName' => $person->getGivenName(),
             'sn' => $person->getSurname()
-        );
+        ];
 
         $mockedUser2 = new User();
         $mockedUser2->setEmail($claims['eppn']);
@@ -644,17 +644,17 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
 
     public function provider()
     {
-        return array (
-            array('Docente', LegacyRoles::DOCENTE, false),
-            array('Laureato', LegacyRoles::STUDENTE, false),
-            array('Preiscritto', LegacyRoles::STUDENTE, false),
-            array('Studente', LegacyRoles::STUDENTE, false),
-            array('PersonaleTA', LegacyRoles::PERSONALE, false),
-            array(null, LegacyRoles::PERSONALE, false),
-            array(null, LegacyRoles::STUDENTE, false, 'nome.cognome@studio.unibo.it'),
-            array('Esterno', LegacyRoles::PERSONALE, false),
-            array('Accreditato', LegacyRoles::PERSONALE, false),
-        );
+        return [
+            ['Docente', LegacyRoles::DOCENTE, false],
+            ['Laureato', LegacyRoles::STUDENTE, false],
+            ['Preiscritto', LegacyRoles::STUDENTE, false],
+            ['Studente', LegacyRoles::STUDENTE, false],
+            ['PersonaleTA', LegacyRoles::PERSONALE, false],
+            [null, LegacyRoles::PERSONALE, false],
+            [null, LegacyRoles::STUDENTE, false, 'nome.cognome@studio.unibo.it'],
+            ['Esterno', LegacyRoles::PERSONALE, false],
+            ['Accreditato', LegacyRoles::PERSONALE, false],
+        ];
     }
 
     private function assertGroup(User $user, $groupName)

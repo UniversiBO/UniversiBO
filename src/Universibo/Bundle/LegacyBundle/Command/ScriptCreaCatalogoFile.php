@@ -42,7 +42,7 @@ class ScriptCreaCatalogoFile extends UniversiboCommand
             $res = $db->query('SELECT id_file FROM file WHERE password IS NULL AND permessi_download = '.$db->quote(User::ALL).' AND eliminato !='.$db->quote(FILE_ELIMINATO).' ORDER BY id_file ASC');
             //			echo 'SELECT id_file FROM file WHERE password IS NULL AND permessi_download = '.$db->quote(User::ALL).' AND eliminato !='.$db->quote(FILE_ELIMINATO).' ORDER BY id_file ASC';
             if (DB::isError($res))
-                Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Errori nel recupero dei file esistenti", 'file' => __FILE__, 'line' => __LINE__));
+                Error :: throwError(_ERROR_DEFAULT, ['msg' => "Errori nel recupero dei file esistenti", 'file' => __FILE__, 'line' => __LINE__]);
 
             $num = $res->numRows();
             //			var_dump($num);
@@ -78,7 +78,7 @@ class ScriptCreaCatalogoFile extends UniversiboCommand
                     $x=$num;
 
                 if ($files === false)
-                    Error :: throwError(_ERROR_DEFAULT, array ('msg' => "Errori nel recupero dei file esistenti", 'file' => __FILE__, 'line' => __LINE__));
+                    Error :: throwError(_ERROR_DEFAULT, ['msg' => "Errori nel recupero dei file esistenti", 'file' => __FILE__, 'line' => __LINE__]);
 
                 foreach ($files as $file) {
                     fwrite($fp,'<download>');
@@ -86,7 +86,7 @@ class ScriptCreaCatalogoFile extends UniversiboCommand
                     fwrite($fp,'<subject>'.htmlentities($file->getCategoriaDesc()).'</subject>');
                     fwrite($fp,'<title>'.htmlentities($file->getTitolo()).'</title>');
                     fwrite($fp,'<description>'.htmlentities($file->getDescrizione()).'</description>');
-                    fwrite($fp,'<url>'.htmlentities($router->generate('universibo_legacy_file', array('id_file' => $file->getIdFile()), true)).'</url>');
+                    fwrite($fp,'<url>'.htmlentities($router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile()], true)).'</url>');
                     fwrite($fp,'</download>');
                     fwrite($fp,"\n");
                     //$download = $root->new_child('download','');

@@ -31,9 +31,9 @@ class ShowHome extends CanaleCommand
 
         if ($canale->getTipoCanale() != Canale::HOME)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $this->sessionUser->getId(),
+                    ['id_utente' => $this->sessionUser->getId(),
                             'msg' => 'Il tipo canale richiesto non corrisponde al comando selezionato',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
     }
 
     public function execute()
@@ -49,9 +49,9 @@ class ShowHome extends CanaleCommand
                 ->assign('home_langMission',
                         'L\'obiettivo verso cui è tracciata la rotta delle iniziative e dei servizi che trovate su questo portale è di "aiutare gli studenti ad aiutarsi tra loro", fornire un punto di riferimento centralizzato in cui prelevare tutte le informazioni didattiche riguardanti i propri corsi di studio e offrire un mezzo di interazione semplice e veloce con i docenti che partecipano all\'iniziativa.');
 
-        $this->executePlugin('ShowNewsLatest', array('num' => 4));
+        $this->executePlugin('ShowNewsLatest', ['num' => 4]);
 
-        $this->executePlugin('ShowLinks', array('num' => 12));
+        $this->executePlugin('ShowLinks', ['num' => 12]);
 
         return 'default';
     }

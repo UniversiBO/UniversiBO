@@ -25,11 +25,11 @@ class ShowHelpId extends PluginCommand
      *
      * @param array $param deve contenere:
      *                     - 'id_help' l'id dell'argomento o argomenti da visualizzare
-     *                     es: array("5","6")
+     *                     es: ["5","6"]
      *                     se viene passato 0  come parametro mostra tutti gli argomenti
      *                     NB 0 non pu? essere l'id di una notizia
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $bc			     = $this->getBaseCommand();
         $frontcontroller = $bc->getFrontController();
@@ -39,7 +39,7 @@ class ShowHelpId extends PluginCommand
         $items = in_array(0, $param) ? $repo->findAll() : $repo->findMany($param);
 
         foreach ($items as $item) {
-            $argomenti[] = array('id' => 'id'.$item->getId(), 'titolo' => $item->getTitle(), 'contenuto' => $item->getContent());
+            $argomenti[] = ['id' => 'id'.$item->getId(), 'titolo' => $item->getTitle(), 'contenuto' => $item->getContent()];
         }
 
         $template->assign('showHelpId_langArgomento', $argomenti);

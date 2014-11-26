@@ -37,15 +37,15 @@ class LinkDelete extends CanaleCommand
         $referente = false;
         $moderatore = false;
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $linkId = $this->getRequest()->attributes->get('id_link');
         $link = $this->get('universibo_legacy.repository.links.link')->find($linkId);
         if ($link === false)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => 'Il link richiesto non e` presente su database',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         $autore = ($user->getId() == $link->getIdUtente());
 
@@ -54,9 +54,9 @@ class LinkDelete extends CanaleCommand
         if ($channelId !== null) {
             if (!preg_match('/^([0-9]{1,9})$/', $channelId)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'id del canale richiesto non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
             }
 
             $canale = $this->get('universibo_legacy.repository.canale2')->find($channelId);
@@ -66,9 +66,9 @@ class LinkDelete extends CanaleCommand
 
             if ($canale->getServizioLinks() == false)
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il servizio links e` disattivato',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $channelRouter = $this->get('universibo_legacy.routing.channel');
             $template->assign('common_canaleURI', $channelRouter->generate($canale));
@@ -87,9 +87,9 @@ class LinkDelete extends CanaleCommand
             $canale_link = $link->getIdCanale();
             if ($channelId != $canale_link)
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'I parametri passati non sono coerenti',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $autore)))
                 throw new AccessDeniedHttpException('Not allowed to delete link');
@@ -108,11 +108,11 @@ class LinkDelete extends CanaleCommand
             }
         }
 
-        //$this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+        //$this->executePlugin('ShowTopic', ['reference' => 'filescollabs']);
         $this
                 ->executePlugin('ShowLink',
-                        array('id_link' => $linkId,
-                                'id_canale' => $channelId));
+                        ['id_link' => $linkId,
+                                'id_canale' => $channelId]);
 
         return 'default';
     }

@@ -31,9 +31,9 @@ class RuoliAdminEdit extends UniversiboCommand
 
         $referente = false;
 
-        $user_ruoli = $user instanceof User ? $ruoloRepo->findByIdUtente($user->getId()) : array();
-        $ruoli = array();
-        $arrayPublicUsers = array();
+        $user_ruoli = $user instanceof User ? $ruoloRepo->findByIdUtente($user->getId()) : [];
+        $ruoli = [];
+        $arrayPublicUsers = [];
 
         $request = $this->getRequest();
         $channelId = $request->get('id_canale');
@@ -55,7 +55,7 @@ class RuoliAdminEdit extends UniversiboCommand
         }
 
         $target_username = $target_user->getUsername();
-        $target_userUri = $router->generate('universibo_legacy_user', array('id_utente' => $target_user->getId()));
+        $target_userUri = $router->generate('universibo_legacy_user', ['id_utente' => $target_user->getId()]);
 
         $channelRouter = $this->get('universibo_legacy.routing.channel');
         $template->assign('common_canaleURI', $channelRouter->generate($channel));
@@ -71,7 +71,7 @@ class RuoliAdminEdit extends UniversiboCommand
         }
 
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN') && $user->getId() == $target_user->getId() )
-            Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'non e` permesso modificare i propri diritti in una pagina', 'file' => __FILE__, 'line' => __LINE__));
+            Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'non e` permesso modificare i propri diritti in una pagina', 'file' => __FILE__, 'line' => __LINE__]);
 
         $target_ruoli = $ruoloRepo->findByIdUtente($target_user->getId());
         if (!array_key_exists($channelId, $target_ruoli))
@@ -85,10 +85,10 @@ class RuoliAdminEdit extends UniversiboCommand
         if (array_key_exists('f17_submit', $_POST)  ) {
 
             if (!array_key_exists('f17_livello', $_POST) )
-                Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__));
+                Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
             if ($_POST['f17_livello'] != 'none' && $_POST['f17_livello'] != 'M' && $_POST['f17_livello'] != 'R' )
-                Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__));
+                Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
             if ($target_ruolo == null) {
                 $nascosto = false;
@@ -122,7 +122,7 @@ class RuoliAdminEdit extends UniversiboCommand
         if ($success == true)
             $template->assign('ruoliAdminEdit_langSuccess', 'Modifica eseguita con successo');
 
-        $this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'filescollabs']);
 
         return 'default';
     }

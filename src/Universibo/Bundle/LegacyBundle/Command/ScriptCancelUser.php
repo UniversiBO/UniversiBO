@@ -34,7 +34,7 @@ class ScriptCancelUser extends UniversiboCommand
 
 //		// TODO verificare quale informativa ha approvato
 //		if (!isset($values['id_info']))
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'impossibile dedurre quale informativa per la privacy ha approvato l\'utente','file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'impossibile dedurre quale informativa per la privacy ha approvato l\'utente','file'=>__FILE__,'line'=>__LINE__]);
         //$idInfo = (isset($values['id_info'])) ? $values['id_info'] : 1;
 
          echo "al momento cancello bene solo secondo la nuova informativa, per la vecchia son da testare!! commentami per eseguire!\n"; die;
@@ -56,7 +56,7 @@ class ScriptCancelUser extends UniversiboCommand
                  "farlo attraverso la normale procedura sul sito, ma puoi contattarci all'indirizzo\n".
                  $fc->getAppSetting('infoEmail')."\n".
                  "Grazie per aver usato UniversiBO!\n\n";
-            if (!$mail->Send()) {echo 'Errore Mail'; Error::throwError(_ERROR_DEFAULT,array('msg'=>'Mail non inviata!', 'file'=>__FILE__, 'line'=>__LINE__));}
+            if (!$mail->Send()) {echo 'Errore Mail'; Error::throwError(_ERROR_DEFAULT,['msg'=>'Mail non inviata!', 'file'=>__FILE__, 'line'=>__LINE__]);}
             echo 'Successo';
         } else
             echo 'Errore';
@@ -70,10 +70,10 @@ define('DELETED', -1);
 class CancellazioneUtente
 {
     public $db;
-    public $valuesDispatch = array(
-                '1' => array('sospendiUtente', 'anonimizeForumUser', 'anonimizeUserPosts', 'clearUserTopicWatches', 'clearUserFromBanlist', 'reassignGroupsModeratedByUser' ),
-                '2' => array('sospendiUtente')
-            );
+    public $valuesDispatch = [
+                '1' => ['sospendiUtente', 'anonimizeForumUser', 'anonimizeUserPosts', 'clearUserTopicWatches', 'clearUserFromBanlist', 'reassignGroupsModeratedByUser' ],
+                '2' => ['sospendiUtente']
+            ];
     public $idInformativa;
 
     // costruttore
@@ -94,7 +94,7 @@ class CancellazioneUtente
             $ret = $this->$method($idUtente);
             if ($ret['esito'] === false) {
                 $db->rollback();
-                Error::throwError(_ERROR_CRITICAL,array('msg'=>'Si e` verificato un errore: ' . $ret['msg'] ."\n".'Ripristino della situazione iniziale','file'=>__FILE__,'line'=>__LINE__));
+                Error::throwError(_ERROR_CRITICAL,['msg'=>'Si e` verificato un errore: ' . $ret['msg'] ."\n".'Ripristino della situazione iniziale','file'=>__FILE__,'line'=>__LINE__]);
 
                 return false;
             }
@@ -116,8 +116,8 @@ class CancellazioneUtente
         $user = User::selectUser($idUtente);
            if ( $user->hasRole('ROLE_PROFESSOR') || $user->hasRole('ROLE_TUTOR') || $user->hasRole('ROLE_MODERATOR') || $user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_STAFF')  ) {
 //			$this->db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__));
-            return array( 'esito' => false, 'msg' => 'Spiacente, lo script cancella solo gli studenti');
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
+            return [ 'esito' => false, 'msg' => 'Spiacente, lo script cancella solo gli studenti'];
         }
            $user->setEliminato();
            $user->updateUser();
@@ -126,8 +126,8 @@ class CancellazioneUtente
         $res = $this->db->query($query);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
-           return array( 'esito' => true);
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
+           return [ 'esito' => true];
     }
 
     /**
@@ -142,8 +142,8 @@ class CancellazioneUtente
         $res = $this->db->query($query);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
-        return array( 'esito' => true);
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
+        return [ 'esito' => true];
     }
 
     /**
@@ -158,8 +158,8 @@ class CancellazioneUtente
         $res = $this->db->query($sql);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
-        return array( 'esito' => true);
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
+        return [ 'esito' => true];
     }
 
 //	/**
@@ -187,7 +187,7 @@ class CancellazioneUtente
         $res = $this->db->query($sql);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
 
         $group_moderator = null;
         while ( $row_group = $res->fetchRow() ) {
@@ -205,13 +205,13 @@ class CancellazioneUtente
                 $res = $this->db->query($sql);
                 if( DB::isError($res) )
 
-                    return array( 'esito' => false, 'msg' => DB::errorMessage($res));
+                    return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
 
                 $res->free();
                 echo "\n". 'Nuovo moderatore del gruppo '.$groupName.': '.User::getUsernameFromId($id_user);
             }
 
-        return array( 'esito' => true);
+        return [ 'esito' => true];
     }
 
     /**
@@ -219,7 +219,7 @@ class CancellazioneUtente
      */
     public function _getFirstAdminInGroup($groupId)
     {
-        $list = User::getIdsFromDesiredGroups(array('ROLE_ADMIN'));
+        $list = User::getIdsFromDesiredGroups(['ROLE_ADMIN']);
         $sql = 'SELECT user_id' .
                 ' FROM phpbb_user_group' .
                 ' WHERE user_id IN '.$this->db->quote(implode(', ', $list['ROLE_ADMIN'])) .
@@ -246,8 +246,8 @@ class CancellazioneUtente
         $res = $this->db->query($sql);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
-        return array( 'esito' => true);
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
+        return [ 'esito' => true];
     }
 
     /**
@@ -261,8 +261,8 @@ class CancellazioneUtente
         $res = $this->db->query($sql);
         if( DB::isError($res) )
 
-            return array( 'esito' => false, 'msg' => DB::errorMessage($res));
-        return array( 'esito' => true);
+            return [ 'esito' => false, 'msg' => DB::errorMessage($res)];
+        return [ 'esito' => true];
     }
 
 
@@ -290,7 +290,7 @@ class CancellazioneUtente
 //       	if( $user->hasRole('ROLE_PROFESSOR') || $user->hasRole('ROLE_TUTOR') || $user->hasRole('ROLE_MODERATOR') || $this->get('security.context')->isGranted('ROLE_ADMIN') || $user->hasRole('ROLE_STAFF')  )
 //		{
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
 //		}
 //       	$user->setEliminato();
 //       	$user->updateUser();
@@ -305,7 +305,7 @@ class CancellazioneUtente
 //		{
 ////			var_dump($query); die;
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 //		}
 
 // 		non abbiamo utenti che costituiscono gruppo a sè
@@ -323,7 +323,7 @@ class CancellazioneUtente
 //		if(  DB::isError($res) )
 //		{
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not update posts for this user','file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update posts for this user','file'=>__FILE__,'line'=>__LINE__]);
 //		}
 
 //		// elimino il nome utente dai topic
@@ -332,7 +332,7 @@ class CancellazioneUtente
 //				WHERE topic_poster = $user_id";
 //			if( !$db->query($sql) )
 //			{
-//				Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not update topics for this user','file'=>__FILE__,'line'=>__LINE__));
+//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update topics for this user','file'=>__FILE__,'line'=>__LINE__]);
 //			}
 
 //			$sql = UPDATE  phpbb_vote_voters . "
@@ -340,7 +340,7 @@ class CancellazioneUtente
 //				WHERE vote_user_id = $user_id";
 //			if( !$db->query($sql) )
 //			{
-//				Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not update votes for this user','file'=>__FILE__,'line'=>__LINE__));
+//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update votes for this user','file'=>__FILE__,'line'=>__LINE__]);
 //			}
 
 //		$sql = 'SELECT group_id' .
@@ -350,7 +350,7 @@ class CancellazioneUtente
 //		if( DB::isError($res) )
 //		{
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 //		}
 //		$group_moderator = null;
 //		while ( $row_group = $res->fetchRow() )
@@ -370,7 +370,7 @@ class CancellazioneUtente
 //			if(  DB::isError($res) )
 //			{
 //				$db->rollback();
-//				Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not update group moderators','file'=>__FILE__,'line'=>__LINE__));
+//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update group moderators','file'=>__FILE__,'line'=>__LINE__]);
 //			}
 //		}
 
@@ -394,7 +394,7 @@ class CancellazioneUtente
 //		if (  DB::isError($res) )
 //		{
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not delete user from topic watch table','file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from topic watch table','file'=>__FILE__,'line'=>__LINE__]);
 //		}
 
 //		$sql = 'DELETE FROM phpbb_banlist
@@ -403,7 +403,7 @@ class CancellazioneUtente
 //		if (  DB::isError($res) )
 //		{
 //			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,array('msg'=>'Could not delete user from banlist table','file'=>__FILE__,'line'=>__LINE__));
+//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from banlist table','file'=>__FILE__,'line'=>__LINE__]);
 //		}
 
         //TODO se cancellare i messaggi privati o meno

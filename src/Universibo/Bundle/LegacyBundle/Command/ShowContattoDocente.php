@@ -66,13 +66,13 @@ class ShowContattoDocente extends UniversiboCommand
         if (!$rub_docente) {
             $rub_presente = false;
             Error::throwError(_ERROR_NOTICE,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => 'Impossibile recuperare le informazioni del docente dalla rubrica',
                             'file' => __FILE__, 'line' => __LINE__,
-                            'template_engine' => &$template));
+                            'template_engine' => &$template]);
         }
         //		var_dump($contatto);
-        $info_docente = array();
+        $info_docente = [];
 
         $info_docente['nome'] = ($rub_presente) ? $rub_docente['prefissonome']
                         . ' ' . $rub_docente['nome'] . ' '
@@ -89,7 +89,7 @@ class ShowContattoDocente extends UniversiboCommand
 
         $elenco_ruoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente_docente->getId());
 
-        $info_ruoli = array();
+        $info_ruoli = [];
         //		var_dump($elenco_ruoli);
         foreach ($elenco_ruoli as $ruolo) {
             $id_canale = $ruolo->getIdCanale();
@@ -101,7 +101,7 @@ class ShowContattoDocente extends UniversiboCommand
         }
 
         $lista_collabs = $this->_getCollaboratoriUniversibo();
-        $table_collab = array();
+        $table_collab = [];
 
         foreach ($lista_collabs as $collab) {
             $id = $collab->getId();
@@ -129,19 +129,19 @@ class ShowContattoDocente extends UniversiboCommand
             if (!array_key_exists('f35_stato', $_POST)
                     || !array_key_exists($_POST['f35_stato'], $f35_stati))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
 
             if (!array_key_exists('f35_id_username', $_POST)
                     || !array_key_exists($_POST['f35_id_username'],
                             $f35_collab_list))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
 
             $f35_stato = $_POST['f35_stato'];
             $f35_id_username = $_POST['f35_id_username'];
@@ -177,7 +177,7 @@ Stato attuale: ' . $f35_stati[$f35_stato] . '
 Report attuale:
 ' . $contatto->getReport() . '
 
-Link: ' . $router->generate('universibo_legacy_contact_professor', array('cod_doc' =>$docente->getCodDoc()))
+Link: ' . $router->generate('universibo_legacy_contact_professor', ['cod_doc' =>$docente->getCodDoc()])
                     . '
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
 
@@ -220,15 +220,15 @@ Link: ' . $router->generate('universibo_legacy_contact_professor', array('cod_do
                         'Info su ' . $docente->getNomeDoc());
         $template
                 ->assign('ShowContattoDocente_contatto',
-                        array('stato' => $f35_stati[$f35_stato],
+                        ['stato' => $f35_stati[$f35_stato],
                                 'assegnato a' => ($f35_id_username != null
                                         && array_key_exists($f35_id_username,
                                                 $f35_collab_list)) ? $f35_collab_list[$f35_id_username]
                                         : '',
-                                'report' => $contatto->getReport()));
+                                'report' => $contatto->getReport()]);
 
         // TODO da attivare quando sarà aggiunto l'argomento nell'help
-        //$this->executePlugin('ShowTopic', array('reference' => 'contattodocenti'));
+        //$this->executePlugin('ShowTopic', ['reference' => 'contattodocenti']);
         return 'default';
     }
 

@@ -30,20 +30,20 @@ class ShowPersonalFiles extends UniversiboCommand
 
         $listaFile = FileItem::selectFileItemsByIdUtente($idUtente, true);
 
-        $files = array();
+        $files = [];
         foreach ($listaFile as $item) {
             if (!$item instanceof FileItem) {
                 continue;
             }
 
-            $files[$item->getIdFile()] = array(
+            $files[$item->getIdFile()] = [
                     'nome' => $item->getNomeFile(),
                     'data' => $item->getDataInserimento(),
                     'dimensione' => $item->getDimensione(),
-                    'editUri' => $router->generate('universibo_legacy_file_edit', array('id_file' => $item->getIdFile())),
-                    'deleteUri' => $router->generate('universibo_legacy_file_delete', array('id_file' => $item->getIdFile())),
-                    'downloadUri' => $router->generate('universibo_legacy_file_download', array('id_file' => $item->getIdFile()))
-            );
+                    'editUri' => $router->generate('universibo_legacy_file_edit', ['id_file' => $item->getIdFile()]),
+                    'deleteUri' => $router->generate('universibo_legacy_file_delete', ['id_file' => $item->getIdFile()]),
+                    'downloadUri' => $router->generate('universibo_legacy_file_download', ['id_file' => $item->getIdFile()])
+            ];
         }
 
         $template->assign('ShowPersonalFiles_listaFile', $files);

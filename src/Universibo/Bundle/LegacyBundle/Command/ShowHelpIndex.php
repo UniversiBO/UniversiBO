@@ -23,7 +23,7 @@ class ShowHelpIndex extends UniversiboCommand
 
         $template -> assign('showHelpIndex_langAltTitle', 'Help');
 
-        $this->executePlugin('ShowHelpId', array( 'id_help' => 0 ) );
+        $this->executePlugin('ShowHelpId', [ 'id_help' => 0 ] );
 
         return 'default';
     }

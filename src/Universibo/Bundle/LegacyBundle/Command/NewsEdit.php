@@ -30,7 +30,7 @@ class NewsEdit extends CanaleCommand
 
         $user = $this->get('security.context')->getToken()->getUser();
         $canale = $this->getRequestCanale();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $id_canale = $canale->getIdCanale();
 
         //diritti
@@ -41,9 +41,9 @@ class NewsEdit extends CanaleCommand
 
         if ($canale->getServizioNews() == false)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => "Il servizio news e` disattivato",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         if (array_key_exists($id_canale, $user_ruoli)) {
             $ruolo = $user_ruoli[$id_canale];
@@ -55,10 +55,10 @@ class NewsEdit extends CanaleCommand
         $news = NewsItem::selectNewsItem($id_news);
         if ($news == false)
             Error::throwError(_ERROR_DEFAULT,
-                    array(
+                    [
                             'msg' => 'L\'id della notizia richiesta '
                                     . $id_news . ' non e` valido',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         $autore = ($user->getId() == $news->getIdUtente());
 
@@ -66,15 +66,15 @@ class NewsEdit extends CanaleCommand
         $canali_news = $news->getIdCanali();
         if (!in_array($id_canale, $canali_news))
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => 'I parametri passati non sono coerenti',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $autore)))
             throw new AccessDeniedHttpException('Not allowed to edit news');
 
-        $param = array('id_notizie' => array($id_news),
-                'chk_diritti' => false);
+        $param = ['id_notizie' => [$id_news],
+                'chk_diritti' => false];
         $this->executePlugin('ShowNews', $param);
 
         $frontcontroller = $this->getFrontController();
@@ -107,7 +107,7 @@ class NewsEdit extends CanaleCommand
             $f8_data_scad_min = $krono->k_date('%i', $data_scadenza);
         }
 
-        //		$elenco_canali = array ($id_canale);
+        //		$elenco_canali = [$id_canale];
         //		$ruoli_keys = array_keys($user_ruoli);
         //		$num_ruoli = count($ruoli_keys);
         //		for ($i = 0; $i < $num_ruoli; $i ++)
@@ -123,7 +123,7 @@ class NewsEdit extends CanaleCommand
         //			$current_canale =  Canale :: retrieveCanale($id_current_canale);
         //			$nome_current_canale = $current_canale->getTitolo();
         //			$spunta = (in_array($id_current_canale, $news->getIdCanali())) ? 'true' : 'false';
-        //			$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
+        //			$f8_canale[] = ['id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta];
         //		}
 
         $lista_canali = $news->getIdCanali();
@@ -132,7 +132,7 @@ class NewsEdit extends CanaleCommand
             $id_current_canale = $lista_canali[$i];
             $current_canale = Canale::retrieveCanale($id_current_canale);
             $nome_current_canale = $current_canale->getTitolo();
-            $f8_canale[] = array('nome_canale' => $nome_current_canale);
+            $f8_canale[] = ['nome_canale' => $nome_current_canale];
         }
 
         $f8_accept = false;
@@ -153,28 +153,28 @@ class NewsEdit extends CanaleCommand
                     || !array_key_exists('f8_data_scad_min', $_POST)
                     || !array_key_exists('f8_testo', $_POST)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f8_accept = false;
             }
 
             //titolo
             if (strlen($_POST['f8_titolo']) > 150) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } elseif ($_POST['f8_titolo'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } else
                 $f8_titolo = $_POST['f8_titolo'];
@@ -183,11 +183,11 @@ class NewsEdit extends CanaleCommand
             //data_ins_gg
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_ins_gg'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo giorno di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
                 $checkdate_ins = false;
             } else
@@ -196,11 +196,11 @@ class NewsEdit extends CanaleCommand
             //f8_data_ins_mm
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_ins_mm'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
                 $checkdate_ins = false;
             } else
@@ -209,21 +209,21 @@ class NewsEdit extends CanaleCommand
             //f8_data_ins_aa
             if (!preg_match('/^([0-9]{4})$/', $_POST['f8_data_ins_aa'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
                 $checkdate_ins = false;
             } elseif ($_POST['f8_data_ins_aa'] < 1970
                     || $_POST['f8_data_ins_aa'] > 2032) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
                 $checkdate_ins = false;
             } else
@@ -232,20 +232,20 @@ class NewsEdit extends CanaleCommand
             //f8_data_ins_ora
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_ins_ora'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } elseif ($_POST['f8_data_ins_ora'] < 0
                     || $_POST['f8_data_ins_ora'] > 23) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } else
                 $f8_data_ins_ora = $_POST['f8_data_ins_ora'];
@@ -253,20 +253,20 @@ class NewsEdit extends CanaleCommand
             //f8_data_ins_min
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_ins_min'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } elseif ($_POST['f8_data_ins_min'] < 0
                     || $_POST['f8_data_ins_min'] > 59) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } else
                 $f8_data_ins_min = $_POST['f8_data_ins_min'];
@@ -275,11 +275,11 @@ class NewsEdit extends CanaleCommand
                     && !checkdate($_POST['f8_data_ins_mm'],
                             $_POST['f8_data_ins_gg'], $_POST['f8_data_ins_aa'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La data di inserimento specificata non esiste',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             }
 
@@ -295,11 +295,11 @@ class NewsEdit extends CanaleCommand
                 //data_scad_gg
                 if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_scad_gg'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                     $checkdate_scad = false;
                 } else
@@ -308,11 +308,11 @@ class NewsEdit extends CanaleCommand
                 //f8_data_scad_mm
                 if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_scad_mm'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo mese di inserimento non \u00e8 valido',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                     $checkdate_scad = false;
                 } else
@@ -321,21 +321,21 @@ class NewsEdit extends CanaleCommand
                 //f8_data_scad_aa
                 if (!preg_match('/^([0-9]{4})$/', $_POST['f8_data_scad_aa'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo anno di inserimento non \u00e8 valido',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => $template));
+                                    'template_engine' => $template]);
                     $f8_accept = false;
                     $checkdate_scad = false;
                 } elseif ($_POST['f8_data_scad_aa'] < 1970
                         || $_POST['f8_data_scad_aa'] > 2032) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => $template));
+                                    'template_engine' => $template]);
                     $f8_accept = false;
                     $checkdate_scad = false;
                 } else
@@ -344,20 +344,20 @@ class NewsEdit extends CanaleCommand
                 //f8_data_scad_ora
                 if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_scad_ora'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 } elseif ($_POST['f8_data_scad_ora'] < 0
                         || $_POST['f8_data_scad_ora'] > 23) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 } else
                     $f8_data_scad_ora = $_POST['f8_data_scad_ora'];
@@ -365,20 +365,20 @@ class NewsEdit extends CanaleCommand
                 //f8_data_scad_min
                 if (!preg_match('/^([0-9]{1,2})$/', $_POST['f8_data_scad_min'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo minuto di inserimento non \u00e8 valido',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 } elseif ($_POST['f8_data_scad_min'] < 0
                         || $_POST['f8_data_scad_min'] > 59) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 } else
                     $f8_data_scad_min = $_POST['f8_data_scad_min'];
@@ -388,11 +388,11 @@ class NewsEdit extends CanaleCommand
                                 $_POST['f8_data_scad_gg'],
                                 $_POST['f8_data_scad_aa'])) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'La data di scadenza specificata non esiste',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 }
 
@@ -404,11 +404,11 @@ class NewsEdit extends CanaleCommand
 
                 if ($data_scadenza < $data_inserimento) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'La data di scadenza e` minore della data di inserimento',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f8_accept = false;
                 }
 
@@ -417,19 +417,19 @@ class NewsEdit extends CanaleCommand
             //testo
             if (strlen($_POST['f8_testo']) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il testo della notizia deve essere inferiore ai 3000 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } elseif ($_POST['f8_testo'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il testo della notizia deve essere inserito obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f8_accept = false;
             } else
                 $f8_testo = $_POST['f8_testo'];
@@ -449,11 +449,11 @@ class NewsEdit extends CanaleCommand
             //					{
             //						if(!preg_match('/^([0-9]{1,9})$/', $key))
             //						{
-            //							Error :: throwError(_ERROR_DEFAULT, array ('msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => true));
+            //							Error :: throwError(_ERROR_DEFAULT, ['msg' => 'Il form inviato non ? valido', 'file' => __FILE__, 'line' => __LINE__, 'log' => true]);
             //						}
             //						//$user_ruoli[$key]->getIdCanale();
             //						$canale =  Canale :: retrieveCanale($key);
-            //						Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Non possiedi i diritti di modifica nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+            //						Error :: throwError(_ERROR_NOTICE, ['msg' => 'Non possiedi i diritti di modifica nel canale: '.$canale->getTitolo(), 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template]);
             //						$f8_accept = false;
             //					}
             //				}
@@ -461,7 +461,7 @@ class NewsEdit extends CanaleCommand
             //			else
             //			{
             //				$f8_accept = false;
-            //				Error :: throwError(_ERROR_NOTICE, array ('msg' => 'Devi selezionare almeno un canale', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+            //				Error :: throwError(_ERROR_NOTICE, ['msg' => 'Devi selezionare almeno un canale', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template]);
             //			}
 
             //esecuzione operazioni accettazione del form
@@ -497,7 +497,7 @@ class NewsEdit extends CanaleCommand
                 //							break;
                 //					}
                 //					$spunta = (array_key_exists($id_current_canale, $_POST['f8_canale'])) ? 'true' : 'false';
-                //					$f8_canale[] = array ('id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta);
+                //					$f8_canale[] = ['id_canale' => $id_current_canale, 'nome_canale' => $nome_current_canale, 'spunta' => $spunta];
                 //				}
                 //				foreach ($f8_canale as $key => $value)
                 //				{
@@ -537,7 +537,7 @@ class NewsEdit extends CanaleCommand
         $template->assign('f8_scadenza', $f8_scadenza);
         $template->assign('f8_canale', $f8_canale);
 
-        $this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
 
         return 'default';
 

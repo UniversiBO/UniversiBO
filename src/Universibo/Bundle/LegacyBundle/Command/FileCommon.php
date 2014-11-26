@@ -30,17 +30,17 @@ abstract class FileCommon extends UniversiboCommand
             Smarty $template)
     {
         if (!preg_match('/^([0-9]{1,3})$/', $permissions)) {
-            Error::throwError(_ERROR_NOTICE, array('id_utente' => $user->getId(),
+            Error::throwError(_ERROR_NOTICE, ['id_utente' => $user->getId(),
                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
                 'file' => __FILE__, 'line' => __LINE__,
                 'log' => false,
-                'template_engine' => $template));
+                'template_engine' => $template]);
         } elseif (!$this->isFilePermissionsValid($permissions, $user->hasRole('ROLE_ADMIN'))) {
-            Error::throwError(_ERROR_NOTICE, array('id_utente' => $user->getId(),
+            Error::throwError(_ERROR_NOTICE, ['id_utente' => $user->getId(),
                 'msg' => 'Il valore dei diritti di download non e` ammissibile',
                 'file' => __FILE__, 'line' => __LINE__,
                 'log' => false,
-                'template_engine' => $template));
+                'template_engine' => $template]);
         }
     }
 
@@ -56,9 +56,9 @@ abstract class FileCommon extends UniversiboCommand
             return false;
         }
 
-        return $isAdmin || in_array($permissions, array(
+        return $isAdmin || in_array($permissions, [
             LegacyRoles::ALL,
-            LegacyRoles::ALL & ~LegacyRoles::OSPITE)
+            LegacyRoles::ALL & ~LegacyRoles::OSPITE]
         );
     }
 }

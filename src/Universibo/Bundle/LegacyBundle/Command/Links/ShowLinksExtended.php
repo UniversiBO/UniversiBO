@@ -29,9 +29,9 @@ class ShowLinksExtended extends ShowLinksCommon
      *
      * @param array $param deve contenere:
      *                     - 'id_canale' l'id del canale
-     *                     es: array('num'=>5)
+     *                     es: ['num'=>5]
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $id_canale  =  $param['id_canale'];
 
@@ -41,7 +41,7 @@ class ShowLinksExtended extends ShowLinksCommon
         $fc        = $bc->getFrontController();
         $template  = $fc->getTemplateEngine();
         //BUG strano: se passo per riferimento l'array dei ruoli, si modifica il session user di universibo_command
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $router = $this->get('router');
 
         $ultima_modifica_canale =  $canale->getUltimaModifica();
@@ -68,7 +68,7 @@ class ShowLinksExtended extends ShowLinksCommon
         $lista_links = Link::selectCanaleLinks($id_canale);
 
         $ret_links = count($lista_links);
-        $elenco_links_tpl = array();
+        $elenco_links_tpl = [];
 
         for ($i = 0; $i < $ret_links; $i++) {
             $links = $lista_links[$i];
@@ -76,16 +76,16 @@ class ShowLinksExtended extends ShowLinksCommon
             $elenco_links_tpl[$i]['uri']       		= $links->getUri();
             $elenco_links_tpl[$i]['label']      	= $links->getLabel();
             $elenco_links_tpl[$i]['description']    = $links->getDescription();
-            $elenco_links_tpl[$i]['userlink']    = $router->generate('universibo_legacy_user', array('id_utente' => $links->getIdUtente()));
+            $elenco_links_tpl[$i]['userlink']    = $router->generate('universibo_legacy_user', ['id_utente' => $links->getIdUtente()]);
             $elenco_links_tpl[$i]['user']    = $links->getUsername();
 
             $elenco_links_tpl[$i]['tipo'] = ($this->isInternalLink($links)) ? "interno" : "esterno";
 
             if (($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $links->getIdUtente()==$user->getId()))) {
                 $elenco_links_tpl[$i]['modifica']="Modifica";
-                $elenco_links_tpl[$i]['modifica_link_uri'] = $router->generate('universibo_legacy_link_edit', array('id_link' => $links->getIdLink(), 'id_canale' => $links->getIdCanale()));
+                $elenco_links_tpl[$i]['modifica_link_uri'] = $router->generate('universibo_legacy_link_edit', ['id_link' => $links->getIdLink(), 'id_canale' => $links->getIdCanale()]);
                 $elenco_links_tpl[$i]['elimina']="Cancella";
-                $elenco_links_tpl[$i]['elimina_link_uri'] = $router->generate('universibo_legacy_link_delete', array('id_link' => $links->getIdLink(), 'id_canale' => $links->getIdCanale()));
+                $elenco_links_tpl[$i]['elimina_link_uri'] = $router->generate('universibo_legacy_link_delete', ['id_link' => $links->getIdLink(), 'id_canale' => $links->getIdCanale()]);
             }
         }
 

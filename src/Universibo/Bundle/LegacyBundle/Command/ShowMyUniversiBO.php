@@ -31,9 +31,9 @@ class ShowMyUniversiBO extends UniversiboCommand
 
         //procedure per ricavare e mostrare le ultime 5 notizie dei canali a cui si ? iscritto...
 
-        $arrayIdCanaliNews = array();
-        $arrayIdCanaliFiles = array();
-        $arrayCanali = array();
+        $arrayIdCanaliNews = [];
+        $arrayIdCanaliFiles = [];
+        $arrayCanali = [];
 
         $ruoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente->getId());
 
@@ -57,16 +57,16 @@ class ShowMyUniversiBO extends UniversiboCommand
 
         $this
                 ->executePlugin('ShowMyNews',
-                        array('id_notizie' => $arrayNewsItems,
-                                'chk_diritti' => false));
+                        ['id_notizie' => $arrayNewsItems,
+                                'chk_diritti' => false]);
 
         $arrayFilesItems = $this->getLatestFileCanale(5, $arrayIdCanaliFiles);
 
         $this
                 ->executePlugin('ShowMyFileTitoli',
-                        array('files' => $arrayFilesItems, 'chk_diritti' => false));
+                        ['files' => $arrayFilesItems, 'chk_diritti' => false]);
 
-        $template->assign('showMyScheda',$router->generate('universibo_legacy_user', array('id_utente' => $utente->getId())));
+        $template->assign('showMyScheda',$router->generate('universibo_legacy_user', ['id_utente' => $utente->getId()]));
     }
 
     /**

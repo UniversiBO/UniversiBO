@@ -32,9 +32,9 @@ class FileStudentiComment extends UniversiboCommand
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => 0,
+                    ['id_utente' => 0,
                             'msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $fileId = $this->getRequest()->attributes->get('id_file');
@@ -52,8 +52,8 @@ class FileStudentiComment extends UniversiboCommand
             $canali = $file->getIdCanali();
 
             $template->assign('FileStudentiComment_ris', 'Esiste già un tuo commento a questo file.');
-            $template->assign('common_canaleURI', $router->generate('universibo_legacy_file', array('id_file' => $id_file, 'id_canale' => $canali[0])));
-            $template->assign('FilesStudentiComment_modifica', $router->generate('universibo_legacy_file_studenti_comment_edit', array('id_canale' => $canali[0], 'id_commento' => $id_commento)));
+            $template->assign('common_canaleURI', $router->generate('universibo_legacy_file', ['id_file' => $id_file, 'id_canale' => $canali[0]]));
+            $template->assign('FilesStudentiComment_modifica', $router->generate('universibo_legacy_file_studenti_comment_edit', ['id_canale' => $canali[0], 'id_commento' => $id_commento]));
             $template->assign('esiste_CommentoItem', 'true');
 
             return 'success';
@@ -79,20 +79,20 @@ class FileStudentiComment extends UniversiboCommand
                     || !array_key_exists('f26_voto', $_POST)) {
                 //var_dump($_POST);die();
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f26_accept = false;
             }
 
             //commento
             if (trim($_POST['f26_commento']) == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Inserisci un commento',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f26_accept = false;
             } else {
                 $f26_commento = $_POST['f26_commento'];
@@ -101,10 +101,10 @@ class FileStudentiComment extends UniversiboCommand
             //voto
             if (!preg_match('/^([0-5]{1})$/', $_POST['f26_voto'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Voto non valido', 'file' => __FILE__,
                                 'line' => __LINE__, 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f26_accept = false;
             } else
                 $f26_voto = $_POST['f26_voto'];
@@ -119,7 +119,7 @@ class FileStudentiComment extends UniversiboCommand
                 $template
                         ->assign('FileStudentiComment_ris',
                                 'Il tuo commento è stato inserito con successo.');
-                $template->assign('common_canaleURI', $router->generate('universibo_legacy_file', array('id_file' => $id_file, 'id_canale' => $canali[0])));
+                $template->assign('common_canaleURI', $router->generate('universibo_legacy_file', ['id_file' => $id_file, 'id_canale' => $canali[0]]));
 
                 return 'success';
             }

@@ -87,11 +87,11 @@ abstract class CanaleCommand extends UniversiboCommand
             if (array_key_exists($id_canale, $user_ruoli) && $user_ruoli[$id_canale]->isMyUniversiBO()) {
                 $template->assign('common_canaleMyUniversiBO', 'remove');
                 $template->assign('common_langCanaleMyUniversiBO', 'Rimuovi questa pagina da MyUniversiBO');
-                $template->assign('common_canaleMyUniversiBOUri', $router->generate('universibo_legacy_myuniversibo_remove', array('id_canale' => $canale->getIdCanale())));
+                $template->assign('common_canaleMyUniversiBOUri', $router->generate('universibo_legacy_myuniversibo_remove', ['id_canale' => $canale->getIdCanale()]));
             } else {
                 $template->assign('common_canaleMyUniversiBO', 'add');
                 $template->assign('common_langCanaleMyUniversiBO', 'Aggiungi questa pagina a MyUniversiBO');
-                $template->assign('common_canaleMyUniversiBOUri', $router->generate('universibo_legacy_myuniversibo_add', array('id_canale' => $canale->getIdCanale())));
+                $template->assign('common_canaleMyUniversiBOUri', $router->generate('universibo_legacy_myuniversibo_add', ['id_canale' => $canale->getIdCanale()]));
             }
         } else
             $template->assign('common_langCanaleMyUniversiBO', '');
@@ -115,7 +115,7 @@ abstract class CanaleCommand extends UniversiboCommand
     {
         $id_canale = $this->getRequestIdCanale();
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         if (array_key_exists($id_canale, $user_ruoli)) {
             $user_ruoli[$id_canale]->updateUltimoAccesso(time(), true);
@@ -140,7 +140,7 @@ abstract class CanaleCommand extends UniversiboCommand
 
             $attivaModificaDiritti = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
-            $arrayPublicUsers = array();
+            $arrayPublicUsers = [];
             $arrayRuoli = $canale->getRuoli();
             //var_dump($arrayRuoli);
             $keys = array_keys($arrayRuoli);
@@ -159,9 +159,9 @@ abstract class CanaleCommand extends UniversiboCommand
                     }
 
                     //var_dump($user);
-                    $contactUser = array();
+                    $contactUser = [];
 
-                    $contactUser['utente_link'] = $router->generate('universibo_legacy_user', array('id_utente' => $user_temp->getId()));
+                    $contactUser['utente_link'] = $router->generate('universibo_legacy_user', ['id_utente' => $user_temp->getId()]);
                     $contactUser['nome'] = LegacyRoles::$map['plural'][$user_temp->getLegacyGroups()];
                     $contactUser['label'] = $user_temp->getUsername();
                     $contactUser['ruolo'] = ($ruolo->isReferente()) ? 'R' : (($ruolo->isModeratore()) ? 'M' : 'none');
@@ -171,19 +171,19 @@ abstract class CanaleCommand extends UniversiboCommand
                 }
             }
             //ordina $arrayCanali
-            //usort($arrayUsers, array('CanaleCommand','_compareMyUniversiBO'));
+            //usort($arrayUsers, ['CanaleCommand','_compareMyUniversiBO']);
             //assegna al template
             if ($attivaContatti) {
                 //var_dump($arrayPublicUsers);
-                uksort($arrayPublicUsers, array($this, '_compareContattiKeys'));
+                uksort($arrayPublicUsers, [$this, '_compareContattiKeys']);
                 //var_dump($arrayPublicUsers);
 
                 $template->assign('common_contactsCanaleAvailable', 'true');
                 $template->assign('common_langContactsCanale', 'Contatti');
                 //$template->assign('common_contactsCanale', $arrayUsers);
                 $template->assign('common_contactsCanale', $arrayPublicUsers);
-                $contactsEditUri = $router->generate('universibo_legacy_role_admin_search', array('id_canale' => $canale->getIdCanale()));
-                $template->assign('common_contactsEdit', array('label' => 'Modifica diritti', 'uri' => $contactsEditUri));
+                $contactsEditUri = $router->generate('universibo_legacy_role_admin_search', ['id_canale' => $canale->getIdCanale()]);
+                $template->assign('common_contactsEdit', ['label' => 'Modifica diritti', 'uri' => $contactsEditUri]);
                 $template->assign('common_contactsEditAvailable', ($attivaModificaDiritti) ? 'true' : 'false');
 
                 $template->assign('common_langLinksCanale', 'Links');
@@ -194,14 +194,14 @@ abstract class CanaleCommand extends UniversiboCommand
             if ($this->getRequestCanale()->getServizioForum()) {
                 $forumRouter = $this->get('universibo_forum.router');
                 //				$newposts = 'false';
-                $list_post = array();
+                $list_post = [];
                 $fa = $this->get('universibo_forum.dao.post');
                 $fr = $this->get('universibo_forum.router');
 
                 $id_posts_list = $fa->getLatestPosts($canale->getForumForumId(), 10);
 
                 foreach ($id_posts_list as $curr_post) {
-                    $list_post[] = array('URI' => $fr->getPostUri($curr_post['min']), 'desc' => $curr_post['topic_title']);
+                    $list_post[] = ['URI' => $fr->getPostUri($curr_post['min']), 'desc' => $curr_post['topic_title']];
                 }
 
                 $template->assign('common_newPostsAvailable', 'true');
@@ -210,7 +210,7 @@ abstract class CanaleCommand extends UniversiboCommand
             }
         }
 
-        $rssResponse = $this->forward('UniversiboWebsiteBundle:Common:rss', array('channel' => $canale));
+        $rssResponse = $this->forward('UniversiboWebsiteBundle:Common:rss', ['channel' => $canale]);
         $template->assign('common_rss', $rssResponse->getContent());
 
         $this->updateUltimoAccesso();
@@ -220,7 +220,7 @@ abstract class CanaleCommand extends UniversiboCommand
 
     public function _compareContattiKeys($b, $a)
     {
-        //		$theArrayOrder = array ('Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>'');
+        //		$theArrayOrder = ['Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>''];
         //		$posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
         //		$posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
         //		if ($posA==$posB) return 0;
@@ -256,7 +256,7 @@ abstract class CanaleCommand extends UniversiboCommand
 
     protected function ensureChannelType($allowedType)
     {
-        return $this->ensureChannelTypes(array($allowedType));
+        return $this->ensureChannelTypes([$allowedType]);
     }
 
     protected function ensureChannelTypes(array $allowedTypes)

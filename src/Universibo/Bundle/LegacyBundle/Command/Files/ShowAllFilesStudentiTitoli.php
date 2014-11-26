@@ -27,7 +27,7 @@ class ShowAllFilesStudentiTitoli extends PluginCommand
      *
      * @param array $param nessu parametro
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $elenco_file = $param['files'];
         $bc        = $this->getBaseCommand();
@@ -54,11 +54,11 @@ class ShowAllFilesStudentiTitoli extends PluginCommand
             $template->assign('showAllFilesStudentiTitoli_langFileAvailableFlag', 'true');
         }
 
-//		usort($elenco_file, array('ShowMyFileTitoli','_compareFile'));
+//		usort($elenco_file, ['ShowMyFileTitoli','_compareFile']);
 
-        //$elenco_categorie_file_tpl = array();
-        $categorie_tpl = array();
-        $file_tpl = array();
+        //$elenco_categorie_file_tpl = [];
+        $categorie_tpl = [];
+        $file_tpl = [];
 
         if ($elenco_file ==! false) {
             $ret_file = count($elenco_file);
@@ -80,7 +80,7 @@ class ShowAllFilesStudentiTitoli extends PluginCommand
                     //$file_tpl['nuova']        = ($flag_chkDiritti && $personalizza_not_admin && $ultimo_accesso < $file->getUltimaModifica()) ? 'true' : 'false';
                     $file_tpl[$i]['nuova']        = ($personalizza_not_admin && $ultimo_accesso < $file->getDataModifica()) ? 'true' : 'false';
                     $file_tpl[$i]['autore']       = $file->getUsername();
-                    $file_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', array('id_utente' => $file->getIdUtente()));
+                    $file_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $file->getIdUtente()]);
                     $file_tpl[$i]['id_autore']    = $file->getIdUtente();
                     $file_tpl[$i]['dimensione'] = $file->getDimensione();
                     $file_tpl[$i]['voto_medio'] = round($file->getVoto($file->getIdFile()),1);
@@ -90,17 +90,17 @@ class ShowAllFilesStudentiTitoli extends PluginCommand
 //					if ($user->isGroupAllowed($permessi_download))
                     $canali = $file->getIdCanali();
                     $num_canali =  count($canali);
-                    $elenco_canali_tpl = array();
+                    $elenco_canali_tpl = [];
 
                     for ($j = 0; $j < $num_canali; $j++) {
                         $canale = Canale::retrieveCanale($canali[$j]);
                         if ($canale->isGroupAllowed($groups)) {
-                            $canale_tpl = array();
+                            $canale_tpl = [];
                             $file_tpl[$i]['canaleTitolo'] = $canale->getNome();
 
                             $file_tpl[$i]['canaleLink'] = $channelRouter->generate($canale);
-                            $file_tpl[$i]['download_uri'] = $router->generate('universibo_legacy_file_download', array('id_file' => $file->getIdFile(), 'id_canale' => $canali[$j]));
-                            $file_tpl[$i]['show_info_uri'] = $router->generate('universibo_legacy_file', array('id_file' => $file->getIdFile(), 'id_canale' => $canali[$j]));
+                            $file_tpl[$i]['download_uri'] = $router->generate('universibo_legacy_file_download', ['id_file' => $file->getIdFile(), 'id_canale' => $canali[$j]]);
+                            $file_tpl[$i]['show_info_uri'] = $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile(), 'id_canale' => $canali[$j]]);
                             $file_tpl[$i]['canali'][] = $canale_tpl;
                         }
                     }

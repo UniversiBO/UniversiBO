@@ -22,12 +22,12 @@ class ScriptTestSms extends UniversiboCommand
         var_dump($m);
 
         $op = 'GETCREDIT';
-        $fields = array(
+        $fields = [
             'operation' => $op,
             'id'            => $m->login,
             'password'      => $m->pwd,
 //			'ticket'        => ''
-        );
+        ];
 
         echo '**** PLAIN AUTH ****'. "\n";
         $ch = curl_init('http://smsweb.mobyt.it/sms-gw/sendsmart');
@@ -41,12 +41,12 @@ class ScriptTestSms extends UniversiboCommand
         var_dump($page);
 
         $op = 'GETCREDIT';
-        $fields = array(
+        $fields = [
             'operation' => $op,
             'id'            => $m->login,
 //			'password'      => $m->pwd,
             'ticket'        => md5($m->login.$op.$m->pwd)
-        );
+        ];
 
         echo '**** MD5 AUTH ****'. "\n";
         $ch = curl_init('http://smsweb.mobyt.it/sms-gw/sendsmart');

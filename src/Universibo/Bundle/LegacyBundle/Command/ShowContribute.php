@@ -32,15 +32,15 @@ class ShowContribute extends UniversiboCommand
         $template->assign('contribute_langTitleAlt', 'Collabora');
         $template
                 ->assign('contribute_langIntro',
-                        array(
+                        [
                                 'UniversiBO è un sito che nasce dalla collaborazione tra studenti, docenti e strutture universitarie. I docenti sono stati disponibili a dare il loro contributo e li ringraziamo per questo. Ma per permettere che questo portale continui la sua vita occorre che anche gli studenti collaborino.',
-                                'Se pensate che il servizio che offriamo sia utile e desiderate che continui a essere disponibile per tutti allora aiutateci a rendere questo portale ancora migliore.'));
+                                'Se pensate che il servizio che offriamo sia utile e desiderate che continui a essere disponibile per tutti allora aiutateci a rendere questo portale ancora migliore.']);
         $template
                 ->assign('contribute_langTitle',
                         '-- Come fare per collaborare? --');
         $template
                 ->assign('contribute_langHowToContribute',
-                        array(
+                        [
                                 'Non vi chiediamo di dedicare al progetto tutta la vostra vita universitaria!
         Le modalità di collaborazione sono tante e ognuna richiede tempi
         diversi. Eccovi un breve elenco di ciò che potreste fare per aiutarci:',
@@ -71,34 +71,34 @@ class ShowContribute extends UniversiboCommand
       [/list]',
                                 'Se quindi vi abbiamo convinto con queste poche e semplici parole e volete
         collaborare attivamente al progetto compilate questo questionario
-        e vi contatteremo al più presto.'));
+        e vi contatteremo al più presto.']);
 
         //domande questionario
         $template->assign('question_PersonalInfo', 'Dati personali: ');
         $template
                 ->assign('question_PersonalInfoData',
-                        array('Nome', 'Cognome', 'E-mail', 'Telefono',
-                                'Corso di Laurea'));
+                        ['Nome', 'Cognome', 'E-mail', 'Telefono',
+                                'Corso di Laurea']);
         $template
                 ->assign('question_q1',
                         'Saresti disponibile a darci un piccolo contributo(di tempo) per il progetto?');
         $template
                 ->assign('question_q1Answers',
-                        array('una giornata alla settimana o più;',
+                        ['una giornata alla settimana o più;',
                                 'poche ore alla settimana;',
-                                'pochi minuti alla settimana;'));
+                                'pochi minuti alla settimana;']);
         $template
                 ->assign('question_q2', 'Quanto tempo ti connetti a Internet?');
         $template
                 ->assign('question_q2Answers',
-                        array('quasi mai;', 'una volta alla settimana;',
-                                'una volta al giorno;', 'vivo connesso;'));
+                        ['quasi mai;', 'una volta alla settimana;',
+                                'una volta al giorno;', 'vivo connesso;']);
         $template
                 ->assign('question_q3',
                         'Quali di queste attività pensi di poter svolgere (anche più di una scelta)?');
         $template
                 ->assign('question_q3AnswersMulti',
-                        array(
+                        [
                                 'attività off-line(contatti con i docenti o studenti, reperimento materiale...);',
                                 'moderatore
         (controllare che la gente non scriva cose non permesse...);',
@@ -106,7 +106,7 @@ class ShowContribute extends UniversiboCommand
                                 'testare le nuove versioni dei sevizi
         provandoli on-line;',
                                 'elaborazione grafica di immagini (icone, scritte, ecc...);',
-                                'aiutare nella progettazione e programmazione del sito;'));
+                                'aiutare nella progettazione e programmazione del sito;']);
         $template
                 ->assign('question_PersonalNotes',
                         'Altre informazioni personali:');
@@ -145,9 +145,9 @@ class ShowContribute extends UniversiboCommand
                     || !array_key_exists('f3_cdl', $_POST)
                     || !array_key_exists('f3_altro', $_POST)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 var_dump($f3_corsi_di_laurea);
                 die();
                 $f3_accept = false;
@@ -156,10 +156,10 @@ class ShowContribute extends UniversiboCommand
             //nome
             if (strlen($_POST['f3_nome']) > 50) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il nome indicato puo` essere massimo 50 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_nome = $f3_nome = $_POST['f3_nome'];
@@ -167,10 +167,10 @@ class ShowContribute extends UniversiboCommand
             //cognome
             if (strlen($_POST['f3_cognome']) > 50) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il cognome indicato puo` essere massimo 50 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_cognome = $f3_cognome = $_POST['f3_cognome'];
@@ -179,10 +179,10 @@ class ShowContribute extends UniversiboCommand
             if ((strlen($_POST['f3_tel']) > 50)
                     || !preg_match('/^([0-9]{1,50})$/', $_POST['f3_tel'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il numero di cellulare indicato puo` essere massimo 20 cifre',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_tel = $f3_tel = $_POST['f3_tel'];
@@ -190,19 +190,19 @@ class ShowContribute extends UniversiboCommand
             //mail
             if (strlen($_POST['f3_mail']) > 50) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'L\' indirizzo e-mail indicato puo` essere massimo 50 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } elseif (!preg_match(
                     "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i",
                     $_POST['f3_mail'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Inserire un indirizzo e-mail valido',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_mail = $f3_mail = $_POST['f3_mail'];
@@ -213,10 +213,10 @@ class ShowContribute extends UniversiboCommand
             //tempo
             if (!array_key_exists('f3_tempo', $_POST)) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Indica quanto tempo utilizzi una connessione internet',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_tempo = $f3_tempo = $_POST['f3_tempo'];
@@ -224,10 +224,10 @@ class ShowContribute extends UniversiboCommand
             //internet
             if (!array_key_exists('f3_internet', $_POST)) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Indica quanto tempo libero potresti dedicare al progetto',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_internet = $f3_internet = $_POST['f3_internet'];
@@ -235,10 +235,10 @@ class ShowContribute extends UniversiboCommand
             //privacy
             if (!array_key_exists('f3_privacy', $_POST)) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'E\' necessario acconsentire al trattamento dei dati personali',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             }
 
@@ -288,10 +288,10 @@ class ShowContribute extends UniversiboCommand
 
             if (strlen($_POST['f3_cdl']) > 50) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user instanceof User ? $user->getId() : 0,
+                        ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il corso di laurea indicato puo` essere massimo 50 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
-                                'log' => false, 'template_engine' => &$template));
+                                'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
                 $q3_cdl = $f3_cdl = $_POST['f3_cdl'];
@@ -352,7 +352,7 @@ class ShowContribute extends UniversiboCommand
 
             $templating = $this->getContainer()->get('templating');
             $username = $session_user instanceof User ? $session_user->getUsername() : 'Anonimo';
-            $body = $templating->render('UniversiboLegacyBundle:Contribute:contributemail.txt.twig', array('questionario' => $questionario, 'username' => $username));
+            $body = $templating->render('UniversiboLegacyBundle:Contribute:contributemail.txt.twig', ['questionario' => $questionario, 'username' => $username]);
 
             $notRepo = $this->getContainer()->get('universibo_legacy.repository.notifica.notifica_item');
 

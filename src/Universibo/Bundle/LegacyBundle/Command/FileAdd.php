@@ -26,9 +26,9 @@ class FileAdd extends FileCommon
         $context = $this->get('security.context');
         if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => 0,
+                    ['id_utente' => 0,
                             'msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $request = $this->getRequest();
@@ -52,7 +52,7 @@ class FileAdd extends FileCommon
         $f12_file = '';
         $f12_titolo = '';
         $f12_abstract = '';
-        $f12_parole_chiave = array();
+        $f12_parole_chiave = [];
         $f12_categorie = FileItem::getCategorie();
         $f12_categoria = 5;
         $f12_data_inserimento = time();
@@ -60,7 +60,7 @@ class FileAdd extends FileCommon
         $f12_permessi_visualizza = '';
         $f12_password = null;
 
-        $elenco_canali = array();
+        $elenco_canali = [];
 
         $channelId = $this->getRequest()->get('id_canale');
 
@@ -68,9 +68,9 @@ class FileAdd extends FileCommon
         if ($channelId !== null) {
             if (!preg_match('/^([0-9]{1,9})$/', $channelId))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'id del canale richiesto non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $channelRepo = $this->get('universibo_legacy.repository.canale2');
             $canale = $channelRepo->find($channelId);
@@ -81,9 +81,9 @@ class FileAdd extends FileCommon
 
             if ($canale->getServizioFiles() == false)
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => "Il servizio files e` disattivato",
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $channelId = $canale->getIdCanale();
             $template->assign('common_canaleURI', $channelRouter->generate($canale));
@@ -97,7 +97,7 @@ class FileAdd extends FileCommon
                 $moderatore = $ruolo->isModeratore();
             }
 
-            $elenco_canali = array($channelId);
+            $elenco_canali = [$channelId];
             $f12_canale = $ruoloRepo->getRuoliInfoGroupedByYear($user, $channelId);
         } else
             $f12_canale = $ruoloRepo->getRuoliInfoGroupedByYear($user);
@@ -123,28 +123,28 @@ class FileAdd extends FileCommon
                     || !array_key_exists('f12_password_confirm', $_POST)) {
                 //var_dump($_POST);die();
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f12_accept = false;
             }
 
             //titolo
             if (strlen($_POST['f12_titolo']) > 150) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif ($_POST['f12_titolo'] == '') {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } else
                 $f12_titolo = $_POST['f12_titolo'];
@@ -156,11 +156,11 @@ class FileAdd extends FileCommon
             //data_ins_gg
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f12_data_ins_gg'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo giorno di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
@@ -169,11 +169,11 @@ class FileAdd extends FileCommon
             //f12_data_ins_mm
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f12_data_ins_mm'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
@@ -182,21 +182,21 @@ class FileAdd extends FileCommon
             //f12_data_ins_aa
             if (!preg_match('/^([0-9]{4})$/', $_POST['f12_data_ins_aa'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
                 $checkdate_ins = false;
             } elseif ($_POST['f12_data_ins_aa'] < 1970
                     || $_POST['f12_data_ins_aa'] > 2032) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
@@ -205,20 +205,20 @@ class FileAdd extends FileCommon
             //f12_data_ins_ora
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f12_data_ins_ora'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo ora di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif ($_POST['f12_data_ins_ora'] < 0
                     || $_POST['f12_data_ins_ora'] > 23) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } else
                 $f12_data_ins_ora = $_POST['f12_data_ins_ora'];
@@ -226,20 +226,20 @@ class FileAdd extends FileCommon
             //f12_data_ins_min
             if (!preg_match('/^([0-9]{1,2})$/', $_POST['f12_data_ins_min'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif ($_POST['f12_data_ins_min'] < 0
                     || $_POST['f12_data_ins_min'] > 59) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } else
                 $f12_data_ins_min = $_POST['f12_data_ins_min'];
@@ -249,11 +249,11 @@ class FileAdd extends FileCommon
                             $_POST['f12_data_ins_gg'],
                             $_POST['f12_data_ins_aa'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La data di inserimento specificata non esiste',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             }
 
@@ -264,11 +264,11 @@ class FileAdd extends FileCommon
             //abstract
             if (strlen($_POST['f12_abstract']) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif ($_POST['f12_abstract'] == '') {
                 $f12_abstract = $f12_titolo;
@@ -281,21 +281,21 @@ class FileAdd extends FileCommon
                 $parole_chiave = explode("\n", $_POST['f12_parole_chiave']);
                 if (count($parole_chiave) > 4) {
                     Error::throwError(_ERROR_NOTICE,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Si possono inserire al massimo 4 parole chiave',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'log' => false,
-                                    'template_engine' => &$template));
+                                    'template_engine' => &$template]);
                     $f12_accept = false;
                 } else {
                     foreach ($parole_chiave as $parola) {
                         if (strlen($parola > 40)) {
                             Error::throwError(_ERROR_NOTICE,
-                                    array('id_utente' => $user->getId(),
+                                    ['id_utente' => $user->getId(),
                                             'msg' => 'La lunghezza massima di una parola chiave e` di 40 caratteri',
                                             'file' => __FILE__,
                                             'line' => __LINE__, 'log' => false,
-                                            'template_engine' => &$template));
+                                            'template_engine' => &$template]);
                             $f12_accept = false;
                         } else {
                             $f12_parole_chiave[] = $parola;
@@ -307,19 +307,19 @@ class FileAdd extends FileCommon
             //permessi_download
             if (!preg_match('/^([0-9]{1,9})$/', $_POST['f12_categoria'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo categoria non e` ammissibile',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif (!array_key_exists($_POST['f12_categoria'], $f12_categorie)) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La categoria inviata contiene un valore non ammissibile',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } else
                 $f12_categoria = $_POST['f12_categoria'];
@@ -330,11 +330,11 @@ class FileAdd extends FileCommon
             //password non necessita controlli
             if ($_POST['f12_password'] != $_POST['f12_password_confirm']) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La password e il campo di verifica non corrispondono',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             } elseif ($_POST['f12_password'] != '') {
                 $f12_password = $_POST['f12_password'];
@@ -347,7 +347,7 @@ class FileAdd extends FileCommon
                 $f12_permessi_visualizza = LegacyRoles::ALL;
             // eventualmente dare la possibilità all'admin di metterli diversamente
 
-            $f12_canali_inserimento = array();
+            $f12_canali_inserimento = [];
             //controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
             if (array_key_exists('f12_canale', $_POST))
                 foreach ($_POST['f12_canale'] as $key => $value) {
@@ -360,12 +360,12 @@ class FileAdd extends FileCommon
                         //$user_ruoli[$key]->getIdCanale();
                         $canale = Canale::retrieveCanale($key);
                         Error::throwError(_ERROR_NOTICE,
-                                array('id_utente' => $user->getId(),
+                                ['id_utente' => $user->getId(),
                                         'msg' => 'Non possiedi i diritti di inserimento nel canale: '
                                                 . $canale->getTitolo(),
                                         'file' => __FILE__, 'line' => __LINE__,
                                         'log' => false,
-                                        'template_engine' => &$template));
+                                        'template_engine' => &$template]);
                         $f12_accept = false;
                     }
 
@@ -387,17 +387,17 @@ class FileAdd extends FileCommon
             $estensione = strtolower(substr($_FILES['f12_file']['name'], -4));
             if ($estensione == PHP_EXTENSION) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'E\' severamente vietato inserire file con estensione .php',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f12_accept = false;
             } elseif (!is_uploaded_file($_FILES['f12_file']['tmp_name'])) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Non e\' stato inviato nessun file',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f12_accept = false;
             }
 
@@ -438,9 +438,9 @@ class FileAdd extends FileCommon
                                 . $nomeFile) === false) {
                     $transaction->rollback();
                     Error::throwError(_ERROR_DEFAULT,
-                            array('id_utente' => $user->getId(),
+                            ['id_utente' => $user->getId(),
                                     'msg' => 'Errore nella copia del file',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
                 }
 
                 $fullFileName = $frontcontroller->getAppSetting('filesPath') . $nomeFile;
@@ -448,13 +448,13 @@ class FileAdd extends FileCommon
 
                 if ($antivirus->checkFile($fullFileName)) {
                     $transaction->rollback();
-                    Error::throwError(_ERROR_DEFAULT, array(
+                    Error::throwError(_ERROR_DEFAULT, [
                         'id_utente' => $user->getId(),
                         'msg' => 'ATTENZIONE: Il file inviato e\' risultato positivo al controllo antivirus!',
                         'file' => __FILE__, 'line' => __LINE__,
                         'log' => false,
                         'template_engine' => &$template
-                    ));
+                    ]);
                 }
 
                 $contactService = $this->get('universibo_core.contact.service');
@@ -489,7 +489,7 @@ class FileAdd extends FileCommon
                                 . '
 
                             Link: '
-                                . $router->generate('universibo_legacy_file', array('id_file' => $newFile->getIdFile()), true)
+                                . $router->generate('universibo_legacy_file', ['id_file' => $newFile->getIdFile()], true)
                                 . '
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                             Informazioni per la cancellazione:
@@ -584,7 +584,7 @@ class FileAdd extends FileCommon
                 ->assign('f12_data_ins_min',
                         $krono->k_date('%i', $f12_data_inserimento));
 
-        $this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'filescollabs']);
 
         return 'default';
 

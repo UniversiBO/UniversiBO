@@ -36,7 +36,7 @@ class FileDelete extends UniversiboCommand
         $referente = false;
         $moderatore = false;
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $request = $this->getRequest();
         $fileId = $request->attributes->get('id_file');
@@ -73,11 +73,11 @@ class FileDelete extends UniversiboCommand
             $canali_file = $file->getIdCanali();
             if (!in_array($channelId, $canali_file))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'I parametri passati non sono coerenti',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
-            $elenco_canali = array($channelId);
+            $elenco_canali = [$channelId];
 
             if (!($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || ($moderatore && $autore))) {
                 throw new AccessDeniedHttpException('Not allowed to delete file');
@@ -97,16 +97,16 @@ class FileDelete extends UniversiboCommand
         //
         $file_canali = $file->getIdCanali();
 
-        $f14_canale = array();
+        $f14_canale = [];
         $num_canali = count($file_canali);
         for ($i = 0; $i < $num_canali; $i++) {
             $id_current_canale = $file_canali[$i];
             $current_canale = $channelRepo->find($id_current_canale);
             $nome_current_canale = $current_canale->getTitolo();
             if (in_array($id_current_canale, $file->getIdCanali())) {
-                $f14_canale[] = array('id_canale' => $id_current_canale,
+                $f14_canale[] = ['id_canale' => $id_current_canale,
                         'nome_canale' => $nome_current_canale,
-                        'spunta' => 'true');
+                        'spunta' => 'true'];
             }
         }
 
@@ -118,7 +118,7 @@ class FileDelete extends UniversiboCommand
 
             $f14_accept = true;
 
-            $f14_canale_app = array();
+            $f14_canale_app = [];
             //controllo diritti su ogni canale di cui ? richiesta la cancellazione
             if (array_key_exists('f14_canale', $_POST)) {
                 foreach ($_POST['f14_canale'] as $key => $value) {
@@ -131,12 +131,12 @@ class FileDelete extends UniversiboCommand
                         //$user_ruoli[$key]->getIdCanale();
                         $canale = $channelRepo->find($key);
                         Error::throwError(_ERROR_NOTICE,
-                                array('id_utente' => $user->getId(),
+                                ['id_utente' => $user->getId(),
                                         'msg' => 'Non possiedi i diritti di eliminazione nel canale: '
                                                 . $canale->getTitolo(),
                                         'file' => __FILE__, 'line' => __LINE__,
                                         'log' => false,
-                                        'template_engine' => &$template));
+                                        'template_engine' => &$template]);
                         $f14_accept = false;
                     } else
                         $f14_canale_app[$key] = $value;
@@ -144,11 +144,11 @@ class FileDelete extends UniversiboCommand
             } elseif (count($f14_canale) > 0) {
                 $f14_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Devi selezionare almeno una pagina:',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
         }
@@ -181,7 +181,7 @@ class FileDelete extends UniversiboCommand
                 ->assign('fileDelete_flagCanali',
                         (count($f14_canale)) ? 'true' : 'false');
 
-        $this->executePlugin('ShowTopic', array('reference' => 'filescollabs'));
+        $this->executePlugin('ShowTopic', ['reference' => 'filescollabs']);
 
         return 'default';
     }

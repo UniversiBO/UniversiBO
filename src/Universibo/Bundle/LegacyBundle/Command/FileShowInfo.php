@@ -31,15 +31,15 @@ class FileShowInfo extends UniversiboCommand
         $tipo_file = $this->get('universibo_legacy.repository.files.file_item_studenti')->isFileStudenti($id_file);
 
         if (null != ($id_canale = $this->getRequest()->get('id_canale'))) {
-            $this->executePlugin('ShowFileInfo', array('id_file' => $id_file,
-                                    'id_canale' => $id_canale));
+            $this->executePlugin('ShowFileInfo', ['id_file' => $id_file,
+                                    'id_canale' => $id_canale]);
         } else
-            $this->executePlugin('ShowFileInfo', array('id_file' => $id_file));
+            $this->executePlugin('ShowFileInfo', ['id_file' => $id_file]);
         if ($tipo_file == true) {
             $template->assign('isFileStudente', 'true');
             $this
                     ->executePlugin('ShowFileStudentiCommenti',
-                            array('id_file' => $id_file));
+                            ['id_file' => $id_file]);
         } else
             $template->assign('isFileStudente', 'false');
 

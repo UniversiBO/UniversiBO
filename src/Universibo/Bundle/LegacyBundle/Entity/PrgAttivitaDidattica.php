@@ -511,7 +511,7 @@ class PrgAttivitaDidattica extends Canale
     * @deprecated
     * @param string $cod_cdl stringa a 4 cifre del codice del corso di laurea
     * @param int $anno_accademico anno accademico
-    * @return array(Insegnamento)
+    * @return Insegnamento[]
     */
     public static function selectPrgAttivitaDidatticaElencoCdl($cod_cdl, $anno_accademico)
     {

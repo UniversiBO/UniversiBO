@@ -29,10 +29,10 @@ class RuoliAdminSearch extends UniversiboCommand
 
         $referente = false;
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $userId = $user instanceof User ? $user->getId() : 0;
-        $ruoli = array();
-        $arrayPublicUsers = array();
+        $ruoli = [];
+        $arrayPublicUsers = [];
 
 
         $id_canale = $this->getRequest()->attributes->get('id_canale');
@@ -64,12 +64,12 @@ class RuoliAdminSearch extends UniversiboCommand
         if (array_key_exists('f16_submit', $_POST)  ) {
 
             if (!array_key_exists('f16_username', $_POST) || !array_key_exists('f16_email', $_POST) )
-                Error :: throwError(_ERROR_DEFAULT, array ('id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__));
+                Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
             $f16_accept = true;
 
             if ($_POST['f16_username'] == '' && $_POST['f16_email'] == '') {
-                Error :: throwError(_ERROR_NOTICE, array ('id_utente' => $user->getId(), 'msg' => 'Specificare almeno uno dei due criteri di ricerca', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template));
+                Error :: throwError(_ERROR_NOTICE, ['id_utente' => $user->getId(), 'msg' => 'Specificare almeno uno dei due criteri di ricerca', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template]);
                 $f16_accept = false;
             }
 
@@ -92,9 +92,9 @@ class RuoliAdminSearch extends UniversiboCommand
                 foreach ($users_search_keys as $key) {
                     $ruoli_search  = $roleRepo->findByIdUtente($users_search[$key]->getId());
 
-                    $contactUser = array();
-                    $contactUser['utente_link']  = $router->generate('universibo_legacy_user', array('id_utente' => $users_search[$key]->getId()));
-                    $contactUser['edit_link']  = $router->generate('universibo_legacy_role_admin_edit', array('id_canale' => $id_canale, 'id_utente' => $users_search[$key]->getId()));
+                    $contactUser = [];
+                    $contactUser['utente_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $users_search[$key]->getId()]);
+                    $contactUser['edit_link']  = $router->generate('universibo_legacy_role_admin_edit', ['id_canale' => $id_canale, 'id_utente' => $users_search[$key]->getId()]);
                     $contactUser['nome']  =  $translator->getUserPublicGroupName($users_search[$key]);
                     $contactUser['label'] = $users_search[$key]->getUsername();
 
@@ -123,9 +123,9 @@ class RuoliAdminSearch extends UniversiboCommand
 
                     $user = $this->get('universibo_website.repository.user')->find($canale_ruoli[$key]->getId());
                     //var_dump($user);
-                    $contactUser = array();
-                    $contactUser['utente_link']  = $router->generate('universibo_legacy_user', array('id_utente' => $user->getId()));
-                    $contactUser['edit_link']  = $router->generate('universibo_legacy_role_admin_edit', array('id_canale' => $id_canale, 'id_utente' => $user->getId()));
+                    $contactUser = [];
+                    $contactUser['utente_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $user->getId()]);
+                    $contactUser['edit_link']  = $router->generate('universibo_legacy_role_admin_edit', ['id_canale' => $id_canale, 'id_utente' => $user->getId()]);
                     $contactUser['nome']  = $translator->getUserPublicGroupName($user);
                     $contactUser['label'] = $user->getUsername();
                     $contactUser['ruolo'] = ($canale_ruoli[$key]->isReferente()) ? 'R' :  (($canale_ruoli[$key]->isModeratore()) ? 'M' : 'none');
@@ -149,7 +149,7 @@ class RuoliAdminSearch extends UniversiboCommand
         $template->assign('ruoliAdminSearch_langAction', "Modifica i diritti nella pagina\n".$canale->getTitolo());
         $template->assign('ruoliAdminSearch_langSearch', "Cerca un altro utente");
 
-        $this->executePlugin('ShowTopic', array('reference' => 'ruoliadmin'));
+        $this->executePlugin('ShowTopic', ['reference' => 'ruoliadmin']);
 
         return 'default';
     }

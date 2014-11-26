@@ -28,13 +28,13 @@ class LinkAdd extends UniversiboCommand
         $template = $frontcontroller->getTemplateEngine();
 
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => 0,
+                    ['id_utente' => 0,
                             'msg' => "Per questa operazione bisogna essere registrati\n la sessione potrebbe essere terminata",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
         $template
                 ->assign('common_canaleURI',
@@ -61,9 +61,9 @@ class LinkAdd extends UniversiboCommand
 
         if ($canale->getServizioLinks() == false)
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => "Il servizio links e` disattivato",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
 
         $channelRouter = $this->get('universibo_legacy.routing.channel');
         $template->assign('common_canaleURI', $channelRouter->generate($canale));
@@ -82,9 +82,9 @@ class LinkAdd extends UniversiboCommand
                     || !array_key_exists('f29_Label', $_POST)
                     || !array_key_exists('f29_Description', $_POST))
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $f29_URI = $_POST['f29_URI'];
             $f29_Description = $_POST['f29_Description'];
@@ -94,50 +94,50 @@ class LinkAdd extends UniversiboCommand
                 $f29_accept = false;
                 $f29_URI = 'http://';
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'URL del link alla pagina degli obiettivi deve iniziare con https://, http:// o ftp://, verificare di non aver lasciato spazi vuoti',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if ($f29_Label === '') {
                 $f29_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Non hai assegnato un\'etichetta al link',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if ($f29_Description === '') {
                 $f29_accept = false;
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'Non hai dato una descrizione del link',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
             }
 
             if (strlen($f29_Description) > 1000) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'La descrizione del link deve essere inferiore ai 1000 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f29_accept = false;
             }
 
             if (strlen($f29_Label) > 127) {
                 Error::throwError(_ERROR_NOTICE,
-                        array('id_utente' => $user->getId(),
+                        ['id_utente' => $user->getId(),
                                 'msg' => 'L\'etichetta del link deve essere inferiore ai 127 caratteri',
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'log' => false,
-                                'template_engine' => &$template));
+                                'template_engine' => &$template]);
                 $f29_accept = false;
             }
 
@@ -156,7 +156,7 @@ class LinkAdd extends UniversiboCommand
         $template->assign('f29_Label', $f29_Label);
         $template->assign('f29_Description', $f29_Description);
 
-        //$this->executePlugin('ShowTopic', array('reference' => 'newscollabs'));
+        //$this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
         return 'default';
 
     }

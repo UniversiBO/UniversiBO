@@ -33,7 +33,7 @@ class ShowInsegnamento extends CanaleCommand
         $id_canale = $this->getRequestIdCanale();
         $insegnamento = $this->getRequestCanale();
 
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         // ??
         $insegnamento->getTitolo();
@@ -62,13 +62,13 @@ class ShowInsegnamento extends CanaleCommand
         $template->assign('ins_infoDidEditUri', '');
         if ($context->isGranted('ROLE_ADMIN') || (array_key_exists($id_canale, $user_ruoli)
                         && $user_ruoli[$id_canale]->isReferente())) {
-            $template->assign('ins_infoDidEdit', $router->generate('universibo_legacy_insegnamento_info_edit', array('id_canale' => $id_canale)));
+            $template->assign('ins_infoDidEdit', $router->generate('universibo_legacy_insegnamento_info_edit', ['id_canale' => $id_canale]));
             if ($context->isGranted('ROLE_ADMIN') ||$context->isGranted('ROLE_MODERATOR'))
                 if (!$contatto) {
-                    $template->assign('ins_ContattoDocenteUri', $router->generate('universibo_legacy_contact_professor_add', array('id_canale' => $id_canale, 'cod_doc' => $coddoc)));
+                    $template->assign('ins_ContattoDocenteUri', $router->generate('universibo_legacy_contact_professor_add', ['id_canale' => $id_canale, 'cod_doc' => $coddoc]));
                     $template->assign('ins_ContattoDocente', 'Crea il contatto di questo docente');
                 } else {
-                    $template->assign('ins_ContattoDocenteUri', $router->generate('universibo_legacy_contact_professor', array('id_canale' => $id_canale, 'cod_doc' => $coddoc)));
+                    $template->assign('ins_ContattoDocenteUri', $router->generate('universibo_legacy_contact_professor', ['id_canale' => $id_canale, 'cod_doc' => $coddoc]));
                     $template->assign('ins_ContattoDocente', 'Visualizza lo stato di questo docente');
                 }
         } else {
@@ -95,7 +95,7 @@ class ShowInsegnamento extends CanaleCommand
                     . ']Obiettivi del corso[/url]';
         else
             $obiettivi = '[url='.
-        $router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $id_canale)).
+        $router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $id_canale]).
                 '#obiettivi]Obiettivi del corso[/url]';
 
         if ($info_didattica->getProgrammaLink() == ''
@@ -106,7 +106,7 @@ class ShowInsegnamento extends CanaleCommand
             $programma = '[url=' . $info_didattica->getProgrammaLink()
                     . ']Programma d\'esame[/url]';
         else
-            $programma = '[url='.$router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $id_canale)). '#programma]Programma d\'esame[/url]';
+            $programma = '[url='.$router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $id_canale]). '#programma]Programma d\'esame[/url]';
 
         if ($info_didattica->getTestiConsigliatiLink() == ''
                 && $info_didattica->getTestiConsigliati() == '') {
@@ -117,7 +117,7 @@ class ShowInsegnamento extends CanaleCommand
                     . ']Materiale didattico e
 testi consigliati[/url]';
         else
-            $materiale = '[url='.$router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $id_canale)).  '#modalita]Materiale didattico e
+            $materiale = '[url='.$router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $id_canale]).  '#modalita]Materiale didattico e
 testi consigliati[/url]';
         '';
 
@@ -129,7 +129,7 @@ testi consigliati[/url]';
             $modalita = '[url=' . $info_didattica->getModalitaLink()
                     . ']Modalità d\'esame[/url]';
         else
-            $modalita = '[url='.$router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $id_canale)). '#modalita]Modalità d\'esame[/url]';
+            $modalita = '[url='.$router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $id_canale]). '#modalita]Modalità d\'esame[/url]';
 
         if ($info_didattica->getAppelliLink() == ''
                 && $info_didattica->getAppelli() == '')
@@ -139,7 +139,7 @@ testi consigliati[/url]';
             $appelli = '[url=' . $info_didattica->getAppelliLink()
                     . ']Appelli d\'esame[/url]';
         else
-            $appelli = '[url='.$router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $id_canale)). '#appelli]Appelli d\'esame[/url]';
+            $appelli = '[url='.$router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $id_canale]). '#appelli]Appelli d\'esame[/url]';
 
         //$orario = '[url=#]Orario delle lezioni[/url]';
 
@@ -151,7 +151,7 @@ testi consigliati[/url]';
             $forum = false;
         }
 
-        $tpl_tabella = array();
+        $tpl_tabella = [];
 
         if($obiettivi)
             $tpl_tabella[] = $obiettivi;
@@ -176,10 +176,10 @@ testi consigliati[/url]';
 
         $template->assign('ins_title', $insegnamento->getTitolo());
 
-        $this->executePlugin('ShowNewsLatest', array('num' => 5));
-        $this->executePlugin('ShowLinks', array('num' => 12));
-        $this->executePlugin('ShowFileTitoli', array());
-        $this->executePlugin('ShowFileStudentiTitoli', array('num' => 12));
+        $this->executePlugin('ShowNewsLatest', ['num' => 5]);
+        $this->executePlugin('ShowLinks', ['num' => 12]);
+        $this->executePlugin('ShowFileTitoli', []);
+        $this->executePlugin('ShowFileStudentiTitoli', ['num' => 12]);
 
         return 'default';
     }

@@ -27,7 +27,7 @@ class ShowFileTitoli extends PluginCommand
      *
      * @param array $param nessu parametro
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         //$flag_chkDiritti	=  $param['chk_diritti'];
         //		var_dump($param['id_notizie']);
@@ -44,7 +44,7 @@ class ShowFileTitoli extends PluginCommand
         $id_canale = $canale->getIdCanale();
         $titolo_canale = $canale->getTitolo();
         $ultima_modifica_canale = $canale->getUltimaModifica();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $lastLogin = $user instanceof User ? $user->getLastLogin()->getTimestamp() : 0;
 
         $personalizza_not_admin = false;
@@ -65,10 +65,10 @@ class ShowFileTitoli extends PluginCommand
             if ($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $moderatore) {
                 $template->assign('showFileTitoli_addFileFlag', 'true');
                 $template->assign('showFileTitoli_addFile', 'Invia un nuovo file');
-                $template->assign('showFileTitoli_addFileUri', $router->generate('universibo_legacy_file_add', array('id_canale' => $id_canale)));
+                $template->assign('showFileTitoli_addFileUri', $router->generate('universibo_legacy_file_add', ['id_canale' => $id_canale]));
                 $template->assign('showFileTitoli_adminFileFlag', 'true');
                 $template->assign('showFileTitoli_adminFile', 'Gestione file');
-                $template->assign('showFileTitoli_adminFileUri', $router->generate('universibo_legacy_file_docente_admin', array('id_canale' => $id_canale)));
+                $template->assign('showFileTitoli_adminFileUri', $router->generate('universibo_legacy_file_docente_admin', ['id_canale' => $id_canale]));
             }
         } else {
             $personalizza = false;
@@ -90,13 +90,13 @@ class ShowFileTitoli extends PluginCommand
 
         //var_dump($elenco_id_file); die();
         $elenco_file = FileItem::selectFileItems($elenco_id_file);
-        usort($elenco_file, array($this, '_compareFile'));
+        usort($elenco_file, [$this, '_compareFile']);
 
         //var_dump($elenco_file); die();
 
-        //$elenco_categorie_file_tpl = array();
-        $categorie_tpl = array();
-        $elenco_file_tpl = array();
+        //$elenco_categorie_file_tpl = [];
+        $categorie_tpl = [];
+        $elenco_file_tpl = [];
 
         if ($elenco_file == !false) {
             $ret_file = count($elenco_file);
@@ -113,7 +113,7 @@ class ShowFileTitoli extends PluginCommand
 
                 $permessi_lettura = $file->getPermessiVisualizza();
                 if ($permessi_lettura & $groups) {
-                    $file_tpl = array();
+                    $file_tpl = [];
                     $file_tpl['titolo'] = $file->getTitolo();
                     //$file_tpl['notizia']      = $file->getNotizia();
                     $file_tpl['data'] = $krono
@@ -124,7 +124,7 @@ class ShowFileTitoli extends PluginCommand
                             && $ultimo_accesso < $file->getDataModifica()) ? 'true'
                             : 'false';
                     $file_tpl['autore'] = $file->getUsername();
-                    $file_tpl['autore_link'] = $router->generate('universibo_legacy_user', array('id_utente' => $file->getIdUtente()));
+                    $file_tpl['autore_link'] = $router->generate('universibo_legacy_user', ['id_utente' => $file->getIdUtente()]);
                     $file_tpl['id_autore'] = $file->getIdUtente();
                     $file_tpl['modifica'] = '';
                     $file_tpl['modifica_link'] = '';
@@ -133,18 +133,18 @@ class ShowFileTitoli extends PluginCommand
                     //if ( ($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $this_moderatore)  && $flag_chkDiritti)
                     if (($this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $this_moderatore)) {
                         $file_tpl['modifica'] = 'Modifica';
-                        $file_tpl['modifica_link'] = $router->generate('universibo_legacy_file_edit', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale));
+                        $file_tpl['modifica_link'] = $router->generate('universibo_legacy_file_edit', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                         $file_tpl['elimina'] = 'Elimina';
-                        $file_tpl['elimina_link'] = $router->generate('universibo_legacy_file_delete', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale));
+                        $file_tpl['elimina_link'] = $router->generate('universibo_legacy_file_delete', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     }
                     $file_tpl['dimensione'] = $file->getDimensione();
                     //	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
                     //					$file_tpl['download_uri'] = '';
                     //					$permessi_download = $file->getPermessiDownload();
                     //					if ($user->isGroupAllowed($permessi_download))
-                    $file_tpl['download_uri'] = $router->generate('universibo_legacy_file_download', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale));
+                    $file_tpl['download_uri'] = $router->generate('universibo_legacy_file_download', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     $file_tpl['categoria'] = $file->getCategoriaDesc();
-                    $file_tpl['show_info_uri'] = $router->generate('universibo_legacy_file', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale));
+                    $file_tpl['show_info_uri'] = $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
 
                     if (!array_key_exists($file->getIdCategoria(),
                             $elenco_file_tpl))

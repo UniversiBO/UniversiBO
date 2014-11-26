@@ -54,7 +54,7 @@ class ShowCollaboratore extends UniversiboCommand
         $contactService = $this->get('universibo_core.contact.service');
         list($email) = $contactService->getUserEmails($curr_user);
 
-        $arrayContatti = array('username' => $curr_user->getUsername(),
+        $arrayContatti = ['username' => $curr_user->getUsername(),
                 'intro' => $collaboratore->getIntro(),
                 'ruolo' => $collaboratore->getRuolo(),
                 'email' => $email,
@@ -62,7 +62,7 @@ class ShowCollaboratore extends UniversiboCommand
                 'obiettivi' => $collaboratore->getObiettivi(),
                 'foto' => $collaboratore->getFotoFilename(),
                 'id_utente' => $collaboratore->getIdUtente(),
-                'modifica_link' => $modifica_link, 'modifica' => $modifica);
+                'modifica_link' => $modifica_link, 'modifica' => $modifica];
 
         $template->assign('collaboratore', $arrayContatti);
 

@@ -33,21 +33,21 @@ class ShowContattiDocenti extends UniversiboCommand
 
         $lista_contatti = ContattoDocente::getAllContattoDocente();
 
-        $elenco = array();
+        $elenco = [];
 
         if ($lista_contatti) {
 
             foreach ($lista_contatti as $contatto) {
                 $doc = $professorRepo->find($contatto->getCodDoc());
                 if ($doc instanceof Docente) {
-                    $elenco[] = array('nome' => $doc->getNomeDoc(),
-                            'URI' => $router->generate('universibo_legacy_contact_professor', array('cod_doc' => $doc->getCodDoc())),
+                    $elenco[] = ['nome' => $doc->getNomeDoc(),
+                            'URI' => $router->generate('universibo_legacy_contact_professor', ['cod_doc' => $doc->getCodDoc()]),
                             'stato' => $contatto->getStatoDesc(),
-                            'codStato' => $contatto->getStato());
+                            'codStato' => $contatto->getStato()];
                 }
             }
         }
-        usort($elenco, array($this, '_compareDocenti'));
+        usort($elenco, [$this, '_compareDocenti']);
         //		var_dump($elenco);
         $template->assign('ShowContattiDocenti_contatti', $elenco);
         $template

@@ -44,10 +44,10 @@ class MyUniversiBORemove extends UniversiboCommand
         $channelRouter = $this->get('universibo_legacy.routing.channel');
         $template->assign('common_canaleURI', $channelRouter->generate($canale));
         $template->assign('common_langCanaleNome', $canale->getNome());
-        $template->assign('showUser', $router->generate('universibo_legacy_user', array('id_utente' => $utente->getId())));
+        $template->assign('showUser', $router->generate('universibo_legacy_user', ['id_utente' => $utente->getId()]));
 
         $ruoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente->getId());
-        $this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
+        $this->executePlugin('ShowTopic', ['reference' => 'myuniversibo']);
 
         if (array_key_exists($id_canale, $ruoli)) {
             $ruolo = $ruoli[$id_canale];
@@ -59,9 +59,9 @@ class MyUniversiBORemove extends UniversiboCommand
             return 'success';
         } else {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $utente->getId(),
+                    ['id_utente' => $utente->getId(),
                             'msg' => 'E\' impossibile trovare la pagina nel tuo elenco di MyUniversiBO',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
     }
 }

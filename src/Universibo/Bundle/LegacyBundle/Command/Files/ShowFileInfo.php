@@ -25,7 +25,7 @@ class ShowFileInfo extends PluginCommand
      *
      * @param array $param id_file obbligatorio, id_canale facoltativo
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $bc = $this->getBaseCommand();
         $router = $this->get('router');
@@ -73,7 +73,7 @@ class ShowFileInfo extends PluginCommand
         $referente = false;
         $moderatore = false;
 
-        $params = array('id_file' => $file->getIdFile());
+        $params = ['id_file' => $file->getIdFile()];
 
         $channelRouter = $this->get('universibo_legacy.routing.channel');
         $bc = $this->getBaseCommand();
@@ -82,8 +82,8 @@ class ShowFileInfo extends PluginCommand
         if ($canale instanceof Canale) {
             if ($canale->getServizioFiles() == false)
                 Error::throwError(_ERROR_DEFAULT,
-                        array('msg' => "Il servizio files e` disattivato",
-                                'file' => __FILE__, 'line' => __LINE__));
+                        ['msg' => "Il servizio files e` disattivato",
+                                'file' => __FILE__, 'line' => __LINE__]);
 
             $params['id_canale'] = $id_canale;
 
@@ -102,9 +102,9 @@ class ShowFileInfo extends PluginCommand
             $canali_file = $file->getIdCanali();
             if (!in_array($id_canale, $canali_file)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array(
+                        [
                                 'msg' => 'I parametri passati non sono coerenti',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
             }
         }
 
@@ -114,11 +114,11 @@ class ShowFileInfo extends PluginCommand
             $template->assign('showFileInfo_deleteFlag', 'true');
 
             if ($isStudent) {
-                $template->assign('showFileInfo_editUri', $router->generate('universibo_legacy_file_studenti_edit', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale)));
-                $template->assign('showFileInfo_deleteUri', $router->generate('universibo_legacy_file_studenti_delete', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale)));
+                $template->assign('showFileInfo_editUri', $router->generate('universibo_legacy_file_studenti_edit', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]));
+                $template->assign('showFileInfo_deleteUri', $router->generate('universibo_legacy_file_studenti_delete', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]));
             } else {
-                $template->assign('showFileInfo_editUri', $router->generate('universibo_legacy_file_edit', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale)));
-                $template->assign('showFileInfo_deleteUri', $router->generate('universibo_legacy_file_delete', array('id_file' => $file->getIdFile(), 'id_canale' => $id_canale)));
+                $template->assign('showFileInfo_editUri', $router->generate('universibo_legacy_file_edit', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]));
+                $template->assign('showFileInfo_deleteUri', $router->generate('universibo_legacy_file_delete', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]));
             }
         }
 
@@ -131,26 +131,26 @@ class ShowFileInfo extends PluginCommand
                 $voto = round($voto, 1);
             }
             $template->assign('showFileInfo_voto', $voto);
-            $template->assign('showFileInfo_addComment', $router->generate('universibo_legacy_file_studenti_comment', array('id_file' => $file->getIdFile())));
+            $template->assign('showFileInfo_addComment', $router->generate('universibo_legacy_file_studenti_comment', ['id_file' => $file->getIdFile()]));
         }
 
-        $canali_tpl = array();
+        $canali_tpl = [];
         $id_canali = $file->getIdCanali();
         foreach ($id_canali as $id_canale) {
             $canale = Canale::retrieveCanale($id_canale);
-            $canali_tpl[$id_canale] = array();
+            $canali_tpl[$id_canale] = [];
             $canali_tpl[$id_canale]['titolo'] = $canale->getTitolo();
             $canali_tpl[$id_canale]['uri'] = $channelRouter->generate($canale);
         }
 
-        $template->assign('showFileInfo_downloadUri', $router->generate('universibo_legacy_file_download', array('id_file' => $file->getIdFile())));
+        $template->assign('showFileInfo_downloadUri', $router->generate('universibo_legacy_file_download', ['id_file' => $file->getIdFile()]));
         $template->assign('showFileInfo_langDelete', 'Elimina');
         $template->assign('showFileInfo_langDownload', 'Scarica');
         $template->assign('showFileInfo_langEdit', 'Modifica');
-        $template->assign('showFileInfo_uri', $router->generate('universibo_legacy_file', array('id_file' => $file->getIdFile())));
+        $template->assign('showFileInfo_uri', $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile()]));
         $template->assign('showFileInfo_titolo', $file->getTitolo());
         $template->assign('showFileInfo_descrizione', $file->getDescrizione());
-        $template->assign('showFileInfo_userLink', $router->generate('universibo_legacy_user', array('id_utente' => $file->getIdUtente())));
+        $template->assign('showFileInfo_userLink', $router->generate('universibo_legacy_user', ['id_utente' => $file->getIdUtente()]));
         $template->assign('showFileInfo_username', $file->getUsername());
         $template->assign('showFileInfo_dataInserimento',$krono->k_date('%j/%m/%Y', $file->getDataInserimento()));
 

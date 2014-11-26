@@ -26,9 +26,9 @@ class ShowLink extends PluginCommand
      *
      * @param array $param deve contenere:
      *                     - 'num' il numero di link da visualizzare
-     *                     es: array('num'=>5)
+     *                     es: ['num'=>5]
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
 
 //		$id_canale  =  $param['id_canale'];
@@ -40,7 +40,7 @@ class ShowLink extends PluginCommand
 //		$canale    = Canale::retrieveCanale($id_canale);
         $fc        = $bc->getFrontController();
         $template  = $fc->getTemplateEngine();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $router    = $this->get('router');
 
 
@@ -71,7 +71,7 @@ class ShowLink extends PluginCommand
         $link_tpl['uri']       		= $link->getUri();
         $link_tpl['label']      	= $link->getLabel();
         $link_tpl['description']    = $link->getDescription();
-        $link_tpl['userlink']    = $router->generate('universibo_legacy_user', array('id_utente' => $link->getIdUtente()));
+        $link_tpl['userlink']    = $router->generate('universibo_legacy_user', ['id_utente' => $link->getIdUtente()]);
         $link_tpl['user']    = $link->getUsername();
 
 

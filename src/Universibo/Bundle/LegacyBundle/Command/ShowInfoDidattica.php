@@ -28,7 +28,7 @@ class ShowInfoDidattica extends UniversiboCommand
 
         $krono = $frontcontroller->getKrono();
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $id_canale = $this->getRequest()->attributes->get('id_canale');
         $canale = $this->get('universibo_legacy.repository.canale')->find($id_canale);
@@ -111,8 +111,8 @@ class ShowInfoDidattica extends UniversiboCommand
                 ->assign('infoDid_langAppelliUniwex',
                         'Ci scusiamo con gli utenti ma al momento non è più possibile visualizzare le informazioni riguardanti gli appelli d\'esame riportati su Uniwex');
 
-        //$this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
-        //$this->executePlugin('ShowFileTitoli', array());
+        //$this->executePlugin('ShowNewsLatest', [ 'num' => 5  ]);
+        //$this->executePlugin('ShowFileTitoli', []);
         return 'default';
     }
 

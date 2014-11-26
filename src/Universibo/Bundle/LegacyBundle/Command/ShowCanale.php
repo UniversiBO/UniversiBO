@@ -39,18 +39,18 @@ class ShowCanale extends CanaleCommand
         //var_dump($canale->getServizioNews());
         if ($canale->getServizioNews()) {
             $template->assign('showCanale_newsFlag', 'true');
-            $this->executePlugin('ShowNewsLatest', array( 'num' => 5  ));
+            $this->executePlugin('ShowNewsLatest', [ 'num' => 5  ]);
         }
 
         //var_dump($canale->getServizioFiles());
         if ($canale->getServizioFiles()) {
             $template->assign('showCanale_filesFlag', 'true');
-            $this->executePlugin('ShowFileTitoli', array());
+            $this->executePlugin('ShowFileTitoli', []);
         }
 
         if ($canale->getServizioLinks()) {
             $template->assign('showCanale_linksFlag', 'true');
-            $this->executePlugin('ShowLinks', array( 'num' => 12 ) );
+            $this->executePlugin('ShowLinks', [ 'num' => 12 ] );
         }
 
         return 'default';

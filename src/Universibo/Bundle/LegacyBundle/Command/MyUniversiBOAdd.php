@@ -41,8 +41,8 @@ class MyUniversiBOAdd extends UniversiboCommand
         $template->assign('common_canaleURI', $channelRouter->generate($canale));
         $template->assign('common_langCanaleNome', $canale->getNome());
 
-        $ruoli = $utente instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente->getId()) : array();
-        $this->executePlugin('ShowTopic', array('reference' => 'myuniversibo'));
+        $ruoli = $utente instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente->getId()) : [];
+        $this->executePlugin('ShowTopic', ['reference' => 'myuniversibo']);
 
         //		if()
         //		{
@@ -64,27 +64,27 @@ class MyUniversiBOAdd extends UniversiboCommand
             if (!array_key_exists('f15_nome', $_POST)
                     || !array_key_exists('f15_livello_notifica', $_POST)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $utente->getId(),
+                        ['id_utente' => $utente->getId(),
                                 'msg' => 'Il form inviato non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f15_accept = false;
             }
 
             if (!array_key_exists($_POST['f15_livello_notifica'],
                     $f15_livelli_notifica)) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $utente->getId(),
+                        ['id_utente' => $utente->getId(),
                                 'msg' => 'Il livello di notifica scelto non e` valido',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f15_accept = false;
             } else
                 $f15_livello_notifica = $_POST['f15_livello_notifica'];
 
             if (strlen($_POST['f15_nome']) > 60) {
                 Error::throwError(_ERROR_DEFAULT,
-                        array('id_utente' => $utente->getId(),
+                        ['id_utente' => $utente->getId(),
                                 'msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri',
-                                'file' => __FILE__, 'line' => __LINE__));
+                                'file' => __FILE__, 'line' => __LINE__]);
                 $f15_accept = false;
             } else
                 $f15_nome = $_POST['f15_nome'];

@@ -14,13 +14,13 @@ class ShowStatistiche extends UniversiboCommand
 
         $krono = $frontcontroller->getKrono();
         $user = $this->get('security.context')->getToken()->getUser();
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         if (!$user->hasRole('ROLE_MODERATOR') && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             Error::throwError(_ERROR_DEFAULT,
-                    array('id_utente' => $user->getId(),
+                    ['id_utente' => $user->getId(),
                             'msg' => "Non hai i diritti necessari per visualizzare la pagina",
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $db = $this->getContainer()->get('doctrine.dbal.default_connection');
@@ -32,20 +32,20 @@ class ShowStatistiche extends UniversiboCommand
         //			var_dump($query,$user); die;
         $res = $db->executeQuery($query);
 
-        $listaFilePerMese = array();
+        $listaFilePerMese = [];
         while (false !== ($row = $res->fetch())) {
-            $listaFilePerMese[] = array('mese' => $row[0], 'anno' => $row[1],
-                    'somma' => $row[2]);
+            $listaFilePerMese[] = ['mese' => $row[0], 'anno' => $row[1],
+                    'somma' => $row[2]];
         }
 
         $query = 'SELECT giorno, mese,anno, iscritti FROM studenti_iscritti ORDER BY anno DESC, mese DESC, giorno DESC;';
         //			var_dump($query,$user); die;
         $res = $db->executeQuery($query);
 
-        $listaUtentiPerMese = array();
+        $listaUtentiPerMese = [];
         while (false !== ($row = $res->fetch())) {
-            $listaUtentiPerMese[] = array('mese' => $row[1], 'anno' => $row[2],
-                    'giorno' => $row[0], 'iscritti' => $row[3]);
+            $listaUtentiPerMese[] = ['mese' => $row[1], 'anno' => $row[2],
+                    'giorno' => $row[0], 'iscritti' => $row[3]];
         }
 
         $template->assign('ShowStatistiche_elencoUtentiPerMese', $listaUtentiPerMese);

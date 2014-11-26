@@ -48,7 +48,7 @@ class ShowPermalink extends UniversiboCommand
     {
         $krono = $this->getFrontController()->getKrono();
 
-        $newsArray = array();
+        $newsArray = [];
 
         $newsArray['id_notizia'] = $news->getIdNotizia();
         $newsArray['titolo'] = $news->getTitolo();
@@ -58,7 +58,7 @@ class ShowPermalink extends UniversiboCommand
         //echo $personalizza,"-" ,$ultimo_accesso,"-", $news->getUltimaModifica()," -- ";
         $newsArray['nuova'] = '';//($personalizza_not_admin == true && $ultimo_accesso < $news->getUltimaModifica()) ? 'true' : 'false';
         $newsArray['autore'] = $news->getUsername();
-        $newsArray['autore_link'] = $this->get('router')->generate('universibo_legacy_user', array('id_utente' => $news->getIdUtente()));
+        $newsArray['autore_link'] = $this->get('router')->generate('universibo_legacy_user', ['id_utente' => $news->getIdUtente()]);
         $newsArray['id_autore'] = $news->getIdUtente();
 
         $newsArray['scadenza'] = '';
@@ -66,7 +66,7 @@ class ShowPermalink extends UniversiboCommand
             $newsArray['scadenza'] = 'Scade il ' . $krono->k_date('%j/%m/%Y', $news->getDataScadenza());
         }*/
 
-        $newsArray['permalink']     = $this->generateUrl('universibo_legacy_permalink', array('id_notizia' => $news->getIdNotizia()));
+        $newsArray['permalink']     = $this->generateUrl('universibo_legacy_permalink', ['id_notizia' => $news->getIdNotizia()]);
         $newsArray['modifica'] = '';
         $newsArray['modifica_link'] = '';
         $newsArray['elimina'] = '';

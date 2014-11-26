@@ -43,16 +43,16 @@ class ShowContacts extends UniversiboCommand
             if (!$coll) {
                 $name = $user instanceof User ? $user->getUsername() : '';
                 if ($name == $username || $context->isGranted('ROLE_ADMIN'))
-                    $collaboratori[] = array('username' => $username,
+                    $collaboratori[] = ['username' => $username,
                             'URI' => 'false',
-                            'inserisci' => $router->generate('universibo_legacy_collaborator_add', array('id_coll' => $idColl)));
+                            'inserisci' => $router->generate('universibo_legacy_collaborator_add', ['id_coll' => $idColl])];
                 else
-                    $collaboratori[] = array('username' => $username,
-                            'URI' => 'false', 'inserisci' => 'false');
+                    $collaboratori[] = ['username' => $username,
+                            'URI' => 'false', 'inserisci' => 'false'];
             } else
-                $collaboratori[] = array('username' => $username,
-                        'URI' => $router->generate('universibo_legacy_collaborator', array('username' => $username)),
-                        'inserisci' => 'false');
+                $collaboratori[] = ['username' => $username,
+                        'URI' => $router->generate('universibo_legacy_collaborator', ['username' => $username]),
+                        'inserisci' => 'false'];
 
         }
 

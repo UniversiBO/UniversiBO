@@ -25,9 +25,9 @@ class ShowLinks extends ShowLinksCommon
      *
      * @param array $param deve contenere:
      *                     - 'num' il numero di link da visualizzare
-     *                     es: array('num'=>5)
+     *                     es: ['num'=>5]
      */
-    public function execute($param = array())
+    public function execute($param = [])
     {
         $num_links  =  $param['num'];
 
@@ -37,7 +37,7 @@ class ShowLinks extends ShowLinksCommon
         $fc        = $bc->getFrontController();
         $template  = $fc->getTemplateEngine();
         $router    = $this->get('router');
-        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : array();
+        $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
         $id_canale = $canale->getIdCanale();
         $ultima_modifica_canale =  $canale->getUltimaModifica();
@@ -60,7 +60,7 @@ class ShowLinks extends ShowLinksCommon
         $lista_links = Link::selectCanaleLinks($id_canale);
 
         $ret_links = count($lista_links);
-        $elenco_links_tpl = array();
+        $elenco_links_tpl = [];
 
         for ($i = 0; $i < $ret_links; $i++) {
             $link = $lista_links[$i];
@@ -75,7 +75,7 @@ class ShowLinks extends ShowLinksCommon
 
         $template->assign('showLinks_linksList', $elenco_links_tpl);
         $template->assign('showLinks_linksListAvailable', 'true');
-        $template->assign('showLinks_linksAdminUri', $router->generate('universibo_legacy_link_admin', array('id_canale' => $id_canale)));
+        $template->assign('showLinks_linksAdminUri', $router->generate('universibo_legacy_link_admin', ['id_canale' => $id_canale]));
         $template->assign('showLinks_linksAdminLabel', 'Gestione links');
         $template->assign('showLinks_linksPersonalizza', ($personalizza) ? 'true' : 'false');
     }

@@ -18,7 +18,7 @@ abstract class ShowLinksCommon extends PluginCommand
     protected function isInternalLink(Link $link)
     {
         $router = $this->get('router');
-        $uri = $router->generate('universibo_legacy_home', array(), true);
+        $uri = $router->generate('universibo_legacy_home', [], true);
 
         return preg_match('/^' . str_replace('/', '\\/', $uri) . '.*$/',
                 $link->getUri());
