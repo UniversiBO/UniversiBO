@@ -13,7 +13,8 @@ You can get a working copy of UniversiBO in 6 easy steps:
 2. Install Vagrant http://vagrantup.com/
 3. Run ```vagrant plugin install vagrant-vbguest```
 4. Fork this repository and clone it
-5. Run ```cd vagrant && vagrant up``` and wait for Vagrant doing all the magic
+5. Run ```cd vagrant && vagrant up``` and wait around ten minutes while Vagrant
+does all the magic
 6. Open your browser at http://localhost:8888/app_dev.php
 
 Then you can log in, available users:
