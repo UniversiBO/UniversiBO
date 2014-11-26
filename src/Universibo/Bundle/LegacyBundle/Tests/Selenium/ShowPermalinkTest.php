@@ -7,8 +7,8 @@ class ShowPermalinkTest extends UniversiBOSeleniumTestCase
     {
         $this->openPrefix('/permalink/1');
         $this->assertSentences(array(
-                'News title',
-                'News text',
+                'Test news',
+                'Test content',
                 '5/03/2013 - 20:29'
         ));
     }
