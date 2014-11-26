@@ -27,10 +27,7 @@ Then you can log in, available users:
 password is always `padrino`
 
 ## Contributing
-Feel free to [fork this repository](https://help.github.com/articles/fork-a-repo) and send us pull request,
-contributed code *must* follow PSR-2 standards, you can use [PHP Coding Standards Fixer](http://cs.sensiolabs.org/) to check your code.
-You can automate that task just copying hooks/pre-commit file to your .git/hooks directory: this will prevent you from committing non-compliant code (not working on Windows).
-This project is currently licensed under GPLv2, since we're considering a license switch, by contributing you accept that code might be licensed under GPLv3 or Affero GPL later.
+If you wish to contribute please read [CONTRIBUTING.md](/CONTRIBUTING.md) file.
 
 ## Past contributors
 We did our best to preserve the whole history from our [Subversion Repository](https://sourceforge.net/p/universibo/svn/) but something has been lost.
