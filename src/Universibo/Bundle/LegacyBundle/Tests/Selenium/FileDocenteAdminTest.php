@@ -14,11 +14,11 @@ class FileDocenteAdminTest extends UniversiBOSeleniumTestCase
     {
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/file/admin/2');
-        $this->assertSentences(array(
+        $this->assertSentences([
                 'Gestione file',
                 'Seleziona i file da copiare',
                 'Seleziona le pagine in cui inserire i file selezionati:'
-        ));
+        ]);
 
         $this->markTestIncomplete();
     }

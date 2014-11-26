@@ -51,12 +51,12 @@ abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTe
 
     protected function assertSentence($sentence)
     {
-        $this->assertSentences(array($sentence));
+        $this->assertSentences([$sentence]);
     }
 
     protected function assertNotSentence($sentence)
     {
-        $this->assertNotSentences(array($sentence));
+        $this->assertNotSentences([$sentence]);
     }
 
     protected function assertSentences(array $sentences)
@@ -77,10 +77,10 @@ abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTe
     {
         $location = $this->base . '/login';
         $this->assertEquals($location, strstr($this->getLocation(), $location));
-        $this->assertSentences(array (
+        $this->assertSentences([
             'Login',
             'Username:',
             'Password:'
-        ));
+        ]);
     }
 }

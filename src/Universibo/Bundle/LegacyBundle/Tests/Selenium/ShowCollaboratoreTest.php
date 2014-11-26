@@ -10,10 +10,10 @@ class ShowCollaboratoreTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Scheda Informativa di moderator',
-                'lorem ipsum'
-        );
+        $sentences = [
+            'Scheda Informativa di moderator',
+            'lorem ipsum'
+        ];
 
         $this->openPrefix('/chi-siamo/moderator');
         $this->assertSentences($sentences);

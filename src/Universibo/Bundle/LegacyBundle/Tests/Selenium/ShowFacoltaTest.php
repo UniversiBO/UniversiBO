@@ -11,9 +11,9 @@ class ShowFacoltaTest extends UniversiBOSeleniumTestCase
     public function testSimple()
     {
         $this->logout();
-        $sentences = array (
-                'FACOLTA\' DI INGEGNERIA - 0021',
-        );
+        $sentences = [
+            'FACOLTA\' DI INGEGNERIA - 0021',
+        ];
 
         $this->openPrefix('/facolta/3');
         $this->assertSentences($sentences);

@@ -41,19 +41,19 @@ class ShowSettingsTest extends UniversiBOSeleniumTestCase
 
     private function getBaseSentences()
     {
-        return array (
-                'I miei file',
-                'Profilo',
-                'Modifica MyUniversiBO',
-                'Mail di ateneo',
-        );
+        return [
+            'I miei file',
+            'Profilo',
+            'Modifica MyUniversiBO',
+            'Mail di ateneo',
+        ];
     }
 
     private function getAdminSentences()
     {
-        return array (
-                'Docenti da contattare',
-                'DB Postgresql locale'
-        );
+        return [
+            'Docenti da contattare',
+            'DB Postgresql locale'
+        ];
     }
 }

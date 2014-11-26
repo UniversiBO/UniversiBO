@@ -12,11 +12,11 @@ class ShowManifestoTest extends UniversiBOSeleniumTestCase
     {
         $this->openPrefix('/manifesto');
 
-        $this->assertSentences(array(
-                'aiutare una specie animale che da tempo immemorabile s\'inerpica tutte le mattine per una salitella ai piedi dei colli Bolognesi... si tratta dello studente d\'ingegneria.',
-                'farfalla',
-                'libera',
-                'bruco'
-        ));
+        $this->assertSentences([
+            'aiutare una specie animale che da tempo immemorabile s\'inerpica tutte le mattine per una salitella ai piedi dei colli Bolognesi... si tratta dello studente d\'ingegneria.',
+            'farfalla',
+            'libera',
+            'bruco'
+        ]);
     }
 }

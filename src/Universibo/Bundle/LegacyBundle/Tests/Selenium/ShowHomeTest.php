@@ -10,10 +10,10 @@ class ShowHomeTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Benvenuto in UniversiBO!',
-                'la nuova versione della community e degli strumenti per la didattica ideato dagli studenti'
-        );
+        $sentences = [
+            'Benvenuto in UniversiBO!',
+            'la nuova versione della community e degli strumenti per la didattica ideato dagli studenti'
+        ];
 
         $this->openPrefix('/');
         $this->assertSentences($sentences);

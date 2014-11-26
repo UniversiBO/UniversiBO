@@ -10,11 +10,11 @@ class ShowRulesTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Regolamento per l\'utilizzo dei servizi del sito',
-                'Informativa sulla privacy',
-                'Regolamento per l\'utilizzo del forum'
-        );
+        $sentences = [
+            'Regolamento per l\'utilizzo dei servizi del sito',
+            'Informativa sulla privacy',
+            'Regolamento per l\'utilizzo del forum'
+        ];
 
         $this->openPrefix('/regolamento/');
         $this->assertSentences($sentences);

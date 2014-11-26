@@ -10,10 +10,10 @@ class ShowContactsTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'admin',
-                'moderator',
-        );
+        $sentences = [
+            'admin',
+            'moderator',
+        ];
 
         $this->openPrefix('/chi-siamo');
         $this->assertSentences($sentences);

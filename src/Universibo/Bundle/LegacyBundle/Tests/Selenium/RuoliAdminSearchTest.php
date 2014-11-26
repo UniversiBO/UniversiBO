@@ -22,15 +22,15 @@ class RuoliAdminSearchTest extends UniversiBOSeleniumTestCase
         $this->login(TestConstants::ADMIN_USERNAME);
 
         $this->openPrefix('/role/search/2/');
-        $this->assertSentences(array(
+        $this->assertSentences([
                 'Modifica i diritti nella pagina',
                 'Test channel'
-        ));
+        ]);
 
         $this->type('id=f16_username', '%dmin');
         $this->clickAndWait('id=f16_submit');
 
-        $this->assertSentences(array('Studenti', 'admin'));
+        $this->assertSentences(['Studenti', 'admin']);
     }
 
     public function testBackLink()

@@ -10,10 +10,10 @@ class ShowContributeTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Collabora',
-                'Come fare per collaborare?',
-        );
+        $sentences = [
+            'Collabora',
+            'Come fare per collaborare?',
+        ];
 
         $this->openPrefix('/collabora');
         $this->assertSentences($sentences);

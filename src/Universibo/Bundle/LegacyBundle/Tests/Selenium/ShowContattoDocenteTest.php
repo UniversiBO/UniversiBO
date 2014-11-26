@@ -15,10 +15,10 @@ class ShowContattoDocenteTest extends UniversiBOSeleniumTestCase
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/docente/012345/contatto/');
 
-        $sentences = array (
-                'LAST NAME GIVEN NAME',
-                'professor@example.org',
-        );
+        $sentences = [
+            'LAST NAME GIVEN NAME',
+            'professor@example.org',
+        ];
 
         $this->assertSentences($sentences);
     }

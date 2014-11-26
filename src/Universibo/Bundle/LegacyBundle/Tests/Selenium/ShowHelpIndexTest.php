@@ -10,11 +10,11 @@ class ShowHelpIndexTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Come faccio a navigare nel sito?',
-                'Cos\'e\' la mail d\'ateneo?',
-                'Perche\' devo avere la mail di Ateneo per iscrivermi ad UniversiBO?',
-        );
+        $sentences = [
+            'Come faccio a navigare nel sito?',
+            'Cos\'e\' la mail d\'ateneo?',
+            'Perche\' devo avere la mail di Ateneo per iscrivermi ad UniversiBO?',
+        ];
 
         $this->openPrefix('/help');
         $this->assertSentences($sentences);

@@ -19,9 +19,9 @@ class FileEditTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'robots SEO',
-        );
+        $sentences = [
+            'robots SEO',
+        ];
 
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/file/1/edit');
@@ -29,20 +29,20 @@ class FileEditTest extends UniversiBOSeleniumTestCase
         $this->assertSentences($sentences);
 
         $this->type('id=f13_abstract', $text = 'robots SEO, '.md5(rand(1,10)));
-        $this->type('id=f13_parole_chiave', implode(PHP_EOL, $keywords = array('robots', 'SEO', md5(rand(1,10)))));
+        $this->type('id=f13_parole_chiave', implode(PHP_EOL, $keywords = ['robots', 'SEO', md5(rand(1,10))]));
         $this->clickAndWait('name=f13_submit');
         $this->assertSentence('modificato con successo');
 
         $this->clickAndWait('link=Torna ai dettagli del file');
 
-        $this->assertSentences(array_merge(array($text), $keywords));
+        $this->assertSentences(array_merge([$text], $keywords));
 
         $this->openPrefix('/file/1/edit');
         $this->type('id=f13_parole_chiave', $keywords = 'robots');
         $this->clickAndWait('name=f13_submit');
         $this->clickAndWait('link=Torna ai dettagli del file');
 
-        $this->assertSentences(array($text, $keywords));
+        $this->assertSentences([$text, $keywords]);
     }
 
     public function testAddPassword()

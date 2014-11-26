@@ -24,6 +24,6 @@ class ShowUserTest extends UniversiBOSeleniumTestCase
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/user/1');
 
-        $this->assertSentences(array('Utente: admin', 'Livello: Admin'));
+        $this->assertSentences(['Utente: admin', 'Livello: Admin']);
     }
 }

@@ -13,9 +13,13 @@ class ShowCanaleTest extends UniversiBOSeleniumTestCase
     {
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/canale/2/');
-        $this->assertSentences(
-                        array('Test', 'News', 'Scrivi nuova notizia',
-                                 'Files',
-                                'Invia un nuovo file', 'Gestione file'));
+        $this->assertSentences([
+            'Test',
+            'News',
+            'Scrivi nuova notizia',
+            'Files',
+            'Invia un nuovo file',
+            'Gestione file',
+        ]);
     }
 }

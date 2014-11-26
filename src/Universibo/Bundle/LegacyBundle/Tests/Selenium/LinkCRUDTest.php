@@ -23,7 +23,7 @@ class LinkCRUDTest extends UniversiBOSeleniumTestCase
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/link/add/1/');
 
-        $this->assertSentences(array('Aggiungi un nuovo link', 'Indirizzo', 'Etichetta', 'Descrizione'));
+        $this->assertSentences(['Aggiungi un nuovo link', 'Indirizzo', 'Etichetta', 'Descrizione']);
 
         $this->type('name=f29_URI', 'http://www.google.it/');
         $this->type('name=f29_Label', 'Google Italy');
@@ -64,7 +64,7 @@ class LinkCRUDTest extends UniversiBOSeleniumTestCase
     {
         $this->login(TestConstants::ADMIN_USERNAME);
         $this->openPrefix('/link/admin/1/');
-        $this->assertSentences(array('Gestione Links','admin', 'AlmaWIFI'));
+        $this->assertSentences(['Gestione Links','admin', 'AlmaWIFI']);
         $this->markTestIncomplete('Just stubbed');
     }
 }

@@ -17,14 +17,14 @@ class RuoliAdminEditTest extends UniversiBOSeleniumTestCase
         $this->login(TestConstants::ADMIN_USERNAME);
 
         $this->openPrefix('/role/search/1/');
-        $this->assertSentences(array(
+        $this->assertSentences([
                 'Modifica i diritti nella pagina',
                 'Home'
-        ));
+        ]);
 
         $this->type('id=f16_username', '%tudent');
         $this->clickAndWait('id=f16_submit');
 
-        $this->assertSentences(array('Studenti', 'student'));
+        $this->assertSentences(['Studenti', 'student']);
     }
 }

@@ -6,11 +6,11 @@ class ShowPermalinkTest extends UniversiBOSeleniumTestCase
     public function testSimple()
     {
         $this->openPrefix('/permalink/1');
-        $this->assertSentences(array(
-                'Test news',
-                'Test content',
-                '5/03/2013 - 20:29'
-        ));
+        $this->assertSentences([
+            'Test news',
+            'Test content',
+            '5/03/2013 - 20:29'
+        ]);
     }
 
     /**

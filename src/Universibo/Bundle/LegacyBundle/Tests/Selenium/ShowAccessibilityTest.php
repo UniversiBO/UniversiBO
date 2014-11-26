@@ -10,11 +10,11 @@ class ShowAccessibilityTest extends UniversiBOSeleniumTestCase
 
     public function testSimple()
     {
-        $sentences = array (
-                'Dichiarazione di accessibilit',
-                'vai all\'homepage',
-                'vai al forum',
-        );
+        $sentences = [
+            'Dichiarazione di accessibilit',
+            'vai all\'homepage',
+            'vai al forum',
+        ];
 
         $this->openPrefix('/accessibilita');
         $this->assertSentences($sentences);

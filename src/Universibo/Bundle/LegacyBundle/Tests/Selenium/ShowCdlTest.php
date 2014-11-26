@@ -11,9 +11,9 @@ class ShowCdlTest extends UniversiBOSeleniumTestCase
     public function testSimple()
     {
         $this->logout();
-        $sentences = array (
-                'CORSO DI LAUREA DI INGEGNERIA INFORMATICA - 0937',
-        );
+        $sentences = [
+            'CORSO DI LAUREA DI INGEGNERIA INFORMATICA - 0937',
+        ];
 
         $this->openPrefix('/cdl/4/');
         $this->assertSentences($sentences);
