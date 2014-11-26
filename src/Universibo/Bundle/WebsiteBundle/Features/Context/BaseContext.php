@@ -77,18 +77,6 @@ class BaseContext extends MinkContext
     }
 
     /**
-     * @When /^I click on "([^"]*)" link$/
-     */
-    public function iClickOnLink($link)
-    {
-        $this
-            ->getSession()
-            ->getPage()
-            ->clickLink($link)
-        ;
-    }
-
-    /**
      * @When /^I visit "([^"]*)"$/
      */
     public function iVisit($url)
@@ -97,38 +85,6 @@ class BaseContext extends MinkContext
             ->getSession()
             ->visit($url)
         ;
-    }
-
-    /**
-     * @Given /^I type "([^"]*)" on "([^"]*)" field$/
-     */
-    public function iTypeOnField($value, $fieldName)
-    {
-        $this
-            ->getSession()
-            ->getPage()
-            ->fillField($fieldName, $value)
-        ;
-    }
-
-    /**
-     * @Given /^I click on "([^"]*)" button$/
-     */
-    public function iClickOnButton($button)
-    {
-        $this
-            ->getSession()
-            ->getPage()
-            ->pressButton($button)
-        ;
-    }
-
-    /**
-     * @Then /^text "([^"]*)" should be present$/
-     */
-    public function textShouldBePresent($text)
-    {
-        $this->assertPageContainsText($text);
     }
 
     /**

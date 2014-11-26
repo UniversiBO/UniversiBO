@@ -6,14 +6,14 @@ Feature: Add a school
   Scenario: Standard list
     Given I'm logged in as "moderator"
     When I visit "/dashboard/didactics/schools"
-    Then text "Agraria e Medicina veterinaria" should be present
-    And text "Economia, Management e Statistica" should be present
-    And text "Farmacia, Biotecnologie e Scienze motorie" should be present
-    And text "Giurisprudenza" should be present
-    And text "Ingegneria e Architettura" should be present
-    And text "Lettere e Beni culturali" should be present
-    And text "Lingue e Letterature, Traduzione e Interpretazione" should be present
-    And text "Medicina e Chirurgia" should be present
-    And text "Psicologia e Scienze della Formazione" should be present
-    And text "Scienze" should be present
-    And text "Scienze politiche" should be present
+    Then the response should contain "Agraria e Medicina veterinaria"
+    And the response should contain "Economia, Management e Statistica"
+    And the response should contain "Farmacia, Biotecnologie e Scienze motorie"
+    And the response should contain "Giurisprudenza"
+    And the response should contain "Ingegneria e Architettura"
+    And the response should contain "Lettere e Beni culturali"
+    And the response should contain "Lingue e Letterature, Traduzione e Interpretazione"
+    And the response should contain "Medicina e Chirurgia"
+    And the response should contain "Psicologia e Scienze della Formazione"
+    And the response should contain "Scienze"
+    And the response should contain "Scienze politiche"
