@@ -14,7 +14,8 @@ abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTe
     protected function setUp()
     {
         $this->setBrowser('*firefox');
-        $this->setBrowserUrl(TestConstants::SELENIUM_URL);
+        $seleniumUrl = getenv('SELENIUM_URL') ?: TestConstants::SELENIUM_URL;
+        $this->setBrowserUrl($seleniumUrl);
     }
 
     protected function login($username, $password = null)
