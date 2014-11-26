@@ -24,8 +24,8 @@ before_script:
   - cat app/sql/pgsql/devdb.sql | psql -U postgres universibo
   - cat vendor/universibo/forum-bundle/Universibo/Bundle/ForumBundle/Tests/Resources/sql/{structure,data}-postgres.sql | sed 's/OWNER TO.*/OWNER TO universibo;/' | psql -U postgres universibo_forum3
   - wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar -O selenium.jar
-  - java -jar selenium.jar -browserSessionReuse 2>&1 > selenium.log &
-  - app/console server:run > server.log &
+  - java -jar selenium.jar -browserSessionReuse &> selenium.log &
+  - app/console server:run &> server.log &
 
 script:
   - bin/phpunit -c app --coverage-clover=coverage.clover
