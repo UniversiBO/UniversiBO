@@ -3,8 +3,14 @@ language: php
 php:
   - 5.4
 
-before_script: 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
+install:
   - composer install --dev
+
+before_script:
   - echo 'CREATE DATABASE universibo' | psql -U postgres
   - echo 'CREATE DATABASE universibo_forum3' | psql -U postgres
   - echo "CREATE USER universibo WITH PASSWORD 'universibo'" | psql -U postgres
@@ -12,6 +18,8 @@ before_script:
   - echo "GRANT ALL PRIVILEGES ON DATABASE universibo_forum3 TO universibo" | psql -U postgres
   - cat app/sql/pgsql/devdb.sql | psql -U postgres universibo
   - cat vendor/universibo/forum-bundle/Universibo/Bundle/ForumBundle/Tests/Resources/sql/{structure,data}-postgres.sql | sed 's/OWNER TO.*/OWNER TO universibo;/' | psql -U postgres universibo_forum3
+  - wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar -O selenium.jar
+  - java -jar selenium.jar &
 
 script:
   - bin/phpunit -c app --coverage-clover=coverage.clover
