@@ -20,6 +20,7 @@ class FileDocenteAdminTest extends UniversiBOSeleniumTestCase
                 'Seleziona le pagine in cui inserire i file selezionati:'
         ]);
 
+        $this->wontCaptureScreenshot();
         $this->markTestIncomplete();
     }
 }

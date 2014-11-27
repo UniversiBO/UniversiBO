@@ -10,14 +10,21 @@ use Universibo\Bundle\LegacyBundle\Tests\TestConstants;
 abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTestCase
 {
     protected $base = '/app_dev.php';
-    protected $captureScreenshotOnFailure = true;
-    protected $screenshotPath = '/tmp/selenium/screenshots';
+    protected $screenshotUrl = 'http://www.universibo.dev/screenshots';
 
     protected function setUp()
     {
+        $this->screenshotPath = __DIR__ . '/../../../../../../web/screenshots';
+        $this->captureScreenshotOnFailure = true;
+
         $this->setBrowser('*firefox');
         $seleniumUrl = getenv('SELENIUM_URL') ?: TestConstants::SELENIUM_URL;
         $this->setBrowserUrl($seleniumUrl);
+    }
+
+    protected function wontCaptureScreenshot()
+    {
+        $this->captureScreenshotOnFailure = false;
     }
 
     protected function login($username, $password = null)
