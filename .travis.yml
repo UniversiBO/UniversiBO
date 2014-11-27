@@ -19,6 +19,7 @@ install:
   - composer install --dev
 
 before_script:
+  - phpenv config-add ci/config/php.ini
   - echo 'CREATE DATABASE universibo' | psql -U postgres
   - echo 'CREATE DATABASE universibo_forum3' | psql -U postgres
   - echo "CREATE USER universibo WITH PASSWORD 'universibo'" | psql -U postgres
