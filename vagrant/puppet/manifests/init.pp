@@ -16,7 +16,17 @@ class { 'lapp::config': }
 class { 'universibo': }
 class { 'xvfb': }
 
-Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/sbin", "/usr/local/bin", "/opt/vagrant_ruby/bin" ] }
+Exec {
+  path => [
+    '/bin/',
+    '/sbin/' ,
+    '/usr/bin/',
+    '/usr/sbin/',
+    '/usr/local/sbin',
+    '/usr/local/bin',
+    '/opt/vagrant_ruby/bin'
+  ]
+}
 
 #Class['locales']->
 Class['phpenv']->
