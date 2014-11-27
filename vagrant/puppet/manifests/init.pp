@@ -29,7 +29,9 @@ Exec {
 }
 
 package {[
+  'htop',
   'iceweasel',
+  'tmux',
 ]:
   ensure => present
 }
