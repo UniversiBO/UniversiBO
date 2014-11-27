@@ -7,7 +7,6 @@ Feature: Permalink
         When I visit "/permalink/1/"
         Then the response should contain "Test news"
         And the response should contain "Test content"
-        And the response should contain "5/03/2013 - 20:29"
 
     Scenario: Expired news is Not found
         When I visit "/permalink/2/"
