@@ -1,6 +1,7 @@
 class universibo
 {
   exec {'composer install':
+    user        => 'vagrant',
     environment => [
       'COMPOSER_HOME=/home/vagrant'
     ],
