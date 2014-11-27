@@ -6,7 +6,7 @@ php:
   - 5.6
 
 env:
-  - SELENIUM_URL='http://localhost:8000/'
+  - SELENIUM_URL='http://localhost:8000/' TZ='Europe/Rome'
 
 before_install:
   - "export DISPLAY=:99.0"
