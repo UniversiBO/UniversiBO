@@ -6,6 +6,7 @@
 /bin/
 /build.xml
 /build/
+/dotfiles
 /cache.properties
 /nbproject
 /web/bundles
