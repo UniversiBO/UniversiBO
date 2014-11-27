@@ -23,4 +23,9 @@ class universibo
     unless  => 'test `/vagrant/vagrant/scripts/check.forumtables.php` -gt 0',
     require => Exec['composer install']
   }
+
+  host {'www.universibo.dev':
+    ip           => '127.0.0.1',
+    host_aliases => 'universibo.dev',
+  }
 }
