@@ -10,6 +10,8 @@ use Universibo\Bundle\LegacyBundle\Tests\TestConstants;
 abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTestCase
 {
     protected $base = '/app_dev.php';
+    protected $captureScreenshotOnFailure = true;
+    protected $screenshotPath = '/tmp/selenium/screenshots';
 
     protected function setUp()
     {
