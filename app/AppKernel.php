@@ -50,4 +50,22 @@ class AppKernel extends Kernel
             )
         ;
     }
+
+    public function getCacheDir()
+    {
+        if (in_array($this->environment, ['dev', 'test'])) {
+            return '/dev/shm/universibo/cache/' .  $this->environment;
+        }
+
+        return parent::getCacheDir();
+    }
+
+    public function getLogDir()
+    {
+        if (in_array($this->environment, ['dev', 'test'])) {
+            return '/dev/shm/universibo/logs';
+        }
+
+        return parent::getLogDir();
+    }
 }
