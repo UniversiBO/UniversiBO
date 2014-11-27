@@ -1,5 +1,5 @@
-group { "puppet":
-  ensure => "present",
+group { 'puppet':
+  ensure => present,
 }
 
 File { owner => 0, group => 0, mode => 0644 }
@@ -26,6 +26,12 @@ Exec {
     '/usr/local/bin',
     '/opt/vagrant_ruby/bin'
   ]
+}
+
+package {[
+  'iceweasel',
+]:
+  ensure => present
 }
 
 #Class['locales']->
