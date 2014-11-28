@@ -28,6 +28,10 @@ class lapp::config
     content => "User vagrant\nGroup vagrant"
   }
 
+  file { '/etc/apache2/envvars':
+    content => template('lapp/envvars.erb')
+  }
+
   exec { 'ports.conf':
     command => 'sed \'/^NameVirtualHost/d\' /etc/apache2/ports.conf'
   }
