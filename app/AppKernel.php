@@ -53,8 +53,8 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        if (in_array($this->environment, ['dev', 'test'])) {
-            return '/tmp/universibo/cache/' .  $this->environment;
+        if ($tmpdir = $this->getCustomTempDir()) {
+            return $tmpdir . '/cache/' . $this->environment;
         }
 
         return parent::getCacheDir();
@@ -62,10 +62,19 @@ class AppKernel extends Kernel
 
     public function getLogDir()
     {
-        if (in_array($this->environment, ['dev', 'test'])) {
-            return '/tmp/universibo/logs';
+        if ($tmpdir = $this->getCustomTempDir()) {
+            return $tmpdir . '/logs';
         }
 
         return parent::getLogDir();
+    }
+
+    private function getCustomTempDir()
+    {
+        if ($tmpdir = getenv('UNIVERSIBO_TEMP_DIR')) {
+            return rtrim($tmpdir, '/');
+        }
+
+        return false;
     }
 }

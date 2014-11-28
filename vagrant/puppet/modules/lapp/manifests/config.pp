@@ -47,4 +47,8 @@ class lapp::config
     logroot         => '/var/log',
     override        => 'All'
   }
+
+  file { '/etc/profile.d/universibo.sh':
+    content => 'export UNIVERSIBO_TEMP_DIR=/tmp/universibo'
+  }
 }
