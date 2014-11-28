@@ -529,12 +529,12 @@ class FrontController
             //fine mia aggiunta
 
             $kernel = $this->getContainer()->get('kernel');
-            $root = $kernel->getRootDir();
+            $root = $kernel->getCacheDir();
 
             $templateEngine->template_dir  = realpath(__DIR__.'/../Resources/views/');
-            $templateEngine->compile_dir   = $root . '/cache/smarty/compile';
+            $templateEngine->compile_dir   = $root . '/smarty/compile';
             $templateEngine->config_dir    = realpath(__DIR__.'/../Resources/views-config/');
-            $templateEngine->cache_dir     = $root . '/cache/smarty/cache';
+            $templateEngine->cache_dir     = $root . '/smarty/cache';
             $templateEngine->compile_check = true;
             $templateEngine->debugging     = 'prod' !== $kernel->getEnvironment();
 
