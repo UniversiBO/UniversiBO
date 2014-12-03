@@ -28,6 +28,9 @@ class lapp::config
     content => "User vagrant\nGroup vagrant"
   }
 
+  file { '/etc/profile.d/universibo.sh':
+    content => 'export UNIVERSIBO_TEMP_DIR=/tmp/universibo'
+  }->
   file { '/etc/apache2/envvars':
     content => template('lapp/envvars.erb')
   }
@@ -50,9 +53,5 @@ class lapp::config
     docroot_group   => 'vagrant',
     logroot         => '/var/log',
     override        => 'All'
-  }
-
-  file { '/etc/profile.d/universibo.sh':
-    content => 'export UNIVERSIBO_TEMP_DIR=/tmp/universibo'
   }
 }
