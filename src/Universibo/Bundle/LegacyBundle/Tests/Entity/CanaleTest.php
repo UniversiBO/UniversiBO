@@ -29,16 +29,16 @@ class CanaleTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('idCanale', rand()),
-                array('permessi', rand()),
-                array('servizioFilesStudenti', true),
-                array('servizioFilesStudenti', false),
-                array('servizioFiles', true),
-                array('servizioFiles', false),
-                array('servizioForum', true),
-                array('servizioForum', false),
-                array('visite', rand()),
-        );
+        return [
+            ['idCanale', rand()],
+            ['permessi', rand()],
+            ['servizioFilesStudenti', true],
+            ['servizioFilesStudenti', false],
+            ['servizioFiles', true],
+            ['servizioFiles', false],
+            ['servizioForum', true],
+            ['servizioForum', false],
+            ['visite', rand()],
+        ];
     }
 }

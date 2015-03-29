@@ -47,8 +47,8 @@ class DBInsegnamentoRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
@@ -58,9 +58,9 @@ class DBInsegnamentoRepository extends DBRepository
         if ($rows > 1) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: canale insegnamento non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         if ($rows == 0)
@@ -105,15 +105,15 @@ EOT;
 
         $stmt = $this
             ->getConnection()
-            ->executeQuery($query, array(
+            ->executeQuery($query, [
                  Canale::INSEGNAMENTO
-            ))
+            ])
         ;
 
-        $insegnamenti = array();
+        $insegnamenti = [];
 
         while (false !== ($row = $stmt->fetch())) {
-            $attivita = $full ? $this->programmaRepository->findByChannelId($row['id_canale']) : array();
+            $attivita = $full ? $this->programmaRepository->findByChannelId($row['id_canale']) : [];
 
             $insegnamenti[] = new Insegnamento($row['id_canale'],
                     $row['permessi_groups'], $row['ultima_modifica'],

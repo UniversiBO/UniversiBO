@@ -87,17 +87,17 @@ class AuthenticationFailedListener
 
         $messageDev = Swift_Message::newInstance()
             ->setSubject('Autenticazione Shibboleth Fallita')
-            ->setFrom(array($this->mailFrom => $this->mailFromName))
+            ->setFrom([$this->mailFrom => $this->mailFromName])
             ->setTo($this->devMailTo)
-            ->setBody($this->templateEngine->render('UniversiboWebsiteBundle:Shibboleth:emailDev.txt.twig', array('claims' => $claims)))
+            ->setBody($this->templateEngine->render('UniversiboWebsiteBundle:Shibboleth:emailDev.txt.twig', ['claims' => $claims]))
         ;
 
         $messageUser = Swift_Message::newInstance()
             ->setSubject('Attivazione manuale account UniversiBO')
-            ->setFrom(array($this->mailFrom => $this->mailFromName))
+            ->setFrom([$this->mailFrom => $this->mailFromName])
             ->setTo($claims['eppn'])
             ->setCc($this->infoMailTo)
-            ->setBody($this->templateEngine->render('UniversiboWebsiteBundle:Shibboleth:emailUser.txt.twig', array('claims' => $claims)))
+            ->setBody($this->templateEngine->render('UniversiboWebsiteBundle:Shibboleth:emailUser.txt.twig', ['claims' => $claims]))
         ;
 
         $this->mailer->send($messageDev);

@@ -34,11 +34,11 @@ class LinkController extends Controller
         $linkRepo = $this->get('universibo_legacy.repository.links.link');
         $links = $linkRepo->findByChannelId($channelId);
 
-        $response = $this->render('UniversiboWebsiteBundle:Link:box.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:Link:box.html.twig', [
             'addAllowed' => $addAllowed,
             'links' => $links,
             'channelId' => $channelId
-        ));
+        ]);
 
         $response->setMaxAge(10);
         $response->setPrivate();

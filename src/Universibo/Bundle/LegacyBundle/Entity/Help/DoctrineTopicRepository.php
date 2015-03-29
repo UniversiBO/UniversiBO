@@ -35,7 +35,7 @@ class DoctrineTopicRepository extends DoctrineRepository
 
     private function fetchAll($stmt)
     {
-        $items = array();
+        $items = [];
 
         while (false !== ($row = $stmt->fetch(PDO::FETCH_ASSOC))) {
             $items[] = $this->rowToItem($row);

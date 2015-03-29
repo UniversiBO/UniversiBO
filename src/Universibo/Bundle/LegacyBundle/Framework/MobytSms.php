@@ -111,27 +111,28 @@ namespace
     /**
      * @global array Array di conversione per le qualit�
      */
-    $GLOBALS['mobyt_qty'] = array(
+    $GLOBALS['mobyt_qty'] = [
             MOBYT_QUALITY_LQS		=> 'll',
             MOBYT_QUALITY_MQS		=> 'l',
             MOBYT_QUALITY_HQS		=> 'h',
             MOBYT_QUALITY_AUTO		=> 'a',
             MOBYT_QUALITY_AUTO_NY	=> 'a'
-    );
+    ];
 
     /**
      * @global array Array di conversione per l'operazione
      */
-    $GLOBALS['mobyt_ops'] = array(
+    $GLOBALS['mobyt_ops'] = [
             MOBYT_OPERATION_TEXT	=> 'TEXT',
             MOBYT_OPERATION_RING	=> 'RING',
             MOBYT_OPERATION_OLGO	=> 'OLGO',
             MOBYT_OPERATION_GLGO	=> 'GLGO',
             MOBYT_OPERATION_8BIT	=> '8BIT',
             MOBYT_OPERATION_FLASH	=> 'FLASH'
-    );
+    ];
     /**#@-*/
 }
+
 namespace Universibo\Bundle\LegacyBundle\Framework
 {
     /**
@@ -344,12 +345,12 @@ namespace Universibo\Bundle\LegacyBundle\Framework
         {
             $op = 'GETCREDIT';
 
-            $fields = array(
+            $fields = [
                     'operation' => $op,
                     'id'		=> $this->login,
                     'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
                     'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
-            );
+            ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
                 return intval($m[1]);
@@ -370,12 +371,12 @@ namespace Universibo\Bundle\LegacyBundle\Framework
         {
             $op = 'GETMESS';
 
-            $fields = array(
+            $fields = [
                     'operation' => $op,
                     'id'		=> $this->login,
                     'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
                     'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
-            );
+            ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
                 return intval($m[1]);
@@ -392,12 +393,12 @@ namespace Universibo\Bundle\LegacyBundle\Framework
         {
             $op = 'GETNOTIFY';
 
-            $fields = array(
+            $fields = [
                     'operation' => $op,
                     'id'		=> $this->login,
                     'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
                     'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
-            );
+            ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
                 return intval($m[1]);
@@ -424,13 +425,13 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $operation = isset($mobyt_ops[$this->operation]) ? $mobyt_ops[$this->operation] : 'TEXT';
 
-            $fields = array(
+            $fields = [
                     'operation' => $operation,
                     'from'		=> $this->from,
                     'rcpt'		=> $rcpt,
                     'data'		=> $text,
                     'id'		=> $this->login
-            );
+            ];
 
             if ($this->quality == MOBYT_QUALITY_AUTO_NY) {
                 if ($act == '') {
@@ -483,13 +484,13 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $operation = isset($mobyt_ops[$this->operation]) ? $mobyt_ops[$this->operation] : 'TEXT';
 
-            $fields = array(
+            $fields = [
                     'id'		=> $this->login,
                     'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
                     'operation' => $operation,
                     'from'		=> $this->from,
                     'data'		=> $text
-            );
+            ];
 
             if ($this->quality != MOBYT_QUALITY_DEFAULT && isset($mobyt_qty[$this->quality]))
                 $fields['qty'] = $mobyt_qty[$this->quality];
@@ -497,7 +498,7 @@ namespace Universibo\Bundle\LegacyBundle\Framework
             if ($this->operation == MOBYT_OPERATION_8BIT)
                 $fileds['udh'] = $this->udh;
 
-            $ret = array();
+            $ret = [];
             foreach ($rcpts as $act => $rcpt) {
                 $fields['rcpt']  = $rcpt;
                 $fields['ticket'] = $this->auth == MOBYT_AUTH_MD5 ?
@@ -520,7 +521,7 @@ namespace Universibo\Bundle\LegacyBundle\Framework
          */
         public function httpPost($fields, $url = '/sms-gw/sendsmart')
         {
-            $qs = array();
+            $qs = [];
             foreach ($fields as $k => $v)
                 $qs[] = $k.'='.urlencode($v);
             $qs = join('&', $qs);

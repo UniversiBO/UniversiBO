@@ -30,10 +30,10 @@ class TopicTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('reference', 'hello'),
-                array('title', 'Hello World!'),
-                array('index', rand())
-        );
+        return [
+            ['reference', 'hello'],
+            ['title', 'Hello World!'],
+            ['index', rand()]
+        ];
     }
 }

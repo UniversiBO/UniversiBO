@@ -31,11 +31,11 @@ class NotificaItemTest extends EntityTest
 
     public function provider()
     {
-        return array(
-            array('destinatario', 'mail://test@example.com'),
-            array('urgente', true),
-            array('urgente', false),
-            array('idNotifica', rand())
-        );
+        return [
+            ['destinatario', 'mail://test@example.com'],
+            ['urgente', true],
+            ['urgente', false],
+            ['idNotifica', rand()]
+        ];
     }
 }

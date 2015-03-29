@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
         $infoEmail = $this->container->getParameter('mailer_info');
 
-        return array('form' => $form->createView(), 'infoEmail' => $infoEmail);
+        return ['form' => $form->createView(), 'infoEmail' => $infoEmail];
     }
 
     public function updateAction()
@@ -37,8 +37,8 @@ class ProfileController extends Controller
         $request = $this->getRequest();
         $form = $this->getUserForm();
 
-        $sentAtDates = array();
-        $verifiedEmails = array();
+        $sentAtDates = [];
+        $verifiedEmails = [];
 
         // TODO get from config
         $threshold = new \DateTime('24 hours ago');
@@ -72,7 +72,7 @@ class ProfileController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('universibo_website_profile_edit', array(), true));
+        return $this->redirect($this->generateUrl('universibo_website_profile_edit', [], true));
     }
 
     private function getUserForm()

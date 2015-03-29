@@ -105,7 +105,7 @@ class BaseContext extends MinkContext
             ->getSql()
         ;
 
-        $id = $db->fetchColumn($sql, array('S'));
+        $id = $db->fetchColumn($sql, ['S']);
 
         if (false !== $id) {
             $channelRepo = $container->get('universibo_legacy.repository.canale2');

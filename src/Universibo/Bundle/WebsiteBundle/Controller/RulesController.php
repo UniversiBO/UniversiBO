@@ -26,7 +26,7 @@ class RulesController extends Controller
             $user = null;
         }
 
-        return array('mustAccept' => $mustAccept, 'user' => $user);
+        return ['mustAccept' => $mustAccept, 'user' => $user];
     }
 
     /**
@@ -36,7 +36,7 @@ class RulesController extends Controller
         $policyRepo = $this->get('universibo_legacy.repository.informativa');
         $current = $policyRepo->findByTime(time());
 
-        $response = $this->render('UniversiboWebsiteBundle:Rules:privacyBox.html.twig', array('policy' => $current));
+        $response = $this->render('UniversiboWebsiteBundle:Rules:privacyBox.html.twig', ['policy' => $current]);
         $response->setPublic();
         $response->setSharedMaxAge(60);
 

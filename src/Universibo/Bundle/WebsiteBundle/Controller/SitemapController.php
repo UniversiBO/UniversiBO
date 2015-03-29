@@ -26,21 +26,21 @@ class SitemapController extends Controller
         $document->appendChild($root);
 
         $this->createHome($document, $root);
-        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_manifesto', array(), true));
-        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_contacts', array(), true));
-        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_accessibility', array(), true));
-        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_credits', array(), true));
-        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_contribute', array(), true));
+        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_manifesto', [], true));
+        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_contacts', [], true));
+        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_accessibility', [], true));
+        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_credits', [], true));
+        $this->createUrl($document, $root, $this->generateUrl('universibo_legacy_contribute', [], true));
 
         $channelRepo = $this->get('universibo_legacy.repository.canale2');
         $channelRouter = $this->get('universibo_legacy.routing.channel');
 
-        $types = array (
+        $types = [
             Canale::FACOLTA => 'weekly',
             Canale::CDEFAULT => 'daily',
             Canale::CDL => 'daily',
             Canale::INSEGNAMENTO => 'daily'
-        );
+        ];
 
         foreach ($types as $type => $changefreq) {
             foreach ($channelRepo->findManyByType($type) as $channel) {
@@ -59,7 +59,7 @@ class SitemapController extends Controller
 
     private function createHome(DOMDocument $document, DOMElement $root)
     {
-        $loc = $this->generateUrl('universibo_legacy_home', array(), true);
+        $loc = $this->generateUrl('universibo_legacy_home', [], true);
         $this->createUrl($document, $root, $loc, 'hourly');
     }
 

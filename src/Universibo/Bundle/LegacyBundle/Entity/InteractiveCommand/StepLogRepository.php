@@ -29,10 +29,10 @@ class StepLogRepository extends EntityRepository
      */
     public function findPositive($userId, $className = null, $limit = null)
     {
-        $params = array(
-                'idUtente' => $userId,
-                'esitoPositivo' => 'S'
-        );
+        $params = [
+            'idUtente' => $userId,
+            'esitoPositivo' => 'S'
+        ];
 
         $builder = $this
             ->createQueryBuilder('sl')

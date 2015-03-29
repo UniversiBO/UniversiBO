@@ -48,24 +48,24 @@ class DefaultController extends Controller
 
         switch ($do) {
             case 'FileDownload':
-                return $this->redirect($router->generate('universibo_legacy_file_download', array('id_file' => $_GET['id_file']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_file_download', ['id_file' => $_GET['id_file']], true), 301);
             case 'FileShowInfo':
-                return $this->redirect($router->generate('universibo_legacy_file', array('id_file' => $_GET['id_file']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_file', ['id_file' => $_GET['id_file']], true), 301);
             case 'NewsShowCanale':
-                  return $this->redirect($router->generate('universibo_legacy_news_show_canale', array('id_canale' => $_GET['id_canale'], 'qta' => $_GET['qta'], 'inizio' => $_GET['inizio']), true), 301);
+                  return $this->redirect($router->generate('universibo_legacy_news_show_canale', ['id_canale' => $_GET['id_canale'], 'qta' => $_GET['qta'], 'inizio' => $_GET['inizio']], true), 301);
             case 'Login':
             case 'NewPasswordStudente':
             case 'RecuperaUsernameStudente':
             case 'RegStudente':
-                return $this->redirect($router->generate('login', array(), true), 301);
+                return $this->redirect($router->generate('login', [], true), 301);
             case 'ShowAccessibility':
-                return $this->redirect($router->generate('universibo_legacy_accessibility', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_accessibility', [], true), 301);
             case 'ShowCanale':
-                return $this->redirect($router->generate('universibo_legacy_canale', array('id_canale' => $_GET['id_canale']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_canale', ['id_canale' => $_GET['id_canale']], true), 301);
             case 'ShowCdl':
-                return $this->redirect($router->generate('universibo_legacy_cdl', array('id_canale' => $_GET['id_canale']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_cdl', ['id_canale' => $_GET['id_canale']], true), 301);
             case 'ShowCredits':
-                return $this->redirect($router->generate('universibo_legacy_credits', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_credits', [], true), 301);
             case 'ShowCollaboratore':
                 $userRepo = $this->get('universibo_core.repository.user');
                 $userId = $this->getRequest()->query->get('id_coll');
@@ -74,37 +74,37 @@ class DefaultController extends Controller
                     throw new NotFoundHttpException('User not found');
                 }
 
-                return $this->redirect($router->generate('universibo_legacy_collaborator', array('username' => $user->getUsername()), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_collaborator', ['username' => $user->getUsername()], true), 301);
             case 'ShowContacts':
-                return $this->redirect($router->generate('universibo_legacy_contacts', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_contacts', [], true), 301);
             case 'ShowContribute':
-                return $this->redirect($router->generate('universibo_legacy_contribute', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_contribute', [], true), 301);
             case 'ShowError':
-                return $this->redirect($router->generate('universibo_legacy_error', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_error', [], true), 301);
             case 'ShowFacolta':
-                return $this->redirect($router->generate('universibo_legacy_facolta', array('id_canale' => $_GET['id_canale']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_facolta', ['id_canale' => $_GET['id_canale']], true), 301);
             case 'ShowFileInfo':
-                return $this->redirect($router->generate('universibo_legacy_file', array('id_file' => $_GET['id_file']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_file', ['id_file' => $_GET['id_file']], true), 301);
             case 'ShowHelp':
-                return $this->redirect($router->generate('universibo_legacy_help', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_help', [], true), 301);
             case 'ShowHelpTopic':
-                return $this->redirect($router->generate('universibo_legacy_help_topic', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_help_topic', [], true), 301);
             case 'ShowHome':
-                return $this->redirect($router->generate('universibo_legacy_home', array(), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_home', [], true), 301);
             case 'ShowInfoDidattica':
-                return $this->redirect($router->generate('universibo_legacy_insegnamento_info', array('id_canale' => $_GET['id_canale']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_insegnamento_info', ['id_canale' => $_GET['id_canale']], true), 301);
             case 'ShowInsegnamento':
-                return $this->redirect($router->generate('universibo_legacy_insegnamento', array('id_canale' => $_GET['id_canale']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_insegnamento', ['id_canale' => $_GET['id_canale']], true), 301);
             case 'ShowManifesto':
-                  return $this->redirect($router->generate('universibo_legacy_manifesto', array(), true), 301);
+                  return $this->redirect($router->generate('universibo_legacy_manifesto', [], true), 301);
             case 'ShowMyUniversiBO':
-                  return $this->redirect($router->generate('universibo_legacy_myuniversibo', array(), true), 301);
+                  return $this->redirect($router->generate('universibo_legacy_myuniversibo', [], true), 301);
             case 'ShowPermalink':
-                return $this->redirect($router->generate('universibo_legacy_permalink', array('id_notizia' => $_GET['id_notizia']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_permalink', ['id_notizia' => $_GET['id_notizia']], true), 301);
             case 'ShowRules':
-                return $this->redirect($router->generate('universibo_website_rules', array(), true), 301);
+                return $this->redirect($router->generate('universibo_website_rules', [], true), 301);
             case 'ShowUser':
-                return $this->redirect($router->generate('universibo_legacy_user', array('id_utente' => $_GET['id_utente']), true), 301);
+                return $this->redirect($router->generate('universibo_legacy_user', ['id_utente' => $_GET['id_utente']], true), 301);
 
             default:
                 throw new NotFoundHttpException("Legacy do=$do not mapped");

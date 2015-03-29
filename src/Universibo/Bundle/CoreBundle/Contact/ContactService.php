@@ -35,10 +35,10 @@ class ContactService
      * @param  array $oldAddresses
      * @return User
      */
-    public function updateUserEmails(User $user, array $verifiedEmails = array(),
-            array $sentAtDates = array())
+    public function updateUserEmails(User $user, array $verifiedEmails = [],
+            array $sentAtDates = [])
     {
-        $contactArray = array();
+        $contactArray = [];
 
         foreach ($user->getContacts() as $contact) {
             $contact->setUser($user);
@@ -57,7 +57,7 @@ class ContactService
             }
         }
 
-        $contacts = array();
+        $contacts = [];
         $user->ensureContact();
         foreach ($user->getContacts() as $contact) {
             $value = $contact->getValue();
@@ -98,7 +98,7 @@ class ContactService
      */
     public function getUserEmails(User $user)
     {
-        $emails = array();
+        $emails = [];
 
         foreach ($user->getContacts() as $contact) {
             if ($contact->isVerified() || !$contact->isVerificationSent()) {

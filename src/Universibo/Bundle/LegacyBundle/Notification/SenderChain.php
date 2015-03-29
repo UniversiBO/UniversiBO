@@ -14,7 +14,7 @@ class SenderChain implements SenderInterface
     /**
      * @var SenderInterface[]
      */
-    private $senders = array();
+    private $senders = [];
 
     public function supports(NotificaItem $notification)
     {

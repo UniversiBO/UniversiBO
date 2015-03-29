@@ -15,10 +15,10 @@ class FileController extends Controller
         $ids = $fileRepo->findIdByChannel($channelId);
         $files = $fileRepo->findMany($ids);
 
-        $response = $this->render('UniversiboWebsiteBundle:File:studentBox.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:File:studentBox.html.twig', [
             'files' => $files,
             'channelId' => $channelId
-        ));
+        ]);
 
         $response->setMaxAge(30);
         $response->setPrivate();

@@ -23,19 +23,19 @@ class ForumController extends Controller
         $forumId = $channel->getForumForumId();
         $forumUri = $forumRouter->getForumUri($forumId);
 
-        $posts = array();
+        $posts = [];
         foreach ($postDao->getLatestPosts($forumId, 10) as $post) {
-            $posts[] = array(
+            $posts[] = [
                 'title' => $post['topic_title'],
                 'uri'   => $forumRouter->getPostUri($post['min'])
-            );
+            ];
         }
 
-        $response = $this->render('UniversiboWebsiteBundle:Forum:box.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:Forum:box.html.twig', [
             'posts'     => $posts,
             'forumUri'  => $forumUri,
             'channelId' => $channel->getIdCanale()
-        ));
+        ]);
 
         $response->setSharedMaxAge(60);
         $response->setPublic();

@@ -38,12 +38,12 @@ class DBFacoltaRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_DEFAULT',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         if ($res->numRows() === 0) {
-            return array();
+            return [];
         }
 
         $facolta = null;
@@ -73,15 +73,15 @@ class DBFacoltaRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_DEFAULT',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         if ($res->numRows() === 0) {
-            return array();
+            return [];
         }
 
-        $facolta = array();
+        $facolta = [];
 
         while ($res->fetchInto($row)) {
             $facolta[] = new Facolta($row[13], $row[5], $row[4], $row[0],
@@ -110,8 +110,8 @@ class DBFacoltaRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_DEFAULT',
-                            array('msg' => $query, 'file' => __FILE__,
-                                    'line' => __LINE__));
+                            ['msg' => $query, 'file' => __FILE__,
+                                    'line' => __LINE__]);
         }
 
         $this->canaleRepository->update($facolta);
@@ -123,8 +123,8 @@ class DBFacoltaRepository extends DBRepository
 
         if ($this->canaleRepository->insert($facolta) != true) {
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => 'Errore inserimento Canale',
-                            'file' => __FILE__, 'line' => __LINE__));
+                    ['msg' => 'Errore inserimento Canale',
+                            'file' => __FILE__, 'line' => __LINE__]);
 
             return false;
         }
@@ -137,8 +137,8 @@ class DBFacoltaRepository extends DBRepository
         $res = $db->query($query);
         if (DB::isError($res)) {
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
             return false;
         }

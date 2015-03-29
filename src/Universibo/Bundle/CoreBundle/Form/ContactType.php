@@ -11,15 +11,15 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('value', null, array('label' => 'Email'))
+            ->add('value', null, ['label' => 'Email'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Universibo\Bundle\CoreBundle\Entity\Contact'
-        ));
+        ]);
     }
 
     public function getName()

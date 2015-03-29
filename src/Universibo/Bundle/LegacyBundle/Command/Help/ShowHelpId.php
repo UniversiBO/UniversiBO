@@ -31,9 +31,9 @@ class ShowHelpId extends PluginCommand
      */
     public function execute($param = [])
     {
-        $bc			     = $this->getBaseCommand();
+        $bc              = $this->getBaseCommand();
         $frontcontroller = $bc->getFrontController();
-        $template		 = $frontcontroller->getTemplateEngine();
+        $template        = $frontcontroller->getTemplateEngine();
 
         $repo = $this->getContainer()->get('universibo_legacy.repository.help.item');
         $items = in_array(0, $param) ? $repo->findAll() : $repo->findMany($param);

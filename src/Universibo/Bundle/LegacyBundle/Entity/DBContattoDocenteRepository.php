@@ -38,7 +38,7 @@ class DBContattoDocenteRepository extends DBRepository
         $query = 'SELECT stato, id_utente_assegnato, ultima_modifica, report FROM docente_contatti WHERE cod_doc = '.$db->quote($codDocente);
         $res = $db->query($query);
         if (DB::isError($res))
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         $rows = $res->numRows();
         if ($rows == 0) {
@@ -63,12 +63,12 @@ class DBContattoDocenteRepository extends DBRepository
 
         $res = $db->query($query);
         if (DB::isError($res))
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         $rows = $res->numRows();
         if( $rows == 0) return false;
 
-        $elenco = array();
+        $elenco = [];
         while ($row = $res->fetchRow())
             $elenco[] = new ContattoDocente($row[0], $row[1], $row[2], $row[3], $row[4]);
 
@@ -96,7 +96,7 @@ class DBContattoDocenteRepository extends DBRepository
         //var_dump($query);
         if (DB::isError($res)) {
             $db->rollback();
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $this->checkState($contattoDocente);
@@ -126,7 +126,7 @@ class DBContattoDocenteRepository extends DBRepository
         //var_dump($query);
         if (DB::isError($res)) {
             $db->rollback();
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $rows = $res->numRows();
@@ -145,7 +145,7 @@ class DBContattoDocenteRepository extends DBRepository
         //var_dump($query);
         if (DB::isError($res)) {
             $db->rollback();
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $this->checkState($contattoDocente);
@@ -175,7 +175,7 @@ class DBContattoDocenteRepository extends DBRepository
             //var_dump($query);
             if (DB::isError($res)) {
                 $db->rollback();
-                Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+                Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
             }
         }
     }
@@ -199,7 +199,7 @@ EOT;
             ->executeQuery($query)
         ;
 
-        $summary = array();
+        $summary = [];
 
         while (false !== ($row = $result->fetch())) {
             $row['status'] = ContattoDocente::$legend[$row['status']];

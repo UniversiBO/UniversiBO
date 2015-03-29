@@ -18,7 +18,7 @@ class RoleController extends Controller
         $loggedUser = $this->getUser();
         $loggedUserId = $loggedUser instanceof User ? $loggedUser->getId() : null;
 
-        $viewRoles = array();
+        $viewRoles = [];
         $roleTranslator = $this->get('universibo_legacy.translator.role_name');
 
         $editAllowed = $this->get('security.context')->isGranted('ROLE_ADMIN');
@@ -30,21 +30,21 @@ class RoleController extends Controller
                 $editAllowed = $editAllowed || $loggedUserId === $userId;
                 $groupName = $roleTranslator->getUserPublicGroupName($user, false);
 
-                $viewRoles[$groupName][] = array (
+                $viewRoles[$groupName][] = [
                     'userId'     => $user->getId(),
                     'username'   => $user->getUsername(),
                     'referente'  => $role->isReferente(),
                     'moderatore' => $role->isModeratore()
-                );
+                ];
             }
         }
 
-        $response = $this->render('UniversiboWebsiteBundle:Role:box.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:Role:box.html.twig', [
             'display' => count($viewRoles) > 0 || $editAllowed,
             'roles' => $viewRoles,
             'channelId' => $channelId,
             'editAllowed' => $editAllowed
-        ));
+        ]);
 
         $response->setMaxAge(30);
         $response->setPrivate();

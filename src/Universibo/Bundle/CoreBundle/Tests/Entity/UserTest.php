@@ -92,13 +92,13 @@ class UserTest extends EntityTest
 
     public function provider()
     {
-        return array (
-            array(2 , 'ROLE_STUDENT'),
-            array(4 , 'ROLE_MODERATOR'),
-            array(8 , 'ROLE_TUTOR'),
-            array(16, 'ROLE_PROFESSOR'),
-            array(32, 'ROLE_STAFF'),
-            array(64, 'ROLE_ADMIN'),
-        );
+        return [
+            [2 , 'ROLE_STUDENT'],
+            [4 , 'ROLE_MODERATOR'],
+            [8 , 'ROLE_TUTOR'],
+            [16, 'ROLE_PROFESSOR'],
+            [32, 'ROLE_STAFF'],
+            [64, 'ROLE_ADMIN'],
+        ];
     }
 }

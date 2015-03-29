@@ -23,14 +23,14 @@ class DBInformativaRepository extends DBRepository
 
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $rows = $res->numRows();
 
-        if( $rows = 0) return array();
+        if( $rows = 0) return [];
 
-        $list = array();
+        $list = [];
         $row = $this->fetchRow($res);
         $res->free();
 

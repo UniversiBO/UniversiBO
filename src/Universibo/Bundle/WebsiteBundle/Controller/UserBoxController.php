@@ -18,6 +18,6 @@ class UserBoxController extends Controller
 
         $roleTranslator = $this->get('universibo_legacy.translator.role_name');
 
-        return array('user' => $user, 'level' => $roleTranslator->translate($user->getRoles()));
+        return ['user' => $user, 'level' => $roleTranslator->translate($user->getRoles())];
     }
 }

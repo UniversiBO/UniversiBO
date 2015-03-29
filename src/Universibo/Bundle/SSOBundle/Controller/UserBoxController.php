@@ -40,7 +40,7 @@ class UserBoxController
     public function indexAction(Request $request)
     {
         $context = $this->securityContext;
-        $claims = $request->getSession()->get('shibbolethClaims', array());
+        $claims = $request->getSession()->get('shibbolethClaims', []);
 
         $hasClaims = count($claims) > 0;
         $logged = $context->isGranted('IS_AUTHENTICATED_FULLY');
@@ -50,7 +50,7 @@ class UserBoxController
         if ($shibDisabled) {
             $logoutUrl = $this->router->generate('universibo_shibboleth_logout');
         } else {
-            $wreply = '?wreply='.urlencode($this->router->generate('universibo_shibboleth_logout', array(), true));
+            $wreply = '?wreply='.urlencode($this->router->generate('universibo_shibboleth_logout', [], true));
             $logoutUrl = $failed ? $this->logoutUrl.$wreply :
             $this->router->generate('universibo_shibboleth_prelogout');
         }
@@ -63,12 +63,12 @@ class UserBoxController
             $eppn = '';
         }
 
-        $data = array (
+        $data = [
             'eppn' => $eppn,
             'showEppn' => $eppn !== '',
             'logoutUrl' => $logoutUrl,
             'infoUrl' => $this->infoUrl
-        ) ;
+        ] ;
 
         return $this->templating->renderResponse('UniversiboSSOBundle:UserBox:index.html.twig', $data);
     }

@@ -21,7 +21,7 @@ class UserMerger implements UserMergerInterface
      * Retrievers
      * @var array
      */
-    private $retrievers = array();
+    private $retrievers = [];
 
     /*
      * @var UserRepository
@@ -49,53 +49,53 @@ class UserMerger implements UserMergerInterface
             PostDAOInterface $postDAO,
             UserDAOInterface $userDAO)
     {
-        $this->retrievers['file'] = array(
+        $this->retrievers['file'] = [
             'description' => 'Uploaded files',
             'repository' => $fileItemRepository
-        );
+        ];
 
-        $this->retrievers['comment'] = array(
+        $this->retrievers['comment'] = [
             'description' => 'File comments',
             'repository' => $commentoRepository
-        );
+        ];
 
-        $this->retrievers['news'] = array(
+        $this->retrievers['news'] = [
             'description' => 'Sent news',
             'repository' => $newsRepository
-        );
+        ];
 
-        $this->retrievers['link'] = array(
+        $this->retrievers['link'] = [
             'description' => 'Added links',
             'repository' => $linkRepository
-        );
+        ];
 
-        $this->retrievers['post'] = array(
+        $this->retrievers['post'] = [
             'description' => 'Forum posts',
             'repository' => $postDAO
-        );
+        ];
 
-        $this->retrievers['roles'] = array(
-                'description' => 'Roles',
-                'repository' => $ruoloRepository
-        );
+        $this->retrievers['roles'] = [
+            'description' => 'Roles',
+            'repository' => $ruoloRepository
+        ];
 
-        $this->retrievers['professors'] = array(
-                'description' => 'Docente table',
-                'repository' => $docenteRepository
-        );
+        $this->retrievers['professors'] = [
+            'description' => 'Docente table',
+            'repository' => $docenteRepository
+        ];
 
         $this->userRepository = $userRepository;
     }
 
     public function getOwnedResources(User $user)
     {
-        $owned = array();
+        $owned = [];
 
         foreach ($this->retrievers as $key => $retriever) {
-            $owned[$key] = array (
+            $owned[$key] = [
                 'count' =>  $retriever['repository']->countByUser($user),
                 'description' => $retriever['description']
-            );
+            ];
         }
 
         return $owned;
@@ -109,7 +109,7 @@ class UserMerger implements UserMergerInterface
             return $users;
         }
 
-        $unlockedUsers = array();
+        $unlockedUsers = [];
 
         foreach ($users as $user) {
             if (!$user->isLocked()) {
@@ -155,7 +155,7 @@ class UserMerger implements UserMergerInterface
      */
     public function getTargetPerson(array $users)
     {
-        $people = array();
+        $people = [];
 
         foreach ($users as $user) {
             $person = $user->getPerson();

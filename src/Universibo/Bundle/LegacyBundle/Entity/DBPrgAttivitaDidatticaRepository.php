@@ -127,7 +127,7 @@ EOT;
 
         $res = $db->query($query);
         if (DB::isError($res)) {
-            Error::throwError(_ERROR_DEFAULT,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_DEFAULT,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
             return false;
         }
@@ -135,11 +135,11 @@ EOT;
         $rows = $res->numRows();
 
         if ($rows == 0) {
-            $array = array();
+            $array = [];
 
             return $array;
         }
-        $elenco = array();
+        $elenco = [];
         while (	$res->fetchInto($row) ) {
             $prgAtt = new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
                     $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
@@ -179,8 +179,8 @@ EOT;
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
         if ($rows >= 1)
             return true;
@@ -189,8 +189,8 @@ EOT;
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => 'Errore generale database',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => 'Errore generale database',
+                                    'file' => __FILE__, 'line' => __LINE__]);
     }
 
     public function findByChannelId($channelId)
@@ -244,18 +244,18 @@ EOT;
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0) {
-            $ret = array();
+            $ret = [];
 
             return $ret;
         }
-        $elenco = array();
+        $elenco = [];
         while ($row = $this->fetchRow($res)) {
             $prgAtt = new PrgAttivitaDidattica($row[13], $row[5], $row[4],
                     $row[0], $row[2], $row[1], $row[3], $row[7] == 'S',
@@ -343,14 +343,14 @@ EOT;
 
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         $rows = $res->numRows();
 
         if ($rows == 0) {
-            $ret = array(); return $ret;
+            $ret = []; return $ret;
         }
-        $elenco = array();
+        $elenco = [];
         while (	$res->fetchInto($row) ) {
             $prgAtt = new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
                     $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
@@ -402,13 +402,13 @@ EOT;
         //		var_dump($query); die;
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0) {
-            $ret = array(); return $ret;
+            $ret = []; return $ret;
         }
 
         $res->fetchInto($row);

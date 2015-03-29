@@ -16,10 +16,10 @@ class CommonController extends Controller
     {
         $krono = $this->get('universibo_legacy.krono');
 
-        $params = array(
+        $params = [
             'longDate' => $krono->k_date('%j %F %Y'),
             'time' => $krono->k_date('%H:%i')
-        );
+        ];
 
        $response = $this->render('UniversiboWebsiteBundle:Common:date.html.twig', $params);
        $response->setPublic();
@@ -42,10 +42,10 @@ class CommonController extends Controller
      */
     public function disclaimerAction()
     {
-       $params = array('disclaimer' => array('Le informazioni contenute nel sito non hanno carattere di ufficialità.',
+       $params = ['disclaimer' => ['Le informazioni contenute nel sito non hanno carattere di ufficialità.',
                 'I contenuti sono mantenuti in maniera volontaria dai partecipanti alla comunità di studenti e docenti di UniversiBO. L\'Università di Bologna - Alma Mater Studiorum non può essere considerata legalmente responsabile di alcun contenuto di questo sito.',
                 'Ogni marchio citato in queste pagine appartiene al legittimo proprietario.' .
-                'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinché le parti in discussione vengano eliminate o chiarite.'));
+                'Con il contenuto delle pagine appartenenti a questo sito non si è voluto ledere i diritti di nessuno, quindi nel malaugurato caso che questo possa essere avvenuto, vi invitiamo a contattarci affinché le parti in discussione vengano eliminate o chiarite.']];
 
        $response = $this->render('UniversiboWebsiteBundle:Common:disclaimer.html.twig', $params);
        $response->setPublic();
@@ -59,7 +59,7 @@ class CommonController extends Controller
      */
     public function versionAction()
     {
-        return array('version' => UniversiboWebsiteBundle::VERSION);
+        return ['version' => UniversiboWebsiteBundle::VERSION];
     }
 
     /**
@@ -88,9 +88,9 @@ class CommonController extends Controller
         elseif (false)
         $logoType = 'carnevale';
 
-        $response = $this->render('UniversiboWebsiteBundle:Common:header.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:Common:header.html.twig', [
             'logoType' => $logoType,
-        ));
+        ]);
 
         $response->setPublic();
         $response->setExpires(new DateTime('tomorrow'));
@@ -100,9 +100,9 @@ class CommonController extends Controller
 
     public function navbarAction()
     {
-        return $this->render('UniversiboWebsiteBundle:Common:navbar.html.twig', array(
+        return $this->render('UniversiboWebsiteBundle:Common:navbar.html.twig', [
             'forumUri' => $this->get('universibo_forum.router')->getRootUri(),
-        ));
+        ]);
     }
 
     /**
@@ -111,7 +111,7 @@ class CommonController extends Controller
      */
     public function rssAction($channel)
     {
-        return array('channelId' => $channel->getIdCanale());
+        return ['channelId' => $channel->getIdCanale()];
     }
 
     /**
@@ -122,7 +122,7 @@ class CommonController extends Controller
     {
         $id = $this->container->getParameter('analytics_id');
 
-        return array('trackingId' => $id);
+        return ['trackingId' => $id];
     }
 
     /**
@@ -150,10 +150,10 @@ class CommonController extends Controller
          else $conta_mday=2-$inizio_mese_wday; */
 
         $conta_wday = 1;  //variabile contatore dei giorni della settimana
-        $tpl_mese = array();
+        $tpl_mese = [];
 
         while ($conta_mday <= $giorni_del_mese) {
-            $tpl_settimana = array();
+            $tpl_settimana = [];
 
             //disegno una settimana
             do {
@@ -161,15 +161,15 @@ class CommonController extends Controller
                 $c_string = "$conta_mday";
                 $today = ($conta_mday == $curr_mday) ? 'true' : 'false';
                 if ($conta_mday < 1 || $conta_mday > $giorni_del_mese)
-                    $tpl_day = array('numero' => '-', 'tipo' => 'empty', 'today' => $today);
+                    $tpl_day = ['numero' => '-', 'tipo' => 'empty', 'today' => $today];
                 elseif ($this->isFestivo($conta_mday, $curr_mese, $curr_anno))
-                $tpl_day = array('numero' => $c_string, 'tipo' => 'festivo', 'today' => $today);
+                $tpl_day = ['numero' => $c_string, 'tipo' => 'festivo', 'today' => $today];
                 elseif ($conta_wday % 7 == 0)
-                $tpl_day = array('numero' => $c_string, 'tipo' => 'domenica', 'today' => $today);
+                $tpl_day = ['numero' => $c_string, 'tipo' => 'domenica', 'today' => $today];
                 else
-                    $tpl_day = array('numero' => $c_string, 'tipo' => 'feriale', 'today' => $today);
+                    $tpl_day = ['numero' => $c_string, 'tipo' => 'feriale', 'today' => $today];
 
-                //$tpl_day = array('numero' => $c_string, 'tipo' => $tipo, 'today' => $today);
+                //$tpl_day = ['numero' => $c_string, 'tipo' => $tipo, 'today' => $today];
                 $tpl_settimana[] = $tpl_day;
                 $conta_wday++;
                 $conta_mday++;
@@ -178,10 +178,13 @@ class CommonController extends Controller
             $tpl_mese[] = $tpl_settimana;
         }
 
-        $weekDays = array('L', 'M', 'M', 'G', 'V', 'S', 'D');
+        $weekDays = ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
 
-        $params = array('weekDays' => $weekDays, 'month' => $krono->k_date('%F'),
-            'data' => $tpl_mese);
+        $params = [
+            'weekDays' => $weekDays,
+            'month' => $krono->k_date('%F'),
+            'data' => $tpl_mese
+        ];
 
         $response = $this->render('UniversiboWebsiteBundle:Common:calendar.html.twig', $params);
         $response->setPublic();

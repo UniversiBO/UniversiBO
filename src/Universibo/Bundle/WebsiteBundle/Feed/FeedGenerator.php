@@ -50,7 +50,7 @@ class FeedGenerator
         $feed = new Feed();
         $feed->setTitle($nome = $canale->getTitolo());
         $feed->setDescription('Feed ' . $nome);
-        $feed->setLink($this->router->generate('rss', array('idCanale' => $idCanale), true));
+        $feed->setLink($this->router->generate('rss', ['idCanale' => $idCanale], true));
 
         $newsRepository = $this->repository;
         $news = $newsRepository->findByCanale($idCanale, 20);
@@ -73,10 +73,10 @@ class FeedGenerator
         $entry->setContent(empty($content) ? 'Nessun testo' : $content);
 
         $id = $item->getIdNotizia();
-        $link = $this->router->generate('universibo_legacy_permalink', array('id_notizia' => $id), true);
+        $link = $this->router->generate('universibo_legacy_permalink', ['id_notizia' => $id], true);
 
         $entry->setLink($link);
-        $entry->addAuthor(array('name' => $item->getUsername()));
+        $entry->addAuthor(['name' => $item->getUsername()]);
         $entry->setDateCreated(intval($item->getDataIns()));
         $entry->setDateModified(intval($item->getUltimaModifica()));
 

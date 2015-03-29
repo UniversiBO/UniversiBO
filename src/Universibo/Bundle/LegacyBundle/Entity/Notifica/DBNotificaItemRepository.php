@@ -15,7 +15,7 @@ class DBNotificaItemRepository extends DBRepository
 {
     public function find($id)
     {
-        $result = $this->findMany(array($id));
+        $result = $this->findMany([$id]);
 
         return is_array($result) ? $result[0] : $result;
     }
@@ -23,13 +23,13 @@ class DBNotificaItemRepository extends DBRepository
     public function findMany(array $ids)
     {
         if (count($ids) == 0) {
-            return array();
+            return [];
         }
 
         $db = $this->getDb();
 
         //esegue $db->quote() su ogni elemento dell'array
-        //array_walk($id_notifiche, array($db, 'quote'));
+        //array_walk($id_notifiche, [$db, 'quote']);
 
         if (count($ids) == 1)
             $values = $ids[0];
@@ -45,8 +45,8 @@ class DBNotificaItemRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
@@ -54,7 +54,7 @@ class DBNotificaItemRepository extends DBRepository
         if ($rows == 0) {
             return false;
         }
-        $notifiche_list = array();
+        $notifiche_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $notifiche_list[] = new NotificaItem($row[0], $row[1], $row[2],
@@ -79,8 +79,8 @@ class DBNotificaItemRepository extends DBRepository
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
         $rows = $res->numRows();
 
@@ -88,7 +88,7 @@ class DBNotificaItemRepository extends DBRepository
             return false;
         }
 
-        $notifiche_list = array();
+        $notifiche_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $notifiche_list[] = new NotificaItem($row[0], $row[1], $row[2],
@@ -125,8 +125,8 @@ class DBNotificaItemRepository extends DBRepository
             $db->rollback();
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $db->commit();
@@ -162,8 +162,8 @@ class DBNotificaItemRepository extends DBRepository
             $db->rollback();
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $notification->setIdNotifica($next_id);

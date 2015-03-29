@@ -27,7 +27,7 @@ class SwiftMailerSender extends AbstractSender
     public function __construct(Swift_Mailer $mailer, $fromAddress, $fromName)
     {
         $this->mailer = $mailer;
-        $this->from = array($fromAddress => $fromName);
+        $this->from = [$fromAddress => $fromName];
     }
 
     public function supports(NotificaItem $notification)

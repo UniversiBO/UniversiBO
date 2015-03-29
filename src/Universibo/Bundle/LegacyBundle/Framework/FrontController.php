@@ -130,14 +130,14 @@ class FrontController
             $templateEngine = $this->getTemplateEngine();
             if (!$templateEngine->template_exists($template)) {
                 echo $template;
-                Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non e` presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__));
+                Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` presente il file relativo al template specificato: "'.$template.'"','file'=>__FILE__,'line'=>__LINE__]);
             }
 
-            return array (
+            return [
                 'content' => $templateEngine->fetch($template),
                 'channel' => $command instanceof CanaleCommand ? $command->getRequestCanale(false) : null,
                 'title'   => $templateEngine->getVariable('common_title')
-            );
+            ];
         }
     }
 
@@ -159,7 +159,7 @@ class FrontController
         $classValues = $this->getPluginClass($name);
 
         if ($classValues == null) {
-            Error::throwError(_ERROR_DEFAULT,array('msg'=>'Non e` stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_DEFAULT,['msg'=>'Non e` stato definito il plugin richiesto: '.$name ,'file'=>__FILE__,'line'=>__LINE__]);
 
             return;
         }
@@ -177,7 +177,7 @@ class FrontController
      */
     public function getAvailablePlugins()
     {
-        $list = array();
+        $list = [];
         foreach ($this->plugins as $pc) {
             //			$explodedPc = explode(".",$pc);
             //			$class_name = $explodedPc[count($explodedPc)-1];
@@ -243,13 +243,13 @@ class FrontController
            $file_namepath = implode("/",$explodedPc);
            $class_name = $explodedPc[count($explodedPc)-1];
 
-           $ret = array('nameWithPath' => $file_namepath,'className' => $class_name);
+           $ret = ['nameWithPath' => $file_namepath,'className' => $class_name];
            $ret['restrictedTo'] = (isset($plugin['restrictedTo']))? $plugin['restrictedTo'] : '';
            $ret['condition'] = (isset($plugin['condition']))? $plugin['condition'] : '';
            $ret['restrictedTo'] = str_replace(' ', '', $ret['restrictedTo']);
            $ret['bundleClass'] = 'Universibo\\Bundle\\LegacyBundle\\Command\\' . str_replace('.', '\\', $pc);
 
-           $ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : array();
+           $ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : [];
 
            return $ret;
     }
@@ -277,7 +277,7 @@ class FrontController
     public function getReceiverUrl($receiverId, $relative=true)
     {
            if ( !array_key_exists($receiverId, $this->receivers) )
-               Error::throwError(_ERROR_CRITICAL,array('msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__));
+               Error::throwError(_ERROR_CRITICAL,['msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__]);
 
            if ($relative == true) {
                return $this->receivers[$receiverId];
@@ -371,7 +371,7 @@ class FrontController
      */
     private function _appSettings(\DOMDocument $config)
     {
-        $this->appSettings = array();
+        $this->appSettings = [];
         //		$appSettingNodes = &$config->getElementsByTagName("appSettings");
         //		var_dump($appSettingNodes);
 
@@ -437,7 +437,7 @@ class FrontController
 
         //		var_dump($cinfonode);
         if($cinfonode == NULL)
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
         // @TODO qui migliorerebbe molto o xpath o cache
         $figli = &$cinfonode->childNodes;
         //print_r($figli);
@@ -455,7 +455,7 @@ class FrontController
                     $this->commandClass = $commandNode->getAttribute('class');
                     //		var_dump($commandNode->attributes[0]->value);
                     //reads allowed response for this BaseCommand
-                    $this->commandTemplate=array();
+                    $this->commandTemplate=[];
                     $responses = $commandNode->getElementsByTagName('response');
 
                     for ($i=0; $i < $responses->length; $i++) {
@@ -470,14 +470,14 @@ class FrontController
                     for ($i=0; $i < $plugins->length; $i++) {
                         $plugin = $plugins->item($i);
                         //			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
-                        $this->plugins[$plugin->getAttribute('name')] = array ('class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition'));
+                        $this->plugins[$plugin->getAttribute('name')] = ['class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition')];
                     }
 
                     if(!isset($this->commandClass))
-                        Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non e` definito l\'attributo class relativo al comando specificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+                        Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` definito l\'attributo class relativo al comando specificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
 
                     if(empty($this->commandClass))
-                        Error::throwError(_ERROR_CRITICAL,array('msg'=>'Non e` specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__));
+                        Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
     }
 
     /**

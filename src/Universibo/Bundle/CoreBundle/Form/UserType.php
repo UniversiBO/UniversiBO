@@ -13,33 +13,33 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('email')
-            ->add('phone', null, array (
+            ->add('phone', null, [
                 'label' => 'Cellulare'
-            ))
-            ->add('notifications', 'choice', array(
+            ])
+            ->add('notifications', 'choice', [
                 'label' => 'Livello di notifica',
-                'choices' => array (
+                'choices' => [
                     0 => 'Nessuna',
                     1 => 'Solo urgenti',
                     2 => 'Tutte'
-                )
-            ))
-            ->add('contacts', 'collection', array(
+                ]
+            ])
+            ->add('contacts', 'collection', [
                 'type' => new ContactType(),
                 'prototype' => true,
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Contatti'
-            ))
+            ])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Universibo\Bundle\CoreBundle\Entity\User'
-        ));
+        ]);
     }
 
     public function getName()

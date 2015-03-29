@@ -20,10 +20,10 @@ class DBCanaleRepository extends DBRepository
         $query = 'SELECT tipo_canale FROM canale WHERE id_canale= '.$db->quote($id_canale);
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         $rows = $res->numRows();
-        if( $rows > 1) $this->throwError('_ERROR_CRITICAL',array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+        if( $rows > 1) $this->throwError('_ERROR_CRITICAL',['msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__]);
         if( $rows == 0) return false;
 
         $row = $this->fetchRow($res);
@@ -38,18 +38,18 @@ class DBCanaleRepository extends DBRepository
         $query = 'UPDATE canale SET ultima_modifica = '.$db->quote($canale->getUltimaModifica()).' WHERE id_canale = '.$db->quote($canale->getIdCanale());
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         $rows = $db->affectedRows();
 
         if( $rows == 1) return true;
         elseif( $rows == 0) return false;
-        else $this->throwError('_ERROR_CRITICAL',array('msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__));
+        else $this->throwError('_ERROR_CRITICAL',['msg'=>'Errore generale database canali: id non unico','file'=>__FILE__,'line'=>__LINE__]);
         return false;
     }
 
     public function find($idCanale)
     {
-        $result = $this->findManyById(array($idCanale));
+        $result = $this->findManyById([$idCanale]);
 
         return is_array($result) ? $result[0] : $result;
     }
@@ -57,24 +57,24 @@ class DBCanaleRepository extends DBRepository
     public function findManyById(array $idCanale)
     {
         if (count($idCanale) === 0) {
-            return array();
+            return [];
         }
 
         $db = $this->getDb();
 
-        array_walk($idCanale, array($db, 'quote'));
+        array_walk($idCanale, [$db, 'quote']);
         $canali_comma = implode (' , ',$idCanale);
 
         $query = 'SELECT tipo_canale, nome_canale, immagine, visite, ultima_modifica, permessi_groups, files_attivo, news_attivo, forum_attivo, id_forum, group_id, links_attivo, id_canale, files_studenti_attivo FROM canale WHERE id_canale IN ('.$canali_comma.') ORDER BY nome_canale;';
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         $rows = $res->numRows();
-        if( $rows > count($idCanale)) Error::throwError(_ERROR_CRITICAL,array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+        if( $rows > count($idCanale)) Error::throwError(_ERROR_CRITICAL,['msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__]);
         if( $rows == 0) return false;
 
-        $elenco_canali = array();
+        $elenco_canali = [];
         while ($row = $this->fetchRow($res)) {
             //var_dump($row);
             $elenco_canali[] = new Canale($row[12], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
@@ -98,7 +98,7 @@ class DBCanaleRepository extends DBRepository
         $query = 'SELECT id_canale FROM canale WHERE tipo_canale = '.$db->quote($type);
         $res = $db->executeQuery($query);
 
-        $elenco_canali = array();
+        $elenco_canali = [];
         while (false !== ($id = $res->fetchColumn())) {
             $elenco_canali[] = $id;
         }
@@ -113,7 +113,7 @@ class DBCanaleRepository extends DBRepository
         $query = 'UPDATE canale SET visite = visite + '.$db->quote($increment).' WHERE id_canale = '.$db->quote($canale->getIdCanale());
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1) {
@@ -121,7 +121,7 @@ class DBCanaleRepository extends DBRepository
         } elseif ($rows == 0) {
             $ok = false;
         } else {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__]);
         }
 
         if ($ok) {
@@ -130,7 +130,7 @@ class DBCanaleRepository extends DBRepository
             $row = $this->fetchRow($res);
 
             if (DB::isError($res)) {
-                $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+                $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
             }
 
             $canale->setVisite((int) $row[0]);
@@ -178,7 +178,7 @@ class DBCanaleRepository extends DBRepository
                 $db->quote($files_studenti_attivo).' )';
         $res = $db->query($query);
         if (DB::isError($res)) {
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
             return false;
         }
@@ -220,12 +220,12 @@ class DBCanaleRepository extends DBRepository
 
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         $rows = $db->affectedRows();
 
         if( $rows == 1) return true;
         elseif( $rows == 0) return false;
-        else $this->throwError('_ERROR_CRITICAL',array('msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__));
+        else $this->throwError('_ERROR_CRITICAL',['msg'=>'Errore generale database: canale non unico','file'=>__FILE__,'line'=>__LINE__]);
     }
 
     public function idExists($id)
@@ -235,7 +235,7 @@ class DBCanaleRepository extends DBRepository
         $query = 'SELECT id_canale FROM canale WHERE id_canale = '.$db->quote($id).';';
         $res = $db->query($query);
         if (DB::isError($res))
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
 
         return $res->numRows() == 1;
     }

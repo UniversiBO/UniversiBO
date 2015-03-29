@@ -29,11 +29,11 @@ class StepParametriTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('callbackName', 'call_hello'),
-                array('id', rand()),
-                array('paramName', 'hello'),
-                array('paramValue', rand().''),
-        );
+        return [
+            ['callbackName', 'call_hello'],
+            ['id', rand()],
+            ['paramName', 'hello'],
+            ['paramValue', rand().''],
+        ];
     }
 }

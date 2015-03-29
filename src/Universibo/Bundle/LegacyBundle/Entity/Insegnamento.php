@@ -88,7 +88,7 @@ class Insegnamento extends Canale
         //var_dump($elenco_attivita);
         $this->elencoAttivita = $elenco_attivita;
         $num = count($elenco_attivita);
-        $this->elencoCodiciCDL = array();
+        $this->elencoCodiciCDL = [];
         for ($i = 0; $i < $num; $i++) {
             if ($elenco_attivita[$i]->isSdoppiato() == false) {
                 $this->elencoAttivitaPadre[] = $elenco_attivita[$i];
@@ -112,16 +112,16 @@ class Insegnamento extends Canale
             // CHE CAS-INOOOOO!!!!!
             $nome = NULL;
             $max_anno = 0;
-            $nomi = array();
-            $e_nomi = array();
-            $b_nomi = array();
-            $t_nomi = array();
-            $anni = array();
-            $docenti = array();
-            $cod_ril = array();
-            //$app	 = array('nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL);
+            $nomi = [];
+            $e_nomi = [];
+            $b_nomi = [];
+            $t_nomi = [];
+            $anni = [];
+            $docenti = [];
+            $cod_ril = [];
+            //$app	 = ['nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL];
 
-            $app_elenco_attivita = array();
+            $app_elenco_attivita = [];
             $num_att = count($this->elencoAttivitaPadre);
             for ($i = 0; $i < $num_att; $i++) {
                 $app_elenco_attivita = $this->elencoAttivitaPadre;
@@ -157,7 +157,7 @@ class Insegnamento extends Canale
             //}
 
             //bugfix
-            $app_nomi = array();
+            $app_nomi = [];
 
             //costruisce la mappa dei nomi
             for ($i = 0; $i < $num_att; $i++) {

@@ -13,7 +13,7 @@ class MyUniversiBOController extends Controller
     public function boxAction()
     {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return array('roles' => array());
+            return ['roles' => []];
         }
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -23,7 +23,7 @@ class MyUniversiBOController extends Controller
 
         $roles = $rolesRepo->findByIdUtente($user->getId());
 
-        $displayRoles = array();
+        $displayRoles = [];
 
         foreach ($roles as $role) {
             if ($role->isMyUniversibo()) {
@@ -35,12 +35,12 @@ class MyUniversiBOController extends Controller
                     $name = $channel->getNome();
                 }
 
-                $displayRoles[] = array ('link' => $channelRouter->generate($channel),
+                $displayRoles[] = ['link' => $channelRouter->generate($channel),
                     'name' => $name, 'referente' => $role->isReferente(),
-                    'moderatore' => $role->isModeratore());
+                    'moderatore' => $role->isModeratore()];
             }
         }
 
-        return array('roles' => $displayRoles);
+        return ['roles' => $displayRoles];
     }
 }

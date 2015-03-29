@@ -5,13 +5,13 @@ namespace Universibo\Bundle\LegacyBundle\Framework;
  * @todo si pu? implementare uno stack per gli handlers
  */
 //global $_Error_handlers_stack;
-//$_Error_handlers_stack = array();
+//$_Error_handlers_stack = [];
 
 global $_Error_handlers;
-$_Error_handlers = array();
+$_Error_handlers = [];
 
 global $_Error_repository;
-$_Error_repository = array();
+$_Error_repository = [];
 
 /**
  * Error class for error creation, handling, collecting and retrieving
@@ -41,10 +41,10 @@ class Error
      *
      * @param int   $error_category defines the error category, see the predefined constants
      * @param mixed $param          error parameters, can be an arbitral value.
-     *                              example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                              example: ['msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__]
      *                              error handlers functions must be able to handle $param type.
      */
-    public function __construct($error_category, $param = array())
+    public function __construct($error_category, $param = [])
     {
         $this->error_category = $error_category;
         $this->param = $param;
@@ -104,7 +104,7 @@ class Error
      * @param mixed $handler_function can be a string
      *                                example: 'my_function_name'
      *                                or an array to use class methods
-     *                                example: array('MyClassName','myMethodName')
+     *                                example: ['MyClassName','myMethodName']
      */
     public static function setHandler($error_category, $handler_function)
     {
@@ -135,7 +135,7 @@ class Error
      * @static optional
      * @param  int   $error_category defines the error category, see the predefined constants
      * @param  mixed $param          error parameters, can be an arbitral value.
-     *                               example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                               example: ['msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__]
      *                               error handlers functions must be able to handle $param type.
      * @return mixed the given handler callback function value
      */
@@ -160,7 +160,7 @@ class Error
      * @static optional
      * @param int   $error_category defines the error category, see the predefined constants
      * @param mixed $param          error parameters, can be an arbitral value.
-     *                              example: array('msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__)
+     *                              example: ['msg'=>'this is yet another error message','file'=>__FILE__,'line'=>__LINE__]
      *                              error handlers functions must be able to handle $param type.
      */
     public function collect($error_category=NULL, $param=NULL)

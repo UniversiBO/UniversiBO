@@ -30,9 +30,9 @@ class FileItemTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('idFile', 42),
-                array('categoriaDesc', 'esami')
-        );
+        return [
+            ['idFile', 42],
+            ['categoriaDesc', 'esami']
+        ];
     }
 }

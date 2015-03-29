@@ -29,12 +29,12 @@ class ItemTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('id', rand()),
-                array('title', 'Hello World!'),
-                array('content', 'Hello World!'),
-                array('lastEdit', rand()),
-                array('index', rand())
-        );
+        return [
+            ['id', rand()],
+            ['title', 'Hello World!'],
+            ['content', 'Hello World!'],
+            ['lastEdit', rand()],
+            ['index', rand()]
+        ];
     }
 }

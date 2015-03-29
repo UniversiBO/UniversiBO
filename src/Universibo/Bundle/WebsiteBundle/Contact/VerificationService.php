@@ -50,7 +50,7 @@ class VerificationService
     public function __construct(Swift_Mailer $mailer, $mailFrom, $mailFromName,
             EngineInterface $templating, EntityManager $entityManager)
     {
-        $this->mailFrom = array($mailFrom => $mailFromName);
+        $this->mailFrom = [$mailFrom => $mailFromName];
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->entityManager = $entityManager;
@@ -73,7 +73,7 @@ class VerificationService
                     $contact->setVerifiedAt(null);
 
                     $body = $this->templating->render('UniversiboWebsiteBundle:Profile:emailValidation.txt.twig',
-                            array('user' => $user, 'contact' => $contact));
+                            ['user' => $user, 'contact' => $contact]);
 
                     $message = Swift_Message::newInstance()
                         ->setTo($contact->getValue())

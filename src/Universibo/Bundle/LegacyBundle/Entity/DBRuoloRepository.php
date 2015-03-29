@@ -20,7 +20,7 @@ class DBRuoloRepository extends DBRepository implements
         $db = $this->getConnection();
         $query = 'DELETE FROM utente_canale WHERE id_utente = ? AND id_canale = ?';
 
-        return $db->executeUpdate($query, array($ruolo->getId(), $ruolo->getIdCanale())) > 0;
+        return $db->executeUpdate($query, [$ruolo->getId(), $ruolo->getIdCanale()]) > 0;
     }
 
     public function insert(Ruolo $ruolo)
@@ -45,8 +45,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return true;
     }
@@ -63,8 +63,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -74,9 +74,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -93,8 +93,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -104,9 +104,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -123,8 +123,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -134,9 +134,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -154,8 +154,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -165,9 +165,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -185,8 +185,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -196,9 +196,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -217,8 +217,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -228,9 +228,9 @@ class DBRuoloRepository extends DBRepository implements
         else
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array(
+                            [
                                     'msg' => 'Errore generale database: ruolo non unico',
-                                    'file' => __FILE__, 'line' => __LINE__));
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return false;
     }
@@ -245,17 +245,17 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         $rows = $res->numRows();
         if ($rows = 0) {
-            $ret = array();
+            $ret = [];
 
             return $ret;
         }
 
-        $ruoli = array();
+        $ruoli = [];
         while ($res->fetchInto($row)) {
             $ruoli[] = new Ruolo($row[0], $idCanale, $row[5], $row[1],
                     $row[2] == Ruolo::MODERATORE, $row[2] == Ruolo::REFERENTE,
@@ -288,8 +288,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         return true;
     }
@@ -325,8 +325,8 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         $rows = $res->numRows();
         if ($rows >= 1) {
             return false;
@@ -345,15 +345,15 @@ class DBRuoloRepository extends DBRepository implements
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
         $rows = $res->numRows();
         if ($rows = 0) {
-            return array();
+            return [];
         }
 
-        $ruoli = array();
+        $ruoli = [];
         while ($row = $this->fetchRow($res)) {
             $ruoli[$row[0]] = new Ruolo($idUtente, $row[0], $row[5], $row[1],
                     $row[2] == Ruolo::MODERATORE, $row[2] == Ruolo::REFERENTE,
@@ -366,7 +366,7 @@ class DBRuoloRepository extends DBRepository implements
     public function getRuoliInfoGroupedByYear(User $user, $id_canale = null)
     {
         $user_ruoli = $this->findByIdUtente($user->getId());
-        $elenco_canali = array();
+        $elenco_canali = [];
         $found = $id_canale == null;
 
         $isAdmin = $user->hasRole('ROLE_ADMIN');
@@ -385,7 +385,7 @@ class DBRuoloRepository extends DBRepository implements
             $elenco_canali[] = $id_canale;
         }
 
-        $elenco_canali_retrieve = array();
+        $elenco_canali_retrieve = [];
 
         foreach ($elenco_canali as $id_current_canale) {
             $current_canale = Canale::retrieveCanale($id_current_canale);
@@ -396,18 +396,18 @@ class DBRuoloRepository extends DBRepository implements
             $annoCorso = (count($didatticaCanale) > 0) ? $didatticaCanale[0]
                             ->getAnnoAccademico() : 'altro';
             $nome_current_canale = $current_canale->getTitolo();
-            $f7_canale[$annoCorso][$id_current_canale] = array(
+            $f7_canale[$annoCorso][$id_current_canale] = [
                     'nome' => $nome_current_canale,
                     'spunta' => ($id_canale != null
                             && $id_current_canale == $id_canale) ? 'true'
-                            : 'false');
+                            : 'false'];
         }
         krsort($f7_canale);
         $tot = count($f7_canale);
         $list_keys = array_keys($f7_canale);
         for ($i = 0; $i < $tot; $i++)
         // var_dump($f7_canale[$i]);
-            uasort($f7_canale[$list_keys[$i]], array($this, 'compareCanale'));
+            uasort($f7_canale[$list_keys[$i]], [$this, 'compareCanale']);
 
         return $f7_canale;
     }

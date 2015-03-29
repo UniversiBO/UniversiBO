@@ -117,14 +117,14 @@ class User extends BaseUser implements EncoderAwareInterface
     /**
      * @var array
      */
-    private static $legacyGroupsMap = array (
+    private static $legacyGroupsMap = [
         2  => 'ROLE_STUDENT',
         4  => 'ROLE_MODERATOR',
         8  => 'ROLE_TUTOR',
         16 => 'ROLE_PROFESSOR',
         32 => 'ROLE_STAFF',
         64 => 'ROLE_ADMIN'
-    );
+    ];
 
     /**
      * Class constructor
@@ -276,7 +276,7 @@ class User extends BaseUser implements EncoderAwareInterface
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->password,
             $this->salt,
             $this->usernameCanonical,
@@ -290,7 +290,7 @@ class User extends BaseUser implements EncoderAwareInterface
             $this->notifications,
             $this->legacyGroups,
             $this->usernameLocked
-        ));
+        ]);
     }
 
     /**

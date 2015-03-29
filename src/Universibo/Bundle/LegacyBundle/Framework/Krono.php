@@ -123,62 +123,58 @@ class Krono
     */
     public function __construct($lan='it', $date_format='it', $separator='/')
     {
-        $this->day_name_ext=
-        array(
-                'it'=>array('Domenica','Luned�','Marted�','Mercoled�','Gioved�','Venerd�','Sabato'),
-                'en'=>array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'),
-                'de'=>array('Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),
-                'fr'=>array('Dimanche','Lund�','Mard�','Mercred�','Jeud�','Vendred�','Samed�'),
-                'es'=>array('Domingo','Lunes','Martes','Miercole','Jueves','Viernes','Sabado'),
-                'id'=>array('Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'),
-                'no'=>array('Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lordag','Sondag'),
-                'jp'=>array('Nichiyoubi','Getsuyoubi','Kayoubi','Suiyoubi','Mokuyoubi','Kinyoubi','Douyoubi'),
-                'fi'=>array('Sunnuntaina','Maanantaina','Tiistaina','Keskiviikkona','Torstaina','Perjantaina','Lauantaina'),
-                'nl'=>array('Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag')
-            );
+        $this->day_name_ext = [
+            'it'=>['Domenica','Luned�','Marted�','Mercoled�','Gioved�','Venerd�','Sabato'],
+            'en'=>['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            'de'=>['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+            'fr'=>['Dimanche','Lund�','Mard�','Mercred�','Jeud�','Vendred�','Samed�'],
+            'es'=>['Domingo','Lunes','Martes','Miercole','Jueves','Viernes','Sabado'],
+            'id'=>['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],
+            'no'=>['Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lordag','Sondag'],
+            'jp'=>['Nichiyoubi','Getsuyoubi','Kayoubi','Suiyoubi','Mokuyoubi','Kinyoubi','Douyoubi'],
+            'fi'=>['Sunnuntaina','Maanantaina','Tiistaina','Keskiviikkona','Torstaina','Perjantaina','Lauantaina'],
+            'nl'=>['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag']
+        ];
 
 
-        $this->day_name_con=
-        array(
-                'it'=>array('Dom','Lun','Mar','Mer','Gio','Ven','Sab'),
-                'en'=>array('Sun','Mon','Tue','Wed','Thu','Fri','Sat'),
-                'de'=>array('So','Mo','Di','Mi','Do','Fr','Sa'),
-                'fr'=>array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam'),
-                'es'=>array('Dom','Lun','Mar','Mie','Jue','Vie','Sab'),
-                'id'=>array('Min','Sen','Sel','Rab','Kam','Jum','Sab'),
-                'no'=>array('Man','Tir','Ons','Tor','Fre','Lor','Son'),
-                'jp'=>array('Nic','Get','Kay','Sui','Mok','Kin','Dou'),
-                'fi'=>array('Sun','Maa','Tii','Kes','Tor','Per','Lau'),
-                'nl'=>array('Zo','Ma','Di','Wo','Do','Vr','Za')
-            );
+        $this->day_name_con = [
+            'it'=>['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+            'en'=>['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+            'de'=>['So','Mo','Di','Mi','Do','Fr','Sa'],
+            'fr'=>['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+            'es'=>['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+            'id'=>['Min','Sen','Sel','Rab','Kam','Jum','Sab'],
+            'no'=>['Man','Tir','Ons','Tor','Fre','Lor','Son'],
+            'jp'=>['Nic','Get','Kay','Sui','Mok','Kin','Dou'],
+            'fi'=>['Sun','Maa','Tii','Kes','Tor','Per','Lau'],
+            'nl'=>['Zo','Ma','Di','Wo','Do','Vr','Za']
+        ];
 
-        $this->month_name_ext=
-        array(
-                'it'=>array('Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'),
-                'en'=>array('January','February','March','April','May','June','July','August','September','October','November','December'),
-                'de'=>array('Januar','Februar','Marz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'),
-                'fr'=>array('Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'),
-                'es'=>array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'),
-                'id'=>array('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'),
-                'no'=>array('Januar','February','Mars','April','Mai','Juni','Juli','','','Oktober','','Desember'),
-                'jp'=>array('Ichigatsu','Nigatsu','Sangatsu','Shigatsu','Gogatsu','Rokugatsu','Shicigatsu','Hachigatsu','Kugatsu','Jugatsu','Juichigatsu','Junigatsu'),
-                'fi'=>array('Tammikuun','Helmikuun','Maaliskuun','Huhtikuun','Toukokuun','Kesakuun','Heinakuun','Elokuun','Syyskuun','Lokakuun','Marraskuun','Joulukuun'),
-                'nl'=>array('Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December')
-            );
+        $this->month_name_ext = [
+            'it'=>['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+            'en'=>['January','February','March','April','May','June','July','August','September','October','November','December'],
+            'de'=>['Januar','Februar','Marz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+            'fr'=>['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'],
+            'es'=>['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            'id'=>['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+            'no'=>['Januar','February','Mars','April','Mai','Juni','Juli','','','Oktober','','Desember'],
+            'jp'=>['Ichigatsu','Nigatsu','Sangatsu','Shigatsu','Gogatsu','Rokugatsu','Shicigatsu','Hachigatsu','Kugatsu','Jugatsu','Juichigatsu','Junigatsu'],
+            'fi'=>['Tammikuun','Helmikuun','Maaliskuun','Huhtikuun','Toukokuun','Kesakuun','Heinakuun','Elokuun','Syyskuun','Lokakuun','Marraskuun','Joulukuun'],
+            'nl'=>['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']
+        ];
 
-        $this->month_name_con=
-        array(
-                'it'=>array('Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'),
-                'en'=>array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
-                'de'=>array('Jan','Feb','Mar','Apr','Mag','Jun','Jul','Aug','Sep','Okt','Nov','Dez'),
-                'fr'=>array('Jan','Fev','Mar','Avr','Mai','Jui','Jul','Aou','Sep','Oct','Nov','Dec'),
-                'es'=>array('Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'),
-                'id'=>array('Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'),
-                'no'=>array('Jan','Feb','Mar','Apr','Mai','Jun','Jul','','','Okt','','Des'),
-                'jp'=>array('Ich','Nig','San','Shi','Gog','Rok','Shi','Hac','Kug','Jug','Jui','Jun'),
-                'fi'=>array('Tam','Hel','Maa','Huh','Tou','Kes','Hei','Elo','Syy','Lok','Mar','Jou'),
-                'nl'=>array('Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec')
-            );
+        $this->month_name_con = [
+            'it'=>['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'],
+            'en'=>['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            'de'=>['Jan','Feb','Mar','Apr','Mag','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+            'fr'=>['Jan','Fev','Mar','Avr','Mai','Jui','Jul','Aou','Sep','Oct','Nov','Dec'],
+            'es'=>['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            'id'=>['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+            'no'=>['Jan','Feb','Mar','Apr','Mai','Jun','Jul','','','Okt','','Des'],
+            'jp'=>['Ich','Nig','San','Shi','Gog','Rok','Shi','Hac','Kug','Jug','Jui','Jun'],
+            'fi'=>['Tam','Hel','Maa','Huh','Tou','Kes','Hei','Elo','Syy','Lok','Mar','Jou'],
+            'nl'=>['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec']
+        ];
 
         $this->lan=$lan;
         $this->date_format=$date_format;

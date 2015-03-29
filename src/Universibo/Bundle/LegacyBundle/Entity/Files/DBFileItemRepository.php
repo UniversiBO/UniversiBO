@@ -64,9 +64,9 @@ class DBFileItemRepository extends DBRepository implements MergeableRepositoryIn
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_CRITICAL',
-                    array('id_utente' => $this->sessionUser->getId(),
+                    ['id_utente' => $this->sessionUser->getId(),
                             'msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                            'line' => __LINE__]);
         }
 
         return $res;
@@ -105,11 +105,11 @@ class DBFileItemRepository extends DBRepository implements MergeableRepositoryIn
     public function findLatestByChannels(array $channelIds, $limit)
     {
         if (count($channelIds) === 0) {
-            return array();
+            return [];
         }
 
         $db = $this->getDb();
-        array_walk($channelIds, array($db, 'quote'));
+        array_walk($channelIds, [$db, 'quote']);
 
         $values = implode(',', $channelIds);
 
@@ -122,12 +122,12 @@ class DBFileItemRepository extends DBRepository implements MergeableRepositoryIn
         $res = $db->limitQuery($query, 0, $limit);
         if (DB::isError($res)) {
             $this->throwError('_ERROR_DEFAULT',
-                    array('id_utente' => $this->sessionUser->getId(),
+                    ['id_utente' => $this->sessionUser->getId(),
                             'msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                            'line' => __LINE__]);
         }
 
-        $ids = array();
+        $ids = [];
 
         while ($res->fetchInto($row)) {
             $ids[] = $row[0];
@@ -168,10 +168,10 @@ EOT;
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_DEFAULT',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
-        $id_file_list = array();
+        $id_file_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $id_file_list[] = $row[0];
@@ -184,7 +184,7 @@ EOT;
 
     public function find($id)
     {
-        $result = $this->findManyById(array($id));
+        $result = $this->findManyById([$id]);
 
         return count($result) > 0 ? $result[0] : null;
     }
@@ -194,11 +194,11 @@ EOT;
         $db = $this->getDb();
 
         if (count($ids) == 0) {
-            return array();
+            return [];
         }
 
         //esegue $db->quote() su ogni elemento dell'array
-        //array_walk($id_notizie, array($db, 'quote'));
+        //array_walk($id_notizie, [$db, 'quote']);
         if (count($ids) == 1)
             $values = $ids[0];
         else
@@ -222,7 +222,7 @@ EOT;
 
         $res = $db->query($query);
 
-        $files_list = array();
+        $files_list = [];
 
         $userRepo = $this->userRepository;
 
@@ -264,15 +264,15 @@ EOT;
         if (DB::isError($res)) {
             $this
             ->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res),
-                            'file' => __FILE__, 'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res),
+                            'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0)
             return false;
-        $files_list = array();
+        $files_list = [];
 
         $userRepo = $this->userRepository;
 
@@ -298,9 +298,9 @@ EOT;
         $res = $db->query($query);
 
         if (DB :: isError($res))
-            Error :: throwError(_ERROR_DEFAULT, array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            Error :: throwError(_ERROR_DEFAULT, ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
 
-        $elenco_keywords = array ();
+        $elenco_keywords = [];
 
         while ($row = $this->fetchRow($res)) {
             $elenco_keywords[] = $row[0];
@@ -318,7 +318,7 @@ EOT;
         $res =  $db->query($query);
 
         if (DB :: isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
     }
 
@@ -329,7 +329,7 @@ EOT;
         $res =$db->query($query);
 
         if (DB :: isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
     }
 
@@ -368,8 +368,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res))
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res),
-                            'file' => __FILE__, 'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res),
+                            'file' => __FILE__, 'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -378,9 +378,9 @@ EOT;
         return false;
         else
             $this->throwError('_ERROR_CRITICAL',
-                    array(
+                    [
                             'msg' => 'Errore generale database file non unico',
-                            'file' => __FILE__, 'line' => __LINE__));
+                            'file' => __FILE__, 'line' => __LINE__]);
     }
 
     public function getTypes()
@@ -392,10 +392,10 @@ EOT;
 
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
-        $tipi = array();
+        $tipi = [];
 
         while ($row = $this->fetchRow($res)) {
             $tipi[$row[0]] = $row[1];
@@ -415,11 +415,11 @@ EOT;
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
-        $tipi = array();
+        $tipi = [];
 
         while ($row = $this->fetchRow($res)) {
             $tipi[$row[0]] = $row[1];
@@ -438,10 +438,10 @@ EOT;
 
         if (DB::isError($res))
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
-        $categorie = array();
+        $categorie = [];
 
         while ($row = $this->fetchRow($res)) {
             $categorie[$row[0]] = $row[1];
@@ -471,15 +471,15 @@ EOT;
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0)
             return false;
-        $files_list = array();
+        $files_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $username = $this->userRepository->getUsernameFromId($row[3]);
@@ -528,8 +528,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         $db->commit();
@@ -570,8 +570,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
             $return = false;
         }
 
@@ -593,11 +593,11 @@ EOT;
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
-        $elenco_id_canale = array();
+        $elenco_id_canale = [];
 
         while ($res->fetchInto($row)) {
             $elenco_id_canale[] = $row[0];
@@ -641,11 +641,11 @@ EOT;
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
-        $file->setIdCanali($ids = array_diff($file->getIdCanali(),array($channelId)));
+        $file->setIdCanali($ids = array_diff($file->getIdCanali(),[$channelId]));
         if (count($ids) === 0) {
             $this->delete($file);
         }
@@ -667,8 +667,8 @@ EOT;
             if (DB::isError($res)) {
                 $db->rollback();
                 $this->throwError('_ERROR_CRITICAL',
-                        array('msg' => DB::errorMessage($res),
-                                'file' => __FILE__, 'line' => __LINE__));
+                        ['msg' => DB::errorMessage($res),
+                                'file' => __FILE__, 'line' => __LINE__]);
             }
 
             return true;
@@ -689,7 +689,7 @@ EOT;
 
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return $db->affectedRows();

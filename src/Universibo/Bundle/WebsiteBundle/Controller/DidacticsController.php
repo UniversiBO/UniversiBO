@@ -13,7 +13,7 @@ class DidacticsController extends Controller
     public function academicYearAction($min, $max, $current, $route, array $params)
     {
 
-        $years = array();
+        $years = [];
         if ($current > $min) {
             $years['prev'] = $this->yearToArray($current-1, $route, $params);
         } else {
@@ -28,19 +28,23 @@ class DidacticsController extends Controller
             $years['next'] = null;
         }
 
-        return array ('years' => $years, 'route' => $route);
+        return ['years' => $years, 'route' => $route];
     }
 
     private function yearToArray($year, $route, array $params)
     {
         $router = $this->get('router');
 
-        return array (
-                'label' => $year . '/' . ($year+1),
-                'value' => $year,
-                'uri' => $router->generate($route, array_merge($params, array(
-                        'anno_accademico' => $year)
-                ))
-        );
+        return [
+            'label' => $year . '/' . ($year+1),
+            'value' => $year,
+            'uri' => $router->generate(
+                $route,
+                array_merge(
+                    $params,
+                    ['anno_accademico' => $year]
+                )
+            )
+        ];
     }
 }

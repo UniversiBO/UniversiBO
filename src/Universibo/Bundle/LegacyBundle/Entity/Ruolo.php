@@ -252,9 +252,11 @@ class Ruolo
      */
     public static function getLivelliNotifica()
     {
-        return array(	NOTIFICA_NONE => 'Nessuna',
-                NOTIFICA_URGENT => 'Solo Urgenti',
-                NOTIFICA_ALL => 'Tutti');
+        return [
+            NOTIFICA_NONE => 'Nessuna',
+            NOTIFICA_URGENT => 'Solo Urgenti',
+            NOTIFICA_ALL => 'Tutti'
+        ];
     }
 
     /**

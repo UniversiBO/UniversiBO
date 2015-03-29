@@ -10,13 +10,13 @@ class UniversiboExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return array(
+        return [
                 'linkify' => new \Twig_Filter_Method($this, 'linkify',
-                        array('pre_escape' => 'html',
-                                'is_safe' => array('html'))),
+                        ['pre_escape' => 'html',
+                                'is_safe' => ['html']]),
                 'bbcode' => new \Twig_Filter_Method($this, 'bbcode',
-                        array('pre_escape' => 'html',
-                                'is_safe' => array('html'))));
+                        ['pre_escape' => 'html',
+                                'is_safe' => ['html']])];
     }
 
     /**
@@ -28,8 +28,8 @@ class UniversiboExtension extends \Twig_Extension
      * @param  string $mode       normal or all
      * @return string
      */
-    public function linkify($value, $protocols = array('http', 'mail'),
-            array $attributes = array())
+    public function linkify($value, $protocols = ['http', 'mail'],
+            array $attributes = [])
     {
         // Link attributes
         $attr = '';
@@ -37,7 +37,7 @@ class UniversiboExtension extends \Twig_Extension
             $attr = ' ' . $key . '="' . htmlentities($val) . '"';
         }
 
-        $links = array();
+        $links = [];
 
         // Extract existing links and tags
         $value = preg_replace_callback('~(<a .*?>.*?</a>|<.*?>)~i',
@@ -109,7 +109,7 @@ class UniversiboExtension extends \Twig_Extension
 
     public function bbcode($message)
     {
-        $preg = array(
+        $preg = [
                 '/(?<!\\\\)\[color(?::\w+)?=(.*?)\](.*?)\[\/color(?::\w+)?\]/si' => "<span style=\"color:\\1\">\\2</span>",
                 //          '/(?<!\\\\)\[size(?::\w+)?=(.*?)\](.*?)\[\/size(?::\w+)?\]/si'     => "<span style=\"font-size:\\1\">\\2</span>",
                 //          '/(?<!\\\\)\[font(?::\w+)?=(.*?)\](.*?)\[\/font(?::\w+)?\]/si'     => "<span style=\"font-family:\\1\">\\2</span>",
@@ -156,7 +156,7 @@ class UniversiboExtension extends \Twig_Extension
                 '/(?<!\\\\)(?:\s*<br\s*\/?>\s*)?\[list(?::o)?(:\w+)?=a\]\s*(?:<br\s*\/?>)?/s' => "\n<ol>",
                 '/(?<!\\\\)(?:\s*<br\s*\/?>\s*)?\[list(?::o)?(:\w+)?=A\]\s*(?:<br\s*\/?>)?/s' => "\n<ol>",
                 // escaped tags like \[b], \[color], \[url], ...
-                '/\\\\(\[\/?\w+(?::\w+)*\])/' => "\\1");
+                '/\\\\(\[\/?\w+(?::\w+)*\])/' => "\\1"];
         $message = preg_replace(array_keys($preg), array_values($preg),
                 $message);
 

@@ -54,7 +54,7 @@ EOT;
 
     public function find($id)
     {
-        $result = $this->findMany(array($id));
+        $result = $this->findMany([$id]);
 
         return is_array($result) ? $result[0] : $result;
     }
@@ -73,15 +73,15 @@ EOT;
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0)
             return false;
-        $news_list = array();
+        $news_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $userRepository = $this->userRepository;
@@ -100,7 +100,7 @@ EOT;
     public function findMany(array $ids)
     {
         if (count($ids) === 0) {
-            return array();
+            return [];
         }
 
         $db = $this->getDb();
@@ -119,15 +119,15 @@ EOT;
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0)
             return false;
-        $news_list = array();
+        $news_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $userRepository = $this->userRepository;
@@ -182,7 +182,7 @@ EOT;
 
         $res = $db->query($sql);
 
-        $news = array();
+        $news = [];
         while ($row = $this->fetchRow($res)) {
             $news[] = new NewsItem($row[7], $row[0], $row[1], $row[2], $row[3],
                     $row[8], ($row[4] == NewsItem::URGENTE),
@@ -225,10 +225,10 @@ EOT;
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
-        $elenco_id_canale = array();
+        $elenco_id_canale = [];
 
         while ($row = $this->fetchRow($res)) {
             $elenco_id_canale[] = $row[0];
@@ -247,10 +247,10 @@ EOT;
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
-        $news->setIdCanali($ids = array_diff ($news->getIdCanali(), array($channelId)));
+        $news->setIdCanali($ids = array_diff ($news->getIdCanali(), [$channelId]));
 
         if (count($ids) === 0) {
             $this->delete($news);
@@ -307,7 +307,7 @@ EOT;
         //var_dump($query);
         if (DB::isError($res)) {
             $db->rollback();
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $db->commit();
@@ -316,17 +316,17 @@ EOT;
 
     public function findLatestByChannel($channelId, $limit, $offset = 0)
     {
-        return $this->findLatestByChannels(array($channelId), $limit, $offset);
+        return $this->findLatestByChannels([$channelId], $limit, $offset);
     }
 
     public function findLatestByChannels(array $channelIds, $limit, $offset = 0)
     {
         if (count($channelIds) === 0) {
-            return array();
+            return [];
         }
 
         $db = $this->getDb();
-        array_walk($channelIds, array($db, 'quote'));
+        array_walk($channelIds, [$db, 'quote']);
 
         $values = implode(',', $channelIds);
 
@@ -342,11 +342,11 @@ EOT;
         //		die();
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
-                    array('id_utente' => $this->sessionUser->getId(),
+                    ['id_utente' => $this->sessionUser->getId(),
                             'msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                            'line' => __LINE__]);
 
-        $id_news_list = array();
+        $id_news_list = [];
 
         while ($res->fetchInto($row)) {
             $id_news_list[] = $row[0];
@@ -366,7 +366,7 @@ EOT;
         'AND ( data_scadenza IS NULL OR \''.time().'\' < data_scadenza ) AND B.id_canale = '.$db->quote($channelId).'';
         $res = $db->getOne($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return $res;
@@ -384,7 +384,7 @@ UPDATE news
 EOT;
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return $db->affectedRows();
@@ -402,7 +402,7 @@ EOT;
         $db = $this->getConnection();
 
         $date = $db
-            ->fetchColumn($statement, array($channel->getIdCanale()))
+            ->fetchColumn($statement, [$channel->getIdCanale()])
         ;
 
         $dateTime = new DateTime();

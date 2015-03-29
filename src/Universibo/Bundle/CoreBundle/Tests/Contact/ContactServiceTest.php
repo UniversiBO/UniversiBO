@@ -89,7 +89,7 @@ class ContactServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($newContact, $contacts[0]);
         $this->assertSame($user, $newContact->getUser(), 'User should be set');
 
-        $this->service->updateUserEmails($user, array($email2));
+        $this->service->updateUserEmails($user, [$email2]);
         $this->assertTrue($newContact->isVerified(), 'Should be verified');
     }
 
@@ -212,7 +212,7 @@ class ContactServiceTest extends \PHPUnit_Framework_TestCase
         ;
 
         $now = new DateTime;
-        $this->service->updateUserEmails($user, array(), array($email2 => $now));
+        $this->service->updateUserEmails($user, [], [$email2 => $now]);
 
         $this->assertEquals($now, $newContact->getVerificationSentAt());
     }

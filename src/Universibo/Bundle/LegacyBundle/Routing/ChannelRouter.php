@@ -29,12 +29,12 @@ class ChannelRouter
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
-        $this->routes = array (
+        $this->routes = [
             self::BASE . 'Cdl' => 'universibo_legacy_cdl',
             self::BASE . 'Facolta' => 'universibo_legacy_facolta',
             self::BASE . 'Insegnamento' => 'universibo_legacy_insegnamento',
             self::BASE . 'PrgattivitaDidattica' => 'universibo_legacy_show_insegnamento',
-        );
+        ];
     }
 
     /**
@@ -54,7 +54,7 @@ class ChannelRouter
 
         return $this
             ->router
-            ->generate($route, array('id_canale' => $channel->getIdCanale()), $absolute)
+            ->generate($route, ['id_canale' => $channel->getIdCanale()], $absolute)
         ;
     }
 

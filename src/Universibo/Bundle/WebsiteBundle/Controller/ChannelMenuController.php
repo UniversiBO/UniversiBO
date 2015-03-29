@@ -15,7 +15,7 @@ class ChannelMenuController extends Controller
      * @param  array    $allowed
      * @return Response
      */
-    public function indexAction($type, $allowed = array())
+    public function indexAction($type, $allowed = [])
     {
         $scontext = $this->get('security.context');
         $token = $scontext->getToken();
@@ -34,7 +34,7 @@ class ChannelMenuController extends Controller
 
         foreach ($channelRepo->findManyByType($type) as $item) {
             if ($acl->canRead($user, $item)) {
-                $allowed[] = array('name' => $item->getNome(), 'url' => $router->generate($item));
+                $allowed[] = ['name' => $item->getNome(), 'url' => $router->generate($item)];
             }
         }
 
@@ -42,9 +42,9 @@ class ChannelMenuController extends Controller
             return strcmp($a['name'], $b['name']);
         });
 
-        $response = $this->render('UniversiboWebsiteBundle:ChannelMenu:index.html.twig', array(
+        $response = $this->render('UniversiboWebsiteBundle:ChannelMenu:index.html.twig', [
             'links' => $allowed
-        ));
+        ]);
 
         $response->setPrivate();
         $response->setMaxAge(120);

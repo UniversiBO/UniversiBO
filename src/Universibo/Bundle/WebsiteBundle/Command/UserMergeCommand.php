@@ -68,7 +68,7 @@ class UserMergeCommand extends ContainerAwareCommand
         $output->setDecorated(true);
 
         $output->writeln('Merging users:');
-        $users = array();
+        $users = [];
         foreach ($usernames as $id => $username) {
             $user = $userManager->findUserByUsername($username);
             if (!$user instanceof User) {
@@ -108,7 +108,7 @@ class UserMergeCommand extends ContainerAwareCommand
 
         $output->writeln('Target user: '.$users[$choosen]);
         $target = $users[$choosen];
-        $others = array_diff($users, array($target));
+        $others = array_diff($users, [$target]);
 
         $start = microtime(true);
         $merger->merge($target, $others, $person);

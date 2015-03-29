@@ -358,12 +358,12 @@ class BatchCreateForumsCommand extends ContainerAwareCommand
     private function createForum(Client $client, $name, $description, $parentId, $type)
     {
         return $client
-            ->post('forum/', null, array (
+            ->post('forum/', null, [
                     'name' => $name,
                     'description' => $description,
                     'parent_id' => $parentId,
                     'type' => $type
-            ))
+            ])
             ->send()
             ->json()
         ;

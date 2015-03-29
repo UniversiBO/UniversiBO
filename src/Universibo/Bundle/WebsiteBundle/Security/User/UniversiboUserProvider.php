@@ -72,7 +72,7 @@ class UniversiboUserProvider implements ShibbolethUserProviderInterface
      *
      * @var array
      */
-    private $memberOfHandlers = array();
+    private $memberOfHandlers = [];
 
     /**
      * Class constructor
@@ -156,7 +156,7 @@ class UniversiboUserProvider implements ShibbolethUserProviderInterface
             $multiMemberOf = explode(';', $memberOf);
             $memberOf = $multiMemberOf[0];
         } else {
-            $multiMemberOf = array($memberOf);
+            $multiMemberOf = [$memberOf];
         }
 
         if ($user === null) {
@@ -283,8 +283,8 @@ class UniversiboUserProvider implements ShibbolethUserProviderInterface
      */
     private function logMissingClaims(array $claims)
     {
-        $existingClaims = array();
-        $missingClaims = array();
+        $existingClaims = [];
+        $missingClaims = [];
 
         foreach ($claims as $key => $claim) {
             if (empty($claim)) {

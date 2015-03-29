@@ -26,8 +26,8 @@ class DBInfoDidatticaRepository extends DBRepository
             $db->rollback();
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         if ($row = $this->fetchRow($res)) {
@@ -51,8 +51,8 @@ class DBInfoDidatticaRepository extends DBRepository
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         return true;
@@ -84,8 +84,8 @@ class DBInfoDidatticaRepository extends DBRepository
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         return true;
@@ -120,8 +120,8 @@ class DBInfoDidatticaRepository extends DBRepository
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         return true;

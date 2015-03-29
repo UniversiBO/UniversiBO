@@ -85,12 +85,12 @@ class CollaboratoreTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('intro', 'Lorem ipsum'),
-                array('recapito', 'hello'),
-                array('obiettivi', 'find a girlfriend'),
-                array('ruolo', 'aaaa'),
-                array('user', new User()),
-        );
+        return [
+            ['intro', 'Lorem ipsum'],
+            ['recapito', 'hello'],
+            ['obiettivi', 'find a girlfriend'],
+            ['ruolo', 'aaaa'],
+            ['user', new User()],
+        ];
     }
 }

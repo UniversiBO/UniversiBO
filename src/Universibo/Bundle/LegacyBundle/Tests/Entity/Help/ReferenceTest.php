@@ -30,9 +30,9 @@ class ReferenceTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('id', 'hello'),
-                array('helpId', rand())
-        );
+        return [
+            ['id', 'hello'],
+            ['helpId', rand()]
+        ];
     }
 }

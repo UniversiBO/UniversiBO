@@ -30,8 +30,8 @@ class DocenteTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('idUtente', rand())
-        );
+        return [
+            ['idUtente', rand()]
+        ];
     }
 }

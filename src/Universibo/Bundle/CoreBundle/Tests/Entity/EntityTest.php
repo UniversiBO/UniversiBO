@@ -30,7 +30,7 @@ abstract class EntityTest extends \PHPUnit_Framework_TestCase
     protected function getValue($object, $fieldName)
     {
         //method names are case insensitive
-        $getters = array('get'.$fieldName,'is'.$fieldName,'has'.$fieldName);
+        $getters = ['get'.$fieldName,'is'.$fieldName,'has'.$fieldName];
 
         $class = new \ReflectionClass($object);
 

@@ -809,7 +809,7 @@ class FileItem
      */
     public static function selectFileItem($id_file)
     {
-        $result = self::selectFileItems(array($id_file));
+        $result = self::selectFileItems([$id_file]);
 
         return is_array($result) ? $result[0] : $result;
     }

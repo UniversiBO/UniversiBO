@@ -70,7 +70,7 @@ class Canale
     /**
      * @private
      */
-    public $forum = array();
+    public $forum = [];
     /**
      * @private
      */
@@ -504,7 +504,7 @@ class Canale
         $this->requestCanale = Canale::selectCanale( $this->getRequestIdCanale() );
 
         if ( $this->requestCanale === false )
-            Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non e` presente','file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_DEFAULT,['msg'=>'Il canale richiesto non e` presente','file'=>__FILE__,'line'=>__LINE__]);
 
         $canale = $this->getRequestCanale();
         $canale->addVisite();
@@ -524,30 +524,29 @@ class Canale
     {
         //spalata la cache!!!
         //dimezza i tempi di esecuzione!!
-        static $cache_canali = array();
+        static $cache_canali = [];
 
         if ($cache == true && array_key_exists($id_canale, $cache_canali))
             return $cache_canali[$id_canale];
 
         $tipo_canale =  Canale::getTipoCanaleFromId ( $id_canale );
         if ($tipo_canale === false )
-            Error::throwError(_ERROR_DEFAULT,array('msg'=>'Il canale richiesto non e` presente','file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_DEFAULT,['msg'=>'Il canale richiesto non e` presente','file'=>__FILE__,'line'=>__LINE__]);
 
-        $dispatch_array = array (
-                self::CDEFAULT     => __NAMESPACE__.'\\Canale',
-                self::HOME         => __NAMESPACE__.'\\Canale',
-                self::FACOLTA      => __NAMESPACE__.'\\Facolta',
-                self::CDL          => __NAMESPACE__.'\\Cdl',
-                self::INSEGNAMENTO => __NAMESPACE__.'\\Insegnamento'
-        );
-
+        $dispatch_array = [
+            self::CDEFAULT     => __NAMESPACE__.'\\Canale',
+            self::HOME         => __NAMESPACE__.'\\Canale',
+            self::FACOLTA      => __NAMESPACE__.'\\Facolta',
+            self::CDL          => __NAMESPACE__.'\\Cdl',
+            self::INSEGNAMENTO => __NAMESPACE__.'\\Insegnamento'
+        ];
 
         if (!array_key_exists($tipo_canale, $dispatch_array)) {
-            Error::throwError(_ERROR_CRITICAL,array('msg'=>'Il tipo di canale richiesto su database non e` valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__));
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Il tipo di canale richiesto su database non e` valido, contattare lo staff - '.var_dump($id_canale).var_dump($tipo_canale),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $class_name = $dispatch_array[$tipo_canale];
-        $cache_canali[$id_canale] = call_user_func(array($class_name,'factoryCanale'), $id_canale);
+        $cache_canali[$id_canale] = call_user_func([$class_name,'factoryCanale'], $id_canale);
 
         return $cache_canali[$id_canale];
     }
@@ -575,7 +574,7 @@ class Canale
      */
     public static function selectCanale($id_canale)
     {
-        $array_canale = Canale::selectCanali( array( 0 => $id_canale ) );
+        $array_canale = Canale::selectCanali( [ 0 => $id_canale ] );
 
         return $array_canale[0];
     }
@@ -622,7 +621,7 @@ class Canale
     public function getRuoli()
     {
         if ($this->ruoli == NULL) {
-            $this->ruoli = array();
+            $this->ruoli = [];
             $ruoli = Ruolo::selectCanaleRuoli($this->getIdCanale());
             $num_elementi = count($ruoli);
             for ($i=0; $i<$num_elementi; $i++) {

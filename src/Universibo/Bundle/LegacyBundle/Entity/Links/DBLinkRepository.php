@@ -37,14 +37,14 @@ class DBLinkRepository extends DBRepository implements MergeableRepositoryInterf
         $res = $db->query($query);
         if (DB::isError($res))
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
         $rows = $res->numRows();
 
         if ($rows = 0)
             return false;
-        $link_list = array();
+        $link_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $link_list[] = new Link($row[0], $row[1], $row[2], $row[3],
@@ -74,7 +74,7 @@ EOT;
     public function find($id)
     {
         $db = $this->getDb();
-        $result = $this->findMany(array($id));
+        $result = $this->findMany([$id]);
 
         return is_array($result) ? $result[0] : $result;
     }
@@ -84,7 +84,7 @@ EOT;
         $db = $this->getDb();
 
         if (count($ids) == 0) {
-            $ret = array();
+            $ret = [];
 
             return $ret;
         }
@@ -95,8 +95,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res))
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
         $rows = $res->numRows();
 
@@ -105,7 +105,7 @@ EOT;
 
             return $ret;
         }
-        $link_list = array();
+        $link_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $link_list[] = new Link($row[0], $row[1], $row[5], $row[2],
@@ -132,8 +132,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res)) {
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
             return false;
         }
@@ -156,8 +156,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -166,8 +166,8 @@ EOT;
         return false;
         else
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => 'Errore generale database: canale non unico',
-                            'file' => __FILE__, 'line' => __LINE__));
+                    ['msg' => 'Errore generale database: canale non unico',
+                            'file' => __FILE__, 'line' => __LINE__]);
     }
 
     public function delete(Link $link)
@@ -179,8 +179,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res))
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         $rows = $db->affectedRows();
 
         if ($rows == 1)
@@ -189,8 +189,8 @@ EOT;
         return false;
         else
             $this->throwError('_ERROR_CRITICAL',
-                    array('msg' => 'Errore generale database: canale non unico',
-                            'file' => __FILE__, 'line' => __LINE__));
+                    ['msg' => 'Errore generale database: canale non unico',
+                            'file' => __FILE__, 'line' => __LINE__]);
     }
 
     public function getUsername(Link $link)
@@ -209,7 +209,7 @@ UPDATE link
 EOT;
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return $db->affectedRows();

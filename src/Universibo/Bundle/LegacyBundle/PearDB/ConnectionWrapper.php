@@ -60,7 +60,7 @@ class ConnectionWrapper extends AbstractWrapper
      * @param  array         $params
      * @return ResultWrapper
      */
-    public function query($query, $params = array())
+    public function query($query, $params = [])
     {
         if (preg_match('/UPDATE|DELETE|INSERT/', $query)) {
             $this->executeUpdate($query, $params);
@@ -192,7 +192,7 @@ class ConnectionWrapper extends AbstractWrapper
      * @param string $query
      * @param array  $params
      */
-    private function executeUpdate($query, $params = array())
+    private function executeUpdate($query, $params = [])
     {
         $this->affectedRows = $this->connection->executeUpdate($query, $params);
     }

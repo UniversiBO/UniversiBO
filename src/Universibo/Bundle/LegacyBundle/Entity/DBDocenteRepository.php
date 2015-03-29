@@ -38,8 +38,8 @@ class DBDocenteRepository extends DBRepository implements MergeableRepositoryInt
         if (DB::isError($res)) {
             $this
                     ->throwError('_ERROR_CRITICAL',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
@@ -82,8 +82,8 @@ EOT;
         $res = $db->query($query);
         if (DB::isError($res))
             Error::throwError(_ERROR_CRITICAL,
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
         $rows = $res->numRows();
         if ($rows == 0)
@@ -92,8 +92,8 @@ EOT;
         $row = $this->fetchRow($res);
 
         $rubrica = array_combine(
-                array('nome', 'cognome', 'prefissonome', 'sesso', 'email',
-                        'descrizionestruttura'), $row);
+                ['nome', 'cognome', 'prefissonome', 'sesso', 'email',
+                        'descrizionestruttura'], $row);
 
         $res->free();
 
@@ -162,7 +162,7 @@ EOT;
         $db = $this->getConnection();
         $query = 'SELECT id_utente FROM docente WHERE cod_doc = ?';
 
-        $userId = $db->fetchColumn($query, array($cod_doc));
+        $userId = $db->fetchColumn($query, [$cod_doc]);
 
         return $userId ? $userId : null;
     }

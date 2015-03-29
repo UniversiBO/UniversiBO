@@ -40,8 +40,8 @@ EOT;
 
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
 
         if ($res->fetchInto($row)) {
             $commenti = new CommentoItem($id, $row[0], $row[1],
@@ -68,10 +68,10 @@ EOT;
         if (DB::isError($res))
             $this
                     ->throwError('_ERROR_DEFAULT',
-                            array('msg' => DB::errorMessage($res),
-                                    'file' => __FILE__, 'line' => __LINE__));
+                            ['msg' => DB::errorMessage($res),
+                                    'file' => __FILE__, 'line' => __LINE__]);
 
-        $commenti_list = array();
+        $commenti_list = [];
 
         while ($res->fetchInto($row)) {
             $commenti_list[] = new CommentoItem($row[0], $fileId, $row[1],
@@ -94,8 +94,8 @@ EOT;
 
         if (DB::isError($res)) {
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         }
 
         $res->fetchInto($row);
@@ -119,8 +119,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
             $return = false;
         }
 
@@ -139,8 +139,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
             $return = false;
         }
     }
@@ -161,8 +161,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
             $return = false;
         }
 
@@ -181,8 +181,8 @@ EOT;
         if (DB::isError($res)) {
             $db->rollback();
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
             $return = false;
         }
     }
@@ -202,8 +202,8 @@ EOT;
 
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
-                    array('msg' => DB::errorMessage($res), 'file' => __FILE__,
-                            'line' => __LINE__));
+                    ['msg' => DB::errorMessage($res), 'file' => __FILE__,
+                            'line' => __LINE__]);
         $res->fetchInto($ris);
 
         return $ris[0];
@@ -220,7 +220,7 @@ UPDATE file_studente_commenti
 EOT;
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_CRITICAL',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return $db->affectedRows();

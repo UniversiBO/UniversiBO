@@ -40,7 +40,7 @@ class DBFileItemStudentiRepository extends DBRepository
 
     public function find($id)
     {
-        $result = $this->findMany(array($id));
+        $result = $this->findMany([$id]);
 
         return is_array($result) ? $result[0] : $result;
     }
@@ -70,12 +70,12 @@ class DBFileItemStudentiRepository extends DBRepository
 
         $res = $db->query($query);
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT',array('id_utente' => $this->sessionUser->getId(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['id_utente' => $this->sessionUser->getId(), 'msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         $rows = $res->numRows();
 
-        $id_files_studenti_list = array();
+        $id_files_studenti_list = [];
 
         while ( $res->fetchInto($row) ) {
             $id_files_studenti_list[]= $row[0];
@@ -91,11 +91,11 @@ class DBFileItemStudentiRepository extends DBRepository
         $db = $this->getDb();
 
         if (count($ids) == 0) {
-            return array();
+            return [];
         }
 
         //esegue $db->quote() su ogni elemento dell'array
-        //array_walk($id_notizie, array($db, 'quote'));
+        //array_walk($id_notizie, [$db, 'quote']);
         if (count($ids) == 1)
             $values = $ids[0];
         else
@@ -118,14 +118,14 @@ class DBFileItemStudentiRepository extends DBRepository
         //echo $query;
 
         if (DB :: isError($res)) {
-            $this->throwError('_ERROR_CRITICAL', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_CRITICAL', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $rows = $res->numRows();
 
         if ($rows == 0)
             return false;
-        $files_list = array ();
+        $files_list = [];
 
         while ($row = $this->fetchRow($res)) {
             $username = $this->userRepository->getUsernameFromId($row[3]);
@@ -167,7 +167,7 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
     }
 
@@ -181,14 +181,12 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
 
         $res->fetchInto($row);
 
-        $return = array($row[0]);
-
-        return $return;
+        return [$row[0]];
     }
 
     public function delete(FileItemStudenti $file)
@@ -199,7 +197,7 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
         if (DB::isError($res)) {
             $db->rollback();
-            $this->throwError('_ERROR_CRITICAL', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_CRITICAL', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
 
         return false;
@@ -213,7 +211,7 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
         $res->fetchInto($ris);
 
@@ -228,7 +226,7 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT', array ('msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__));
+            $this->throwError('_ERROR_DEFAULT', ['msg' => DB :: errorMessage($res), 'file' => __FILE__, 'line' => __LINE__]);
         }
         $res->fetchInto($ris);
 
@@ -243,7 +241,7 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
         if (DB::isError($res)) {
             $db->rollback();
-            $this->throwError('_ERROR_DEFAULT',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
         return true;
@@ -259,10 +257,10 @@ class DBFileItemStudentiRepository extends DBRepository
         $res = $db->query($query);
 
         if (DB::isError($res)) {
-            $this->throwError('_ERROR_DEFAULT',array('msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__));
+            $this->throwError('_ERROR_DEFAULT',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
         }
 
-        $id_file_list = array();
+        $id_file_list = [];
 
         while ( $res->fetchInto($row) ) {
             $id_file_list[]= $row[0];

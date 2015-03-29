@@ -69,7 +69,7 @@ class UserRepository extends EntityRepository
 
         return
             $qb -> getQuery()
-                -> setParameters(array(mb_strtolower($usernameQuery), mb_strtolower($mailQuery)))
+                -> setParameters([mb_strtolower($usernameQuery), mb_strtolower($mailQuery)])
                 -> getResult();
     }
 
@@ -95,7 +95,7 @@ EOT;
             ->createQuery($dql)
         ;
 
-        $query->execute(array($person));
+        $query->execute([$person]);
 
         return $query->getSingleScalarResult();
     }
@@ -120,7 +120,7 @@ EOT;
         $query = $this
             ->getEntityManager()
             ->createQuery($dql)
-            ->setParameter('groups', array(4, 64))
+            ->setParameter('groups', [4, 64])
         ;
 
         return $query->getResult();

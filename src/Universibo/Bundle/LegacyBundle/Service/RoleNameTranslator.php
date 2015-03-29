@@ -13,14 +13,14 @@ use Universibo\Bundle\CoreBundle\Entity\User;
 
 class RoleNameTranslator
 {
-    private static $translation = array (
-            'ROLE_ADMIN' => 'Admin',
-            'ROLE_STUDENT' => 'Studente',
-            'ROLE_PROFESSOR' => 'Docente',
-            'ROLE_STAFF' => 'Personale non docente',
-            'ROLE_TUTOR' => 'Tutor',
-            'ROLE_MODERATOR' => 'Collaboratore'
-    );
+    private static $translation = [
+        'ROLE_ADMIN' => 'Admin',
+        'ROLE_STUDENT' => 'Studente',
+        'ROLE_PROFESSOR' => 'Docente',
+        'ROLE_STAFF' => 'Personale non docente',
+        'ROLE_TUTOR' => 'Tutor',
+        'ROLE_MODERATOR' => 'Collaboratore'
+    ];
 
     /**
      * @param  array  $roles
@@ -28,7 +28,7 @@ class RoleNameTranslator
      */
     public function translate(array $roles)
     {
-        $roles = array_diff($roles, array('ROLE_USER'));
+        $roles = array_diff($roles, ['ROLE_USER']);
         $role = array_pop($roles);
 
         return self::$translation[$role];

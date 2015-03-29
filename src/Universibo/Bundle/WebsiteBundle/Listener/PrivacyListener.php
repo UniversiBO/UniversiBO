@@ -121,7 +121,7 @@ class PrivacyListener
 
         $response = new Response();
         $response->setStatusCode(302);
-        $response->headers->set('Location', $this->router->generate('universibo_website_rules', array(), true));
+        $response->headers->set('Location', $this->router->generate('universibo_website_rules', [], true));
 
         $event->setResponse($response);
     }

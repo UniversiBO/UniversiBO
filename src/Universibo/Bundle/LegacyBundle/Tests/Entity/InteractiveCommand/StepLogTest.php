@@ -29,12 +29,12 @@ class StepLogTest extends EntityTest
 
     public function accessorDataProvider()
     {
-        return array(
-                array('id', rand()),
-                array('idUtente', rand()),
-                array('dataUltimaInterazione', rand()),
-                array('nomeClasse', 'stdClass'),
-                array('esitoPositivo', 'S'),
-        );
+        return [
+            ['id', rand()],
+            ['idUtente', rand()],
+            ['dataUltimaInterazione', rand()],
+            ['nomeClasse', 'stdClass'],
+            ['esitoPositivo', 'S'],
+        ];
     }
 }
