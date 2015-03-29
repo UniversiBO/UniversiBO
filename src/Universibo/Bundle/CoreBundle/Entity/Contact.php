@@ -6,7 +6,6 @@ namespace Universibo\Bundle\CoreBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Universibo\Bundle\CoreBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

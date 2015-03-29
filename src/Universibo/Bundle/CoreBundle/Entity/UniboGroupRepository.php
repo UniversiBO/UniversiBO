@@ -3,7 +3,6 @@
 namespace Universibo\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Universibo\Bundle\CoreBundle\Entity\UniboGroup;
 
 /**
  * UniboGroupRepository

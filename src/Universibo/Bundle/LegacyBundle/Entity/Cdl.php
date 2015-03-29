@@ -282,7 +282,7 @@ class Cdl extends Canale
      * in ordine alfabetico di tutti i cdl appartenenti alla facolt? data
      *
      * @deprecated
-     * @param  string     $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
+     * @param  string $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
      * @return [Cdl]
      */
     public static function selectCdlElencoFacolta($codiceFacolta)

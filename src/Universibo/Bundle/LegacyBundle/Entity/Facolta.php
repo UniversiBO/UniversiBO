@@ -215,7 +215,7 @@ class Facolta extends Canale
      * Seleziona da database e restituisce un'array contenente l'elenco
      * in ordine alfabetico di tutte le facolt?
      *
-     * @param  string         $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
+     * @param  string    $cod_facolta stringa a 4 cifre del codice d'ateneo della facolt?
      * @return Facolta[]
      */
     public static function selectFacoltaElenco()
