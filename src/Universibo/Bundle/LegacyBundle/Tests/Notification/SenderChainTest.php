@@ -32,15 +32,17 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
         $notification1 = new NotificaItem(1, 'hello', 'world', time(), false, false, 'mail://hello@world.com');
         $notification2 = new NotificaItem(2, 'hello', 'world', time(), false, false, 'sms://123456789');
 
-        $sender->expects($this->exactly(2))
-          ->method('supports')
-          ->will($this->onConsecutiveCalls([true,false]));
+        $sender
+            ->expects($this->exactly(2))
+            ->method('supports')
+            ->will($this->onConsecutiveCalls([true,false]))
+        ;
 
         $this->assertTrue($this->chain->supports($notification1), 'Sender should support mail');
         $this->assertFalse($this->chain->supports($notification2), 'Sender should not support sms');
     }
 
-    public function testRegisterTwice()
+    public function testSenderRegistrationIsIdempotent()
     {
         $sender = $this->getMock(self::INAME);
         $this->chain->register($sender);
@@ -48,21 +50,25 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
         $notification1 = new NotificaItem(1, 'hello', 'world', time(), false, false, 'mail://hello@world.com');
 
-        $sender->expects($this->once())
-        ->method('supports')
-        ->will($this->returnValue(false));
+        $sender
+            ->expects($this->once())
+            ->method('supports')
+            ->will($this->returnValue(false))
+        ;
 
         $this->chain->supports($notification1);
     }
 
-    public function testUnregister()
+    public function testUnregisteredSenderIsNotCalledAnymore()
     {
         $sender = $this->getMock(self::INAME);
         $this->chain->register($sender);
         $this->chain->unregister($sender);
 
-        $sender->expects($this->never())
-        ->method('supports');
+        $sender
+            ->expects($this->never())
+            ->method('supports')
+        ;
 
         $notification1 = new NotificaItem(1, 'hello', 'world', time(), false, false, 'mail://hello@world.com');
 
@@ -94,13 +100,15 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
         $sender = $this->getMock(self::INAME);
         $sender->expects($this->once())
-        ->method('supports')
-        ->with($this->equalTo($notification1))
-        ->will($this->returnValue(true));
+            ->method('supports')
+            ->with($this->equalTo($notification1))
+            ->will($this->returnValue(true))
+        ;
 
         $sender->expects($this->once())
-        ->method('send')
-        ->with($this->equalTo($notification1));
+            ->method('send')
+            ->with($this->equalTo($notification1))
+        ;
 
         $this->chain->register($sender);
         $this->chain->send($notification1);
