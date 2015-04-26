@@ -9,6 +9,7 @@ file { '/etc/motd':
          Managed by Vagrant & Puppet.\n"
 }
 
+class { 'editors': }
 class { 'phpenv': }
 #class { 'l10n': }
 class { 'lapp::packages': }
