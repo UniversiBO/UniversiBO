@@ -85,10 +85,10 @@ class FileStudentiCommentEdit extends UniversiboCommand
 
             // TODO: perché non funziona il controllo???
 
-            //			var_dump($canali_file);
-            //			die();
-            //			if (!in_array($id_canale, $canali_file))
-            //				 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
+            //          var_dump($canali_file);
+            //          die();
+            //          if (!in_array($id_canale, $canali_file))
+            //               Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
 
             $elenco_canali = [$id_canale];
 

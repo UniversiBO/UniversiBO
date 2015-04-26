@@ -87,7 +87,7 @@ class FrontController
     {
         self::$container = $receiver->getContainer();
 
-        //		include_once('XmlDoc'.PHP_EXTENSION);
+        //      include_once('XmlDoc'.PHP_EXTENSION);
 
         $this->receiverIdentifier = $receiver->getIdentifier();
 
@@ -179,9 +179,9 @@ class FrontController
     {
         $list = [];
         foreach ($this->plugins as $pc) {
-            //			$explodedPc = explode(".",$pc);
-            //			$class_name = $explodedPc[count($explodedPc)-1];
-            //			$list[]		= $class_name;
+            //          $explodedPc = explode(".",$pc);
+            //          $class_name = $explodedPc[count($explodedPc)-1];
+            //          $list[]     = $class_name;
             $list[] = $this->_parsePluginInfo($pc);
         }
 
@@ -372,8 +372,8 @@ class FrontController
     private function _appSettings(\DOMDocument $config)
     {
         $this->appSettings = [];
-        //		$appSettingNodes = &$config->getElementsByTagName("appSettings");
-        //		var_dump($appSettingNodes);
+        //      $appSettingNodes = &$config->getElementsByTagName("appSettings");
+        //      var_dump($appSettingNodes);
 
         $figli =$config->documentElement->childNodes;
         //var_dump($figli);
@@ -390,8 +390,8 @@ class FrontController
             $figliAppSettingNode = $appSettingNode->childNodes;
             for ($i=0; $i < $figliAppSettingNode->length; $i++) {
                 $aSetting = $figliAppSettingNode->item($i);
-                //			echo $i.' '.$aSetting->nodeName.'<br>';
-                //				var_dump($aSetting);
+                //          echo $i.' '.$aSetting->nodeName.'<br>';
+                //              var_dump($aSetting);
                 if ($aSetting->nodeType == XML_ELEMENT_NODE) {
                     $this->appSettings[$aSetting->tagName] = ($aSetting->hasChildNodes() == true) ? $aSetting->firstChild->nodeValue : '';
                 }
@@ -408,12 +408,12 @@ class FrontController
         $commandString=$this->getCommandRequest();
         // @bug: qui il ->childNodes mi restituisce i figli di appsettings invce che dei figli di root
         $figliRoot = $config->documentElement->childNodes;
-        //		var_dump($this);
-        //		$listaNodiCommands =& $config->getElementsByTagName("commands");
+        //      var_dump($this);
+        //      $listaNodiCommands =& $config->getElementsByTagName("commands");
         $cinfonode = null;
         for ($i = 0; $i < $figliRoot->length; $i++) {
             $iesimoFiglio = $figliRoot->item($i);
-            //			var_dump($iesimoFiglio);
+            //          var_dump($iesimoFiglio);
             if ($iesimoFiglio != null)
                 if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->tagName == 'commands') {
                     $cinfonode =& $iesimoFiglio;
@@ -422,20 +422,20 @@ class FrontController
 
         }
 
-        //	for ( $i = 0; $i < $listaNodiCommands->length; $i++ )
-        //		{
-        //			$iesimoFiglio =& $listaNodiCommands->item($i);
-        //			var_dump($iesimoFiglio);
-        //			if ($iesimoFiglio != null)
-        //				if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->parentNode->nodeName == 'config' )
-        //				{
-        //					$cinfonode =& $iesimoFiglio;
-        //					break;
-        //				}
+        //  for ( $i = 0; $i < $listaNodiCommands->length; $i++ )
+        //      {
+        //          $iesimoFiglio =& $listaNodiCommands->item($i);
+        //          var_dump($iesimoFiglio);
+        //          if ($iesimoFiglio != null)
+        //              if ($iesimoFiglio->nodeType == XML_ELEMENT_NODE && $iesimoFiglio->parentNode->nodeName == 'config' )
+        //              {
+        //                  $cinfonode =& $iesimoFiglio;
+        //                  break;
+        //              }
         //
-        //		}
+        //      }
 
-        //		var_dump($cinfonode);
+        //      var_dump($cinfonode);
         if($cinfonode == NULL)
             Error::throwError(_ERROR_CRITICAL,['msg'=>'Elemento commands non trovato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
         // @TODO qui migliorerebbe molto o xpath o cache
@@ -453,7 +453,7 @@ class FrontController
         }
 
                     $this->commandClass = $commandNode->getAttribute('class');
-                    //		var_dump($commandNode->attributes[0]->value);
+                    //      var_dump($commandNode->attributes[0]->value);
                     //reads allowed response for this BaseCommand
                     $this->commandTemplate=[];
                     $responses = $commandNode->getElementsByTagName('response');
@@ -469,7 +469,7 @@ class FrontController
 
                     for ($i=0; $i < $plugins->length; $i++) {
                         $plugin = $plugins->item($i);
-                        //			$this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
+                        //          $this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
                         $this->plugins[$plugin->getAttribute('name')] = ['class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition')];
                     }
 

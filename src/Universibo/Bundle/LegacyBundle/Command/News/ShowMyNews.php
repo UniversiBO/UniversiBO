@@ -30,13 +30,13 @@ class ShowMyNews extends PluginCommand
      */
     public function execute($param = [])
     {
-        $elenco_id_news		=  $param['id_notizie'];
-        $bc        = $this->getBaseCommand();
-        $user      = $bc->get('security.context')->getToken()->getUser();
-        $fc        = $bc->getFrontController();
-        $template  = $fc->getTemplateEngine();
-        $krono     = $fc->getKrono();
-        $router    = $this->get('router');
+        $elenco_id_news = $param['id_notizie'];
+        $bc             = $this->getBaseCommand();
+        $user           = $bc->get('security.context')->getToken()->getUser();
+        $fc             = $bc->getFrontController();
+        $template       = $fc->getTemplateEngine();
+        $krono          = $fc->getKrono();
+        $router         = $this->get('router');
 
         $channelRouter = $this->get('universibo_legacy.routing.channel');
 
@@ -75,7 +75,7 @@ class ShowMyNews extends PluginCommand
                 $elenco_news_tpl[$i]['scadenza']     = '';
                 //if ( ($news->getDataScadenza()!=NULL) && ( $this->get('security.context')->isGranted('ROLE_ADMIN') || $referente || $this_moderatore ) && $flag_chkDiritti)
                 //{
-                //	$elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
+                //  $elenco_news_tpl[$i]['scadenza'] = 'Scade il '.$krono->k_date('%j/%m/%Y - %H:%i', $news->getDataScadenza() );
                 //}
 
                 //roba mia
@@ -90,8 +90,8 @@ class ShowMyNews extends PluginCommand
                         $elenco_news_tpl[$i]['canali'][] = $canale_tpl;
                     }
                 }
-                $elenco_news_tpl[$i]['permalink']     = $router->generate('universibo_legacy_permalink', ['id_notizia' => $news->getIdNotizia()]);
-                $elenco_news_tpl[$i]['nuova']	   	 = ($news->getUltimaModifica() > $ultimo_accesso) ? 'true' : 'false';
+                $elenco_news_tpl[$i]['permalink']    = $router->generate('universibo_legacy_permalink', ['id_notizia' => $news->getIdNotizia()]);
+                $elenco_news_tpl[$i]['nuova']        = ($news->getUltimaModifica() > $ultimo_accesso) ? 'true' : 'false';
                 $elenco_news_tpl[$i]['modifica']     = '';
                 $elenco_news_tpl[$i]['modifica_link']= '';
                 $elenco_news_tpl[$i]['elimina']      = '';

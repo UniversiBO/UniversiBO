@@ -62,7 +62,7 @@ class NewsShowCanale extends CanaleCommand
             $start = 0;
             for ($i = 1; $i <= $num_pagine; $i++) {
                 $n_pag_list[$i] = ['URI' => $router->generate('universibo_legacy_news_show_canale', ['id_canale' => $id_canale, 'inizio' => $start, 'qta' => $quantita]), 'current' => ($inizio != $start)];
-                $start 	= $start + $quantita;
+                $start  = $start + $quantita;
             }
             $template->assign('NewsShowCanale_numPagine', $n_pag_list);
             $template->assign('NewsShowCanale_numPagineFlag', 'true');

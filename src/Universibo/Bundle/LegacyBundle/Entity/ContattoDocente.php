@@ -33,7 +33,7 @@ class ContattoDocente
     /**
      * @access private
      */
-    public $cod_doc =	null;
+    public $cod_doc =   null;
 
     /**
      * @access private
@@ -65,17 +65,17 @@ class ContattoDocente
 
     public function __construct($coddoc, $state, $id, $mod, $report)
     {
-        $this->cod_doc 	= $coddoc;
-        $this->stato	= $state;
-        $this->id_utente_assegnato	= $id;
-        $this->ultima_modifica		= $mod;
-        $this->report	= $report;
+        $this->cod_doc  = $coddoc;
+        $this->stato    = $state;
+        $this->id_utente_assegnato  = $id;
+        $this->ultima_modifica      = $mod;
+        $this->report   = $report;
     }
 
     /**
      * resituisce il contattoDocente corrispondente al Docente
      *
-     *	@deprecated
+     *  @deprecated
      *  @param int coddoc è il codice del docente di cui si vuole avere informazioni
      *  @return mixed resituisce ContattoDocente se esiste il contatto, false altrimenti
      */
@@ -87,7 +87,7 @@ class ContattoDocente
     /**
      * resituisce il contattoDocente corrispondente al Docente
      *
-     *	@deprecated
+     *  @deprecated
      *  @return mixed resituisce array di ContattoDocente se esistono, false altrimenti
      */
     public static function getAllContattoDocente()
@@ -138,7 +138,7 @@ class ContattoDocente
     }
 
     /**
-     * @param int s	stato del contatto
+     * @param int s stato del contatto
      * @param int id id utente di chi effettua le modifiche
      */
     public function setStato($s, $username = null)

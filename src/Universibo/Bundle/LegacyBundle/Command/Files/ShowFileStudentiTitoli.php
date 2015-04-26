@@ -30,9 +30,9 @@ class ShowFileStudentiTitoli extends PluginCommand
      */
     public function execute($param = [])
     {
-        //$flag_chkDiritti	=  $param['chk_diritti'];
-//		var_dump($param['id_notizie']);
-//		die();
+        //$flag_chkDiritti  =  $param['chk_diritti'];
+//      var_dump($param['id_notizie']);
+//      die();
         $num = $param['num'];
         $bc        = $this->getBaseCommand();
         $user      = $bc->get('security.context')->getToken()->getUser();
@@ -137,10 +137,10 @@ class ShowFileStudentiTitoli extends PluginCommand
                         $file_tpl['elimina_link'] = $router->generate('universibo_legacy_file_delete', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     }
                     $file_tpl['dimensione'] = $file->getDimensione();
-//	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
-//					$file_tpl['download_uri'] = '';
-//					$permessi_download = $file->getPermessiDownload();
-//					if ($user->isGroupAllowed($permessi_download))
+//  tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
+//                  $file_tpl['download_uri'] = '';
+//                  $permessi_download = $file->getPermessiDownload();
+//                  if ($user->isGroupAllowed($permessi_download))
                     $file_tpl['download_uri'] = $router->generate('universibo_legacy_file_download', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     $file_tpl['categoria'] = $file->getCategoriaDesc();
                     $file_tpl['show_info_uri'] = $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);

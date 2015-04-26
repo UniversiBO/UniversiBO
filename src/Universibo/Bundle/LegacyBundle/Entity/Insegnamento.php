@@ -119,7 +119,7 @@ class Insegnamento extends Canale
             $anni = [];
             $docenti = [];
             $cod_ril = [];
-            //$app	 = ['nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL];
+            //$app   = ['nomi'=>NULL,'b_nomi'=>NULL,'e_nomi'=>NULL,'anni'=>NULL,'docenti'=>NULL,'cod_ril'=>NULL];
 
             $app_elenco_attivita = [];
             $num_att = count($this->elencoAttivitaPadre);

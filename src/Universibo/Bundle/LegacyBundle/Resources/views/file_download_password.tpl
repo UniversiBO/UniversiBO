@@ -7,9 +7,9 @@ Per per proseguire con il download è necessario inserirla nel seguente form.</p
 {include file="avviso_notice.tpl"}
 
 <form method="post">
-	<p><label for="f11_file_password">Password:</label>
-		<input type="password" id="f11_file_password" name="f11_file_password" size="20" maxlength="130" value="" /></p>
-	<p><input class="submit" type="submit" id="" name="f11_submit" size="20" value="Invia" /></p>
+    <p><label for="f11_file_password">Password:</label>
+        <input type="password" id="f11_file_password" name="f11_file_password" size="20" maxlength="130" value="" /></p>
+    <p><input class="submit" type="submit" id="" name="f11_submit" size="20" value="Invia" /></p>
 </form>
 
 <p><a href="{$fileDownload_InfoURI|escape:"htmlall"}">Torna&nbsp;indietro</a></p>

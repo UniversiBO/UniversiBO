@@ -111,7 +111,7 @@ class FileItem
     /**
      * @private
      */
-    //	var $eliminato = false
+    //  var $eliminato = false
 
     /**
      * @private
@@ -276,15 +276,15 @@ class FileItem
         return $this->data_modifica;
     }
 
-    //	/**
-    //	 * Recupera l'hash del file (almeno credo)
-    //	 *
-    //	 * @return string
-    //	 */
+    //  /**
+    //   * Recupera l'hash del file (almeno credo)
+    //   *
+    //   * @return string
+    //   */
     //
-    //	function getHashFile() {
-    //		return $this->hash_file;
-    //	}
+    //  function getHashFile() {
+    //      return $this->hash_file;
+    //  }
     //
     /**
      * Recupera delle informazioni aggiuntive sul file

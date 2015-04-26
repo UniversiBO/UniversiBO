@@ -47,7 +47,7 @@ http://www.fsf.org
 */
 class Krono
 {
-    /** Array that contain the name of days in long format 	*
+    /** Array that contain the name of days in long format  *
     *   @access private
     */
     public $day_name_ext;
@@ -98,13 +98,13 @@ class Krono
     public $version='0.6';
 
     /**
-    *	Set to desidered date format
+    *   Set to desidered date format
     * + possible values:
     * + it -> italian (dd-mm-yyyy)
     * + en,std -> international (mm-dd-yyyy)
     * + ansi -> used in dbase and other source (yyyy-mm-dd)
     *
-    * 	@access public
+    *   @access public
     */
     public $date_format;
 
@@ -477,17 +477,17 @@ class Krono
     }
 
     /**
-    *	Give the difference between two times.
-    *	+ (i.e.: how minutes from 4.50 to 12.50?).
-    *	+ Accept only 24H format.
-    *	+ the time is a string like: "4.50" or "4:50"
+    *   Give the difference between two times.
+    *   + (i.e.: how minutes from 4.50 to 12.50?).
+    *   + Accept only 24H format.
+    *   + the time is a string like: "4.50" or "4:50"
     *   @access public
     *   @param string $time_from The start time
-    *	@param string $time_to The end time
+    *   @param string $time_to The end time
     *   @param char $result_in The format of result
-    *	+ "m" -> for minutes
-    *	+ "s" -> for seconds
-    *	+ "h" -> for hours
+    *   + "m" -> for minutes
+    *   + "s" -> for seconds
+    *   + "h" -> for hours
     *   @return string The difference between times according to format given in $result_in
     */
     public function times_diff($time_from,$time_to,$result_in="m")
@@ -533,17 +533,17 @@ class Krono
     }
 
     /**
-    *	Add some minutes or hours to a given time.
-    *	+ i.e.: (add 2 hours to 14.10 -> result is 16.10)
-    *	+ Accept only 24H format.
-    *	+ the time is a string like: "4.50" or "4:50"
+    *   Add some minutes or hours to a given time.
+    *   + i.e.: (add 2 hours to 14.10 -> result is 16.10)
+    *   + Accept only 24H format.
+    *   + the time is a string like: "4.50" or "4:50"
     *   @param string $time The time string to transform
-    *	@param int $add The hours or minutes to add
-    *	@param char $what is what add to time
-    *	+ "m" -> for add minutes
-    *	+ "h" -> for add hours
-    *	+ "t" -> for add time string given in HH:mm format
-    *	@return string Result is in format HH:mm, return -1 on error
+    *   @param int $add The hours or minutes to add
+    *   @param char $what is what add to time
+    *   + "m" -> for add minutes
+    *   + "h" -> for add hours
+    *   + "t" -> for add time string given in HH:mm format
+    *   @return string Result is in format HH:mm, return -1 on error
     */
     public function times_add($time,$add,$what)
     {
@@ -643,19 +643,19 @@ class Krono
     }
 
     /**
-    *	Return a single component of given date according to format in date_format
+    *   Return a single component of given date according to format in date_format
     *   date example with hour: 03/05/2003 23:43:00 (use only ':' as time separator)
     *   @access public
     *   @return date
     *   @param date to extract atom from
     *   @param atom ->
-    *		 	+	'm' for return month;
-    *			+	'd' for return day;
-    *			+	'y' for return last two number of year
-    *			+	'Y' for return entire year
-    *			+	'h' for hours
-    *			+	'i' for minutes
-    *			+	's' for seconds
+    *           +   'm' for return month;
+    *           +   'd' for return day;
+    *           +   'y' for return last two number of year
+    *           +   'Y' for return entire year
+    *           +   'h' for hours
+    *           +   'i' for minutes
+    *           +   's' for seconds
     */
     public function atom_date($date,$atom)
     {
@@ -718,17 +718,17 @@ class Krono
     *  @access public
     *  @return string The date according with format given
     *  @param string format ->
-    *	+ valid format parameter:
-    *	+ %l (L lowercase): Day textual long
-    *	+ %d: Day of month, 2 digits with leading zeros
-    *	+ %F: Month textual Long
-    *	+ %Y: Year, 4 digits
-    *	+ %y: Year, 2 digits
-    *	+ %m: Month numeric, 2 digits with leading zeros
-    *	+ %D: Day textual short
-    *	+ %M: Month textual short
-    *	+ %n: Month numeric, without leading zeros
-    *	+ %j: Day of month, without leading zeros
+    *   + valid format parameter:
+    *   + %l (L lowercase): Day textual long
+    *   + %d: Day of month, 2 digits with leading zeros
+    *   + %F: Month textual Long
+    *   + %Y: Year, 4 digits
+    *   + %y: Year, 2 digits
+    *   + %m: Month numeric, 2 digits with leading zeros
+    *   + %D: Day textual short
+    *   + %M: Month textual short
+    *   + %n: Month numeric, without leading zeros
+    *   + %j: Day of month, without leading zeros
     *  @param timestamp $timestamp The time to transform
     */
     public function k_date($format="%l %d %F %Y",$timestamp=0)
@@ -787,11 +787,11 @@ class Krono
     *  @param  date $date The date to calc on
     *  @param  string $operand is a number plus '%D' for days, '%M' for months, '%Y' for years
     *  + Example:
-    *	- Add 1 month to a date:
-    *	- $obj->operation('+','10/01/2003','1%M');
+    *   - Add 1 month to a date:
+    *   - $obj->operation('+','10/01/2003','1%M');
     *
-    *	- Subtract 20 days from a date:
-    *	- $obj->operation('-','10/01/2003','20%D');
+    *   - Subtract 20 days from a date:
+    *   - $obj->operation('-','10/01/2003','20%D');
     */
     public function operation($operator,$date,$operand)
     {

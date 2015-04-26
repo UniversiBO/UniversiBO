@@ -71,7 +71,7 @@ class ShowContattoDocente extends UniversiboCommand
                             'file' => __FILE__, 'line' => __LINE__,
                             'template_engine' => &$template]);
         }
-        //		var_dump($contatto);
+        //      var_dump($contatto);
         $info_docente = [];
 
         $info_docente['nome'] = ($rub_presente) ? $rub_docente['prefissonome']
@@ -90,7 +90,7 @@ class ShowContattoDocente extends UniversiboCommand
         $elenco_ruoli = $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($utente_docente->getId());
 
         $info_ruoli = [];
-        //		var_dump($elenco_ruoli);
+        //      var_dump($elenco_ruoli);
         foreach ($elenco_ruoli as $ruolo) {
             $id_canale = $ruolo->getIdCanale();
             $canale = Canale::retrieveCanale($id_canale);

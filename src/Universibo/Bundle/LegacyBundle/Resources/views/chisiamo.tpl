@@ -21,4 +21,4 @@
 {/foreach}
 </table>
 </div>
-{include file="footer_index.tpl"}	
+{include file="footer_index.tpl"}   

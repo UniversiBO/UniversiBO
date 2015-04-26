@@ -63,7 +63,7 @@ EOT;
     {
         $db = $this->getDb();
 
-        //		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NewsItem::ELIMINATA);
+        //      $query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NewsItem::ELIMINATA);
         $query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A WHERE eliminata='
                 . $db->quote(NewsItem::NOT_ELIMINATA)
                 . ' ORDER BY data_inserimento DESC';
@@ -108,7 +108,7 @@ EOT;
         array_walk($ids, 'intval');
         $values = implode(',', $ids);
 
-        //		$query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NewsItem::ELIMINATA);
+        //      $query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, username, data_modifica FROM news A, utente B WHERE A.id_utente = B.id_utente AND id_news IN ('.$values.') AND eliminata!='.$db->quote(NewsItem::ELIMINATA);
         $query = 'SELECT titolo, notizia, data_inserimento, data_scadenza, flag_urgente, eliminata, A.id_utente, id_news, data_modifica FROM news A WHERE id_news IN ('
                 . $values . ') AND eliminata='
                 . $db->quote(NewsItem::NOT_ELIMINATA)
@@ -338,8 +338,8 @@ EOT;
         . ')
         ORDER BY A.data_inserimento DESC';
         $res = $db->limitQuery($query, $offset, $limit);
-        //		var_dump($res);
-        //		die();
+        //      var_dump($res);
+        //      die();
         if (DB::isError($res))
             $this->throwError('_ERROR_DEFAULT',
                     ['id_utente' => $this->sessionUser->getId(),

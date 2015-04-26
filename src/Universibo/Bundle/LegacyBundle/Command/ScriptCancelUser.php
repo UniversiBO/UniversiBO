@@ -32,9 +32,9 @@ class ScriptCancelUser extends UniversiboCommand
         $idUtente = $user->getId();
         $values = StoredInteractionInformationRetriever::getInfoFromIdUtente($idUtente, 'InformativaPrivacyInteractiveCommand', false);
 
-//		// TODO verificare quale informativa ha approvato
-//		if (!isset($values['id_info']))
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'impossibile dedurre quale informativa per la privacy ha approvato l\'utente','file'=>__FILE__,'line'=>__LINE__]);
+//      // TODO verificare quale informativa ha approvato
+//      if (!isset($values['id_info']))
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'impossibile dedurre quale informativa per la privacy ha approvato l\'utente','file'=>__FILE__,'line'=>__LINE__]);
         //$idInfo = (isset($values['id_info'])) ? $values['id_info'] : 1;
 
          echo "al momento cancello bene solo secondo la nuova informativa, per la vecchia son da testare!! commentami per eseguire!\n"; die;
@@ -115,8 +115,8 @@ class CancellazioneUtente
     {
         $user = User::selectUser($idUtente);
            if ( $user->hasRole('ROLE_PROFESSOR') || $user->hasRole('ROLE_TUTOR') || $user->hasRole('ROLE_MODERATOR') || $user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_STAFF')  ) {
-//			$this->db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
+//          $this->db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
             return [ 'esito' => false, 'msg' => 'Spiacente, lo script cancella solo gli studenti'];
         }
            $user->setEliminato();
@@ -162,18 +162,18 @@ class CancellazioneUtente
         return [ 'esito' => true];
     }
 
-//	/**
-//	 * @access private
-//	 * @return boolean true if ok, false if error
-//	 */
-//	function anonimizeUserTopic ($idUtente)
-//	{
-//		$sql = 'UPDATE phpbb_topics '.
-//			'SET topic_poster = '.$this->db->quote(User::NICK_ELIMINATO).'   // WARNING!! topic_poster è un id_utente, non uno username!!
-//			WHERE topic_poster = '.$this->db->quote($idUtente);
-//		$res = $this->db->query($sql);
-//		return (  !DB::isError($res) );
-//	}
+//  /**
+//   * @access private
+//   * @return boolean true if ok, false if error
+//   */
+//  function anonimizeUserTopic ($idUtente)
+//  {
+//      $sql = 'UPDATE phpbb_topics '.
+//          'SET topic_poster = '.$this->db->quote(User::NICK_ELIMINATO).'   // WARNING!! topic_poster è un id_utente, non uno username!!
+//          WHERE topic_poster = '.$this->db->quote($idUtente);
+//      $res = $this->db->query($sql);
+//      return (  !DB::isError($res) );
+//  }
 
     /**
      * @access private
@@ -270,182 +270,182 @@ class CancellazioneUtente
 
 //class Informativa1 extends CancellazioneUtenteAbstract
 //{
-//	// costruttore
-//	function Informativa1()
-//	{
+//  // costruttore
+//  function Informativa1()
+//  {
 //
-//	}
+//  }
 //
-//	// i figli devono fare l'override di questo metodo
-//	function cancellaUtente( $idUtente)
-//	{
-//		$db = FrontController::getDbConnection('main');
-//		ignore_user_abort(1);
+//  // i figli devono fare l'override di questo metodo
+//  function cancellaUtente( $idUtente)
+//  {
+//      $db = FrontController::getDbConnection('main');
+//      ignore_user_abort(1);
 //        $db->autoCommit(false);
 
 /*=============== sito==================================================*/
 
            // cancellazione dell'utente per quanto riguarda il sito.
-//      	$user = User::selectUser($idUtente);
-//       	if( $user->hasRole('ROLE_PROFESSOR') || $user->hasRole('ROLE_TUTOR') || $user->hasRole('ROLE_MODERATOR') || $this->get('security.context')->isGranted('ROLE_ADMIN') || $user->hasRole('ROLE_STAFF')  )
-//		{
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
-//		}
-//       	$user->setEliminato();
-//       	$user->updateUser();
+//          $user = User::selectUser($idUtente);
+//          if( $user->hasRole('ROLE_PROFESSOR') || $user->hasRole('ROLE_TUTOR') || $user->hasRole('ROLE_MODERATOR') || $this->get('security.context')->isGranted('ROLE_ADMIN') || $user->hasRole('ROLE_STAFF')  )
+//      {
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'Spiacente, lo script cancella solo gli studenti','file'=>__FILE__,'line'=>__LINE__]);
+//      }
+//          $user->setEliminato();
+//          $user->updateUser();
 
 /*=============== FORUM==================================================*/
 
-//		// TODO valutare bene cosa settare per user_level e per user_rank
-//		$query = 'UPDATE phpbb_users SET username = '.$db->quote(User::NICK_ELIMINATO).', user_email = \'\', user_icq = \'\', ' .
-//				'user_occ = \'\', user_from = \'\', user_interests = \'\', user_aim = \'\', user_yim = \'\', user_msnm = \'\' WHERE user_id = '. $db->quote($idUtente);
-//		$res = $db->query($query);
-//		if(  DB::isError($res) )
-//		{
-////			var_dump($query); die;
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
-//		}
+//      // TODO valutare bene cosa settare per user_level e per user_rank
+//      $query = 'UPDATE phpbb_users SET username = '.$db->quote(User::NICK_ELIMINATO).', user_email = \'\', user_icq = \'\', ' .
+//              'user_occ = \'\', user_from = \'\', user_interests = \'\', user_aim = \'\', user_yim = \'\', user_msnm = \'\' WHERE user_id = '. $db->quote($idUtente);
+//      $res = $db->query($query);
+//      if(  DB::isError($res) )
+//      {
+////            var_dump($query); die;
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
+//      }
 
-// 		non abbiamo utenti che costituiscono gruppo a sè
-//			$sql = 'SELECT g.group_id
-//				FROM phpbb_user_group ug, phpbb_groups g
-//				WHERE ug.user_id = '.$db->quote($idUtente).'
-//					AND g.group_id = ug.group_id
-//					AND g.group_single_user = 1';
+//      non abbiamo utenti che costituiscono gruppo a sè
+//          $sql = 'SELECT g.group_id
+//              FROM phpbb_user_group ug, phpbb_groups g
+//              WHERE ug.user_id = '.$db->quote($idUtente).'
+//                  AND g.group_id = ug.group_id
+//                  AND g.group_single_user = 1';
 
-//		// elimino il nome utente dai post
-//		$sql = 'UPDATE phpbb_posts
-//			SET post_username = '.$db->quote(User::NICK_ELIMINATO).'
-//			WHERE poster_id = '.$db->quote($idUtente);
-//		$res = $db->query($sql);
-//		if(  DB::isError($res) )
-//		{
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update posts for this user','file'=>__FILE__,'line'=>__LINE__]);
-//		}
+//      // elimino il nome utente dai post
+//      $sql = 'UPDATE phpbb_posts
+//          SET post_username = '.$db->quote(User::NICK_ELIMINATO).'
+//          WHERE poster_id = '.$db->quote($idUtente);
+//      $res = $db->query($sql);
+//      if(  DB::isError($res) )
+//      {
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update posts for this user','file'=>__FILE__,'line'=>__LINE__]);
+//      }
 
-//		// elimino il nome utente dai topic
-//			$sql = "UPDATE phpbb_topics
-//				SET topic_poster = " . DELETED . "
-//				WHERE topic_poster = $user_id";
-//			if( !$db->query($sql) )
-//			{
-//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update topics for this user','file'=>__FILE__,'line'=>__LINE__]);
-//			}
+//      // elimino il nome utente dai topic
+//          $sql = "UPDATE phpbb_topics
+//              SET topic_poster = " . DELETED . "
+//              WHERE topic_poster = $user_id";
+//          if( !$db->query($sql) )
+//          {
+//              Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update topics for this user','file'=>__FILE__,'line'=>__LINE__]);
+//          }
 
-//			$sql = UPDATE  phpbb_vote_voters . "
-//				SET vote_user_id = " . DELETED . "
-//				WHERE vote_user_id = $user_id";
-//			if( !$db->query($sql) )
-//			{
-//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update votes for this user','file'=>__FILE__,'line'=>__LINE__]);
-//			}
+//          $sql = UPDATE  phpbb_vote_voters . "
+//              SET vote_user_id = " . DELETED . "
+//              WHERE vote_user_id = $user_id";
+//          if( !$db->query($sql) )
+//          {
+//              Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update votes for this user','file'=>__FILE__,'line'=>__LINE__]);
+//          }
 
-//		$sql = 'SELECT group_id' .
-//				' FROM phpbb_groups' .
-//				' WHERE group_moderator = '.$db->quote($idUtente);
-//		$res = $db->query($sql);
-//		if( DB::isError($res) )
-//		{
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
-//		}
-//		$group_moderator = null;
-//		while ( $row_group = $res->fetchRow() )
-//		{
-//			$group_moderator[] = $row_group['group_id'];
-//		}
-//		$res->free();
+//      $sql = 'SELECT group_id' .
+//              ' FROM phpbb_groups' .
+//              ' WHERE group_moderator = '.$db->quote($idUtente);
+//      $res = $db->query($sql);
+//      if( DB::isError($res) )
+//      {
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);
+//      }
+//      $group_moderator = null;
+//      while ( $row_group = $res->fetchRow() )
+//      {
+//          $group_moderator[] = $row_group['group_id'];
+//      }
+//      $res->free();
 //
-//		if ( count($group_moderator) )
-//		{
-//			$update_moderator_id = implode(', ', $group_moderator);
+//      if ( count($group_moderator) )
+//      {
+//          $update_moderator_id = implode(', ', $group_moderator);
 //
-//			$sql = 'UPDATE phpbb_groups' .
-//					' SET group_moderator = ' . $db->quote('609') .   /* TODO chi metto come moderatore di default?*/
-//					' WHERE group_moderator IN ($update_moderator_id)';
-//			$res = $db->query($sql);
-//			if(  DB::isError($res) )
-//			{
-//				$db->rollback();
-//				Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update group moderators','file'=>__FILE__,'line'=>__LINE__]);
-//			}
-//		}
+//          $sql = 'UPDATE phpbb_groups' .
+//                  ' SET group_moderator = ' . $db->quote('609') .   /* TODO chi metto come moderatore di default?*/
+//                  ' WHERE group_moderator IN ($update_moderator_id)';
+//          $res = $db->query($sql);
+//          if(  DB::isError($res) )
+//          {
+//              $db->rollback();
+//              Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not update group moderators','file'=>__FILE__,'line'=>__LINE__]);
+//          }
+//      }
 
-//			$sql = "DELETE FROM " . GROUPS_TABLE . "
-//				WHERE group_id = " . $row['group_id'];
-//			if( !$db->query($sql) )
-//			{
-//				message_die(GENERAL_ERROR, 'Could not delete group for this user', '', __LINE__, __FILE__, $sql);
-//			}
+//          $sql = "DELETE FROM " . GROUPS_TABLE . "
+//              WHERE group_id = " . $row['group_id'];
+//          if( !$db->query($sql) )
+//          {
+//              message_die(GENERAL_ERROR, 'Could not delete group for this user', '', __LINE__, __FILE__, $sql);
+//          }
 
-//			$sql = "DELETE FROM " . AUTH_ACCESS_TABLE . "
-//				WHERE group_id = " . $row['group_id'];
-//			if( !$db->query($sql) )
-//			{
-//				message_die(GENERAL_ERROR, 'Could not delete group for this user', '', __LINE__, __FILE__, $sql);
-//			}
+//          $sql = "DELETE FROM " . AUTH_ACCESS_TABLE . "
+//              WHERE group_id = " . $row['group_id'];
+//          if( !$db->query($sql) )
+//          {
+//              message_die(GENERAL_ERROR, 'Could not delete group for this user', '', __LINE__, __FILE__, $sql);
+//          }
 
-//		$sql = 'DELETE FROM phpbb_topics_watch' .
-//				' WHERE user_id = '.$db->quote($idUtente);
-//		$res = $db->query($sql);
-//		if (  DB::isError($res) )
-//		{
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from topic watch table','file'=>__FILE__,'line'=>__LINE__]);
-//		}
+//      $sql = 'DELETE FROM phpbb_topics_watch' .
+//              ' WHERE user_id = '.$db->quote($idUtente);
+//      $res = $db->query($sql);
+//      if (  DB::isError($res) )
+//      {
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from topic watch table','file'=>__FILE__,'line'=>__LINE__]);
+//      }
 
-//		$sql = 'DELETE FROM phpbb_banlist
-//			WHERE ban_userid = '.$db->quote($idUtente);
-//		$res = $db->query($sql);
-//		if (  DB::isError($res) )
-//		{
-//			$db->rollback();
-//			Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from banlist table','file'=>__FILE__,'line'=>__LINE__]);
-//		}
+//      $sql = 'DELETE FROM phpbb_banlist
+//          WHERE ban_userid = '.$db->quote($idUtente);
+//      $res = $db->query($sql);
+//      if (  DB::isError($res) )
+//      {
+//          $db->rollback();
+//          Error::throwError(_ERROR_CRITICAL,['msg'=>'Could not delete user from banlist table','file'=>__FILE__,'line'=>__LINE__]);
+//      }
 
         //TODO se cancellare i messaggi privati o meno
-//			$sql = "SELECT privmsgs_id
-//				FROM " . PRIVMSGS_TABLE . "
-//				WHERE privmsgs_from_userid = $user_id
-//					OR privmsgs_to_userid = $user_id";
-//			if ( !($result = $db->query($sql)) )
-//			{
-//				message_die(GENERAL_ERROR, 'Could not select all users private messages', '', __LINE__, __FILE__, $sql);
-//			}
+//          $sql = "SELECT privmsgs_id
+//              FROM " . PRIVMSGS_TABLE . "
+//              WHERE privmsgs_from_userid = $user_id
+//                  OR privmsgs_to_userid = $user_id";
+//          if ( !($result = $db->query($sql)) )
+//          {
+//              message_die(GENERAL_ERROR, 'Could not select all users private messages', '', __LINE__, __FILE__, $sql);
+//          }
 //
-//			// This little bit of code directly from the private messaging section.
-//			while ( $row_privmsgs = $result->fetchRow() )
-//			{
-//				$mark_list[] = $row_privmsgs['privmsgs_id'];
-//			}
+//          // This little bit of code directly from the private messaging section.
+//          while ( $row_privmsgs = $result->fetchRow() )
+//          {
+//              $mark_list[] = $row_privmsgs['privmsgs_id'];
+//          }
 //
-//			if ( count($mark_list) )
-//			{
-//				$delete_sql_id = implode(', ', $mark_list);
+//          if ( count($mark_list) )
+//          {
+//              $delete_sql_id = implode(', ', $mark_list);
 //
-//				$delete_text_sql = "DELETE FROM " . PRIVMSGS_TEXT_TABLE . "
-//					WHERE privmsgs_text_id IN ($delete_sql_id)";
-//				$delete_sql = "DELETE FROM " . PRIVMSGS_TABLE . "
-//					WHERE privmsgs_id IN ($delete_sql_id)";
+//              $delete_text_sql = "DELETE FROM " . PRIVMSGS_TEXT_TABLE . "
+//                  WHERE privmsgs_text_id IN ($delete_sql_id)";
+//              $delete_sql = "DELETE FROM " . PRIVMSGS_TABLE . "
+//                  WHERE privmsgs_id IN ($delete_sql_id)";
 //
-//				if ( !$db->query($delete_sql) )
-//				{
-//					message_die(GENERAL_ERROR, 'Could not delete private message info', '', __LINE__, __FILE__, $delete_sql);
-//				}
+//              if ( !$db->query($delete_sql) )
+//              {
+//                  message_die(GENERAL_ERROR, 'Could not delete private message info', '', __LINE__, __FILE__, $delete_sql);
+//              }
 //
-//				if ( !$db->query($delete_text_sql) )
-//				{
-//					message_die(GENERAL_ERROR, 'Could not delete private message text', '', __LINE__, __FILE__, $delete_text_sql);
-//				}
-//			}
+//              if ( !$db->query($delete_text_sql) )
+//              {
+//                  message_die(GENERAL_ERROR, 'Could not delete private message text', '', __LINE__, __FILE__, $delete_text_sql);
+//              }
+//          }
 
 //
-//		$db->commit();
-//		$db->autoCommit(true);
-//		ignore_user_abort(0);
+//      $db->commit();
+//      $db->autoCommit(true);
+//      ignore_user_abort(0);
 //
-//	}
+//  }
 //}

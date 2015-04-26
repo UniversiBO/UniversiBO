@@ -122,14 +122,14 @@ class FileStudentiEdit extends UniversiboCommand
 
         //prendo tutti i canali tra i ruoli più (??) il canale corrente (che per l'admin puo` essere diverso)
         $elenco_canali = $file->getIdCanali();
-        //		$num_canali = count($elenco_canali);
-        //		for ($i = 0; $i<$num_canali; $i++)
-        //		{
-        //			$id_current_canale = $elenco_canali[$i];
-        //			$current_canale = Canale::retrieveCanale($id_current_canale);
-        //			$nome_current_canale = $current_canale->getTitolo();
-        //			$f24_canale[] = ['nome_canale'=> $nome_current_canale];
-        //		}
+        //      $num_canali = count($elenco_canali);
+        //      for ($i = 0; $i<$num_canali; $i++)
+        //      {
+        //          $id_current_canale = $elenco_canali[$i];
+        //          $current_canale = Canale::retrieveCanale($id_current_canale);
+        //          $nome_current_canale = $current_canale->getTitolo();
+        //          $f24_canale[] = ['nome_canale'=> $nome_current_canale];
+        //      }
 
         $f24_accept = false;
 
@@ -475,9 +475,9 @@ class FileStudentiEdit extends UniversiboCommand
                 ->assign('fileEdit_flagCanali',
                         (count($f24_canale)) ? 'true' : 'false');
 
-        //		$template->assign('f24_password', $f24_password);
-        //		$template->assign('f24_password_confirm', $f24_password);
-        //		$template->assign('f24_password_enable', ($f24_password_enable) ? 'true' : 'false' );
+        //      $template->assign('f24_password', $f24_password);
+        //      $template->assign('f24_password_confirm', $f24_password);
+        //      $template->assign('f24_password_enable', ($f24_password_enable) ? 'true' : 'false' );
         $template->assign('f24_permessi_download', $f24_permessi_download);
         $template->assign('f24_permessi_visualizza', $f24_permessi_visualizza);
         $template

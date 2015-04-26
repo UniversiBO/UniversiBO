@@ -11,7 +11,7 @@
 <p>&nbsp;Formato file:<img src="{$common_basePath}/bundles/universibolegacy/images/icone_file/{$showFileInfo_icona|escape:"htmlall"}" width="32" height="32" alt="{$showFileInfo_tipo|escape:"htmlall"}" border="0" />&nbsp;{$showFileInfo_info|escape:"htmlall"|nl2br|bbcode2html}</p>
 <p>&nbsp;Hash MD5:&nbsp;{$showFileInfo_hash|escape:"htmlall"}</p>
 <p>&nbsp;Presente in:<br />
-	{foreach from=$showFileInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}</p>
+    {foreach from=$showFileInfo_canali item=temp_canale}&nbsp;&nbsp;<a href="{$temp_canale.uri|escape:"htmlall"}">{$temp_canale.titolo|escape:"htmlall"}</a><br />{/foreach}</p>
 <p>&nbsp;{$showFileInfo_langDownload|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_downloadUri|escape:"htmlall"}"><img src="{$common_basePath}/bundles/universibolegacy/images/file_download_32.gif" width="32" height="32" alt="{$showFileInfo_langDownload|escape:"htmlall"}" border="0" align="top" /></a></p>
  {if $showFileInfo_editFlag == 'true'}
  <p>&nbsp;{$showFileInfo_langEdit|escape:"htmlall"}:&nbsp;<a href="{$showFileInfo_editUri|escape:"htmlall"}"><img src="{$common_basePath}/bundles/universibolegacy/images/file_edit_32.gif" width="32" height="32" alt="{$showFileInfo_langEdit|escape:"htmlall"}" border="0" align="top" /></a></p>

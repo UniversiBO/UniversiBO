@@ -88,12 +88,12 @@ class Cdl extends Canale
         parent::__construct($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
                  $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo);
 
-        $this->cdlCodice	= $cod_cdl;
-        $this->cdlNome		= $nome_cdl;
-        $this->cdlCategoria	= $categoria_cdl;
-        $this->cdlCodiceFacoltaPadre	= $cod_facolta_padre;
-        $this->cdlForumCatId	= $forum_cat_id;
-        $this->cdlCodDoc	= $cod_doc;
+        $this->cdlCodice    = $cod_cdl;
+        $this->cdlNome      = $nome_cdl;
+        $this->cdlCategoria = $categoria_cdl;
+        $this->cdlCodiceFacoltaPadre    = $cod_facolta_padre;
+        $this->cdlForumCatId    = $forum_cat_id;
+        $this->cdlCodDoc    = $cod_doc;
     }
 
     /**
@@ -161,7 +161,7 @@ class Cdl extends Canale
     public function translateCategoriaCdl($categoria)
     {
         $translationTable =
-        [	'LT' => CDL_NUOVO_ORDINAMENTO,
+        [   'LT' => CDL_NUOVO_ORDINAMENTO,
                 'LS' => CDL_SPECIALISTICA,
                 'L'  => CDL_VECCHIO_ORDINAMENTO];
 

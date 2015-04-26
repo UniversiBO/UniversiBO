@@ -76,7 +76,7 @@ class FileDocenteAdmin extends UniversiboCommand
             $elenco_canali_retrieve[$id_current_canale] = $current_canale;
             $didatticaCanale = PrgAttivitaDidattica::factoryCanale(
                     $id_current_canale);
-            //			var_dump($didatticaCanale);
+            //          var_dump($didatticaCanale);
             $annoCorso = (count($didatticaCanale) > 0) ? $didatticaCanale[0]
                             ->getAnnoAccademico() : 'altro';
             $nome_current_canale = $current_canale->getTitolo();
@@ -104,10 +104,10 @@ class FileDocenteAdmin extends UniversiboCommand
         $tot = count($f40_canale);
         $list_keys = array_keys($f40_canale);
         for ($i = 0; $i < $tot; $i++)
-        //			var_dump($f40_canale[$i]);
+        //          var_dump($f40_canale[$i]);
             uasort($f40_canale[$list_keys[$i]], [$this, '_compareCanale']);
 
-        //		var_dump($f40_files); die;
+        //      var_dump($f40_files); die;
         $f40_accept = false;
 
         if (array_key_exists('f40_submit', $_POST)) {
@@ -115,13 +115,13 @@ class FileDocenteAdmin extends UniversiboCommand
             $f40_canali_inserimento = [];
             $f40_file_inserimento = [];
 
-            //			if ( !array_key_exists('f40_files', $_POST) ||
-            //				 !array_key_exists('f40_canale', $_POST) )
-            //			{
-            ////				var_dump($_POST);die();
-            //				Error :: throwError (_ERROR_DEFAULT, ['msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
-            //				$f40_accept = false;
-            //			}
+            //          if ( !array_key_exists('f40_files', $_POST) ||
+            //               !array_key_exists('f40_canale', $_POST) )
+            //          {
+            ////                var_dump($_POST);die();
+            //              Error :: throwError (_ERROR_DEFAULT, ['msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
+            //              $f40_accept = false;
+            //          }
 
             if (!array_key_exists('f40_files', $_POST)
                     || count($_POST['f40_files']) == 0) {
@@ -133,19 +133,19 @@ class FileDocenteAdmin extends UniversiboCommand
                 $f40_accept = false;
             } else {
                 //controllo se i file appartengono ad un canale su cui ha diritto l'utente
-                //			var_dump($_POST['f40_files'] );
+                //          var_dump($_POST['f40_files'] );
                 foreach ($_POST['f40_files'] as $key => $value) {
                     $fileTemp = &FileItem::selectFileItem($key);
                     $diritti = false;
-                    //				var_dump($fileTemp); die;
+                    //              var_dump($fileTemp); die;
                     // TODO controllo se fileTemp è effettivamente un oggetto di tipo FileItem
                     foreach ($fileTemp->getIdCanali() as $canaleId) {
-                        //					var_dump($canaleId);
+                        //                  var_dump($canaleId);
                         $diritti = $this->get('security.context')->isGranted('ROLE_ADMIN')
                                 || (array_key_exists($canaleId, $user_ruoli)
                                         && $user_ruoli[$canaleId]
                                                 ->isReferente());
-                        //					var_dump($diritti);
+                        //                  var_dump($diritti);
                         if ($diritti)
                             break;
                     }
@@ -208,7 +208,7 @@ class FileDocenteAdmin extends UniversiboCommand
                 foreach ($f40_file_inserimento as $newFile) {
                     $canali_file = &$newFile->getIdCanali();
                     foreach ($f40_canali_inserimento as $key) {
-                        //							var_dump($f40_canali_inserimento); die;
+                        //                          var_dump($f40_canali_inserimento); die;
                         if (!in_array($key, $canali_file)) {
                             $newFile->addCanale($key);
                             $canaleTemp = Canale::retrieveCanale($key);
@@ -225,7 +225,7 @@ class FileDocenteAdmin extends UniversiboCommand
                 return 'success';
             } else {
                 //riassegno al form i valori validi
-                //				echo 'qui';
+                //              echo 'qui';
                 $listaIdFiles = [];
                 $listaIdCanali = [];
                 $listaIdFiles = array_keys($f40_file_inserimento);

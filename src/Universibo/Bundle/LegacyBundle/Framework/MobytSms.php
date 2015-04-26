@@ -43,92 +43,92 @@ namespace
      */
 
     /**#@+
-     * @access	private
+     * @access  private
      */
     /**
      * Versione della classe
      */
-    define('MOBYT_PHPSMS_VERSION',	'1.4.2');
+    define('MOBYT_PHPSMS_VERSION',  '1.4.2');
     /**
      * Tipo di autenticazione basata su MD5, con password <b>non</b> inviata in chiaro
      */
-    define('MOBYT_AUTH_MD5',	1);
+    define('MOBYT_AUTH_MD5',    1);
     /**
      * Tipo di autenticazione basata su IP, con password inviata in chiaro
      */
-    define('MOBYT_AUTH_PLAIN',	2);
+    define('MOBYT_AUTH_PLAIN',  2);
 
     /**
      * Qualità messaggi in base al valore di default dell'account
      */
-    define('MOBYT_QUALITY_DEFAULT',	0);
+    define('MOBYT_QUALITY_DEFAULT', 0);
     /**
      * Qualità messaggi bassa (LQS)
      */
-    define('MOBYT_QUALITY_LQS',	1);
+    define('MOBYT_QUALITY_LQS', 1);
     /**
      * Qualità messaggi media (MQS)
      */
-    define('MOBYT_QUALITY_MQS',	2);
+    define('MOBYT_QUALITY_MQS', 2);
     /**
      * Qualit� messaggi alta (HQS)
      */
-    define('MOBYT_QUALITY_HQS',	3);
+    define('MOBYT_QUALITY_HQS', 3);
     /**
      * Qualit� messaggi automatica
      */
-    define('MOBYT_QUALITY_AUTO',	4);
+    define('MOBYT_QUALITY_AUTO',    4);
     /**
      * Qualit� messaggi automatica con notifica
      */
-    define('MOBYT_QUALITY_AUTO_NY',	5);
+    define('MOBYT_QUALITY_AUTO_NY', 5);
 
     /**
      * Tipo operazione TEXT
      */
-    define('MOBYT_OPERATION_TEXT',	0);
+    define('MOBYT_OPERATION_TEXT',  0);
     /**
      * Tipo operazione RING
      */
-    define('MOBYT_OPERATION_RING',	1);
+    define('MOBYT_OPERATION_RING',  1);
     /**
      * Tipo operazione Logo Operatore
      */
-    define('MOBYT_OPERATION_OLGO',	2);
+    define('MOBYT_OPERATION_OLGO',  2);
     /**
      * Tipo operazione Logo Gruppo
      */
-    define('MOBYT_OPERATION_GLGO',	3);
+    define('MOBYT_OPERATION_GLGO',  3);
     /**
      * Tipo operazione 8 bit
      */
-    define('MOBYT_OPERATION_8BIT',	4);
+    define('MOBYT_OPERATION_8BIT',  4);
     /**
      * Tipo operazione Flash
      */
-    define('MOBYT_OPERATION_FLASH',	5);
+    define('MOBYT_OPERATION_FLASH', 5);
 
     /**
      * @global array Array di conversione per le qualit�
      */
     $GLOBALS['mobyt_qty'] = [
-            MOBYT_QUALITY_LQS		=> 'll',
-            MOBYT_QUALITY_MQS		=> 'l',
-            MOBYT_QUALITY_HQS		=> 'h',
-            MOBYT_QUALITY_AUTO		=> 'a',
-            MOBYT_QUALITY_AUTO_NY	=> 'a'
+            MOBYT_QUALITY_LQS       => 'll',
+            MOBYT_QUALITY_MQS       => 'l',
+            MOBYT_QUALITY_HQS       => 'h',
+            MOBYT_QUALITY_AUTO      => 'a',
+            MOBYT_QUALITY_AUTO_NY   => 'a'
     ];
 
     /**
      * @global array Array di conversione per l'operazione
      */
     $GLOBALS['mobyt_ops'] = [
-            MOBYT_OPERATION_TEXT	=> 'TEXT',
-            MOBYT_OPERATION_RING	=> 'RING',
-            MOBYT_OPERATION_OLGO	=> 'OLGO',
-            MOBYT_OPERATION_GLGO	=> 'GLGO',
-            MOBYT_OPERATION_8BIT	=> '8BIT',
-            MOBYT_OPERATION_FLASH	=> 'FLASH'
+            MOBYT_OPERATION_TEXT    => 'TEXT',
+            MOBYT_OPERATION_RING    => 'RING',
+            MOBYT_OPERATION_OLGO    => 'OLGO',
+            MOBYT_OPERATION_GLGO    => 'GLGO',
+            MOBYT_OPERATION_8BIT    => '8BIT',
+            MOBYT_OPERATION_FLASH   => 'FLASH'
     ];
     /**#@-*/
 }
@@ -149,8 +149,8 @@ namespace Universibo\Bundle\LegacyBundle\Framework
     class MobytSms
     {
         /**#@+
-         * @access	private
-         * @var		string
+         * @access  private
+         * @var     string
          */
         public $auth = MOBYT_AUTH_MD5;
         public $quality = MOBYT_QUALITY_DEFAULT;
@@ -162,9 +162,9 @@ namespace Universibo\Bundle\LegacyBundle\Framework
         /**#@-*/
 
         /**
-         * @param string	Username di accesso (Login)
-         * @param string	Password dispositiva
-         * @param string	Intestazione mittente
+         * @param string    Username di accesso (Login)
+         * @param string    Password dispositiva
+         * @param string    Intestazione mittente
          *
          * @see setFrom
          */
@@ -181,7 +181,7 @@ namespace Universibo\Bundle\LegacyBundle\Framework
          * Il mittente pu� essere composto da un massimo di 11 caratteri alfanumerici o un numero telefonico
          * con prefisso internazionale.
          *
-         * @param string	Intestazione mittente
+         * @param string    Intestazione mittente
          */
         public function setFrom($from)
         {
@@ -347,9 +347,9 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $fields = [
                     'operation' => $op,
-                    'id'		=> $this->login,
-                    'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
-                    'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
+                    'id'        => $this->login,
+                    'password'  => $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
+                    'ticket'    => $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
             ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
@@ -373,9 +373,9 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $fields = [
                     'operation' => $op,
-                    'id'		=> $this->login,
-                    'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
-                    'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
+                    'id'        => $this->login,
+                    'password'  => $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
+                    'ticket'    => $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
             ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
@@ -395,9 +395,9 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $fields = [
                     'operation' => $op,
-                    'id'		=> $this->login,
-                    'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
-                    'ticket'	=> $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
+                    'id'        => $this->login,
+                    'password'  => $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
+                    'ticket'    => $this->auth == MOBYT_AUTH_MD5 ? md5($this->login.$op.$this->pwd) : ''
             ];
 
             if (preg_match('/^OK (\d+)/', $this->httpPost($fields), $m))
@@ -427,10 +427,10 @@ namespace Universibo\Bundle\LegacyBundle\Framework
 
             $fields = [
                     'operation' => $operation,
-                    'from'		=> $this->from,
-                    'rcpt'		=> $rcpt,
-                    'data'		=> $text,
-                    'id'		=> $this->login
+                    'from'      => $this->from,
+                    'rcpt'      => $rcpt,
+                    'data'      => $text,
+                    'id'        => $this->login
             ];
 
             if ($this->quality == MOBYT_QUALITY_AUTO_NY) {
@@ -485,11 +485,11 @@ namespace Universibo\Bundle\LegacyBundle\Framework
             $operation = isset($mobyt_ops[$this->operation]) ? $mobyt_ops[$this->operation] : 'TEXT';
 
             $fields = [
-                    'id'		=> $this->login,
-                    'password'	=> $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
+                    'id'        => $this->login,
+                    'password'  => $this->auth == MOBYT_AUTH_MD5 ? '' : $this->pwd,
                     'operation' => $operation,
-                    'from'		=> $this->from,
-                    'data'		=> $text
+                    'from'      => $this->from,
+                    'data'      => $text
             ];
 
             if ($this->quality != MOBYT_QUALITY_DEFAULT && isset($mobyt_qty[$this->quality]))

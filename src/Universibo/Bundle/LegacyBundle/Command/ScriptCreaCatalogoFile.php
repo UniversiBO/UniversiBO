@@ -40,17 +40,17 @@ class ScriptCreaCatalogoFile extends UniversiboCommand
             echo "vecchio" ;
             echo " \n" ;
             $res = $db->query('SELECT id_file FROM file WHERE password IS NULL AND permessi_download = '.$db->quote(User::ALL).' AND eliminato !='.$db->quote(FILE_ELIMINATO).' ORDER BY id_file ASC');
-            //			echo 'SELECT id_file FROM file WHERE password IS NULL AND permessi_download = '.$db->quote(User::ALL).' AND eliminato !='.$db->quote(FILE_ELIMINATO).' ORDER BY id_file ASC';
+            //          echo 'SELECT id_file FROM file WHERE password IS NULL AND permessi_download = '.$db->quote(User::ALL).' AND eliminato !='.$db->quote(FILE_ELIMINATO).' ORDER BY id_file ASC';
             if (DB::isError($res))
                 Error :: throwError(_ERROR_DEFAULT, ['msg' => "Errori nel recupero dei file esistenti", 'file' => __FILE__, 'line' => __LINE__]);
 
             $num = $res->numRows();
-            //			var_dump($num);
+            //          var_dump($num);
 
-            //			$doc = new_xmldoc('1.0');
-            //			$root = $doc->add_root('catalog');
-            //			$root->new_child('university',UNIVERSITY_NAME);
-            //			$root->new_child('faculty',UNIVERSITY_FACULTY);
+            //          $doc = new_xmldoc('1.0');
+            //          $root = $doc->add_root('catalog');
+            //          $root->new_child('university',UNIVERSITY_NAME);
+            //          $root->new_child('faculty',UNIVERSITY_FACULTY);
 
             // cancello il file vecchio
             $fp=@fopen('catalog.xml','w');
@@ -73,7 +73,7 @@ class ScriptCreaCatalogoFile extends UniversiboCommand
 
             for ($x = 0; $x <= $num; $x+=$iterationStep) {
                 $files = FileItem::selectFileItems(array_slice($listaIdFiles,$x,$iterationStep));
-                //				var_dump($files);
+                //              var_dump($files);
                 if ($x+$iterationStep>$num)
                     $x=$num;
 

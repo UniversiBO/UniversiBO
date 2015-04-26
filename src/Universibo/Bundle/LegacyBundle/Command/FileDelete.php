@@ -88,12 +88,12 @@ class FileDelete extends UniversiboCommand
 
         $elenco_canali = array_keys($user_ruoli);
         //
-        //		$ruoli_keys = array_keys($user_ruoli);
-        //		$num_ruoli = count($ruoli_keys);
-        //		for ($i = 0; $i < $num_ruoli; $i ++)
-        //		{
-        //			$elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
-        //		}
+        //      $ruoli_keys = array_keys($user_ruoli);
+        //      $num_ruoli = count($ruoli_keys);
+        //      for ($i = 0; $i < $num_ruoli; $i ++)
+        //      {
+        //          $elenco_canali[] = $user_ruoli[$ruoli_keys[$i]]->getIdCanale();
+        //      }
         //
         $file_canali = $file->getIdCanali();
 
@@ -155,8 +155,8 @@ class FileDelete extends UniversiboCommand
 
         //accettazione della richiesta
         if ($f14_accept == true) {
-            //			var_dump($_POST['f14_canale'] );
-            //			die();
+            //          var_dump($_POST['f14_canale'] );
+            //          die();
             //cancellazione dai canali richiesti
             foreach ($f14_canale_app as $key => $value) {
                 $file->removeCanale($key);

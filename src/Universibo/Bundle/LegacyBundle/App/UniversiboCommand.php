@@ -188,7 +188,7 @@ abstract class UniversiboCommand extends BaseCommand
 
         //informazioni del MyUniversiBO
         $attivaMyUniversibo = false;
-        //		var_dump($session_user);
+        //      var_dump($session_user);
 
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $attivaMyUniversibo = true;

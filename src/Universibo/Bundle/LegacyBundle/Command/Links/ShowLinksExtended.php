@@ -73,8 +73,8 @@ class ShowLinksExtended extends ShowLinksCommon
         for ($i = 0; $i < $ret_links; $i++) {
             $links = $lista_links[$i];
 
-            $elenco_links_tpl[$i]['uri']       		= $links->getUri();
-            $elenco_links_tpl[$i]['label']      	= $links->getLabel();
+            $elenco_links_tpl[$i]['uri']            = $links->getUri();
+            $elenco_links_tpl[$i]['label']          = $links->getLabel();
             $elenco_links_tpl[$i]['description']    = $links->getDescription();
             $elenco_links_tpl[$i]['userlink']    = $router->generate('universibo_legacy_user', ['id_utente' => $links->getIdUtente()]);
             $elenco_links_tpl[$i]['user']    = $links->getUsername();

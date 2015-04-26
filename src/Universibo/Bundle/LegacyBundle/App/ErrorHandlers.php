@@ -44,10 +44,10 @@ class ErrorHandlers
      * @param $param mixed,array Tipo restituito da chi cattura l'errore,
      * questo handler ? in grado di gestire un parametro array avente la seguente struttura
      * $param = [  "msg"=>"messaggio di errore da mostrare",
-     * 					"file"=>"file in cui ? avvenuto l'errore",
-     * 					"line"=>"linea di codice in cui ? avvenuto l'errore",
-     * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul logger"
-     * 					]
+     *                  "file"=>"file in cui ? avvenuto l'errore",
+     *                  "line"=>"linea di codice in cui ? avvenuto l'errore",
+     *                  "log"=>"(opzionale)se impostato viene salvato come messaggio sul logger"
+     *                  ]
      */
     public function critical_handler($param)
     {
@@ -62,17 +62,17 @@ class ErrorHandlers
      * @param $param mixed,[] Tipo restituito da chi cattura l'errore,
      * questo handler ? in grado di gestire un parametro arrequireray avente la seguente struttura
      * $param = [  "msg"=>"messaggio di errore da mostrare",
-     * 					"file"=>"file in cui ? avvenuto l'errore",
-     * 					"line"=>"linea di codice in cui ? avvenuto l'errore",
-     * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul logger"
-     * 					]
+     *                  "file"=>"file in cui ? avvenuto l'errore",
+     *                  "line"=>"linea di codice in cui ? avvenuto l'errore",
+     *                  "log"=>"(opzionale)se impostato viene salvato come messaggio sul logger"
+     *                  ]
      */
     public function default_handler($param)
     {
-        //		die( 'Errore Critico: '.$param['msg']. '<br />
-        //		file: '.$param['file']. '<br />
-        //		line: '.$param['line']. '<br />
-        //		log: '.$param['log']. '<br />');
+        //      die( 'Errore Critico: '.$param['msg']. '<br />
+        //      file: '.$param['file']. '<br />
+        //      line: '.$param['line']. '<br />
+        //      log: '.$param['log']. '<br />');
         $_SESSION['error_param'] = $param;
         //var_dump($param);
 
@@ -101,11 +101,11 @@ class ErrorHandlers
      * @param $param mixed,[] Tipo restituito da chi cattura l'errore,
      * questo handler ? in grado di gestire un parametro array avente la seguente struttura
      * $param = [  "msg"=>"messaggio di errore da mostrare",
-     * 					"file"=>"file in cui ? avvenuto l'errore",
-     * 					"line"=>"linea di codice in cui ? avvenuto l'errore",
-     * 					"log"=>"(opzionale)se impostato viene salvato come messaggio sul logger",
-     *					"template_engine"=>"Riferimento all'oggetto template engine"
-     * 					]
+     *                  "file"=>"file in cui ? avvenuto l'errore",
+     *                  "line"=>"linea di codice in cui ? avvenuto l'errore",
+     *                  "log"=>"(opzionale)se impostato viene salvato come messaggio sul logger",
+     *                  "template_engine"=>"Riferimento all'oggetto template engine"
+     *                  ]
      */
     public function notice_handler($param)
     {

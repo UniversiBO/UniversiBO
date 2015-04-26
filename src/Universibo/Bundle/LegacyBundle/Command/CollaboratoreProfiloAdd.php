@@ -69,15 +69,15 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
         $template->assign('back_id_canale', $id_canale);
          */
 
-        //		$num_canali = count($elenco_canali);
-        //		for ($i = 0; $i<$num_canali; $i++)
-        //		{
-        //			$id_current_canale = $elenco_canali[$i];
-        //			$current_canale = Canale::retrieveCanale($id_current_canale);
-        //			$nome_current_canale = $current_canale->getTitolo();
-        //			$spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
-        //			$f7_canale[] = ['id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta];
-        //		}
+        //      $num_canali = count($elenco_canali);
+        //      for ($i = 0; $i<$num_canali; $i++)
+        //      {
+        //          $id_current_canale = $elenco_canali[$i];
+        //          $current_canale = Canale::retrieveCanale($id_current_canale);
+        //          $nome_current_canale = $current_canale->getTitolo();
+        //          $spunta = ($id_canale == $id_current_canale ) ? 'true' :'false';
+        //          $f7_canale[] = ['id_canale'=> $id_current_canale, 'nome_canale'=> $nome_current_canale, 'spunta'=> $spunta];
+        //      }
 
         $f36_accept = false;
 

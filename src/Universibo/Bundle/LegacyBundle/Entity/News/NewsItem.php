@@ -25,12 +25,12 @@ class NewsItem
     const URGENTE = 'S';
     const NOT_URGENTE = 'N';
 
-    //	/**
-    //	 * ? costante per il valore del flag per le notizie eliminate
-    //	 *
-    //	 * @private
-    //	 */
-    //	var $ELIMINATA='S';
+    //  /**
+    //   * ? costante per il valore del flag per le notizie eliminate
+    //   *
+    //   * @private
+    //   */
+    //  var $ELIMINATA='S';
 
     /**
      * @var DBNewsItemRepository

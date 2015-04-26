@@ -48,7 +48,7 @@ class ShowContattiDocenti extends UniversiboCommand
             }
         }
         usort($elenco, [$this, '_compareDocenti']);
-        //		var_dump($elenco);
+        //      var_dump($elenco);
         $template->assign('ShowContattiDocenti_contatti', $elenco);
         $template
                 ->assign('ShowContattiDocenti_titolo',

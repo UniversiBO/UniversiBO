@@ -30,11 +30,11 @@ class ShowNews extends PluginCommand
      */
     public function execute($param=[])
     {
-        $elenco_id_news		=  $param['id_notizie'];
-        $flag_chkDiritti	=  $param['chk_diritti'];
+        $elenco_id_news     =  $param['id_notizie'];
+        $flag_chkDiritti    =  $param['chk_diritti'];
         $router = $this->get('router');
-//		var_dump($param['id_notizie']);
-//		die();
+//      var_dump($param['id_notizie']);
+//      die();
 
         $bc        = $this->getBaseCommand();
         $canale    = $bc->getRequestCanale();

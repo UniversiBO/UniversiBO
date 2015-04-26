@@ -62,7 +62,7 @@ class FileStudentiAdd extends UniversiboCommand
         $f23_permessi_download = '';
         $f23_permessi_visualizza = '';
 
-        //		$f23_password = null;
+        //      $f23_password = null;
 
         $canale = $this->getRequestCanale();
         $id_canale = $canale->getIdCanale();
@@ -327,16 +327,16 @@ class FileStudentiAdd extends UniversiboCommand
                 $f23_permessi_download = $_POST['f23_permessi_download'];
             }
 
-            //			//password non necessita controlli
-            //			if ($_POST['f23_password'] != $_POST['f23_password_confirm'])
-            //			{
-            //				Error :: throwError(_ERROR_NOTICE, ['msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template]);
-            //				$f23_accept = false;
-            //			}
-            //			elseif($_POST['f23_password'] != '')
-            //			{
-            //				$f23_password = $_POST['f23_password'];
-            //			}
+            //          //password non necessita controlli
+            //          if ($_POST['f23_password'] != $_POST['f23_password_confirm'])
+            //          {
+            //              Error :: throwError(_ERROR_NOTICE, ['msg' => 'La password e il campo di verifica non corrispondono', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' =>& $template]);
+            //              $f23_accept = false;
+            //          }
+            //          elseif($_POST['f23_password'] != '')
+            //          {
+            //              $f23_password = $_POST['f23_password'];
+            //          }
             //e i permessi di visualizzazione??
             // li prendo uguali a quelli del canale,
             if ($canale instanceof Canale)
@@ -467,8 +467,8 @@ class FileStudentiAdd extends UniversiboCommand
                     }
                 }
 
-                //						var_dump($arrayEmailRef);
-                //						die();
+                //                      var_dump($arrayEmailRef);
+                //                      die();
                 //Ok: prende i referenti, e solo gli studenti...;)...
                 //Bisogna solo creare la notifica...
                 //E serve uno script per le pagine SENZA referenti --> admin preposti al lavoro...
@@ -498,7 +498,7 @@ Link: '
                         . PHP_EOL . '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
 
                 //
-                //						$ruoli_canale = $canale->getRuoli();
+                //                      $ruoli_canale = $canale->getRuoli();
                 for ($j = 0; $j < $i; $j++) {
                     $notifica_destinatario = 'mail://' . $arrayEmailRef[$j];
                     $notifica = new NotificaItem(0, $notifica_titolo,
@@ -508,11 +508,11 @@ Link: '
                     $notifica->insertNotificaItem();
                 }
                 //
-                //						//ultima notifica all'archivio
-                //						$notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');;
+                //                      //ultima notifica all'archivio
+                //                      $notifica_destinatario = 'mail://'.$frontcontroller->getAppSetting('rootEmail');;
                 //
-                //						$notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
-                //						$notifica->insertNotificaItem();
+                //                      $notifica = new NotificaItem(0, $notifica_titolo, $notifica_messaggio, $notifica_dataIns, $notifica_urgente, $notifica_eliminata, $notifica_destinatario );
+                //                      $notifica->insertNotificaItem();
                 //
                 //
                 $transaction->commit();
@@ -535,7 +535,7 @@ Link: '
         $template
                 ->assign('fileAdd_flagCanali', (count($f23_canale)) ? 'true' : 'false');
 
-        //		$template->assign('f23_password', $f23_password);
+        //      $template->assign('f23_password', $f23_password);
         $template->assign('f23_permessi_download', $f23_permessi_download);
         $template->assign('f23_permessi_visualizza', $f23_permessi_visualizza);
         $template

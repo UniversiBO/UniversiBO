@@ -41,16 +41,16 @@ class ShowInsegnamento extends CanaleCommand
 
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
-        //		echo "qua\n";
+        //      echo "qua\n";
         $array_prg = $insegnamento->getElencoAttivitaPadre();
-        //		var_dump($prg); die;
+        //      var_dump($prg); die;
 
         if (count($array_prg) === 0) {
             throw new NotFoundHttpException('Missing data');
         }
 
         $coddoc = $array_prg[0]->getCodDoc();
-        //		var_dump($coddoc); die;
+        //      var_dump($coddoc); die;
 
         $contactRepo = $this->get('universibo_legacy.repository.contatto_docente');
         $contatto = $contactRepo->findOneByCodDoc($coddoc);

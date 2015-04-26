@@ -76,8 +76,8 @@ class ShowFileStudentiCommenti extends PluginCommand
         $elenco_commenti = CommentoItem::selectCommentiItem($param['id_file']);
         $num_commenti = CommentoItem::quantiCommenti($param['id_file']);
         $elenco_commenti_tpl = [];
-//		var_dump($elenco_commenti);
-//	    die();
+//      var_dump($elenco_commenti);
+//      die();
 
         $userRepo = $this->get('universibo_core.repository.user');
 

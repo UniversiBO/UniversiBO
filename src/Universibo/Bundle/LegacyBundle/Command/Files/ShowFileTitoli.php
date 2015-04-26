@@ -29,9 +29,9 @@ class ShowFileTitoli extends PluginCommand
      */
     public function execute($param = [])
     {
-        //$flag_chkDiritti	=  $param['chk_diritti'];
-        //		var_dump($param['id_notizie']);
-        //		die();
+        //$flag_chkDiritti  =  $param['chk_diritti'];
+        //      var_dump($param['id_notizie']);
+        //      die();
 
         $bc = $this->getBaseCommand();
         $user = $bc->get('security.context')->getToken()->getUser();
@@ -81,10 +81,10 @@ class ShowFileTitoli extends PluginCommand
 
                 $template->assign('showNews_desc', 'Mostra le ultime '.$num_news.' notizie del canale '.$id_canale.' - '.$titolo_canale);
          */
-        //		var_dump($elenco_id_news);
-        //		die();
-        //		var_dump($elenco_id_news);
-        //		die();
+        //      var_dump($elenco_id_news);
+        //      die();
+        //      var_dump($elenco_id_news);
+        //      die();
 
         $elenco_id_file = $this->getFileCanale($id_canale);
 
@@ -138,10 +138,10 @@ class ShowFileTitoli extends PluginCommand
                         $file_tpl['elimina_link'] = $router->generate('universibo_legacy_file_delete', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     }
                     $file_tpl['dimensione'] = $file->getDimensione();
-                    //	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
-                    //					$file_tpl['download_uri'] = '';
-                    //					$permessi_download = $file->getPermessiDownload();
-                    //					if ($user->isGroupAllowed($permessi_download))
+                    //  tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
+                    //                  $file_tpl['download_uri'] = '';
+                    //                  $permessi_download = $file->getPermessiDownload();
+                    //                  if ($user->isGroupAllowed($permessi_download))
                     $file_tpl['download_uri'] = $router->generate('universibo_legacy_file_download', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);
                     $file_tpl['categoria'] = $file->getCategoriaDesc();
                     $file_tpl['show_info_uri'] = $router->generate('universibo_legacy_file', ['id_file' => $file->getIdFile(), 'id_canale' => $id_canale]);

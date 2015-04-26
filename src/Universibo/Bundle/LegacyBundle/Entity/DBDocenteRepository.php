@@ -31,9 +31,9 @@ class DBDocenteRepository extends DBRepository implements MergeableRepositoryInt
 
         $cond = $field . ' = ';
 
-        $query = 'SELECT id_utente,	cod_doc, nome_doc FROM docente WHERE '
+        $query = 'SELECT id_utente, cod_doc, nome_doc FROM docente WHERE '
                 . $cond . $db->quote($id);
-        //		var_dump($query); die;
+        //      var_dump($query); die;
         $res = $db->query($query);
         if (DB::isError($res)) {
             $this

@@ -26,7 +26,7 @@ class ScriptTestSms extends UniversiboCommand
             'operation' => $op,
             'id'            => $m->login,
             'password'      => $m->pwd,
-//			'ticket'        => ''
+//          'ticket'        => ''
         ];
 
         echo '**** PLAIN AUTH ****'. "\n";
@@ -44,7 +44,7 @@ class ScriptTestSms extends UniversiboCommand
         $fields = [
             'operation' => $op,
             'id'            => $m->login,
-//			'password'      => $m->pwd,
+//          'password'      => $m->pwd,
             'ticket'        => md5($m->login.$op.$m->pwd)
         ];
 
@@ -65,6 +65,6 @@ class ScriptTestSms extends UniversiboCommand
                 echo "\n".'sms residuii ';
         var_dump($m->getAvailableSms());
         echo '**** STOP REQUEST ****'. "\n";
-    //	echo $m->sendSms('+393334708204','prova');
+    //  echo $m->sendSms('+393334708204','prova');
     }
 }

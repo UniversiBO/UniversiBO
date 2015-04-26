@@ -193,7 +193,7 @@ abstract class CanaleCommand extends UniversiboCommand
             // elenco post nuovi contestuale al canale
             if ($this->getRequestCanale()->getServizioForum()) {
                 $forumRouter = $this->get('universibo_forum.router');
-                //				$newposts = 'false';
+                //              $newposts = 'false';
                 $list_post = [];
                 $fa = $this->get('universibo_forum.dao.post');
                 $fr = $this->get('universibo_forum.router');
@@ -220,11 +220,11 @@ abstract class CanaleCommand extends UniversiboCommand
 
     public function _compareContattiKeys($b, $a)
     {
-        //		$theArrayOrder = ['Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>''];
-        //		$posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
-        //		$posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
-        //		if ($posA==$posB) return 0;
-        //		return ($posA > $posB) ? 1 : -1;
+        //      $theArrayOrder = ['Docenti'=>'','Personale'=>'','Tutor'=>'','Studenti'=>''];
+        //      $posA = CanaleCommand::_keyPosInArray($a,$theArrayOrder);
+        //      $posB = CanaleCommand::_keyPosInArray($b,$theArrayOrder);
+        //      if ($posA==$posB) return 0;
+        //      return ($posA > $posB) ? 1 : -1;
         switch ($a) {
             case 'Docenti': $posA = 0;
                 break;
@@ -271,17 +271,17 @@ abstract class CanaleCommand extends UniversiboCommand
     }
 
     //where is my key in my array
-    //	function _keyPosInArray($key,$array)
-    //	{
-    //		$i=0;
-    //		reset($array);
-    //		while (current($array)) {
-    //			$i++;
-    //			if (key($array) == $key) {
-    //				return $i;
-    //			}
-    //			next($array);
-    //		}
-    //		return $i + 1;
-    //	}
+    //  function _keyPosInArray($key,$array)
+    //  {
+    //      $i=0;
+    //      reset($array);
+    //      while (current($array)) {
+    //          $i++;
+    //          if (key($array) == $key) {
+    //              return $i;
+    //          }
+    //          next($array);
+    //      }
+    //      return $i + 1;
+    //  }
 }

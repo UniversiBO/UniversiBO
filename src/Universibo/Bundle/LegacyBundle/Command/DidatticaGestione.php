@@ -86,8 +86,8 @@ class DidatticaGestione extends UniversiboCommand
         // controllo canale scelto
         $channelId = $request->get('id_canale', '');
         if (preg_match('/^([0-9]{1,9})$/', $channelId)) {
-            //			if (!preg_match('/^([0-9]{1,9})$/', $channelId))
-            //				Error :: throwError (_ERROR_DEFAULT, ['msg' => 'L\'id del canale richiesto non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
+            //          if (!preg_match('/^([0-9]{1,9})$/', $channelId))
+            //              Error :: throwError (_ERROR_DEFAULT, ['msg' => 'L\'id del canale richiesto non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
             if ($channelRepo->getTipoCanaleFromId($channelId)
                     == Canale::INSEGNAMENTO) {
@@ -118,7 +118,7 @@ class DidatticaGestione extends UniversiboCommand
                 } else
                     $esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale(
                             $channelId, $prg_sdop);
-                //				$esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($channelId);
+                //              $esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($channelId);
                 if (count($esamiAlternativi) == 0)
                     $esamiAlternativi = '';
                 // la modifica del docente è permessa solo quando è insegnamento padre e  non e` attivo il forum dell'insegnamento
@@ -223,7 +223,7 @@ class DidatticaGestione extends UniversiboCommand
         // submit della modifica delle attivita`
         if (array_key_exists('f41_submit', $_POST) && $channelId != '') {
             $f41_accept = true;
-            //			var_dump($_POST); die;
+            //          var_dump($_POST); die;
             if (!array_key_exists('f41_edit_sel', $_POST)
                     || !is_array($_POST['f41_edit_sel'])
                     || count($_POST['f41_edit_sel']) == 0) {
@@ -243,13 +243,13 @@ class DidatticaGestione extends UniversiboCommand
                             (int) $idSdop);
                 else
                     $prgs[] = $prg;
-                //				var_dump($prgs); die;
+                //              var_dump($prgs); die;
                 if (array_key_exists('f41_alts', $_POST))
                     foreach ($_POST['f41_alts'] as $key => $value) {
                         if (strstr($key, '#') != false) {
                             list($id_channel, $idSdoppiamento) = explode('#',
                                     $key);
-                            //							var_dump($key); var_dump($idSdoppiamento); die;
+                            //                          var_dump($key); var_dump($idSdoppiamento); die;
                             $prgs[] = PrgAttivitaDidattica::selectPrgAttivitaDidatticaSdoppiata(
                                     (int) $idSdoppiamento);
                         } else {
@@ -324,7 +324,7 @@ class DidatticaGestione extends UniversiboCommand
 
             //esecuzione operazioni accettazione del form
             if ($f41_accept == true) {
-                //				var_dump($mods);
+                //              var_dump($mods);
                 $failure = false;
                 // TODO BEGIN TRANSACTION
                 //$transaction = $this->getContainer()->get('uiversibo_legacy.transaction');
@@ -335,9 +335,9 @@ class DidatticaGestione extends UniversiboCommand
                 $keys = array_keys($mods);
                 foreach ($keys as $i) {
                     $esito = $prgs[$i]->updatePrgAttivitaDidattica();
-                    //					var_dump($prgs); die;
+                    //                  var_dump($prgs); die;
                     if ($esito == false) {
-                        //						echo 'qui'; die;
+                        //                      echo 'qui'; die;
                         $failure = true;
                         // TODO $transaction->rollback();
                         break;
@@ -358,7 +358,7 @@ class DidatticaGestione extends UniversiboCommand
                             $r->setMyUniversiBO(false);
                             $esito = $r->updateRuolo();
                             if ($esito == false) {
-                                //						echo 'qui'; die;
+                                //                      echo 'qui'; die;
                                 $failure = true;
                                 $transaction->rollback();
                                 break;
@@ -379,7 +379,7 @@ class DidatticaGestione extends UniversiboCommand
                                 $r->setMyUniversiBO(true);
                                 $esito = $r->updateRuolo();
                                 if ($esito == false) {
-                                    //						echo 'qui'; die;
+                                    //                      echo 'qui'; die;
                                     $failure = true;
                                     $transaction->rollback();
                                     break;
@@ -416,7 +416,7 @@ class DidatticaGestione extends UniversiboCommand
         }
         //end if (array_key_exists('f41_submit', $_POST))
 
-        /*		$template->assign('f41_canale', $f41_canale);
+        /*      $template->assign('f41_canale', $f41_canale);
          $template->assign('f41_cdl', $f41_cdl);
         $template->assign('f41_fac', $f41_fac);
          */ $template->assign('f41_cur_sel', $f41_cur_sel);
@@ -459,7 +459,7 @@ class DidatticaGestione extends UniversiboCommand
         $ret = [];
         foreach ($prgs as $prg)
             if ($prg_exclude == null || $prg != $prg_exclude) {
-                //	 			var_dump($prg);
+                //              var_dump($prg);
                 $cdl = Cdl::selectCdlCodice($prg->getCodiceCdl());
                 $id = $channelId;
                 $facultyId = $this->getRequest()->get('id_fac');
@@ -557,7 +557,7 @@ class DidatticaGestione extends UniversiboCommand
         }
 
         $old = $prg->$get();
-        //		var_dump($old); die;
+        //      var_dump($old); die;
         if ($old != $val) {
             $prg->$set($val);
             $m = (array_key_exists($index, $mods)) ? $mods[$index] : [];

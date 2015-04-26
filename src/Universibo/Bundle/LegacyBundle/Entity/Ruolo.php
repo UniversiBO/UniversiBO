@@ -93,7 +93,7 @@ class Ruolo
      *
      * @param int     $id_utente      numero identificativo utente
      * @param int     $id_canale      numero identificativo canale
-     * @param string  $nome           nome		identificativo del ruolo (stringa personalizzata dall'utente per identificare il canale)
+     * @param string  $nome           nome      identificativo del ruolo (stringa personalizzata dall'utente per identificare il canale)
      * @param int     $ultimo_accesso timestamp dell'ultimo accesso al canale da parete dell'utente
      * @param boolean $moderatore     true se l'utente possiede diritti di moderatore sul canale
      * @param boolean $referente      true se l'utente possiede diritti di referente sul canale

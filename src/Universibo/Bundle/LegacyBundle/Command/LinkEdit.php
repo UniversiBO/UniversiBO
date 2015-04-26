@@ -60,10 +60,10 @@ class LinkEdit extends CanaleCommand
         $link = $this->get('universibo_legacy.repository.links.link')->find($id_link);
         $autore = ($userId == $link->getIdUtente());
 
-        //		//controllo coerenza parametri
-        //		$canali_news	= 	$news->getIdCanali();
-        //		if (!in_array($id_canale, $canali_news))
-        //			 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
+        //      //controllo coerenza parametri
+        //      $canali_news    =   $news->getIdCanali();
+        //      if (!in_array($id_canale, $canali_news))
+        //           Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'I parametri passati non sono coerenti', 'file' => __FILE__, 'line' => __LINE__]);
         //
         $canale_link = $link->getIdCanale();
         if ($id_canale != $canale_link)
@@ -172,7 +172,7 @@ class LinkEdit extends CanaleCommand
         $template->assign('f31_Label', $f31_Label);
         $template->assign('f31_Description', $f31_Description);
 
-        //		$this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
+        //      $this->executePlugin('ShowTopic', ['reference' => 'newscollabs']);
         return 'default';
 
     }

@@ -65,8 +65,8 @@ class ShowLinks extends ShowLinksCommon
         for ($i = 0; $i < $ret_links; $i++) {
             $link = $lista_links[$i];
 
-            $elenco_links_tpl[$i]['uri']       		= $link->getUri();
-            $elenco_links_tpl[$i]['label']      	= $link->getLabel();
+            $elenco_links_tpl[$i]['uri']            = $link->getUri();
+            $elenco_links_tpl[$i]['label']          = $link->getLabel();
             if ($this->isInternalLink($link))
                 $elenco_links_tpl[$i]['tipo'] = "interno";
             else

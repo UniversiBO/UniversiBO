@@ -177,26 +177,26 @@ class PrgAttivitaDidattica extends Canale
         parent::__construct($id_canale, $permessi, $ultima_modifica, $tipo_canale, $immagine, $nome, $visite,
                 $news_attivo, $files_attivo, $forum_attivo, $forum_forum_id, $forum_group_id, $links_attivo,$files_studenti_attivo);
 
-        $this->annoAccademico	   = $annoAccademico;
-        $this->codiceCdl		   = $codiceCdl;
-        $this->codInd			   = $codInd;
-        $this->codOri			   = $codOri;
-        $this->codMateria		   = $codMateria;
-        $this->nomeMateria		   = $nomeMateria;
-        $this->annoCorso		   = $annoCorso;
-        $this->codMateriaIns	   = $codMateriaIns;
-        $this->nomeMateriaIns	   = $nomeMateriaIns;
-        $this->annoCorsoIns		   = $annoCorsoIns;
-        $this->codRil			   = $codRil;
-        $this->codModulo		   = $codModulo;
-        $this->codDoc			   = $codDoc;
-        $this->nomeDoc			   = $nomeDoc;
+        $this->annoAccademico      = $annoAccademico;
+        $this->codiceCdl           = $codiceCdl;
+        $this->codInd              = $codInd;
+        $this->codOri              = $codOri;
+        $this->codMateria          = $codMateria;
+        $this->nomeMateria         = $nomeMateria;
+        $this->annoCorso           = $annoCorso;
+        $this->codMateriaIns       = $codMateriaIns;
+        $this->nomeMateriaIns      = $nomeMateriaIns;
+        $this->annoCorsoIns        = $annoCorsoIns;
+        $this->codRil              = $codRil;
+        $this->codModulo           = $codModulo;
+        $this->codDoc              = $codDoc;
+        $this->nomeDoc             = $nomeDoc;
         $this->flagTitolareModulo  = $flagTitolareModulo;
-        $this->tipoCiclo		   = $tipoCiclo;
-        $this->codAte			   = $codAte;
+        $this->tipoCiclo           = $tipoCiclo;
+        $this->codAte              = $codAte;
         $this->annoCorsoUniversibo = $annoCorsoUniversibo;
-        $this->sdoppiato		   = $sdoppiato;
-        $this->id_sdop			   = $id_sdop;
+        $this->sdoppiato           = $sdoppiato;
+        $this->id_sdop             = $id_sdop;
 
     }
 

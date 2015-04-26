@@ -121,7 +121,7 @@ class DBContattoDocenteRepository extends DBRepository
         $db->autoCommit(false);
 
         $query = 'SELECT * FROM docente_contatti WHERE cod_doc = '.$db->quote($cod);
-        //        echo $query;		die;
+        //        echo $query;      die;
         $res = $db->query($query);
         //var_dump($query);
         if (DB::isError($res)) {
@@ -140,7 +140,7 @@ class DBContattoDocenteRepository extends DBRepository
                 .' , '.$db->quote($contattoDocente->getUltimaModifica())
                 .' , '.$db->quote($contattoDocente->getReport())
                 .' )';
-        //		echo $query;		die;
+        //      echo $query;        die;
         $res = $db->query($query);
         //var_dump($query);
         if (DB::isError($res)) {
@@ -165,8 +165,8 @@ class DBContattoDocenteRepository extends DBRepository
         $db = $this->getDb();
 
         if ($contattoDocente->getStato() != APERTO && $contattoDocente->getStato() != null) {
-            $time	= time();
-            $query	= 'UPDATE docente SET '
+            $time   = time();
+            $query  = 'UPDATE docente SET '
             .' docente_contattato = '.$db->quote($time)
             .' , id_mod = '.$db->quote($contattoDocente->getIdUtenteAssegnato())
             .' WHERE cod_doc = '.$db->quote($contattoDocente->getCodDoc());

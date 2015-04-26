@@ -138,11 +138,11 @@ class RuoliAdminSearch extends UniversiboCommand
 
         uksort($arrayPublicUsers, "strcmp");
 //mettere ogni sotto gruppo in ordine alfabetico (non funziona)
-//		$keys = array_keys($arrayPublicUsers);
-//		foreach($keys as $key)
-//		{
-//			uksort($arrayPublicUsers[$key], "strcmp");
-//		}
+//      $keys = array_keys($arrayPublicUsers);
+//      foreach($keys as $key)
+//      {
+//          uksort($arrayPublicUsers[$key], "strcmp");
+//      }
 
         $template->assign('ruoliAdminSearch_users', $arrayPublicUsers);
 

@@ -29,7 +29,7 @@ class ShowStatistiche extends UniversiboCommand
         FROM file_inseriti_giorno
         GROUP BY file_inseriti_giorno.anno, file_inseriti_giorno.mese
         ORDER BY file_inseriti_giorno.anno DESC, file_inseriti_giorno.mese DESC;';
-        //			var_dump($query,$user); die;
+        //          var_dump($query,$user); die;
         $res = $db->executeQuery($query);
 
         $listaFilePerMese = [];
@@ -39,7 +39,7 @@ class ShowStatistiche extends UniversiboCommand
         }
 
         $query = 'SELECT giorno, mese,anno, iscritti FROM studenti_iscritti ORDER BY anno DESC, mese DESC, giorno DESC;';
-        //			var_dump($query,$user); die;
+        //          var_dump($query,$user); die;
         $res = $db->executeQuery($query);
 
         $listaUtentiPerMese = [];

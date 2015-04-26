@@ -31,13 +31,13 @@ class ShowLink extends PluginCommand
     public function execute($param = [])
     {
 
-//		$id_canale  =  $param['id_canale'];
+//      $id_canale  =  $param['id_canale'];
         $id_link = $param['id_link'];
 
         $bc        = $this->getBaseCommand();
         $user      = $bc->get('security.context')->getToken()->getUser();
         $canale    = $bc->getRequestCanale();
-//		$canale    = Canale::retrieveCanale($id_canale);
+//      $canale    = Canale::retrieveCanale($id_canale);
         $fc        = $bc->getFrontController();
         $template  = $fc->getTemplateEngine();
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
@@ -68,8 +68,8 @@ class ShowLink extends PluginCommand
 
         $link = Link::selectLink($id_link);
 
-        $link_tpl['uri']       		= $link->getUri();
-        $link_tpl['label']      	= $link->getLabel();
+        $link_tpl['uri']            = $link->getUri();
+        $link_tpl['label']          = $link->getLabel();
         $link_tpl['description']    = $link->getDescription();
         $link_tpl['userlink']    = $router->generate('universibo_legacy_user', ['id_utente' => $link->getIdUtente()]);
         $link_tpl['user']    = $link->getUsername();

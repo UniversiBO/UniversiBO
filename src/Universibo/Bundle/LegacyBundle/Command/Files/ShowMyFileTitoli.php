@@ -53,7 +53,7 @@ class ShowMyFileTitoli extends PluginCommand
             $template->assign('showMyFileTitoli_langFileAvailableFlag', 'true');
         }
 
-//		usort($elenco_file, ['ShowMyFileTitoli','_compareFile']);
+//      usort($elenco_file, ['ShowMyFileTitoli','_compareFile']);
 
         //$elenco_categorie_file_tpl = [];
         $categorie_tpl = [];
@@ -81,10 +81,10 @@ class ShowMyFileTitoli extends PluginCommand
                     $file_tpl[$i]['autore_link']  = $router->generate('universibo_legacy_user', ['id_utente' => $file->getIdUtente()]);
                     $file_tpl[$i]['id_autore']    = $file->getIdUtente();
                     $file_tpl[$i]['dimensione'] = $file->getDimensione();
-//	tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
-//					$file_tpl['download_uri'] = '';
-//					$permessi_download = $file->getPermessiDownload();
-//					if ($user->isGroupAllowed($permessi_download))
+//  tolto controllo: Il link download va mostrato sempre, il controllo ? effettuato successivamente
+//                  $file_tpl['download_uri'] = '';
+//                  $permessi_download = $file->getPermessiDownload();
+//                  if ($user->isGroupAllowed($permessi_download))
                     $canali = $file->getIdCanali();
                     $num_canali =  count($canali);
                     $elenco_canali_tpl = [];

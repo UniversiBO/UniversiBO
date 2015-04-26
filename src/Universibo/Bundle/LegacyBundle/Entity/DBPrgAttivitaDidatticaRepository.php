@@ -140,7 +140,7 @@ EOT;
             return $array;
         }
         $elenco = [];
-        while (	$res->fetchInto($row) ) {
+        while ( $res->fetchInto($row) ) {
             $prgAtt = new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
                     $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
                     $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20], $row[21],
@@ -162,7 +162,7 @@ EOT;
                     . 'SET anno_corso_universibo = '
                     . $db->quote($attivita->getAnnoCorsoUniversibo())
                     . ', tipo_ciclo = ' . $db->quote($attivita->getTipoCiclo())
-                    . ' WHERE  	id_sdop='
+                    . ' WHERE   id_sdop='
                     . $db->quote($attivita->getIdSdop());
         else
             $query = 'UPDATE prg_insegnamento '
@@ -174,7 +174,7 @@ EOT;
                     . $db->quote($attivita->getIdCanale());
 
         $res = $db->query($query);
-        //		var_dump($query);
+        //      var_dump($query);
 
         if (DB::isError($res))
             $this
@@ -351,7 +351,7 @@ EOT;
             $ret = []; return $ret;
         }
         $elenco = [];
-        while (	$res->fetchInto($row) ) {
+        while ( $res->fetchInto($row) ) {
             $prgAtt = new PrgAttivitaDidattica( $row[13], $row[5], $row[4], $row[0], $row[2], $row[1], $row[3],
                     $row[7]=='S', $row[6]=='S', $row[8]=='S', $row[9], $row[10], $row[11]=='S',$row[12]=='S',
                     $row[14], $row[15], $row[16], $row[17], $row[18], $row[19], $row[20], $row[21],
@@ -399,7 +399,7 @@ EOT;
          * @todo ATTENZIONE! ...questa query non ? portabile.
          * bisogna cambiarla ed eventualmente gestire i duplicati via PHP
          */
-        //		var_dump($query); die;
+        //      var_dump($query); die;
         $res = $db->query($query);
         if (DB::isError($res)) {
             $this->throwError('_ERROR_CRITICAL',['msg'=>DB::errorMessage($res),'file'=>__FILE__,'line'=>__LINE__]);

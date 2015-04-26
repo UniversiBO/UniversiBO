@@ -57,7 +57,7 @@ class LinksAdmin extends UniversiboCommand
 
         $this->executePlugin('ShowLinksExtended', ['id_canale' => $idCanale]);
         $template->assign('add_link_uri', $router->generate('universibo_legacy_link_add', ['id_canale' => $idCanale]));
-        //		$this->executePlugin('ShowTopic', ['reference' => 'ruoliadmin']);
+        //      $this->executePlugin('ShowTopic', ['reference' => 'ruoliadmin']);
         return 'default';
     }
 }

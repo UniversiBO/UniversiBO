@@ -147,8 +147,8 @@ class NewsDelete extends CanaleCommand
 
         //accettazione della richiesta
         if ($f9_accept == true) {
-            //			var_dump($_POST['f9_canale'] );
-            //			die();
+            //          var_dump($_POST['f9_canale'] );
+            //          die();
             //cancellazione dai canali richiesti
             foreach ($f9_canale_app as $key => $value) {
                 $news->removeCanale($key);
