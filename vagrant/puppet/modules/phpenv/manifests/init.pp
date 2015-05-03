@@ -2,7 +2,7 @@ class phpenv
 {
     include php
 
-    class {'php::apache': }->package{'php5-json': }
+    class {'php::apache': } ->package{'php5-json': }
     class {'php::cli': }
 
     class {['php::composer', 'php::composer::auto_update']: }
@@ -23,5 +23,10 @@ class phpenv
         config => [
             'set Date/date.timezone Europe/Rome'
         ]
+    }
+
+    file {'/var/lib/php5':
+      ensure => directory,
+      owner => 'www-data'
     }
 }
