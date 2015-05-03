@@ -13,7 +13,7 @@ fi
 cp /vagrant/vagrant/puppet/Puppetfile $PUPPET_DIR
 
 if [ `gem list | grep librarian | wc -l` -eq 0 ]; then
-  gem install puppet librarian-puppet
+  gem install puppet --version '<4.0' librarian-puppet
   cd $PUPPET_DIR && librarian-puppet install --clean
 else
   cd $PUPPET_DIR && librarian-puppet update
