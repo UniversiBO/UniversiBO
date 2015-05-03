@@ -27,6 +27,7 @@ class phpenv
 
     file {'/var/lib/php5':
       ensure => directory,
-      owner => 'www-data'
+      owner => 'vagrant',
+      group => 'vagrant',
     }
 }
