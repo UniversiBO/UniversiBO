@@ -27,6 +27,18 @@ Then you can log in, available users:
 
 password is always `padrino`
 
+### Running automated tests
+Do `vagrant ssh` to get inside the virtual machine and `cd /vagrant` to
+get to the proper directory.
+
+* PHPUnit tests `bin/phpunit -c app`
+* Behat
+    * `bin/behat @UniversiboDashboardBundle`
+    * `bin/behat @UniversiboWebBundle`
+
+There already a Xvfb configured and running for Selenium tests but you will need to
+manually download and run the Selenium jar
+
 ## Contributing
 If you wish to contribute please read [CONTRIBUTING.md](/CONTRIBUTING.md) file.
 
