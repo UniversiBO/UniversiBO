@@ -36,8 +36,8 @@ get to the proper directory.
     * `bin/behat @UniversiboDashboardBundle`
     * `bin/behat @UniversiboWebBundle`
 
-There already a Xvfb configured and running for Selenium tests but you will need to
-manually download and run the Selenium jar
+Xvfb and Selenium Server are already installed and running.
+To skip those test just run `service selenium stop`
 
 ## Contributing
 If you wish to contribute please read [CONTRIBUTING.md](/CONTRIBUTING.md) file.

@@ -16,6 +16,7 @@ class { 'lapp::packages': }
 class { 'lapp::config': }
 class { 'universibo': }
 class { 'xvfb': }
+class { 'selenium': }
 
 Exec {
   path => [
