@@ -31,13 +31,16 @@ password is always `padrino`
 Do `vagrant ssh` to get inside the virtual machine and `cd /vagrant` to
 get to the proper directory.
 
-* PHPUnit tests `bin/phpunit -c app`
+* PHPUnit (including Selenium) tests `bin/phpunit -c app`
 * Behat
     * `bin/behat @UniversiboDashboardBundle`
     * `bin/behat @UniversiboWebBundle`
 
-Xvfb and Selenium Server are already installed and running.
-To skip those test just run `service selenium stop`
+Xvfb, Firefox and Selenium Server are already installed.
+
+To **enable** Selenium testing run `/etc/init.d/selenium start`
+
+To **disable** Selenium testing run `/etc/init.d/selenium stop`
 
 ## Contributing
 If you wish to contribute please read [CONTRIBUTING.md](/CONTRIBUTING.md) file.
