@@ -31,6 +31,7 @@ Exec {
 }
 
 package {[
+  'bash-completion',
   'htop',
   'iceweasel',
   'tmux',
