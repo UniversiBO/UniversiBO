@@ -32,7 +32,7 @@ Do `vagrant ssh` to get inside the virtual machine and `cd /vagrant` to
 get to the proper directory.
 
 * PHPUnit (including Selenium) tests `bin/phpunit -c app`
-* Behat
+* Behat:
     * `bin/behat @UniversiboDashboardBundle`
     * `bin/behat @UniversiboWebBundle`
 
