@@ -34,7 +34,7 @@ get to the proper directory.
 * PHPUnit (including Selenium) tests `bin/phpunit -c app`
 * Behat:
     * `bin/behat @UniversiboDashboardBundle`
-    * `bin/behat @UniversiboWebBundle`
+    * `bin/behat @UniversiboWebsiteBundle`
 
 Xvfb, Firefox and Selenium Server are already installed.
 
