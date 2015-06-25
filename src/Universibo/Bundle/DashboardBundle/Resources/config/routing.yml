@@ -1,7 +1,7 @@
 universibo_dashboard_home:
-  pattern: /
+  path: /
   defaults: { _controller: 'UniversiboDashboardBundle:Default:index' }
 
 universibo_dashboard_schools:
-  pattern: /didactics/schools
+  path: /didactics/schools
   defaults: { _controller: 'UniversiboDashboardBundle:School:index' }

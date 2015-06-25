@@ -1,203 +1,203 @@
 # Please keep rules in alphabetic order
 universibo_legacy_accessibility:
-    pattern: /accessibilita/
+    path: /accessibilita/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowAccessibility' }
 universibo_legacy_contribute:
-    pattern: /collabora/
+    path: /collabora/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowContribute' }
 universibo_legacy_canale:
-    pattern: /canale/{id_canale}/
+    path: /canale/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowCanale' }
     requirements: { id_canale: \d+ }
 universibo_legacy_cdl:
-    pattern: /cdl/{id_canale}/
+    path: /cdl/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowCdl' }
     requirements: { id_canale: \d+ }
 universibo_legacy_collaborator:
-    pattern: /chi-siamo/{username}/
+    path: /chi-siamo/{username}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowCollaboratore' }
 universibo_legacy_collaborator_add:
-    pattern: /chi-siamo/{id_coll}/add/
+    path: /chi-siamo/{id_coll}/add/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'CollaboratoreProfiloAdd' }
 universibo_legacy_contacts:
-    pattern: /chi-siamo/
+    path: /chi-siamo/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowContacts' }
 universibo_legacy_contact_professor:
-    pattern: /docente/{cod_doc}/contatto/
+    path: /docente/{cod_doc}/contatto/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowContattoDocente' }
     requirements: { cod_doc: \d+ }
 universibo_legacy_contact_professor_add:
-    pattern: /docente/{cod_doc}/contatto/add/
+    path: /docente/{cod_doc}/contatto/add/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ContattoDocenteAdd' }
     requirements: { cod_doc: \d+ }
 universibo_legacy_contact_professors:
-    pattern: /docente/contatti/
+    path: /docente/contatti/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowContattiDocenti' }
 universibo_legacy_credits:
-    pattern: /credits/
+    path: /credits/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowCredits' }
 universibo_legacy_didattica_gestione:
-    pattern: /gestione/didattica/
+    path: /gestione/didattica/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'DidatticaGestione' }
 universibo_legacy_error:
-    pattern: /error/
+    path: /error/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowError' }
 universibo_legacy_facolta:
-    pattern: /facolta/{id_canale}/
+    path: /facolta/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowFacolta' }
     requirements: { id_canale: \d+ }
 universibo_legacy_file:
-    pattern: /file/{id_file}/
+    path: /file/{id_file}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileShowInfo' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_download:
-    pattern: /file/{id_file}/download/
+    path: /file/{id_file}/download/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileDownload' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_add:
-    pattern: /file/add/{id_canale}/
+    path: /file/add/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileAdd' }
     requirements: { id_canale: \d+ }
 universibo_legacy_file_delete:
-    pattern: /file/{id_file}/delete/
+    path: /file/{id_file}/delete/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileDelete' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_docente_admin:
-    pattern: /file/admin/{id_canale}/
+    path: /file/admin/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileDocenteAdmin' }
     requirements: { id_canale: \d+ }
 universibo_legacy_file_edit:
-    pattern: /file/{id_file}/edit/
+    path: /file/{id_file}/edit/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileEdit' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_studenti_add:
-    pattern: /file/studenti/add/{id_canale}/
+    path: /file/studenti/add/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiAdd' }
     requirements: { id_canale: \d+ }
 universibo_legacy_file_studenti_comment:
-    pattern: /file/studenti/{id_file}/comment/
+    path: /file/studenti/{id_file}/comment/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiComment' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_studenti_comment_delete:
-    pattern: /file/studenti/comment/{id_commento}/delete/
+    path: /file/studenti/comment/{id_commento}/delete/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiCommentDelete' }
     requirements: { id_commento: \d+ }
 universibo_legacy_file_studenti_comment_edit:
-    pattern: /file/studenti/comment/{id_commento}/edit/
+    path: /file/studenti/comment/{id_commento}/edit/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiCommentEdit' }
     requirements: { id_commento: \d+ }
 universibo_legacy_file_studenti:
-    pattern: /file/studenti/
+    path: /file/studenti/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowAllFilesStudenti' }
 universibo_legacy_file_studenti_delete:
-    pattern: /file/studenti/{id_file}/delete/
+    path: /file/studenti/{id_file}/delete/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiDelete' }
     requirements: { id_file: \d+ }
 universibo_legacy_file_studenti_edit:
-    pattern: /file/studenti/{id_file}/edit/
+    path: /file/studenti/{id_file}/edit/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'FileStudentiEdit' }
     requirements: { id_file: \d+ }
 universibo_legacy_help:
-    pattern: /help/
+    path: /help/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowHelp' }
 universibo_legacy_help_topic:
-    pattern: /help/topic/
+    path: /help/topic/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowHelpTopic' }
 universibo_legacy_insegnamento:
-    pattern: /insegnamento/{id_canale}/
+    path: /insegnamento/{id_canale}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowInsegnamento' }
     requirements: { id_canale: \d+ }
 universibo_legacy_insegnamento_info:
-    pattern: /insegnamento/{id_canale}/info/
+    path: /insegnamento/{id_canale}/info/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowInfoDidattica' }
     requirements: { id_canale: \d+ }
 universibo_legacy_insegnamento_info_edit:
-    pattern: /insegnamento/{id_canale}/info/edit/
+    path: /insegnamento/{id_canale}/info/edit/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'InfoDidatticaEdit' }
     requirements: { id_canale: \d+ }
 universibo_legacy_link_add:
-    pattern: /link/add/{id_canale}/
+    path: /link/add/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'LinkAdd' }
 universibo_legacy_link_admin:
-    pattern: /link/admin/{id_canale}/
+    path: /link/admin/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'LinksAdmin' }
 universibo_legacy_link_delete:
-    pattern: /link/{id_link}/delete/
+    path: /link/{id_link}/delete/
     requirements: { id_link: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'LinkDelete' }
 universibo_legacy_link_edit:
-    pattern: /link/{id_link}/edit/{id_canale}/
+    path: /link/{id_link}/edit/{id_canale}/
     requirements: { id_link: \d+, id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'LinkEdit' }
 universibo_legacy_manifesto:
-    pattern: /manifesto/
+    path: /manifesto/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowManifesto' }
 universibo_legacy_myuniversibo:
-    pattern: /my/universibo/
+    path: /my/universibo/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowMyUniversiBO' }
 universibo_legacy_myuniversibo_add:
-    pattern: /my/universibo/add/{id_canale}/
+    path: /my/universibo/add/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'MyUniversiBOAdd' }
 universibo_legacy_myuniversibo_edit:
-    pattern: /my/universibo/edit/{id_canale}/
+    path: /my/universibo/edit/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'MyUniversiBOEdit' }
 universibo_legacy_myuniversibo_remove:
-    pattern: /my/universibo/remove/{id_canale}/
+    path: /my/universibo/remove/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'MyUniversiBORemove' }
 universibo_legacy_news_add:
-    pattern: /news/add/{id_canale}/
+    path: /news/add/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'NewsAdd' }
 universibo_legacy_news_delete:
-    pattern: /news/{id_news}/delete/
+    path: /news/{id_news}/delete/
     requirements: { id_news: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'NewsDelete' }
 universibo_legacy_news_edit:
-    pattern: /news/{id_news}/edit/{id_canale}/
+    path: /news/{id_news}/edit/{id_canale}/
     requirements: { id_news: \d+, id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'NewsEdit' }
 universibo_legacy_news_show_canale:
-    pattern: /news/canale/{id_canale}/
+    path: /news/canale/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'NewsShowCanale' }
 universibo_legacy_permalink:
-    pattern: /permalink/{id_notizia}/
+    path: /permalink/{id_notizia}/
     requirements: { id_news: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowPermalink' }
 universibo_legacy_personal_files:
-    pattern: /my/files/
+    path: /my/files/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowPersonalFiles' }
 universibo_legacy_role_admin_edit:
-    pattern: /role/edit/{id_canale}/{id_utente}/
+    path: /role/edit/{id_canale}/{id_utente}/
     requirements: { id_canale: \d+, id_utente: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'RuoliAdminEdit' }
 universibo_legacy_role_admin_search:
-    pattern: /role/search/{id_canale}/
+    path: /role/search/{id_canale}/
     requirements: { id_canale: \d+ }
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'RuoliAdminSearch' }
 universibo_legacy_settings:
-    pattern: /my/settings/
+    path: /my/settings/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowSettings' }
 universibo_legacy_stats:
-    pattern: /statistiche/
+    path: /statistiche/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowStatistics' }
 universibo_legacy_user:
-    pattern: /user/{id_utente}/
+    path: /user/{id_utente}/
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowUser' }
     requirements: { id_utente: \d+ }
 
 # Last by choice
 universibo_legacy_home:
-    pattern: /
+    path: /
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowHome' }
 universibo_legacy_home_v2:
-    pattern: /v2.php
+    path: /v2.php
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowHome', redirect: true }
 universibo_legacy_home_index:
-    pattern: /index.php
+    path: /index.php
     defaults: { _controller: 'UniversiboLegacyBundle:Default:index', do: 'ShowHome', redirect: true }

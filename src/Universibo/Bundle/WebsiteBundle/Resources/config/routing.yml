@@ -1,32 +1,32 @@
 rss:
-  pattern: /rss/{idCanale}/
+  path: /rss/{idCanale}/
   defaults: { _controller: 'UniversiboWebsiteBundle:Rss:index' }
   requirements: { idCanale: \d+ }
 universibo_website_auth_failed:
-  pattern: /auth-failed/
+  path: /auth-failed/
   defaults: { _controller: 'UniversiboWebsiteBundle:AuthFailed:index' }
 universibo_website_rules:
-  pattern: /regolamento/
+  path: /regolamento/
   defaults: { _controller: 'UniversiboWebsiteBundle:Rules:index' }
 universibo_website_rules_accept:
-  pattern: /regolamento/accetta/
+  path: /regolamento/accetta/
   defaults: { _controller: 'UniversiboWebsiteBundle:Rules:accept' }
-  requirements: { _method: POST }
+  methods: [POST]
 universibo_website_profile_edit:
-  pattern: /my/profile/
+  path: /my/profile/
   defaults: { _controller: 'UniversiboWebsiteBundle:Profile:edit' }
 universibo_website_profile_update:
-  pattern: /my/profile/update/
+  path: /my/profile/update/
   defaults: { _controller: 'UniversiboWebsiteBundle:Profile:update' }
-  requirements: { _method: POST }
+  methods: [POST]
 universibo_website_sitemap:
-  pattern: /sitemap.xml
+  path: /sitemap.xml
   defaults: { _controller: 'UniversiboWebsiteBundle:Sitemap:index' }
 universibo_website_contact_verify:
-  pattern: /my/email/verify/{token}/
+  path: /my/email/verify/{token}/
   defaults: { _controller: 'UniversiboWebsiteBundle:Contact:verify' }
-  requirements: { _method: GET }
+  methods: [GET]
 universibo_website_contact_cancel:
-  pattern: /my/email/cancel/{token}/
+  path: /my/email/cancel/{token}/
   defaults: { _controller: 'UniversiboWebsiteBundle:Contact:cancel' }
-  requirements: { _method: GET }
+  methods: [GET]
