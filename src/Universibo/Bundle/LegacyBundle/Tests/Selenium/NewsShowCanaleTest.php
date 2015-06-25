@@ -23,11 +23,4 @@ class NewsShowCanaleTest extends UniversiBOSeleniumTestCase
         $this->openPrefix('/news/canale/2?inizio=0&qta=10');
         $this->assertSentences(['News','Scrivi nuova notizia']);
     }
-
-    public function testPermalink()
-    {
-        $this->openPrefix('/news/canale/2?inizio=0&qta=10');
-        $this->clickAndWait('link=permalink');
-        $this->assertFalse($this->isTextPresent('Error'), 'Should NOT display an error message');
-    }
 }
