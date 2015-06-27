@@ -6,13 +6,13 @@ define('MAIL_KEEPALIVE_ALIVE', 1);
 define('MAIL_KEEPALIVE_CLOSE', 2);
 
 use DOMDocument;
-use MySmarty;
 use Smarty;
 use Swift_Mailer;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
+use Universibo\Bundle\LegacyBundle\Template\TemplateEngineFactory;
 
 /**
  * It is a front controller.
@@ -68,7 +68,7 @@ class FrontController
     private $plugins;
 
     /**
-     * @access private
+     * @var Smarty
      */
     private $templateEngine;
 
@@ -512,34 +512,19 @@ class FrontController
      * Implements singleton pattern, returns always the same object istance
      *
      * @return Smarty
-     * @access public
      */
     public function getTemplateEngine()
     {
-        static $templateEngine = NULL;
-        //var_dump($templateEngine);
-
-        //if ( defined('TEMPLATE_SINGLETON') ) {
-        if ($templateEngine != NULL) {
-            return $templateEngine ;
-        } else {
-            //define('TEMPLATE_SINGLETON','on');
-
-            $templateEngine = new MySmarty();
-            //fine mia aggiunta
-
+        if (null === $this->templateEngine) {
             $kernel = $this->getContainer()->get('kernel');
-            $root = $kernel->getCacheDir();
-
-            $templateEngine->template_dir  = realpath(__DIR__.'/../Resources/views/');
-            $templateEngine->compile_dir   = $root . '/smarty/compile';
-            $templateEngine->config_dir    = realpath(__DIR__.'/../Resources/views-config/');
-            $templateEngine->cache_dir     = $root . '/smarty/cache';
-            $templateEngine->compile_check = true;
-            $templateEngine->debugging     = 'prod' !== $kernel->getEnvironment();
-
-            return $templateEngine;
+            $factory = new TemplateEngineFactory(
+                $kernel->getCacheDir(),
+                'prod' !== $kernel->getEnvironment()
+            );
+            $this->templateEngine = $factory->create();
         }
+
+        return $this->templateEngine;
     }
 
     public function getTemplateEngineSettings()
