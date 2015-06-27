@@ -135,9 +135,9 @@ class FrontController
 
             return [
                 'content' => $templateEngine->fetch($template),
-                'channel' => $command instanceof CanaleCommand ? $command->getRequestCanale(false) : null,
-                'title'   => $templateEngine->getVariable('common_title')
-            ];
+                    'channel' => $command instanceof CanaleCommand ? $command->getRequestCanale(false) : null,
+                    'title'   => $templateEngine->getVariable('common_title')
+                ];
         }
     }
 
@@ -224,11 +224,11 @@ class FrontController
      */
     public function getPluginClass($name)
     {
-           if (!array_key_exists($name, $this->plugins) ) {
-               return null;
-           }
+        if (!array_key_exists($name, $this->plugins) ) {
+            return null;
+        }
 
-           return $this->_parsePluginInfo($this->plugins[$name]);
+        return $this->_parsePluginInfo($this->plugins[$name]);
     }
 
     /**
@@ -238,20 +238,20 @@ class FrontController
      */
     public function _parsePluginInfo($plugin)
     {
-           $pc = $plugin['class'];
-           $explodedPc = explode(".",$pc);
-           $file_namepath = implode("/",$explodedPc);
-           $class_name = $explodedPc[count($explodedPc)-1];
+        $pc = $plugin['class'];
+        $explodedPc = explode(".",$pc);
+        $file_namepath = implode("/",$explodedPc);
+        $class_name = $explodedPc[count($explodedPc)-1];
 
-           $ret = ['nameWithPath' => $file_namepath,'className' => $class_name];
-           $ret['restrictedTo'] = (isset($plugin['restrictedTo']))? $plugin['restrictedTo'] : '';
-           $ret['condition'] = (isset($plugin['condition']))? $plugin['condition'] : '';
-           $ret['restrictedTo'] = str_replace(' ', '', $ret['restrictedTo']);
-           $ret['bundleClass'] = 'Universibo\\Bundle\\LegacyBundle\\Command\\' . str_replace('.', '\\', $pc);
+        $ret = ['nameWithPath' => $file_namepath,'className' => $class_name];
+        $ret['restrictedTo'] = (isset($plugin['restrictedTo']))? $plugin['restrictedTo'] : '';
+        $ret['condition'] = (isset($plugin['condition']))? $plugin['condition'] : '';
+        $ret['restrictedTo'] = str_replace(' ', '', $ret['restrictedTo']);
+        $ret['bundleClass'] = 'Universibo\\Bundle\\LegacyBundle\\Command\\' . str_replace('.', '\\', $pc);
 
-           $ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : [];
+        $ret['restrictedTo'] = ($ret['restrictedTo'] != '') ? explode(',', $ret['restrictedTo']) : [];
 
-           return $ret;
+        return $ret;
     }
     /**
      * Returns the current receiver identifier
@@ -261,7 +261,7 @@ class FrontController
      */
     public function getReceiverId()
     {
-           return $this->receiverIdentifier;
+        return $this->receiverIdentifier;
     }
 
     /**
@@ -276,14 +276,14 @@ class FrontController
      */
     public function getReceiverUrl($receiverId, $relative=true)
     {
-           if ( !array_key_exists($receiverId, $this->receivers) )
-               Error::throwError(_ERROR_CRITICAL,['msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__]);
+        if ( !array_key_exists($receiverId, $this->receivers) )
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Identificativo del receiver inesistente o non permesso','file'=>__FILE__,'line'=>__LINE__]);
 
-           if ($relative == true) {
-               return $this->receivers[$receiverId];
-           } else {
-               return $this->rootUrl.$this->receivers[$receiverId];
-           }
+        if ($relative == true) {
+            return $this->receivers[$receiverId];
+        } else {
+            return $this->rootUrl.$this->receivers[$receiverId];
+        }
     }
 
     /**
@@ -294,7 +294,7 @@ class FrontController
      */
     public function getRootPath()
     {
-           return $this->rootUrl;
+        return $this->rootUrl;
     }
 
     /**
@@ -315,11 +315,11 @@ class FrontController
             $_GET['do'] = $this->do;
         }
 
-         if ($this->do === '') {
-               throw new NotFoundHttpException('Empty command name');
-           }
+        if ($this->do === '') {
+            throw new NotFoundHttpException('Empty command name');
+        }
 
-           return $this->do;
+        return $this->do;
     }
 
     /**
@@ -385,24 +385,24 @@ class FrontController
                 }
             }
 
-            if($appSettingNode == NULL) return;
+        if($appSettingNode == NULL) return;
 
-            $figliAppSettingNode = $appSettingNode->childNodes;
-            for ($i=0; $i < $figliAppSettingNode->length; $i++) {
-                $aSetting = $figliAppSettingNode->item($i);
-                //          echo $i.' '.$aSetting->nodeName.'<br>';
-                //              var_dump($aSetting);
-                if ($aSetting->nodeType == XML_ELEMENT_NODE) {
-                    $this->appSettings[$aSetting->tagName] = ($aSetting->hasChildNodes() == true) ? $aSetting->firstChild->nodeValue : '';
-                }
+        $figliAppSettingNode = $appSettingNode->childNodes;
+        for ($i=0; $i < $figliAppSettingNode->length; $i++) {
+            $aSetting = $figliAppSettingNode->item($i);
+            //          echo $i.' '.$aSetting->nodeName.'<br>';
+            //              var_dump($aSetting);
+            if ($aSetting->nodeType == XML_ELEMENT_NODE) {
+                $this->appSettings[$aSetting->tagName] = ($aSetting->hasChildNodes() == true) ? $aSetting->firstChild->nodeValue : '';
             }
+        }
     }
 
     /**
-        * Sets the framework current request command class
-        *
-        * @access private
-        */
+     * Sets the framework current request command class
+     *
+     * @access private
+     */
     public function _setCommandClass(\DOMDocument $config)
     {
         $commandString=$this->getCommandRequest();
@@ -452,41 +452,41 @@ class FrontController
             throw new NotFoundHttpException('Command not in configuration');
         }
 
-                    $this->commandClass = $commandNode->getAttribute('class');
-                    //      var_dump($commandNode->attributes[0]->value);
-                    //reads allowed response for this BaseCommand
-                    $this->commandTemplate=[];
-                    $responses = $commandNode->getElementsByTagName('response');
+        $this->commandClass = $commandNode->getAttribute('class');
+        //      var_dump($commandNode->attributes[0]->value);
+        //reads allowed response for this BaseCommand
+        $this->commandTemplate=[];
+        $responses = $commandNode->getElementsByTagName('response');
 
-                    for ($i=0; $i < $responses->length; $i++) {
-                        $response = $responses->item($i);
-                        if ($response->getAttribute('type') == 'template') {
-                            $this->commandTemplate[$response->getAttribute('name')] = $response->firstChild->nodeValue;
-                        }
-                    }
+        for ($i=0; $i < $responses->length; $i++) {
+            $response = $responses->item($i);
+            if ($response->getAttribute('type') == 'template') {
+                $this->commandTemplate[$response->getAttribute('name')] = $response->firstChild->nodeValue;
+            }
+        }
 
-                    $plugins = $commandNode->getElementsByTagName('pluginCommand');
+        $plugins = $commandNode->getElementsByTagName('pluginCommand');
 
-                    for ($i=0; $i < $plugins->length; $i++) {
-                        $plugin = $plugins->item($i);
-                        //          $this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
-                        $this->plugins[$plugin->getAttribute('name')] = ['class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition')];
-                    }
+        for ($i=0; $i < $plugins->length; $i++) {
+            $plugin = $plugins->item($i);
+            //          $this->plugins[$plugin->getAttribute('name')] = $plugin->getAttribute('class');
+            $this->plugins[$plugin->getAttribute('name')] = ['class' => $plugin->getAttribute('class'), 'restrictedTo' => $plugin->getAttribute('restrictedTo'), 'condition' => $plugin->getAttribute('condition')];
+        }
 
-                    if(!isset($this->commandClass))
-                        Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` definito l\'attributo class relativo al comando specificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
+        if(!isset($this->commandClass))
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` definito l\'attributo class relativo al comando specificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
 
-                    if(empty($this->commandClass))
-                        Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
+        if(empty($this->commandClass))
+            Error::throwError(_ERROR_CRITICAL,['msg'=>'Non e` specificata la classe relativa al comando spacificato nel file di config','file'=>__FILE__,'line'=>__LINE__]);
     }
 
     /**
      * Returns values of elements added into the <appSettings> XML tag in config file
-        *
-        * @param string $identifier Setting name identifier of XML element tag
-        * @return string text content of XML tag
-        * @access public
-        */
+     *
+     * @param string $identifier Setting name identifier of XML element tag
+     * @return string text content of XML tag
+     * @access public
+     */
     public function getAppSetting($identifier)
     {
         return $this->appSettings[$identifier];
