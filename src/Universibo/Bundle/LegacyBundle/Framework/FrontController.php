@@ -110,7 +110,7 @@ class FrontController
         $command->setContainer(self::getContainer());
         $command->initCommand($this, $request);
         $response = $command->execute($request);
-        $command->shutdownCommand();
+        $command->shutdownCommand($request);
 
         if ($response instanceof Response) {
             return $response;

@@ -125,11 +125,11 @@ abstract class CanaleCommand extends UniversiboCommand
     /**
      * Chiude il CanaleCommand ridefinisce lo shutdownCommand() dell'UniversiboCommand.
      */
-    public function shutdownCommand()
+    public function shutdownCommand(Request $request)
     {
         $router = $this->get('router');
 
-        if (!$this->isPopup()) {
+        if (!$this->isPopup($request)) {
             $template = $this->frontController->getTemplateEngine();
             $canale = $this->getRequestCanale();
             $user = $this->get('security.context')->getToken()->getUser();

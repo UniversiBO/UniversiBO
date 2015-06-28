@@ -40,21 +40,19 @@ abstract class UniversiboCommand extends BaseCommand
         $template = $frontController->getTemplateEngine();
         $template->assign('error_notice_present', 'false');
 
-        $this->_initTemplateUniversibo();
+        $this->initTemplateUniversibo($request);
     }
 
     /**
      * Ridefinisce il metodo della classe padre
      * Si occupa di raccogliere tutti gli errori non ancora lanciati
      */
-    public function shutdownCommand()
+    public function shutdownCommand(Request $request)
     {
-        parent::shutdownCommand();
+        parent::shutdownCommand($request);
 
-        if ($this->isPopup()) {
-            $this->_shutdownTemplatePopupUniversibo();
-        } else {
-            $this->_shutdownTemplateIndexUniversibo();
+        if (!$this->isPopup($request)) {
+            $this->shutdownTemplateIndexUniversibo();
         }
 
         //raccolgo tutti gli errori
@@ -74,33 +72,30 @@ abstract class UniversiboCommand extends BaseCommand
     /**
      * Restituisce se la pagina chiamata ? di tipo indice (con menu) o popup (senza menu)
      *
+     * @param Request $request
      * @return boolean
      */
-    public function isPopup()
+    public function isPopup(Request $request)
     {
-        return (boolean) (array_key_exists('pageType', $_GET) && $_GET['pageType'] == 'popup');
+        return $request->query('pageType') === 'popup';
     }
 
     /**
      * Inizializza le informazioni comuni del template dell' UniversiboCommand
      * esegue distizione tra pagine con indice completo e popup
-     *
-     * @private
      */
-    public function _initTemplateUniversibo()
+    private function initTemplateUniversibo(Request $request)
     {
         $template = $this->frontController->getTemplateEngine();
         $krono = $this->frontController->getKrono();
         //var_dump($template);
 
-        if ($this->isPopup()) {
+        if ($this->isPopup($request)) {
             $template->assign('common_pageType', 'popup');
             $template->assign('common_pageTypeExt', 'pageType=popup&');
-            $this->_initTemplatePopupUniversibo();
         } else {
             $template->assign('common_pageType', 'index');
             $template->assign('common_pageTypeExt', '');
-            $this->_initTemplateIndexUniversibo();
         }
 
         //riferimenti per ottimizzare gli accessi
@@ -156,29 +151,8 @@ abstract class UniversiboCommand extends BaseCommand
 
     /**
      * Inizializza le variabili del template per le pagine con indice completo
-     *
-     * @private
      */
-    public function _initTemplateIndexUniversibo()
-    {
-    }
-
-    /**
-     * Inizializza le variabili del template per le pagine popup
-     *
-     * @private
-     * @todo implementare
-     */
-    public function _initTemplatePopupUniversibo()
-    {
-    }
-
-    /**
-     * Inizializza le variabili del template per le pagine con indice completo
-     *
-     * @private
-     */
-    public function _shutdownTemplateIndexUniversibo()
+    private function shutdownTemplateIndexUniversibo()
     {
         $template = $this->frontController->getTemplateEngine();
         $channelRouter = $this->get('universibo_legacy.routing.channel');
@@ -324,16 +298,6 @@ abstract class UniversiboCommand extends BaseCommand
         $template->assign('common_docSfUri', 'https://wiki.universibo.unibo.it/');
 
         $template->assign('common_isSetVisite', 'N');
-    }
-
-    /**
-     * Inizializza le variabili del template per le pagine popup
-     *
-     * @private
-     * @todo implementare
-     */
-    public function _shutdownTemplatePopupUniversibo()
-    {
     }
 
     /**

@@ -44,7 +44,7 @@ abstract class BaseCommand extends Controller
      *
      * This method must be overridden from Commands that need shutdown
      */
-    public function shutdownCommand()
+    public function shutdownCommand(Request $request)
     {
     }
 
