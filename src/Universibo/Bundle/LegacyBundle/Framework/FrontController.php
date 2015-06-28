@@ -108,7 +108,7 @@ class FrontController
         $command = new $command_class;
 
         $command->setContainer(self::getContainer());
-        $command->initCommand($this);
+        $command->initCommand($this, $request);
         $response = $command->execute($request);
         $command->shutdownCommand();
 

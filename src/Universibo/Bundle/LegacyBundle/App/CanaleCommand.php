@@ -1,7 +1,7 @@
 <?php
-
 namespace Universibo\Bundle\LegacyBundle\App;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\Auth\LegacyRoles;
@@ -38,9 +38,9 @@ abstract class CanaleCommand extends UniversiboCommand
     /**
      * Inizializza il CanaleCommand ridefinisce l'init() dell'UniversiboCommand.
      */
-    public function initCommand(FrontController $frontController)
+    public function initCommand(FrontController $frontController, Request $request)
     {
-        parent::initCommand($frontController);
+        parent::initCommand($frontController, $request);
 
         $this->_setUpCanaleCanale();
 

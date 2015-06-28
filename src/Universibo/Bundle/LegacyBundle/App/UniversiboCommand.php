@@ -1,14 +1,16 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\App;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Facolta;
 use Universibo\Bundle\LegacyBundle\Framework\BaseCommand;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Universibo\Bundle\LegacyBundle\Framework\FrontController;
+
 /**
  * UniversiboCommand is the abstract super class of all command classes
  * used in the universibo application.
@@ -31,9 +33,9 @@ abstract class UniversiboCommand extends BaseCommand
     /**
      * Inizializza l' UniversiboCommand ridefinisce l'init() del BaseCommand.
      */
-    public function initCommand(FrontController $frontController)
+    public function initCommand(FrontController $frontController, Request $request)
     {
-        parent::initCommand($frontController);
+        parent::initCommand($frontController, $request);
 
         $template = $frontController->getTemplateEngine();
         $template->assign('error_notice_present', 'false');

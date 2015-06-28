@@ -21,14 +21,6 @@ use Universibo\Bundle\LegacyBundle\Framework\FrontController;
  */
 class ShowCdl extends CanaleCommand
 {
-    /**
-     * Inizializza il comando ShowCdl ridefinisce l'initCommand() di CanaleCommand
-     */
-    public function initCommand(FrontController $frontController)
-    {
-        parent::initCommand($frontController);
-    }
-
     public function execute(Request $request)
     {
         $check = $this->ensureChannelType(Canale::CDL);

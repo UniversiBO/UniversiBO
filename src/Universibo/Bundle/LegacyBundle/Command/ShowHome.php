@@ -22,11 +22,11 @@ class ShowHome extends CanaleCommand
     /**
      * Inizializza il comando ShowHome ridefinisce l'initCommand() di CanaleCommand
      */
-    public function initCommand(FrontController $frontController)
+    public function initCommand(FrontController $frontController, Request $request)
     {
         $request->attributes->set('id_canale', 1);
 
-        parent::initCommand($frontController);
+        parent::initCommand($frontController, $request);
 
         $canale = $this->getRequestCanale();
 
