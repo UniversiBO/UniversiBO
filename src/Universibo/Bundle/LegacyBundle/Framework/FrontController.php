@@ -297,7 +297,6 @@ class FrontController
     /**
      * Gets the current command string request
      * Returns default command string if not set
-     * and  sets $_GET['do'] with default value
      *
      * @return string
      * @access public
@@ -306,10 +305,6 @@ class FrontController
     {
         if (is_null($this->do)) {
             $this->do = $this->defaultCommand;
-        }
-
-        if (!array_key_exists('do',$_GET) || is_null($_GET['do'])) {
-            $_GET['do'] = $this->do;
         }
 
         if ($this->do === '') {
