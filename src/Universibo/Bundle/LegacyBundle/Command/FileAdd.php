@@ -130,7 +130,7 @@ class FileAdd extends FileCommon
             }
 
             //titolo
-            if (strlen($request->request('f12_titolo')) > 150) {
+            if (strlen($request->request->get('f12_titolo')) > 150) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
@@ -138,7 +138,7 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif ($request->request('f12_titolo') == '') {
+            } elseif ($request->request->get('f12_titolo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
@@ -147,14 +147,14 @@ class FileAdd extends FileCommon
                                 'template_engine' => &$template]);
                 $f12_accept = false;
             } else
-                $f12_titolo = $request->request('f12_titolo');
+                $f12_titolo = $request->request->get('f12_titolo');
 
             //abstract
-            $f12_abstract = $request->request('f12_abstract');
+            $f12_abstract = $request->request->get('f12_abstract');
 
             $checkdate_ins = true;
             //data_ins_gg
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f12_data_ins_gg'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f12_data_ins_gg'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo giorno di inserimento non e` valido',
@@ -164,10 +164,10 @@ class FileAdd extends FileCommon
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
-                $f12_data_ins_gg = $request->request('f12_data_ins_gg');
+                $f12_data_ins_gg = $request->request->get('f12_data_ins_gg');
 
             //f12_data_ins_mm
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f12_data_ins_mm'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f12_data_ins_mm'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
@@ -177,10 +177,10 @@ class FileAdd extends FileCommon
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
-                $f12_data_ins_mm = $request->request('f12_data_ins_mm');
+                $f12_data_ins_mm = $request->request->get('f12_data_ins_mm');
 
             //f12_data_ins_aa
-            if (!preg_match('/^([0-9]{4})$/', $request->request('f12_data_ins_aa'))) {
+            if (!preg_match('/^([0-9]{4})$/', $request->request->get('f12_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
@@ -189,8 +189,8 @@ class FileAdd extends FileCommon
                                 'template_engine' => &$template]);
                 $f12_accept = false;
                 $checkdate_ins = false;
-            } elseif ($request->request('f12_data_ins_aa') < 1970
-                    || $request->request('f12_data_ins_aa') > 2032) {
+            } elseif ($request->request->get('f12_data_ins_aa') < 1970
+                    || $request->request->get('f12_data_ins_aa') > 2032) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
@@ -200,10 +200,10 @@ class FileAdd extends FileCommon
                 $f12_accept = false;
                 $checkdate_ins = false;
             } else
-                $f12_data_ins_aa = $request->request('f12_data_ins_aa');
+                $f12_data_ins_aa = $request->request->get('f12_data_ins_aa');
 
             //f12_data_ins_ora
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f12_data_ins_ora'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f12_data_ins_ora'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo ora di inserimento non e` valido',
@@ -211,8 +211,8 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif ($request->request('f12_data_ins_ora') < 0
-                    || $request->request('f12_data_ins_ora') > 23) {
+            } elseif ($request->request->get('f12_data_ins_ora') < 0
+                    || $request->request->get('f12_data_ins_ora') > 23) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
@@ -221,10 +221,10 @@ class FileAdd extends FileCommon
                                 'template_engine' => &$template]);
                 $f12_accept = false;
             } else
-                $f12_data_ins_ora = $request->request('f12_data_ins_ora');
+                $f12_data_ins_ora = $request->request->get('f12_data_ins_ora');
 
             //f12_data_ins_min
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f12_data_ins_min'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f12_data_ins_min'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
@@ -232,8 +232,8 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif ($request->request('f12_data_ins_min') < 0
-                    || $request->request('f12_data_ins_min') > 59) {
+            } elseif ($request->request->get('f12_data_ins_min') < 0
+                    || $request->request->get('f12_data_ins_min') > 59) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
@@ -242,12 +242,12 @@ class FileAdd extends FileCommon
                                 'template_engine' => &$template]);
                 $f12_accept = false;
             } else
-                $f12_data_ins_min = $request->request('f12_data_ins_min');
+                $f12_data_ins_min = $request->request->get('f12_data_ins_min');
 
             if ($checkdate_ins == true
-                    && !checkdate($request->request('f12_data_ins_mm'),
-                            $request->request('f12_data_ins_gg'),
-                            $request->request('f12_data_ins_aa'))) {
+                    && !checkdate($request->request->get('f12_data_ins_mm'),
+                            $request->request->get('f12_data_ins_gg'),
+                            $request->request->get('f12_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La data di inserimento specificata non esiste',
@@ -257,12 +257,12 @@ class FileAdd extends FileCommon
                 $f12_accept = false;
             }
 
-            $f12_data_inserimento = mktime($request->request('f12_data_ins_ora'),
-                    $request->request('f12_data_ins_min'), "0", $request->request('f12_data_ins_mm'),
-                    $request->request('f12_data_ins_gg'), $request->request('f12_data_ins_aa'));
+            $f12_data_inserimento = mktime($request->request->get('f12_data_ins_ora'),
+                    $request->request->get('f12_data_ins_min'), "0", $request->request->get('f12_data_ins_mm'),
+                    $request->request->get('f12_data_ins_gg'), $request->request->get('f12_data_ins_aa'));
 
             //abstract
-            if (strlen($request->request('f12_abstract')) > 3000) {
+            if (strlen($request->request->get('f12_abstract')) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri',
@@ -270,15 +270,15 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif ($request->request('f12_abstract') == '') {
+            } elseif ($request->request->get('f12_abstract') == '') {
                 $f12_abstract = $f12_titolo;
             } else {
-                $f12_abstract = $request->request('f12_abstract');
+                $f12_abstract = $request->request->get('f12_abstract');
             }
 
             //parole chiave
-            if ($request->request('f12_parole_chiave') != '') {
-                $parole_chiave = explode("\n", $request->request('f12_parole_chiave'));
+            if ($request->request->get('f12_parole_chiave') != '') {
+                $parole_chiave = explode("\n", $request->request->get('f12_parole_chiave'));
                 if (count($parole_chiave) > 4) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
@@ -305,7 +305,7 @@ class FileAdd extends FileCommon
             }
 
             //permessi_download
-            if (!preg_match('/^([0-9]{1,9})$/', $request->request('f12_categoria'))) {
+            if (!preg_match('/^([0-9]{1,9})$/', $request->request->get('f12_categoria'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo categoria non e` ammissibile',
@@ -313,7 +313,7 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif (!array_key_exists($request->request('f12_categoria'), $f12_categorie)) {
+            } elseif (!array_key_exists($request->request->get('f12_categoria'), $f12_categorie)) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La categoria inviata contiene un valore non ammissibile',
@@ -322,13 +322,13 @@ class FileAdd extends FileCommon
                                 'template_engine' => &$template]);
                 $f12_accept = false;
             } else
-                $f12_categoria = $request->request('f12_categoria');
+                $f12_categoria = $request->request->get('f12_categoria');
 
-            $f12_permessi_download = $request->request('f12_permessi_download');
+            $f12_permessi_download = $request->request->get('f12_permessi_download');
             $this->validateDownloadPermissions($f12_permessi_download, $user, $template);
 
             //password non necessita controlli
-            if ($request->request('f12_password') != $request->request('f12_password_confirm')) {
+            if ($request->request->get('f12_password') != $request->request->get('f12_password_confirm')) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La password e il campo di verifica non corrispondono',
@@ -336,8 +336,8 @@ class FileAdd extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f12_accept = false;
-            } elseif ($request->request('f12_password') != '') {
-                $f12_password = $request->request('f12_password');
+            } elseif ($request->request->get('f12_password') != '') {
+                $f12_password = $request->request->get('f12_password');
             }
             //e i permessi di visualizzazione??
             // li prendo uguali a quelli del canale,
@@ -350,7 +350,7 @@ class FileAdd extends FileCommon
             $f12_canali_inserimento = [];
             //controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
             if (array_key_exists('f12_canale', $_POST))
-                foreach ($request->request('f12_canale') as $key => $value) {
+                foreach ($request->request->get('f12_canale') as $key => $value) {
                     $diritti = $context->isGranted('ROLE_ADMIN')
                             || (array_key_exists($key, $user_ruoli)
                                     && ($user_ruoli[$key]->isReferente()
@@ -369,7 +369,7 @@ class FileAdd extends FileCommon
                         $f12_accept = false;
                     }
 
-                    $f12_canali_inserimento = $request->request('f12_canale');
+                    $f12_canali_inserimento = $request->request->get('f12_canale');
                 }
 
             //modifica aggiunta per compatibilità bug explorer con PHP4.3.11 e successivi
@@ -463,7 +463,7 @@ class FileAdd extends FileCommon
                 //var_dump($f12_canale);
                 if (array_key_exists('f12_canale', $_POST))
                     $userRepo = $this->get('universibo_core.repository.user');
-                    foreach ($request->request('f12_canale') as $key => $value) {
+                    foreach ($request->request->get('f12_canale') as $key => $value) {
                         $newFile->addCanale($key);
                         $canale = Canale::retrieveCanale($key);
                         $canale->setUltimaModifica(time(), true);

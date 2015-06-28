@@ -83,7 +83,7 @@ class FileDownload extends UniversiboCommand
 
                 if ($file->getPassword()
                         != FileItem::passwordHashFunction(
-                                $request->request('f11_file_password'))) {
+                                $request->request->get('f11_file_password'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['msg' => 'La password inviata ? errata',
                                     'file' => __FILE__, 'line' => __LINE__,

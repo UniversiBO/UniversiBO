@@ -103,7 +103,7 @@ class NewsAdd extends CanaleCommand
             }
 
             //titolo
-            if (strlen($request->request('f7_titolo')) > 150) {
+            if (strlen($request->request->get('f7_titolo')) > 150) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
@@ -111,7 +111,7 @@ class NewsAdd extends CanaleCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f7_accept = false;
-            } elseif ($request->request('f7_titolo') == '') {
+            } elseif ($request->request->get('f7_titolo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
@@ -120,11 +120,11 @@ class NewsAdd extends CanaleCommand
                                 'template_engine' => &$template]);
                 $f7_accept = false;
             } else
-                $f7_titolo = $request->request('f7_titolo');
+                $f7_titolo = $request->request->get('f7_titolo');
 
             $checkdate_ins = true;
             //data_ins_gg
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_ins_gg'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_ins_gg'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido',
@@ -134,10 +134,10 @@ class NewsAdd extends CanaleCommand
                 $f7_accept = false;
                 $checkdate_ins = false;
             } else
-                $f7_data_ins_gg = $request->request('f7_data_ins_gg');
+                $f7_data_ins_gg = $request->request->get('f7_data_ins_gg');
 
             //f7_data_ins_mm
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_ins_mm'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_ins_mm'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
@@ -147,10 +147,10 @@ class NewsAdd extends CanaleCommand
                 $f7_accept = false;
                 $checkdate_ins = false;
             } else
-                $f7_data_ins_mm = $request->request('f7_data_ins_mm');
+                $f7_data_ins_mm = $request->request->get('f7_data_ins_mm');
 
             //f7_data_ins_aa
-            if (!preg_match('/^([0-9]{4})$/', $request->request('f7_data_ins_aa'))) {
+            if (!preg_match('/^([0-9]{4})$/', $request->request->get('f7_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
@@ -159,8 +159,8 @@ class NewsAdd extends CanaleCommand
                                 'template_engine' => &$template]);
                 $f7_accept = false;
                 $checkdate_ins = false;
-            } elseif ($request->request('f7_data_ins_aa') < 1970
-                    || $request->request('f7_data_ins_aa') > 2032) {
+            } elseif ($request->request->get('f7_data_ins_aa') < 1970
+                    || $request->request->get('f7_data_ins_aa') > 2032) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
@@ -170,10 +170,10 @@ class NewsAdd extends CanaleCommand
                 $f7_accept = false;
                 $checkdate_ins = false;
             } else
-                $f7_data_ins_aa = $request->request('f7_data_ins_aa');
+                $f7_data_ins_aa = $request->request->get('f7_data_ins_aa');
 
             //f7_data_ins_ora
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_ins_ora'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_ins_ora'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
@@ -181,8 +181,8 @@ class NewsAdd extends CanaleCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f7_accept = false;
-            } elseif ($request->request('f7_data_ins_ora') < 0
-                    || $request->request('f7_data_ins_ora') > 23) {
+            } elseif ($request->request->get('f7_data_ins_ora') < 0
+                    || $request->request->get('f7_data_ins_ora') > 23) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
@@ -191,10 +191,10 @@ class NewsAdd extends CanaleCommand
                                 'template_engine' => &$template]);
                 $f7_accept = false;
             } else
-                $f7_data_ins_ora = $request->request('f7_data_ins_ora');
+                $f7_data_ins_ora = $request->request->get('f7_data_ins_ora');
 
             //f7_data_ins_min
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_ins_min'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_ins_min'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
@@ -202,8 +202,8 @@ class NewsAdd extends CanaleCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f7_accept = false;
-            } elseif ($request->request('f7_data_ins_min') < 0
-                    || $request->request('f7_data_ins_min') > 59) {
+            } elseif ($request->request->get('f7_data_ins_min') < 0
+                    || $request->request->get('f7_data_ins_min') > 59) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
@@ -212,11 +212,11 @@ class NewsAdd extends CanaleCommand
                                 'template_engine' => &$template]);
                 $f7_accept = false;
             } else
-                $f7_data_ins_min = $request->request('f7_data_ins_min');
+                $f7_data_ins_min = $request->request->get('f7_data_ins_min');
 
             if ($checkdate_ins == true
-                    && !checkdate($request->request('f7_data_ins_mm'),
-                            $request->request('f7_data_ins_gg'), $request->request('f7_data_ins_aa'))) {
+                    && !checkdate($request->request->get('f7_data_ins_mm'),
+                            $request->request->get('f7_data_ins_gg'), $request->request->get('f7_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La data di inserimento specificata non esiste',
@@ -226,9 +226,9 @@ class NewsAdd extends CanaleCommand
                 $f7_accept = false;
             }
 
-            $data_inserimento = mktime($request->request('f7_data_ins_ora'),
-                    $request->request('f7_data_ins_min'), "0", $request->request('f7_data_ins_mm'),
-                    $request->request('f7_data_ins_gg'), $request->request('f7_data_ins_aa'));
+            $data_inserimento = mktime($request->request->get('f7_data_ins_ora'),
+                    $request->request->get('f7_data_ins_min'), "0", $request->request->get('f7_data_ins_mm'),
+                    $request->request->get('f7_data_ins_gg'), $request->request->get('f7_data_ins_aa'));
             $data_scadenza = NULL;
 
             if (array_key_exists('f7_scadenza', $_POST)) {
@@ -236,7 +236,7 @@ class NewsAdd extends CanaleCommand
                 $f7_scadenza = true;
                 $checkdate_scad = true;
                 //data_scad_gg
-                if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_scad_gg'))) {
+                if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_scad_gg'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido',
@@ -246,10 +246,10 @@ class NewsAdd extends CanaleCommand
                     $f7_accept = false;
                     $checkdate_scad = false;
                 } else
-                    $f7_data_scad_gg = $request->request('f7_data_scad_gg');
+                    $f7_data_scad_gg = $request->request->get('f7_data_scad_gg');
 
                 //f7_data_scad_mm
-                if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_scad_mm'))) {
+                if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_scad_mm'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo mese di inserimento non \u00e8 valido',
@@ -259,10 +259,10 @@ class NewsAdd extends CanaleCommand
                     $f7_accept = false;
                     $checkdate_scad = false;
                 } else
-                    $f7_data_scad_mm = $request->request('f7_data_scad_mm');
+                    $f7_data_scad_mm = $request->request->get('f7_data_scad_mm');
 
                 //f7_data_scad_aa
-                if (!preg_match('/^([0-9]{4})$/', $request->request('f7_data_scad_aa'))) {
+                if (!preg_match('/^([0-9]{4})$/', $request->request->get('f7_data_scad_aa'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo anno di inserimento non \u00e8 valido',
@@ -271,8 +271,8 @@ class NewsAdd extends CanaleCommand
                                     'template_engine' => &$template]);
                     $f7_accept = false;
                     $checkdate_scad = false;
-                } elseif ($request->request('f7_data_scad_aa') < 1970
-                        || $request->request('f7_data_scad_aa') > 2032) {
+                } elseif ($request->request->get('f7_data_scad_aa') < 1970
+                        || $request->request->get('f7_data_scad_aa') > 2032) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
@@ -282,10 +282,10 @@ class NewsAdd extends CanaleCommand
                     $f7_accept = false;
                     $checkdate_scad = false;
                 } else
-                    $f7_data_scad_aa = $request->request('f7_data_scad_aa');
+                    $f7_data_scad_aa = $request->request->get('f7_data_scad_aa');
 
                 //f7_data_scad_ora
-                if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_scad_ora'))) {
+                if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_scad_ora'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
@@ -293,8 +293,8 @@ class NewsAdd extends CanaleCommand
                                     'log' => false,
                                     'template_engine' => &$template]);
                     $f7_accept = false;
-                } elseif ($request->request('f7_data_scad_ora') < 0
-                        || $request->request('f7_data_scad_ora') > 23) {
+                } elseif ($request->request->get('f7_data_scad_ora') < 0
+                        || $request->request->get('f7_data_scad_ora') > 23) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
@@ -303,10 +303,10 @@ class NewsAdd extends CanaleCommand
                                     'template_engine' => &$template]);
                     $f7_accept = false;
                 } else
-                    $f7_data_scad_ora = $request->request('f7_data_scad_ora');
+                    $f7_data_scad_ora = $request->request->get('f7_data_scad_ora');
 
                 //f7_data_scad_min
-                if (!preg_match('/^([0-9]{1,2})$/', $request->request('f7_data_scad_min'))) {
+                if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f7_data_scad_min'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il formato del campo minuto di inserimento non \u00e8 valido',
@@ -314,8 +314,8 @@ class NewsAdd extends CanaleCommand
                                     'log' => false,
                                     'template_engine' => &$template]);
                     $f7_accept = false;
-                } elseif ($request->request('f7_data_scad_min') < 0
-                        || $request->request('f7_data_scad_min') > 59) {
+                } elseif ($request->request->get('f7_data_scad_min') < 0
+                        || $request->request->get('f7_data_scad_min') > 59) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
@@ -324,12 +324,12 @@ class NewsAdd extends CanaleCommand
                                     'template_engine' => &$template]);
                     $f7_accept = false;
                 } else
-                    $f7_data_scad_min = $request->request('f7_data_scad_min');
+                    $f7_data_scad_min = $request->request->get('f7_data_scad_min');
 
                 if ($checkdate_scad == true
-                        && !checkdate($request->request('f7_data_scad_mm'),
-                                $request->request('f7_data_scad_gg'),
-                                $request->request('f7_data_scad_aa'))) {
+                        && !checkdate($request->request->get('f7_data_scad_mm'),
+                                $request->request->get('f7_data_scad_gg'),
+                                $request->request->get('f7_data_scad_aa'))) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'La data di scadenza specificata non esiste',
@@ -340,10 +340,10 @@ class NewsAdd extends CanaleCommand
                 }
 
                 //scadenza posteriore a inserimento
-                $data_scadenza = mktime($request->request('f7_data_scad_ora'),
-                        $request->request('f7_data_scad_min'), "0",
-                        $request->request('f7_data_scad_mm'), $request->request('f7_data_scad_gg'),
-                        $request->request('f7_data_scad_aa'));
+                $data_scadenza = mktime($request->request->get('f7_data_scad_ora'),
+                        $request->request->get('f7_data_scad_min'), "0",
+                        $request->request->get('f7_data_scad_mm'), $request->request->get('f7_data_scad_gg'),
+                        $request->request->get('f7_data_scad_aa'));
 
                 if ($data_scadenza < $data_inserimento) {
                     Error::throwError(_ERROR_NOTICE,
@@ -358,7 +358,7 @@ class NewsAdd extends CanaleCommand
             }
 
             //testo
-            if (strlen($request->request('f7_testo')) > 3000) {
+            if (strlen($request->request->get('f7_testo')) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il testo della notizia deve essere inferiore ai 3000 caratteri',
@@ -366,7 +366,7 @@ class NewsAdd extends CanaleCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f7_accept = false;
-            } elseif ($request->request('f7_testo') == '') {
+            } elseif ($request->request->get('f7_testo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il testo della notizia deve essere inserito obbligatoriamente',
@@ -375,7 +375,7 @@ class NewsAdd extends CanaleCommand
                                 'template_engine' => &$template]);
                 $f7_accept = false;
             } else
-                $f7_testo = $request->request('f7_testo');
+                $f7_testo = $request->request->get('f7_testo');
 
             //flag urgente
             if (array_key_exists('f7_urgente', $_POST)) {
@@ -384,7 +384,7 @@ class NewsAdd extends CanaleCommand
 
             //diritti_su_tutti_i_canali
             if (array_key_exists('f7_canale', $_POST))
-                foreach ($request->request('f7_canale') as $key => $value) {
+                foreach ($request->request->get('f7_canale') as $key => $value) {
                     $diritti = $this->get('security.context')->isGranted('ROLE_ADMIN')
                             || (array_key_exists($key, $user_ruoli)
                                     && ($user_ruoli[$key]->isReferente()
@@ -424,8 +424,8 @@ class NewsAdd extends CanaleCommand
 
                 //$num_canali = count($f7_canale);
                 //var_dump($f7_canale);
-                //var_dump($request->request('f7_canale'));
-                foreach ($request->request('f7_canale') as $key => $value) {
+                //var_dump($request->request->get('f7_canale'));
+                foreach ($request->request->get('f7_canale') as $key => $value) {
                     $notizia->addCanale($key);
                     $add_canale = Canale::retrieveCanale($key);
                     $add_canale->setUltimaModifica(time(), true);

@@ -87,18 +87,18 @@ class RuoliAdminEdit extends UniversiboCommand
             if (!array_key_exists('f17_livello', $_POST) )
                 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
-            if ($request->request('f17_livello') != 'none' && $request->request('f17_livello') != 'M' && $request->request('f17_livello') != 'R' )
+            if ($request->request->get('f17_livello') != 'none' && $request->request->get('f17_livello') != 'M' && $request->request->get('f17_livello') != 'R' )
                 Error :: throwError(_ERROR_DEFAULT, ['id_utente' => $user->getId(), 'msg' => 'Il form inviato non e` valido', 'file' => __FILE__, 'line' => __LINE__]);
 
             if ($target_ruolo == null) {
                 $nascosto = false;
-                $ruolo = new Ruolo($target_user->getId(), $channelId, '' , time(), $request->request('f17_livello') == 'M', $request->request('f17_livello') == 'R', true, NOTIFICA_ALL, $nascosto);
+                $ruolo = new Ruolo($target_user->getId(), $channelId, '' , time(), $request->request->get('f17_livello') == 'M', $request->request->get('f17_livello') == 'R', true, NOTIFICA_ALL, $nascosto);
                 $ruolo->insertRuolo();
 
                 $success = true;
             } else {
-                $target_ruolo->updateSetModeratore($request->request('f17_livello') == 'M');
-                $target_ruolo->updateSetReferente($request->request('f17_livello') == 'R');
+                $target_ruolo->updateSetModeratore($request->request->get('f17_livello') == 'M');
+                $target_ruolo->updateSetReferente($request->request->get('f17_livello') == 'R');
                 $target_ruolo->setMyUniversiBO(true);
                 $target_ruolo->updateRuolo();
 

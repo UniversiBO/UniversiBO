@@ -77,7 +77,7 @@ abstract class UniversiboCommand extends BaseCommand
      */
     public function isPopup(Request $request)
     {
-        return $request->query('pageType') === 'popup';
+        return $request->query->get('pageType') === 'popup';
     }
 
     /**

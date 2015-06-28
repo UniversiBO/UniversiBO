@@ -113,7 +113,7 @@ class NewsDelete extends CanaleCommand
 
             //controllo diritti su ogni canale di cui ? richiesta la cancellazione
             if (array_key_exists('f9_canale', $_POST)) {
-                foreach ($request->request('f9_canale') as $key => $value) {
+                foreach ($request->request->get('f9_canale') as $key => $value) {
                     $diritti = $this->get('security.context')->isGranted('ROLE_ADMIN')
                             || (array_key_exists($key, $user_ruoli)
                                     && ($user_ruoli[$key]->isReferente()
@@ -147,7 +147,7 @@ class NewsDelete extends CanaleCommand
 
         //accettazione della richiesta
         if ($f9_accept == true) {
-            //          var_dump($request->request('f9_canale') );
+            //          var_dump($request->request->get('f9_canale') );
             //          die();
             //cancellazione dai canali richiesti
             foreach ($f9_canale_app as $key => $value) {

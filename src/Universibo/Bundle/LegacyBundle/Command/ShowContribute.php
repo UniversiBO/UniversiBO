@@ -155,7 +155,7 @@ class ShowContribute extends UniversiboCommand
             }
 
             //nome
-            if (strlen($request->request('f3_nome')) > 50) {
+            if (strlen($request->request->get('f3_nome')) > 50) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il nome indicato puo` essere massimo 50 caratteri',
@@ -163,10 +163,10 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_nome = $f3_nome = $request->request('f3_nome');
+                $q3_nome = $f3_nome = $request->request->get('f3_nome');
 
             //cognome
-            if (strlen($request->request('f3_cognome')) > 50) {
+            if (strlen($request->request->get('f3_cognome')) > 50) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il cognome indicato puo` essere massimo 50 caratteri',
@@ -174,11 +174,11 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_cognome = $f3_cognome = $request->request('f3_cognome');
+                $q3_cognome = $f3_cognome = $request->request->get('f3_cognome');
 
             //telefono
-            if ((strlen($request->request('f3_tel')) > 50)
-                    || !preg_match('/^([0-9]{1,50})$/', $request->request('f3_tel'))) {
+            if ((strlen($request->request->get('f3_tel')) > 50)
+                    || !preg_match('/^([0-9]{1,50})$/', $request->request->get('f3_tel'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il numero di cellulare indicato puo` essere massimo 20 cifre',
@@ -186,10 +186,10 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_tel = $f3_tel = $request->request('f3_tel');
+                $q3_tel = $f3_tel = $request->request->get('f3_tel');
 
             //mail
-            if (strlen($request->request('f3_mail')) > 50) {
+            if (strlen($request->request->get('f3_mail')) > 50) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'L\' indirizzo e-mail indicato puo` essere massimo 50 caratteri',
@@ -198,7 +198,7 @@ class ShowContribute extends UniversiboCommand
                 $f3_accept = false;
             } elseif (!preg_match(
                     "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i",
-                    $request->request('f3_mail'))) {
+                    $request->request->get('f3_mail'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Inserire un indirizzo e-mail valido',
@@ -206,10 +206,10 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_mail = $f3_mail = $request->request('f3_mail');
+                $q3_mail = $f3_mail = $request->request->get('f3_mail');
 
             //altro
-            $q3_altro = $f3_altro = $request->request('f3_altro');
+            $q3_altro = $f3_altro = $request->request->get('f3_altro');
 
             //tempo
             if (!array_key_exists('f3_tempo', $_POST)) {
@@ -220,7 +220,7 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_tempo = $f3_tempo = $request->request('f3_tempo');
+                $q3_tempo = $f3_tempo = $request->request->get('f3_tempo');
 
             //internet
             if (!array_key_exists('f3_internet', $_POST)) {
@@ -231,7 +231,7 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_internet = $f3_internet = $request->request('f3_internet');
+                $q3_internet = $f3_internet = $request->request->get('f3_internet');
 
             //privacy
             if (!array_key_exists('f3_privacy', $_POST)) {
@@ -287,7 +287,7 @@ class ShowContribute extends UniversiboCommand
 
             //corso di laurea
 
-            if (strlen($request->request('f3_cdl')) > 50) {
+            if (strlen($request->request->get('f3_cdl')) > 50) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user instanceof User ? $user->getId() : 0,
                                 'msg' => 'Il corso di laurea indicato puo` essere massimo 50 caratteri',
@@ -295,7 +295,7 @@ class ShowContribute extends UniversiboCommand
                                 'log' => false, 'template_engine' => &$template]);
                 $f3_accept = false;
             } else
-                $q3_cdl = $f3_cdl = $request->request('f3_cdl');
+                $q3_cdl = $f3_cdl = $request->request->get('f3_cdl');
 
         }
 

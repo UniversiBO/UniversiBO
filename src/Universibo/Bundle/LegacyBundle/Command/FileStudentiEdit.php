@@ -156,7 +156,7 @@ class FileStudentiEdit extends UniversiboCommand
             }
 
             //titolo
-            if (strlen($request->request('f24_titolo')) > 150) {
+            if (strlen($request->request->get('f24_titolo')) > 150) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
@@ -164,7 +164,7 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif ($request->request('f24_titolo') == '') {
+            } elseif ($request->request->get('f24_titolo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
@@ -173,14 +173,14 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } else
-                $f24_titolo = $request->request('f24_titolo');
+                $f24_titolo = $request->request->get('f24_titolo');
 
             //abstract
-            $f24_abstract = $request->request('f24_abstract');
+            $f24_abstract = $request->request->get('f24_abstract');
 
             $checkdate_ins = true;
             //data_ins_gg
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f24_data_ins_gg'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f24_data_ins_gg'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido',
@@ -190,10 +190,10 @@ class FileStudentiEdit extends UniversiboCommand
                 $f24_accept = false;
                 $checkdate_ins = false;
             } else
-                $f24_data_ins_gg = $request->request('f24_data_ins_gg');
+                $f24_data_ins_gg = $request->request->get('f24_data_ins_gg');
 
             //f24_data_ins_mm
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f24_data_ins_mm'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f24_data_ins_mm'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
@@ -203,10 +203,10 @@ class FileStudentiEdit extends UniversiboCommand
                 $f24_accept = false;
                 $checkdate_ins = false;
             } else
-                $f24_data_ins_mm = $request->request('f24_data_ins_mm');
+                $f24_data_ins_mm = $request->request->get('f24_data_ins_mm');
 
             //f24_data_ins_aa
-            if (!preg_match('/^([0-9]{4})$/', $request->request('f24_data_ins_aa'))) {
+            if (!preg_match('/^([0-9]{4})$/', $request->request->get('f24_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
@@ -215,8 +215,8 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
                 $checkdate_ins = false;
-            } elseif ($request->request('f24_data_ins_aa') < 1970
-                    || $request->request('f24_data_ins_aa') > 2032) {
+            } elseif ($request->request->get('f24_data_ins_aa') < 1970
+                    || $request->request->get('f24_data_ins_aa') > 2032) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
@@ -226,10 +226,10 @@ class FileStudentiEdit extends UniversiboCommand
                 $f24_accept = false;
                 $checkdate_ins = false;
             } else
-                $f24_data_ins_aa = $request->request('f24_data_ins_aa');
+                $f24_data_ins_aa = $request->request->get('f24_data_ins_aa');
 
             //f24_data_ins_ora
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f24_data_ins_ora'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f24_data_ins_ora'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
@@ -237,8 +237,8 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif ($request->request('f24_data_ins_ora') < 0
-                    || $request->request('f24_data_ins_ora') > 23) {
+            } elseif ($request->request->get('f24_data_ins_ora') < 0
+                    || $request->request->get('f24_data_ins_ora') > 23) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
@@ -247,10 +247,10 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } else
-                $f24_data_ins_ora = $request->request('f24_data_ins_ora');
+                $f24_data_ins_ora = $request->request->get('f24_data_ins_ora');
 
             //f24_data_ins_min
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f24_data_ins_min'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f24_data_ins_min'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
@@ -258,8 +258,8 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif ($request->request('f24_data_ins_min') < 0
-                    || $request->request('f24_data_ins_min') > 59) {
+            } elseif ($request->request->get('f24_data_ins_min') < 0
+                    || $request->request->get('f24_data_ins_min') > 59) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
@@ -268,12 +268,12 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } else
-                $f24_data_ins_min = $request->request('f24_data_ins_min');
+                $f24_data_ins_min = $request->request->get('f24_data_ins_min');
 
             if ($checkdate_ins == true
-                    && !checkdate($request->request('f24_data_ins_mm'),
-                            $request->request('f24_data_ins_gg'),
-                            $request->request('f24_data_ins_aa'))) {
+                    && !checkdate($request->request->get('f24_data_ins_mm'),
+                            $request->request->get('f24_data_ins_gg'),
+                            $request->request->get('f24_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'La data di inserimento specificata non esiste',
@@ -283,12 +283,12 @@ class FileStudentiEdit extends UniversiboCommand
                 $f24_accept = false;
             }
 
-            $f24_data_inserimento = mktime($request->request('f24_data_ins_ora'),
-                    $request->request('f24_data_ins_min'), "0", $request->request('f24_data_ins_mm'),
-                    $request->request('f24_data_ins_gg'), $request->request('f24_data_ins_aa'));
+            $f24_data_inserimento = mktime($request->request->get('f24_data_ins_ora'),
+                    $request->request->get('f24_data_ins_min'), "0", $request->request->get('f24_data_ins_mm'),
+                    $request->request->get('f24_data_ins_gg'), $request->request->get('f24_data_ins_aa'));
 
             //abstract
-            if (strlen($request->request('f24_abstract')) > 3000) {
+            if (strlen($request->request->get('f24_abstract')) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri',
@@ -296,15 +296,15 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif ($request->request('f24_abstract') == '') {
+            } elseif ($request->request->get('f24_abstract') == '') {
                 $f24_abstract = $f24_titolo;
             } else
-                $f24_abstract = $request->request('f24_abstract');
+                $f24_abstract = $request->request->get('f24_abstract');
 
             //parole chiave
             $f24_parole_chiave = [];
-            if ($request->request('f24_parole_chiave') != '') {
-                $parole_chiave = explode("\r\n", $request->request('f24_parole_chiave'));
+            if ($request->request->get('f24_parole_chiave') != '') {
+                $parole_chiave = explode("\r\n", $request->request->get('f24_parole_chiave'));
 
                 foreach ($parole_chiave as $parola) {
                     if (strlen($parola > 40)) {
@@ -334,7 +334,7 @@ class FileStudentiEdit extends UniversiboCommand
             }
 
             //categoria
-            if (!preg_match('/^([0-9]{1,9})$/', $request->request('f24_categoria'))) {
+            if (!preg_match('/^([0-9]{1,9})$/', $request->request->get('f24_categoria'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo categoria non e` ammissibile',
@@ -342,7 +342,7 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif (!array_key_exists($request->request('f24_categoria'), $f24_categorie)) {
+            } elseif (!array_key_exists($request->request->get('f24_categoria'), $f24_categorie)) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'La categoria inviata contiene un valore non ammissibile',
@@ -351,10 +351,10 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } else
-                $f24_categoria = $request->request('f24_categoria');
+                $f24_categoria = $request->request->get('f24_categoria');
 
             //tipi
-            if (!preg_match('/^([0-9]{1,9})$/', $request->request('f24_tipo'))) {
+            if (!preg_match('/^([0-9]{1,9})$/', $request->request->get('f24_tipo'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo tipo non e` ammissibile',
@@ -362,7 +362,7 @@ class FileStudentiEdit extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f24_accept = false;
-            } elseif (!array_key_exists($request->request('f24_tipo'), $f24_tipi)) {
+            } elseif (!array_key_exists($request->request->get('f24_tipo'), $f24_tipi)) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il tipo inviato contiene un valore non ammissibile',
@@ -371,10 +371,10 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } else
-                $f24_tipo = $request->request('f24_tipo');
+                $f24_tipo = $request->request->get('f24_tipo');
 
             //permessi_download
-            if (!preg_match('/^([0-9]{1,3})$/', $request->request('f24_permessi_download'))) {
+            if (!preg_match('/^([0-9]{1,3})$/', $request->request->get('f24_permessi_download'))) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
@@ -383,8 +383,8 @@ class FileStudentiEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f24_accept = false;
             } elseif ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
-                if ($request->request('f24_permessi_download') < 0
-                        || $request->request('f24_permessi_download') > LegacyRoles::ALL) {
+                if ($request->request->get('f24_permessi_download') < 0
+                        || $request->request->get('f24_permessi_download') > LegacyRoles::ALL) {
                     Error::throwError(_ERROR_NOTICE,
                             [
                                     'msg' => 'Il valore dei diritti di download non e` ammessibile',
@@ -393,10 +393,10 @@ class FileStudentiEdit extends UniversiboCommand
                                     'template_engine' => &$template]);
                     $f24_accept = false;
                 }
-                $f24_permessi_download = $request->request('f24_permessi_download');
+                $f24_permessi_download = $request->request->get('f24_permessi_download');
             } else {
-                if ($request->request('f24_permessi_download') != LegacyRoles::ALL
-                        && $request->request('f24_permessi_download')
+                if ($request->request->get('f24_permessi_download') != LegacyRoles::ALL
+                        && $request->request->get('f24_permessi_download')
                                 != ('ROLE_STUDENT' | 'ROLE_PROFESSOR'
                                         | 'ROLE_TUTOR' | 'ROLE_STAFF'
                                         | 'ROLE_MODERATOR' | 'ROLE_ADMIN')) {
@@ -408,7 +408,7 @@ class FileStudentiEdit extends UniversiboCommand
                                     'template_engine' => &$template]);
                     $f24_accept = false;
                 }
-                $f24_permessi_download = $request->request('f24_permessi_download');
+                $f24_permessi_download = $request->request->get('f24_permessi_download');
 
             }
 

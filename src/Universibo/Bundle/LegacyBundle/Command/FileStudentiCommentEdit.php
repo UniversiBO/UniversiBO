@@ -114,7 +114,7 @@ class FileStudentiCommentEdit extends UniversiboCommand
             $f27_accept = true;
 
             //commento
-            if (trim($request->request('f27_commento')) == '') {
+            if (trim($request->request->get('f27_commento')) == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Inserisci un commento',
@@ -123,11 +123,11 @@ class FileStudentiCommentEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f27_accept = false;
             } else {
-                $f27_commento = $request->request('f27_commento');
+                $f27_commento = $request->request->get('f27_commento');
             }
 
             //voto
-            if (!preg_match('/^([0-5]{1})$/', $request->request('f27_voto'))) {
+            if (!preg_match('/^([0-5]{1})$/', $request->request->get('f27_voto'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Voto non valido', 'file' => __FILE__,
@@ -135,7 +135,7 @@ class FileStudentiCommentEdit extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f27_accept = false;
             } else
-                $f27_voto = $request->request('f27_voto');
+                $f27_voto = $request->request->get('f27_voto');
 
             //esecuzione operazioni accettazione del form
             if ($f27_accept == true) {

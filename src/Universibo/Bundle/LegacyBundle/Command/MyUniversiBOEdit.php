@@ -73,7 +73,7 @@ class MyUniversiBOEdit extends UniversiboCommand
                     $f19_accept = false;
                 }
 
-                if (!array_key_exists($request->request('f19_livello_notifica'),
+                if (!array_key_exists($request->request->get('f19_livello_notifica'),
                         $f19_livelli_notifica)) {
                     Error::throwError(_ERROR_DEFAULT,
                             ['id_utente' => $utente->getId(),
@@ -81,16 +81,16 @@ class MyUniversiBOEdit extends UniversiboCommand
                                     'file' => __FILE__, 'line' => __LINE__]);
                     $f19_accept = false;
                 } else
-                    $f19_livello_notifica = $request->request('f19_livello_notifica');
+                    $f19_livello_notifica = $request->request->get('f19_livello_notifica');
 
-                if (strlen($request->request('f19_nome')) > 60) {
+                if (strlen($request->request->get('f19_nome')) > 60) {
                     Error::throwError(_ERROR_DEFAULT,
                             ['id_utente' => $utente->getId(),
                                     'msg' => 'Il nome scelto deve essere inferiore ai 60 caratteri',
                                     'file' => __FILE__, 'line' => __LINE__]);
                     $f19_accept = false;
                 } else
-                    $f19_nome = $request->request('f19_nome');
+                    $f19_nome = $request->request->get('f19_nome');
 
                 if ($f19_accept == true) {
                     //$nascosto = false;

@@ -69,20 +69,20 @@ class RuoliAdminSearch extends UniversiboCommand
 
             $f16_accept = true;
 
-            if ($request->request('f16_username') == '' && $request->request('f16_email') == '') {
+            if ($request->request->get('f16_username') == '' && $request->request->get('f16_email') == '') {
                 Error :: throwError(_ERROR_NOTICE, ['id_utente' => $user->getId(), 'msg' => 'Specificare almeno uno dei due criteri di ricerca', 'file' => __FILE__, 'line' => __LINE__, 'log' => false, 'template_engine' => & $template]);
                 $f16_accept = false;
             }
 
-            if ($request->request('f16_username') == '')
+            if ($request->request->get('f16_username') == '')
                 $f16_username = '%';
             else
-                $f16_username = $request->request('f16_username');
+                $f16_username = $request->request->get('f16_username');
 
-            if ($request->request('f16_email') == '')
+            if ($request->request->get('f16_email') == '')
                 $f16_email = '%';
             else
-                $f16_email = $request->request('f16_email');
+                $f16_email = $request->request->get('f16_email');
 
             $roleRepo = $this->get('universibo_legacy.repository.ruolo');
 

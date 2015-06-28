@@ -141,7 +141,7 @@ class FileEdit extends FileCommon
             }
 
             //titolo
-            if (strlen($request->request('f13_titolo')) > 150) {
+            if (strlen($request->request->get('f13_titolo')) > 150) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inferiore ai 150 caratteri',
@@ -149,7 +149,7 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif ($request->request('f13_titolo') == '') {
+            } elseif ($request->request->get('f13_titolo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il titolo deve essere inserito obbligatoriamente',
@@ -158,14 +158,14 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
             } else
-                $f13_titolo = $request->request('f13_titolo');
+                $f13_titolo = $request->request->get('f13_titolo');
 
             //abstract
-            $f13_abstract = $request->request('f13_abstract');
+            $f13_abstract = $request->request->get('f13_abstract');
 
             $checkdate_ins = true;
             //data_ins_gg
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f13_data_ins_gg'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f13_data_ins_gg'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo giorno di inserimento non \u00e8 valido',
@@ -175,10 +175,10 @@ class FileEdit extends FileCommon
                 $f13_accept = false;
                 $checkdate_ins = false;
             } else
-                $f13_data_ins_gg = $request->request('f13_data_ins_gg');
+                $f13_data_ins_gg = $request->request->get('f13_data_ins_gg');
 
             //f13_data_ins_mm
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f13_data_ins_mm'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f13_data_ins_mm'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo mese di inserimento non e` valido',
@@ -188,10 +188,10 @@ class FileEdit extends FileCommon
                 $f13_accept = false;
                 $checkdate_ins = false;
             } else
-                $f13_data_ins_mm = $request->request('f13_data_ins_mm');
+                $f13_data_ins_mm = $request->request->get('f13_data_ins_mm');
 
             //f13_data_ins_aa
-            if (!preg_match('/^([0-9]{4})$/', $request->request('f13_data_ins_aa'))) {
+            if (!preg_match('/^([0-9]{4})$/', $request->request->get('f13_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo anno di inserimento non e` valido',
@@ -200,8 +200,8 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
                 $checkdate_ins = false;
-            } elseif ($request->request('f13_data_ins_aa') < 1970
-                    || $request->request('f13_data_ins_aa') > 2032) {
+            } elseif ($request->request->get('f13_data_ins_aa') < 1970
+                    || $request->request->get('f13_data_ins_aa') > 2032) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo anno di inserimento deve essere compreso tra il 1970 e il 2032',
@@ -211,10 +211,10 @@ class FileEdit extends FileCommon
                 $f13_accept = false;
                 $checkdate_ins = false;
             } else
-                $f13_data_ins_aa = $request->request('f13_data_ins_aa');
+                $f13_data_ins_aa = $request->request->get('f13_data_ins_aa');
 
             //f13_data_ins_ora
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f13_data_ins_ora'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f13_data_ins_ora'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo ora di inserimento non \u00e8 valido',
@@ -222,8 +222,8 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif ($request->request('f13_data_ins_ora') < 0
-                    || $request->request('f13_data_ins_ora') > 23) {
+            } elseif ($request->request->get('f13_data_ins_ora') < 0
+                    || $request->request->get('f13_data_ins_ora') > 23) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 23',
@@ -232,10 +232,10 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
             } else
-                $f13_data_ins_ora = $request->request('f13_data_ins_ora');
+                $f13_data_ins_ora = $request->request->get('f13_data_ins_ora');
 
             //f13_data_ins_min
-            if (!preg_match('/^([0-9]{1,2})$/', $request->request('f13_data_ins_min'))) {
+            if (!preg_match('/^([0-9]{1,2})$/', $request->request->get('f13_data_ins_min'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo minuto di inserimento non e` valido',
@@ -243,8 +243,8 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif ($request->request('f13_data_ins_min') < 0
-                    || $request->request('f13_data_ins_min') > 59) {
+            } elseif ($request->request->get('f13_data_ins_min') < 0
+                    || $request->request->get('f13_data_ins_min') > 59) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il campo ora di inserimento deve essere compreso tra 0 e 59',
@@ -253,12 +253,12 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
             } else
-                $f13_data_ins_min = $request->request('f13_data_ins_min');
+                $f13_data_ins_min = $request->request->get('f13_data_ins_min');
 
             if ($checkdate_ins == true
-                    && !checkdate($request->request('f13_data_ins_mm'),
-                            $request->request('f13_data_ins_gg'),
-                            $request->request('f13_data_ins_aa'))) {
+                    && !checkdate($request->request->get('f13_data_ins_mm'),
+                            $request->request->get('f13_data_ins_gg'),
+                            $request->request->get('f13_data_ins_aa'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La data di inserimento specificata non esiste',
@@ -268,12 +268,12 @@ class FileEdit extends FileCommon
                 $f13_accept = false;
             }
 
-            $f13_data_inserimento = mktime($request->request('f13_data_ins_ora'),
-                    $request->request('f13_data_ins_min'), "0", $request->request('f13_data_ins_mm'),
-                    $request->request('f13_data_ins_gg'), $request->request('f13_data_ins_aa'));
+            $f13_data_inserimento = mktime($request->request->get('f13_data_ins_ora'),
+                    $request->request->get('f13_data_ins_min'), "0", $request->request->get('f13_data_ins_mm'),
+                    $request->request->get('f13_data_ins_gg'), $request->request->get('f13_data_ins_aa'));
 
             //abstract
-            if (strlen($request->request('f13_abstract')) > 3000) {
+            if (strlen($request->request->get('f13_abstract')) > 3000) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La descrizione/abstract del file deve essere inferiore ai 3000 caratteri',
@@ -281,15 +281,15 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif ($request->request('f13_abstract') == '') {
+            } elseif ($request->request->get('f13_abstract') == '') {
                 $f13_abstract = $f13_titolo;
             } else
-                $f13_abstract = $request->request('f13_abstract');
+                $f13_abstract = $request->request->get('f13_abstract');
 
             //parole chiave
             $f13_parole_chiave = [];
-            if ($request->request('f13_parole_chiave') != '') {
-                $parole_chiave = preg_split('/((?<!\\\|\r)\n)|((?<!\\\)\r\n)/', $request->request('f13_parole_chiave'));
+            if ($request->request->get('f13_parole_chiave') != '') {
+                $parole_chiave = preg_split('/((?<!\\\|\r)\n)|((?<!\\\)\r\n)/', $request->request->get('f13_parole_chiave'));
 
                 foreach ($parole_chiave as $parola) {
                     if (strlen($parola > 40)) {
@@ -319,7 +319,7 @@ class FileEdit extends FileCommon
             }
 
             //categoria
-            if (!preg_match('/^([0-9]{1,9})$/', $request->request('f13_categoria'))) {
+            if (!preg_match('/^([0-9]{1,9})$/', $request->request->get('f13_categoria'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo categoria non e` ammissibile',
@@ -327,7 +327,7 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif (!array_key_exists($request->request('f13_categoria'), $f13_categorie)) {
+            } elseif (!array_key_exists($request->request->get('f13_categoria'), $f13_categorie)) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'La categoria inviata contiene un valore non ammissibile',
@@ -336,10 +336,10 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
             } else
-                $f13_categoria = $request->request('f13_categoria');
+                $f13_categoria = $request->request->get('f13_categoria');
 
             //tipi
-            if (!preg_match('/^([0-9]{1,9})$/', $request->request('f13_tipo'))) {
+            if (!preg_match('/^([0-9]{1,9})$/', $request->request->get('f13_tipo'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il formato del campo tipo non e` ammissibile',
@@ -347,7 +347,7 @@ class FileEdit extends FileCommon
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f13_accept = false;
-            } elseif (!array_key_exists($request->request('f13_tipo'), $f13_tipi)) {
+            } elseif (!array_key_exists($request->request->get('f13_tipo'), $f13_tipi)) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il tipo inviato contiene un valore non ammissibile',
@@ -356,15 +356,15 @@ class FileEdit extends FileCommon
                                 'template_engine' => &$template]);
                 $f13_accept = false;
             } else
-                $f13_tipo = $request->request('f13_tipo');
+                $f13_tipo = $request->request->get('f13_tipo');
 
-            $f13_permessi_download = $request->request('f13_permessi_download');
+            $f13_permessi_download = $request->request->get('f13_permessi_download');
             $this->validateDownloadPermissions($f13_permessi_download, $user, $template);
 
             $edit_password = true;
             //password
             if (array_key_exists('f13_password_enable', $_POST)) {
-                if ($request->request('f13_password') != $request->request('f13_password_confirm')) {
+                if ($request->request->get('f13_password') != $request->request->get('f13_password_confirm')) {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'La password e il campo di verifica non corrispondono',
@@ -373,7 +373,7 @@ class FileEdit extends FileCommon
                                     'template_engine' => &$template]);
                     $f13_accept = false;
                 } elseif ($file->getPassword() == null
-                        && $request->request('f13_password') == '') {
+                        && $request->request->get('f13_password') == '') {
                     Error::throwError(_ERROR_NOTICE,
                             ['id_utente' => $user->getId(),
                                     'msg' => 'La password inserita e` vuota',
@@ -382,10 +382,10 @@ class FileEdit extends FileCommon
                                     'template_engine' => &$template]);
                     $f13_accept = false;
                 } elseif ($file->getPassword() != null
-                        && $request->request('f13_password') == '') {
+                        && $request->request->get('f13_password') == '') {
                     $edit_password = false;
                 } else
-                    $f13_password = $request->request('f13_password');
+                    $f13_password = $request->request->get('f13_password');
             } else {
                 $f13_password = null;
             }
