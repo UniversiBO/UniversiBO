@@ -5,6 +5,7 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Universibo\Bundle\LegacyBundle\Exception\Exception;
 use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Universibo\Bundle\LegacyBundle\Framework\FrontController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Definisce gli handler da utilizzare per la classe Error,
@@ -31,9 +32,12 @@ class ErrorHandlers
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    private $session;
+
+    public function __construct(LoggerInterface $logger, SessionInterface $session)
     {
         $this->logger = $logger;
+        $this->session = $session;
     }
 
     /**
@@ -69,12 +73,7 @@ class ErrorHandlers
      */
     public function default_handler($param)
     {
-        //      die( 'Errore Critico: '.$param['msg']. '<br />
-        //      file: '.$param['file']. '<br />
-        //      line: '.$param['line']. '<br />
-        //      log: '.$param['log']. '<br />');
-        $_SESSION['error_param'] = $param;
-        //var_dump($param);
+        $this->session->set('error_param', $param);
 
         $log_array = [ 'timestamp'  => time(),
                 'date'  => date("Y-m-d",time()),

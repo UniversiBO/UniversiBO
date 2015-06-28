@@ -14,6 +14,7 @@
 
         <service id="universibo_legacy.error.handlers" class="Universibo\Bundle\LegacyBundle\App\ErrorHandlers">
             <argument type="service" id="logger"/>
+            <argument type="service" id="session"/>
         </service>
 
         <service id="universibo_legacy.krono" class="Universibo\Bundle\LegacyBundle\Framework\Krono">
