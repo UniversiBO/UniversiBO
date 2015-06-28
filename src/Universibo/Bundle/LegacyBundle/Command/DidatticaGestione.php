@@ -179,7 +179,7 @@ class DidatticaGestione extends UniversiboCommand
 
             $f41_accept = true;
 
-            if ($_POST['f41_username'] == '' && $_POST['f41_email'] == '') {
+            if ($request->request('f41_username') == '' && $request->request('f41_email') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Specificare almeno uno dei due criteri di ricerca docente',
@@ -189,15 +189,15 @@ class DidatticaGestione extends UniversiboCommand
                 $f41_accept = false;
             }
 
-            if ($_POST['f41_username'] == '')
+            if ($request->request('f41_username') == '')
                 $f41_username = '%';
             else
-                $f41_username = $_POST['f41_username'];
+                $f41_username = $request->request('f41_username');
 
-            if ($_POST['f41_email'] == '')
+            if ($request->request('f41_email') == '')
                 $f41_email = '%';
             else
-                $f41_email = $_POST['f41_email'];
+                $f41_email = $request->request('f41_email');
 
             if ($f41_accept) {
                 $users_search = User::selectUsersSearch($f41_username,
@@ -224,8 +224,8 @@ class DidatticaGestione extends UniversiboCommand
             $f41_accept = true;
             //          var_dump($_POST); die;
             if (!array_key_exists('f41_edit_sel', $_POST)
-                    || !is_array($_POST['f41_edit_sel'])
-                    || count($_POST['f41_edit_sel']) == 0) {
+                    || !is_array($request->request('f41_edit_sel'))
+                    || count($request->request('f41_edit_sel')) == 0) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Nessun parametro specificato, nessuna modifica effettuata',
@@ -235,7 +235,7 @@ class DidatticaGestione extends UniversiboCommand
                 $f41_accept = false;
             } else {
                 $prgs = [];
-                $tmpEdit = $_POST['f41_edit_sel'];
+                $tmpEdit = $request->request('f41_edit_sel');
 
                 if ($idSdop != '')
                     $prgs[] = PrgAttivitaDidattica::selectPrgAttivitaDidatticaSdoppiata(
@@ -244,7 +244,7 @@ class DidatticaGestione extends UniversiboCommand
                     $prgs[] = $prg;
                 //              var_dump($prgs); die;
                 if (array_key_exists('f41_alts', $_POST))
-                    foreach ($_POST['f41_alts'] as $key => $value) {
+                    foreach ($request->request('f41_alts') as $key => $value) {
                         if (strstr($key, '#') != false) {
                             list($id_channel, $idSdoppiamento) = explode('#',
                                     $key);

@@ -129,7 +129,7 @@ class ShowContattoDocente extends UniversiboCommand
         if (array_key_exists('f35_submit_report', $_POST)) {
 
             if (!array_key_exists('f35_stato', $_POST)
-                    || !array_key_exists($_POST['f35_stato'], $f35_stati))
+                    || !array_key_exists($request->request('f35_stato'), $f35_stati))
                 Error::throwError(_ERROR_DEFAULT,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il form inviato non e` valido',
@@ -137,7 +137,7 @@ class ShowContattoDocente extends UniversiboCommand
                                 'template_engine' => &$template]);
 
             if (!array_key_exists('f35_id_username', $_POST)
-                    || !array_key_exists($_POST['f35_id_username'],
+                    || !array_key_exists($request->request('f35_id_username'),
                             $f35_collab_list))
                 Error::throwError(_ERROR_DEFAULT,
                         ['id_utente' => $user->getId(),
@@ -145,8 +145,8 @@ class ShowContattoDocente extends UniversiboCommand
                                 'file' => __FILE__, 'line' => __LINE__,
                                 'template_engine' => &$template]);
 
-            $f35_stato = $_POST['f35_stato'];
-            $f35_id_username = $_POST['f35_id_username'];
+            $f35_stato = $request->request('f35_stato');
+            $f35_id_username = $request->request('f35_id_username');
 
             if ($f35_stato != $contatto->getStato())
                 $contatto->setStato($f35_stato, $user->getUsername());
@@ -158,8 +158,8 @@ class ShowContattoDocente extends UniversiboCommand
                 }
             }
 
-            if (trim($_POST['f35_report']) != '')
-                $contatto->appendReport($_POST['f35_report']);
+            if (trim($request->request('f35_report')) != '')
+                $contatto->appendReport($request->request('f35_report'));
 
             $contatto->updateContattoDocente();
 

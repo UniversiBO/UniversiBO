@@ -122,7 +122,7 @@ class FileDelete extends UniversiboCommand
             $f14_canale_app = [];
             //controllo diritti su ogni canale di cui ? richiesta la cancellazione
             if (array_key_exists('f14_canale', $_POST)) {
-                foreach ($_POST['f14_canale'] as $key => $value) {
+                foreach ($request->request('f14_canale') as $key => $value) {
                     $diritti = $this->get('security.context')->isGranted('ROLE_ADMIN')
                             || (array_key_exists($key, $user_ruoli)
                                     && ($user_ruoli[$key]->isReferente()
@@ -156,7 +156,7 @@ class FileDelete extends UniversiboCommand
 
         //accettazione della richiesta
         if ($f14_accept == true) {
-            //          var_dump($_POST['f14_canale'] );
+            //          var_dump($request->request('f14_canale') );
             //          die();
             //cancellazione dai canali richiesti
             foreach ($f14_canale_app as $key => $value) {

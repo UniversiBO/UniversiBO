@@ -94,7 +94,7 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
             }
 
             //ruolo
-            if (strlen($_POST['f36_ruolo']) > 150) {
+            if (strlen($request->request('f36_ruolo')) > 150) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il ruolo deve essere inferiore ai 150 caratteri',
@@ -102,7 +102,7 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
                                 'log' => false,
                                 'template_engine' => &$template]);
                 $f36_accept = false;
-            } elseif ($_POST['f36_ruolo'] == '') {
+            } elseif ($request->request('f36_ruolo') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Il ruolo deve essere inserito obbligatoriamente',
@@ -111,10 +111,10 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f36_accept = false;
             } else
-                $f36_ruolo = $_POST['f36_ruolo'];
+                $f36_ruolo = $request->request('f36_ruolo');
 
             //intro
-            if ($_POST['f36_intro'] == '') {
+            if ($request->request('f36_intro') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'L\'intro del profilo deve essere inserito obbligatoriamente',
@@ -123,10 +123,10 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f36_accept = false;
             } else
-                $f36_intro = $_POST['f36_intro'];
+                $f36_intro = $request->request('f36_intro');
 
             //obiettivi
-            if ($_POST['f36_obiettivi'] == '') {
+            if ($request->request('f36_obiettivi') == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Gli obiettivi del profilo devono essere inseriti obbligatoriamente',
@@ -135,18 +135,18 @@ class CollaboratoreProfiloAdd extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f36_accept = false;
             } else
-                $f36_obiettivi = $_POST['f36_obiettivi'];
+                $f36_obiettivi = $request->request('f36_obiettivi');
 
             $photo = $request->files->get('f36_foto');
 
             //email
             if (array_key_exists('f36_email', $_POST)) {
-                $f36_email = $_POST['f36_email'];
+                $f36_email = $request->request('f36_email');
             }
 
             //recapito
             if (array_key_exists('f36_recapito', $_POST)) {
-                $f36_recapito = $_POST['f36_recapito'];
+                $f36_recapito = $request->request('f36_recapito');
             }
 
             //esecuzione operazioni accettazione del form

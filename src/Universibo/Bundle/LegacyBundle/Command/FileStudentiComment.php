@@ -87,7 +87,7 @@ class FileStudentiComment extends UniversiboCommand
             }
 
             //commento
-            if (trim($_POST['f26_commento']) == '') {
+            if (trim($request->request('f26_commento')) == '') {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Inserisci un commento',
@@ -96,11 +96,11 @@ class FileStudentiComment extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f26_accept = false;
             } else {
-                $f26_commento = $_POST['f26_commento'];
+                $f26_commento = $request->request('f26_commento');
             }
 
             //voto
-            if (!preg_match('/^([0-5]{1})$/', $_POST['f26_voto'])) {
+            if (!preg_match('/^([0-5]{1})$/', $request->request('f26_voto'))) {
                 Error::throwError(_ERROR_NOTICE,
                         ['id_utente' => $user->getId(),
                                 'msg' => 'Voto non valido', 'file' => __FILE__,
@@ -108,7 +108,7 @@ class FileStudentiComment extends UniversiboCommand
                                 'template_engine' => &$template]);
                 $f26_accept = false;
             } else
-                $f26_voto = $_POST['f26_voto'];
+                $f26_voto = $request->request('f26_voto');
 
             //esecuzione operazioni accettazione del form
             if ($f26_accept == true) {

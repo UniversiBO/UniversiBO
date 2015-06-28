@@ -125,7 +125,7 @@ class FileDocenteAdmin extends UniversiboCommand
             //          }
 
             if (!array_key_exists('f40_files', $_POST)
-                    || count($_POST['f40_files']) == 0) {
+                    || count($request->request('f40_files')) == 0) {
                 Error::throwError(_ERROR_NOTICE,
                         ['msg' => 'Bisogna selezionare almeno un file',
                                 'file' => __FILE__, 'line' => __LINE__,
@@ -134,8 +134,8 @@ class FileDocenteAdmin extends UniversiboCommand
                 $f40_accept = false;
             } else {
                 //controllo se i file appartengono ad un canale su cui ha diritto l'utente
-                //          var_dump($_POST['f40_files'] );
-                foreach ($_POST['f40_files'] as $key => $value) {
+                //          var_dump($request->request('f40_files') );
+                foreach ($request->request('f40_files') as $key => $value) {
                     $fileTemp = &FileItem::selectFileItem($key);
                     $diritti = false;
                     //              var_dump($fileTemp); die;
@@ -165,7 +165,7 @@ class FileDocenteAdmin extends UniversiboCommand
             }
 
             if (!array_key_exists('f40_canale', $_POST)
-                    || count($_POST['f40_canale']) == 0) {
+                    || count($request->request('f40_canale')) == 0) {
                 Error::throwError(_ERROR_NOTICE,
                         [
                                 'msg' => 'Bisogna selezionare almeno una pagina',
@@ -175,7 +175,7 @@ class FileDocenteAdmin extends UniversiboCommand
                 $f40_accept = false;
             } else {
                 //controllo i diritti_su_tutti_i_canali su cui si vuole fare l'inserimento
-                foreach ($_POST['f40_canale'] as $key => $value) {
+                foreach ($request->request('f40_canale') as $key => $value) {
                     // TODO controllo se value è effettivamente un oggetto di tipo Canale e se key è id valido
                     $diritti = $this->get('security.context')->isGranted('ROLE_ADMIN')
                             || (array_key_exists($key, $user_ruoli)
