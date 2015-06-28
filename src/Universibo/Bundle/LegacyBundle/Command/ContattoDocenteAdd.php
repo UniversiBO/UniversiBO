@@ -1,7 +1,6 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
@@ -9,6 +8,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\ContattoDocente;
 use Universibo\Bundle\LegacyBundle\Entity\Docente;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * ContattoDocenteAdd is an extension of UniversiboCommand class.
@@ -24,8 +24,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Docente;
 
 class ContattoDocenteAdd extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -41,7 +40,6 @@ class ContattoDocenteAdd extends UniversiboCommand
                             'file' => __FILE__, 'line' => __LINE__]);
         }
 
-        $request = $this->getRequest();
         $codDoc = $request->get('cod_doc');
         $docenteRepo = $this->get('universibo_legacy.repository.docente');
         $docente = $docenteRepo->find($codDoc);

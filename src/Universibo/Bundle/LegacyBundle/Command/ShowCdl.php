@@ -1,13 +1,14 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Entity\Canale;
-
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
+use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Facolta;
 use Universibo\Bundle\LegacyBundle\Framework\FrontController;
+
 /**
  * ShowCdl: mostra un corso di laurea
  * Mostra i collegamenti a tutti gli insegnamenti attivi nel corso di laurea
@@ -28,7 +29,7 @@ class ShowCdl extends CanaleCommand
         parent::initCommand($frontController);
     }
 
-    public function execute()
+    public function execute(Request $request)
     {
         $check = $this->ensureChannelType(Canale::CDL);
 
@@ -48,7 +49,6 @@ class ShowCdl extends CanaleCommand
 
         $minYear = $prgRepo->findMinAcademicYear($cdl->getCodiceCdl());
         $maxYear = $prgRepo->findMaxAcademicYear($cdl->getCodiceCdl());
-        $request = $this->getRequest();
         $academicYear = $request->get('anno_accademico', $maxYear);
 
         if ($maxYear !== null) {

@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\PearDB\DB;
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\InteractiveCommand\StoredInteractionInformationRetriever;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Universibo\Bundle\LegacyBundle\Framework\FrontController;
+use Universibo\Bundle\LegacyBundle\PearDB\DB;
 
 /**
  *
@@ -20,7 +21,7 @@ use Universibo\Bundle\LegacyBundle\Framework\FrontController;
  */
 class ScriptCancelUser extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $fc = $this->getFrontController();
         $template = $fc->getTemplateEngine();

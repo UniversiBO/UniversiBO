@@ -1,7 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
@@ -9,6 +9,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Commenti\CommentoItem;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItemStudenti;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileStudentiCommentEdit: Modifica un commento di un File Studente
@@ -25,7 +26,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItemStudenti;
 class FileStudentiCommentEdit extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();
@@ -35,7 +36,6 @@ class FileStudentiCommentEdit extends UniversiboCommand
         $user = $this->get('security.context')->getToken()->getUser();
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
-        $request = $this->getRequest();
         $commentId = $request->attributes->get('id_commento');
         $commentRepo = $this->get('universibo_legacy.repository.commenti.commento_item');
         $comment = $commentRepo->find($commentId);

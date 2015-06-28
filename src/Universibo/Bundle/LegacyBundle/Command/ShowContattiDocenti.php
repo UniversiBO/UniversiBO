@@ -1,7 +1,7 @@
 <?php
-
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\ContattoDocente;
 use Universibo\Bundle\LegacyBundle\Entity\Docente;
@@ -19,8 +19,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Docente;
  */
 class ShowContattiDocenti extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();

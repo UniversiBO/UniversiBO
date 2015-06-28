@@ -1,11 +1,12 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
 use Universibo\Bundle\LegacyBundle\Entity\Questionario;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * ShowContributes is an extension of UniversiboCommand class.
@@ -22,7 +23,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Questionario;
  */
 class ShowContribute extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();

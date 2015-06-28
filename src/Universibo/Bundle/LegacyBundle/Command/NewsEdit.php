@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * NewsEdit: si occupa della modifica di una news in un canale
@@ -25,7 +26,7 @@ class NewsEdit extends CanaleCommand
     /**
      * Deve stampare "La notizia ? gi? presente nei seguenti canali"
      */
-    public function execute()
+    public function execute(Request $request)
     {
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -37,7 +38,7 @@ class NewsEdit extends CanaleCommand
         $referente = false;
         $moderatore = false;
 
-        $id_news = $this->getRequest()->attributes->get('id_news');
+        $id_news = $request->attributes->get('id_news');
 
         if ($canale->getServizioNews() == false)
             Error::throwError(_ERROR_DEFAULT,

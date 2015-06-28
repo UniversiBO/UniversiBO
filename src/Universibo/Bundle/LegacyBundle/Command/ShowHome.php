@@ -1,9 +1,10 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Universibo\Bundle\LegacyBundle\Framework\FrontController;
 
 /**
@@ -23,7 +24,7 @@ class ShowHome extends CanaleCommand
      */
     public function initCommand(FrontController $frontController)
     {
-        $this->getRequest()->attributes->set('id_canale', 1);
+        $request->attributes->set('id_canale', 1);
 
         parent::initCommand($frontController);
 
@@ -36,7 +37,7 @@ class ShowHome extends CanaleCommand
                             'file' => __FILE__, 'line' => __LINE__]);
     }
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();

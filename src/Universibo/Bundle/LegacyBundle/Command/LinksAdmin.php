@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
@@ -19,8 +20,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Canale;
 
 class LinksAdmin extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -32,7 +32,7 @@ class LinksAdmin extends UniversiboCommand
         $template->assign('common_canaleURI', $router->generate('universibo_legacy_myuniversibo'));
         $template->assign('common_langCanaleNome', 'indietro');
 
-        $idCanale = $this->getRequest()->attributes->get('id_canale');
+        $idCanale = $request->attributes->get('id_canale');
 
         $referente = false;
 

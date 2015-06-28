@@ -1,8 +1,9 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * ShowSettings is an extension of UniversiboCommand class.
@@ -20,7 +21,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 class ShowSettings extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();

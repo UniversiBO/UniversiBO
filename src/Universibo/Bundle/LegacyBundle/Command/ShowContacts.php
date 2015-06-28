@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Collaboratore;
@@ -19,7 +20,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Collaboratore;
  */
 class ShowContacts extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();

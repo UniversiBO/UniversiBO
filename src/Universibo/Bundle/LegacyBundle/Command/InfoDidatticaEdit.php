@@ -1,14 +1,16 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\InfoDidattica;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Zend\Validator\Uri;
+
 /**
  * ShowCdl: mostra un corso di laurea
  * Mostra i collegamenti a tutti gli insegnamenti attivi nel corso di laurea
@@ -23,7 +25,7 @@ use Zend\Validator\Uri;
 class InfoDidatticaEdit extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -37,7 +39,7 @@ class InfoDidatticaEdit extends UniversiboCommand
                                 : '');
         $template->assign('common_langCanaleNome', 'indietro');
 
-        $id_canale = $this->getRequest()->attributes->get('id_canale');
+        $id_canale = $request->attributes->get('id_canale');
 
         $canale = $this->get('universibo_legacy.repository.canale2')->find($id_canale);
         if (!$canale instanceof Canale) {

@@ -5,6 +5,7 @@
  */
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
@@ -14,16 +15,15 @@ use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
  */
 class ShowPermalink extends UniversiboCommand
 {
-
     /**
      * Controller action
      *
      * @throws NotFoundHttpException
      */
-    public function execute()
+    public function execute(Request $request)
     {
         $newsRepo = $this->getContainer()->get('universibo_legacy.repository.news.news_item');
-        $news = $newsRepo->find($id_notizia = $this->getRequest()->attributes->get('id_notizia'));
+        $news = $newsRepo->find($id_notizia = $request->attributes->get('id_notizia'));
 
         $isExpired = function (NewsItem $news) {
             return $news->getDataScadenza() > 0 && $news->getDataScadenza() < time();

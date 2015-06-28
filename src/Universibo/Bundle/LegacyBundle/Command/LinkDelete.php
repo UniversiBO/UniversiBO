@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * LinkDelete: elimina un link, mostra il form e gestisce la cancellazione
@@ -23,7 +24,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Canale;
 class LinkDelete extends CanaleCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -39,7 +40,7 @@ class LinkDelete extends CanaleCommand
 
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
-        $linkId = $this->getRequest()->attributes->get('id_link');
+        $linkId = $request->attributes->get('id_link');
         $link = $this->get('universibo_legacy.repository.links.link')->find($linkId);
         if ($link === false)
             Error::throwError(_ERROR_DEFAULT,
@@ -49,7 +50,7 @@ class LinkDelete extends CanaleCommand
 
         $autore = ($user->getId() == $link->getIdUtente());
 
-        $channelId = $this->getRequest()->attributes->get('id_canale');
+        $channelId = $request->attributes->get('id_canale');
 
         if ($channelId !== null) {
             if (!preg_match('/^([0-9]{1,9})$/', $channelId)) {

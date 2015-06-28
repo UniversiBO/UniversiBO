@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 /**
@@ -17,7 +18,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
  */
 class ShowHelpTopic extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();
@@ -27,7 +28,7 @@ class ShowHelpTopic extends UniversiboCommand
         $references = [];
         $topics = [];
 
-        $ref = $this->getRequest()->get('ref', '');
+        $ref = $request->get('ref', '');
         if (!preg_match('/^[[:alnum:]]{1,32}$/', $ref)) {
             $topicRepo = $this->getContainer()->get('universibo_legacy.repository.help.topic');
 

@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Ruolo;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * ShowMyUniversiBO is an extension of UniversiboCommand class.
@@ -24,7 +25,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Ruolo;
 
 class MyUniversiBOEdit extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();
@@ -33,7 +34,7 @@ class MyUniversiBOEdit extends UniversiboCommand
         $router = $this->get('router');
 
 
-        $id_canale = $this->getRequest()->attributes->get('id_canale');
+        $id_canale = $request->attributes->get('id_canale');
         $canale = $this->get('universibo_legacy.repository.canale2')->find($id_canale);
 
         if (!$canale instanceof Canale) {

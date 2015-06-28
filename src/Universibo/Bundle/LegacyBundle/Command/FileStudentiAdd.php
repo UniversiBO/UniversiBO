@@ -1,9 +1,8 @@
 <?php
-
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Auth\LegacyRoles;
@@ -11,6 +10,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItemStudenti;
 use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileStudentiAdd: si occupa dell'inserimento di un file studente in un canale
@@ -24,7 +24,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
  */
 class FileStudentiAdd extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             Error::throwError(_ERROR_DEFAULT, ['id_utente' => 0,

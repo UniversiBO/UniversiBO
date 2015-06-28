@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
@@ -16,13 +17,12 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 class FileShowInfo extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
 
         $template = $frontcontroller->getTemplateEngine();
-        $id_file = $this->getRequest()->attributes->get('id_file');
+        $id_file = $request->attributes->get('id_file');
 
         if (!preg_match('/^([0-9]{1,9})$/', $id_file)) {
             throw new NotFoundHttpException('Invalid file ID');
@@ -30,7 +30,7 @@ class FileShowInfo extends UniversiboCommand
 
         $tipo_file = $this->get('universibo_legacy.repository.files.file_item_studenti')->isFileStudenti($id_file);
 
-        if (null != ($id_canale = $this->getRequest()->get('id_canale'))) {
+        if (null != ($id_canale = $request->get('id_canale'))) {
             $this->executePlugin('ShowFileInfo', ['id_file' => $id_file,
                                     'id_canale' => $id_canale]);
         } else

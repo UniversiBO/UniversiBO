@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Docente;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  *Questa classe consente la visualizzazione e la possibile modifica
@@ -17,7 +18,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Docente;
 class ShowUser extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -25,7 +26,7 @@ class ShowUser extends UniversiboCommand
         $current_user = $context->getToken()->getUser();
         $professorRepo = $this->get('universibo_legacy.repository.docente');
 
-        $userId = $this->getRequest()->attributes->get('id_utente');
+        $userId = $request->attributes->get('id_utente');
         $user = $this->get('universibo_website.repository.user')->find($userId);
 
         if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {

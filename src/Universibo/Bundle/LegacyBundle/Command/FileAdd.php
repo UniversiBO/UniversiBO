@@ -1,13 +1,14 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\Auth\LegacyRoles;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 /**
  * FileAdd: si occupa dell'inserimento di un file in un canale
  *
@@ -21,7 +22,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
 
 class FileAdd extends FileCommon
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $context = $this->get('security.context');
         if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -31,7 +32,6 @@ class FileAdd extends FileCommon
                             'file' => __FILE__, 'line' => __LINE__]);
         }
 
-        $request = $this->getRequest();
         $router = $this->get('router');
         $channelRouter = $this->get('universibo_legacy.routing.channel');
         $frontcontroller = $this->getFrontController();
@@ -62,7 +62,7 @@ class FileAdd extends FileCommon
 
         $elenco_canali = [];
 
-        $channelId = $this->getRequest()->get('id_canale');
+        $channelId = $request->get('id_canale');
 
         $filesPath = $this->get('kernel')->getRootDir().'/data/uploads/';
         if ($channelId !== null) {

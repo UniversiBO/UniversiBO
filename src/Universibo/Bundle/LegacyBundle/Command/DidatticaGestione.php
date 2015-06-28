@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
@@ -21,13 +22,11 @@ use Universibo\Bundle\LegacyBundle\Framework\FrontController;
 
 class DidatticaGestione extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
         $router = $this->get('router');
-        $request = $this->getRequest();
         $professorRepo = $this->get('universibo_legacy.repository.docente');
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -114,10 +113,10 @@ class DidatticaGestione extends UniversiboCommand
                     $edit = 'true';
 
                     $esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale(
-                            $channelId, $prg);
+                            $channelId, $request, $prg);
                 } else
                     $esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale(
-                            $channelId, $prg_sdop);
+                            $channelId, $request, $prg_sdop);
                 //              $esamiAlternativi = DidatticaGestione::_getAttivitaFromCanale($channelId);
                 if (count($esamiAlternativi) == 0)
                     $esamiAlternativi = '';
@@ -451,7 +450,7 @@ class DidatticaGestione extends UniversiboCommand
     /**
      * Recupera le attività associate ad un insegnamento, escludendo un eventuale attività
      */
-    function &_getAttivitaFromCanale($channelId, $prg_exclude = null)
+    function _getAttivitaFromCanale($channelId, $request, $prg_exclude = null)
     {
         $router = $this->get('router');
         $prgs = PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale(
@@ -462,7 +461,7 @@ class DidatticaGestione extends UniversiboCommand
                 //              var_dump($prg);
                 $cdl = Cdl::selectCdlCodice($prg->getCodiceCdl());
                 $id = $channelId;
-                $facultyId = $this->getRequest()->get('id_fac');
+                $facultyId = $request->get('id_fac');
                 $uri =  $router->generate('universibo_legacy_didattica_gestione', ['id_canale' => $channelId, 'id_cdl' => $cdl->getIdCanale(), 'id_fac' => $facultyId]);
                 $status = '';
                 if ($prg->isSdoppiato()) {

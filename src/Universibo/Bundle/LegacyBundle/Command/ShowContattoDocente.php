@@ -2,7 +2,7 @@
 namespace Universibo\Bundle\LegacyBundle\Command;
 
 use DateTime;
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
@@ -11,6 +11,8 @@ use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\ContattoDocente;
 use Universibo\Bundle\LegacyBundle\Entity\Docente;
 use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
+
 /**
  * ShowContacts is an extension of UniversiboCommand class.
  *
@@ -26,7 +28,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
 class ShowContattoDocente extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $context = $this->get('security.context');
         if (!$context->isGranted('ROLE_MODERATOR')) {
@@ -40,7 +42,7 @@ class ShowContattoDocente extends UniversiboCommand
         $router = $this->get('router');
 
         $docenteRepo = $this->get('universibo_legacy.repository.docente');
-        $codDoc = $this->getRequest()->attributes->get('cod_doc');
+        $codDoc = $request->attributes->get('cod_doc');
         $docente = $docenteRepo->find($codDoc);
 
         if (!$docente instanceof Docente) {

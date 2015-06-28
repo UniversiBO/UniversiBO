@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 /**
@@ -17,13 +18,12 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 class ShowAllFilesStudenti extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
         $router = $this->get('router');
 
-        $request = $this->getRequest();
         $order = $request->get('order', 0);
 
 

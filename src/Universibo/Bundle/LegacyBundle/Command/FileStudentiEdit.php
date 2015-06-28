@@ -1,7 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
@@ -9,6 +9,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Auth\LegacyRoles;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileAdd: si occupa dell'inserimento di un file in un canale
@@ -24,7 +25,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 class FileStudentiEdit extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -36,7 +37,7 @@ class FileStudentiEdit extends UniversiboCommand
         $user = $this->get('security.context')->getToken()->getUser();
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
-        $file = $this->get('universibo_legacy.repository.files.file_item_studenti')->find($this->getRequest()->attributes->get('id_file'));
+        $file = $this->get('universibo_legacy.repository.files.file_item_studenti')->find($request->attributes->get('id_file'));
 
         if (!$file instanceof FileItem) {
             throw new NotFoundHttpException('File not found');
@@ -61,7 +62,7 @@ class FileStudentiEdit extends UniversiboCommand
         $autore = ($user->getId() == $file->getIdUtente());
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
-        $channelId = $this->getRequest()->get('id_canale');
+        $channelId = $request->get('id_canale');
 
         if ($channelId !== null) {
             if (!preg_match('/^([0-9]{1,9})$/', $channelId))

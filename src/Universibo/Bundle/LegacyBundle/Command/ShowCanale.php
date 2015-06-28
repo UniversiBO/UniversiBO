@@ -1,9 +1,9 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Entity\Canale;
-
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
+use Universibo\Bundle\LegacyBundle\Entity\Canale;
 
 /**
  * ShowCanale: mostra un canale
@@ -16,7 +16,7 @@ use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
  */
 class ShowCanale extends CanaleCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $check = $this->ensureChannelType(Canale::CDEFAULT);
         if ($check !== null) {

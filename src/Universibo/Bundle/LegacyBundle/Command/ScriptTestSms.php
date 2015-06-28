@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 
 /**
@@ -12,7 +13,7 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 class ScriptTestSms extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $fc = $this->getFrontController();
         $template = $fc->getTemplateEngine();

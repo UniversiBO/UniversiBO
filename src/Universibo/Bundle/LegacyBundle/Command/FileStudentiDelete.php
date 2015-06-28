@@ -1,7 +1,7 @@
 <?php
-
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
@@ -21,7 +21,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Ruolo;
  */
 class FileStudentiDelete extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $context = $this->get('security.context');
 
@@ -35,7 +35,7 @@ class FileStudentiDelete extends UniversiboCommand
         $user = $context->getToken()->getUser();
         $userId = $user->getId();
 
-        $fileId = $this->getRequest()->attributes->get('id_file');
+        $fileId = $request->attributes->get('id_file');
         $fileStudentiRepo = $this->get('universibo_legacy.repository.files.file_item_studenti');
         $file = $fileStudentiRepo->find($fileId);
 

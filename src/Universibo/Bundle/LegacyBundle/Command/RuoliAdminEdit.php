@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Ruolo;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * RuoliAdminEdit: modifica il ruolo di un utente in un canale
@@ -20,7 +21,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Ruolo;
  */
 class RuoliAdminEdit extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -35,7 +36,6 @@ class RuoliAdminEdit extends UniversiboCommand
         $ruoli = [];
         $arrayPublicUsers = [];
 
-        $request = $this->getRequest();
         $channelId = $request->get('id_canale');
 
         $channelRepo = $this->get('universibo_legacy.repository.canale2');

@@ -1,13 +1,15 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
 use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
+
 /**
  * NewsAdd: si occupa dell'inserimento di una news in un canale
  *
@@ -23,7 +25,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Notifica\NotificaItem;
 class NewsAdd extends CanaleCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
 
         $user = $this->get('security.context')->getToken()->getUser();

@@ -1,13 +1,15 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
+
 /**
  * NewsDelete: elimina una notizia, mostra il form e gestisce la cancellazione
  *
@@ -21,7 +23,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 
 class FileDelete extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -38,7 +40,6 @@ class FileDelete extends UniversiboCommand
 
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
-        $request = $this->getRequest();
         $fileId = $request->attributes->get('id_file');
 
         $fileRepo = $this->get('universibo_legacy.repository.files.file_item');

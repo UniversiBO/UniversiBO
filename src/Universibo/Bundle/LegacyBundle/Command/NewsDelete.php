@@ -1,13 +1,14 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * NewsDelete: elimina una notizia, mostra il form e gestisce la cancellazione
@@ -24,8 +25,7 @@ use Universibo\Bundle\LegacyBundle\Entity\News\NewsItem;
 
 class NewsDelete extends CanaleCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -59,7 +59,7 @@ class NewsDelete extends CanaleCommand
             $moderatore = $ruolo->isModeratore();
         }
 
-        $idNews = $this->getRequest()->attributes->get('id_news');
+        $idNews = $request->attributes->get('id_news');
         $newsRepo = $this->get('universibo_legacy.repository.news.news_item');
         $news = $newsRepo->find($idNews);
 

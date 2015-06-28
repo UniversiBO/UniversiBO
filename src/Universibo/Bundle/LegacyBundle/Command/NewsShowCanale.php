@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
@@ -17,7 +18,7 @@ use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
  */
 class NewsShowCanale extends CanaleCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -29,7 +30,6 @@ class NewsShowCanale extends CanaleCommand
         $id_canale = $canale->getIdCanale();
         $router = $this->get('router');
 
-        $request = $this->getRequest();
         $inizio = $request->get('inizio', 0);
         $quantita = $request->get('qta', 10);
 

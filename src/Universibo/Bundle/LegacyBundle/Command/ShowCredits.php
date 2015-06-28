@@ -2,6 +2,7 @@
 namespace Universibo\Bundle\LegacyBundle\Command;
 
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ShowCredits is an extension of UniversiboCommand class.
@@ -17,9 +18,8 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
  */
 class ShowCredits extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
-
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
 

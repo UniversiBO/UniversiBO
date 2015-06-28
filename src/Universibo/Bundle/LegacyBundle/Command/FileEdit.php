@@ -1,13 +1,14 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\Auth\LegacyRoles;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileAdd: si occupa dell'inserimento di un file in un canale
@@ -22,7 +23,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 
 class FileEdit extends FileCommon
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -33,7 +34,7 @@ class FileEdit extends FileCommon
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $userId = $user instanceof User ? $user->getId() : 0;
 
-        $file = $this->get('universibo_legacy.repository.files.file_item')->find($this->getRequest()->attributes->get('id_file'));
+        $file = $this->get('universibo_legacy.repository.files.file_item')->find($request->attributes->get('id_file'));
 
         if (!$file instanceof FileItem) {
             throw new NotFoundHttpException('File not found');

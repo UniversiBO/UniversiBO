@@ -1,13 +1,14 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Links\Link;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * NewsEdit: si occupa della modifica di una news in un canale
@@ -25,9 +26,8 @@ class LinkEdit extends CanaleCommand
     /**
      * Deve stampare "La notizia ? gi? presente nei seguenti canali"
      */
-    public function execute()
+    public function execute(Request $request)
     {
-
         $user = $this->get('security.context')->getToken()->getUser();
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
         $userId = $user instanceof User ? $user->getId() : 0;
@@ -36,7 +36,7 @@ class LinkEdit extends CanaleCommand
         $referente = false;
         $moderatore = false;
 
-        $id_canale = $this->getRequest()->get('id_canale');
+        $id_canale = $request->get('id_canale');
         $canale = $this->get('universibo_legacy.repository.canale')->find($id_canale);
         if (!$canale instanceof Canale) {
             throw new NotFoundHttpException('Channel with id='.$id_canale.' not found');
@@ -56,7 +56,7 @@ class LinkEdit extends CanaleCommand
             $moderatore = $ruolo->isModeratore();
         }
 
-        $id_link = $this->getRequest()->attributes->get('id_link');
+        $id_link = $request->attributes->get('id_link');
         $link = $this->get('universibo_legacy.repository.links.link')->find($id_link);
         $autore = ($userId == $link->getIdUtente());
 

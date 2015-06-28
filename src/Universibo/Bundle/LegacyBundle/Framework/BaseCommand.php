@@ -2,6 +2,7 @@
 namespace Universibo\Bundle\LegacyBundle\Framework;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * BaseCommand is the abstract super class of all command classes.
@@ -36,7 +37,7 @@ abstract class BaseCommand extends Controller
      *
      * @return string template identifier if command uses template engine
      */
-    abstract public function execute();
+    abstract public function execute(Request $request);
 
     /**
      * Shutdown the command

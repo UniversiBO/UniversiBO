@@ -1,11 +1,12 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Commenti\CommentoItem;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItemStudenti;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileStudentiComment: si occupa dell'inserimento di un nuovo commento per il File Studente
@@ -21,7 +22,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItemStudenti;
 class FileStudentiComment extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
 
         $frontcontroller = $this->getFrontController();
@@ -37,7 +38,7 @@ class FileStudentiComment extends UniversiboCommand
                             'file' => __FILE__, 'line' => __LINE__]);
         }
 
-        $fileId = $this->getRequest()->attributes->get('id_file');
+        $fileId = $request->attributes->get('id_file');
         $fileRepo = $this->get('universibo_legacy.repository.files.file_item_studenti');
         $file = $fileRepo->find($fileId);
 

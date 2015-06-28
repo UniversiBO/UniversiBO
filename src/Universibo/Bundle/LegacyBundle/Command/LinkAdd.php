@@ -1,12 +1,13 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
-use Universibo\Bundle\LegacyBundle\Framework\Error;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Canale;
 use Universibo\Bundle\LegacyBundle\Entity\Links\Link;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * LinkAdd: si occupa dell'inserimento di un link in un canale
@@ -22,7 +23,7 @@ use Universibo\Bundle\LegacyBundle\Entity\Links\Link;
 class LinkAdd extends UniversiboCommand
 {
 
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -52,7 +53,7 @@ class LinkAdd extends UniversiboCommand
 
         $f29_accept = false;
 
-        $id_canale = $this->getRequest()->attributes->get('id_canale');
+        $id_canale = $request->attributes->get('id_canale');
 
         $canale = $this->get('universibo_legacy.repository.canale2')->find($id_canale);
         if (!$canale instanceof Canale) {

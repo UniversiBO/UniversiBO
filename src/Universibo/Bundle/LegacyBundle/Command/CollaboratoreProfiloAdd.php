@@ -4,6 +4,7 @@ namespace Universibo\Bundle\LegacyBundle\Command;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
@@ -23,13 +24,11 @@ use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 class CollaboratoreProfiloAdd extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
-        $request = $this->getRequest();
         $context = $this->get('security.context');
         $user = $context->getToken()->getUser();
-        $id_coll = $this->getRequest()->get('id_coll');
+        $id_coll = $request->get('id_coll');
 
         $userRepo = $this->get('universibo_core.repository.user');
         $collabUser = $userRepo->find($id_coll);

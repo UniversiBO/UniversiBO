@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
@@ -19,7 +20,7 @@ use Universibo\Bundle\LegacyBundle\Framework\FrontController;
  */
 class ShowFacolta extends CanaleCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $check = $this->ensureChannelType(Canale::FACOLTA);
 
@@ -36,7 +37,7 @@ class ShowFacolta extends CanaleCommand
         $facolta = $this->getRequestCanale();
         $codFac = $facolta->getCodiceFacolta();
 
-        $academicYear = $this->getRequest()->get('anno_accademico');
+        $academicYear = $request->get('anno_accademico');
         if ($academicYear === 'all') {
             $currentYear = null;
             $template->assign('fac_langYear', 'Tutti gli anni accademici');
@@ -56,7 +57,7 @@ class ShowFacolta extends CanaleCommand
                 $currentYear = intval($this->getFrontController()->getAppSetting('defaultAnnoAccademico'));
                 $minYear = $maxYear = $currentYear;
             } else {
-                $currentYear = intval($this->getRequest()->get('anno_accademico', $maxYear));
+                $currentYear = intval($request->get('anno_accademico', $maxYear));
             }
 
             if ($currentYear > $maxYear || $currentYear < $minYear) {

@@ -1,6 +1,7 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
@@ -20,8 +21,7 @@ use Universibo\Bundle\LegacyBundle\Entity\InfoDidattica;
 
 class ShowInfoDidattica extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
@@ -30,7 +30,7 @@ class ShowInfoDidattica extends UniversiboCommand
         $user = $this->get('security.context')->getToken()->getUser();
         $user_ruoli = $user instanceof User ? $this->get('universibo_legacy.repository.ruolo')->findByIdUtente($user->getId()) : [];
 
-        $id_canale = $this->getRequest()->attributes->get('id_canale');
+        $id_canale = $request->attributes->get('id_canale');
         $canale = $this->get('universibo_legacy.repository.canale')->find($id_canale);
 
         if (!$canale instanceof Canale) {

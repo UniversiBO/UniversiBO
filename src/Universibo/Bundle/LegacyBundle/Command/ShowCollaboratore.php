@@ -1,9 +1,11 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Command;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
+
 /**
  * ShowContacts is an extension of UniversiboCommand class.
  *
@@ -19,13 +21,13 @@ use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
  */
 class ShowCollaboratore extends UniversiboCommand
 {
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $username = $this->getRequest()->attributes->get('username');
+        $username = $request->attributes->get('username');
         $userRepo = $this->get('universibo_website.repository.user');
 
         $collabUser = $userRepo->findOneByUsername($username);

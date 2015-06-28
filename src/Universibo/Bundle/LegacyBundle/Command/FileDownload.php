@@ -2,12 +2,13 @@
 namespace Universibo\Bundle\LegacyBundle\Command;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Universibo\Bundle\LegacyBundle\Framework\Error;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\CoreBundle\Entity\User;
 use Universibo\Bundle\LegacyBundle\App\UniversiboCommand;
 use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
+use Universibo\Bundle\LegacyBundle\Framework\Error;
 
 /**
  * FileDownload: si occupa del download di un file
@@ -22,14 +23,12 @@ use Universibo\Bundle\LegacyBundle\Entity\Files\FileItem;
 
 class FileDownload extends UniversiboCommand
 {
-
-    public function execute()
+    public function execute(Request $request)
     {
         $frontcontroller = $this->getFrontController();
         $template = $frontcontroller->getTemplateEngine();
         $user = $this->get('security.context')->getToken()->getUser();
         $userId = $user instanceof User ? $user->getId() : 0;
-        $request = $this->getRequest();
         $router = $this->get('router');
 
         $fileId = $request->attributes->get('id_file');
@@ -102,7 +101,7 @@ class FileDownload extends UniversiboCommand
 
             $nomeFile = realpath($nomeFile);
             $response = new BinaryFileResponse($nomeFile);
-            $response->prepare($this->getRequest());
+            $response->prepare($request);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, basename($nomeFile));
 
             return $response;
