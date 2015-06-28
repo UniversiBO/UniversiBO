@@ -533,14 +533,6 @@ class FrontController
     }
 
     /**
-     * @return Swift_Mailer
-     */
-    public function getMailer()
-    {
-        return $this->getContainer()->get('mailer');
-    }
-
-    /**
      * Factory method that creates a Kronos object based on the config language info
      *
      * @return Krono object
