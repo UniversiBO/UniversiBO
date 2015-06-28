@@ -83,14 +83,11 @@ class FrontController
      *
      * @param string $configFile filename of FrontController configuration file
      */
-    public function __construct($receiver, $do = null)
+    public function __construct($receiver, $do)
     {
         self::$container = $receiver->getContainer();
 
-        //      include_once('XmlDoc'.PHP_EXTENSION);
-
         $this->receiverIdentifier = $receiver->getIdentifier();
-
         $this->do = $do;
     }
 

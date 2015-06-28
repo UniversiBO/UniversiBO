@@ -33,7 +33,7 @@ abstract class BaseReceiver
      * @param string $framework_path   percorso in cui si trovano i file del framework
      * @param string $application_path percorso in cui si trovano i file dell'applicazione
      */
-    public function __construct($identifier, $config_file, $framework_path, $application_path, $container, $do = null)
+    public function __construct($identifier, $config_file, $framework_path, $application_path, $container, $do)
     {
         $this->frameworkPath = $framework_path;
         $this->applicationPath = $application_path;
@@ -43,8 +43,6 @@ abstract class BaseReceiver
         $this->container = $container;
         $this->do = $do;
     }
-
-
 
     /**
      * Return the receiver name identifier
