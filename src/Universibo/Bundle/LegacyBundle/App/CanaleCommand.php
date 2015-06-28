@@ -215,7 +215,7 @@ abstract class CanaleCommand extends UniversiboCommand
 
         $this->updateUltimoAccesso();
 
-        parent::shutdownCommand();
+        parent::shutdownCommand($request);
     }
 
     public function _compareContattiKeys($b, $a)
