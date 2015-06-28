@@ -9,6 +9,7 @@ use DOMDocument;
 use Smarty;
 use Swift_Mailer;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Universibo\Bundle\LegacyBundle\App\CanaleCommand;
@@ -100,20 +101,15 @@ class FrontController
      *
      * @access public
      */
-    public function executeCommand()
+    public function executeCommand(Request $request)
     {
-        //$command_request=$this->getCommandRequest();
         $command_class=$this->getCommandClass();
         $command_class = 'Universibo\\Bundle\\LegacyBundle\\Command\\'.$command_class;
-
-        /**
-         * @todo mettere controllo sull'avvenuta inclusione, altrimenti errore critico
-         */
         $command = new $command_class;
 
         $command->setContainer(self::getContainer());
         $command->initCommand($this);
-        $response = $command->execute();
+        $response = $command->execute($request);
         $command->shutdownCommand();
 
         if ($response instanceof Response) {

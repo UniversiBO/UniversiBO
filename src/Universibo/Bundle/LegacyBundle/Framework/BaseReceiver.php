@@ -1,6 +1,8 @@
 <?php
 namespace Universibo\Bundle\LegacyBundle\Framework;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * The receiver.
  * Code to activate the framework system.
@@ -16,7 +18,6 @@ namespace Universibo\Bundle\LegacyBundle\Framework;
 
 abstract class BaseReceiver
 {
-
     public $frameworkPath = '../framework';
     public $applicationPath = '../universibo';
 
@@ -58,13 +59,13 @@ abstract class BaseReceiver
      * Main code for framework activation, includes Error definitions
      * and instantiates FrontController
      */
-    public function main()
+    public function main(Request $request)
     {
         $fc= new FrontController($this, $this->do);
 
         $fc->setConfig( $this->configFile );
 
-        $result = $fc->executeCommand();
+        $result = $fc->executeCommand($request);
         $fc->getDbConnection('main')->disconnect();
 
         return $result;
