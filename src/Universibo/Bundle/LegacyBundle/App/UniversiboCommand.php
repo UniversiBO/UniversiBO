@@ -72,7 +72,7 @@ abstract class UniversiboCommand extends BaseCommand
     /**
      * Restituisce se la pagina chiamata ? di tipo indice (con menu) o popup (senza menu)
      *
-     * @param Request $request
+     * @param  Request $request
      * @return boolean
      */
     public function isPopup(Request $request)

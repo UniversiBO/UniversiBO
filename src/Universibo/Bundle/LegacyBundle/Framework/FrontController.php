@@ -7,7 +7,6 @@ define('MAIL_KEEPALIVE_CLOSE', 2);
 
 use DOMDocument;
 use Smarty;
-use Swift_Mailer;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -133,8 +132,6 @@ class FrontController
                 ];
         }
     }
-
-
 
     /**
      * Executes a plugin action.
@@ -455,7 +452,7 @@ class FrontController
     /**
      * Returns values of elements added into the <appSettings> XML tag in config file
      *
-     * @param string $identifier Setting name identifier of XML element tag
+     * @param  string $identifier Setting name identifier of XML element tag
      * @return string text content of XML tag
      * @access public
      */

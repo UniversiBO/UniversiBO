@@ -450,7 +450,7 @@ class DidatticaGestione extends UniversiboCommand
     /**
      * Recupera le attività associate ad un insegnamento, escludendo un eventuale attività
      */
-    function _getAttivitaFromCanale($channelId, $request, $prg_exclude = null)
+    public function _getAttivitaFromCanale($channelId, $request, $prg_exclude = null)
     {
         $router = $this->get('router');
         $prgs = PrgAttivitaDidattica::selectPrgAttivitaDidatticaCanale(
