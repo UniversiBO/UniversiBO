@@ -8,6 +8,8 @@ php:
 env:
   - SELENIUM_URL='http://localhost:8000/' TZ='Europe/Rome'
 
+sudo: false
+
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
