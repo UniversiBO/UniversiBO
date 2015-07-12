@@ -9,6 +9,6 @@ class SystemClockTest extends \PHPUnit_Framework_TestCase
     {
         $clock = new SystemClock();
 
-        $this->assertInstanceOf(DateTime::class, $clock->currentTime());
+        $this->assertInstanceOf('DateTime', $clock->currentTime());
     }
 }
