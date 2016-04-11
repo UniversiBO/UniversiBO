@@ -49,8 +49,6 @@ class lapp::config
     vhost_name      => '*',
     port            => '80',
     docroot         => '/vagrant/web',
-    docroot_owner   => 'vagrant',
-    docroot_group   => 'vagrant',
     logroot         => '/var/log',
     override        => 'All'
   }
