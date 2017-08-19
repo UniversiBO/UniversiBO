@@ -15,7 +15,7 @@ You can get a working copy of UniversiBO in 6 easy steps:
 4. Fork this repository and clone it
 5. Run ```cd vagrant && vagrant up``` and wait around ten minutes while Vagrant
 does all the magic
-6. Open your browser at http://localhost:8888/app_dev.php
+6. Open your browser at http://192.168.33.10/
 
 Then you can log in, available users:
 
@@ -69,7 +69,7 @@ UniversiBO uses Travis and Scrutinizer
 [![Code Coverage](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/badges/coverage.png?s=6ce13ce595f42cfb5a92f70b070e9c19689e03f3)](https://scrutinizer-ci.com/g/UniversiBO/UniversiBO/)
 
 ## License
-Copyright (C) \<2001-2015\> Associazione UniversiBO
+Copyright (C) \<2001-2017\> Associazione UniversiBO
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
