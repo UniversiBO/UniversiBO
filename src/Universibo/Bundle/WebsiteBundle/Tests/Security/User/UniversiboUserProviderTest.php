@@ -69,12 +69,12 @@ class UniversiboUserProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManager = $this->getMock('Doctrine\\Common\\Persistence\\ObjectManager');
+        $this->objectManager = $this->createMock('Doctrine\\Common\\Persistence\\ObjectManager');
         $this->personRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\PersonRepository', ['findOneByUniboId'], [], '', false);
-        $this->userRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UserRepository', ['findOneByEmail', 'findOneAllowedToLogin'], [], '', false);
-        $this->userManager = $this->getMock('FOS\\UserBundle\\Model\\UserManagerInterface');
+        $this->userRepository = $this->createMock('Universibo\\Bundle\\CoreBundle\\Entity\\UserRepository', ['findOneByEmail', 'findOneAllowedToLogin'], [], '', false);
+        $this->userManager = $this->createMock('FOS\\UserBundle\\Model\\UserManagerInterface');
         $this->uniboGroupRepository = $this->getMock('Universibo\\Bundle\\CoreBundle\\Entity\\UniboGroupRepository', ['findOrCreate'], [], '', false);
-        $this->logger = $this->getMock('Symfony\\Component\\HttpKernel\\Log\\LoggerInterface');
+        $this->logger = $this->createMock('Symfony\\Component\\HttpKernel\\Log\\LoggerInterface');
 
         $this->provider = new UniversiboUserProvider($this->objectManager,
                 $this->personRepository, $this->userRepository, $this->userManager,

@@ -25,7 +25,7 @@ class ContactServiceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManager = $this->getMock('Doctrine\\Common\\Persistence\\ObjectManager');
+        $this->objectManager = $this->createMock('Doctrine\\Common\\Persistence\\ObjectManager');
         $this->service = new ContactService($this->objectManager);
     }
 

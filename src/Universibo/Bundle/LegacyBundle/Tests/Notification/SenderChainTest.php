@@ -26,7 +26,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
     public function testSupportsFirst()
     {
-        $sender = $this->getMock(self::INAME);
+        $sender = $this->createMock(self::INAME);
         $this->chain->register($sender);
 
         $notification1 = new NotificaItem(1, 'hello', 'world', time(), false, false, 'mail://hello@world.com');
@@ -44,7 +44,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
     public function testSenderRegistrationIsIdempotent()
     {
-        $sender = $this->getMock(self::INAME);
+        $sender = $this->createMock(self::INAME);
         $this->chain->register($sender);
         $this->chain->register($sender);
 
@@ -61,7 +61,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
 
     public function testUnregisteredSenderIsNotCalledAnymore()
     {
-        $sender = $this->getMock(self::INAME);
+        $sender = $this->createMock(self::INAME);
         $this->chain->register($sender);
         $this->chain->unregister($sender);
 
@@ -80,7 +80,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnregisterUnexisting()
     {
-        $sender = $this->getMock(self::INAME);
+        $sender = $this->createMock(self::INAME);
         $this->chain->unregister($sender);
     }
 
@@ -98,7 +98,7 @@ class SenderChainTest extends \PHPUnit_Framework_TestCase
     {
         $notification1 = new NotificaItem(1, 'hello', 'world', time(), false, false, 'mail://hello@world.com');
 
-        $sender = $this->getMock(self::INAME);
+        $sender = $this->createMock(self::INAME);
         $sender->expects($this->once())
             ->method('supports')
             ->with($this->equalTo($notification1))
