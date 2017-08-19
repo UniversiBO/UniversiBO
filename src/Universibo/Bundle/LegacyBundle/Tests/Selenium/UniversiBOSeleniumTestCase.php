@@ -7,7 +7,7 @@ namespace Universibo\Bundle\LegacyBundle\Tests\Selenium;
  */
 use Universibo\Bundle\LegacyBundle\Tests\TestConstants;
 
-abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_SeleniumTestCase
+abstract class UniversiBOSeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase
 {
     protected $base = '/app_dev.php';
     protected $screenshotUrl = 'http://www.universibo.dev/screenshots';

@@ -1,0 +1,39 @@
+---
+- hosts: default
+  gather_facts: yes
+  vars_files:
+    - vars/main.yml
+  tasks:
+  - name: install git
+    apt: name=git state=installed
+  - name: set environment variables (Symfony)
+    copy:
+      src: files/etc/profile.d/symfony.sh
+      dest: /etc/profile.d/symfony.sh
+  - name: install xvfb
+    apt: name=xvfb state=installed
+  - name: set environment variables (xvfb)
+    copy:
+      src: files/etc/profile.d/xvfb.sh
+      dest: /etc/profile.d/xvfb.sh
+  - name: set timezone to Europe/Rome
+    timezone:
+      name: Europe/Rome
+  roles:
+    - { role: geerlingguy.apache }
+    - { role: geerlingguy.php }
+    - { role: geerlingguy.apache-php-fpm }
+    - { role: geerlingguy.postgresql }
+    - { role: geerlingguy.java }
+
+  post_tasks:
+  - name: Load Database universibo
+    shell: cat devdb.sql | sed 's/OWNER TO .*/OWNER TO universibo;/' | su - postgres -c 'psql universibo' && touch /var/dump-universibo-loaded
+    args:
+      chdir: /vagrant/app/sql/pgsql
+      creates: /var/dump-universibo-loaded
+  - name: Load Database forum
+    shell: cat structure-postgres.sql data-postgres.sql | sed 's/OWNER TO .*/OWNER TO universibo;/' | su - postgres -c 'psql universibo_forum3' && touch /var/dump-forum-loaded
+    args:
+      chdir: /vagrant/vendor/universibo/forum-bundle/Universibo/Bundle/ForumBundle/Tests/Resources/sql/
+      creates: /var/dump-forum-loaded

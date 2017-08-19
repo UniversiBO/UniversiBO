@@ -1,5 +1,6 @@
 <?php
 namespace Universibo\Bundle\WebsiteBundle\Twig;
+
 class UniversiboExtension extends \Twig_Extension
 {
 
@@ -11,12 +12,9 @@ class UniversiboExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-                'linkify' => new \Twig_Filter_Method($this, 'linkify',
-                        ['pre_escape' => 'html',
-                                'is_safe' => ['html']]),
-                'bbcode' => new \Twig_Filter_Method($this, 'bbcode',
-                        ['pre_escape' => 'html',
-                                'is_safe' => ['html']])];
+            new \Twig_SimpleFilter('linkify', [$this, 'linkify'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new \Twig_SimpleFilter('bbcode', [$this, 'bbcode'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+        ];
     }
 
     /**
