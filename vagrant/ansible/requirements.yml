@@ -1,4 +1,5 @@
 ---
+- src: arknoll.selenium
 - src: geerlingguy.apache
 - src: geerlingguy.apache-php-fpm
 - src: geerlingguy.java

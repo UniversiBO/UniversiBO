@@ -32,3 +32,6 @@ apache_vhosts:
     documentroot: /vagrant/web
     extra_parameters: |
         ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/run/php/php7.0-fpm.sock|fcgi://localhost/vagrant/web"
+
+selenium_install_chrome: false
+selenium_install_firefox: true

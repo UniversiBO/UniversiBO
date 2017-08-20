@@ -25,6 +25,7 @@
     - { role: geerlingguy.apache-php-fpm }
     - { role: geerlingguy.postgresql }
     - { role: geerlingguy.java }
+    - { role: arknoll.selenium }
 
   post_tasks:
   - name: Load Database universibo
