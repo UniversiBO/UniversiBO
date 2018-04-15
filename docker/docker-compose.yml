@@ -1,0 +1,15 @@
+# vim: set tabstop=2 shiftwidth=2 expandtab:
+version: '3'
+services:
+    web:
+        build: .
+        ports:
+            - "8080:80"
+        volumes:
+            - ..:/var/www/universibo
+        links:
+            - db
+    db:
+        image: "postgres:latest"
+        volumes:
+            - "./data/postgresql:/var/lib/postgresql/data"
