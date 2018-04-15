@@ -19,3 +19,5 @@ RUN apt-get update &&\
         &&\
     pecl install apcu &&\
     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
+
+RUN a2enmod rewrite
