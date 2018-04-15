@@ -9,7 +9,7 @@ require_once __DIR__.'/../app/AppKernel.php';
 
 $env = getenv('APP_ENV') ?: 'dev';
 
-$kernel = new AppKernel('dev', $env === 'dev');
+$kernel = new AppKernel($env, $env === 'dev');
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
