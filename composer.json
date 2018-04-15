@@ -3,7 +3,8 @@
     "description": "UniversiBO Web Portal",
     "license": "GPL-2.0",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "": "src/" },
+        "files": ["src/functions.php"]
     },
     "require": {
         "php": "^7.2.4",
