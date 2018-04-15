@@ -21,3 +21,5 @@ RUN apt-get update &&\
     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
 
 RUN a2enmod rewrite
+RUN a2enmod proxy
+RUN a2enmod proxy_http
