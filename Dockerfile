@@ -2,6 +2,7 @@ FROM php:7.2-apache-stretch
 
 RUN apt-get update &&\
     apt-get install -y\
+        clamav\
         libpq-dev\
         libicu-dev\
         zlib1g-dev\
@@ -11,6 +12,7 @@ RUN apt-get update &&\
         pdo\
         pdo_pgsql\
         pdo_mysql\
+        pgsql\
         intl\
         zip\
         &&\
