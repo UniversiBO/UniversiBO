@@ -15,6 +15,7 @@ RUN apt-get update &&\
         pgsql\
         intl\
         zip\
+        calendar\
         &&\
     pecl install apcu &&\
     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
