@@ -17,7 +17,7 @@ RUN apt-get update &&\
         zip\
         calendar\
         &&\
-    pecl install apcu &&\
+    pecl install apcu-4.0.11 &&\
     echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
 
 RUN a2enmod rewrite
