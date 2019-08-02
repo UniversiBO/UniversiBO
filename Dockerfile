@@ -11,6 +11,7 @@ RUN apt-get update &&\
         libicu-dev\
         zlib1g-dev\
         git\
+        unzip\
         &&\
     docker-php-ext-install\
         pdo\
