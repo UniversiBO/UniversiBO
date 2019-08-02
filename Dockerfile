@@ -26,3 +26,9 @@ RUN apt-get update &&\
 COPY ${DATA}/vhosts/default.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN a2enmod rewrite
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php
+
+WORKDIR /var/www/project
