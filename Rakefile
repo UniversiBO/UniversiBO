@@ -15,6 +15,25 @@ namespace :deploy do
   end
 end
 
+namespace :web do
+  desc "launch composer"
+  task :composer, [:params] do |_task, args|
+    sh("docker-compose exec web composer -- #{args[:params]}")
+  end
+
+  desc "Runs bash shell inside web server"
+  task :shell do
+    sh("docker-compose exec web bash")
+  end
+end
+
+namespace :sf do
+  desc "launch console"
+  task :console, [:params] do |_task, args|
+    sh("docker-compose exec web app/console -- #{args[:params]}")
+  end
+end
+
 namespace :db do
   desc "Runs bash shell inside DB"
   task :shell do
@@ -30,17 +49,5 @@ namespace :db do
   task :schema do
     sh("docker-compose exec db psql -U postgres -f /sql/createdb.sql")
     sh("docker-compose exec db psql -U postgres -f /sql/devdb.sql universibo")
-  end
-end
-
-desc "launch composer"
-task :composer, [:params] do |_task, args|
-  sh("docker-compose exec web composer -- #{args[:params]}")
-end
-
-namespace :sf do
-  desc "launch console"
-  task :console, [:params] do |_task, args|
-    sh("docker-compose exec web app/console -- #{args[:params]}")
   end
 end
