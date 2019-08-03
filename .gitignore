@@ -6,8 +6,8 @@
 /bin/
 /build.xml
 /build/
-/dotfiles
 /cache.properties
+/dotfiles
 /nbproject
 /web/bundles
 app/bootstrap.php.cache
@@ -17,6 +17,7 @@ app/config/parameters.yml
 app/logs
 app/phpunit.xml
 app/uploads/*
+auth.json
 compiled
 php-cs-fixer.phar
 vendor
