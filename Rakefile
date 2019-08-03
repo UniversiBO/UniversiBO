@@ -32,3 +32,8 @@ namespace :db do
     sh("docker-compose exec db psql -U postgres -f /sql/devdb.sql universibo")
   end
 end
+
+desc "launch composer"
+task :composer, [:params] do |_task, args|
+  sh("docker-compose exec web composer -- #{args[:params]}")
+end
