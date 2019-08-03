@@ -13,4 +13,4 @@ services:
     image: "postgres:latest"
     volumes:
       - "./data/postgresql:/var/lib/postgresql/data"
-      - "./app/sql:/sql"
+      - "./app/sql/pgsql:/sql"

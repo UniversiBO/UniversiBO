@@ -16,8 +16,19 @@ namespace :deploy do
 end
 
 namespace :db do
+  desc "Runs bash shell inside DB"
+  task :shell do
+    sh("docker-compose exec db bash")
+  end
+
   desc "Runs psql shell"
   task :psql do
     sh("docker-compose exec db psql -U postgres")
+  end
+
+  desc "Loads the schema"
+  task :schema do
+    sh("docker-compose exec db psql -U postgres -f /sql/createdb.sql")
+    sh("docker-compose exec db psql -U postgres -f /sql/devdb.sql universibo")
   end
 end
