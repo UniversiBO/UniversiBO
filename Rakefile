@@ -37,3 +37,10 @@ desc "launch composer"
 task :composer, [:params] do |_task, args|
   sh("docker-compose exec web composer -- #{args[:params]}")
 end
+
+namespace :sf do
+  desc "launch console"
+  task :console, [:params] do |_task, args|
+    sh("docker-compose exec web app/console -- #{args[:params]}")
+  end
+end
