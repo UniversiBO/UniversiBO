@@ -35,3 +35,7 @@ composer:
 .PHONY: composer-install
 composer-install:
 	docker-compose exec web composer install
+
+.PHONY: init-db
+init-db:
+	docker-compose exec db /bin/bash /sql/sql.sh
