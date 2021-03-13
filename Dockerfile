@@ -32,4 +32,5 @@ RUN a2enmod rewrite
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    && rm composer-setup.php
+    && rm composer-setup.php \
+    && composer self-update --1
