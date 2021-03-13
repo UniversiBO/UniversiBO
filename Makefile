@@ -1,5 +1,5 @@
 .PHONY: get-ready
-get-ready: | build reload composer-install
+get-ready: | reload composer-install
 
 .PHONY: build
 build:
