@@ -16,3 +16,5 @@ services:
     volumes:
       - "./data/postgresql:/var/lib/postgresql/data"
       - "./app/sql/pgsql:/sql"
+    environment:
+      POSTGRES_PASSWORD: universibo
