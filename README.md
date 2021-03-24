@@ -6,7 +6,7 @@ UniversiBO was a Web Community joined by Students, Professors and Staff in Alma 
 * Since version 2 we migrated to eocene framework  (http://sourceforge.net/projects/eocene-php/)
 * Version 3 is a porting to Symfony 2.x framework (http://symfony.com/)
 
-On Tuesday, 25 Feb 2020 the only production server crashed abruptly and On June 2020 the student association ceased its activities.
+On Tuesday, 25 Feb 2020 the only production server crashed abruptly and on June 2020 the student association ceased its activities.
 
 ## Running UniversiBO
 You can get a working copy of UniversiBO in 6 easy steps:
