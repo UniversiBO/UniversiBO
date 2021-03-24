@@ -1,10 +1,12 @@
 UniversiBO
 ==========
 ## What is UniversiBO?
-UniversiBO is a Web Community joined by Students, Professors and Staff in Alma Mater Studiorum - University of Bologna, Italy since 2002.
+UniversiBO was a Web Community joined by Students, Professors and Staff in Alma Mater Studiorum - University of Bologna, Italy since 2002.
 * Version 1 was a PHP-PostgreSQL "old style" application
 * Since version 2 we migrated to eocene framework  (http://sourceforge.net/projects/eocene-php/)
-* We're working on version 3 which is a porting to Symfony 2.x framework (http://symfony.com/)
+* Version 3 is a porting to Symfony 2.x framework (http://symfony.com/)
+
+On Tuesday, 25 Feb 2020 the only production server crashed abruptly and On June 2020 the student association ceased its activities.
 
 ## Running UniversiBO
 You can get a working copy of UniversiBO in 6 easy steps:
